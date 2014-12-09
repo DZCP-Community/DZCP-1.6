@@ -127,6 +127,12 @@ var DZCP = {
         var request = $.ajax({ url: "../inc/ajax.php?i=" + menu + options, type: "GET", data: {}, cache:true, dataType: "html", contentType: "application/x-www-form-urlencoded; charset=iso-8859-1" });
         request.done(function(msg) { $('#' + tag).html( msg ).hide().fadeIn("normal"); });
     },
+    
+    // init Ajax DynCaptcha
+    initDynCaptcha: function(tag,num,secure) {
+        var request = $.ajax({ url: "../antispam.php?secure=" + secure + "&num=" + num, type: "GET", data: {}, cache:false, dataType: "html", contentType: "application/x-www-form-urlencoded; charset=iso-8859-1" });
+        request.done(function(msg) { $('#' + tag).html( msg ).hide().fadeIn("normal"); });
+    },
 
     // submit shoutbox
     shoutSubmit: function() {

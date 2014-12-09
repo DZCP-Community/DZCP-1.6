@@ -24,7 +24,12 @@
           <td class="contentMainFirst" align="center">
             <table class="hperc" cellspacing="0">
               <tr>
-                <td style="text-align:right;vertical-align:middle"><img src="../antispam.php?secure=gb&amp;num=5" alt="" class="icon" /></td>
+                <td style="text-align:right;vertical-align:middle">
+                    <div id="antispam">
+                        <img class="icon" src="../inc/images/ajax_loading.gif" alt="" />
+                        <script language="javascript" type="text/javascript">DZCP.initDynCaptcha("antispam",5,"gb");</script>
+                    </div>
+                </td>
                 <td style="width:2%">&nbsp;</td>
                 <td style="width:50%;vertical-align:middle">
                   <input class="inputField_dis_mid" type="text" name="secure"

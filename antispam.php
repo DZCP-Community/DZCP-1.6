@@ -5,7 +5,9 @@
  */
 
 ob_start();
-
+$error = true;
+if(isset($_GET['secure']) && !empty($_GET['secure'])) {
+    $nonajax = isset($_GET['nonajax']) && $_GET['secure'] == 'shout';
 // Start session if no headers were sent
   if(!headers_sent())
   {
@@ -31,9 +33,9 @@ ob_start();
 
   if(function_exists('gd_info'))
   {
-    if(isset($_GET['num']) && !empty($_GET['num']))
+    if(isset($_GET['num']) && $_GET['num'] != 0 && $_GET['num'] >= 2 && !empty($_GET['num']))
     {
-      $num = $_GET['num'];
+      $num = ((int)$_GET['num']);
       $x = 100; $y = 30;
       $space = 10;
     } else {
@@ -95,6 +97,7 @@ ob_start();
                               hex2rgb($textColor,'b')), "./inc/images/fonts/verdana.ttf", $spamcode);
       $code .= $spamcode;
     }
+    
     if(!function_exists('imagettftext'))
     {
       for($i=0;$i<=strlen($code);$i++) $strcode .= $code[$i].' ';
@@ -103,12 +106,32 @@ ob_start();
     }
 
 //Bild ausgeben & bildcache zerstoeren
-    imagegif($im);
+    if(imagegif($im))
+        $error = false;
+    
     imagedestroy($im);
+    
 //Code in Session abspeichern
-    $_SESSION["sec_$_GET[secure]"] = $code;
+    $_SESSION["sec_".$_GET['secure']] = $code;
+  } 
+  else {
+      echo '<a href="http://www.libgd.org" target="_blank">GDLib</a> is not installed!';
+      $error = true;
+  }
+} else echo 'Parameter Error!';
 
-    header ("Content-type: image/gif");
-  } else echo '<a href="http://www.libgd.org" target="_blank">GDLib</a> is not installed!';
-## OUTPUT BUFFER END ##
+$imgData = ob_get_contents();
+ob_end_clean();
+
+ob_start();
+    if(!$error && !$nonajax) {
+        $imgData = base64_encode($imgData);
+        $src = 'data:image/gif;base64,'.$imgData;
+        echo '<img class="icon" src="'.$src.'">';
+    } else { 
+        if($nonajax && !$error)
+            header ("Content-type: image/gif");
+        
+        echo $imgData; 
+    }
 ob_end_flush();

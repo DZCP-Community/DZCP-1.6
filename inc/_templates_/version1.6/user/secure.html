@@ -8,7 +8,11 @@
            onfocus="this.className='inputField_en_small'"
            onblur="this.className='inputField_dis_small'" />
         </td>
-        <td style="vertical-align:middle"><img src="../antispam.php?secure=login" alt="" /></td>
+        <td style="vertical-align:middle">
+            <div id="antispam_login">
+                <img class="icon" src="../inc/images/ajax_loading.gif" alt="" />
+                <script language="javascript" type="text/javascript">DZCP.initDynCaptcha("antispam_login",0,"login");</script>
+            </div>
       </tr>
     </table>
   </td>

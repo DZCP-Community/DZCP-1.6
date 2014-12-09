@@ -115,7 +115,12 @@
    <td class="contentMainFirst" align="center">
      <table class="hperc" cellspacing="0">
        <tr>
-         <td style="text-align:right"><img src="../antispam.php?secure=fightus&amp;num=5" alt="" class="icon" /></td>
+         <td style="text-align:right">
+            <div id="antispam">
+                <img class="icon" src="../inc/images/ajax_loading.gif" alt="" />
+                <script language="javascript" type="text/javascript">DZCP.initDynCaptcha("antispam",5,"fightus");</script>
+            </div>
+         </td>
          <td>&nbsp;</td>
          <td style="width:50%;vertical-align:middle">
            <input class="inputField_dis_mid" type="text" name="secure" 
