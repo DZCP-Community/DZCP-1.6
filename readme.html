@@ -54,10 +54,10 @@
             <li><a href="#install">2. Installation</a></li>
             <li><a href="#autoupdate">3. Automatisches Update</a></li>
             <li><a href="#support">4. Hilfe und Support</a></li>
-            <li>5. DZCP v1.6.0.1
+            <li>5. DZCP v1.6.0.2
               <ul>
-                <li><a href="#v16manuel">5.1 DZCP V1.6.0.1 manuelles Update</a></li>
-                <li><a href="#v16fixes"> 5.2 DZCP v1.6.0.1 Bugfixes, Updates, Neuerungen</a></li>
+                <li><a href="#v16manuel">5.1 DZCP V1.6.0.2 manuelles Update</a></li>
+                <li><a href="#v16fixes"> 5.2 DZCP v1.6.0.2 Bugfixes, Updates, Neuerungen</a></li>
               </ul>
             </li>
             </ul>
@@ -266,6 +266,12 @@
                     <li>Erkennung der Verf&uuml;gbarkeit der fsockopen() Funktion wurde behoben</li>
                     <li>Die Funktion gethostbyaddr() wurde vor&uuml;bergehen deaktiviert, da sie f&uuml;r Timeouts auf der Seite 'Besucher online' verantwortlich ist * Wird Voraussichtig  mit einem sp&auml;teren Update ge&auml;ndert *</li>
                     <li>Sponsoren Links wurden Automatisch durch http:// erg&auml;nzt was zu einer fehlerhaften Ausgabe des Links f&uuml;hrt</li>
+                </ul>
+<h4>DZCP 1.6.0.2 Update</h4>
+                 <ul>
+                    <li>Es wurde eine SQL-Injection Sicherheitsl&uuml;cke auf der Seite "News einsenden" beseitigt</li>
+					<li>Es wird jetzt JQuery zum laden der Capacha-Codes verwendet, um Bots usw. die kein JavaScript ausf&uuml;hren zu blockieren</li>
+					<li>Die Session & Cookie Verschl&uuml;sselung wurde deaktiviert, da einige der n&ouml;tigen Funktionen fehlerhaft sind ( Verwendung ist wieder ab DZCP 1.6.1.x m&ouml;glich )</li>
                 </ul>
 <h4>Thanks</h4>
                     Wir bedanken uns bei allen die an der Fertigstellung der v1.6 mitgearbeitet haben.
