@@ -2014,14 +2014,45 @@ function admin_perms($userid) {
 
 //-> blacklist um spider/crawler von der Besucherstatistik auszuschliessen
 function isSpider() {
-    $uagent = $_SERVER['HTTP_USER_AGENT'];
-    $ex = explode("\n", file_get_contents(basePath.'/inc/_spiders.txt'));
-    for($i=0;$i<=count($ex)-1;$i++) {
-        if(stristr($uagent, trim($ex[$i])))
+    $bots_basic = array('bot', 'b o t', 'spider', 'spyder', 'crawl', 'slurp', 'robo', 'yahoo', 'ask', 'google', '80legs', 'acoon',
+            'altavista', 'al_viewer', 'appie', 'appengine-google', 'arachnoidea', 'archiver', 'asterias', 'ask jeeves', 'beholder',
+            'bildsauger', 'bingsearch', 'bingpreview', 'bumblebee', 'bramptonmoose', 'cherrypicker', 'crescent', 'coccoc', 'cosmos',
+            'docomo', 'drupact', 'emailsiphon', 'emailwolf', 'extractorpro', 'exalead ng', 'ezresult', 'feedfetcher', 'fido', 'fireball',
+            'flipboardproxy', 'gazz', 'getweb', 'gigabaz', 'gulliver', 'harvester', 'hcat', 'heritrix', 'hloader', 'hoge', 'httrack',
+            'incywincy', 'infoseek', 'infohelfer', 'inktomi', 'indy library', 'informant', 'internetami', 'internetseer', 'link', 'larbin',
+            'jakarta', 'mata hari', 'medicalmatrix', 'mercator', 'miixpc', 'moget', 'msnptc', 'muscatferret', 'netcraftsurveyagent',
+            'openxxx', 'picmole', 'piranha', 'pldi.net', 'p357x', 'quosa', 'rambler', 'rippers', 'rganalytics', 'scan', 'scooter', 'ScoutJet',
+            'siclab', 'siteexplorer', 'sly', 'suchen', 'searchme', 'spy', 'swisssearch', 'sqworm', 'trivial', 't-h-u-n-d-e-r-s-t-o-n-e', 'teoma',
+            'twiceler', 'ultraseek', 'validator', 'webbandit', 'webmastercoffee', 'webwhacker', 'wevika', 'wisewire', 'yandex', 'zyborg', 'agentname');
+
+	$BotList = array("Teoma", "alexa", "froogle", "Gigabot", "inktomi", "looksmart", "URL_Spider_SQL", "Firefly", 
+				 "NationalDirectory", "Ask Jeeves", "TECNOSEEK", "InfoSeek", "WebFindBot", "girafabot", "crawler", 
+				 "www.galaxy.com", "Googlebot", "Googlebot/2.1", "Google Webmaster", "Scooter", "James Bond", "Slurp", 
+				 "msnbot", "appie", "FAST", "WebBug", "Spade", "ZyBorg", "rabaz", "Baiduspider", "Feedfetcher-Google", 
+				 "TechnoratiSnoop", "Rankivabot", "Mediapartners-Google", "Sogou web spider", "WebAlta Crawler", "MJ12bot",
+				 "Yandex/", "YaDirectBot", "StackRambler","DotBot","dotbot");
+			
+    $spiders = file_get_contents(basePath.'/inc/_spiders.txt');
+    $UserAgent = $_SERVER['HTTP_USER_AGENT'];
+    if(empty($UserAgent)) return false;
+    foreach ($bots_basic as $bot) {
+        if(stristr($UserAgent, $bot) !== FALSE)
             return true;
     }
 
-    return false;
+    $ex = explode("\n", $spiders);
+    for($i=0;$i<=count($ex)-1;$i++) {
+        if(stristr($UserAgent, trim($ex[$i])))
+            return true;
+    }
+
+   foreach($BotList as $bot) {
+      if(strpos($bot, $UserAgent)) {
+         return true;
+      }
+    }
+	
+	return false;
 }
 
 //-> filter placeholders
