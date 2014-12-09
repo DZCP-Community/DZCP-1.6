@@ -495,6 +495,7 @@ class phpFastCache {
     }
 
     function decode($value,$base64=false) {
+        return $value;
         /*
         if(function_exists('mcrypt_decrypt')) {
             if($base64) $value = base64_decode($value);
