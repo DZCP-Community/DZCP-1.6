@@ -479,6 +479,8 @@ class phpFastCache {
     }
 
     function encode($data='',$base64=false) {
+        return $data; 
+        /*
         $data = serialize($data);
         if(function_exists('mcrypt_encrypt')) {
             $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
@@ -489,9 +491,11 @@ class phpFastCache {
         }
         else
             return base64_encode($data);
+         */
     }
 
     function decode($value,$base64=false) {
+        /*
         if(function_exists('mcrypt_decrypt')) {
             if($base64) $value = base64_decode($value);
             $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
@@ -507,6 +511,7 @@ class phpFastCache {
         } else {
             return $x;
         }
+         */
     }
 
     /*
