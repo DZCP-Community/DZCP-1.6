@@ -1033,8 +1033,8 @@ function orderby($sort) {
     return $url."orderby=".$sort."&order=ASC";
 }
 
-function orderby_sql($sort_by=array(), $default_order='',$join='') {
-    if(!isset($_GET['order']) || empty($_GET['order'])) return $default_order;
+function orderby_sql($sort_by=array(), $default_order='',$join='', $order_by = array('ASC','DESC')) {
+    if(!isset($_GET['order']) || empty($_GET['order']) || !in_array($_GET['order'],$order_by)) return $default_order;
     if(!isset($_GET['orderby']) || empty($_GET['orderby']) || !in_array($_GET['orderby'],$sort_by)) return $default_order;
     $orderby_real = _real_escape_string($_GET['orderby']);
     $order_real = _real_escape_string($_GET['order']);
