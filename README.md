@@ -1,1 +1,1 @@
-Official repository for deV!L`z ClanPortal Version 1.6.x
+#deV!L`z ClanPortal - 1.6
