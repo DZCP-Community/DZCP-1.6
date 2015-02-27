@@ -51,18 +51,31 @@
 				case 'MP_Siege': $nmap = 'Siege of Shanghai'; break;
 				case 'MP_TheDish': $nmap = 'Rogue Transmission'; break;
 				case 'MP_Tremors': $nmap = 'Dawnbreaker'; break;
+				// Second Assault Maps
+				case 'XP0_Metro': $nmap = 'Operation Metro 2014'; break;
+				case 'XP0_Caspian': $nmap = 'Caspian Border 2014'; break;
+				case 'XP0_Oman': $nmap = 'Gulf of Oman 2014'; break;
+				case 'XP0_Firestorm': $nmap = 'Operation Firestorm 2014'; break;	
+				// China Rising Maps
 				case 'XP1_001': $nmap = 'Silk Road'; break;
 				case 'XP1_002': $nmap = 'Altai Range'; break;
 				case 'XP1_003': $nmap = 'Guilin Peaks'; break;
 				case 'XP1_004': $nmap = 'Dragon Pass'; break;
-				case 'XP0_Metro': $nmap = 'Operation Metro 2014'; break;
-				case 'XP0_Caspian': $nmap = 'Caspian Border 2014'; break;
-				case 'XP0_Oman': $nmap = 'Gulf of Oman 2014'; break;
-				case 'XP0_Firestorm': $nmap = 'Operation Firestorm 2014'; break;
+				// Naval Strike Maps
 				case 'XP2_001': $nmap = 'Lost Islands'; break;
 				case 'XP2_002': $nmap = 'Nansha Strike'; break;
 				case 'XP2_003': $nmap = 'Wave Breaker'; break;
 				case 'XP2_004': $nmap = 'Operation Mortar'; break;
+				// Dragon's Teeth Maps
+				case 'XP3_MarketPl': $nmap = 'Pearl Market'; break;
+				case 'XP3_Prpganda': $nmap = 'Propaganda'; break;
+				case 'XP3_UrbanGrn': $nmap = 'Lumphini Garden'; break;
+				case 'XP3_WtrFront': $nmap = 'Sunken Dragon'; break;				
+				// Final Stand Maps
+				case 'XP4_Arctic': $nmap = 'Operation Whiteout'; break;
+				case 'XP4_SubBase': $nmap = 'Hammerhead'; break;
+				case 'XP4_Titan': $nmap = 'Hangar 21'; break;
+				case 'XP4_WalkerFactory': $nmap = 'Giants of Karelia'; break;
       }
 	  $data['mapname']    = $nmap;
     } else if($request == 'players') {
