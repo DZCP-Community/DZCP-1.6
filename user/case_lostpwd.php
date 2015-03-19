@@ -17,7 +17,7 @@ if(defined('_UserMenu')) {
             $get = db_stmt("SELECT id,user,level,pwd FROM ".$db['users']." WHERE `user`= ? AND `email` = ?",
                             array('ss', up($_POST['user']), up($_POST['email'])),false,true);
 
-        if(_rows($qry) && ($_POST['secure'] == $_SESSION['sec_lostpwd'] && $_SESSION['sec_lostpwd'] != NULL)) {
+        if($get['id'] && ($_POST['secure'] == $_SESSION['sec_lostpwd'] && $_SESSION['sec_lostpwd'] != NULL)) {
             $pwd = mkpwd();
             db("UPDATE ".$db['users']." SET `pwd` = '".md5($pwd)."' WHERE id = '".$get['id']."'");
             setIpcheck("pwd(".$get['id'].")");
