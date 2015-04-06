@@ -1983,7 +1983,8 @@ function admin_perms($userid) {
         return false;
 
    // no need for these admin areas
-    $e = array('gb', 'shoutbox', 'editusers', 'votes', 'contact', 'joinus', 'intnews', 'forum', 'gs_showpw');
+    $e = array('gb', 'shoutbox', 'editusers', 'votes', 'contact', 'joinus', 'intnews', 'forum', 
+	'gs_showpw','dlintern','intforum','galleryintern');
 
    // check user permission
     $c = db("SELECT * FROM ".$db['permissions']." WHERE user = '".intval($userid)."'",false,true);
