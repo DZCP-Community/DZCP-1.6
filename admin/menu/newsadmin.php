@@ -190,6 +190,7 @@ switch ($do) {
         }
     break;
     case 'edit':
+        $_SESSION['news_return'] = isset($_GET['return']) ? up($_GET['return']) : '';
         $get = db("SELECT * FROM ".$db['news']." WHERE id = '".intval($_GET['id'])."'",false,true);
         $qryk = db("SELECT id,kategorie FROM ".$db['newskat'].""); $kat = '';
         while($getk = _fetch($qryk)) {
@@ -331,7 +332,11 @@ switch ($do) {
                 move_uploaded_file($_FILES['newspic']['tmp_name'], basePath."/inc/images/uploads/news/".intval($_GET['id']).".".strtolower($endung));
             }
 
-            $show = info(_news_edited, "?admin=newsadmin");
+            if(!empty($_SESSION['news_return'])) {
+                $show = info(_news_edited, "../".$_SESSION['news_return']."/?action=show&id=".intval($_GET['id']));
+            } else {
+                $show = info(_news_edited, "?admin=newsadmin");
+            }
         }
     break;
     case 'public':
@@ -362,6 +367,13 @@ switch ($do) {
             }
         }
 
+        $news_return = isset($_GET['return']) ? up($_GET['return']) : '';
+        if(!empty($news_return)) {
+            $show = info(_news_deleted, "../".$news_return);
+        } else {
+            $show = info(_news_deleted, "?admin=newsadmin");
+        }
+        
         $show = info(_news_deleted, "?admin=newsadmin");
     break;
     case 'delnewspic':
