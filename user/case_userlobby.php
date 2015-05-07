@@ -35,9 +35,9 @@ if(defined('_UserMenu')) {
                     if(_rows($qrytopic) >= 1) {
                         $forumposts_show = '';
                         while($gettopic = _fetch($qrytopic)) {
-                            $lp = ""; $cnt = "";
+                            $lp = 0; $cnt = "";
                             $count = cnt($db['f_posts'], " WHERE date > ".$lastvisit." AND sid = '".$gettopic['id']."'");
-                            $lp = cnt($db['f_posts'], " WHERE sid = '".$gettopic['id']."'");
+                            $lp = cnt($db['f_posts'], " WHERE sid = '".$gettopic['id']."'"); $lp++;
 
                             if($count == 0) {
                                 $cnt = 1;
@@ -45,11 +45,11 @@ if(defined('_UserMenu')) {
                                 $post = "";
                             } elseif($count == 1) {
                                 $cnt = 1;
-                                $pagenr = ceil($lp/config('m_ftopics'));
+                                $pagenr = round($lp/config('m_ftopics'));
                                 $post = _new_post_1;
                             } else {
                                 $cnt = $count;
-                                $pagenr = ceil($lp/config('m_ftopics'));
+                                $pagenr = round($lp/config('m_ftopics'));
                                 $post = _new_post_2;
                             }
 
@@ -461,8 +461,8 @@ if(defined('_UserMenu')) {
         if(_rows($qryft) >= 1) {
             while($getft = _fetch($qryft)) {
                 if(fintern($getft['kid'])) {
-                    $lp = cnt($db['f_posts'], " WHERE sid = '".$getft['id']."'");
-                    $pagenr = ceil($lp/config('m_ftopics'));
+                    $lp = cnt($db['f_posts'], " WHERE sid = '".$getft['id']."'"); $lp++;
+                    $pagenr = round($lp/config('m_ftopics'));
                     $page = ($pagenr == 0 ? 1 : $pagenr);
                     $getp = db("SELECT text FROM ".$db['f_posts']."
                                 WHERE kid = '".$getft['kid']."'
