@@ -54,10 +54,10 @@
             <li><a href="#install">2. Installation</a></li>
             <li><a href="#autoupdate">3. Automatisches Update</a></li>
             <li><a href="#support">4. Hilfe und Support</a></li>
-            <li>5. DZCP v1.6.0.2
+            <li>5. DZCP v1.6.0.3
               <ul>
-                <li><a href="#v16manuel">5.1 DZCP V1.6.0.2 manuelles Update</a></li>
-                <li><a href="#v16fixes"> 5.2 DZCP v1.6.0.2 Bugfixes, Updates, Neuerungen</a></li>
+                <li><a href="#v16manuel">5.1 DZCP V1.6.0.3 manuelles Update</a></li>
+                <li><a href="#v16fixes"> 5.2 DZCP v1.6.0.3 Bugfixes, Updates, Neuerungen</a></li>
               </ul>
             </li>
             </ul>
@@ -65,25 +65,27 @@
         <section>
             <h3><a name="equirements">1. Voraussetzungen</a></h3>
              <ul>
-                 <li>PHP 5.2 oder höher</li>
-                <li>MySQL-Datenbank (getestet auf 5.1.x bis 5.6)</li>
+                 <li>PHP 5.2 oder höher * Optimal PHP 5.4 *</li>
+                <li>MySQL-Datenbank (getestet auf 5.1.x bis 5.6) oder MariaDB</li>
                 <li>GDlib Libary</li>
                 <li>MySQLi Erweiterung</li>
                 <li>Voller FTP-Zugriff</li>
                 <li>Unterstützung der folgenden PHP-Funktionen: fopen(), fsockopen(), mail(), imagettftext()</li>
              </ul>
-             <p>Optimal * Nicht zwingend notwendig *</p>
-              <ul>
-                <li>APC (Alternative PHP Cache)</li>
-                <li>Mcrypt</li>
-              </ul>
-              <p>F&uuml;r eine Aktualisierung einer DZCP Version:</p>
+             <p>Optimal für den Cache * Nicht zwingend notwendig *</p>
+          <ul>
+                <li>APC (Alternative PHP Cache) oder</li>
+                <li>Memcache (PHP  Extension) + Memcache Server * Min 32MB Ram* oder</li>
+                <li>Wincache / XCache</li>
+          </ul>
+          <p>Einstellungen des Cache können in der inc/config.php vorgenommen werden.</p>
+          <p>F&uuml;r eine Aktualisierung einer DZCP Version:</p>
               <ul>
                 <li>DZCP V1.5.x</li>
               </ul>
               <p>F&uuml;r ein Update einer V1.6.0 oder 1.6.0.x bitte nur die einsprechenden Update-Pakete auf DZCP.de verwenden!</p>
         </section>
-        <section>
+<section>
             <h3><a name="install">2. Installation</a></h3>
                 <p>
                 Die Installation gestaltet sich recht einfach.<br>
@@ -124,9 +126,9 @@
                Aufgrund der Vielzahl an Änderungen, wird kein manuelles Update für diese Version aufgeführt.
                </p>
         </section>
-        <section>
+    <section>
         <h3><a name="v16fixes">5.2 DZCP v1.6 Bugfixes, Updates, Neuerungen</a></h3>
-            <a href="https://github.com/DZCP-Community/DZCP-1.6" target="_blank">Projekt on GitHub</a>
+            <a href="https://github.com/DZCP-Community/DZCP-1.6/" target="_blank">Projekt on GitHub</a>
                 <h4>Updates, Neuerungen</h4>
                 <ul>
                     <li>sicheres automatisches generiertes Passwort</li>
@@ -242,16 +244,8 @@
                     <li>Fix function config() &amp; settings()</li>
                     <LI>Fix getBoardPermissions()
                     <LI>Fix re() decode for E-Mails</LI>
-                    <LI>Fix SQL Query Errors</LI>
-                    <li>DZCP 1.6.0.1 Update:</li>
-                    <li>Einige MySQL Fehler wurden behoben * Admin: Server *</li>
-                    <li>Grafiken wurden nicht richtig dargestellt, wenn man Google Crome verwendet hat</li>
-                    <li>auf der Seite 'Besucher online' werden jetzt alle Sonderzeichen richtig angezeigt</li>
-                    <li>alte &uuml;berbleibsel von Gametieger wurden entfernt</li>
-                    <li>beim Editieren eines Downloads wird das Datum des Uploads nicht mehr mit aktualisiert</li>
-                    <li>Checkboxen der Teamzuweisung f&uuml;r alle Teams, wo nur ein Team aktiviert war, wurde behoben</li>
-                    <li>Rankings: 'Team' lassen sich jetzt ordnungsgem&auml;ß sortieren</li>
-                    <li>Clankasse: 'Nick' l&auml;sst sich jetzt ordnungsgem&auml;ß sortieren<br>
+                    <LI>Fix SQL Query Errors<br>
+                </LI>
                 </ul>
 <h4>DZCP 1.6.0.1 Update</h4>
                  <ul>
@@ -282,18 +276,29 @@
                  <ul>
                     <li>Die Geburtstage wurden im Kalender nicht angezeigt</li>
                 </ul>
-<h4>Thanks</h4>
-                    Wir bedanken uns bei allen die an der Fertigstellung der v1.6 mitgearbeitet haben.
-
-                    <p>Godkiller_NT(Hammermaps.de), Dragonfire, xDGeForcexD, Hypernate, Koma, Alper Cino (eSport-Designs.de),  Makke,
-                    Tune389, Acecom, Sk!ller</p>
-           <h4>Statistik</h4>
+<h4>DZCP 1.6.0.3 Bugfix / Enhancement Release</h4>
+                 <ul>
+                    <li>Versionsabfrage wurde aufgrund der Github Repository Änderungen nachgebessert, das die aktuelle Version von DZCP abgerufen werden kann.  <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/4eb547a6299b679616ae46360f073f254fc6b7ef" target="_blank">Commit: #2611e01</a></li>
+					<li>Es wurde der Administrations-Link angezeigt wenn jemand interne Rechte hatte zbs. &quot;Interne Downloads sehen&quot;, &quot;Interne Galerie sehen&quot; usw. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/10" target="_blank">Issue: #10</a></li>
+			        <li>Es kann ein externer E-Mail-Server für das versenden von E-Mails konfiguriert werden * SMTP * , sehe config.php * Use SMTP connection with authentication for Mailing *  <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/781e12902e0b6602e298c61854dd4ac132526813" target="_blank">Commit: #a1a6c05</a></li>
+                    <li>Ein Problem mit dem PHPFastCache betreffend der funktion encode() und decode() wurde behoben, der bei der Deaktivierung der Session &amp; Cookie Verschlüsselung übersehen wurde. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/6213d8f6af17f7dcd7ca43dfa4590bd4bbd00504" target="_blank">Commit: #781e129</a></li>
+                    <li>Die News können über einen schnell-Link gelöscht oder bearbeitet werden.<a href="https://github.com/DZCP-Community/DZCP-1.6/issues/6" target="_blank"> Issue: #6</a></li>
+                    <li>Wenn beim anlegen neuer Profilfelder bestimmte Sonderzeichen wie _ oder - verwendet hat, wurde dieses Sonderzeichen gelöscht, dieses Problem wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/7" target="_blank">Issue: #7</a></li>
+                    <li>Links zu neuen Foren Themen wurde in der Userlobby und Last Forum Posts wurden falsch generiert.  <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/14" target="_blank">Issue: #14</a></li>
+                    <li>Links in der Slideshow waren fehlerhaft wenn die Einstellung: 'Neues Fenster?: Ja' gesetzt ist, wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/13" target="_blank">Issue: #13</a></li>
+                    <li>Es wurden fehlende BF4  Map Namen hinzugefügt.</li>
+                </ul>
+                 <h4>Thanks</h4>
+                    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+                    <HTML>
+                    <!--  		@page { margin: 2cm }  		P { margin-bottom: 0.21cm }  		A:link { so-language: zxx }  	-->Wir bedanken uns bei allen die mit an  der DZCP v1.6 helfen und uns fleißig bei der Entwicklung und  Erprobung helfen. 
+                    <h4>Statistik</h4>
                 Insgesammt wurden für die DZCP v1.6<br>
-                420.425 Zeilen geschrieben,<br>
-                244.848 Zeilen gelöscht und<br>
-                665.273 Zeilen gesammt verändert in<br>
-                über 700 Commits.<br>
-        </section>
+                425.622 Zeilen geschrieben,<br>
+                249.885 Zeilen gelöscht und<br>
+                675.507 Zeilen gesammt verändert in<br>
+                über 800 Commits.<br>
+    </section>
     <footer><a href="http://www.dzcp.de/" target="_blank">Powered by DZCP - deV!L`z Clanportal</a></footer>
     </body>
 </html>
