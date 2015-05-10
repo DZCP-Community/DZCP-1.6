@@ -45,11 +45,11 @@ if(defined('_UserMenu')) {
                                 $post = "";
                             } elseif($count == 1) {
                                 $cnt = 1;
-                                $pagenr = round($lp/config('m_ftopics'));
+                                $pagenr = ceil($lp/config('m_fposts'));
                                 $post = _new_post_1;
                             } else {
                                 $cnt = $count;
-                                $pagenr = round($lp/config('m_ftopics'));
+                                $pagenr = ceil($lp/config('m_fposts'));
                                 $post = _new_post_2;
                             }
 
@@ -462,7 +462,7 @@ if(defined('_UserMenu')) {
             while($getft = _fetch($qryft)) {
                 if(fintern($getft['kid'])) {
                     $lp = cnt($db['f_posts'], " WHERE sid = '".$getft['id']."'"); $lp++;
-                    $pagenr = round($lp/config('m_ftopics'));
+                    $pagenr = ceil($lp/config('m_fposts'));
                     $page = ($pagenr == 0 ? 1 : $pagenr);
                     $getp = db("SELECT text FROM ".$db['f_posts']."
                                 WHERE kid = '".$getft['kid']."'
@@ -487,10 +487,12 @@ if(defined('_UserMenu')) {
         }
 
         // Userlevel
-        if(($lvl = data("level")) == 1) $mylevel = _status_user;
-        elseif($lvl == 2) $mylevel = _status_trial;
-        elseif($lvl == 3) $mylevel = _status_member;
-        elseif($lvl == 4) $mylevel = _status_admin;
+        switch (data("level")) {
+            case 1: $mylevel = _status_user; break;
+            case 2: $mylevel = _status_trial; break;
+            case 3: $mylevel = _status_member; break;
+            case 4: $mylevel = _status_admin; break;
+        }
 
         $erase = $can_erase ? _user_new_erase : '';
         $index = show($dir."/userlobby", array("userlobbyhead" => _userlobby,

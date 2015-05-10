@@ -17,7 +17,7 @@ function ftopics() {
             if(fintern($get['kid']))
             {
                 $lp = cnt($db['f_posts'], " WHERE `sid` = '".$get['id']."'");
-                $pagenr = ceil($lp/config('m_ftopics'));
+                $pagenr = ceil($lp/config('m_fposts'));
 
                 if($pagenr == 0) $page = 1;
                 else $page = $pagenr;
@@ -26,7 +26,7 @@ function ftopics() {
                         re($get['kattopic']).';'.++$lp.';'.date("d.m.Y H:i", $get['lp'])._uhr.'\')" onmouseout="DZCP.hideInfo()"' : '';
                 $ftopics .= show("menu/forum_topics", array("id" => $get['id'],
                                                             "pagenr" => $page,
-                                                            "p" => $lp +1,
+                                                            "p" => $lp,
                                                             "titel" => cut(re($get['topic']),config('l_ftopics')),
                                                             "info" => $info,
                                                             "kid" => $get['kid']));
