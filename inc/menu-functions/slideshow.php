@@ -6,7 +6,7 @@
  */
 function slideshow() {
     global $db;
-    $qry = db("SELECT `id`,`desc`,`showbez`,`bez`,`url` FROM ".$db['slideshow']." ORDER BY `pos` ASC LIMIT 4");
+    $qry = db("SELECT `id`,`desc`,`showbez`,`bez`,`url`,`target` FROM ".$db['slideshow']." ORDER BY `pos` ASC LIMIT 4");
     if(_rows($qry) >= 1) {
         $pic = ''; $tabs = '';
         while($get = _fetch($qry)) {
