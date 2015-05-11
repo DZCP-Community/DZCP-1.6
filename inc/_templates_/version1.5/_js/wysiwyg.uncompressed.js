@@ -18,6 +18,7 @@ tinyMCE.init({
     theme_advanced_resizing_use_cookie  : false,
     accessibility_warnings              : false,
     entity_encoding                     : 'raw',
+	forced_root_block                   : '',
     verify_html                         : false,
     button_tile_map                     : true
 });
@@ -40,6 +41,7 @@ tinyMCE.init({
     accessibility_warnings              : false,
     entity_encoding                     : 'raw',
     verify_html                         : false,
+	forced_root_block                   : '',
     button_tile_map                     : true
 });
 
@@ -63,6 +65,7 @@ tinyMCE.init({
     entity_encoding                     : 'raw',
     verify_html                         : false,
     button_tile_map                     : true,
+	forced_root_block                   : '',
     convert_urls                        : false
 });
 
@@ -90,6 +93,7 @@ tinyMCE.init({
     button_tile_map                   : true,
     entity_encoding                   : 'raw',
     verify_html                       : false,
+	forced_root_block                   : '',
     file_browser_callback             : 'ajaxfilemanager'
 });
 
