@@ -1598,6 +1598,15 @@ function userstats($what,$tid=0) {
 function sendMail($mailto,$subject,$content) {
     global $language;
     $mail = new PHPMailer;
+    if(phpmailer_use_smtp) {
+        $mail->isSMTP();
+        $mail->Host = phpmailer_smtp_host;
+        $mail->Port = phpmailer_smtp_port;
+        $mail->SMTPAuth = phpmailer_use_auth;
+        $mail->Username = phpmailer_smtp_user;
+        $mail->Password = phpmailer_smtp_password;
+    }
+    
     $mail->From = ($mailfrom =settings('mailfrom'));
     $mail->FromName = $mailfrom;
     $mail->AddAddress(preg_replace('/(\\n+|\\r+|%0A|%0D)/i', '',$mailto));
@@ -1983,7 +1992,8 @@ function admin_perms($userid) {
         return false;
 
    // no need for these admin areas
-    $e = array('gb', 'shoutbox', 'editusers', 'votes', 'contact', 'joinus', 'intnews', 'forum', 'gs_showpw');
+    $e = array('gb', 'shoutbox', 'editusers', 'votes', 'contact', 'joinus', 'intnews', 'forum', 
+	'gs_showpw','dlintern','intforum','galleryintern');
 
    // check user permission
     $c = db("SELECT * FROM ".$db['permissions']." WHERE user = '".intval($userid)."'",false,true);

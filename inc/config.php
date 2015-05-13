@@ -8,7 +8,7 @@
 //-> DZCP Settings Start
 #########################################
 
-define('view_error_reporting', false); // Zeigt alle Fehler und Notices etc.
+define('view_error_reporting', true); // Zeigt alle Fehler und Notices etc.
 define('debug_all_sql_querys', false);
 define('debug_save_to_file', false);
 define('debug_dzcp_handler', true);
@@ -47,6 +47,16 @@ define('steam_only_proxy', false); //Sollen soll nur der Steam Proxy Server verw
 * http://php.net/manual/de/features.persistent-connections.php
 */
 define('mysqli_persistconns', false);
+
+/*
+ * Use SMTP connection with authentication for Mailing
+ */
+define('phpmailer_use_smtp', false); //Use SMTP for Mailing
+define('phpmailer_use_auth', true); //Use SMTP authentication
+define('phpmailer_smtp_host', 'localhost'); //Hostname of the mail server
+define('phpmailer_smtp_port', 25); //SMTP port number
+define('phpmailer_smtp_user', ''); //Username to use for SMTP authentication
+define('phpmailer_smtp_password', '');//Password to use for SMTP authentication
 
 $config_cache = array();
 $config_cache['storage'] = "files"; //auto,memcache,files,sqlite,wincache,xcache oder apc

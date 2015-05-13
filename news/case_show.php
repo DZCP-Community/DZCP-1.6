@@ -157,13 +157,22 @@ if(defined('_News')) {
                     break;
                 }
             }
+            
+            $news_edit = '';
+            if(permission('news')) {
+                $news_edit .= show("page/button_edit_url", array("action" => "../admin/?admin=newsadmin&amp;do=edit&amp;return=news&amp;id=".$get['id'],
+                                                                 "title" => _button_title_edit));
+                $news_edit .= ' ';
+                $news_edit .= show("page/button_delete_url", array("action" => "../admin/?admin=newsadmin&amp;do=delete&amp;return=news&amp;id=".$get['id'],
+                                                                   "title" => _button_title_del,
+                                                                   "del" => convSpace(_confirm_del_news)));
+            }
 
             $title = re($get['titel']).' - '.$title;
             $index = show($dir."/news_show_full", array("titel" => re($get['titel']),
                                                    "kat" => $newsimage,
                                                    "id" => $get['id'],
-                                                   "comments" => "",
-                                                   "dp" => "compact",
+                                                   "dp" => "none",
                                                    "nautor" => _autor,
                                                    "dir" => $designpath,
                                                    "ndatum" => _datum,
@@ -171,6 +180,7 @@ if(defined('_News')) {
                                                    "sticky" => "",
                                                    "intern" => $intern,
                                                    "ncomments" => "",
+                                                   "edit" => $news_edit,
                                                    "showmore" => $showmore,
                                                    "klapp" => $klapp,
                                                    "more" => bbcode($get['klapptext']),

@@ -18,6 +18,7 @@ tinyMCE.init({
     theme_advanced_resizing_use_cookie  : false,
     accessibility_warnings              : false,
     entity_encoding                     : 'raw',
+	forced_root_block                   : '',
     verify_html                         : false,
     button_tile_map                     : true
 });
@@ -40,6 +41,7 @@ tinyMCE.init({
     accessibility_warnings              : false,
     entity_encoding                     : 'raw',
     verify_html                         : false,
+	forced_root_block                   : '',
     button_tile_map                     : true
 });
 
@@ -63,6 +65,7 @@ tinyMCE.init({
     entity_encoding                     : 'raw',
     verify_html                         : false,
     button_tile_map                     : true,
+	forced_root_block                   : '',
     convert_urls                        : false
 });
 
@@ -77,7 +80,7 @@ tinyMCE.init({
     theme_advanced_buttons1           : 'bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,undo,redo,|,bullist,numlist,|,link,unlink,|,pastephp,|,forecolor,'
                                       + 'backcolor,|,smileys,flags,',
     theme_advanced_buttons2           : 'paste,pastetext,pasteword,|,search,replace,|,image,|,tablecontrols,|,dzcpuser',
-    theme_advanced_buttons3           : 'fontselect,fontsizeselect,|,insertdate,inserttime,|,sub,sup,|,outdent,indent,|,fullscreen,clip,spellchecker,code,youtube',
+    theme_advanced_buttons3           : 'fontselect,fontsizeselect,|,insertdate,inserttime,|,sub,sup,|,outdent,indent,|,fullscreen,spellchecker,code,youtube',
     extended_valid_elements           : 'img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|style],'
                                       + 'hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]',
     theme_advanced_toolbar_location   : 'top',
@@ -90,6 +93,7 @@ tinyMCE.init({
     button_tile_map                   : true,
     entity_encoding                   : 'raw',
     verify_html                       : false,
+	forced_root_block                   : '',
     file_browser_callback             : 'ajaxfilemanager'
 });
 
