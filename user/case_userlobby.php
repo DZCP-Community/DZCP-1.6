@@ -37,7 +37,7 @@ if(defined('_UserMenu')) {
                         while($gettopic = _fetch($qrytopic)) {
                             $lp = 0; $cnt = "";
                             $count = cnt($db['f_posts'], " WHERE date > ".$lastvisit." AND sid = '".$gettopic['id']."'");
-                            $lp = cnt($db['f_posts'], " WHERE sid = '".$gettopic['id']."'"); $lp++;
+                            $lp = cnt($db['f_posts'], " WHERE sid = '".$gettopic['id']."'");
 
                             if($count == 0) {
                                 $cnt = 1;
