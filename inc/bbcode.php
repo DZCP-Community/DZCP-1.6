@@ -86,7 +86,7 @@ $maxfilesize = @ini_get('upload_max_filesize');
 
 //-> Global
 $action = isset($_GET['action']) ? $_GET['action'] : '';
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$page = (isset($_GET['page']) && intval($_GET['page']) >= 1) ? intval($_GET['page']) : 1;
 $do = isset($_GET['do']) ? $_GET['do'] : '';
 $index = ''; $show = ''; $color = 0;
 
