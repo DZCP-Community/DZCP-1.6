@@ -1036,7 +1036,7 @@ define('_downloads_kat', 'Kategorie');
 define('_downloads_empty_download', 'Du musst einen Downloadnamen angeben!');
 define('_downloads_empty_url', 'Du musst eine Datei angeben!');
 define('_downloads_empty_beschreibung', 'Du musst eine Beschreibung angeben!');
-define('_downloads_added', 'Der Download wurde erfolreich hinzugef&uuml;gt!');
+define('_downloads_added', 'Der Download wurde erfolgreich hinzugef&uuml;gt!');
 define('_downloads_edited', 'Der Download wurde erfolgreich editiert!');
 define('_downloads_deleted', 'Der Download wurde erfolgreich gel&ouml;scht!');
 define('_dl_info', 'Download Informationen');
