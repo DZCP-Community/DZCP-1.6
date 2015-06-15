@@ -179,6 +179,7 @@ if(defined('_Clanwars')) {
                                                 "delete" => $delete));
 
             $posted_ip = $chkMe == "4" ? $getc['ip'] : _logged;
+			$email =  ($chkMe >= 1 ? $email : '');
             $comments .= show("page/comments_show", array("titel" => $titel,
                                                           "comment" => bbcode($getc['comment']),
                                                           "editby" => bbcode($getc['editby']),

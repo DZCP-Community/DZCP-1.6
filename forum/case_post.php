@@ -268,6 +268,7 @@ if(defined('_Forum')) {
               else $hp = show(_hpicon_forum, array("hp" => $getl['hp']));
             }
 
+			$email =  ($chkMe >= 1 ? $email : '');
             $lastpost = show($dir."/forum_posts_show", array("nick" => cleanautor($getl['reg'], '', $getl['nick'], re($getl['email'])),
                                                              "postnr" => "",
                                                              "text" => $text,
@@ -343,6 +344,7 @@ if(defined('_Forum')) {
               else $hp = show(_hpicon_forum, array("hp" => $gett['t_hp']));
             }
 
+			$email =  ($chkMe >= 1 ? $email : '');
             $lastpost = show($dir."/forum_posts_show", array("nick" => cleanautor($gett['t_reg'], '', $gett['t_nick'], $gett['t_email']),
                                                              "postnr" => "",
                                                              "text" => $text,
@@ -518,6 +520,7 @@ if(defined('_Forum')) {
                             if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';
                         }
 
+						$email =  ($chkMe >= 1 ? $email : '');
                         $lastpost = show($dir."/forum_posts_show", array("nick" => $nick,
                                                                                                                          "postnr" => "",
                                                                                                                          "text" => $text,
@@ -591,6 +594,7 @@ if(defined('_Forum')) {
                             if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';
                         }
 
+						$email =  ($chkMe >= 1 ? $email : '');
                         $lastpost = show($dir."/forum_posts_show", array("nick" => $nick,
                                                                                                                          "postnr" => "",
                                                                                                                          "text" => $text,

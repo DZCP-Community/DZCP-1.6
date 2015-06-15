@@ -49,6 +49,7 @@ if(defined('_News')) {
                                         "edit" => '',
                                         "delete" => ''));
 
+	$email =  ($chkMe >= 1 ? $email : '');
     $index = show("page/comments_show", array("titel" => $titel,
                                               "comment" => bbcode(re($_POST['comment']),true),
                                               "nick" => $nick,

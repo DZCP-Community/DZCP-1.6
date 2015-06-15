@@ -121,6 +121,7 @@ if(defined('_Forum')) {
           if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';
         }
 
+		$email = ($chkMe >= 1 ? $email : '');
         $show .= show($dir."/forum_posts_show", array("nick" => $nick,
                                                       "postnr" => "#".($i+($page-1)*config('m_fposts')),
                                                       "p" => ($i+($page-1)*config('m_fposts')),
@@ -309,6 +310,7 @@ if(defined('_Forum')) {
       }
 
       $title = re($getw['topic']).' - '.$title;
+	  $email = ($chkMe >= 1 ? $email : '');
       $index = show($dir."/forum_posts", array("head" => _forum_head,
                                                "where" => $wheres,
                                                "admin" => $admin,
