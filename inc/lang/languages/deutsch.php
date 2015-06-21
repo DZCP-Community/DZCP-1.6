@@ -1409,7 +1409,7 @@ define('_gallery_beschr', 'Beschreibung');
 define('_gallery_edit_new', '<a href="../upload/?action=usergallery">Neues Bild hinzuf&uuml;gen</a>');
 define('_info_edit_gallery_done', 'Du hast den Datensatz erfolgreich gel&ouml;scht!');
 define('_admin_user_edithead', 'Admin: User editieren');
-define('_admin_user_clanhead', 'Authorisierungen');
+define('_admin_user_clanhead', 'Autorisierungen');
 define('_admin_user_squadhead', 'Team');
 define('_admin_user_personalhead', 'Pers&ouml;nliches');
 define('_admin_user_level', 'Level');
