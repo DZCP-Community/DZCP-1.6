@@ -4,7 +4,7 @@
  * http://www.dzcp.de
  */
 
-define('_version', '1.6.0.3');
-define('_release', '20.05.2015');
-define('_build', '1603.00.03');
-define('_edition', 'final');
+define('_version', '1.6.0.4');
+define('_release', '01.07.2015');
+define('_build', '1604.00.00');
+define('_edition', 'dev');
