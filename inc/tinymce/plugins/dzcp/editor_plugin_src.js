@@ -82,7 +82,7 @@
 				author :    'Frank "deV!L" Herrmann',
 				authorurl : 'http://www.dzcp.de',
 				infourl : '',
-				version :   '1.5'
+				version :   '1.6'
 			};
 		}
 	});
