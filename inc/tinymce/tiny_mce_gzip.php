@@ -136,13 +136,13 @@ class TinyMCE_Compressor {
             
             foreach ($languages as $language) {
                 $files[] = "langs/".$language;
-            } unset($languages, $language);
+            } unset($language);
 
-            // Add plugins
+            // Add plugins && languages
             foreach ($plugins as $plugin) {
-                $files[] = "plugins/$plugin/editor_plugin";
+                $files[] = "plugins/".$plugin."/editor_plugin";
                 foreach ($languages as $language) {
-                    $files[] = array("file"=>"plugins/$plugin/langs/$language");
+                    $files[] = array("file"=>"plugins/".$plugin."/langs/".$language);
                 }
             } unset($plugins, $plugin);
 
@@ -150,7 +150,7 @@ class TinyMCE_Compressor {
             foreach ($themes as $theme) {
                 $files[] = "themes/$theme/editor_template";
                 foreach ($languages as $language) {
-                    $files[] = "themes/$theme/langs/$language";
+                    $files[] = "themes/".$theme."/langs/".$language;
                 }
             } unset($themes, $theme);
 
