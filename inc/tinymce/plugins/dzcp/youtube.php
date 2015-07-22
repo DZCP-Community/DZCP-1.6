@@ -2,7 +2,7 @@
 <head>
 	<title>{#dzcp.youtube}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
-	<script language="javascript" type="text/javascript" src="jscripts/youtube.js"></script>
+	<script language="javascript" type="text/javascript" src="js/youtube.js"></script>
 	<base target="_self" />
 </head>
 <body onload="tinyMCEPopup.executeOnLoad('onLoadInit();');" onresize="resizeInputs();" style="display: none">

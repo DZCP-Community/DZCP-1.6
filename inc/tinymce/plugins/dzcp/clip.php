@@ -2,7 +2,7 @@
 <head>
 	<title>{#dzcp.clip}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
-	<script language="javascript" type="text/javascript" src="jscripts/clip.js"></script>
+	<script language="javascript" type="text/javascript" src="js/clip.js"></script>
 	<base target="_self" />
 </head>
 <body onload="tinyMCEPopup.executeOnLoad('onLoadInit();');" onresize="resizeInputs();" style="display: none">

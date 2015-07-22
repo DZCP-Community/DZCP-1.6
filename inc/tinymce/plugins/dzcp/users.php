@@ -55,7 +55,7 @@ if(empty($_GET['sort']) || $_GET['sort'] == 'clan') {
 <head>
     <title>{#dzcp.users}</title>
     <script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
-    <script language="javascript" type="text/javascript" src="jscripts/users.js"></script>
+    <script language="javascript" type="text/javascript" src="js/users.js"></script>
     <base target="_self" />
 </head>
 <body>
