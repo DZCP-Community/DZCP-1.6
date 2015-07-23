@@ -28,16 +28,13 @@ require_once(basePath."/inc/bbcode.php");
 TinyMCE_Compressor::getParams();
 
 // Handle incoming request if it's a script call
-if (TinyMCE_Compressor::getParam("js")) {
+if(TinyMCE_Compressor::getParam("js")) {
     // Default settings
     $tinyMCECompressor = new TinyMCE_Compressor();
 
     // Handle request, compress and stream to client
     $tinyMCECompressor->handleRequest();
 }
-
-if(!mysqli_persistconns)
-    $mysql->close(); //MySQL
 
 class TinyMCE_Compressor {
     private $files, $settings;
@@ -48,9 +45,10 @@ class TinyMCE_Compressor {
                                             "disk_cache" => true,
                                             "core"       => true,
                                             "expires"    => "30d",
-                                            "cache_dir"  => "",
+                                            "headers"    => true,
                                             "compress"   => true,
                                             "debug"      => false,
+                                            "cc"         => true,
                                             "suffix"     => "",
                                             "files"      => "",
                                             "source"     => false);
@@ -62,8 +60,6 @@ class TinyMCE_Compressor {
      */
     public function __construct($settings = array()) {
         $this->settings = array_merge(self::$defaultSettings, $settings);
-        if (empty($this->settings["cache_dir"]))
-            $this->settings["cache_dir"] = dirname(__FILE__);
     }
 
     /**
@@ -82,11 +78,11 @@ class TinyMCE_Compressor {
     public function handleRequest() {
         global $cache;
         $files = array();
-        $this->settings["debug"] = self::getParam("debug");
+        $this->settings["debug"] = (self::getParam("debug") && view_error_reporting);
         $expiresOffset = $this->parseTime($this->settings["expires"]);
         $tinymceDir = dirname(__FILE__);
         $cacheHash = md5(implode($_GET));
-        if ($this->settings["debug"] || !$cache->isExisting($cacheHash)) {
+        if (!$this->settings["disk_cache"] || $this->settings["debug"] || !$cache->isExisting($cacheHash)) {
             // Override settings with querystring params
             if ($plugins = self::getParam("plugins")) {
                 $this->settings["plugins"] = $plugins;
@@ -123,6 +119,12 @@ class TinyMCE_Compressor {
             
             //Set Core
             $this->settings['core'] = self::getParam("core");
+            
+            //Set Headers
+            $this->settings['headers'] = self::getParam("headers");
+            
+            //Set Cache-Control
+            $this->settings['cc'] = self::getParam("cc");
 
             if($this->settings["debug"]) {
                 echo '<p>########################<br>Settings:<br>########################<p>';
@@ -141,6 +143,7 @@ class TinyMCE_Compressor {
             // Add plugins && languages
             foreach ($plugins as $plugin) {
                 $files[] = "plugins/".$plugin."/editor_plugin";
+                
                 foreach ($languages as $language) {
                     $files[] = array("file"=>"plugins/".$plugin."/langs/".$language);
                 }
@@ -252,19 +255,38 @@ class TinyMCE_Compressor {
         $supportsGzip = !empty($encoding) && !$zlibOn && function_exists('gzencode');
         
         // Set headers
-        if(!$this->settings["debug"]) {
+        if(!$this->settings["debug"] && $this->settings['headers']) {
             header("Content-type: text/javascript");
-            header("Vary: Accept-Encoding");  // Handle proxies
-            header("Expires: " . gmdate("D, d M Y H:i:s", time() + $expiresOffset) . " GMT");
-            header("Cache-Control: public, max-age=" . $expiresOffset);
+            if($this->settings['cc']) {
+                header("Vary: Accept-Encoding");  // Handle proxies
+                header("Expires: " . gmdate("D, d M Y H:i:s", time() + $expiresOffset) . " GMT");
+                header("Cache-Control: public, max-age=" . $expiresOffset);
+            } else {
+                header("Expires: " . gmdate("D, d M Y H:i:s") . " GMT");
+                header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+                header("Cache-Control: no-store, no-cache, must-revalidate");
+                header("Cache-Control: post-check=0, pre-check=0", false);
+                header("Pragma: no-cache");
+            }
         } else {
-            echo '<p>########################<br>Headers:<br>########################<p>';
-            echo "Content-type: text/javascript";
-            echo "<br>Vary: Accept-Encoding";
-            echo "<br>Expires: " . gmdate("D, d M Y H:i:s", time() + $expiresOffset) . " GMT";
-            echo "<br>Cache-Control: public, max-age=" . $expiresOffset;
-            if ($supportsGzip && $this->settings['compress']) {
-                echo "<br>Content-Encoding: " . $encoding;
+            if($this->settings['headers']) {
+                echo '<p>########################<br>Headers:<br>########################<p>';
+                echo "Content-type: text/javascript";
+                if($this->settings['cc']) {
+                    echo "<br>Vary: Accept-Encoding";
+                    echo "<br>Expires: " . gmdate("D, d M Y H:i:s", time() + $expiresOffset) . " GMT";
+                    echo "<br>Cache-Control: public, max-age=" . $expiresOffset;
+                } else {
+                    echo "<br>Expires: " . gmdate("D, d M Y H:i:s") . " GMT";
+                    echo "<br>Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT";
+                    echo "<br>Cache-Control: no-store, no-cache, must-revalidate";
+                    echo "<br>Cache-Control: post-check=0, pre-check=0";
+                    echo "<br>Pragma: no-cache";
+                }
+
+                if ($supportsGzip && $this->settings['compress']) {
+                    echo "<br>Content-Encoding: " . $encoding;
+                }
             }
         }
         
@@ -275,7 +297,7 @@ class TinyMCE_Compressor {
             echo '<br>GZIP Compression Support by Webbrowser: '.($encoding ? 'yes' : 'no');
         }
         
-        if ($supportsGzip && $this->settings['compress']) {
+        if ($supportsGzip && $this->settings['compress'] && $this->settings['headers']) {
             if(!$this->settings["debug"]) {
                 header("Content-Encoding: " . $encoding);
             }
@@ -313,7 +335,7 @@ class TinyMCE_Compressor {
     }
     
     public static function getParams() { //Load Params
-        $bolean_index = array('js','diskcache','core','compress','source','debug');
+        $bolean_index = array('js','diskcache','core','compress','src','debug','headers','cc');
         foreach($_GET as $key => $param) {
             if(in_array($key, $bolean_index)) {
                 self::$opt_params[$key] = ((trim($_GET[$key]) == 'true' || trim($_GET[$key]) == '1' || trim($_GET[$key]) == 1) ? true : false);
@@ -339,16 +361,19 @@ class TinyMCE_Compressor {
         $multipel = 1;
 
         // Hours
-        if (strpos($time, "h") > 0)
+        if (strpos($time, "h") > 0) {
             $multipel = 3600;
+        }
 
         // Days
-        if (strpos($time, "d") > 0)
+        if (strpos($time, "d") > 0) {
             $multipel = 86400;
+        }
 
         // Months
-        if (strpos($time, "m") > 0)
+        if (strpos($time, "m") > 0) {
             $multipel = 2592000;
+        }
 
         // Trim string
         return intval($time) * $multipel;
@@ -364,8 +389,9 @@ class TinyMCE_Compressor {
         $content = file_get_contents($file);
 
         // Remove UTF-8 BOM
-        if (substr($content, 0, 3) === pack("CCC", 0xef, 0xbb, 0xbf))
+        if (substr($content, 0, 3) === pack("CCC", 0xef, 0xbb, 0xbf)) {
             $content = substr($content, 3);
+        }
 
         return $content;
     }
