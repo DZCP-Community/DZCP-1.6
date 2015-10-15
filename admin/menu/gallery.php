@@ -16,7 +16,7 @@ switch ($do) {
             }
 
             db("INSERT INTO ".$db['gallery']." SET `kat` = '".up($_POST['gallery'])."',
-                                                   `intern`   = '".((int)$_POST['intern'])."',
+                                                   `intern`   = ".(isset($_POST['intern']) ? intval($_POST['intern']) : 0).",
                                                    `beschreibung`   = '".up($_POST['beschreibung'], 1)."',
                                                    `datum`          = '".time()."'");
 
@@ -131,8 +131,11 @@ switch ($do) {
         $anzahl = $_POST['anzahl'];
         $files = get_files("../gallery/images/",false,true,$picformat); $cnt = 0;
         foreach ($files as $file) {
-            if(preg_match("#".$galid."_(.*?).(gif|GIF|JPG|jpg|JPEG|jpeg|png)#",$file)!=FALSE)
-                $cnt++;
+            if(strpos($file, '_minimize_')=== false) {
+                if(preg_match("#".$galid."_(.*?).(GIF|JPG|JPEG|PNG|gif|jpg|jpeg|png)#",$file)!=FALSE) {
+                    $cnt++;
+                }
+            }
         }
 
         for($i=1;$i<=$anzahl;$i++) {
@@ -143,7 +146,7 @@ switch ($do) {
             $imginfo = getimagesize($tmp);
 
             if($_FILES['file'.$i]) {
-                if(($type == "image/gif" || $type == "image/pjpeg" || $type == "image/jpeg") && $imginfo[0])
+                if(($type == "image/gif" || $type == "image/pjpeg" || $type == "image/jpeg" || $type == "image/png") && $imginfo[0])
                     move_uploaded_file($tmp, basePath."/gallery/images/".$galid."_".str_pad($i+$cnt, 3, '0', STR_PAD_LEFT).".".strtolower($end));
             }
         }
