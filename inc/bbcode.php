@@ -724,6 +724,8 @@ function zitat($nick,$zitat) {
 
 //-> convert string for output
 function re($txt) {
+    return string::decode($txt);
+    /* # Experimental #
     $txt = stripslashes($txt);
     $txt = str_replace("& ","&amp; ",$txt);
     $txt = str_replace("[","&#91;",$txt);
@@ -733,6 +735,7 @@ function re($txt) {
     $txt = str_replace(">","&#62;",$txt);
     $txt = str_replace("(", "&#40;", $txt);
     return str_replace(")", "&#41;", $txt);
+     * */
 }
 
 function re_entry($txt) {
@@ -975,8 +978,30 @@ function spChars($txt) {
   return str_replace("€","&euro;",$txt);
 }
 
+//-> Codiert Text zur Speicherung
+final class string {
+    /**
+     * Codiert Text in das UTF8 Charset.
+     *
+     * @param string $txt
+     */
+    public static function encode($txt='')
+    { global $charset; return utf8_encode(stripcslashes(spChars(htmlentities($txt, ENT_COMPAT, $charset)))); }
+
+    /**
+     * Decodiert UTF8 Text in das aktuelle Charset der Seite.
+     *
+     * @param utf8 string $txt
+     */
+    public static function decode($txt='')
+    { global $charset; return trim(stripslashes(spChars(@html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true))); }
+}
+
 //-> Funktion um sauber in die DB einzutragen
 function up($txt, $bbcode=false, $charset_set='') {
+    return string::encode($txt);
+    
+    /* # Experimental #
     global $charset;
 
     if(!empty($charset_set))
@@ -992,6 +1017,7 @@ function up($txt, $bbcode=false, $charset_set='') {
 
     $txt = str_replace("'","&#39;",$txt);
     return trim(spChars($txt));
+    */
 }
 
 //-> Funktion um diverse Dinge aus Tabellen auszaehlen zu lassen
@@ -1477,8 +1503,8 @@ function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
             $get = _fetch($qry);
             dbc_index::setIndex('user_'.$get['id'], $get);
         } else {
-            $nickname = (!empty($cut)) ? cut(re($nick), $cut) : re($nick);
-            return show(_user_link_noreg, array("nick" => $nickname, "class" => $class, "email" => eMailAddr($email)));
+            $nickname = (!empty($cut)) ? cut($nick, $cut) : $nick;
+            return show(_user_link_noreg, array("nick" => re($nickname), "class" => $class, "email" => eMailAddr($email)));
         }
     }
 
@@ -2355,7 +2381,6 @@ function get_elapsed_time( $timestamp, $aktuell = null, $anzahl_einheiten = null
     return $ret;
 }
 
-
 //-> Neue Languages einbinden, sofern vorhanden
 if($language_files = get_files(basePath.'/inc/additional-languages/'.$language.'/',false,true,array('php'))) {
     foreach($language_files AS $languages)
@@ -2436,7 +2461,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
         if(check_internal_url())
             $index = error(_error_have_to_be_logged, 1);
 
-        $where = preg_replace_callback("#autor_(.*?)$#",create_function('$id', 'return data("nick","$id[1]");'),$where);
+        $where = preg_replace_callback("#autor_(.*?)$#",create_function('$id', 'return re(data("nick","$id[1]"));'),$where);
         $index = empty($index) ? '' : (empty($check_msg) ? '' : $check_msg).'<table class="mainContent" cellspacing="1">'.$index.'</table>';
 
         //-> Sort & filter placeholders
