@@ -724,7 +724,7 @@ function zitat($nick,$zitat) {
 
 //-> convert string for output
 function re($txt) {
-    return string::decode($txt);
+    return stringParser::decode($txt);
     /* # Experimental #
     $txt = stripslashes($txt);
     $txt = str_replace("& ","&amp; ",$txt);
@@ -979,7 +979,7 @@ function spChars($txt) {
 }
 
 //-> Codiert Text zur Speicherung
-final class string {
+final class stringParser {
     /**
      * Codiert Text in das UTF8 Charset.
      *
@@ -999,7 +999,7 @@ final class string {
 
 //-> Funktion um sauber in die DB einzutragen
 function up($txt, $bbcode=false, $charset_set='') {
-    return string::encode($txt);
+    return stringParser::encode($txt);
     
     /* # Experimental #
     global $charset;
