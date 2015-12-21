@@ -65,7 +65,7 @@ if(defined('_News')) {
                 $entrys = cnt($db['newscomments'], " WHERE news = ".intval($_GET['id']));
                 $i = $entrys-($page - 1)*config('m_comments');
 
-                $comments = ''; $i = 0;
+                $comments = '';
                 while($getc = _fetch($qryc)) {
                     $edit = ""; $delete = "";
                     if(($chkMe >= 1 && $getc['reg'] == $userid) || permission("news")) {
@@ -90,7 +90,7 @@ if(defined('_News')) {
                         $nick = show(_link_mailto, array("nick" => re($getc['nick']), "email" => eMailAddr(re($getc['email']))));
                     }
 
-                    $titel = show(_eintrag_titel, array("postid" => $i+1,
+                    $titel = show(_eintrag_titel, array("postid" => $i,
                                                         "datum" => date("d.m.Y", $getc['datum']),
                                                         "zeit" => date("H:i", $getc['datum'])._uhr,
                                                         "edit" => $edit,
