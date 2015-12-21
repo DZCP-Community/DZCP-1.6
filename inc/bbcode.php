@@ -724,18 +724,8 @@ function zitat($nick,$zitat) {
 
 //-> convert string for output
 function re($txt) {
-    return stringParser::decode($txt);
-    /* # Experimental #
-    $txt = stripslashes($txt);
-    $txt = str_replace("& ","&amp; ",$txt);
-    $txt = str_replace("[","&#91;",$txt);
-    $txt = str_replace("]","&#93;",$txt);
-    $txt = str_replace("\"","&#34;",$txt);
-    $txt = str_replace("<","&#60;",$txt);
-    $txt = str_replace(">","&#62;",$txt);
-    $txt = str_replace("(", "&#40;", $txt);
-    return str_replace(")", "&#41;", $txt);
-     * */
+    global $charset; 
+    return trim(stripslashes(spChars(@html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true)));
 }
 
 function re_entry($txt) {
@@ -978,46 +968,10 @@ function spChars($txt) {
   return str_replace("€","&euro;",$txt);
 }
 
-//-> Codiert Text zur Speicherung
-final class stringParser {
-    /**
-     * Codiert Text in das UTF8 Charset.
-     *
-     * @param string $txt
-     */
-    public static function encode($txt='')
-    { global $charset; return utf8_encode(stripcslashes(spChars(htmlentities($txt, ENT_COMPAT, $charset)))); }
-
-    /**
-     * Decodiert UTF8 Text in das aktuelle Charset der Seite.
-     *
-     * @param utf8 string $txt
-     */
-    public static function decode($txt='')
-    { global $charset; return trim(stripslashes(spChars(@html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true))); }
-}
-
 //-> Funktion um sauber in die DB einzutragen
 function up($txt, $bbcode=false, $charset_set='') {
-    return stringParser::encode($txt);
-    
-    /* # Experimental #
     global $charset;
-
-    if(!empty($charset_set))
-        $charset = $charset_set;
-
-    $txt = str_replace("& ","&amp; ",$txt);
-    $txt = str_replace("\"","&#34;",$txt);
-
-    if(!$bbcode) {
-        $txt = htmlentities(html_entity_decode($txt), ENT_QUOTES, $charset);
-        $txt = nl2br($txt);
-    }
-
-    $txt = str_replace("'","&#39;",$txt);
-    return trim(spChars($txt));
-    */
+    return utf8_encode(stripcslashes(spChars(htmlentities($txt, ENT_COMPAT, $charset))));
 }
 
 //-> Funktion um diverse Dinge aus Tabellen auszaehlen zu lassen
@@ -2210,9 +2164,9 @@ function getBoardPermissions($checkID = 0, $pos = 0) {
 }
 
 //-> schreibe in dei IPCheck Tabelle
-function setIpcheck($what = '') {
+function setIpcheck($what = '',$time=true) {
     global $db, $userip;
-    db("INSERT INTO ".$db['ipcheck']." SET `ip` = '".$userip."', `user_id` = '".userid()."', `what` = '".$what."', `time` = ".time().";");
+    db("INSERT INTO ".$db['ipcheck']." SET `ip` = '".$userip."', `user_id` = '".userid()."', `what` = '".$what."', `time` = ".($time ? time() : 0).";");
 }
 
 function is_php($version='5.3.0')

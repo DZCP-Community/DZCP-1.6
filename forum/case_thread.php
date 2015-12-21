@@ -393,7 +393,7 @@ if(defined('_Forum')) {
         $qry = db("DELETE FROM ".$db['vote_results']."
                    WHERE vid = '".$gett['vote']."'");
 
-        setIpcheck("vid_".$gett['vote']);
+        setIpcheck("vid_".$gett['vote'],false);
         $vid = "";
         }
 
