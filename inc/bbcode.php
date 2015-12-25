@@ -278,6 +278,42 @@ function lang($lng,$pfad='') {
     include(basePath."/inc/lang/languages/".$lng.".php");
 }
 
+//->Daten uber file_get_contents oder curl abrufen
+function get_external_contents($url="") {
+    $output = '';
+    if(allow_url_fopen_support()) {
+        $ctx = stream_context_create(array('http'=>array('timeout' => file_get_contents_timeout)));
+        $output = file_get_contents($url,false,$ctx);
+    } else if(fsockopen_support() && !function_exists('curl_init')) {
+        $parse = parse_url($url);
+        $port = array_key_exists('port', $parse) ? $parse['port'] : 80;
+	$fp = fsockopen($parse['host'], $port, $errno, $errstr, 5);
+	if ($fp) {
+            $out = "GET ".$parse['path']." HTTP/1.1\r\n";
+            $out .= "Host: ".$parse['host']."\r\n";
+            $out .= "Connection: Close\r\n\r\n";
+            fwrite($fp, $out);
+            while (!feof($fp)) {
+                $output .= fgets($fp, 128);
+            }
+            fclose($fp);
+	}
+    } else if(function_exists('curl_init')) {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_FAILONERROR, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 5);
+        $output = curl_exec($curl);
+        curl_close($curl);
+    }
+
+    return $output;
+}
+
 //-> Sprachdateien auflisten
 function languages() {
     $lang="";
@@ -1103,6 +1139,7 @@ function online_reg() {
 function checkme($userid_set=0) {
     global $db;
     if(!$userid = ($userid_set != 0 ? intval($userid_set) : userid())) return 0;
+    if(rootAdmin($userid)) return 4;
     if(empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
     if(!dbc_index::issetIndex('user_'.$userid)) {
         $qry = db("SELECT * FROM ".$db['users']." WHERE id = ".$userid." AND pwd = '".$_SESSION['pwd']."' AND ip = '".$_SESSION['ip']."'");
@@ -1145,11 +1182,11 @@ function isBanned($userid_set=0,$logout=true) {
 function permission($check,$uid=0) {
     global $db,$userid,$chkMe;
     if(!$uid) $uid = $userid;
-
+    if(rootAdmin($uid)) return true;
     if($chkMe == 4)
         return true;
     else {
-        if($userid) {
+        if($uid) {
             // check rank permission
             if(db("SELECT s1.`".$check."` FROM ".$db['permissions']." AS s1
                    LEFT JOIN ".$db['userpos']." AS s2 ON s1.`pos` = s2.`posi`
@@ -1967,9 +2004,11 @@ function hoveruserpic($userid, $width=170,$height=210) {
 // Adminberechtigungen ueberpruefen
 function admin_perms($userid) {
     global $db,$chkMe;
-
     if(empty($userid))
         return false;
+    
+    if(rootAdmin($userid)) 
+        return true;
 
    // no need for these admin areas
     $e = array('gb', 'shoutbox', 'editusers', 'votes', 'contact', 'joinus', 'intnews', 'forum', 
@@ -2163,7 +2202,7 @@ function getBoardPermissions($checkID = 0, $pos = 0) {
     return $i_forum;
 }
 
-//-> schreibe in dei IPCheck Tabelle
+//-> schreibe in die IPCheck Tabelle
 function setIpcheck($what = '',$time=true) {
     global $db, $userip;
     db("INSERT INTO ".$db['ipcheck']." SET `ip` = '".$userip."', `user_id` = '".userid()."', `what` = '".$what."', `time` = ".($time ? time() : 0).";");
