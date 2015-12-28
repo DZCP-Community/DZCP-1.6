@@ -279,39 +279,86 @@ function lang($lng,$pfad='') {
 }
 
 //->Daten uber file_get_contents oder curl abrufen
-function get_external_contents($url="") {
-    $output = '';
-    if(allow_url_fopen_support()) {
-        $ctx = stream_context_create(array('http'=>array('timeout' => file_get_contents_timeout)));
-        $output = file_get_contents($url,false,$ctx);
-    } else if(fsockopen_support() && !function_exists('curl_init')) {
-        $parse = parse_url($url);
-        $port = array_key_exists('port', $parse) ? $parse['port'] : 80;
-	$fp = fsockopen($parse['host'], $port, $errno, $errstr, 5);
-	if ($fp) {
-            $out = "GET ".$parse['path']." HTTP/1.1\r\n";
-            $out .= "Host: ".$parse['host']."\r\n";
-            $out .= "Connection: Close\r\n\r\n";
-            fwrite($fp, $out);
-            while (!feof($fp)) {
-                $output .= fgets($fp, 128);
-            }
-            fclose($fp);
-	}
-    } else if(function_exists('curl_init')) {
-        $curl = curl_init();
+function get_external_contents($url,$post=false,$timeout=file_get_contents_timeout) {
+    if((!allow_url_fopen_support() || !extension_loaded('curl')))
+        return false;
+    
+    $url_p = @parse_url($url);
+    $host = $url_p['host'];
+    $port = isset($url_p['port']) ? $url_p['port'] : 80;
+    if(!ping_port($host,$port,$timeout)) return false;
+    unset($host,$port);
+
+    if(extension_loaded('curl')) {
+        if(!$curl = curl_init())
+            return false;
+        
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_FAILONERROR, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 5);
-        $output = curl_exec($curl);
-        curl_close($curl);
-    }
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $timeout);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout * 2); // x 2
+        
+        //For POST
+        if(count($post) >= 1 && $post != false) {
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
+            curl_setopt($curl, CURLOPT_VERBOSE , 0 );
+        }
+        
+        $gzip = false;
+        if(function_exists('gzinflate')) {
+            $gzip = true;
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept-Encoding: gzip,deflate'));
+            curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+        }
+        
+        if($url_p['scheme'] == 'https') { //SSL
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        }
+        
+        if (!$content = curl_exec($curl)) {
+            return false;
+        }
 
-    return $output;
+        if($gzip) {
+            $curl_info = curl_getinfo($curl,CURLINFO_HEADER_OUT);
+            if(stristr($curl_info, 'accept-encoding') && stristr($curl_info, 'gzip')) {
+                $content = gzinflate( substr($content,10,-8) );
+            }
+        }
+
+        @curl_close($curl);
+        unset($curl);
+    } else {
+        if($url_p['scheme'] == 'https') //HTTPS not Supported!
+            $url = str_replace('https', 'http', $url);
+        
+        $opts = array();
+        $opts['http']['method'] = "GET";
+        $opts['http']['timeout'] = $timeout * 2;
+                
+        $gzip = false;
+        if(function_exists('gzinflate')) {
+            $gzip = true;
+            $opts['http']['header'] = 'Accept-Encoding:gzip,deflate'."\r\n";
+        }
+        
+        $context = stream_context_create($opts);
+        if(!$content = @file_get_contents($url, false, $context, -1, 40000))
+            return false;
+
+        if($gzip) {
+            foreach($http_response_header as $c => $h) {
+                if(stristr($h, 'content-encoding') && stristr($h, 'gzip')) {
+                    $content = gzinflate( substr($content,10,-8) );
+                }
+            }
+        }
+    }
+    
+    return ((string)(trim($content)));
 }
 
 //-> Sprachdateien auflisten
@@ -1005,9 +1052,10 @@ function spChars($txt) {
 }
 
 //-> Funktion um sauber in die DB einzutragen
-function up($txt, $bbcode=false, $charset_set='') {
+function up($txt,$escape=true) {
     global $charset;
-    return utf8_encode(stripcslashes(spChars(htmlentities($txt, ENT_COMPAT, $charset))));
+    $return = utf8_encode(stripcslashes(spChars(htmlentities($txt, ENT_COMPAT, $charset))));
+    return $escape ? _real_escape_string($return) : $return;
 }
 
 //-> Funktion um diverse Dinge aus Tabellen auszaehlen zu lassen
@@ -1124,7 +1172,7 @@ function online_guests($where='') {
         db("REPLACE INTO ".$db['c_who']."
                SET `ip`       = '".$userip."',
                    `online`   = '".((int)(time()+$useronline))."',
-                   `whereami` = '".up($where,true)."',
+                   `whereami` = '".up($where)."',
                    `login`    = '".((int)$logged)."'");
         return cnt($db['c_who']);
     }
@@ -2431,7 +2479,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
             include_once(basePath.'/inc/menu-functions/login.php');
         else {
             $check_msg = check_msg(); set_lastvisit(); $login = "";
-            db("UPDATE ".$db['users']." SET `time` = '".time()."', `whereami` = '".up($where,true)."' WHERE id = '".intval($userid)."'");
+            db("UPDATE ".$db['users']." SET `time` = '".time()."', `whereami` = '".up($where)."' WHERE id = '".intval($userid)."'");
         }
 
         //init templateswitch
