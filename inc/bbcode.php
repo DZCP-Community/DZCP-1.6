@@ -358,7 +358,7 @@ function get_external_contents($url,$post=false,$timeout=file_get_contents_timeo
         }
     }
     
-    return ((string)(trim($content)));
+    return $content;
 }
 
 //-> Sprachdateien auflisten
@@ -2253,7 +2253,9 @@ function getBoardPermissions($checkID = 0, $pos = 0) {
 //-> schreibe in die IPCheck Tabelle
 function setIpcheck($what = '',$time=true) {
     global $db, $userip;
-    db("INSERT INTO ".$db['ipcheck']." SET `ip` = '".$userip."', `user_id` = '".userid()."', `what` = '".$what."', `time` = ".($time ? time() : 0).";");
+    db("INSERT INTO ".$db['ipcheck']." SET `ip` = '".$userip."', "
+            . "`user_id` = '".userid()."', `what` = '".$what."', "
+            . "`time` = ".($time ? time() : 0).", `created` = ".time().";");
 }
 
 function is_php($version='5.3.0')
