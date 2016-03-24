@@ -395,7 +395,6 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
 
   $qry = db("INSERT INTO ".$db['links']." (`id`, `url`, `text`, `banner`, `beschreibung`, `hits`) VALUES (1, 'http://www.dzcp.de', 'http://www.dzcp.de/banner/dzcp.gif', 1, 'deV!L`z Clanportal', 0)");
-  $qry = db("INSERT INTO ".$db['links']." (`id`, `url`, `text`, `banner`, `beschreibung`, `hits`) VALUES (2, 'http://www.my-starmedia.de', 'http://www.my-starmedia.de/extern/b3/b3.gif', 1, '<b>my-STARMEDIAN</b><br />my-STARMEDIA.de - DZCP Mods and Coding', 0)");
 
 //-> LinkUs
   $qry = db("DROP TABLE IF EXISTS ".$db['linkus']."");
@@ -606,11 +605,8 @@ function install_mysql($login, $nick, $pwd, $email)
             PRIMARY KEY  (`id`)
             ) ");
 
-  $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.my-starmedia.de', 'my-starmedia.gif');");
   $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.hogibo.net', 'hogibo.gif');");
-  $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.codeking.eu', 'codeking.gif');");
   $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.dzcp.de', 'dzcp.gif');");
-  $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://spenden.dzcp.de', 'spenden.gif');");
 
 //-> Rechte
   $qry = db("DROP TABLE IF EXISTS ".$db['permissions']."");
@@ -1345,9 +1341,7 @@ function update_mysql_1_5()
 VALUES
 (1, 'DZCP', 'http://www.dzcp.de', '<p>deV!L\'z Clanportal, das CMS for Online-Clans!</p>', 0, '', '', 0, '', '', 1, 'gif', '', 7, 0),
 (2, 'DZCP Rotationsbanner', 'http://www.dzcp.de', '<p>deV!L`z Clanportal</p>', 0, '', '', 1, '', 'http://www.dzcp.de/banner/dzcp.gif', 0, '', '', 5, 0),
-(3, 'TEMPLATEbar', 'http://www.templatebar.de', '<p>Auf TEMPLATEbar.de kannst du dir kosteng&uuml;nstige Clandesigns und/oder Templates von Top Designer erwerben.</p>', 1, '', 'http://www.templatebar.de/___FILES/TBbanner/tb_468x60_2.gif', 1, '', 'http://www.templatebar.de/___FILES/TBbanner/tb_468x60_2.gif', 1, '', '../banner/sponsors/tb_88x32.png', 1, 0),
-(4, 'MODSbar.de', 'http://www.modsbar.de', '<p>Auf MODSbar.de kannst du dir kosteng&uuml;nstige Modifikationen und/oder Dienstleistungen von Top Codern erwerben.</p>', 1, '', 'http://www.templatebar.de/___FILES/MBbanner/mb_468x60.gif', 1, '', 'http://www.templatebar.de/___FILES/MBbanner/mb_468x60.gif', 1, '', '../banner/sponsors/mb_88x32.png', 2, 0),
-(5, 'eSport-Designs', 'http://esport-designs.de', '<p>Jedes Team das keine gut strukturierte und &uuml;bersichtlich gestaltete Webseite besitzt, die sich von der breiten Masse abhebt, gelingt es schwer oder teilweise gar nicht sich im Web zu pr&auml;sentieren. eSport-Designs bietet vorgefertigte DZCP Templates, Logo Designs oder Onlineshop L&ouml;sungen komplett nach Kundenwunsch an.</p>', 1, '', '../banner/sponsors/ed468x60.png', 1, '', '../banner/sponsors/ed468x60.png', 1, '', '../banner/sponsors/ed88x31.gif', 8, 0);");
+(3, 'eSport-Designs', 'http://esport-designs.de', '<p>Jedes Team das keine gut strukturierte und &uuml;bersichtlich gestaltete Webseite besitzt, die sich von der breiten Masse abhebt, gelingt es schwer oder teilweise gar nicht sich im Web zu pr&auml;sentieren. eSport-Designs bietet vorgefertigte DZCP Templates, Logo Designs oder Onlineshop L&ouml;sungen komplett nach Kundenwunsch an.</p>', 1, '', '../banner/sponsors/ed468x60.png', 1, '', '../banner/sponsors/ed468x60.png', 1, '', '../banner/sponsors/ed88x31.gif', 8, 0);");
 
 
 
@@ -1404,11 +1398,7 @@ function update_mysql_1_5_2()
                                       ADD `direct_refresh` INT( 1 ) NOT NULL DEFAULT '0'");
 }
 function update_mysql_1_5_4()
-{
-  global $db;
-        db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.modsbar.de', 'mb_88x32.png');");
-      db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.templatebar.de', 'tb_88x32.png');");
-}
+{}
 function update_mysql_1_6()
 {
     global $db,$updater;
