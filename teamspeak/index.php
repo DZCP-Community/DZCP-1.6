@@ -20,7 +20,8 @@ $dir = "teamspeak";
 ## SECTIONS ##
   if(fsockopen_support())
   {
-    if(!$cache->isExisting('teamspeak_'.$language) || isset($_GET['cID']))
+    $index = $cache->get('teamspeak_'.$language);
+    if(is_null($index) || isset($_GET['cID']))
     {
     switch(settings('ts_version')):
     default; case '2';
@@ -294,8 +295,6 @@ $dir = "teamspeak";
     break;
     endswitch;
         $cache->set('teamspeak_'.$language, $index, config('cache_teamspeak'));
-    } else {
-        $index = $cache->get('teamspeak_'.$language);
     }
   } else {
     $index = error(_fopen,1);

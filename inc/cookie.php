@@ -30,11 +30,10 @@ final class cookie
     * Extraktiert ein gespeichertes Cookie
     */
     public final static function extract($cname="") {
-        global $cache;
         if(array_key_exists('PHPSESSID', $_SESSION) && array_key_exists('PHPSESSID', $_COOKIE)) {
             $cname=(empty($cname) ? self::$cname : $cname);
             if(!empty($_COOKIE[$cname])) {
-                $arr = json_decode($cache->decode(($_COOKIE[$cname]),true),true);
+                $arr = json_decode($_COOKIE[$cname],true);
                 if($arr!==false && is_array($arr)) {
                     foreach($arr as $var => $val)
                     { $_COOKIE[$var]=$val; }
@@ -81,9 +80,8 @@ final class cookie
     * Speichert das Cookie
     */
     public final static function save() {
-        global $cache;
         if(array_key_exists('PHPSESSID', $_SESSION) && array_key_exists('PHPSESSID', $_COOKIE)) {
-            $cookie_val = (empty(self::$val) ? '' : $cache->encode(json_encode(self::$val, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP),true));
+            $cookie_val = (empty(self::$val) ? '' : json_encode(self::$val, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP));
             if(strlen($cookie_val)>4*1024)
                 trigger_error("The cookie ".self::$cname." exceeds the specification for the maximum cookie size.  Some data may be lost", E_USER_WARNING);
 

@@ -1,85 +1,157 @@
 <?php
-
-/*
- * khoaofgod@yahoo.com
- * Website: http://www.phpfastcache.com
- * Example at our website, any bugs, problems, please visit http://www.codehelper.io
+/**
+ *
+ * This file is part of phpFastCache.
+ *
+ * @license MIT License (MIT)
+ *
+ * For full copyright and license information, please see the docs/CREDITS.txt file.
+ *
+ * @author Khoa Bui (khoaofgod)  <khoaofgod@gmail.com> http://www.phpfastcache.com
+ * @author Georges.L (Geolim4)  <contact@geolim4.com>
+ *
  */
 
+namespace phpFastCache\Drivers;
 
-class phpfastcache_apc extends phpFastCache implements phpfastcache_driver {
-    function checkdriver() {
-        // Check apc
-        if(extension_loaded('apc') && ini_get('apc.enabled'))
-        {
+use phpFastCache\Core\DriverAbstract;
+use phpFastCache\Exceptions\phpFastCacheDriverException;
+
+/**
+ * Class apc
+ * @package phpFastCache\Drivers
+ */
+class apc extends DriverAbstract
+{
+    /**
+     * phpFastCache_apc constructor.
+     * @param array $config
+     * @throws phpFastCacheDriverException
+     */
+    public function __construct($config = array())
+    {
+        $this->setup($config);
+
+        if (!$this->checkdriver()) {
+            throw new phpFastCacheDriverException('APC is not installed, cannot continue.');
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkdriver()
+    {
+        if (extension_loaded('apc') && ini_get('apc.enabled')) {
             return true;
         } else {
+            $this->fallback = true;
             return false;
         }
     }
 
-    function __construct($option = array()) {
-        $this->setOption($option);
-        if(!$this->checkdriver() && !isset($option['skipError'])) {
-            throw new Exception("Can't use this driver for your website!");
-        }
-    }
-
-    function driver_set($keyword, $value = "", $time = 300, $option = array() ) {
-        if(isset($option['skipExisting']) && $option['skipExisting'] == true) {
-            return apc_add($keyword,$value,$time);
+    /**
+     * @param $keyword
+     * @param string $value
+     * @param int $time
+     * @param array $option
+     * @return array|bool
+     */
+    public function driver_set(
+      $keyword,
+      $value = '',
+      $time = 300,
+      $option = array()
+    ) {
+        if (isset($option[ 'skipExisting' ]) && $option[ 'skipExisting' ] == true) {
+            return apc_add($keyword, $value, $time);
         } else {
-            return apc_store($keyword,$value,$time);
+            return apc_store($keyword, $value, $time);
         }
     }
 
-    function driver_get($keyword, $option = array()) {
-        // return null if no caching
-        // return value if in caching
-
-        $data = apc_fetch($keyword,$bo);
-        if($bo === false) {
+    /**
+     * @param $keyword
+     * @param array $option
+     * @return mixed|null
+     */
+    public function driver_get($keyword, $option = array())
+    {
+        $success = null;
+        $data = apc_fetch($keyword, $success);
+        if ($success === false) {
             return null;
         }
+        
         return $data;
-
     }
 
-    function driver_delete($keyword, $option = array()) {
+    /**
+     * @param $keyword
+     * @param array $option
+     * @return bool|\string[]
+     */
+    public function driver_delete($keyword, $option = array())
+    {
         return apc_delete($keyword);
     }
 
-    function driver_stats($option = array()) {
+    /**
+     * @param array $option
+     * @return array
+     */
+    public function driver_stats($option = array())
+    {
         $res = array(
-            "info" => "",
-            "size"  => "",
-            "data"  =>  "",
+          'info' => '',
+          'size' => '',
+          'data' => '',
         );
 
         try {
-            $res['data'] = apc_cache_info("user");
-        } catch(Exception $e) {
-            $res['data'] =  array();
+            $res[ 'data' ] = apc_cache_info('user');
+        } catch (\Exception $e) {
+            $res[ 'data' ] = array();
         }
 
         return $res;
     }
 
-    function driver_clean($option = array()) {
+    /**
+     * @param array $option
+     * @return void
+     */
+    public function driver_clean($option = array())
+    {
         @apc_clear_cache();
-        @apc_clear_cache("user");
+        @apc_clear_cache('user');
     }
 
-    function driver_isExisting($keyword) {
-        if(apc_exists($keyword)) {
-            return true;
-        } else {
+    /**
+     * @param string $keyword
+     * @return boolean
+     */
+    public function driver_exists($keyword)
+    {
+        $success = null;
+        $data = apc_fetch($keyword, $success);
+        if ($success === false) {
             return false;
         }
+        
+        return true;
     }
 
-
-
-
-
+    
+    /**
+     * @param $keyword
+     * @return bool
+     */
+    public function driver_isExisting($keyword)
+    {
+        if(function_exists('apc_exists'))
+            return (bool) apc_exists($keyword);
+        else
+            return (bool) $this->driver_exists ($keyword);
+    }
 }

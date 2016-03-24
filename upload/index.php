@@ -435,7 +435,7 @@ switch ($action):
                                             } else {
                                                 db("INSERT INTO ".$db['usergallery']." "
                                                         . "SET `user` = '".((int)$userid)."', "
-                                                        . "`beschreibung` = '".up($_POST['beschreibung'],1)."', "
+                                                        . "`beschreibung` = '".up($_POST['beschreibung'])."', "
                                                         . "`pic` = '".up(strtolower($_FILES['file']['name']))."'");
 
                                                 $index = info(_info_upload_success, "../user/?action=editprofile&show=gallery");
@@ -498,7 +498,7 @@ switch ($action):
                                         } else {
                                             db("UPDATE ".$db['usergallery']." SET "
                                                     . "`pic` = '".$_FILES['file']['name']."',"
-                                                    . "`beschreibung` = '".up($_POST['beschreibung'],1)."' "
+                                                    . "`beschreibung` = '".up($_POST['beschreibung'])."' "
                                                     . "WHERE id = '".intval($_POST['id'])."' AND `user` = '".((int)$userid)."'");
                                             
                                             $index = info(_edit_gallery_done, "../user/?action=editprofile&show=gallery");

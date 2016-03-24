@@ -25,22 +25,40 @@ require_once(basePath.'/inc/steamapi.php');
 $ajaxJob = (!isset($ajaxJob) ? false : $ajaxJob);
 
 //Cache
-$config_cache['htaccess'] = true;
-$config_cache['fallback'] = array( "memcache" => "apc", "memcached" =>  "apc", "apc" =>  "sqlite", "sqlite" => "files");
-$config_cache['path'] = basePath."/inc/_cache_";
+use phpFastCache\CacheManager;
+use phpFastCache\Util;
+Util\Languages::setEncoding("UTF-8");
+CacheManager::CachingMethod("phpfastcache");
 
-if(!is_dir($config_cache['path'])) //Check cache dir
-    mkdir($config_cache['path'], 0777, true);
+//Auto Cache
+if($config_cache['storage'] == 'auto') {
+    if((extension_loaded('apc') && ini_get('apc.enabled') && strpos(PHP_SAPI,"CGI") === false))
+        $config_cache['storage'] = "apc";
+    else if((extension_loaded('xcache') && function_exists("xcache_get")))
+        $config_cache['storage'] = "xcache";
+    else if((extension_loaded('wincache') && function_exists("wincache_ucache_set")))
+        $config_cache['storage'] = "wincache";
+    else
+        $config_cache['storage'] = "files";
+}
 
-$config_cache['securityKey'] = settings('prev',false);
-phpFastCache::setup($config_cache);
-$cache = new phpFastCache();
+CacheManager::setup(array(
+    "path" => basePath."/inc/_cache_/",
+    "allow_search" => false,
+    "storage" => $config_cache['storage'],
+    "memcache" => $config_cache['server_mem'],
+    "redis" => $config_cache['server_redis'],
+    "ssdb" => $config_cache['server_ssdb'],
+    "fallback" => "files"
+));
+$cache = CacheManager::getInstance(); // return your setup storage
 
 //-> Automatische Datenbank Optimierung
 if(auto_db_optimize && settings('db_optimize',false) <= time() && !$installer && !$updater) {
     @ignore_user_abort(true);
     db("UPDATE `".$db['settings']."` SET `db_optimize` = '".(time()+auto_db_optimize_interval)."' WHERE `id` = 1;");
     db_optimize();
+    $cache->autoCleanExpired(3600*1);
     @ignore_user_abort(false);
 }
 
@@ -278,40 +296,93 @@ function lang($lng,$pfad='') {
     include(basePath."/inc/lang/languages/".$lng.".php");
 }
 
+
 //->Daten uber file_get_contents oder curl abrufen
-function get_external_contents($url="") {
-    $output = '';
-    if(allow_url_fopen_support()) {
-        $ctx = stream_context_create(array('http'=>array('timeout' => file_get_contents_timeout)));
-        $output = file_get_contents($url,false,$ctx);
-    } else if(fsockopen_support() && !function_exists('curl_init')) {
-        $parse = parse_url($url);
-        $port = array_key_exists('port', $parse) ? $parse['port'] : 80;
-	$fp = fsockopen($parse['host'], $port, $errno, $errstr, 5);
-	if ($fp) {
-            $out = "GET ".$parse['path']." HTTP/1.1\r\n";
-            $out .= "Host: ".$parse['host']."\r\n";
-            $out .= "Connection: Close\r\n\r\n";
-            fwrite($fp, $out);
-            while (!feof($fp)) {
-                $output .= fgets($fp, 128);
-            }
-            fclose($fp);
-	}
-    } else if(function_exists('curl_init')) {
-        $curl = curl_init();
+function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_contents_timeout) {
+    if(!allow_url_fopen_support() && (!extension_loaded('curl') || !use_curl_support))
+        return false;
+    
+    $url_p = @parse_url($url);
+    $host = $url_p['host'];
+    $port = isset($url_p['port']) ? $url_p['port'] : 80;
+    if(!ping_port($host,$port,$timeout)) return false;
+
+    if(extension_loaded('curl') && use_curl_support) {
+        if(!$curl = curl_init())
+            return false;
+        
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_FAILONERROR, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 5);
-        $output = curl_exec($curl);
-        curl_close($curl);
-    }
+        curl_setopt($curl, CURLOPT_AUTOREFERER, true);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
+        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0");
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $timeout);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout * 2); // x 2
+        
+        //For POST
+        if(count($post) >= 1 && $post != false) {
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
+            curl_setopt($curl, CURLOPT_VERBOSE , 0 );
+        }
+        
+        $gzip = false;
+        if(function_exists('gzinflate') && !$nogzip) {
+            $gzip = true;
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept-Encoding: gzip,deflate'));
+            curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+        }
+        
+        if($url_p['scheme'] == 'https') { //SSL
+            curl_setopt($curl, CURLOPT_PORT , $port); 
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        }
 
-    return $output;
+        if (!($content = curl_exec($curl)) || empty($content)) {
+            return false;
+        }
+
+        if($gzip) {
+            $curl_info = curl_getinfo($curl,CURLINFO_HEADER_OUT);
+            if(stristr($curl_info, 'accept-encoding') && stristr($curl_info, 'gzip')) {
+                $content = gzinflate( substr($content,10,-8) );
+            }
+        }
+
+        @curl_close($curl);
+        unset($curl);
+    } else {
+        if($url_p['scheme'] == 'https') //HTTPS not Supported!
+            $url = str_replace('https', 'http', $url);
+        
+        $opts = array();
+        $opts['http']['method'] = "GET";
+        $opts['http']['timeout'] = $timeout * 2;
+                
+        $gzip = false;
+        if(function_exists('gzinflate') && !$nogzip) {
+            $gzip = true;
+            $opts['http']['header'] = 'Accept-Encoding:gzip,deflate'."\r\n";
+        }
+        
+        $context = stream_context_create($opts);
+        if ((!$content = @file_get_contents($url, false, $context, -1, 40000)) || empty($content)) {
+            return false;
+        }
+
+        if($gzip) {
+            foreach($http_response_header as $c => $h) {
+                if(stristr($h, 'content-encoding') && stristr($h, 'gzip')) {
+                    $content = gzinflate( substr($content,10,-8) );
+                }
+            }
+        }
+    }
+    
+    return $content;
 }
 
 //-> Sprachdateien auflisten
@@ -1005,9 +1076,10 @@ function spChars($txt) {
 }
 
 //-> Funktion um sauber in die DB einzutragen
-function up($txt, $bbcode=false, $charset_set='') {
+function up($txt,$escape=true) {
     global $charset;
-    return utf8_encode(stripcslashes(spChars(htmlentities($txt, ENT_COMPAT, $charset))));
+    $return = utf8_encode(stripcslashes(spChars(htmlentities($txt, ENT_COMPAT, $charset))));
+    return $escape ? _real_escape_string($return) : $return;
 }
 
 //-> Funktion um diverse Dinge aus Tabellen auszaehlen zu lassen
@@ -1124,7 +1196,7 @@ function online_guests($where='') {
         db("REPLACE INTO ".$db['c_who']."
                SET `ip`       = '".$userip."',
                    `online`   = '".((int)(time()+$useronline))."',
-                   `whereami` = '".up($where,true)."',
+                   `whereami` = '".up($where)."',
                    `login`    = '".((int)$logged)."'");
         return cnt($db['c_who']);
     }
@@ -2205,7 +2277,9 @@ function getBoardPermissions($checkID = 0, $pos = 0) {
 //-> schreibe in die IPCheck Tabelle
 function setIpcheck($what = '',$time=true) {
     global $db, $userip;
-    db("INSERT INTO ".$db['ipcheck']." SET `ip` = '".$userip."', `user_id` = '".userid()."', `what` = '".$what."', `time` = ".($time ? time() : 0).";");
+    db("INSERT INTO ".$db['ipcheck']." SET `ip` = '".$userip."', "
+            . "`user_id` = '".userid()."', `what` = '".$what."', "
+            . "`time` = ".($time ? time() : 0).", `created` = ".time().";");
 }
 
 function is_php($version='5.3.0')
@@ -2239,7 +2313,7 @@ final class dbc_index {
             if(show_dbc_debug)
                 DebugConsole::insert_info('dbc_index::setIndex()', 'Set index: "'.$index_key.'" to cache');
 
-            $cache->set('dbc_'.$index_key, serialize($data), 1);
+            $cache->set('dbc_'.$index_key, serialize($data), 1.2);
         }
 
         if(show_dbc_debug)
@@ -2266,44 +2340,43 @@ final class dbc_index {
         if(empty($data) || !array_key_exists($key,$data))
             return false;
 
-        if(show_dbc_debug)
-            DebugConsole::insert_info('dbc_index::getIndexKey()', 'Get from index: "'.$index_key.'" get key: "'.$key.'"');
-
         return $data[$key];
     }
 
     public static final function issetIndex($index_key) {
         global $cache;
         if(isset(self::$index[$index_key])) return true;
-        if(self::MemSetIndex() && $cache->isExisting('dbc_'.$index_key)) {
+        if(self::MemSetIndex()) {
+            $data = $cache->get('dbc_'.$index_key);
+            if(!is_null($data)) {
+                if(show_dbc_debug)
+                    DebugConsole::insert_loaded('dbc_index::issetIndex()', 'Load index: "'.$index_key.'" from cache');
 
-            if(show_dbc_debug)
-                DebugConsole::insert_loaded('dbc_index::issetIndex()', 'Load index: "'.$index_key.'" from cache');
-
-            self::$index[$index_key] = unserialize($cache->get('dbc_'.$index_key));
-            return true;
+                self::$index[$index_key] = unserialize($data);
+                return true;
+            }
         }
 
         return false;
     }
 
     private static final function MemSetIndex() {
-        global $config_cache;
-        if(!$config_cache['dbc']) return false;
-        switch ($config_cache['storage']) {
-            case 'apc': return (extension_loaded('apc') && ini_get('apc.enabled') && strpos(PHP_SAPI,"CGI") === false); break;
-            case 'memcached': return (ping_port($config_cache['server'][0][0],$config_cache['server'][0][1],0.2) && class_exists("memcached")); break;
-            case 'memcache': return (ping_port($config_cache['server'][0][0],$config_cache['server'][0][1],0.2) && function_exists("memcache_connect")); break;
-            case 'xcache': return (extension_loaded('xcache') && function_exists("xcache_get")); break;
-            case 'wincache': return (extension_loaded('wincache') && function_exists("wincache_ucache_set")); break;
-            case 'auto':
-                return ((extension_loaded('apc') && ini_get('apc.enabled') && strpos(PHP_SAPI,"CGI") === false) ||
-                       ($config_cache['dbc_auto_memcache'] && ping_port($config_cache['server'][0][0],$config_cache['server'][0][1],0.2) && class_exists("memcached")) ||
-                       ($config_cache['dbc_auto_memcache'] && ping_port($config_cache['server'][0][0],$config_cache['server'][0][1],0.2) && function_exists("memcache_connect")) ||
-                       (extension_loaded('xcache') && function_exists("xcache_get")) ||
-                       (extension_loaded('wincache') && function_exists("wincache_ucache_set")));
-            break;
-            default: return false; break;
+        global $config_cache,$cache;
+        if (!$config_cache['dbc'] || $cache->fallback) {
+            return false;
+        }
+
+        switch(strtolower(str_replace('\\phpFastCache\\Drivers\\', '', $cache->config['class']))) {
+            case 'apc':
+            case 'memcache':
+            case 'memcached':
+            case 'mongodb':
+            case 'predis':
+            case 'redis':
+            case 'ssdb':
+            case 'wincache':
+            case 'xcache': 
+                return true;
         }
 
         return false;
@@ -2407,7 +2480,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
     $java_vars = '<script language="javascript" type="text/javascript">var maxW = '.config('maxwidth').',lng = \''.$lng.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
 
     if(!strstr($_SERVER['HTTP_USER_AGENT'],'Android') && !strstr($_SERVER['HTTP_USER_AGENT'],'webOS'))
-        $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.js"></script>'."\n";;
+        $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.js"></script>'."\n";
 
     if(settings("wmodus") && $chkMe != 4) {
         if(config('securelogin'))
@@ -2431,7 +2504,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
             include_once(basePath.'/inc/menu-functions/login.php');
         else {
             $check_msg = check_msg(); set_lastvisit(); $login = "";
-            db("UPDATE ".$db['users']." SET `time` = '".time()."', `whereami` = '".up($where,true)."' WHERE id = '".intval($userid)."'");
+            db("UPDATE ".$db['users']." SET `time` = '".time()."', `whereami` = '".up($where)."' WHERE id = '".intval($userid)."'");
         }
 
         //init templateswitch
@@ -2493,8 +2566,9 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
         }
 
         $pholdervars = explode("^",$pholdervars);
-        for($i=0;$i<=count($pholdervars)-1;$i++)
-        { $arr[$pholdervars[$i]] = $$pholdervars[$i]; }
+        foreach ($pholdervars as $pholdervar) {
+            $arr[$pholdervar] = $$pholdervar;
+        }
 
         //index output
         $index = (file_exists("../inc/_templates_/".$tmpdir."/".$index_templ.".html") ? show($index_templ, $arr) : show("index", $arr));

@@ -19,13 +19,7 @@ $support .= "DZCP Version: "._version."\r\n";
 $support .= "DZCP Release: "._release."\r\n";
 $support .= "DZCP Build: "._build."\r\n";
 $support .= "DZCP Template: ".$tmpdir."\r\n";
-$support .= "\r\n";
-
-$support .= "#####################\r\n";
-$support .= "Domain & User\r\n";
-$support .= "#####################\r\n";
 $support .= "Domain: http://".$_SERVER['HTTP_HOST'].str_replace('/admin','/',dirname($_SERVER['PHP_SELF']))."\r\n";
-$support .= "System/Browser: ".$_SERVER['HTTP_USER_AGENT']."\r\n";
 $support .= "\r\n";
 
 $support .= "#####################\r\n";
@@ -35,8 +29,15 @@ $support .= "Server OS: ".@php_uname()."\r\n";
 $support .= "Webserver: ".(array_key_exists('apache2handler', $PhpInfo) ? (array_key_exists('Apache Version', $PhpInfo['apache2handler']) ? $PhpInfo['apache2handler']['Apache Version'] : 'PHP l&auml;uft als CGI <Keine Info>' ) : 'PHP l&auml;uft als CGI <Keine Info>')."\r\n";
 $support .= "PHP-Version: ".phpversion()." (".php_sapi_type().")"."\r\n";
 $support .= "MySQL-Server Version: ".mysqli_get_server_info($mysql)."\r\n";
-$support .= "MySQLi-Protocol Version: ".mysqli_get_proto_info($mysql)."\r\n";
 $support .= "MySQLi-Persistente Datenbankverbindung: ".(mysqli_persistconns ? 'On' : 'Off')."\r\n";
+$support .= "\r\n";
+
+$support .= "#####################\r\n";
+$support .= "Server Cache\r\n";
+$support .= "#####################\r\n";
+$support .= "Cache Storage: ".str_replace('\\phpFastCache\\Drivers\\', '', $cache->config['class'])."\r\n";
+$support .= "Cache Fallback Storage: ".$cache->config['fallback']."\r\n";
+$support .= "Cache Fallback Enabled: ".($cache->fallback ? 'On' : 'Off')."\r\n";
 $support .= "\r\n";
 
 $support .= "#####################\r\n";
@@ -62,10 +63,8 @@ if(!is_php('5.4.0')) {
 }
 
 $support .= "open_basedir: ".$PhpInfo['Core']['open_basedir'][0]."\r\n";
-$support .= "GD-Version: ".$PhpInfo['gd']['GD Version']."\r\n";
 $support .= "PHP-Memory Limit: ".$PhpInfo['Core']['memory_limit'][0]."\r\n";
 $support .= "imagettftext(): ".(function_exists('imagettftext')==true? 'existiert' : 'existiert nicht')."\r\n";
-$support .= "HTTP_ACCEPT_ENCODING: ".$_SERVER["HTTP_ACCEPT_ENCODING"]."\r\n";
 
 //Removed in PHP 5.4.x +
 if(!is_php('5.4.0'))

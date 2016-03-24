@@ -9,7 +9,8 @@ function show_dzcp_version() {
     $dzcp_version_info = 'onmouseover="DZCP.showInfo(\'<tr><td colspan=2 align=center padding=3 class=infoTop>DZCP Versions Checker</td></tr><tr><td>'._dzcp_vcheck.'</td></tr>\')" onmouseout="DZCP.hideInfo()"';
     $return = array();
     if(dzcp_version_checker || allow_url_fopen_support()) {
-        if(!$cache->isExisting('dzcp_version')) {
+        $dzcp_online_v = $cache->get('dzcp_version');
+        if(is_null($dzcp_online_v)) {
             switch (_edition) {
                 case 'dev': $url = 'development'; break;
                 case 'society': $url = 'society'; break;
@@ -19,8 +20,6 @@ function show_dzcp_version() {
             if($dzcp_online_v = get_external_contents("http://raw.githubusercontent.com/DZCP-Community/DZCP-1.6/".$url."/dzcp_version.xml"))
                 $cache->set('dzcp_version', $dzcp_online_v, dzcp_version_checker_refresh);
         }
-        else
-            $dzcp_online_v = $cache->get('dzcp_version');
 
         if($dzcp_online_v && !empty($dzcp_online_v) && strpos($dzcp_online_v, 'not found') === false) {
             $xml = simplexml_load_string($dzcp_online_v, 'SimpleXMLElement', LIBXML_NOCDATA); $_build = _build;

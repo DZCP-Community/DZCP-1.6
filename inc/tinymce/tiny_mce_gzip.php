@@ -82,7 +82,8 @@ class TinyMCE_Compressor {
         $expiresOffset = $this->parseTime($this->settings["expires"]);
         $tinymceDir = dirname(__FILE__);
         $cacheHash = md5(implode($_GET));
-        if (!$this->settings["disk_cache"] || $this->settings["debug"] || !$cache->isExisting($cacheHash)) {
+        $buffer = $cache->get($cacheHash);
+        if (!$this->settings["disk_cache"] || $this->settings["debug"] || is_null($buffer)) {
             // Override settings with querystring params
             if ($plugins = self::getParam("plugins")) {
                 $this->settings["plugins"] = $plugins;
@@ -232,8 +233,6 @@ class TinyMCE_Compressor {
             if($this->settings["disk_cache"]) {
                 $cache->set($cacheHash, $buffer, $expiresOffset);
             }
-        } else {
-            $buffer = $cache->get($cacheHash);
         }
 
         if($this->settings["debug"]) {

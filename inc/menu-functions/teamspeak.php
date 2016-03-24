@@ -10,8 +10,7 @@ function teamspeak($js = 0) {
     header('Content-Type: text/html; charset=iso-8859-1');
     if(!fsockopen_support()) return _fopen;
 
-    if(empty($js))
-    {
+    if(empty($js)) {
         $teamspeak = '
           <div id="navTeamspeakServer">
             <div style="width:100%;padding:10px 0;text-align:center"><img src="../inc/images/ajax_loading.gif" alt="" /></div>
@@ -26,13 +25,11 @@ function teamspeak($js = 0) {
         $ts_ip = settings('ts_ip');
         $ts_sport = settings('ts_sport');
         $ts_port = settings('ts_port');
-
-        if(!empty($ts_ip) && !empty($ts_port) && !empty($ts_port)) {
-            if(!$cache->isExisting('nav_teamspeak_'.$language)) {
+        if(!empty($ts_ip) && !empty($ts_sport) && !empty($ts_port)) {
+            $teamspeak = $cache->get('nav_teamspeak_'.$language);
+            if(is_null($teamspeak)) {
                 $teamspeak = teamspeakViewer();
                 $cache->set('nav_teamspeak_'.$language, $teamspeak, config('cache_teamspeak'));
-            } else {
-                $teamspeak = $cache->get('nav_teamspeak_'.$language);
             }
         } else {
             $teamspeak = '<br /><center>'._no_ts.'</center><br />';

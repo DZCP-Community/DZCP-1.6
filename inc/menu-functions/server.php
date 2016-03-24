@@ -5,7 +5,7 @@
  * Menu: Gameserver
  */
 function server($serverID = 0) {
-    global $db, $language, $cache;
+    global $db, $cache;
 
     header('Content-Type: text/html; charset=iso-8859-1');
     if(!fsockopen_support()) return _fopen;
@@ -32,17 +32,17 @@ function server($serverID = 0) {
             include(basePath.'/inc/server_query/'.strtolower($get['status']).'.php');
         }
 
-        unset($player_list);
-
-        if(!$cache->isExisting('nav_server_'.$serverID)) {
+        $server_cache = $cache->get('nav_server_'.$serverID);
+        if(is_null($server_cache)) {
             $server = gs_normalise(@call_user_func('server_query_'.$get['status'], $get['ip'], $get['port'], $get['qport'], 'info'));
             $player_list = call_user_func('server_query_'.$get['status'], $get['ip'], $get['port'], $get['qport'], 'players');
             $cache->set('nav_server_'.$serverID, serialize(array('server' => $server, 'players' => $player_list)), config('cache_server'));
+            unset($server_cache);
         } else {
-            $server_cache = $cache->get('nav_server_'.$serverID);
             $server_cache = unserialize($server_cache);
             $server = gs_normalise($server_cache['server']);
             $player_list = $server_cache['players'];
+            unset($server_cache);
         }
 
         $server["mapname"] = preg_replace("/[^A-Za-z0-9 \&\_\-]/", "_", $server["mapname"]);

@@ -17,7 +17,7 @@ switch ($do) {
 
             db("INSERT INTO ".$db['gallery']." SET `kat` = '".up($_POST['gallery'])."',
                                                    `intern`   = ".(isset($_POST['intern']) ? intval($_POST['intern']) : 0).",
-                                                   `beschreibung`   = '".up($_POST['beschreibung'], 1)."',
+                                                   `beschreibung`   = '".up($_POST['beschreibung'])."',
                                                    `datum`          = '".time()."'");
 
             $show = show($dir."/form_gallery_step2", array("head" => _gallery_admin_head,

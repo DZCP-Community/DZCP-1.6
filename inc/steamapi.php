@@ -114,7 +114,9 @@ class SteamAPI {
         global $cache;
         if(empty(self::$api_key) || empty(self::$user_data['steamID'])) return false;
         $cache_tag = 'steam_api_'.$interface.'_'.$method.'_'.self::$profile_url;
-        if(!$cache->isExisting($cache_tag)) {
+        
+        self::$api_data = $cache->get('steam_api_'.$interface.'_'.$method.'_'.self::$profile_url);
+        if (is_null(self::$api_data)) {
             self::$send_data_api['format'] = 'xml';
             self::$send_data_api['key'] = self::$api_key;
             self::$send_data_api['steamids'] = self::$user_data['steamID'];
@@ -146,7 +148,7 @@ class SteamAPI {
             $cache->set('steam_api_'.$interface.'_'.$method.'_'.self::$profile_url, base64_encode(serialize(self::$api_data)), steam_api_refresh);
             return is_array(self::$api_data);
         } else {
-            self::$api_data = unserialize(base64_decode($cache->get('steam_api_'.$interface.'_'.$method.'_'.self::$profile_url)));
+            self::$api_data = unserialize(base64_decode(self::$api_data));
             return is_array(self::$api_data);
         }
 
@@ -161,14 +163,19 @@ class SteamAPI {
     private static final function get_steamcommunity($zone='',$xml='profile') {
         global $cache;
         $zone_url = !empty($zone) ? '/'.$zone.'/' : ''; $zone_tag = !empty($zone) ? $zone.'_' : 'profile';
-        if(!$cache->isExisting('steam_'.self::$profile_url) || !steam_infos_cache) {
+        self::$community_data[str_replace('_', '', $zone_tag)] = $cache->get('steam_'.self::$profile_url);
+        if (is_null(self::$community_data[str_replace('_', '', $zone_tag)]) || !steam_infos_cache) {
             $xml_stream = steam_only_proxy ? false : get_external_contents(self::$api_com.'/id/'.self::$profile_url.$zone_url.'/?xml=1');
             if(empty($xml_stream) || !$xml_stream) {
                 //-> Use SteamAPI Proxy
                 if(function_exists('SteamAPI_Proxy')) {
                    $proxy = SteamAPI_Proxy(self::$profile_url,'com',$zone);
                    if($proxy['status'] != 'available' || empty($proxy['data']) || !is_array($proxy['data'])) return false;
-                   $cache->set('steam_'.self::$profile_url, base64_encode(serialize($proxy['data'])), steam_refresh);
+                   
+                   if(steam_infos_cache) {
+                        $cache->set('steam_'.self::$profile_url, base64_encode(serialize($proxy['data'])), steam_refresh);
+                    }
+                   
                    self::$community_data[str_replace('_', '', $zone_tag)] = $proxy['data'];
                    return is_array(self::$community_data[str_replace('_', '', $zone_tag)]);
                 } else {
@@ -193,10 +200,13 @@ class SteamAPI {
             if(array_key_exists('error',$xml) || empty($xml_stream)) return false;
             if(!$xml = simplexml_load_string($xml_stream, 'SimpleXMLElement', LIBXML_NOCDATA)) return false;
             self::$community_data[str_replace('_', '', $zone_tag)] = self::objectToArray($xml);
-            $cache->set('steam_'.self::$profile_url, base64_encode(serialize(self::$community_data[str_replace('_', '', $zone_tag)])), steam_refresh);
+            if (steam_infos_cache) {
+                $cache->set('steam_' . self::$profile_url, base64_encode(serialize(self::$community_data[str_replace('_', '', $zone_tag)])), steam_refresh);
+            }
+
             return is_array(self::$community_data[str_replace('_', '', $zone_tag)]);
         } else {
-            self::$community_data[str_replace('_', '', $zone_tag)] = unserialize(base64_decode($cache->get('steam_'.self::$profile_url)));
+            self::$community_data[str_replace('_', '', $zone_tag)] = unserialize(base64_decode(self::$community_data[str_replace('_', '', $zone_tag)]));
             return is_array(self::$community_data[str_replace('_', '', $zone_tag)]);
         }
 

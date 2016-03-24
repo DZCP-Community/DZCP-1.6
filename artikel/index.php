@@ -283,7 +283,7 @@ case 'show';
                                                      `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : data('email'))."',
                                                      `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : links(data('hp')))."',
                                                      `reg`      = '".((int)$userid)."',
-                                                     `comment`  = '".up($_POST['comment'],1)."',
+                                                     `comment`  = '".up($_POST['comment'])."',
                                                      `ip`       = '".$userip."'");
 
                         setIpcheck("artid(".$_GET['id'].")");
@@ -324,7 +324,7 @@ case 'show';
                    SET `nick`     = '".up($_POST['nick'])."',
                        `email`    = '".up($_POST['email'])."',
                        `hp`       = '".links($_POST['hp'])."',
-                       `comment`  = '".up($_POST['comment'],1)."',
+                       `comment`  = '".up($_POST['comment'])."',
                        `editby`   = '".addslashes($editedby)."'
                    WHERE id = '".intval($_GET['cid'])."'");
 

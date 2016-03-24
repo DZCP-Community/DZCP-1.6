@@ -1168,9 +1168,9 @@ class TSStatus
     function renderFlags($channel)
     {
         $flags = array();
-        if($channel["channel_flag_default"] == 1) $flags[] = '16x16_default.png';
-        if($channel["channel_needed_talk_power"] > 0) $flags[] = '16x16_moderated.png';
-        if($channel["channel_flag_password"] == 1) $flags[] = '16x16_register.png';
+        if(array_key_exists('channel_flag_default', $channel) && $channel["channel_flag_default"] == 1) $flags[] = '16x16_default.png';
+        if(array_key_exists('channel_needed_talk_power', $channel) && $channel["channel_needed_talk_power"] > 0) $flags[] = '16x16_moderated.png';
+        if(array_key_exists('channel_flag_password', $channel) && $channel["channel_flag_password"] == 1) $flags[] = '16x16_register.png';
         $out = "";
         foreach ($flags as $flag) $out .= '<img src="../inc/images/tsicons/' . $flag . '" alt="" class="icon" />';
         return $out;
@@ -1264,7 +1264,7 @@ class TSStatus
         class="navTeamspeak" style="font-weight:bold;white-space:nowrap" title="'.rep2($channel['channel_name']).'">'.rep2($channel['channel_name']).'</a>'."\n";
     }
     function sub_channel($channels,$channel,$i,$tpl,$joints) {
-        $out = "";
+        $out = ""; $join_ts = "";
         foreach($channels as $sub_channel) {
             if($channel == $sub_channel['pid']) {
                 if(($this->_showOnly && (($sub_channel['total_clients_family'] > 0 && $sub_channel['channel_flag_default'] == 0) || ($sub_channel['total_clients_family'] > 1 && $sub_channel['channel_flag_default']))) || !$this->_showOnly) {
@@ -1380,6 +1380,7 @@ class TSStatus
 }
 
  function rep2($var) {
+    $var = utf8_decode($var);
     $var = secure_dzcp($var);
     $var = preg_replace("/\[(.*?)spacer(.*?)\]/","",$var);
     return strtr($var, array(
@@ -1398,7 +1399,7 @@ function secure_dzcp($replace) {
     $replace=str_replace("\"", "&quot;", $replace);
     /* Only do the slow convert if there are 8-bit characters */
     /* avoid using 0xA0 (\240) in ereg ranges. RH73 does not like that */
-    if (! ereg("[\200-\237]", $replace) and ! ereg("[\241-\377]", $replace))
+    if (!preg_match("[\200-\237]", $replace) && !preg_match("[\241-\377]", $replace))
     return $replace;
     // decode three byte unicode characters
     $replace = preg_replace("/([\340-\357])([\200-\277])([\200-\277])/e","'&#'.((ord('\\1')-224)*4096 + (ord('\\2')-128)*64 + (ord('\\3')-128)).';'",$replace);
@@ -1406,5 +1407,3 @@ function secure_dzcp($replace) {
     $replace = preg_replace("/([\300-\337])([\200-\277])/e","'&#'.((ord('\\1')-192)*64+(ord('\\2')-128)).';'",$replace);
     return $replace;
 }
-
-?>

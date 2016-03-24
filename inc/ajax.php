@@ -34,13 +34,14 @@ ob_implicit_flush(false);
         if(!$steam || empty($steam) || !is_array($steam) || count($steam) <= 1) return '-';
 
         //Avatar
-        if(!$cache->isExisting('steam_avatar_'.$steamID)) {
-            if($img_stream = get_external_contents($steam['user']['avatarIcon_url']) && !empty($img_stream)) {
+        $user_avatar = $cache->get('steam_avatar_'.$steamID);
+        if(is_null($user_avatar)) {
+            if(($img_stream = get_external_contents($steam['user']['avatarIcon_url'],false,true)) && !empty($img_stream)) {
                 $steam['user']['avatarIcon_url'] = 'data:image/png;base64,'.base64_encode($img_stream);
                 if(steam_avatar_cache)
                     $cache->set('steam_avatar_'.$steamID, bin2hex($img_stream), steam_avatar_refresh);
             } else return '-';
-        } else $steam['user']['avatarIcon_url'] = 'data:image/png;base64,'.base64_encode(hextobin($cache->get('steam_avatar_'.$steamID)));
+        } else $steam['user']['avatarIcon_url'] = 'data:image/png;base64,'.base64_encode(hextobin($user_avatar));
 
         switch($steam['user']['onlineState']) {
             case 'in-game': $status_set = '2'; $text_1 = _steam_in_game; $text_2 = $steam['user']['gameextrainfo']; break;

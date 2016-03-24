@@ -1578,3 +1578,8 @@ function update_mysql_1_6()
         db_optimize();
     }
 }
+function update_mysql_1_6_0_4()
+{
+    global $db;
+    db("ALTER TABLE `".$db['ipcheck']."` ADD `created` INT(11) NOT NULL DEFAULT '0' AFTER `time`;");
+}

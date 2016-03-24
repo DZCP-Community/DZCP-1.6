@@ -28,8 +28,8 @@ default:
         $player_list = '';
         if($get['status'] != "nope" && file_exists(basePath.'/inc/server_query/'.$get['status'].'.php'))
         {
-          if(!$cache->isExisting('gameserver_'.intval($get['id']).'_'.$language))
-          {
+          $index = $cache->get('gameserver_'.intval($get['id']).'_'.$language);
+          if(is_null($index)) {
           if(!function_exists('server_query_'.$get['status']))
           {
             include(basePath.'/inc/server_query/'.strtolower($get['status']).'.php');
@@ -216,8 +216,6 @@ default:
                                                     "image_map" => $image_map));
 
           $cache->set('gameserver_'.intval($get['id']).'_'.$language, $index, config('cache_server'));
-        } else {
-            $index = $cache->get('gameserver_'.intval($get['id']).'_'.$language);
         }
       } else {
         if(!empty($get['pwd'])) $pwds = show(_server_pwd, array("pwd" => re($get['pwd'])));

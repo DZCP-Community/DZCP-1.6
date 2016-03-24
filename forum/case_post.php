@@ -114,7 +114,7 @@ if(defined('_Forum')) {
         $qry = db("UPDATE ".$db['f_posts']."
                    SET `nick`   = '".up($_POST['nick'])."',
                        `email`  = '".up($_POST['email'])."',
-                       `text`   = '".up($_POST['eintrag'],1)."',
+                       `text`   = '".up($_POST['eintrag'])."',
                        `hp`     = '".links($_POST['hp'])."',
                        `edited` = '".addslashes($editedby)."'
                    WHERE id = '".intval($_GET['id'])."'");
@@ -685,7 +685,7 @@ if(defined('_Forum')) {
 
                             $text = show(_forum_spam_text, array("autor" => $fautor,
                                                                                                      "ltext" => addslashes($getdp['text']),
-                                                                                                     "ntext" => up($_POST['eintrag'],1)));
+                                                                                                     "ntext" => up($_POST['eintrag'])));
 
                                                     $qry = db("UPDATE ".$db['f_threads']."
                                                                                          SET `lp` = '".time()."'
@@ -702,7 +702,7 @@ if(defined('_Forum')) {
 
                             $text = show(_forum_spam_text, array("autor" => $fautor,
                                                                                                      "ltext" => addslashes($gettdp['t_text']),
-                                                                                                     "ntext" => up($_POST['eintrag'],1)));
+                                                                                                     "ntext" => up($_POST['eintrag'])));
 
                             $qry = db("UPDATE ".$db['f_threads']."
                                                  SET `lp`   = '".time()."',
@@ -717,7 +717,7 @@ if(defined('_Forum')) {
                                                  `email` = '".up($_POST['email'])."',
                                                  `hp`    = '".links($_POST['hp'])."',
                                                  `reg`   = '".up($userid)."',
-                                                 `text`  = '".up($_POST['eintrag'],1)."',
+                                                 `text`  = '".up($_POST['eintrag'])."',
                                                  `ip`    = '".$userip."'");
 
                     $update = db("UPDATE ".$db['f_threads']."

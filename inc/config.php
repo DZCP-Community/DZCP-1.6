@@ -13,6 +13,7 @@ define('debug_all_sql_querys', false);
 define('debug_save_to_file', false);
 define('debug_dzcp_handler', true);
 define('fsockopen_support_bypass', false); //Umgeht die fsockopen pruefung
+define('use_curl_support', true); //Soll CURL verwendet werden
 
 define('use_default_timezone', true); // Verwendende die Zeitzone vom Server
 define('default_timezone', 'Europe/Berlin'); // Die zu verwendende Zeitzone selbst einstellen * 'use_default_timezone' auf false stellen *
@@ -58,11 +59,16 @@ define('phpmailer_smtp_port', 25); //SMTP port number
 define('phpmailer_smtp_user', ''); //Username to use for SMTP authentication
 define('phpmailer_smtp_password', '');//Password to use for SMTP authentication
 
-$config_cache = array();
-$config_cache['storage'] = "files"; //auto,memcache,files,sqlite,wincache,xcache oder apc
-$config_cache['server'] = array(array("127.0.0.1",11211,1));
-$config_cache['dbc'] = true; //use database query caching * only use with memory cache
-$config_cache['dbc_auto_memcache'] = false; //use database querie caching * auto memcache check
+/*
+ * Cache Configuration
+ */
+$config_cache = array(
+    "storage" => "auto", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, cookie, wincache
+    "server_mem" => array(array("127.0.0.1",11211,1)), //memcache / memcached
+    "server_redis" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'database' => '', 'timeout' => ''),
+    "server_ssdb" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'timeout' => ''),
+    "dbc" => true,  //use database query caching * only use with memory cache
+);
 
 //-> Legt die UserID des Rootadmins fest
 //-> (dieser darf bestimmte Dinge, den normale Admins nicht duerfen, z.B. andere Admins editieren)
