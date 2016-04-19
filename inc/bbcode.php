@@ -298,40 +298,28 @@ function lang($lng,$pfad='') {
 
 
 //->Daten uber file_get_contents oder curl abrufen
-<<<<<<< HEAD
+
 function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_contents_timeout) {
     if(!allow_url_fopen_support() && (!extension_loaded('curl') || !use_curl_support))
-=======
-function get_external_contents($url,$post=false,$timeout=file_get_contents_timeout) {
-    if((!allow_url_fopen_support() || !extension_loaded('curl')))
->>>>>>> origin/development
         return false;
     
     $url_p = @parse_url($url);
     $host = $url_p['host'];
     $port = isset($url_p['port']) ? $url_p['port'] : 80;
     if(!ping_port($host,$port,$timeout)) return false;
-<<<<<<< HEAD
 
     if(extension_loaded('curl') && use_curl_support) {
-=======
-    unset($host,$port);
-
-    if(extension_loaded('curl')) {
->>>>>>> origin/development
         if(!$curl = curl_init())
             return false;
         
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-<<<<<<< HEAD
         curl_setopt($curl, CURLOPT_AUTOREFERER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
         curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0");
-=======
->>>>>>> origin/development
+		
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $timeout);
         curl_setopt($curl, CURLOPT_TIMEOUT, $timeout * 2); // x 2
         
@@ -343,18 +331,14 @@ function get_external_contents($url,$post=false,$timeout=file_get_contents_timeo
         }
         
         $gzip = false;
-<<<<<<< HEAD
+
         if(function_exists('gzinflate') && !$nogzip) {
-=======
-        if(function_exists('gzinflate')) {
->>>>>>> origin/development
             $gzip = true;
             curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept-Encoding: gzip,deflate'));
             curl_setopt($curl, CURLINFO_HEADER_OUT, true);
         }
         
         if($url_p['scheme'] == 'https') { //SSL
-<<<<<<< HEAD
             curl_setopt($curl, CURLOPT_PORT , $port); 
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
@@ -364,16 +348,6 @@ function get_external_contents($url,$post=false,$timeout=file_get_contents_timeo
             return false;
         }
 
-=======
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        }
-        
-        if (!$content = curl_exec($curl)) {
-            return false;
-        }
-
->>>>>>> origin/development
         if($gzip) {
             $curl_info = curl_getinfo($curl,CURLINFO_HEADER_OUT);
             if(stristr($curl_info, 'accept-encoding') && stristr($curl_info, 'gzip')) {
@@ -392,24 +366,16 @@ function get_external_contents($url,$post=false,$timeout=file_get_contents_timeo
         $opts['http']['timeout'] = $timeout * 2;
                 
         $gzip = false;
-<<<<<<< HEAD
+
         if(function_exists('gzinflate') && !$nogzip) {
-=======
-        if(function_exists('gzinflate')) {
->>>>>>> origin/development
             $gzip = true;
             $opts['http']['header'] = 'Accept-Encoding:gzip,deflate'."\r\n";
         }
         
         $context = stream_context_create($opts);
-<<<<<<< HEAD
         if ((!$content = @file_get_contents($url, false, $context, -1, 40000)) || empty($content)) {
             return false;
         }
-=======
-        if(!$content = @file_get_contents($url, false, $context, -1, 40000))
-            return false;
->>>>>>> origin/development
 
         if($gzip) {
             foreach($http_response_header as $c => $h) {
