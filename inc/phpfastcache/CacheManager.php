@@ -88,6 +88,13 @@ class CacheManager
                 }
             }
 
+			if(!class_exists($config[ 'class' ])) {
+				$exp = explode('\\',$config[ 'class' ]);
+				if (is_readable(__DIR__.'/drivers/'.$exp[3].'.'.PHP_EXT)) {
+					require_once __DIR__.'/drivers/'.$exp[3].'.'.PHP_EXT;
+				}
+			}
+			
             self::$instances[ $instance ] = new $class($config);
         }
 
