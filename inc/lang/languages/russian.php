@@ -1961,7 +1961,7 @@ define('_navi_add_head', 'Добавить новую ссылку');
 define('_navi_edit_head', 'Редактировать Ссылку');
 define('_navi_url_to', 'Выложить на');
 define('_posi', 'Позиция');
-define('_nach', 'на');
+define('_nach', 'после');
 define('_navi_no_name', 'Вы должны указать имя ссылки!');
 define('_navi_no_url', 'Вы должны укозать адрес переадресации!');
 define('_navi_no_pos', 'Вы должны указать местоположение для связи!');
