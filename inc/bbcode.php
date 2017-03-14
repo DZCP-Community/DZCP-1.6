@@ -298,7 +298,6 @@ function lang($lng,$pfad='') {
 
 
 //->Daten uber file_get_contents oder curl abrufen
-
 function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_contents_timeout) {
     if(!allow_url_fopen_support() && (!extension_loaded('curl') || !use_curl_support))
         return false;
@@ -306,6 +305,7 @@ function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_
     $url_p = @parse_url($url);
     $host = $url_p['host'];
     $port = isset($url_p['port']) ? $url_p['port'] : 80;
+    $port = (($url_p['scheme'] == 'https' && $port == 80) ? 443 : $port);
     if(!ping_port($host,$port,$timeout)) return false;
 
     if(extension_loaded('curl') && use_curl_support) {
@@ -318,7 +318,7 @@ function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_
         curl_setopt($curl, CURLOPT_AUTOREFERER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
-        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0");
+        curl_setopt($curl, CURLOPT_USERAGENT, "DZCP-HTTP-CLIENT");
 		
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $timeout);
         curl_setopt($curl, CURLOPT_TIMEOUT, $timeout * 2); // x 2
