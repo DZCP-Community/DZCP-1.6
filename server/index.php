@@ -49,12 +49,14 @@ default:
           } else {
             $server["mapname"] = preg_replace("/[^A-Za-z0-9 \&\_\-]/", "_", $server["mapname"]);
             $map_low = str_replace(' ','_', strtolower($server["mapname"]));
-            $image_map = "../inc/images/maps/".$get['status']."/".$server['gamemod']."/".$map_low.".jpg";
+            $image_map = basePath."/inc/images/maps/".$get['status']."/".$server['gamemod']."/".$map_low.".jpg";
 
             if(!file_exists($image_map))
             {
               if($chkMe == 4) $mappath = '<span style="color:#000;background-color:#FFF"><b style="color:red">Admin:</b> <b>Mappath:</b> '.str_replace(basePath, '', $image_map).'<br />';
               $image_map = "../inc/images/maps/no_map.gif";
+            } else {
+              $image_map = '../'.str_replace(basePath, '', $image_map);
             }
 
             $image_status = "../inc/images/online.gif";
