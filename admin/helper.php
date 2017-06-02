@@ -1,6 +1,6 @@
 <?php
 /**
- * Prüft online ob DZCP aktuell ist.
+ * PrÃ¼ft online ob DZCP aktuell ist.
  *
  * @return array
  */
@@ -8,13 +8,15 @@ function show_dzcp_version() {
     global $cache,$config_cache;
     $dzcp_version_info = 'onmouseover="DZCP.showInfo(\'<tr><td colspan=2 align=center padding=3 class=infoTop>DZCP Versions Checker</td></tr><tr><td>'._dzcp_vcheck.'</td></tr>\')" onmouseout="DZCP.hideInfo()"';
     $return = array();
-    if(dzcp_version_checker || allow_url_fopen_support()) {
+    if(dzcp_version_checker && allow_url_fopen_support()) {
         if(!$config_cache['use_cache'] || !$cache->isExisting('dzcp_version')) {
-			$input = json_encode(array('event' => 'version', 'dzcp' => _version, 'edition' => _edition, 'type' => 'xml');
-            if($dzcp_online_v = get_external_contents('http://www.dzcp.de/api.php?input='.$input))
+			$input = json_encode(array('event' => 'version', 'dzcp' => _version, 'edition' => _edition, 'type' => 'xml'));
+            if($dzcp_online_v = get_external_contents('http://www.dzcp.de/api.php?input='.$input)) {
+		    $cache->set('dzcp_version',$dzcp_online_v);
+	    }
         } else
             $dzcp_online_v = $cache->get('dzcp_version');
-		unset($input);
+	unset($input);
 
         if($dzcp_online_v && !empty($dzcp_online_v) && strpos($dzcp_online_v, 'not found') === false) {
             $xml = simplexml_load_string($dzcp_online_v, 'SimpleXMLElement', LIBXML_NOCDATA);
