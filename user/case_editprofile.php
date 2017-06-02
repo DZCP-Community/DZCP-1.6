@@ -107,8 +107,8 @@ if(defined('_UserMenu')) {
           `skypename`    = '".up(trim($_POST['skypename']))."',
                   `signatur`     = '".up($_POST['sig'],1)."',
                   `beschreibung` = '".up($_POST['ich'],1)."',
-                  `perm_gb`      = '".up($_POST['visibility_gb'])."',
-                  `perm_gallery` = '".up($_POST['visibility_gallery'])."'
+                  `perm_gb`      = '".(int)($_POST['visibility_gb'])."',
+                  `perm_gallery` = '".(int)($_POST['visibility_gallery'])."'
            WHERE id = ".$userid);
           }
       } elseif($do == "delete") {
