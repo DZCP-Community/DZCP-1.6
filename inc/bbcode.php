@@ -7,7 +7,7 @@
 ## Error Reporting ##
 if(!defined('DEBUG_LOADER'))
     exit('<b>Die Debug-Console wurde nicht geladen!<p>
-    Bitte überprüfen Sie ob die index.php einen "include(basePath."/inc/debugger.php");" Eintrag hat.</b>');
+    Bitte Ã¼berprÃ¼fen Sie ob die index.php einen "include(basePath."/inc/debugger.php");" Eintrag hat.</b>');
 
 ## INCLUDES/REQUIRES ##
 require_once(basePath.'/inc/secure.php');
@@ -20,6 +20,10 @@ require_once(basePath.'/inc/server_query/_functions.php');
 require_once(basePath."/inc/teamspeak_query.php");
 require_once(basePath."/inc/phpfastcache/phpfastcache.php");
 require_once(basePath.'/inc/steamapi.php');
+require_once(basePath.'/inc/crawler-detect/CrawlerDetect.php');
+
+//CrawlerDetect
+use Jaybizzle\CrawlerDetect as CrawlerDetect;
 
 ## Is AjaxJob ##
 $ajaxJob = (!isset($ajaxJob) ? false : $ajaxJob);
@@ -86,7 +90,8 @@ SteamAPI::set('apikey',re(settings('steam_api_key')));
 $language = (cookie::get('language') != false ? (file_exists(basePath.'/inc/lang/languages/'.cookie::get('language').'.php') ? cookie::get('language') : re(settings('language'))) : re(settings('language')));
 
 //-> einzelne Definitionen
-$isSpider = isSpider();
+$CrawlerDetect = new CrawlerDetect\CrawlerDetect();
+$isSpider = $CrawlerDetect->isCrawler();
 $subfolder = basename(dirname(dirname($_SERVER['PHP_SELF']).'../'));
 $httphost = $_SERVER['HTTP_HOST'].(empty($subfolder) ? '' : '/'.$subfolder);
 $domain = str_replace('www.','',$httphost);
@@ -169,7 +174,7 @@ if(!$chkMe) {
     $_SESSION['lastvisit'] = '';
 }
 
-//-> Prueft ob der User gebannt ist, oder die IP des Clients warend einer offenen session verändert wurde.
+//-> Prueft ob der User gebannt ist, oder die IP des Clients warend einer offenen session verÃ¤ndert wurde.
 if($chkMe && $userid && !empty($_SESSION['ip'])) {
     if($_SESSION['ip'] != visitorIp() || isBanned($userid,false) ) {
         $_SESSION['id']        = '';
@@ -185,7 +190,7 @@ if($chkMe && $userid && !empty($_SESSION['ip'])) {
 }
 
 /**
-* Gibt die IP des Besuchers / Users zurück
+* Gibt die IP des Besuchers / Users zurÃ¼ck
 * Forwarded IP Support
 */
 function visitorIp() {
@@ -1069,14 +1074,14 @@ function fileExists($url) {
 
 //-> Funktion um Sonderzeichen zu konvertieren
 function spChars($txt) {
-  $txt = str_replace("Ä","&Auml;",$txt);
-  $txt = str_replace("ä","&auml;",$txt);
-  $txt = str_replace("Ü","&Uuml;",$txt);
-  $txt = str_replace("ü","&uuml;",$txt);
-  $txt = str_replace("Ö","&Ouml;",$txt);
-  $txt = str_replace("ö","&ouml;",$txt);
-  $txt = str_replace("ß","&szlig;",$txt);
-  return str_replace("€","&euro;",$txt);
+  $txt = str_replace("Ã„","&Auml;",$txt);
+  $txt = str_replace("Ã¤","&auml;",$txt);
+  $txt = str_replace("Ãœ","&Uuml;",$txt);
+  $txt = str_replace("Ã¼","&uuml;",$txt);
+  $txt = str_replace("Ã–","&Ouml;",$txt);
+  $txt = str_replace("Ã¶","&ouml;",$txt);
+  $txt = str_replace("ÃŸ","&szlig;",$txt);
+  return str_replace("â‚¬","&euro;",$txt);
 }
 
 //-> Funktion um sauber in die DB einzutragen
@@ -1854,7 +1859,7 @@ function voteanswer($what, $vid) {
 
 //Profilfelder konvertieren
 function conv($txt) {
-    return str_replace(array("ä","ü","ö","Ä","Ü","Ö","ß"), array("ae","ue","oe","Ae","Ue","Oe","ss"), $txt);
+    return str_replace(array("Ã¤","Ã¼","Ã¶","","Ã„","Ã–",""), array("ae","ue","oe","Ae","Ue","Oe","ss"), $txt);
 }
 
 //-> Geburtstag errechnen
@@ -2119,49 +2124,6 @@ function admin_perms($userid) {
     return ($chkMe == 4) ? true : false;
 }
 
-//-> blacklist um spider/crawler von der Besucherstatistik auszuschliessen
-function isSpider() {
-    $bots_basic = array('bot', 'b o t', 'spider', 'spyder', 'crawl', 'slurp', 'robo', 'yahoo', 'ask', 'google', '80legs', 'acoon',
-            'altavista', 'al_viewer', 'appie', 'appengine-google', 'arachnoidea', 'archiver', 'asterias', 'ask jeeves', 'beholder',
-            'bildsauger', 'bingsearch', 'bingpreview', 'bumblebee', 'bramptonmoose', 'cherrypicker', 'crescent', 'coccoc', 'cosmos',
-            'docomo', 'drupact', 'emailsiphon', 'emailwolf', 'extractorpro', 'exalead ng', 'ezresult', 'feedfetcher', 'fido', 'fireball',
-            'flipboardproxy', 'gazz', 'getweb', 'gigabaz', 'gulliver', 'harvester', 'hcat', 'heritrix', 'hloader', 'hoge', 'httrack',
-            'incywincy', 'infoseek', 'infohelfer', 'inktomi', 'indy library', 'informant', 'internetami', 'internetseer', 'link', 'larbin',
-            'jakarta', 'mata hari', 'medicalmatrix', 'mercator', 'miixpc', 'moget', 'msnptc', 'muscatferret', 'netcraftsurveyagent',
-            'openxxx', 'picmole', 'piranha', 'pldi.net', 'p357x', 'quosa', 'rambler', 'rippers', 'rganalytics', 'scan', 'scooter', 'ScoutJet',
-            'siclab', 'siteexplorer', 'sly', 'suchen', 'searchme', 'spy', 'swisssearch', 'sqworm', 'trivial', 't-h-u-n-d-e-r-s-t-o-n-e', 'teoma',
-            'twiceler', 'ultraseek', 'validator', 'webbandit', 'webmastercoffee', 'webwhacker', 'wevika', 'wisewire', 'yandex', 'zyborg', 'agentname');
-
-	$BotList = array("Teoma", "alexa", "froogle", "Gigabot", "inktomi", "looksmart", "URL_Spider_SQL", "Firefly", 
-				 "NationalDirectory", "Ask Jeeves", "TECNOSEEK", "InfoSeek", "WebFindBot", "girafabot", "crawler", 
-				 "www.galaxy.com", "Googlebot", "Googlebot/2.1", "Google Webmaster", "Scooter", "James Bond", "Slurp", 
-				 "msnbot", "appie", "FAST", "WebBug", "Spade", "ZyBorg", "rabaz", "Baiduspider", "Feedfetcher-Google", 
-				 "TechnoratiSnoop", "Rankivabot", "Mediapartners-Google", "Sogou web spider", "WebAlta Crawler", "MJ12bot",
-				 "Yandex/", "YaDirectBot", "StackRambler","DotBot","dotbot");
-			
-    $spiders = file_get_contents(basePath.'/inc/_spiders.txt');
-    $UserAgent = $_SERVER['HTTP_USER_AGENT'];
-    if(empty($UserAgent)) return false;
-    foreach ($bots_basic as $bot) {
-        if(stristr($UserAgent, $bot) !== FALSE)
-            return true;
-    }
-
-    $ex = explode("\n", $spiders);
-    for($i=0;$i<=count($ex)-1;$i++) {
-        if(stristr($UserAgent, trim($ex[$i])))
-            return true;
-    }
-
-   foreach($BotList as $bot) {
-      if(strpos($bot, $UserAgent)) {
-         return true;
-      }
-    }
-	
-	return false;
-}
-
 //-> filter placeholders
 function pholderreplace($pholder) {
     $search = array('@<script[^>]*?>.*?</script>@si',
@@ -2307,7 +2269,7 @@ function hextobin($hexstr) {
     return $sbin;
 }
 
-//-> Speichert Rückgaben der MySQL Datenbank zwischen um SQL-Queries einzusparen
+//-> Speichert RÃ¼ckgaben der MySQL Datenbank zwischen um SQL-Queries einzusparen
 final class dbc_index {
     private static $index = array();
     public static final function setIndex($index_key,$data) {
@@ -2471,7 +2433,7 @@ include_once(basePath.'/inc/menu-functions/navi.php');
 //-> Ausgabe des Indextemplates
 function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
 {
-    global $db,$userid,$userip,$tmpdir,$chkMe,$charset,$mysql;
+    global $db,$userid,$userip,$tmpdir,$chkMe,$charset,$mysql,$isSpider;
     global $designpath,$language,$cp_color,$copyright,$time_start;
 
     // Timer Stop
@@ -2500,8 +2462,10 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
                                          "title" => re(strip_tags($title)),
                                          "login" => $login));
     } else {
-        updateCounter();
-        update_maxonline();
+        if(!$isSpider) {
+            updateCounter();
+            update_maxonline();
+        }
 
         //check permissions
         if(!$chkMe)
