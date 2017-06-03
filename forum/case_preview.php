@@ -56,7 +56,7 @@ if(defined('_Forum')) {
 
       if(empty($getu['hp'])) $hp = "";
       else $hp = show(_hpicon_forum, array("hp" => $getu['hp']));
-      if(data("signatur",$pUId)) $sig = _sig.bbcode(data("signatur",$pUId),true);
+      if(data("signatur",$pUId)) $sig = _sig.bbcode(data("signatur",$pUId));
       else $sig = "";
       $onoff = onlinecheck($userid);
       $userposts = show(_forum_user_posts, array("posts" => userstats("forumposts",$pUId)+1));
@@ -106,7 +106,7 @@ if(defined('_Forum')) {
                                              "hp" => $hp,
                                              "email" => $email,
                                              "posts" => $userposts,
-                                             "text" =>  bbcode(re($_POST['eintrag']),true).$editedby,
+                                             "text" =>  bbcode(re($_POST['eintrag'])).$editedby,
                                              "status" => getrank($pUId),
                                              "avatar" => useravatar($pUId),
                                              "edited" => $get['edited'],
@@ -124,7 +124,7 @@ if(defined('_Forum')) {
                                              "f_abo" => "",
                                              "show" => $show));
 
-    echo '<table class="mainContent" cellspacing="1" style="margin-top:17px">'.$index.'</table>';
+    echo utf8_encode('<table class="mainContent" cellspacing="1" style="margin-top:17px">'.$index.'</table>');
 
     if(!mysqli_persistconns)
         $mysql->close(); //MySQL
@@ -182,7 +182,7 @@ if(defined('_Forum')) {
 
       if(empty($getu['hp'])) $hp = "";
       else $hp = show(_hpicon_forum, array("hp" => $getu['hp']));
-      if(data("signatur",$pUId)) $sig = _sig.bbcode(data("signatur",$pUId),true);
+      if(data("signatur",$pUId)) $sig = _sig.bbcode(data("signatur",$pUId));
       else $sig = "";
     } else {
       $icq = "";
@@ -196,7 +196,7 @@ if(defined('_Forum')) {
                                                   "postnr" => "#".($i+($page-1)*config('m_fposts')),
                                                   "p" => ($i+($page-1)*config('m_fposts')),
                                                   "class" => 'class="commentsRight"',
-                                                  "text" => bbcode(re($_POST['eintrag']),true).$editedby,
+                                                  "text" => bbcode(re($_POST['eintrag'])).$editedby,
                                                   "pn" => $pn,
                                                   "icq" => $icq,
                                                   "hp" => $hp,
@@ -212,7 +212,7 @@ if(defined('_Forum')) {
                                                   "onoff" => $onoff,
                                                   "p" => ""));
 
-    echo '<table class="mainContent" cellspacing="1" style="margin-top:17px">'.$index.'</table>';
+    echo utf8_encode('<table class="mainContent" cellspacing="1" style="margin-top:17px">'.$index.'</table>');
 
     if(!mysqli_persistconns)
         $mysql->close(); //MySQL
