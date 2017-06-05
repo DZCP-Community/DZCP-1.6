@@ -478,7 +478,7 @@ if(defined('_UserMenu')) {
                                                                     "p" => $lp +1,
                                                                     "intern" => $intern,
                                                                     "wichtig" => $wichtig,
-                                                                    "lpost" => cut(re($text), 100),
+                                                                    "lpost" => cut(strip_tags(re($text)), 100),
                                                                     "kat" => re($getft['kattopic']),
                                                                     "titel" => re($getft['topic']),
                                                                     "kid" => $getft['kid']));
