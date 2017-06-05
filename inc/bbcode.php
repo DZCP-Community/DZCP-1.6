@@ -1158,7 +1158,7 @@ function highlight($word) {
 
 //-> Counter updaten
 function updateCounter() {
-    global $db,$reload,$today,$datum,$userip;
+    global $db,$reload,$today,$datum,$userip,$CrawlerDetect;
     $ipcheck = db("SELECT id,ip,datum FROM ".$db['c_ips']." WHERE ip = '".$userip."' AND FROM_UNIXTIME(datum,'%d.%m.%Y') = '".date("d.m.Y")."'");
     db("DELETE FROM ".$db['c_ips']." WHERE datum+".$reload." <= ".time()." OR FROM_UNIXTIME(datum,'%d.%m.%Y') != '".date("d.m.Y")."'");
     $count = db("SELECT id,visitors,today FROM ".$db['counter']." WHERE today = '".$today."'");
@@ -1166,21 +1166,28 @@ function updateCounter() {
         $get = _fetch($ipcheck);
         $sperrzeit = $get['datum']+$reload;
         if($sperrzeit <= time()) {
-            db("DELETE FROM ".$db['c_ips']." WHERE ip = '".$userip."'");
-
             if(_rows($count))
                 db("UPDATE ".$db['counter']." SET `visitors` = visitors+1 WHERE today = '".$today."'");
             else
                 db("INSERT INTO ".$db['counter']." SET `visitors` = '1', `today` = '".$today."'");
 
-            db("INSERT INTO ".$db['c_ips']." SET `ip` = '".$userip."', `datum` = '".((int)$datum)."'");
+            if(db("SELECT id FROM ".$db['c_ips']." WHERE ip = '".$userip."';",true)) {
+                db("UPDATE ".$db['c_ips']." SET `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."' WHERE `ip` = '".$userip."';");
+            } else {
+                db("INSERT INTO ".$db['c_ips']." SET `ip` = '".$userip."', `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."';");
+            }
         }
     } else {
         if(_rows($count))
             db("UPDATE ".$db['counter']." SET `visitors` = visitors+1 WHERE today = '".$today."'");
-       else
+        else
             db("INSERT INTO ".$db['counter']." SET `visitors` = '1', `today` = '".$today."'");
-        db("INSERT INTO ".$db['c_ips']." SET `ip` = '".$userip."', `datum` = '".((int)$datum)."'");
+
+        if(db("SELECT id FROM ".$db['c_ips']." WHERE ip = '".$userip."';",true)) {
+            db("UPDATE ".$db['c_ips']." SET `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."' WHERE `ip` = '".$userip."';");
+        } else {
+            db("INSERT INTO ".$db['c_ips']." SET `ip` = '".$userip."', `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."';");
+        }
     }
 }
 
