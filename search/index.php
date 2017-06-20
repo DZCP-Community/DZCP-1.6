@@ -151,7 +151,7 @@ switch ($action):
             } unset($strkat,$k,$y,$kat);
 
             //Intern
-            $dosearch .= (!permission("intforum")) ? ' AND s4.`intern` = 0' : ' AND s4.`intern` = 1';
+            $dosearch .= (!permission("intforum")) ? ' AND s4.`intern` = 0' : '';
 
             //SQL
             $qry = db("SELECT s1.`id`,s1.`topic`,s1.`kid`,s1.`t_reg`,s1.`t_email`,s1.`t_nick`,s1.`hits`,s4.`intern`,s3.`id` "
