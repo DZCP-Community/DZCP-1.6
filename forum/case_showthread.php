@@ -115,7 +115,7 @@ if(defined('_Forum')) {
           else $hp = show(_hpicon_forum, array("hp" => $getp['hp']));
         }
 
-        $nick = autor($getp['reg'], '', $getp['nick'], re($getp['email']));
+        $nick = autor($getp['reg'], '', re($getp['nick']), re($getp['email']));
         if(!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor')
         {
           if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';
@@ -283,7 +283,7 @@ if(defined('_Forum')) {
         else $hp = show(_hpicon_forum, array("hp" => $get['t_hp']));
       }
 
-      $nick = autor($get['t_reg'], '', $get['t_nick'], $get['t_email']);
+      $nick = autor($get['t_reg'], '', re($get['t_nick']), re($get['t_email']));
       if(!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor')
       {
         if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';

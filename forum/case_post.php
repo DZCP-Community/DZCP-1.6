@@ -269,7 +269,7 @@ if(defined('_Forum')) {
             }
 
 			$email =  ($chkMe >= 1 ? $email : '');
-            $lastpost = show($dir."/forum_posts_show", array("nick" => cleanautor($getl['reg'], '', $getl['nick'], re($getl['email'])),
+            $lastpost = show($dir."/forum_posts_show", array("nick" => cleanautor($getl['reg'], '', re($getl['nick']), re(re($getl['email']))),
                                                              "postnr" => "",
                                                              "text" => $text,
                                                              "status" => getrank($getl['reg']),
@@ -514,7 +514,7 @@ if(defined('_Forum')) {
                             else $hp = show(_hpicon_forum, array("hp" => $getl['hp']));
                         }
 
-                        $nick = autor($getl['reg'], '', $getl['nick'], re($getl['email']));
+                        $nick = autor($getl['reg'], '', re($getl['nick']), re($getl['email']));
                         if(!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor')
                         {
                             if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';
