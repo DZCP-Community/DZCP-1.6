@@ -480,6 +480,10 @@ define('_search_type' , 'Search type');
 define('_search_type_autor' , 'Find authors');
 define('_search_type_text' , 'Search in text and topics');
 define('_search_in' , 'Search in...');
+define('_search_no_entrys_yet', '
+<tr>
+  <td class="contentMainFirst" colspan="[colspan]" align="center">No search results found!</td>
+</tr>');
 define('_user_profile_of' , 'Userprofile from ');
 define('_sites_not_available' , 'The requested site does not exist!');
 define('_wrote' , 'wrote');

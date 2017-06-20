@@ -477,6 +477,10 @@ define('_search_type', 'Suchtyp');
 define('_search_type_autor', 'Autoren finden');
 define('_search_type_text', 'Text und Topic durchsuchen');
 define('_search_in', 'Suchen in...');
+define('_search_no_entrys_yet', '
+<tr>
+  <td class="contentMainFirst" colspan="[colspan]" align="center">Keine Suchergebnisse vorhanden!</td>
+</tr>');
 define('_user_profile_of', 'Userprofil von ');
 define('_sites_not_available', 'Die angeforderte Seite existiert nicht!');
 define('_wrote', 'schrieb');
