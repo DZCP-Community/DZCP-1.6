@@ -162,6 +162,16 @@ class CrawlerDetect
     }
 
     /**
+     * Set the user agent.
+     *
+     * @param string|null $userAgent
+     */
+    public function getUserAgent()
+    {
+        return $this->userAgent;
+    }
+
+    /**
      * Check user agent string against the regex.
      *
      * @param string|null $userAgent
