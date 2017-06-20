@@ -12,11 +12,11 @@ function show_dzcp_version() {
         if(!$config_cache['use_cache'] || !$cache->isExisting('dzcp_version')) {
 			$input = json_encode(array('event' => 'version', 'dzcp' => _version, 'edition' => _edition, 'type' => 'xml'));
             if($dzcp_online_v = get_external_contents('http://www.dzcp.de/api.php?input='.$input)) {
-		    $cache->set('dzcp_version',$dzcp_online_v);
-	    }
+		        $cache->set('dzcp_version',$dzcp_online_v);
+	        }
         } else
             $dzcp_online_v = $cache->get('dzcp_version');
-	unset($input);
+	    unset($input);
 
         if($dzcp_online_v && !empty($dzcp_online_v) && strpos($dzcp_online_v, 'not found') === false) {
             $xml = simplexml_load_string($dzcp_online_v, 'SimpleXMLElement', LIBXML_NOCDATA);
