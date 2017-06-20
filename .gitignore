@@ -1,5 +1,6 @@
 *.project
 inc/mysql.php
+.idea
 rss.xml
 rss.xml
 *.prefs
