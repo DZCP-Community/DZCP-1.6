@@ -42,24 +42,22 @@ switch ($action):
                 $sep = '&';
 
             $getstr .= $sep.$key.'='.$value;
-
             if(preg_match("#k_#",$key))
                 $strkat .= $key.'|';
         }
 
         if(permission("intforum")) {
-            $qry = db("SELECT * FROM ".$db['f_kats']." ORDER BY kid");
+            $qry = db("SELECT `id`,`name` FROM `".$db['f_kats']."` ORDER BY `kid`;");
         } else {
-            $qry = db("SELECT * FROM ".$db['f_kats']." WHERE intern = 0 ORDER BY kid");
+            $qry = db("SELECT `id`,`name` FROM `".$db['f_kats']."` WHERE `intern` = 0 ORDER BY `kid`;");
         }
 
         while($get = _fetch($qry)) {
             $fkats .= '<li><label class="searchKat" style="text-align:center">'.re($get['name']).'</label></li>';
-
             $showt = "";
-            $qrys = db("SELECT * FROM ".$db['f_skats']." WHERE sid = '".$get['id']."' ORDER BY kattopic");
+            $qrys = db("SELECT `id`,`kattopic` FROM `".$db['f_skats']."` WHERE `sid` = ".$get['id']." ORDER BY `kattopic`;");
             while($gets = _fetch($qrys)) {
-                $intF = db("SELECT * FROM ".$db['f_access']." WHERE user = '".$_SESSION['id']."' AND forum = '".$gets['id']."'",true);
+                $intF = db("SELECT `id` FROM `".$db['f_access']."` WHERE `user` = ".$userid." AND `forum` = ".$gets['id'].";",true);
                 if($get['intern'] == 0 || (($get['intern'] == 1 && $intF) || $chkMe == 4)) {
                     if(preg_match("#k_".$gets['id']."\|#",$strkat))
                         $kcheck = 'checked="checked"';
@@ -69,7 +67,7 @@ switch ($action):
                     $fkats .= '<li><label class="search" for="k_'.$gets['id'].'"><input type="checkbox" class="chksearch" name="k_'.$gets['id'].'" id="k_'.$gets['id'].'" '.$kcheck.' onclick="DZCP.hideForumFirst()" value="true" />&nbsp;&nbsp;'.re($gets['kattopic']).'</label></li>';
                 }
             }
-        }
+        } unset($get,$gets,$qry,$qrys,$intF,$kcheck);
 
         //Auswertung
         if($do == 'search' && !empty($_GET['search']) && $_GET['search'] != _search_word) {
@@ -244,7 +242,7 @@ switch ($action):
             $all_board = 'checked="checked"';
         }
 
-        $index = show($dir."/search", array("head" => /*_search_head*/_forum_search_head,
+        $index = show($dir."/search", array("head" => _forum_search_head,
                                                 "searchwords" => _search_word,
                                                 "board" => _forum,
                                                 "fkats" => $fkats,
