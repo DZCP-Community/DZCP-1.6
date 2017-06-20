@@ -104,7 +104,7 @@ if(defined('_UserMenu')) {
           `originid`     = '".up(trim($_POST['originid']))."',
           `battlenetid`  = '".up(trim($_POST['battlenetid']))."',
                   `steamid`      = '".up(trim($_POST['steamid']))."',
-          `skypename`    = '".up(trim($_POST['skypename']))."',
+				`skypename`    = '".up(trim($_POST['skypename']))."',
                   `signatur`     = '".up($_POST['sig'],1)."',
                   `beschreibung` = '".up($_POST['ich'],1)."',
                   `perm_gb`      = '".(int)($_POST['visibility_gb'])."',
