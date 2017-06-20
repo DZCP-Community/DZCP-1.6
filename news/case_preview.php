@@ -68,7 +68,7 @@ if(defined('_News')) {
                                                "text" => bbcode($_POST['newstext']),
                                                "datum" => date("d.m.y H:i", time())._uhr,
                                                "links" => $links,
-                                               "autor" => autor($_SESSION['id'])));
+                                               "autor" => autor($userid)));
 
         echo utf8_encode('<table class="mainContent" cellspacing="1">'.$index.'</table>');
 
