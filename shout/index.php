@@ -87,7 +87,7 @@ case 'archiv';
     $is_num = preg_match("#\d#", re($get['email']));
 
     if($is_num && !check_email(re($get['email']))) $nick = autor(re($get['email']));
-    else $nick = '<a href="mailto:'.re($get['email']).'" title="'.$get['nick'].'">'.cut($get['nick'], config('l_shoutnick')).'</a>';
+    else $nick = '<a href="mailto:'.re($get['email']).'" title="'.$get['nick'].'">'.cut($get['nick'], config('l_shoutnick'),true,false).'</a>';
 
     $class = ($color % 2) ? "contentMainTop" : "contentMainFirst"; $color++;
 
