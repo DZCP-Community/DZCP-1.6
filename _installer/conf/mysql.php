@@ -180,6 +180,7 @@ function install_mysql($login, $nick, $pwd, $email)
              `id` int(10) NOT NULL auto_increment,
              `ip` varchar(30) NOT NULL default '0',
              `datum` int(20) NOT NULL default '0',
+             `agent` text DEFAULT NULL
              PRIMARY KEY  (`id`)
              ) ");
   $qry = db("DROP TABLE IF EXISTS ".$db['c_who']."");
@@ -1534,7 +1535,7 @@ function update_mysql_1_6()
         db("UPDATE ".$db['f_skats']." SET `pos` = '".$get['id']."' WHERE `id` = '".$get['id']."'");
      }
 
-     //-> Alte Artikelkommentare löschen wo für es keinen Artikel mehr gibt
+     //-> Alte Artikelkommentare lï¿½schen wo fï¿½r es keinen Artikel mehr gibt
      $qry = db("SELECT id FROM `".$db['artikel']."`"); $artikel_index = array();
      while($get = mysqli_fetch_assoc($qry)){ $artikel_index[$get['id']] = true; }
 
