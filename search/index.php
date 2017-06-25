@@ -33,7 +33,7 @@ switch ($action):
         else
             $tcheck1 = 'checked="checked"';
 
-        $i=0;
+        $i=0; $strkat = ''; $getstr = '';
         for(reset($_GET); list($key,$value)=each($_GET);$i++) {
             $key = trim($key);
             if($i == 0)
@@ -52,13 +52,14 @@ switch ($action):
             $qry = db("SELECT `id`,`name`,`intern` FROM `".$db['f_kats']."` WHERE `intern` = 0 ORDER BY `kid`;");
         }
 
+		$fkats = '';
         while($get = _fetch($qry)) {
             $fkats .= '<li><label class="searchKat" style="text-align:center">'.re($get['name']).'</label></li>';
             $showt = "";
             $qrys = db("SELECT `id`,`kattopic` FROM `".$db['f_skats']."` WHERE `sid` = ".$get['id']." ORDER BY `kattopic`;");
             while($gets = _fetch($qrys)) {
                 $intF = db("SELECT `id` FROM `".$db['f_access']."` WHERE `user` = ".$userid." AND `forum` = ".$gets['id'].";",true);
-                if($get['intern'] == 0 || (($get['intern'] && $intF) || $chkMe == 4)) {
+                if(!$get['intern'] || (($get['intern'] && $intF) || $chkMe == 4)) {
                     if(preg_match("#k_".$gets['id']."\|#",$strkat))
                         $kcheck = 'checked="checked"';
                     else
@@ -231,7 +232,8 @@ switch ($action):
         }
 
         //Diverse Abfragen
-        if($_GET['searchplugin'] == true) {
+		$chk_con = ''; $all_board = '';
+        if(isset($_GET['searchplugin'])) {
             $onclick = 'onclick="more(1)" style="cursor:pointer"';
             $img = '<img id="img1" src="../inc/images/expand.gif" alt="" />';
             $style = 'style="display:none"';
@@ -240,6 +242,9 @@ switch ($action):
             if($_GET['con'] == 'or') $chk_con = 'selected="selected"';
         } else {
             $all_board = 'checked="checked"';
+            $style = '';
+            $onclick = '';
+            $img = '';
         }
 
         $index = show($dir."/search", array("head" => _forum_search_head,
