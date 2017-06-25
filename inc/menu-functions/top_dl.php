@@ -17,7 +17,7 @@ function top_dl() {
             }
 
             $top_dl .= show("menu/top_dl", array("id" => $get['id'],
-                                                 "titel" => cut(re($get['download']),config('l_topdl')),
+                                                 "titel" => cut(re($get['download']),config('l_topdl'),true,false),
                                                  "info" => $info,
                                                  "hits" => $get['hits']));
         }

@@ -196,7 +196,7 @@ switch ($action):
                         $lpdate = $getlp['date'];
                     } unset($getlp,$qrylp);
 
-                    $threadlink = show(_forum_thread_search_link, array("topic" => cut(re($get['topic']),config('l_forumtopic')),
+                    $threadlink = show(_forum_thread_search_link, array("topic" => cut(re($get['topic']),config('l_forumtopic'),true,false),
                                                                             "id" => $get['id'],
                                                                             "sticky" => $sticky,
                                                                             "hl" => $_GET['search'],
@@ -207,7 +207,7 @@ switch ($action):
                     $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
                     $results .= show($dir."/forum_search_results", array("new" => check_new($get['lp']),
                                                                              "topic" => $threadlink,
-                                                                             "subtopic" => cut(re($get['subtopic']),config('l_forumsubtopic')),
+                                                                             "subtopic" => cut(re($get['subtopic']),config('l_forumsubtopic'),true,false),
                                                                              "hits" => $get['hits'],
                                                                              "replys" => cnt($db['f_posts'], " WHERE sid = '".$get['id']."'"),
                                                                              "class" => $class,

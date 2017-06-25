@@ -20,7 +20,7 @@ function l_wars() {
                 $info = 'onmouseover="DZCP.showInfo(\''.jsconvert(re($get['name'])).' vs. '.jsconvert(re($get['gegner'])).'\', \''._played_at.';'._cw_xonx.';'._result.';'._comments_head.'\', \''.date("d.m.Y H:i", $get['datum'])._uhr.';'.jsconvert(re($get['xonx'])).';'.cw_result_nopic_nocolor($get['punkte'],$get['gpunkte']).';'.cnt($db['cw_comments'], "WHERE cw = '".$get['id']."'").'\')" onmouseout="DZCP.hideInfo()"';
 
             $lwars .= show("menu/last_wars", array("id" => $get['id'],
-                                                   "clantag" => re(cut($get['clantag'],config('l_lwars'))),
+                                                   "clantag" => re(cut($get['clantag'],config('l_lwars'),true,false)),
                                                    "icon" => re($get['icon']),
                                                    "info" => $info,
                                                    "result" => cw_result_pic($get['punkte'],$get['gpunkte'])));

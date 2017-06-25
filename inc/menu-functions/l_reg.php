@@ -14,7 +14,7 @@ function l_reg() {
     $lreg = '';
     if(_rows($qry)) {
         while($get = _fetch($qry)) {
-          $lreg .= show("menu/last_reg", array("nick" => re(cut($get['nick'], config('l_lreg'))),
+          $lreg .= show("menu/last_reg", array("nick" => re(cut($get['nick'], config('l_lreg'),true,false)),
                                                "country" => flag($get['country']),
                                                "reg" => date("d.m.", $get['regdatum']),
                                                "id" => $get['id']));

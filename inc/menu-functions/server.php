@@ -92,11 +92,11 @@ function server($serverID = 0) {
         if($count == 0)
             $players = 'Keine Spieler';
 
-        $servername = jsconvert(re(cut($server['hostname'],config('l_servernavi'))));
+        $servername = jsconvert(re(cut($server['hostname'],config('l_servernavi'),true,false)));
         $servernameout = (!empty($servername)) ? $servername : "no name available";
         $info = 'onmouseover="DZCP.showInfo(\''.$servernameout.'\', \'IP/Port;'.$pwd_info.';Game;Map;Players Online;On the Game\', \''.$get['ip'].':'.$get['port'].';'.$pwd_txt.';'.jsconvert(re($game_icon)).''.$server_name_short.';'.(empty($server['mapname']) ? '-' : re($server['mapname'])).';'.$server['players'].' / '.$server['maxplayers'].';'.$players.'\')" onmouseout="DZCP.hideInfo()"';
 
-        $servernavi .= show("menu/server", array("host" => re(cut($server['hostname'],config('l_servernavi'))),
+        $servernavi .= show("menu/server", array("host" => re(cut($server['hostname'],config('l_servernavi'),true,false)),
                                                 "ip" => $get['ip'],
                                                 "map" => (empty($server['mapname']) ? '-' : re($server['mapname'])),
                                                 "mappic" => $image_map,

@@ -582,7 +582,7 @@ if(_adminMenu != 'true') exit;
 
           $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
 
-          $show .= show($dir."/sponsors_show", array("link" => cut(re($get['link']),40),
+          $show .= show($dir."/sponsors_show", array("link" => cut(re($get['link']),40,true,false),
                                                        "class" => $class,
                                                        "name" => $get['name'],
                                                        "edit" => $edit,

@@ -124,7 +124,7 @@ if(_adminMenu != 'true') exit;
 
           $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
 
-          $show1 .= show($dir."/links_show", array("link" => cut(re($get['url']),40),
+          $show1 .= show($dir."/links_show", array("link" => cut(re($get['url']),40,true,false),
                                                    "class" => $class,
                                                    "type" => "links",
                                                    "edit" => $edit,

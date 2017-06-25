@@ -23,7 +23,7 @@ function l_news() {
               $info = 'onmouseover="DZCP.showInfo(\''.jsconvert(re($get['titel'])).'\', \''._datum.';'._autor.';'._news_admin_kat.';'._comments_head.'\', \''.date("d.m.Y H:i", $get['datum'])._uhr.';'.fabo_autor($get['autor']).';'.jsconvert(re($getkat['kategorie'])).';'.cnt($db['newscomments'],"WHERE news = '".$get['id']."'").'\')" onmouseout="DZCP.hideInfo()"';
 
           $l_news .= show("menu/last_news", array("id" => $get['id'],
-                                                  "titel" => re(cut($get['titel'],config('l_lnews'))),
+                                                  "titel" => re(cut($get['titel'],config('l_lnews'),true,false)),
                                                   "datum" => date("d.m.Y", $get['datum']),
                                                   "info" => $info));
         }
