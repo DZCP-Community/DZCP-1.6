@@ -47,9 +47,9 @@ switch ($action):
         }
 
         if(permission("intforum")) {
-            $qry = db("SELECT `id`,`name` FROM `".$db['f_kats']."` ORDER BY `kid`;");
+            $qry = db("SELECT `id`,`name`,`intern` FROM `".$db['f_kats']."` ORDER BY `kid`;");
         } else {
-            $qry = db("SELECT `id`,`name` FROM `".$db['f_kats']."` WHERE `intern` = 0 ORDER BY `kid`;");
+            $qry = db("SELECT `id`,`name`,`intern` FROM `".$db['f_kats']."` WHERE `intern` = 0 ORDER BY `kid`;");
         }
 
         while($get = _fetch($qry)) {
@@ -58,7 +58,7 @@ switch ($action):
             $qrys = db("SELECT `id`,`kattopic` FROM `".$db['f_skats']."` WHERE `sid` = ".$get['id']." ORDER BY `kattopic`;");
             while($gets = _fetch($qrys)) {
                 $intF = db("SELECT `id` FROM `".$db['f_access']."` WHERE `user` = ".$userid." AND `forum` = ".$gets['id'].";",true);
-                if($get['intern'] == 0 || (($get['intern'] == 1 && $intF) || $chkMe == 4)) {
+                if($get['intern'] == 0 || (($get['intern'] && $intF) || $chkMe == 4)) {
                     if(preg_match("#k_".$gets['id']."\|#",$strkat))
                         $kcheck = 'checked="checked"';
                     else
