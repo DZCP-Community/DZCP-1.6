@@ -290,8 +290,7 @@ unset($files);
 $designpath = '../inc/_templates_/'.$tmpdir;
 
 //-> Languagefiles einlesen
-function lang($lng,$pfad='') {
-    global $charset;
+function lang($lng) {
     if(!file_exists(basePath."/inc/lang/languages/".$lng.".php"))
     {
         $files = get_files(basePath.'/inc/lang/languages/',false,true,array('php'));
@@ -480,7 +479,7 @@ function rootAdmin($userid=0) {
 //-> PHP-Code farbig anzeigen
 function highlight_text($txt) {
     while(preg_match("=\[php\](.*)\[/php\]=Uis",$txt)!=FALSE) {
-        $res = preg_match("=\[php\](.*)\[/php\]=Uis",$txt,$matches);
+        preg_match("=\[php\](.*)\[/php\]=Uis",$txt,$matches);
         $src = $matches[1];
         $src = str_replace('<?php','',$src);
         $src = str_replace('<?php','',$src);
@@ -948,8 +947,13 @@ function cut($text,$length='',$dots = true,$html = true,$ending = '',$exact = fa
 
     $ending = $dots || !empty($ending) ? (!empty($ending) ? $ending : '...') : '';
 
-    if(!$html)
+    if(!$html) {
+        if(strlen($text) <= $length) {
+            return $text;
+        }
+
         return substr($text, 0, $length).$ending;
+    }
 
     if ($considerHtml) {
         // if the plain text is shorter than the maximum length, return the whole text
