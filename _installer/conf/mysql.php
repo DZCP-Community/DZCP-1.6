@@ -1572,5 +1572,5 @@ function update_mysql_1_6_0_4()
 {
     global $db;
     db("ALTER TABLE `".$db['ipcheck']."` ADD `created` INT(11) NOT NULL DEFAULT '0' AFTER `time`;");
-	db("ALTER TABLE `".$db['counter_ips']."` ADD  `agent` text DEFAULT NULL AFTER `datum`;");
+	db("ALTER TABLE `".$db['c_ips']."` ADD  `agent` text DEFAULT NULL AFTER `datum`;");
 }
