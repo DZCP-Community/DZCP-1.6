@@ -1794,7 +1794,6 @@ function userstats($what,$tid=0) {
 
 //- Funktion zum versenden von Emails
 function sendMail($mailto,$subject,$content) {
-    global $language;
     $mail = new PHPMailer;
     if(phpmailer_use_smtp) {
         $mail->isSMTP();
@@ -1811,8 +1810,18 @@ function sendMail($mailto,$subject,$content) {
     $mail->Subject = $subject;
     $mail->msgHTML($content);
     $mail->AltBody = bbcode_nletter_plain($content);
-    $mail->setLanguage(($language=='deutsch')?'de':'en', basePath.'/inc/lang/sendmail/');
+    $mail->setLanguage(language_short_tag(), basePath.'/inc/lang/sendmail/');
     return $mail->Send();
+}
+
+function language_short_tag() {
+    global $language;
+    switch ($language) {
+        case "spanish": return 'es';
+        case "deutsch": return 'de';
+        case "russian": return 'ru';
+        default: return 'en';
+    }
 }
 
 function check_msg_emal() {
@@ -2534,13 +2543,13 @@ include_once(basePath.'/inc/menu-functions/navi.php');
 function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
 {
     global $db,$userid,$userip,$tmpdir,$chkMe,$charset,$mysql,$isSpider;
-    global $designpath,$language,$cp_color,$copyright,$time_start;
+    global $designpath,$language,$cp_color,$time_start;
 
     // Timer Stop
     $time = round(generatetime() - $time_start,4);
 
     // JS-Dateine einbinden
-    $lng = ($language=='deutsch')?'de':'en';
+    $lng = language_short_tag();
     $edr = ($wysiwyg=='_word')?'advanced':'normal';
     $lcolor = ($cp_color==1)?'lcolor=true;':'';
     $java_vars = '<script language="javascript" type="text/javascript">var maxW = '.config('maxwidth').',lng = \''.$lng.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
