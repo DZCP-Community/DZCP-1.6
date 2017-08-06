@@ -607,6 +607,10 @@ define('_search_type', 'Тип Поиска');
 define('_search_type_autor', 'Найти писателя');
 define('_search_type_text', 'Поиск текста и тем');
 define('_search_in', 'Поиск в...');
+define('_search_no_entrys_yet', '
+<tr>
+  <td class="contentMainFirst" colspan="[colspan]" align="center">Ничего не найдено!</td>
+</tr>');
 define('_user_profile_of', 'Профиль пользователя ');
 define('_sites_not_available', 'Страница, которую вы запросили, не существует!');
 define('_wrote', 'написал');
