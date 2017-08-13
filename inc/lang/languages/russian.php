@@ -1,6 +1,6 @@
 ﻿<?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final /// Translation Version 0.4ru
+ * DZCP - deV!L`z ClanPortal 1.6 Final /// Translation Version 0.5ru
  * http://www.dzcp.de
  * Russian Translation by www.russian-speznas.com /// xero.ru
  * Russian Translation by www.russian-instinct.ru /// xero.ru
