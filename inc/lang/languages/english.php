@@ -4,7 +4,9 @@
  * http://www.dzcp.de
  */
 
-$charset = 'iso-8859-1';
+
+ 
+$charset = 'utf-8';
 header("Content-type: text/html; charset=".$charset);
 
 ## ADDED / REDEFINED FOR 1.6 Final
@@ -36,7 +38,6 @@ define('_txt_server', 'Server');
 define('_txt_teamspeak', 'Teamspeak');
 define('_txt_top_dl', 'Top Downloads');
 define('_txt_uotm', 'User of the Moment');
-
 define('_gal_pics', 'Pics in Gallery');
 define('_config_slideshow', 'Slideshow');
 define('_perm_slideshow', 'Manage Slideshow Pics');
@@ -60,31 +61,24 @@ define('_slider_position_lazy', '<option value="lazy">- no change -</option>');
 define('_slider_url', 'URL');
 define('_slider_show_title', 'Show title');
 define('_forum_kat', 'Categorie');
-
 define('_artikel_userimage', 'Own Articlepicture');
 define('_artikelpic_del', 'delete Articlepicture?');
 define('_artikelpic_deleted', 'Articlepicture successfully deleted');
-
 define('_news_userimage', 'Own Newspicture');
 define('_newspic_del', 'delete Newspicture?');
 define('_newspic_deleted', 'Newspicture successfully deleted');
 define('_max', 'max.');
-
 define('_cw_screenshot_deleted', 'Screenshot successfully deleted');
-
 define('_perm_galleryintern','View internal Gallery');
 define('_perm_dlintern','View internal Downloads');
-
 define('_config_url_linked_head', "URLs linking");
 define('_config_c_m_membermap', 'Membermap');
 define('_ts_settings_customicon', 'custom icons downloading');
 define('_ts_settings_showchannels', 'Only show channels with user');
 define('_ts_settings_showchannels_desc', 'If this is on, they will only show channels there are users.');
-
 define('_upload_error', 'Failed to upload the file!');
 define('_login_banned', 'Your account has been banned by administrator!');
 define('_lobby_no_mymessages', '<a href="../user/?action=msg">You have no new messages!</a>');
-
 define('_perm_smileys', 'manage smileys');
 define('_perm_protocol', 'can see admin protocol');
 define('_perm_support', 'can see support page');
@@ -96,10 +90,8 @@ define('_perm_config', 'manage configuration page');
 define('_perm_positions', 'manage user ranks');
 define('_perm_partners', 'manage partner');
 define('_perm_profile', 'manage profile fields');
-
 define('_dzcp_vcheck', 'The DZCP Version Checker will inform you about new DZCP updates and shows you whether your version is up to date.<br><br><span class=fontBold>Description:</span><br><font color=#17D427>Green:</font>Up to Date!<br><font color=#FFFF00>Yellow:</font> Could not connect to Server</br><font color=#FF0000>Red:</font>A new update available!');
 define('_cw_dont_exist', 'The specified clanwar ID does not exist!');
-
 //Steam
 define('_steam', 'Steam');
 define('_steam_online', 'Online');
@@ -108,7 +100,6 @@ define('_steam_offline_simple', 'Offline.');
 define('_steam_in_game', 'In Game');
 define('_config_steam_apikey', 'Steam API-Key');
 define('_steam_apikey_info', 'Registering a Steam API Key: <a href="http://steamcommunity.com/dev/apikey/" target="_blank">steamcommunity.com</a>');
-
 define('_years', 'Years');
 define('_year', 'Year');
 define('_months', 'Months');
@@ -123,13 +114,9 @@ define('_minutes', 'Minutes');
 define('_minute', 'Minute');
 define('_seconds', 'Seconds');
 define('_second', 'Second');
-
 ## ADDED / REDEFINED FOR 1.5 Final
-define('_side_membermap', 'Membermap');
 define('_id_dont_exist', 'The requested ID does not exist!');
 define('_perm_editts', 'manage teamspeak server');
-define('_perm_receivecws', 'receive fight us form');
-
 ## ADDED / REDEFINED FOR 1.5.2
 define('_button_title_del_account' , 'User-Account delete');
 define('_confirm_del_account' , 'You really want to delete your Account on dzcp.de');
@@ -166,6 +153,7 @@ define('_config_double_post' , 'Forum double post');
 define('_config_fotum_vote' , 'Forum-Vote');
 define('_config_fotum_vote_info' , '<center>Here you can specify whether a Forum-Vote also Vote to be displayed.</center>');
 ## ADDED / REDEFINED FOR 1.5
+define('_side_membermap', 'Membermap');
 define('_installdir' , "<tr><td colspan=\"15\" class=\"contentMainFirst\"><br /><center>In case of security reasons, please remove the folder \"<b>/_installer</b>\" from your webserver! Only then the admin menu available!</center><br /></td></tr>");
 define('_no_ts' , 'no Teamspeak');
 define('_search_sites' , 'Sites');
@@ -192,7 +180,6 @@ define('_sq_banner' , 'Teambanner');
 define('_forum_abo_title' , 'Suscribe Thread');
 define('_forum_vote' , 'Vote');
 define('_admin_user_clanhead_info' , 'These permissions can be set <u>additional</u> to the permissions in the user ranks.');
-define('_user_noposi' , '<option value="lazy" class="dropdownKat">no user rank</option>');
 define('_config_positions_boardrights' , 'internal board permissions');
 define('_perm_awards' , 'manage awards');
 define('_perm_clankasse' , 'manage Clancash');
@@ -217,12 +204,12 @@ define('_perm_gallery' , 'manage galleries');
 define('_perm_glossar' , 'manage glossar');
 define('_perm_intnews' , 'can read internal news');
 define('_perm_joinus' , 'receive joinus form');
+define('_perm_receivecws', 'receive fight us form');
 define('_perm_news' , 'manage news');
 define('_perm_shoutbox' , 'Shoutbox admin');
 define('_perm_votes' , 'can see internal votes');
 define('_perm_gs_showpw' , 'can see gameserver password');
 define('_config_positions_rights' , 'Permissions');
-define('_config_positions' , 'User Ranks');
 define('_admin_pos' , 'User Ranks');
 define('_awaycal' , 'Away Calendar');
 define('_clear_away' , 'Away Calendar entrys?');
@@ -302,7 +289,6 @@ define('_contact_text_sendnews' , '
 <span class="fontBold">Title:</span> [titel]<p>&nbsp;</p><p>&nbsp;</p>
 <span class="fontUnder"><span class="fontBold">News:</span></span><p>&nbsp;</p>[text]<p>&nbsp;</p><p>&nbsp;</p>
 <span class="fontUnder"><span class="fontBold">Communication or notic:</span></span><p>&nbsp;</p>[info]');
-
 define('_msg_sendnews_user' , '
 <tr>
   <td align="center" class="contentMainTop"><span class="fontBold">In order for the other editors know that you will publish this news, <br /> please click on the following button. Thanks</span></td>
@@ -320,8 +306,8 @@ define('_msg_sendnews_user' , '
 </tr>');
 define('_msg_sendnews_done' , '
 <tr>
-  <td align="center" class="contentMainTop"><span class="fontRed">
-This news is / was made from the [user] edited!!!</span></td>
+  <td align="center" class="contentMainTop"><span class="fontRed">This news is / was made from the [user] edited!!!</span></td>
+
 </tr>');
 define('_send_news_done' , 'Thank you for your news!');
 define('_msg_all_leader' , "all Leader & Co-Leader");
@@ -347,6 +333,7 @@ define('_forum_vote_del' , 'Delete Vote');
 define('_forum_vote_preview' , 'Here the vote appears.');
 define('_forum_spam_text' , '[ltext]<p>&nbsp;</p><p>&nbsp;</p><span class="fontBold">Addendum by </span>[autor]:<p>&nbsp;</p>[ntext]');
 ####################################################################################
+define('_cw_screens_info' , 'jpg, gif and png files only!');
 define('_config_config' , 'Global Settings');
 define('_config_dladmin' , 'Downloads');
 define('_config_editor' , 'Sites');
@@ -401,7 +388,6 @@ define('_protocol_action' , 'Action');
 define('_protocol' , 'Admin protocol');
 define('_button_title_del_protocol' , 'Completely delete the protocol!');
 define('_protocol_deleted' , 'The admin protocol was successfull deleted!');
-
 define('_vote_no_answer' , 'You have to choose an answer!');
 define('_linkus_admin_edit' , 'Edit linkus');
 define('_config_linkus' , 'Linkus');
@@ -552,6 +538,8 @@ define('_admin_nletter' , 'Template for newsletter');
 define('_result' , 'Result');
 define('_opponent' , 'Opponent');
 define('_played_at' , 'Played at');
+define('_error_empty_nachricht', 'You must enter a message!');
+define('_links_empty_text', 'You must enter a banner address!');
 define('_login_secure_help' , 'To verify, put the two-digit number code in the inputfield.');
 define('_online_head_guests' , 'Guests online');
 define('_admin_first' , 'at first');
@@ -573,6 +561,7 @@ define('_config_serverliste' , 'Serverlist');
 define('_config_squads' , 'Teams');
 define('_config_backup' , 'Backup database');
 define('_config_news' , 'News-/Article categories');
+define('_config_positions' , 'User Ranks');
 define('_config_allgemein' , 'Configuration');
 define('_config_impressum' , 'Imprint');
 define('_config_clankasse' , 'Clan Cash');
@@ -595,8 +584,7 @@ define('_profil_sig' , 'Board signature');
 define('_akt_version' , 'DZCP Version');
 define('_forum_searchlink' , '- <a href="../search/">Board search</a> -');
 define('_msg_deleted' , 'The message was successfully deleted!');
-define('_info_reg_valid' , 'You successfully registered on this page!<br />
-Your password were send to your e-mail adress [email]');
+define('_info_reg_valid' , 'You successfully registered on this page!<br />Your password were send to your e-mail adress [email]');
 define('_edited_by' , '<br /><br /><i>last edited by [autor] at [time]</i>');
 define('_linkus_empty_text' , 'You have to indicate an url of the banner!');
 define('_gb_titel' , '<span class="fontBold">#[postid]</span> from [nick] [email] [hp] at [datum] on [zeit][uhr] [edit] [delete] [comment] [public]');
@@ -1061,7 +1049,6 @@ define('_member_squad_weare' , 'Alltogether we are <span class="fontBold">[cm] m
 ## Clanwars ##
 define('_cw_comments_head' , 'Comments');
 define('_cw_comments_add' , 'Write new comment');
-
 define('_cw_head_details' , 'Clanwar details');
 define('_cw_head_results' , 'Results');
 define('_cw_head_lineup' , 'Lineup');
@@ -1119,7 +1106,6 @@ define('_cw_head_legende' , 'Legend');
 define('_cw_nothing' , '<option value="lazy" class="" class="dropdownKat">--- change nothing ---</option>');
 define('_cw_screens' , 'Screenshots');
 define('_cw_new' , 'New');
-define('_cw_screens_info' , 'jpg, gif and png files only!');
 define('_clanwars_no_show' , 'No registered clanwar yet!');
 define('_cw_show_all' , '
 <tr>
@@ -1181,6 +1167,7 @@ define('_slist_serverip' , 'Serverip');
 define('_slist_slots' , 'Slots');
 define('_slist_add' , 'Insert server');
 define('_slist_serverport' , 'Serverport');
+define('_slist_addip', 'Click on the ServerIP to add in HLSW');
 define('_slist_added_msg' , 'New entry in the serverlist!');
 define('_slist_title' , 'Serverlist');
 define('_server_password' , 'Serverpassword');
@@ -1283,6 +1270,7 @@ define('_stats_dl_traffic' , 'Totally caused traffic');
 define('_stats_dl_hits' , 'Totally downloaded');
 ## User ##
 define('_profil_head' , '<span class="fontBold">Userprofile from [nick]</span> [[profilhits] times viewed]');
+define('_user_noposi' , '<option value="lazy" class="dropdownKat">no user rank</option>');
 define('_login_head' , 'Login');
 define('_new_pwd' , 'new password');
 define('_register_head' , 'Registration');
@@ -1543,6 +1531,7 @@ define('_upload_ava_head' , 'Useravatar');
 define('_upload_userava_info' , 'Only jpg, gif or png files with a maximum filesize of [userpicsize]KB!<br />The recommended dimension is 100px * 100px ');
 define('_upload_newskats_head' , 'Category pictures');
 ## Unzugeordnet ##
+define('_forum_no_last_post', 'Unfortunately, the last post can not be displayed!');
 define('_config_maxwidth' , 'Resize pictures automatically');
 define('_config_maxwidth_info' , 'Here you can adjust at which width a picture will be resized!');
 define('_forum_top_posts' , 'Top 5 poster');
@@ -1557,6 +1546,7 @@ define('_nav_no_lastwars' , 'No last wars yet!');
 define('_nav_no_ftopics' , 'No entry yet!');
 define('_gallery_folder_exists' , 'The indicated folder already exist!');
 define('_server_isnt_live' , 'The server isn`t set to a live status!');
+define('_target', 'new window');
 define('_rankings_edit_head' , 'Edit ranking');
 define('_fopen' , 'The webhoster of this site does not allow the function fopen() which is needed!');
 define('_and' , 'and');
@@ -1741,6 +1731,9 @@ define('_admin_server_new' , 'Insert server');
 define('_server_admin_added' , 'The server was successfully registered!');
 define('_empty_game' , 'You have to choose an icon!');
 define('_empty_servername' , 'You have to choose a server`s name!');
+define('_config_server_mapname', 'Mapname');
+define('_config_server_maps_head', 'Servermaps');
+define('_config_server_map_deleted', 'The map screen has been successfully deleted!');
 define('_admin_dlkat' , 'Download categories');
 define('_admin_download_kat' , 'Description');
 define('_dl_add_new' , '<a href="?admin=dl&amp;do=new">Insert new category</a>');
@@ -1753,7 +1746,7 @@ define('_dl_edit_head' , 'Edit download category');
 define('_dl_admin_edited' , 'The download category was successfully edited!');
 define('_config_global_head' , 'Configuration');
 define('_config_c_limits' , 'Limits');
-define('_config_c_limits_what' , 'Here you can adjust the amount of entrys which will be maximum shown');
+define('_config_c_limits_what' , 'Here you can adjust the amount of entries which will be maximum shown');
 define('_config_c_usergb' , 'User guestbook');
 define('_config_c_clankasse' , 'Clan Cash');
 define('_config_c_gb' , 'Guestbook');
@@ -1796,6 +1789,7 @@ define('_pos_edit_head' , 'Edit position');
 define('_pos_admin_edited' , 'The position was successfully edited!');
 define('_pos_admin_deleted' , 'The position was successfully deleted!');
 define('_pos_admin_added' , 'The position was successfully registered!');
+define('_admin_clankasse_add', '<a href="?admin=konto&amp;do=new">Add new name</a>');
 define('_clankasse_new_head' , 'Insert new in-/outpayment label');
 define('_clankasse_edit_head' , 'Edit in-/outpayment label');
 define('_clankasse_empty_kat' , 'You have to indicate an in-/outpayment label!');
@@ -1824,9 +1818,10 @@ define('_navi_type' , 'Type');
 define('_navi_wichtig' , 'Mark');
 define('_navi_space' , '<b>Blank line</b>');
 define('_navi_head' , 'Navigation administration');
+define('_navi_add', '<a href="?admin=navi&amp;do=add">Add new link</a>');
 define('_navi_add_head' , 'Insert link');
 define('_navi_edit_head' , 'Edit link');
-define('_navi_url_to' , 'Weiterleiten nach');
+define('_navi_url_to' , 'Forward to');
 define('_posi' , 'Position');
 define('_nach' , 'after');
 define('_navi_no_name' , 'You have to indicate a link`s name!');
@@ -1837,6 +1832,7 @@ define('_navi_deleted' , 'The link was successfully deleted!');
 define('_navi_edited' , 'The link was successfully edited!');
 define('_editor_head' , 'Insert site');
 define('_editor_name' , 'Site description');
+define('_editor_add', '<a href="?admin=editor&amp;do=add">Create new page</a>');
 define('_editor_add_head' , 'Insert site');
 define('_inhalt' , 'Content');
 define('_allow', 'Allow');
@@ -1848,6 +1844,8 @@ define('_editor_linkname' , 'Linkname');
 define('_editor_deleted' , 'The site was successfully deleted!');
 define('_editor_edit_head' , 'Edit site');
 define('_site_edited' , 'The site was successfully edited!');
+define('_navi_standard', 'The standard has been successfully restored!');
+define('_standard_sicher', 'Are you sure you want to restore the default?<br />All previously created links and new pages will be deleted!');
 define('_partners_head' , 'Partnerbuttons');
 define('_partners_button' , 'Button');
 define('_partners_add_head' , 'Insert partnerbutton');
@@ -1860,6 +1858,7 @@ define('_clear_head' , 'Clear database');
 define('_clear_news' , 'Newsentrys?');
 define('_clear_forum' , 'Boardentrys?');
 define('_clear_forum_info' , 'Boardentrys which are marked as <span class="fontWichtig">important</span> won`t be deleted!');
+define('_clear_misc', 'Others involve? (recommended)');
 define('_clear_days' , 'Delete entrys which are older than');
 define('_clear_what' , 'days');
 define('_clear_deleted' , 'The database was successfully cleared up!');
@@ -1877,7 +1876,9 @@ define('_smileys_error_type' , 'Only gif files are allowed!');
 define('_smileys_added' , 'The smiley was successfully registered!');
 define('_smileys_edited' , 'The smiley was successfully edited!');
 define('_smileys_deleted' , 'The smiley was successfully deleted!');
+define('_smileys_normals', 'Standard smileys (can not be deleted!)');
 define('_smileys_head' , 'Smiley editor');
+define('_smileys_customs', 'New Smileys');
 define('_smileys_smiley' , 'Smiley');
 define('_smileys_bbcode' , 'BBCode');
 define('_smileys_head_add' , 'Insert smiley');
