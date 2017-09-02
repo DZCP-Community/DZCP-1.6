@@ -1,6 +1,6 @@
 ﻿<?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final /// Translation Version 0.5ru
+ * DZCP - deV!L`z ClanPortal 1.6 Final /// Translation Version 0.6ru
  * http://www.dzcp.de
  * Russian Translation by www.russian-speznas.com /// xero.ru
  * Russian Translation by www.russian-instinct.ru /// xero.ru
@@ -8,7 +8,6 @@
 
 $charset = 'utf-8';
 header("Content-type: text/html; charset=".$charset);
-
 
 ## ADDED / REDEFINED FOR 1.6 Final
 define('_txt_navi_main', 'Главная Навигация');
@@ -39,76 +38,6 @@ define('_txt_server', 'Cервер');
 define('_txt_teamspeak', 'Teamspeak');
 define('_txt_top_dl', 'Топ закачек');
 define('_txt_uotm', 'Случайный пользователь');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 define('_gal_pics', 'Изображения в галерее');
 define('_config_slideshow', 'Слайд-шоу');
 define('_perm_slideshow', 'Слайд-шоу-Управление картинками');
@@ -132,31 +61,24 @@ define('_slider_position_lazy', '<option value="lazy">- не изменять -<
 define('_slider_url', 'Ссылка');
 define('_slider_show_title', 'Показать Название');
 define('_forum_kat', 'категория');
-
 define('_artikel_userimage', 'Собственные Изображение');
 define('_artikelpic_del', 'Удалить изображение?');
 define('_artikelpic_deleted', 'Изображение продукта успешно удаленo');
-
 define('_news_userimage', 'Собственные Изображение');
 define('_newspic_del', 'Удалить образ новостей?');
 define('_newspic_deleted', 'образ новостей успешно удаленo');
 define('_max', 'Макс.');
-
 define('_cw_screenshot_deleted', 'Скриншот успешно удален');
-
 define('_perm_galleryintern','Показать внутренняя галерея');
 define('_perm_dlintern','Показать  Загрузки');
-
 define('_config_url_linked_head', 'URLs связать');
 define('_config_c_m_membermap', 'Все пользователи на карте');
 define('_ts_settings_customicon', 'Скачать свои собственные иконки');
 define('_ts_settings_showchannels', 'Показать только каналы с пользователями');
 define('_ts_settings_showchannels_desc', 'Показать только каналы с пользователями');
-
 define('_upload_error', 'Не удалось загрузить файл!');
 define('_login_banned', 'Ваш аккаунт заблокирован администратором!');
 define('_lobby_no_mymessages', '<a href="../user/?action=msg">У вас нет новых сообщений!</a>');
-
 define('_perm_smileys', 'Редактировать смайлики');
 define('_perm_protocol', 'См протокол администратора');
 define('_perm_support', 'Смотрите страницу поддержки');
@@ -168,67 +90,8 @@ define('_perm_config', 'изменений конфигурации Страни
 define('_perm_positions', 'Управление рангами пользователей');
 define('_perm_partners', 'Управление партнеров');
 define('_perm_profile', 'Управление поля в профилe');
-
 define('_dzcp_vcheck', 'DZCP Versions Checker сообщает вам, если новая версия вышла и ваша текущая версия актуальнa.<br><br><span class=fontBold>описание:</span><br><font color=#17D427>зеленый:</font>Up to Date!<br><font color=#FFFF00>желтый:</font> Не удается подключиться к серверу<br><font color=#FF0000>Rot:</font>Существует новое обновление!');
 define('_cw_dont_exist', 'Clanwar-ID не существует!');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Steam
 define('_steam', 'Steam');
 define('_steam_online', 'Онлайн');
@@ -237,7 +100,6 @@ define('_steam_offline_simple', 'Офлайн.');
 define('_steam_in_game', 'В игре');
 define('_config_steam_apikey', 'Steam API-Key');
 define('_steam_apikey_info', 'Оформление Steam API-Keys: <a href="http://steamcommunity.com/dev/apikey/" target="_blank">steamcommunity.com</a>');
-
 define('_years', 'Лет');
 define('_year', 'год');
 define('_months', 'месяцев');
@@ -252,12 +114,9 @@ define('_minutes', 'минут');
 define('_minute', 'минута');
 define('_seconds', 'секунды');
 define('_second', 'секундa');
-
 ## ADDED / REDEFINED FOR 1.5 Final
 define('_id_dont_exist', 'Который вы указали ID не существует!');
 define('_perm_editts', 'Управление TeamSpeak сервер');
-
-
 ## ADDED / REDEFINED FOR 1.5.2
 define('_button_title_del_account', 'удалить аккаунт?');
 define('_confirm_del_account', 'вы действительно хотите удалить свой аккаунт ?');
@@ -428,7 +287,7 @@ define('_contact_text_sendnews', '
 <span class="fontBold">Email:</span> [email]<p>&nbsp;</p>
 <span class="fontBold">источник:</span> [hp]<p>&nbsp;</p><p>&nbsp;</p>
 <span class="fontBold">Название:</span> [titel]<p>&nbsp;</p><p>&nbsp;</p>
-<span class="fontUnder"><span class="fontBold">News:</span></span><p>&nbsp;</p>[text]<p>&nbsp;</p><p>&nbsp;</p>
+<span class="fontUnder"><span class="fontBold">Новость:</span></span><p>&nbsp;</p>[text]<p>&nbsp;</p><p>&nbsp;</p>
 <span class="fontUnder"><span class="fontBold">Внимание:</span></span><p>&nbsp;</p>[info]');
 
 define('_msg_sendnews_user', '
@@ -513,7 +372,7 @@ define('_clankasse_new', '<form action="" method="get" onsubmit="return(DZCP.sub
     </form>');
 define('_admin_reg_info', 'Отрегулируйте, если кто обязан зарегистрироваться для одной из областей (Написать сообщения, скачать Загрузки и.т.д.)');
 define('_config_c_floods_what', 'Здесь вы можете задать время в секундах,которые пользователь должен ждать, перед тем как написать нови пост');
-define('_confirm_del_shout', 'Вы действительно уверены, удалил запись Мини-чатa?');
+define('_confirm_del_shout', 'Вы действительно уверены, удалил запись');
 ## ADDED FOR 1.4.5
 define('_admin_smiley_exists', 'Yже cуществует смайлик с таким названием!');
 ## ADDED FOR 1.4.3
@@ -764,7 +623,7 @@ define('_contact_text_fightus', '
 <span class="fontBold">Комментар:</span></span><br />[text]');
 ## EDITED/ADDED FOR v 1.3.3
 define('_cw_info', 'Администратор (FightUs) также принимает запросы !');
-define('_level_info', 'внимание: с уровня "Админ" может изменить только корень Админ  (тот, кто установил клан портал)!<br />он получает <span class="fontUnder">неограниченный</span> доступ ко всем районам!');
+define('_level_info', 'внимание: уровень "Админа" может изменить только корень Админ  (rootadmin тот, кто установил клан портал)!<br />он получает <span class="fontUnder">неограниченный</span> доступ ко всем районам!');
 ## EDITED FOR v 1.3.1
 define('_related_links','Связанные ссылки:');
 define('_cw_admin_lineup_info','Разделяйте имена c запятой!');
@@ -1032,7 +891,7 @@ define('_news_kat_choose', 'Выберите категорию');
 define('_artikel_comments_write_head', 'Написать новыю комментарию');
 ## Форум ##
 define('_forum_head', 'Форум');
-define('_forum_topic', 'Topic');
+define('_forum_topic', 'тема');
 define('_forum_subtopic', 'Подзаголовок');
 define('_forum_lpost', 'Последнее сообщение');
 define('_forum_threads', 'Темы');
@@ -1040,7 +899,7 @@ define('_forum_thread', 'Тема');
 define('_forum_posts', 'Ответы');
 define('_forum_cnt_threads', '<span class="fontBold">Количество потоков:</span> [threads]');
 define('_forum_cnt_posts', '<span class="fontBold">Количество сообщений:</span> [posts]');
-define('_forum_admin_head', 'Admin');
+define('_forum_admin_head', 'Админ');
 define('_forum_admin_addsticky', 'Марк. <span class="fontWichtig">важно</span> ?');
 define('_forum_katname_intern', '<span class="fontWichtig">Внутренние:</span> [katname]');
 define('_forum_sticky', '<span class="fontWichtig">Важно:</span>');
@@ -1057,7 +916,7 @@ define('_forum_newpost_successful', 'Сообщение было успешно 
 define('_posted_by', '<span class="fontBold">&raquo;</span> ');
 define('_forum_post_where', '<a href="../forum/">[mainkat]</a> <span class="fontBold">Форум:</span> <a href="?action=show&amp;id=[kid]">[wherekat]</a> <span class="fontBold">Thread:</span> <a href="?action=showthread&amp;id=[tid]">[wherepost]</a>');
 define('_forum_lpostlink', 'Последнее сообщение');
-define('_forum_user_posts', '<span class="fontBold">Posts:</span> [posts]');
+define('_forum_user_posts', '<span class="fontBold">Сообщения::</span> [posts]');
 define('_sig', '<br /><br /><hr />');
 define('_error_forum_closed', 'Эта тема закрыта!');
 define('_forum_search_head', 'поиск в форумах');
@@ -1217,7 +1076,7 @@ define('_cw_admin_gegnerstuff', 'Информация о противнике');
 define('_cw_admin_clantag', 'Клан тег');
 define('_cw_admin_warstuff', 'Clan War Информация');
 define('_cw_admin_maps', 'Карты');
-define('_cw_admin_serverip', 'ServerIP');
+define('_cw_admin_serverip', 'СерверIP');
 define('_cw_admin_empty_gegner', 'Вы должны указать имя противника!');
 define('_cw_admin_empty_clantag', 'Вы должны указать клан тег противника!');
 define('_cw_admin_deleted', 'Clanwar был успешно удален!');
@@ -1469,9 +1328,9 @@ define('_profil_pagehits', 'Хитов на сайт');
 define('_pedit_visibility', 'Видимость / права доступа');
 define('_pedit_visibility_gb', 'Записи в гостевой книге');
 define('_pedit_visibility_gallery', 'галерея');
-define('_pedit_perm_public', '<option value="0" selected="selected">Public</option><option value="1">User only</option><option value="2">Member only</option>');
-define('_pedit_perm_user', '<option value="0">Public</option><option value="1" selected="selected">User only</option><option value="2">Member only</option>');
-define('_pedit_perm_member', '<option value="0">Public</option><option value="1">User only</option><option value="2" selected="selected">Member only</option>');
+define('_pedit_perm_public', '<option value="0" selected="selected">публично</option><option value="1">Только для пользователей</option><option value="2">только для мемберов</option>');
+define('_pedit_perm_user', '<option value="0">публично</option><option value="1" selected="selected">Только для пользователей</option><option value="2">только для мемберов</option>');
+define('_pedit_perm_member', '<option value="0">публично</option><option value="1">Только для пользователей</option><option value="2" selected="selected">только для мемберов</option>');
 define('_pedit_perm_allow', '<option value="1" selected="selected">Позволить</option><option value="0">Блокировaть</option>');
 define('_pedit_perm_deny', '<option value="1">Позволить</option><option value="0" selected="selected">Блокировaть</option>');
 define('_gallery_no_perm', '<div align="center"><br/>Вы не имеете доступа увидеть эту галерею</div>');
@@ -1817,141 +1676,141 @@ define('_config_newskats_kat', 'Категория');
 define('_config_newskats_head', 'Категории новостей/статей');
 define('_config_newskats_katbild', 'Изаброжэние Категории');
 define('_config_newskats_add', '<a href="?admin=news&amp;do=add">Добавить новую категорию</a>');
-define('_config_newskat_deleted', 'Die Kategorie wurde erfolgreich gel&ouml;scht!');
-define('_config_newskats_add_head', 'Neue Kategorie hinzuf&uuml;gen');
-define('_config_newskats_added', 'Die Kategorie wurde erfolgreich hinzugef&uuml;gt!');
-define('_config_newskats_edit_head', 'Kategorie editieren');
-define('_config_newskats_edited', 'Die Kategorie wurde erfolgreich editiert!');
+define('_config_newskat_deleted', 'Категория удалена!');
+define('_config_newskats_add_head', 'Добавить новую категорию');
+define('_config_newskats_added', 'Категория добавлена!');
+define('_config_newskats_edit_head', 'Изменить категорию');
+define('_config_newskats_edited', 'Категория отредактирована!');
 define('_config_impressum_head', 'Выходные данные');
-define('_config_impressum_domains', 'Domains');
-define('_config_impressum_autor', 'Autor der Seite');
-define('_config_konto_head', 'Kontodaten');
-define('_config_clankasse_head', 'Ein-/Auszahlungsbezeichnungen');
-define('_backup_head', 'Datenbankbackup');
-define('_backup_info_head', 'Anmerkung');
-define('_backup_info', 'Der Backupvorgang kann je nach Gr&ouml;&szlig;e der Datenbank mehrere Minuten in Anspruch nehmen.');
-define('_backup_link', 'neues Backup anlegen!');
-define('_backup_successful', 'Das Datenbankbackup wurde erfolgreich angelegt!');
-define('_backup_last_head', 'Letztes Backup');
-define('_backup_last_not_exist', 'Du hast bisher noch kein MySQL-Datenbankbackup angelegt!');
-define('_news_admin_head', 'Newsbereich');
-define('_admin_news_add', '<a href="?admin=newsadmin&amp;do=add">News hinzuf&uuml;gen</a>');
-define('_admin_news_head', 'News hinzuf&uuml;gen');
+define('_config_impressum_domains', 'домены');
+define('_config_impressum_autor', 'Автор страницы');
+define('_config_konto_head', 'инфо´. об учетной записи');
+define('_config_clankasse_head', 'название опл/выплаты');
+define('_backup_head', 'Резерв копирование базы данных');
+define('_backup_info_head', 'замечание');
+define('_backup_info', 'Процесс резервного копирования может занять несколько минут в зависимости от размера базы данных.');
+define('_backup_link', 'Создайте новую резервную копию!');
+define('_backup_successful', 'Резервная копия базы данных создана!');
+define('_backup_last_head', 'Последняя копия');
+define('_backup_last_not_exist', 'Вы еще не создали резервную копию базы данных MySQL!');
+define('_news_admin_head', 'Раздел новостей');
+define('_admin_news_add', '<a href="?admin=newsadmin&amp;do=add">Добавить новость</a>');
+define('_admin_news_head', 'Добавить новость');
 define('_news_admin_kat', 'Категория');
-define('_news_admin_klapptitel', 'Klapptexttitel');
-define('_news_admin_more', 'More');
-define('_empty_news', 'Du musst eine News eintragen!');
-define('_news_sended', 'Die News wurde erfolgreich eingetragen!');
-define('_admin_news_edit_head', 'News editieren');
-define('_news_edited', 'Die News wurde erfolgreich editiert!');
-define('_news_deleted', 'Die News wurde erfolgreich gel&ouml;scht!');
-define('_member_admin_header', 'Teambereich');
-define('_member_admin_squad', 'Team');
-define('_member_admin_game', 'Game');
-define('_member_admin_icon', 'Icon');
-define('_member_admin_add', '<a href="?admin=squads&amp;do=add">Team hinzuf&uuml;gen</a>');
-define('_admin_squad_deleted', 'Das Team wurde erfolgreich gel&ouml;scht!');
-define('_member_admin_add_header', 'Team hinzuf&uuml;gen');
-define('_admin_squad_no_squad', 'Du musst einen Teamnamen angeben!');
-define('_admin_squad_no_game', 'Du musst ein Game angeben, welches dieses Team spielt!');
-define('_admin_squad_add_successful', 'Das Team wurde erfolgreich hinzugef&uuml;gt!');
-define('_admin_squad_edit_successful', 'Das Team wurde erfolgreich editiert!');
-define('_member_admin_edit_header', 'Team editieren');
-define('_error_server_edit', 'Der Server wurde erfolgreich editiert!');
-define('_error_empty_clanname', 'Du musst euren Clannamen angeben!');
-define('_error_server_accept', 'Die ausgew&auml;hlten Server wurden erfolgreich freigeschaltet!');
-define('_error_server_dont_accept', 'Die ausgew&auml;hlten Server wurden erfolgreich aus der Liste genommen!');
-define('_slist_head_admin', 'Serverliste');
-define('_slist_server_deleted', 'Der Server wurde erfolgreich gel&ouml;scht!');
-define('_server_admin_head', 'Server');
-define('_server_add_new', '<a href="?admin=server&amp;do=new">Neuen Server hinzuf&uuml;gen</a>');
-define('_admin_server_edit', 'Server editieren');
-define('_empty_ip', 'Du musst eine IP angeben!');
-define('_server_admin_edited', 'Der Server wurde erfolgreich editiert!');
-define('_server_admin_deleted', 'Der Server wurde erfolgreich gel&ouml;scht!');
-define('_admin_server_new', 'Neuen Server hinzuf&uuml;gen');
-define('_server_admin_added', 'Der Server wurde erfolgreich hinzugef&uuml;gt!');
-define('_empty_game', 'Du musst ein Icon ausw&auml;hlen!');
-define('_empty_servername', 'Du musst einen Servernamen angeben!');
-define('_config_server_mapname', 'Mapname');
-define('_config_server_maps_head', 'Servermaps');
-define('_config_server_map_deleted', 'Der Mapscreen wurde erfolgreich gel&ouml;scht!');
-define('_admin_dlkat', 'Downloadkategorien');
-define('_admin_download_kat', 'Bezeichnung');
-define('_dl_add_new', '<a href="?admin=dl&amp;do=new">Neue Kategorie hinzuf&uuml;gen</a>');
-define('_dl_new_head', 'Neue Downloadkategorie hinzuf&uuml;gen');
-define('_dl_dlkat', 'Kategorie');
-define('_dl_empty_kat', 'Du musst eine Kategoriebezeichnung angeben!');
-define('_dl_admin_added', 'Die Downloadkategorie wurde erfolgreich hinzugef&uuml;gt!');
-define('_dl_admin_deleted', 'Die Downloadkategorie wurde erfolgreich gel&ouml;scht!');
-define('_dl_edit_head', 'Downloadkategorie editieren');
-define('_dl_admin_edited', 'Die Downloadkategorie wurde erfolgreich editiert!');
-define('_config_global_head', 'Konfiguration');
-define('_config_c_limits', 'Seitenaufteilungen (LIMITS)');
-define('_config_c_limits_what', 'Hier kannst du die Eintr&auml;ge einstellen, die pro Bereich maximal angezeigt werden');
-define('_config_c_usergb', 'User-G&auml;stebuch');
-define('_config_c_clankasse', 'Clankasse');
-define('_config_c_gb', 'G&auml;stebuch');
-define('_config_c_archivnews', 'News-Archiv');
-define('_config_c_news', 'News');
-define('_config_c_banned', 'Bannliste');
-define('_config_c_adminnews', 'News-Admin');
-define('_config_c_clanwars', 'Clanwars');
-define('_config_c_shout', 'Shoutbox');
-define('_config_c_userlist', 'Userliste');
-define('_config_c_comments', 'Newskommentare');
-define('_config_c_fthreads', 'Forumthreads');
-define('_config_c_fposts', 'Forumposts');
-define('_config_c_floods', 'Anti-Flooding');
-define('_config_c_forum', 'Forum');
-define('_config_c_length', 'L&auml;ngenangaben');
-define('_config_c_length_what', 'Hier kannst du die L&auml;nge in Anzahl der Zeichen angeben, bei der nach &Uuml;berschreitung die Ausgabe gek&uuml;rzt wird.');
-define('_config_c_newsadmin', 'Newsadmin: Titel');
-define('_config_c_shouttext', 'Shoutbox: Text');
-define('_config_c_newsarchiv', 'Newsarchiv: Titel');
-define('_config_c_forumtopic', 'Forum: Topic');
-define('_config_c_forumsubtopic', 'Forum: Subtopic');
-define('_config_c_topdl', 'Men&uuml;: Top Downloads');
-define('_config_c_ftopics', 'Men&uuml;: Last Forumtopics');
-define('_config_c_lcws', 'Clanwars: Gegnername');
-define('_config_c_lwars', 'Men&uuml;: Last Wars');
-define('_config_c_nwars', 'Men&uuml;: Next Wars');
-define('_config_c_main', 'Allgemeine Einstellungen');
-define('_config_c_clanname', 'Clanname');
-define('_config_c_pagetitel', 'Seitentitel');
-define('_config_c_language', 'Default-Sprache');
-define('_config_c_upicsize', 'Global: Uploadgr&ouml;sse Bilder');
-define('_config_c_gallerypics', 'User: Usergalerie');
-define('_config_c_upicsize_what', 'erlaubte Gr&ouml;&szlig;e der Bilder in KB (Newsbilder, Userprofilbilder usw.)');
-define('_config_c_regcode', 'Reg: Sicherheitscode');
-define('_config_c_regcode_what', 'Fragt bei der Registrierung einen Sicherheitscode ab');
-define('_pos_add_new', '<a href="?admin=positions&amp;do=new">Neuen Rang hinzuf&uuml;gen</a>');
-define('_pos_new_head', 'Neuen Rang hinzuf&uuml;gen');
-define('_pos_edit_head', 'Rang editieren');
-define('_pos_admin_edited', 'Der Rang wurde erfolgreich editiert!');
-define('_pos_admin_deleted', 'Der Rang wurde erfolgreich gel&ouml;scht!');
-define('_pos_admin_added', 'Der Rang wurde erfolgreich hinzugef&uuml;gt!');
-define('_admin_clankasse_add', '<a href="?admin=konto&amp;do=new">Neue Bezeichnung hinzuf&uuml;gen</a>');
-define('_clankasse_new_head', 'Neue Ein-/Auszahlungsbezeichnung hinzuf&uuml;gen');
-define('_clankasse_edit_head', 'Ein-/Auszahlungsbezeichnung editieren');
-define('_clankasse_empty_kat', 'Du musst eine Ein-/Auszahlungsbezeichnung angeben!');
-define('_clankasse_kat_added', 'Die Ein-/Auszahlungsbezeichnung wurde erfolgreich hinzugef&uuml;gt!');
-define('_clankasse_kat_edited', 'Die Ein-/Auszahlungsbezeichnung wurde erfolgreich editiert!');
-define('_clankasse_kat_deleted', 'Die Ein-/Auszahlungsbezeichnung wurde erfolgreich gel&ouml;scht!');
-define('_config_c_gallery', 'Galerie');
-define('_config_info_gallery', 'Anzahl der Bilder die maximal in einer Reihe gezeigt werden');
-define('_config_server_ts_updated', 'Die TeamspeakIP wurde erfogreich gesetzt!');
+define('_news_admin_klapptitel', 'Blurb Название');
+define('_news_admin_more', 'более');
+define('_empty_news', 'Вы должны ввести новость!');
+define('_news_sended', 'Новость была успешно введена!');
+define('_admin_news_edit_head', 'редактировать новости');
+define('_news_edited', 'Новость отредактирована!');
+define('_news_deleted', 'Новость удалена!');
+define('_member_admin_header', 'область команды');
+define('_member_admin_squad', 'команда');
+define('_member_admin_game', 'Игра');
+define('_member_admin_icon', 'Значок');
+define('_member_admin_add', '<a href="?admin=squads&amp;do=add">Добавить команду</a>');
+define('_admin_squad_deleted', 'Команда удалена!');
+define('_member_admin_add_header', 'Добавить команду');
+define('_admin_squad_no_squad', 'Вы должны ввести название команды!');
+define('_admin_squad_no_game', 'Вы должны указать игру, в которую играет эта команда!');
+define('_admin_squad_add_successful', 'Команда добавлена!');
+define('_admin_squad_edit_successful', 'Команда отредактирована!');
+define('_member_admin_edit_header', 'Редактировать команду');
+define('_error_server_edit', 'Сервер отредактирован!');
+define('_error_empty_clanname', 'Вы должны указать название клана!');
+define('_error_server_accept', 'Выбранные серверы включены!');
+define('_error_server_dont_accept', 'Выбранные серверы удалены из списка!');
+define('_slist_head_admin', 'список серверов');
+define('_slist_server_deleted', 'Сервер удален!');
+define('_server_admin_head', 'сервер');
+define('_server_add_new', '<a href="?admin=server&amp;do=new">Добавить новый сервер</a>');
+define('_admin_server_edit', 'редактировать сервер');
+define('_empty_ip', 'Вы должны указать IP-адрес!');
+define('_server_admin_edited', 'Сервер был отредактирован!');
+define('_server_admin_deleted', 'Сервер удален!');
+define('_admin_server_new', 'Добавить новый сервер');
+define('_server_admin_added', 'Сервер добавлен!');
+define('_empty_game', 'Вы должны выбрать значок!');
+define('_empty_servername', 'Вы должны ввести название сервера!');
+define('_config_server_mapname', 'Название карты');
+define('_config_server_maps_head', 'карты сервера');
+define('_config_server_map_deleted', 'Изображение карты удалено!');
+define('_admin_dlkat', 'Категории загрузки');
+define('_admin_download_kat', 'обозначение');
+define('_dl_add_new', '<a href="?admin=dl&amp;do=new">Добавить новую категорию</a>');
+define('_dl_new_head', 'Добавить новую категорию загрузки');
+define('_dl_dlkat', 'категория');
+define('_dl_empty_kat', 'Вы должны указать описание категории!');
+define('_dl_admin_added', 'Категория загрузки была добавлена!');
+define('_dl_admin_deleted', 'Категория загрузки удалена!');
+define('_dl_edit_head', 'Изменить категорию загрузки');
+define('_dl_admin_edited', 'Категория загрузки была отредактирована!');
+define('_config_global_head', 'конфигурация');
+define('_config_c_limits', 'Разделитель страниц (ПРЕДЕЛЫ)');
+define('_config_c_limits_what', 'Здесь вы можете установить максимал для каждой области');
+define('_config_c_usergb', 'Гостевая книга пользователя');
+define('_config_c_clankasse', 'копилка клана');
+define('_config_c_gb', 'Гостевая книга');
+define('_config_c_archivnews', 'Архив новостей');
+define('_config_c_news', 'новости');
+define('_config_c_banned', 'список банов');
+define('_config_c_adminnews', 'Админ новостей');
+define('_config_c_clanwars', 'КВ');
+define('_config_c_shout', 'Мини-чат');
+define('_config_c_userlist', 'список пользователей');
+define('_config_c_comments', 'комментарии к новостям');
+define('_config_c_fthreads', 'темы форума');
+define('_config_c_fposts', 'Сообщения форума');
+define('_config_c_floods', 'Анти-Флуд');
+define('_config_c_forum', 'Форум');
+define('_config_c_length', 'указание длины');
+define('_config_c_length_what', 'Здесь вы можете указать длину в количестве символов, после чего выход будет сокращен.');
+define('_config_c_newsadmin', 'Newsadmin: Название');
+define('_config_c_shouttext', 'Мини-чат: Текст');
+define('_config_c_newsarchiv', 'Архив новостей: Название');
+define('_config_c_forumtopic', 'Форум: Тема');
+define('_config_c_forumsubtopic', 'Форум: Подраздел');
+define('_config_c_topdl', 'Меню: Top Downloads');
+define('_config_c_ftopics', 'Меню: Последние темы форума');
+define('_config_c_lcws', 'КВ: название соперника');
+define('_config_c_lwars', 'Меню: последний КВ');
+define('_config_c_nwars', 'Меню: следующий КВ');
+define('_config_c_main', 'Общие настройки');
+define('_config_c_clanname', 'название клана');
+define('_config_c_pagetitel', 'Название страницы');
+define('_config_c_language', 'По умолчанию язык');
+define('_config_c_upicsize', 'Глобальный: размер загрузки картинок');
+define('_config_c_gallerypics', 'Пользователь: Галерея пользователя');
+define('_config_c_upicsize_what', 'Допустимый размер изображений в КБ (фотографии новостей, изображения профиля пользователя и т. Д.)');
+define('_config_c_regcode', 'Рег.: Защитный код');
+define('_config_c_regcode_what', 'Задать код безопасности при регистрации');
+define('_pos_add_new', '<a href="?admin=positions&amp;do=new">Добавить новый ранг</a>');
+define('_pos_new_head', 'Добавить новый ранг');
+define('_pos_edit_head', 'Изменить ранг');
+define('_pos_admin_edited', 'Ранг отредактирован!');
+define('_pos_admin_deleted', 'Ранг удален!');
+define('_pos_admin_added', 'Ранг добавлен!');
+define('_admin_clankasse_add', '<a href="?admin=konto&amp;do=new">Добавить новое название</a>');
+define('_clankasse_new_head', 'Добавить новое название ввода / вывода');
+define('_clankasse_edit_head', 'Изменить описание ввода / вывода');
+define('_clankasse_empty_kat', 'Вы должны указать описание ввода / вывода!');
+define('_clankasse_kat_added', 'Имя ввода / вывода добавлено!');
+define('_clankasse_kat_edited', 'Описание ввода / вывода отредактировано!');
+define('_clankasse_kat_deleted', 'Описание ввода / вывода удалено!');
+define('_config_c_gallery', 'галерея');
+define('_config_info_gallery', 'Количество изображений, показанных в строке');
+define('_config_server_ts_updated', 'TeamSpeak IP был установлен!');
 define('_ts_sport', 'Server Queryport');
-define('_ts_width', 'Breite der Anzeige');
-define('_config_c_awards', 'Awards');
-define('_counter_start', 'Counter');
-define('_counter_start_info', 'Hier kannst du eine Zahl eintragen, die zum Counter dazuaddiert wird.');
-define('_admin_nc', 'Newskommentare');
-define('_admin_reg_head', 'Registrierungspflicht');
-define('_config_shoutarchiv', 'Shoutbox: Archiv');
-define('_config_zeichen', 'Shoutbox: Zeichen');
-define('_config_zeichen_info', 'Hier kannst du einstellen, nach wieviel Zeichen das Eingabefeld der Shoutbox gesperrt wird.');
-define('_wartungsmodus_info', 'wenn eingeschaltet kann keiner, ausser der Admin die Seite betreten.');
+define('_ts_width', 'Ширина дисплея');
+define('_config_c_awards', 'Награды');
+define('_counter_start', 'счетчик');
+define('_counter_start_info', 'Здесь вы можете ввести число, добавленное в счетчик.');
+define('_admin_nc', 'Комментарии новости');
+define('_admin_reg_head', 'требуется регистрация');
+define('_config_shoutarchiv', 'Shoutbox: архив');
+define('_config_zeichen', 'Shoutbox: знаки');
+define('_config_zeichen_info', 'Здесь вы можете установить, сколько символов вводится поле ввода Shoutbox.');
+define('_wartungsmodus_info', 'Если включено, никто не может войти, кроме администратора.');
 define('_navi_kat', 'Oбласть');
 define('_navi_name', 'Нозвания связи');
 define('_navi_url', 'Переадресовка');
@@ -2076,7 +1935,7 @@ define('_profile_type_dropdown', '
 <option value="1">Текстовое поле</option>
 <option value="2">URL</option>
 <option value="3">Адрес электронной почты</option>');
-define('_profile_add_head', 'Profilfeld hinzuf&uuml;gen');
+define('_profile_add_head', 'Добавить поле в профиле');
 define('_profile_added', 'Профилное поля успешно добавили!');
 define('_profil_no_name', 'Вы должны указать имя поля!');
 define('_profil_deleted', 'Профилное поля успешно удалоно!');
@@ -2098,23 +1957,6 @@ define('_clankasse_bank', 'Банк');
 define('_clankasse_head', 'Капилка Клана');
 define('_clankasse_cakt', 'Банковский баланс');
 define('_clankasse_admin_minus', 'Минус');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 define('_clankasse_plus', '<span class="fontGreen">[betrag] [w]</span>');
 define('_clankasse_minus', '<span class="fontRed">- [betrag] [w]</span>');
 define('_clankasse_summe_plus', '<span class="fontGreen">[summe] [w]</span>');
@@ -2308,13 +2150,11 @@ define('_site_joinus', 'JoinUs вступить в клан');
 define('_site_fightus', 'FightUs - Заявки на ВАР');
 define('_joinus', 'Вступить в клан');
 define('_fightus', 'Заявки на ВАР');
-define('_site_msg_new', 'Вы получили новые сообщения!<br />
-                         Нажмите <a href="../user/?action=msg">здесь</a> чтобы попасть в меню новых сообщений!');
+define('_site_msg_new', 'Вы получили новые сообщения!<br />Нажмите <a href="../user/?action=msg">здесь</a> чтобы попасть в меню новых сообщений!');
 define('_site_kalender', 'Календарь');
 define('_login_permanent', ' Авто Логин');
 define('_msg_del', 'Удалить отмеченные');
-define('_wartungsmodus', 'Сайт пока закрыт на техническое обслуживание!<br />
-Пожалуйста, попробуйте еще раз через несколько минут!');
+define('_wartungsmodus', 'Сайт пока закрыт на техническое обслуживание!<br />Пожалуйста, попробуйте еще раз через несколько минут!');
 define('_wartungsmodus_head', 'Режим обслуживания');
 define('_kalender', 'Календарь');
 define('_ts_head', 'Teamspeak');
