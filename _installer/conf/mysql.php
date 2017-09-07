@@ -180,7 +180,7 @@ function install_mysql($login, $nick, $pwd, $email)
              `id` int(10) NOT NULL auto_increment,
              `ip` varchar(30) NOT NULL default '0',
              `datum` int(20) NOT NULL default '0',
-             `agent` text DEFAULT NULL
+             `agent` text DEFAULT NULL,
              PRIMARY KEY  (`id`)
              ) ");
   $qry = db("DROP TABLE IF EXISTS ".$db['c_who']."");
@@ -1572,5 +1572,5 @@ function update_mysql_1_6_0_4()
 {
     global $db;
     db("ALTER TABLE `".$db['ipcheck']."` ADD `created` INT(11) NOT NULL DEFAULT '0' AFTER `time`;");
-	db("ALTER TABLE `".$db['c_ips']."` ADD  `agent` text DEFAULT NULL AFTER `datum`;");
+    //db("ALTER TABLE `".$db['c_ips']."` ADD  `agent` text DEFAULT NULL AFTER `datum`;"); Redundant!
 }
