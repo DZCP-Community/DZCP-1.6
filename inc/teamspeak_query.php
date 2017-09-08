@@ -1380,7 +1380,6 @@ class TSStatus
 }
 
  function rep2($var) {
-    $var = utf8_decode($var);
     $var = secure_dzcp($var);
     $var = preg_replace("/\[(.*?)spacer(.*?)\]/","",$var);
     return strtr($var, array(
