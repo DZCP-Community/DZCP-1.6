@@ -36,12 +36,12 @@ if(defined('_Forum')) {
         {
            $lpost = '';
            if($getlt['first'] == "1") {
-              $lpost .= show(_forum_thread_lpost, array("nick" => autor($getlt['t_reg'], '', $getlt['t_nick'], $getlt['t_email']),
+              $lpost .= show(_forum_thread_lpost, array("nick" => autor($getlt['t_reg'], '', re($getlt['t_nick']), re($getlt['t_email'])),
                                                         "date" => date("d.m.y H:i", $getlt['t_date'])._uhr));
 
               $lpdate = $getlt['t_date'];
             } elseif($getlt['first'] == "0") {
-              $lpost .= show(_forum_thread_lpost, array("nick" => autor($getlp['reg'], '', $getlp['nick'], re($getlp['email'])),
+              $lpost .= show(_forum_thread_lpost, array("nick" => autor($getlp['reg'], '', re($getlp['nick']), re($getlp['email'])),
                                                         "date" => date("d.m.y H:i", $getlp['date'])._uhr));
               $lpdate = $getlp['date'];
             }

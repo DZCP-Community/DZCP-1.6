@@ -104,7 +104,7 @@ if(defined('_UserMenu')) {
           elseif($_GET['id'] == $userid) $index = error(_error_msg_self, 1);
           else {
 
-      $titel = show(_msg_from_nick, array("nick" => data($userid,"nick")));
+		 $titel = show(_msg_from_nick, array("nick" => re(data("nick"))));
 
           $index = show($dir."/answer", array("von" => $userid,
                                               "an" => $_GET['id'],
@@ -130,7 +130,7 @@ if(defined('_UserMenu')) {
                                 `von`        = '".((int)$_POST['von'])."',
                              `an`         = '".((int)$_POST['an'])."',
                              `titel`      = '".up($_POST['titel'])."',
-                             `nachricht`  = '".up($_POST['eintrag'], 1)."',
+                             `nachricht`  = '".up($_POST['eintrag'])."',
                              `see`        = '1'");
 
               $qry = db("UPDATE ".$db['userstats']."
@@ -293,7 +293,7 @@ if(defined('_UserMenu')) {
                        `von`        = '".((int)$userid)."',
                        `an`         = '".((int)$to)."',
                        `titel`      = '".up($_POST['titel'])."',
-                       `nachricht`  = '".up($_POST['eintrag'], 1)."',
+                       `nachricht`  = '".up($_POST['eintrag'])."',
                        `see`        = '1'");
 
             $qry = db("UPDATE ".$db['userstats']."

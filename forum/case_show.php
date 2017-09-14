@@ -60,7 +60,7 @@ if(defined('_Forum')) {
         $gets = db("SELECT id FROM ".$db['f_skats']."
                     WHERE id = '".intval($_GET['id'])."'",false,true);
 
-        $threadlink = show(_forum_thread_link, array("topic" => re(cut($get['topic'],config('l_forumtopic'))),
+        $threadlink = show(_forum_thread_link, array("topic" => re(cut($get['topic'],config('l_forumtopic'),true,false)),
                                                      "id" => $get['id'],
                                                      "kid" => $gets['id'],
                                                      "sticky" => $sticky,
@@ -69,7 +69,7 @@ if(defined('_Forum')) {
                                                      "lpid" => $cntpage+1,
                                                      "page" => $pagenr));
       } else {
-        $threadlink = show(_forum_thread_search_link, array("topic" => re(cut($get['topic'],config('l_forumtopic'))),
+        $threadlink = show(_forum_thread_search_link, array("topic" => re(cut($get['topic'],config('l_forumtopic'),true,false)),
                                                             "id" => $get['id'],
                                                             "sticky" => $sticky,
                                                             "hl" => $_POST['suche'],
@@ -84,7 +84,7 @@ if(defined('_Forum')) {
       if(_rows($qrylp))
       {
         $getlp = _fetch($qrylp);
-        $lpost = show(_forum_thread_lpost, array("nick" => autor($getlp['reg'], '', $getlp['nick'], re($getlp['email'])),
+        $lpost = show(_forum_thread_lpost, array("nick" => autor($getlp['reg'], '', re($getlp['nick']), re($getlp['email'])),
                                                  "date" => date("d.m.y H:i", $getlp['date'])._uhr));
         $lpdate = $getlp['date'];
       } else {
@@ -95,7 +95,7 @@ if(defined('_Forum')) {
       $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
       $threads .= show($dir."/forum_show_threads", array("new" => check_new($get['lp']),
                                                          "topic" => $threadlink,
-                                                         "subtopic" => re(cut($get['subtopic'],config('l_forumsubtopic'))),
+                                                         "subtopic" => re(cut($get['subtopic'],config('l_forumsubtopic'),true,false)),
                                                          "hits" => $get['hits'],
                                                          "replys" => cnt($db['f_posts'], " WHERE sid = '".$get['id']."'"),
                                                          "class" => $class,

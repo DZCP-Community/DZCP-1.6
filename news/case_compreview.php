@@ -49,6 +49,7 @@ if(defined('_News')) {
                                         "edit" => '',
                                         "delete" => ''));
 
+	$email =  ($chkMe >= 1 ? $email : '');
     $index = show("page/comments_show", array("titel" => $titel,
                                               "comment" => bbcode(re($_POST['comment']),true),
                                               "nick" => $nick,
@@ -60,7 +61,7 @@ if(defined('_News')) {
                                               "rank" => getrank($get_userid),
                                               "ip" => $userip._only_for_admins));
 
-    echo '<table class="mainContent" cellspacing="1">'.$index.'</table>';
+    echo utf8_encode('<table class="mainContent" cellspacing="1">'.$index.'</table>');
 
     if(!mysqli_persistconns)
         $mysql->close(); //MySQL

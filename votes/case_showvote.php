@@ -5,14 +5,17 @@
  */
 
 if(defined('_Votes')) {
-    $get = db("SELECT * FROM ".$db['votes']." WHERE id = '".intval($_GET['id'])."'",false,true);
-    if($get['intern']) {
-        $qryv = db("SELECT user_id,time FROM ".$db['ipcheck']." WHERE what = 'vid_".$get['id']."' ORDER BY time DESC");
-        while($getv = _fetch($qryv)) {
-            $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
-            $show .= show($dir."/voted_show", array("user" => autor($getv['user_id']),
-                                                    "date" => date("d.m.y H:i",$getv['time'])._uhr,
-                                                    "class" => $class));
+    $get = db("SELECT `id`,`intern`,`closed` FROM `".$db['votes']."` WHERE `id` = ".intval($_GET['id']).";",false,true);
+    if(!$get['intern'] || ($get['intern'] && $chkMe)) {
+        $qryv = db("SELECT `user_id`,`created` FROM `".$db['ipcheck']."` WHERE `what` = 'vid_".$get['id']."' ORDER BY time DESC;");
+        if($chkMe == 4 || $get['closed'] || permission('votesadmin') || db("SELECT `id` FROM `".$db['ipcheck']."` WHERE `user_id` = ".$userid." "
+                . "AND `what` = 'vid_".$get['id']."'",true)) {
+            while($getv = _fetch($qryv)) {
+                $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
+                $show .= show($dir."/voted_show", array("user" => $getv['user_id'] ? autor($getv['user_id']) : _gast,
+                                                        "date" => date("d.m.y H:i",$getv['created'])._uhr,
+                                                        "class" => $class));
+            }
         }
 
         if(empty($show))
@@ -22,7 +25,6 @@ if(defined('_Votes')) {
                                            "user" => _user,
                                            "date" => _datum,
                                            "show" => $show));
-    }
-    else
+    } else
         $index = error(_error_vote_show,1);
 }

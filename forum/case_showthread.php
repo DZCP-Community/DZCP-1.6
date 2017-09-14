@@ -73,9 +73,11 @@ if(defined('_Forum')) {
           $edit = "";
         }
 
-        $ftxt = hl($getp['text'], $_GET['hl']);
-        if($_GET['hl']) $text = bbcode($ftxt['text']);
-        else $text = bbcode($getp['text']);
+        $ftxt = hl($getp['text'], isset($_GET['hl']) ? $_GET['hl'] : '');
+        if(isset($_GET['hl'])) 
+            $text = bbcode($ftxt['text']);
+        else 
+            $text = bbcode($getp['text']);
 
         if($chkMe == 4) $posted_ip = $getp['ip'];
         else $posted_ip = _logged;
@@ -113,12 +115,13 @@ if(defined('_Forum')) {
           else $hp = show(_hpicon_forum, array("hp" => $getp['hp']));
         }
 
-        $nick = autor($getp['reg'], '', $getp['nick'], re($getp['email']));
+        $nick = autor($getp['reg'], '', re($getp['nick']), re($getp['email']));
         if(!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor')
         {
           if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';
         }
 
+		$email = ($chkMe >= 1 ? $email : '');
         $show .= show($dir."/forum_posts_show", array("nick" => $nick,
                                                       "postnr" => "#".($i+($page-1)*config('m_fposts')),
                                                       "p" => ($i+($page-1)*config('m_fposts')),
@@ -280,7 +283,7 @@ if(defined('_Forum')) {
         else $hp = show(_hpicon_forum, array("hp" => $get['t_hp']));
       }
 
-      $nick = autor($get['t_reg'], '', $get['t_nick'], $get['t_email']);
+      $nick = autor($get['t_reg'], '', re($get['t_nick']), re($get['t_email']));
       if(!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor')
       {
         if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';
@@ -307,6 +310,7 @@ if(defined('_Forum')) {
       }
 
       $title = re($getw['topic']).' - '.$title;
+	  $email = ($chkMe >= 1 ? $email : '');
       $index = show($dir."/forum_posts", array("head" => _forum_head,
                                                "where" => $wheres,
                                                "admin" => $admin,

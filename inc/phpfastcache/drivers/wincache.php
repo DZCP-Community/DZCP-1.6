@@ -1,75 +1,133 @@
 <?php
-/*
- * khoaofgod@yahoo.com
- * Website: http://www.phpfastcache.com
- * Example at our website, any bugs, problems, please visit http://www.codehelper.io
+/**
+ *
+ * This file is part of phpFastCache.
+ *
+ * @license MIT License (MIT)
+ *
+ * For full copyright and license information, please see the docs/CREDITS.txt file.
+ *
+ * @author Khoa Bui (khoaofgod)  <khoaofgod@gmail.com> http://www.phpfastcache.com
+ * @author Georges.L (Geolim4)  <contact@geolim4.com>
+ *
  */
 
-class phpfastcache_wincache extends phpFastCache implements phpfastcache_driver  {
+namespace phpFastCache\Drivers;
 
-    function checkdriver() {
-        if(extension_loaded('wincache') && function_exists("wincache_ucache_set"))
-        {
+use phpFastCache\Core\DriverAbstract;
+
+/**
+ * Class wincache
+ * @package phpFastCache\Drivers
+ */
+class wincache extends DriverAbstract
+{
+
+    /**
+     * phpFastCache_wincache constructor.
+     * @param array $config
+     */
+    public function __construct($config = array())
+    {
+        $this->setup($config);
+        if (!$this->checkdriver() && !isset($config[ 'skipError' ])) {
+            $this->fallback = true;
+        }
+
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkdriver()
+    {
+        if (extension_loaded('wincache') && function_exists('wincache_ucache_set')) {
             return true;
         }
+        $this->fallback = true;
         return false;
     }
 
-    function __construct($option = array()) {
-        $this->setOption($option);
-        if(!$this->checkdriver() && !isset($option['skipError'])) {
-            throw new Exception("Can't use this driver for your website!");
-        }
 
-    }
-
-    function driver_set($keyword, $value = "", $time = 300, $option = array() ) {
-        if(isset($option['skipExisting']) && $option['skipExisting'] == true) {
+    /**
+     * @param $keyword
+     * @param string $value
+     * @param int $time
+     * @param array $option
+     * @return bool
+     */
+    public function driver_set($keyword, $value = "", $time = 300, $option = array())
+    {
+        if (isset($option[ 'skipExisting' ]) && $option[ 'skipExisting' ] == true) {
             return wincache_ucache_add($keyword, $value, $time);
         } else {
             return wincache_ucache_set($keyword, $value, $time);
         }
     }
 
-    function driver_get($keyword, $option = array()) {
+    /**
+     * @param $keyword
+     * @param array $option
+     * @return mixed|null
+     */
+    public function driver_get($keyword, $option = array())
+    {
         // return null if no caching
         // return value if in caching
 
-        $x = wincache_ucache_get($keyword,$suc);
+        $x = wincache_ucache_get($keyword, $suc);
 
-        if($suc == false) {
+        if ($suc == false) {
             return null;
         } else {
             return $x;
         }
     }
 
-    function driver_delete($keyword, $option = array()) {
+    /**
+     * @param $keyword
+     * @param array $option
+     * @return bool
+     */
+    public function driver_delete($keyword, $option = array())
+    {
         return wincache_ucache_delete($keyword);
     }
 
-    function driver_stats($option = array()) {
+    /**
+     * @param array $option
+     * @return array
+     */
+    public function driver_stats($option = array())
+    {
         $res = array(
-            "info"  =>  "",
-            "size"  =>  "",
-            "data"  =>  wincache_scache_info(),
+          'info' => '',
+          'size' => '',
+          'data' => wincache_scache_info(),
         );
         return $res;
     }
 
-    function driver_clean($option = array()) {
+    /**
+     * @param array $option
+     * @return bool
+     */
+    public function driver_clean($option = array())
+    {
         wincache_ucache_clear();
         return true;
     }
 
-    function driver_isExisting($keyword) {
-        if(wincache_ucache_exists($keyword)) {
+    /**
+     * @param $keyword
+     * @return bool
+     */
+    public function driver_isExisting($keyword)
+    {
+        if (wincache_ucache_exists($keyword)) {
             return true;
         } else {
             return false;
         }
     }
-
-
-
 }

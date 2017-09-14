@@ -20,6 +20,7 @@
                               'si'              => array('Science and Industry',              'SI'),
                               'crusade'         => array('Dark Messiah of Might &amp; Magic', 'DMoMaM'),
                               'cspromod'        => array('Counter-Strike Pro Mod',            'CS Pro'),
+						    'rust'     		=> array('Rust',							  'Rust'),
   );
 
 ##############################################################################################################################

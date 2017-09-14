@@ -159,7 +159,7 @@ if(_adminMenu != 'true') exit;
           $qry = db("INSERT INTO ".$db['sponsoren']."
                      SET `name`         = '".up($_POST['name'])."',
                                      `link`         = '".links($_POST['link'])."',
-                                     `beschreibung` = '".up($_POST['beschreibung'],1)."',
+                                     `beschreibung` = '".up($_POST['beschreibung'])."',
                                      `site`         = '".((int)$_POST['site'])."',
                                      `slink`        = '".$_POST['slink']."',
                                      `banner`       = '".((int)$_POST['banner'])."',
@@ -479,7 +479,7 @@ if(_adminMenu != 'true') exit;
             $qry = db("UPDATE ".$db['sponsoren']."
                        SET      `name`         = '".up($_POST['name'])."',
                              `link`         = '".links($_POST['link'])."',
-                             `beschreibung` = '".up($_POST['beschreibung'],1)."',
+                             `beschreibung` = '".up($_POST['beschreibung'])."',
                              `site`         = '".((int)$_POST['site'])."',
                              `slink`        = '".$_POST['slink']."',
                              `banner`       = '".((int)$_POST['banner'])."',
@@ -582,7 +582,7 @@ if(_adminMenu != 'true') exit;
 
           $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
 
-          $show .= show($dir."/sponsors_show", array("link" => cut(re($get['link']),40),
+          $show .= show($dir."/sponsors_show", array("link" => cut(re($get['link']),40,true,false),
                                                        "class" => $class,
                                                        "name" => $get['name'],
                                                        "edit" => $edit,

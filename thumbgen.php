@@ -33,6 +33,10 @@ ob_start();
             if(!thumbgen_cache || !file_exists($file_cache) || time() - filemtime($file_cache) > thumbgen_cache_time) {
                 $altesBild = imagecreatefromgif(basePath.'/'.$_GET['img']);
                 $neuesBild = imagecreatetruecolor($neueBreite,$neueHoehe);
+                $CT = imagecolortransparent($altesBild);
+                imagepalettecopy($neuesBild, $altesBild);
+                imagefill($neuesBild, 0, 0, $CT);
+                imagecolortransparent($neuesBild, $CT);
                 imagecopyresampled($neuesBild, $altesBild,0,0,0,0, $neueBreite, $neueHoehe, $breite, $hoehe);
                 thumbgen_cache ? imagegif($neuesBild,$file_cache) : imagegif($neuesBild);
                 $picture_build = true;
@@ -57,6 +61,8 @@ ob_start();
                 header("Content-Type: image/png");
                 $altesBild = imagecreatefrompng(basePath.'/'.$_GET['img']);
                 $neuesBild = imagecreatetruecolor($neueBreite,$neueHoehe);
+                imagealphablending($neuesBild, false);
+                imagesavealpha($neuesBild,true); 
                 imagecopyresampled($neuesBild, $altesBild,0,0,0,0, $neueBreite, $neueHoehe, $breite, $hoehe);
                 thumbgen_cache ? imagepng($neuesBild,$file_cache) : imagepng($neuesBild);
                 $picture_build = true;
@@ -64,13 +70,15 @@ ob_start();
         break;
     }
 
-    if($picture_build && is_resource($altesBild))
+    if ($picture_build && is_resource($altesBild)) {
         imagedestroy($altesBild);
+    }
 
-    if($picture_build && is_resource($neuesBild))
+    if ($picture_build && is_resource($neuesBild)) {
         imagedestroy($neuesBild);
+    }
 
-    if(thumbgen_cache && file_exists($file_cache))
+    if (thumbgen_cache && file_exists($file_cache)) {
         echo file_get_contents($file_cache);
-
+    }
 ob_end_flush();

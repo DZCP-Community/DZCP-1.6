@@ -63,7 +63,7 @@ if(defined('_News')) {
         while($get = _fetch($qry)) {
             $getk = db("SELECT kategorie FROM ".$db['newskat']." WHERE id = '".$get['kat']."'",false,true);
             $comments = cnt($db['newscomments'], " WHERE news = ".$get['id']."");
-            $titel = show(_news_show_link, array("titel" => cut(re($get['titel']),config('l_newsarchiv')), "id" => $get['id']));
+            $titel = show(_news_show_link, array("titel" => cut(re($get['titel']),config('l_newsarchiv'),true,false), "id" => $get['id']));
             $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
             $show .= show($dir."/archiv_show", array("autor" => autor($get['autor']),
                                                      "date" => date("d.m.y", $get['datum']),

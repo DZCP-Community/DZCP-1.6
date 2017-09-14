@@ -393,7 +393,7 @@ if(defined('_Forum')) {
         $qry = db("DELETE FROM ".$db['vote_results']."
                    WHERE vid = '".$gett['vote']."'");
 
-        setIpcheck("vid_".$gett['vote']);
+        setIpcheck("vid_".$gett['vote'],false);
         $vid = "";
         }
 
@@ -406,7 +406,7 @@ if(defined('_Forum')) {
                        `t_nick`   = '".up($_POST['nick'])."',
                        `t_email`  = '".up($_POST['email'])."',
                        `t_hp`     = '".links($_POST['hp'])."',
-                       `t_text`   = '".up($_POST['eintrag'],1)."',
+                       `t_text`   = '".up($_POST['eintrag'])."',
                        `sticky`   = '".((int)$_POST['sticky'])."',
                        `global`   = '".((int)$_POST['global'])."',
                                             `vote`     = '".$vid."',
@@ -749,7 +749,7 @@ if(defined('_Forum')) {
                                                 `t_email`  = '".up($_POST['email'])."',
                                                 `t_hp`     = '".links($_POST['hp'])."',
                                                 `t_reg`    = '".((int)$userid)."',
-                                                `t_text`   = '".up($_POST['eintrag'],1)."',
+                                                `t_text`   = '".up($_POST['eintrag'])."',
                                                 `sticky`   = '".((int)$_POST['sticky'])."',
                                                 `global`   = '".((int)$_POST['global'])."',
                                                 `ip`       = '".$userip."',

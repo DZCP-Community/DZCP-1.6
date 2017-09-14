@@ -137,6 +137,7 @@ case 'show';
                                                     "delete" => $delete));
 
                 $posted_ip = ($chkMe == "4" ? $getc['ip'] : _logged);
+				$email =  ($chkMe >= 1 ? $email : '');
                 $comments .= show("page/comments_show", array("titel" => $titel,
                                                               "comment" => bbcode($getc['comment']),
                                                               "editby" => bbcode($getc['editby']),
@@ -282,7 +283,7 @@ case 'show';
                                                      `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : data('email'))."',
                                                      `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : links(data('hp')))."',
                                                      `reg`      = '".((int)$userid)."',
-                                                     `comment`  = '".up($_POST['comment'],1)."',
+                                                     `comment`  = '".up($_POST['comment'])."',
                                                      `ip`       = '".$userip."'");
 
                         setIpcheck("artid(".$_GET['id'].")");
@@ -323,7 +324,7 @@ case 'show';
                    SET `nick`     = '".up($_POST['nick'])."',
                        `email`    = '".up($_POST['email'])."',
                        `hp`       = '".links($_POST['hp'])."',
-                       `comment`  = '".up($_POST['comment'],1)."',
+                       `comment`  = '".up($_POST['comment'])."',
                        `editby`   = '".addslashes($editedby)."'
                    WHERE id = '".intval($_GET['cid'])."'");
 
@@ -418,13 +419,21 @@ case 'preview';
       $links = "";
     }
 
+    $artikelimage = '../inc/images/newskat/'.$getkat['katimg'];
+    foreach($picformat as $tmpendung) {
+        if(file_exists(basePath."/inc/images/uploads/artikel/".$get['id'].".".$tmpendung)) {
+            $artikelimage = '../inc/images/uploads/artikel/'.$get['id'].'.'.$tmpendung;
+            break;
+        }
+    }
+
     $index = show($dir."/show_more", array("titel" => re($_POST['titel']),
                                            "id" => $get['id'],
                                            "comments" => "",
                                            "display" => "inline",
                                            "nautor" => _autor,
                                            "dir" => $designpath,
-                                           "kat" => re($getkat['katimg']),
+                                           "kat" => $artikelimage,
                                            "ndatum" => _datum,
                                            "showmore" => $showmore,
                                            "icq" => "",
@@ -432,7 +441,7 @@ case 'preview';
                                            "datum" => date("j.m.y H:i")._uhr,
                                            "links" => $links,
                                            "autor" => autor($userid)));
-    echo '<table class="mainContent" cellspacing="1">'.$index.'</table>';
+    echo utf8_encode('<table class="mainContent" cellspacing="1">'.$index.'</table>');
 
     if(!mysqli_persistconns)
         $mysql->close(); //MySQL

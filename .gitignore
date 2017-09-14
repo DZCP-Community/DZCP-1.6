@@ -1,8 +1,7 @@
 *.project
 inc/mysql.php
-rss.xml
+.idea
 rss.xml
 *.prefs
 /nbproject/private/
 nbproject/project.properties
-rss.xml

@@ -63,14 +63,14 @@ if(defined('_News')) {
                                                "ndatum" => _datum,
                                                "ncomments" => _news_kommentare.":",
                                                "klapp" => $klapp,
-                                               "more" => bbcode(re($_POST['morenews']),true),
+                                               "more" => bbcode($_POST['morenews']),
                                                "viewed" => $viewed,
-                                               "text" => bbcode(re($_POST['newstext']),true),
+                                               "text" => bbcode($_POST['newstext']),
                                                "datum" => date("d.m.y H:i", time())._uhr,
                                                "links" => $links,
-                                               "autor" => autor($_SESSION['id'])));
+                                               "autor" => autor($userid)));
 
-        echo '<table class="mainContent" cellspacing="1">'.$index.'</table>';
+        echo utf8_encode('<table class="mainContent" cellspacing="1">'.$index.'</table>');
 
         if(!mysqli_persistconns)
             $mysql->close(); //MySQL

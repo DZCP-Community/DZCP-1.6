@@ -169,6 +169,7 @@ if(defined('_UserMenu')) {
                                                     "delete" => $delete));
 
                 $posted_ip = ($chkMe == 4 ? $getgb['ip'] : _logged);
+				$email =  ($chkMe >= 1 ? $email : '');
                 $membergb .= show("page/comments_show", array("titel" => $titel,
                                                               "comment" => bbcode($getgb['nachricht']),
                                                               "nick" => $nick,
@@ -243,6 +244,7 @@ if(defined('_UserMenu')) {
             $steam = (!empty($get['steamid']) && steam_enable ? '<div id="infoSteam_'.md5(re($get['steamid'])).'"><div style="width:100%;text-align:center"><img src="../inc/images/ajax-loader-mini.gif" alt="" /></div><script language="javascript" type="text/javascript">DZCP.initDynLoader("infoSteam_'.md5(re($get['steamid'])).'","steam","&steamid='.re($get['steamid']).'");</script></div>' : '-');
 
             $city = re($get['city']); $beschreibung = bbcode($get['beschreibung']);
+			$email =  ($chkMe >= 1 ? $email : '');
             $show = show($dir."/profil_show",array("hardware_head" => $hardware_head,
                                                    "about" => _profil_about,
                                                    "country" => flag($get['country']),

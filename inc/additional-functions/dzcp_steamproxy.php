@@ -27,8 +27,7 @@ function SteamAPI_Proxy($steamID='',$call='',$data0=array()) {
         if(ping_port($server['host'],$server['port'],0.5)) break;
     }
 
-    $ctx = stream_context_create(array('http'=>array('timeout' => file_get_contents_timeout)));
-    if(!($stream = file_get_contents('http://'.$server['host'].':'.$server['port'].'/api.php?proxy=1&data='.$send, false, $ctx))) return false;
+    if(!($stream = get_external_contents('http://'.$server['host'].':'.$server['port'].'/api.php?proxy=1&data='.$send))) return false;
     if(empty($stream)) return false;
     $ret = unserialize(base64_decode(gzuncompress(hextobin($stream))));
     return array('status' => $ret['status'],'data' => $ret['data']);

@@ -5,9 +5,9 @@
  * Menu: Gameserver
  */
 function server($serverID = 0) {
-    global $db, $language, $cache;
+    global $db, $cache;
 
-    header('Content-Type: text/html; charset=iso-8859-1');
+    header('Content-Type: text/html; charset=utf-8');
     if(!fsockopen_support()) return _fopen;
 
     $servernavi = '';
@@ -32,17 +32,17 @@ function server($serverID = 0) {
             include(basePath.'/inc/server_query/'.strtolower($get['status']).'.php');
         }
 
-        unset($player_list);
-
-        if(!$cache->isExisting('nav_server_'.$serverID)) {
+        $server_cache = $cache->get('nav_server_'.$serverID);
+        if(is_null($server_cache)) {
             $server = gs_normalise(@call_user_func('server_query_'.$get['status'], $get['ip'], $get['port'], $get['qport'], 'info'));
             $player_list = call_user_func('server_query_'.$get['status'], $get['ip'], $get['port'], $get['qport'], 'players');
             $cache->set('nav_server_'.$serverID, serialize(array('server' => $server, 'players' => $player_list)), config('cache_server'));
+            unset($server_cache);
         } else {
-            $server_cache = $cache->get('nav_server_'.$serverID);
             $server_cache = unserialize($server_cache);
             $server = gs_normalise($server_cache['server']);
             $player_list = $server_cache['players'];
+            unset($server_cache);
         }
 
         $server["mapname"] = preg_replace("/[^A-Za-z0-9 \&\_\-]/", "_", $server["mapname"]);
@@ -92,11 +92,11 @@ function server($serverID = 0) {
         if($count == 0)
             $players = 'Keine Spieler';
 
-        $servername = jsconvert(re(cut($server['hostname'],config('l_servernavi'))));
+        $servername = jsconvert(re(cut($server['hostname'],config('l_servernavi'),true,false)));
         $servernameout = (!empty($servername)) ? $servername : "no name available";
         $info = 'onmouseover="DZCP.showInfo(\''.$servernameout.'\', \'IP/Port;'.$pwd_info.';Game;Map;Players Online;On the Game\', \''.$get['ip'].':'.$get['port'].';'.$pwd_txt.';'.jsconvert(re($game_icon)).''.$server_name_short.';'.(empty($server['mapname']) ? '-' : re($server['mapname'])).';'.$server['players'].' / '.$server['maxplayers'].';'.$players.'\')" onmouseout="DZCP.hideInfo()"';
 
-        $servernavi .= show("menu/server", array("host" => re(cut($server['hostname'],config('l_servernavi'))),
+        $servernavi .= show("menu/server", array("host" => re(cut($server['hostname'],config('l_servernavi'),true,false)),
                                                 "ip" => $get['ip'],
                                                 "map" => (empty($server['mapname']) ? '-' : re($server['mapname'])),
                                                 "mappic" => $image_map,

@@ -1,31 +1,52 @@
 <?php
 /**
- * Prüft online ob DZCP aktuell ist.
+ * PrÃ¼ft online ob DZCP aktuell ist.
  *
  * @return array
  */
 function show_dzcp_version() {
-    global $cache;
+    global $cache,$config_cache;
     $dzcp_version_info = 'onmouseover="DZCP.showInfo(\'<tr><td colspan=2 align=center padding=3 class=infoTop>DZCP Versions Checker</td></tr><tr><td>'._dzcp_vcheck.'</td></tr>\')" onmouseout="DZCP.hideInfo()"';
     $return = array();
-    if(dzcp_version_checker || allow_url_fopen_support()) {
-        if(!$cache->isExisting('dzcp_version')) {
-            $ctx = stream_context_create(array('http'=>array('timeout' => file_get_contents_timeout)));
-            switch (_edition) {
-                case 'dev': $url = 'development'; break;
-                case 'society': $url = 'society'; break;
-                default: $url = 'final'; break;
-            }
-
-            if($dzcp_online_v = file_get_contents("https://raw.githubusercontent.com/DZCP-Community/DZCP-1.6/".$url."/dzcp_version.xml", false, $ctx))
-                $cache->set('dzcp_version', $dzcp_online_v, dzcp_version_checker_refresh);
-        }
-        else
+    if(dzcp_version_checker && allow_url_fopen_support()) {
+        if(!$config_cache['use_cache'] || !$cache->isExisting('dzcp_version')) {
+			$input = json_encode(array('event' => 'version', 'dzcp' => _version, 'edition' => _edition, 'type' => 'xml'));
+            if($dzcp_online_v = get_external_contents('http://www.dzcp.de/api.php?input='.$input)) {
+		        $cache->set('dzcp_version',$dzcp_online_v);
+	        }
+        } else
             $dzcp_online_v = $cache->get('dzcp_version');
+	    unset($input);
 
         if($dzcp_online_v && !empty($dzcp_online_v) && strpos($dzcp_online_v, 'not found') === false) {
-            $xml = simplexml_load_string($dzcp_online_v, 'SimpleXMLElement', LIBXML_NOCDATA); $_build = _build;
-            $xml = SteamAPI::objectToArray($xml);
+            $xml = simplexml_load_string($dzcp_online_v, 'SimpleXMLElement', LIBXML_NOCDATA);
+			if(empty($xml) || is_bool($xml) || !is_object($xml)) {
+				$return['version'] = '<b>'._akt_version.': <a href="" [info]><font color="#FFFF00">'._version.'</font></a> / Release: '._release.' / Build: '._build.'</b>';
+				$return['version'] = show($return['version'],array('info' => $dzcp_version_info));
+				$return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
+				return $return;
+			}
+			
+			$xml = SteamAPI::objectToArray($xml);
+			if(empty($xml) || is_bool($xml) || !is_array($xml)) {
+				$return['version'] = '<b>'._akt_version.': <a href="" [info]><font color="#FFFF00">'._version.'</font></a> / Release: '._release.' / Build: '._build.'</b>';
+				$return['version'] = show($return['version'],array('info' => $dzcp_version_info));
+				$return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
+				return $return;
+			}
+			
+			if(strtolower($xml['edition']) != strtolower(_edition)) {
+				$return['version'] = '<b>'._akt_version.': <a href="" [info]><font color="#FFFF00">'._version.'</font></a> / Release: '._release.' / Build: '._build.'</b>';
+				$return['version'] = show($return['version'],array('info' => $dzcp_version_info));
+				$return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
+				return $return;
+			}
+			
+			if($config_cache['use_cache'])
+                    $cache->set('dzcp_version', $dzcp_online_v, dzcp_version_checker_refresh);
+			unset($dzcp_online_v);
+			
+			$_build = _build;
             if($xml['build'] > _build) $_build = '<font color="#FF0000">'._build.'</font> => <font color="#00FF00">'.$xml['build'].'</font>';
 
             if($xml['version'] <= _version) {

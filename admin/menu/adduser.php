@@ -133,7 +133,7 @@ if(_adminMenu != 'true') exit;
                                  `status`   = '1'");
 
       $insert_id = mysqli_insert_id($mysql);
-      setIpcheck("createuser(".$_SESSION['id']."_".$insert_id.")");
+      setIpcheck("createuser(".$userid."_".$insert_id.")");
 
     // permissions
       if(!empty($_POST['perm']))

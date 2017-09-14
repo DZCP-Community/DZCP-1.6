@@ -26,7 +26,7 @@ if(defined('_Forum')) {
         $delvr = db("DELETE FROM ".$db['vote_results']."
                      WHERE vid = '".$getv['vote']."'");
 
-        setIpcheck("vid_".$getv['vote']);
+        setIpcheck("vid_".$getv['vote'],false);
         }
         $del = db("DELETE FROM ".$db['f_threads']."
                    WHERE id = '".intval($_GET['id'])."'");

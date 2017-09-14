@@ -114,7 +114,7 @@ if(defined('_Forum')) {
         $qry = db("UPDATE ".$db['f_posts']."
                    SET `nick`   = '".up($_POST['nick'])."',
                        `email`  = '".up($_POST['email'])."',
-                       `text`   = '".up($_POST['eintrag'],1)."',
+                       `text`   = '".up($_POST['eintrag'])."',
                        `hp`     = '".links($_POST['hp'])."',
                        `edited` = '".addslashes($editedby)."'
                    WHERE id = '".intval($_GET['id'])."'");
@@ -268,7 +268,8 @@ if(defined('_Forum')) {
               else $hp = show(_hpicon_forum, array("hp" => $getl['hp']));
             }
 
-            $lastpost = show($dir."/forum_posts_show", array("nick" => cleanautor($getl['reg'], '', $getl['nick'], re($getl['email'])),
+			$email =  ($chkMe >= 1 ? $email : '');
+            $lastpost = show($dir."/forum_posts_show", array("nick" => cleanautor($getl['reg'], '', re($getl['nick']), re(re($getl['email']))),
                                                              "postnr" => "",
                                                              "text" => $text,
                                                              "status" => getrank($getl['reg']),
@@ -343,6 +344,7 @@ if(defined('_Forum')) {
               else $hp = show(_hpicon_forum, array("hp" => $gett['t_hp']));
             }
 
+			$email =  ($chkMe >= 1 ? $email : '');
             $lastpost = show($dir."/forum_posts_show", array("nick" => cleanautor($gett['t_reg'], '', $gett['t_nick'], $gett['t_email']),
                                                              "postnr" => "",
                                                              "text" => $text,
@@ -512,12 +514,13 @@ if(defined('_Forum')) {
                             else $hp = show(_hpicon_forum, array("hp" => $getl['hp']));
                         }
 
-                        $nick = autor($getl['reg'], '', $getl['nick'], re($getl['email']));
+                        $nick = autor($getl['reg'], '', re($getl['nick']), re($getl['email']));
                         if(!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor')
                         {
                             if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';
                         }
 
+						$email =  ($chkMe >= 1 ? $email : '');
                         $lastpost = show($dir."/forum_posts_show", array("nick" => $nick,
                                                                                                                          "postnr" => "",
                                                                                                                          "text" => $text,
@@ -591,6 +594,7 @@ if(defined('_Forum')) {
                             if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';
                         }
 
+						$email =  ($chkMe >= 1 ? $email : '');
                         $lastpost = show($dir."/forum_posts_show", array("nick" => $nick,
                                                                                                                          "postnr" => "",
                                                                                                                          "text" => $text,
@@ -681,7 +685,7 @@ if(defined('_Forum')) {
 
                             $text = show(_forum_spam_text, array("autor" => $fautor,
                                                                                                      "ltext" => addslashes($getdp['text']),
-                                                                                                     "ntext" => up($_POST['eintrag'],1)));
+                                                                                                     "ntext" => up($_POST['eintrag'])));
 
                                                     $qry = db("UPDATE ".$db['f_threads']."
                                                                                          SET `lp` = '".time()."'
@@ -698,7 +702,7 @@ if(defined('_Forum')) {
 
                             $text = show(_forum_spam_text, array("autor" => $fautor,
                                                                                                      "ltext" => addslashes($gettdp['t_text']),
-                                                                                                     "ntext" => up($_POST['eintrag'],1)));
+                                                                                                     "ntext" => up($_POST['eintrag'])));
 
                             $qry = db("UPDATE ".$db['f_threads']."
                                                  SET `lp`   = '".time()."',
@@ -713,7 +717,7 @@ if(defined('_Forum')) {
                                                  `email` = '".up($_POST['email'])."',
                                                  `hp`    = '".links($_POST['hp'])."',
                                                  `reg`   = '".up($userid)."',
-                                                 `text`  = '".up($_POST['eintrag'],1)."',
+                                                 `text`  = '".up($_POST['eintrag'])."',
                                                  `ip`    = '".$userip."'");
 
                     $update = db("UPDATE ".$db['f_threads']."

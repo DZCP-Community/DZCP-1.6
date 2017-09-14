@@ -155,7 +155,7 @@ switch($do) {
             db("UPDATE ".$db['artikel']."
                 SET `kat`    = '".((int)$_POST['kat'])."',
                     `titel`  = '".up($_POST['titel'])."',
-                    `text`   = '".up($_POST['artikel'],1)."',
+                    `text`   = '".up($_POST['artikel'])."',
                     `link1`  = '".up($_POST['link1'])."',
                     `link2`  = '".up($_POST['link2'])."',
                     `link3`  = '".up($_POST['link3'])."',
@@ -253,7 +253,7 @@ switch($do) {
                                                               "title" => _button_title_del,
                                                               "del" => convSpace(_confirm_del_artikel)));
 
-            $titel = show(_artikel_show_link, array("titel" => re(cut($get['titel'],config('l_newsadmin'))), "id" => $get['id']));
+            $titel = show(_artikel_show_link, array("titel" => re(cut($get['titel'],config('l_newsadmin'),true,false)), "id" => $get['id']));
 
             $public = ($get['public'] ? '<a href="?admin=artikel&amp;do=public&amp;id='.$get['id'].'&amp;what=unset"><img src="../inc/images/public.gif" alt="" title="'._non_public.'" /></a>'
                     : '<a href="?admin=artikel&amp;do=public&amp;id='.$get['id'].'&amp;what=set"><img src="../inc/images/nonpublic.gif" alt="" title="'._public.'" /></a>');

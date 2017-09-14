@@ -29,7 +29,7 @@ $check = db("SELECT s1.user FROM ".$db['permissions']." s1, ".$db['users']." s2
              AND s2.id = '".intval($userid)."'
              AND s2.pwd = '".$_SESSION['pwd']."'");
 
-if(!admin_perms($_SESSION['id']))
+if(!admin_perms($userid))
     $index = error(_error_wrong_permissions, 1);
 else {
     if(isset($_GET['admin']) && file_exists(basePath.'/admin/menu/'.strtolower($_GET['admin']).'.php') &&
@@ -95,15 +95,12 @@ else {
     $dzcp_news = '';
     if(allow_url_fopen_support()) {
         if(admin_view_dzcp_news) {
-            if(!$cache->isExisting("admin_news")) {
-                $dzcp_news = fileExists("http://www.dzcp.de/dzcp_news.php");
-                if(!empty($dzcp_news))
+            $dzcp_news = $cache->get("admin_news");
+            if(is_null($dzcp_news)) {
+                if($dzcp_news = get_external_contents("http://www.dzcp.de/dzcp_news.php"))
                     $cache->set("admin_news", base64_encode($dzcp_news), 1200);
-                else
-                    $dzcp_news = false;
-            }
-            else
-                $dzcp_news = base64_decode($cache->get("admin_news"));
+            } else
+                $dzcp_news = base64_decode($dzcp_news);
         }
     }
 

@@ -165,9 +165,9 @@ switch ($do) {
                 SET `autor`      = '".((int)$userid)."',
                     `kat`        = '".((int)$_POST['kat'])."',
                     `titel`      = '".up($_POST['titel'])."',
-                    `text`       = '".up($_POST['newstext'],1)."',
+                    `text`       = '".up($_POST['newstext'])."',
                     `klapplink`  = '".up($_POST['klapptitel'])."',
-                    `klapptext`  = '".up($_POST['morenews'],1)."',
+                    `klapptext`  = '".up($_POST['morenews'])."',
                     `link1`      = '".up($_POST['link1'])."',
                     `link2`      = '".up($_POST['link2'])."',
                     `link3`      = '".up($_POST['link3'])."',
@@ -190,7 +190,7 @@ switch ($do) {
         }
     break;
     case 'edit':
-        $_SESSION['news_return'] = isset($_GET['return']) ? up($_GET['return']) : '';
+        $_SESSION['news_return'] = isset($_GET['return']) ? up($_GET['return'],false) : '';
         $get = db("SELECT * FROM ".$db['news']." WHERE id = '".intval($_GET['id'])."'",false,true);
         $qryk = db("SELECT id,kategorie FROM ".$db['newskat'].""); $kat = '';
         while($getk = _fetch($qryk)) {
@@ -295,9 +295,9 @@ switch ($do) {
             db("UPDATE ".$db['news']."
                 SET `kat`        = '".((int)$_POST['kat'])."',
                     `titel`      = '".up($_POST['titel'])."',
-                    `text`       = '".up($_POST['newstext'],1)."',
+                    `text`       = '".up($_POST['newstext'])."',
                     `klapplink`  = '".up($_POST['klapptitel'])."',
-                    `klapptext`  = '".up($_POST['morenews'],1)."',
+                    `klapptext`  = '".up($_POST['morenews'])."',
                     `link1`      = '".up($_POST['link1'])."',
                     `url1`       = '".links($_POST['url1'])."',
                     `link2`      = '".up($_POST['link2'])."',
@@ -409,7 +409,7 @@ switch ($do) {
                                                               "title" => _button_title_del,
                                                               "del" => convSpace(_confirm_del_news)));
 
-            $titel = show(_news_show_link, array("titel" => re(cut($get['titel'],config('l_newsadmin'))), "id" => $get['id']));
+            $titel = show(_news_show_link, array("titel" => re(cut($get['titel'],config('l_newsadmin'),true,false)), "id" => $get['id']));
             $intern = ($get['intern'] ? _votes_intern : '');
             $sticky = ($get['sticky'] ? _news_sticky : '');
             $datum = empty($get['datum']) ? _no_public : date("d.m.y H:i", $get['datum'])._uhr;

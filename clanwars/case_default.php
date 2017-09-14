@@ -81,7 +81,7 @@ if(defined('_Clanwars')) {
             $game = squad($getm['icon']);
 
             $flagge = flag($getm['gcountry']);
-            $gegner = show(_cw_details_gegner, array("gegner" => re(cut($getm['clantag']." - ".$getm['gegner'], config('l_clanwars'))),
+            $gegner = show(_cw_details_gegner, array("gegner" => re(cut($getm['clantag']." - ".$getm['gegner'], config('l_clanwars'),true,false)),
                                                          "url" => '?action=details&amp;id='.$getm['id']));
 
             $details = show(_cw_show_details, array("id" => $getm['id']));

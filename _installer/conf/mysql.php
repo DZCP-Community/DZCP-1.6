@@ -180,6 +180,7 @@ function install_mysql($login, $nick, $pwd, $email)
              `id` int(10) NOT NULL auto_increment,
              `ip` varchar(30) NOT NULL default '0',
              `datum` int(20) NOT NULL default '0',
+             `agent` text DEFAULT NULL,
              PRIMARY KEY  (`id`)
              ) ");
   $qry = db("DROP TABLE IF EXISTS ".$db['c_who']."");
@@ -395,7 +396,6 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
 
   $qry = db("INSERT INTO ".$db['links']." (`id`, `url`, `text`, `banner`, `beschreibung`, `hits`) VALUES (1, 'http://www.dzcp.de', 'http://www.dzcp.de/banner/dzcp.gif', 1, 'deV!L`z Clanportal', 0)");
-  $qry = db("INSERT INTO ".$db['links']." (`id`, `url`, `text`, `banner`, `beschreibung`, `hits`) VALUES (2, 'http://www.my-starmedia.de', 'http://www.my-starmedia.de/extern/b3/b3.gif', 1, '<b>my-STARMEDIAN</b><br />my-STARMEDIA.de - DZCP Mods and Coding', 0)");
 
 //-> LinkUs
   $qry = db("DROP TABLE IF EXISTS ".$db['linkus']."");
@@ -606,11 +606,8 @@ function install_mysql($login, $nick, $pwd, $email)
             PRIMARY KEY  (`id`)
             ) ");
 
-  $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.my-starmedia.de', 'my-starmedia.gif');");
   $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.hogibo.net', 'hogibo.gif');");
-  $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.codeking.eu', 'codeking.gif');");
   $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.dzcp.de', 'dzcp.gif');");
-  $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://spenden.dzcp.de', 'spenden.gif');");
 
 //-> Rechte
   $qry = db("DROP TABLE IF EXISTS ".$db['permissions']."");
@@ -1345,9 +1342,7 @@ function update_mysql_1_5()
 VALUES
 (1, 'DZCP', 'http://www.dzcp.de', '<p>deV!L\'z Clanportal, das CMS for Online-Clans!</p>', 0, '', '', 0, '', '', 1, 'gif', '', 7, 0),
 (2, 'DZCP Rotationsbanner', 'http://www.dzcp.de', '<p>deV!L`z Clanportal</p>', 0, '', '', 1, '', 'http://www.dzcp.de/banner/dzcp.gif', 0, '', '', 5, 0),
-(3, 'TEMPLATEbar', 'http://www.templatebar.de', '<p>Auf TEMPLATEbar.de kannst du dir kosteng&uuml;nstige Clandesigns und/oder Templates von Top Designer erwerben.</p>', 1, '', 'http://www.templatebar.de/___FILES/TBbanner/tb_468x60_2.gif', 1, '', 'http://www.templatebar.de/___FILES/TBbanner/tb_468x60_2.gif', 1, '', '../banner/sponsors/tb_88x32.png', 1, 0),
-(4, 'MODSbar.de', 'http://www.modsbar.de', '<p>Auf MODSbar.de kannst du dir kosteng&uuml;nstige Modifikationen und/oder Dienstleistungen von Top Codern erwerben.</p>', 1, '', 'http://www.templatebar.de/___FILES/MBbanner/mb_468x60.gif', 1, '', 'http://www.templatebar.de/___FILES/MBbanner/mb_468x60.gif', 1, '', '../banner/sponsors/mb_88x32.png', 2, 0),
-(5, 'eSport-Designs', 'http://esport-designs.de', '<p>Jedes Team das keine gut strukturierte und &uuml;bersichtlich gestaltete Webseite besitzt, die sich von der breiten Masse abhebt, gelingt es schwer oder teilweise gar nicht sich im Web zu pr&auml;sentieren. eSport-Designs bietet vorgefertigte DZCP Templates, Logo Designs oder Onlineshop L&ouml;sungen komplett nach Kundenwunsch an.</p>', 1, '', '../banner/sponsors/ed468x60.png', 1, '', '../banner/sponsors/ed468x60.png', 1, '', '../banner/sponsors/ed88x31.gif', 8, 0);");
+(3, 'eSport-Designs', 'http://esport-designs.de', '<p>Jedes Team das keine gut strukturierte und &uuml;bersichtlich gestaltete Webseite besitzt, die sich von der breiten Masse abhebt, gelingt es schwer oder teilweise gar nicht sich im Web zu pr&auml;sentieren. eSport-Designs bietet vorgefertigte DZCP Templates, Logo Designs oder Onlineshop L&ouml;sungen komplett nach Kundenwunsch an.</p>', 1, '', '../banner/sponsors/ed468x60.png', 1, '', '../banner/sponsors/ed468x60.png', 1, '', '../banner/sponsors/ed88x31.gif', 8, 0);");
 
 
 
@@ -1355,7 +1350,6 @@ VALUES
 
     db("INSERT INTO ".$db['partners']." (`link`, `banner`, `textlink`) VALUES ('http://www.dzcp.de', 'dzcp.de', 1);");
     db("INSERT INTO ".$db['partners']." (`link`, `banner`, `textlink`) VALUES ('http://www.hogibo.net', 'Webspace', 1);");
-    db("INSERT INTO ".$db['partners']." (`link`, `banner`, `textlink`) VALUES ('http://www.freunde.org', 'Freunde finden', 1);");
 
     db("ALTER TABLE ".$db['permissions']." ADD `pos` INT( 1 ) NOT NULL AFTER `user`");
     db("ALTER TABLE ".$db['f_access']." ADD `pos` INT( 1 ) NOT NULL AFTER `user` ");
@@ -1404,11 +1398,7 @@ function update_mysql_1_5_2()
                                       ADD `direct_refresh` INT( 1 ) NOT NULL DEFAULT '0'");
 }
 function update_mysql_1_5_4()
-{
-  global $db;
-        db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.modsbar.de', 'mb_88x32.png');");
-      db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.templatebar.de', 'tb_88x32.png');");
-}
+{}
 function update_mysql_1_6()
 {
     global $db,$updater;
@@ -1545,7 +1535,7 @@ function update_mysql_1_6()
         db("UPDATE ".$db['f_skats']." SET `pos` = '".$get['id']."' WHERE `id` = '".$get['id']."'");
      }
 
-     //-> Alte Artikelkommentare löschen wo für es keinen Artikel mehr gibt
+     //-> Alte Artikelkommentare lï¿½schen wo fï¿½r es keinen Artikel mehr gibt
      $qry = db("SELECT id FROM `".$db['artikel']."`"); $artikel_index = array();
      while($get = mysqli_fetch_assoc($qry)){ $artikel_index[$get['id']] = true; }
 
@@ -1577,4 +1567,10 @@ function update_mysql_1_6()
         db("UPDATE `".$db['settings']."` SET `db_optimize` = '".(time()+auto_db_optimize_interval)."' WHERE `id` = 1;");
         db_optimize();
     }
+}
+function update_mysql_1_6_0_4()
+{
+    global $db;
+    db("ALTER TABLE `".$db['ipcheck']."` ADD `created` INT(11) NOT NULL DEFAULT '0' AFTER `time`;");
+    //db("ALTER TABLE `".$db['c_ips']."` ADD  `agent` text DEFAULT NULL AFTER `datum`;"); Redundant!
 }

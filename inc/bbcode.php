@@ -7,7 +7,7 @@
 ## Error Reporting ##
 if(!defined('DEBUG_LOADER'))
     exit('<b>Die Debug-Console wurde nicht geladen!<p>
-    Bitte überprüfen Sie ob die index.php einen "include(basePath."/inc/debugger.php");" Eintrag hat.</b>');
+    Bitte Ã¼berprÃ¼fen Sie ob die index.php einen "include(basePath."/inc/debugger.php");" Eintrag hat.</b>');
 
 ## INCLUDES/REQUIRES ##
 require_once(basePath.'/inc/secure.php');
@@ -20,27 +20,49 @@ require_once(basePath.'/inc/server_query/_functions.php');
 require_once(basePath."/inc/teamspeak_query.php");
 require_once(basePath."/inc/phpfastcache/phpfastcache.php");
 require_once(basePath.'/inc/steamapi.php');
+require_once(basePath.'/inc/crawler-detect/CrawlerDetect.php');
+
+//CrawlerDetect
+use Jaybizzle\CrawlerDetect as CrawlerDetect;
 
 ## Is AjaxJob ##
 $ajaxJob = (!isset($ajaxJob) ? false : $ajaxJob);
 
 //Cache
-$config_cache['htaccess'] = true;
-$config_cache['fallback'] = array( "memcache" => "apc", "memcached" =>  "apc", "apc" =>  "sqlite", "sqlite" => "files");
-$config_cache['path'] = basePath."/inc/_cache_";
+use phpFastCache\CacheManager;
+use phpFastCache\Util;
+Util\Languages::setEncoding("UTF-8");
+CacheManager::CachingMethod("phpfastcache");
 
-if(!is_dir($config_cache['path'])) //Check cache dir
-    mkdir($config_cache['path'], 0777, true);
+//Auto Cache
+if($config_cache['storage'] == 'auto') {
+    if((extension_loaded('apc') && ini_get('apc.enabled') && strpos(PHP_SAPI,"CGI") === false))
+        $config_cache['storage'] = "apc";
+    else if((extension_loaded('xcache') && function_exists("xcache_get")))
+        $config_cache['storage'] = "xcache";
+    else if((extension_loaded('wincache') && function_exists("wincache_ucache_set")))
+        $config_cache['storage'] = "wincache";
+    else
+        $config_cache['storage'] = "files";
+}
 
-$config_cache['securityKey'] = settings('prev',false);
-phpFastCache::setup($config_cache);
-$cache = new phpFastCache();
+CacheManager::setup(array(
+    "path" => basePath."/inc/_cache_/",
+    "allow_search" => false,
+    "storage" => $config_cache['storage'],
+    "memcache" => $config_cache['server_mem'],
+    "redis" => $config_cache['server_redis'],
+    "ssdb" => $config_cache['server_ssdb'],
+    "fallback" => "files"
+));
+$cache = CacheManager::getInstance(); // return your setup storage
 
 //-> Automatische Datenbank Optimierung
 if(auto_db_optimize && settings('db_optimize',false) <= time() && !$installer && !$updater) {
     @ignore_user_abort(true);
     db("UPDATE `".$db['settings']."` SET `db_optimize` = '".(time()+auto_db_optimize_interval)."' WHERE `id` = 1;");
     db_optimize();
+    $cache->autoCleanExpired(3600*1);
     @ignore_user_abort(false);
 }
 
@@ -68,7 +90,8 @@ SteamAPI::set('apikey',re(settings('steam_api_key')));
 $language = (cookie::get('language') != false ? (file_exists(basePath.'/inc/lang/languages/'.cookie::get('language').'.php') ? cookie::get('language') : re(settings('language'))) : re(settings('language')));
 
 //-> einzelne Definitionen
-$isSpider = isSpider();
+$CrawlerDetect = new CrawlerDetect\CrawlerDetect();
+$isSpider = $CrawlerDetect->isCrawler();
 $subfolder = basename(dirname(dirname($_SERVER['PHP_SELF']).'../'));
 $httphost = $_SERVER['HTTP_HOST'].(empty($subfolder) ? '' : '/'.$subfolder);
 $domain = str_replace('www.','',$httphost);
@@ -83,10 +106,11 @@ $userip = visitorIp();
 $maxpicwidth = 90;
 $maxadmincw = 10;
 $maxfilesize = @ini_get('upload_max_filesize');
+$search_forum = false;
 
 //-> Global
 $action = isset($_GET['action']) ? $_GET['action'] : '';
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$page = (isset($_GET['page']) && intval($_GET['page']) >= 1) ? intval($_GET['page']) : 1;
 $do = isset($_GET['do']) ? $_GET['do'] : '';
 $index = ''; $show = ''; $color = 0;
 
@@ -151,7 +175,7 @@ if(!$chkMe) {
     $_SESSION['lastvisit'] = '';
 }
 
-//-> Prueft ob der User gebannt ist, oder die IP des Clients warend einer offenen session verändert wurde.
+//-> Prueft ob der User gebannt ist, oder die IP des Clients warend einer offenen session verÃ¤ndert wurde.
 if($chkMe && $userid && !empty($_SESSION['ip'])) {
     if($_SESSION['ip'] != visitorIp() || isBanned($userid,false) ) {
         $_SESSION['id']        = '';
@@ -167,7 +191,7 @@ if($chkMe && $userid && !empty($_SESSION['ip'])) {
 }
 
 /**
-* Gibt die IP des Besuchers / Users zurück
+* Gibt die IP des Besuchers / Users zurÃ¼ck
 * Forwarded IP Support
 */
 function visitorIp() {
@@ -266,8 +290,7 @@ unset($files);
 $designpath = '../inc/_templates_/'.$tmpdir;
 
 //-> Languagefiles einlesen
-function lang($lng,$pfad='') {
-    global $charset;
+function lang($lng) {
     if(!file_exists(basePath."/inc/lang/languages/".$lng.".php"))
     {
         $files = get_files(basePath.'/inc/lang/languages/',false,true,array('php'));
@@ -276,6 +299,99 @@ function lang($lng,$pfad='') {
 
     include(basePath."/inc/lang/global.php");
     include(basePath."/inc/lang/languages/".$lng.".php");
+}
+
+
+//->Daten uber file_get_contents oder curl abrufen
+function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_contents_timeout) {
+    if(!allow_url_fopen_support() && (!extension_loaded('curl') || !use_curl_support))
+        return false;
+    
+    $url_p = @parse_url($url);
+    $host = $url_p['host'];
+    $port = isset($url_p['port']) ? $url_p['port'] : 80;
+    $port = (($url_p['scheme'] == 'https' && $port == 80) ? 443 : $port);
+    if(!ping_port($host,$port,$timeout)) return false;
+
+    if(extension_loaded('curl') && use_curl_support) {
+        if(!$curl = curl_init())
+            return false;
+        
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_AUTOREFERER, true);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
+        curl_setopt($curl, CURLOPT_USERAGENT, "DZCP-HTTP-CLIENT");
+		
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $timeout);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout * 2); // x 2
+        
+        //For POST
+        if(count($post) >= 1 && $post != false) {
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
+            curl_setopt($curl, CURLOPT_VERBOSE , 0 );
+        }
+        
+        $gzip = false;
+
+        if(function_exists('gzinflate') && !$nogzip) {
+            $gzip = true;
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept-Encoding: gzip,deflate'));
+            curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+        }
+        
+        if($url_p['scheme'] == 'https') { //SSL
+            curl_setopt($curl, CURLOPT_PORT , $port); 
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        }
+
+        if (!($content = curl_exec($curl)) || empty($content)) {
+            return false;
+        }
+
+        if($gzip) {
+            $curl_info = curl_getinfo($curl,CURLINFO_HEADER_OUT);
+            if(stristr($curl_info, 'accept-encoding') && stristr($curl_info, 'gzip')) {
+                $content = gzinflate( substr($content,10,-8) );
+            }
+        }
+
+        @curl_close($curl);
+        unset($curl);
+    } else {
+        if($url_p['scheme'] == 'https') //HTTPS not Supported!
+            $url = str_replace('https', 'http', $url);
+        
+        $opts = array();
+        $opts['http']['method'] = "GET";
+        $opts['http']['timeout'] = $timeout * 2;
+                
+        $gzip = false;
+
+        if(function_exists('gzinflate') && !$nogzip) {
+            $gzip = true;
+            $opts['http']['header'] = 'Accept-Encoding:gzip,deflate'."\r\n";
+        }
+        
+        $context = stream_context_create($opts);
+        if ((!$content = @file_get_contents($url, false, $context, -1, 40000)) || empty($content)) {
+            return false;
+        }
+
+        if($gzip) {
+            foreach($http_response_header as $c => $h) {
+                if(stristr($h, 'content-encoding') && stristr($h, 'gzip')) {
+                    $content = gzinflate( substr($content,10,-8) );
+                }
+            }
+        }
+    }
+    
+    return $content;
 }
 
 //-> Sprachdateien auflisten
@@ -363,7 +479,7 @@ function rootAdmin($userid=0) {
 //-> PHP-Code farbig anzeigen
 function highlight_text($txt) {
     while(preg_match("=\[php\](.*)\[/php\]=Uis",$txt)!=FALSE) {
-        $res = preg_match("=\[php\](.*)\[/php\]=Uis",$txt,$matches);
+        preg_match("=\[php\](.*)\[/php\]=Uis",$txt,$matches);
         $src = $matches[1];
         $src = str_replace('<?php','',$src);
         $src = str_replace('<?php','',$src);
@@ -724,15 +840,8 @@ function zitat($nick,$zitat) {
 
 //-> convert string for output
 function re($txt) {
-    $txt = stripslashes($txt);
-    $txt = str_replace("& ","&amp; ",$txt);
-    $txt = str_replace("[","&#91;",$txt);
-    $txt = str_replace("]","&#93;",$txt);
-    $txt = str_replace("\"","&#34;",$txt);
-    $txt = str_replace("<","&#60;",$txt);
-    $txt = str_replace(">","&#62;",$txt);
-    $txt = str_replace("(", "&#40;", $txt);
-    return str_replace(")", "&#41;", $txt);
+    global $charset; 
+    return trim(stripslashes(spChars(@html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true)));
 }
 
 function re_entry($txt) {
@@ -829,36 +938,114 @@ function flagge($txt) {
     return preg_replace($var,$repl, $txt);
 }
 
-//-> Funktion um Ausgaben zu kuerzen
-function cut($str, $length = null, $dots = true) {
+function cut($text,$length='',$dots = true,$html = true,$ending = '',$exact = false,$considerHtml = true) {
     if($length === 0)
         return '';
 
-    $start = 0;
-    $dots = ($dots == true && strlen(html_entity_decode($str)) > $length) ? '...' : '';
+    if(empty($length))
+        return $text;
 
-    if(strpos($str, '&') === false)
-        return (($length === null) ? substr($str, $start) : substr($str, $start, $length)).$dots;
+    $ending = $dots || !empty($ending) ? (!empty($ending) ? $ending : '...') : '';
 
-    $chars = preg_split('/(&[^;\s]+;)|/', $str, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_OFFSET_CAPTURE);
-    $html_length = count($chars);
+    if(!$html) {
+        if(strlen($text) <= $length) {
+            return $text;
+        }
 
-    if(($html_length === 0) || ($start >= $html_length) || (isset($length) && ($length <= -$html_length)))
-        return '';
-
-    if($start >= 0)
-        $real_start = $chars[$start][1];
-    else {
-        $start = max($start,-$html_length);
-        $real_start = $chars[$html_length+$start][1];
+        return substr($text, 0, $length).$ending;
     }
 
-    if (!isset($length))
-        return substr($str, $real_start).$dots;
-    else if($length > 0)
-        return (($start+$length >= $html_length) ? substr($str, $real_start) : substr($str, $real_start, $chars[max($start,0)+$length][1] - $real_start)).$dots;
-    else
-        return substr($str, $real_start, $chars[$html_length+$length][1] - $real_start).$dots;
+    if ($considerHtml) {
+        // if the plain text is shorter than the maximum length, return the whole text
+        if (strlen(preg_replace('/<.*?>/', '', $text)) <= $length) {
+            return $text;
+        }
+
+        // splits all html-tags to scanable lines
+        preg_match_all('/(<.+?>)?([^<>]*)/s', $text, $lines, PREG_SET_ORDER);
+        $total_length = strlen($ending);
+        $open_tags = array();
+        $truncate = '';
+        foreach ($lines as $line_matchings) {
+            // if there is any html-tag in this line, handle it and add it (uncounted) to the output
+            if (!empty($line_matchings[1])) {
+                // if it's an "empty element" with or without xhtml-conform closing slash
+                if (preg_match('/^<(\s*.+?\/\s*|\s*(img|br|input|hr|area|base|basefont|col|frame|isindex|link|meta|param)(\s.+?)?)>$/is', $line_matchings[1])) {
+                    // do nothing
+                    // if tag is a closing tag
+                } else if (preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
+                    // delete tag from $open_tags list
+                    $pos = array_search($tag_matchings[1], $open_tags);
+                    if ($pos !== false) {
+                        unset($open_tags[$pos]);
+                    }
+                    // if tag is an opening tag
+                } else if (preg_match('/^<\s*([^\s>!]+).*?>$/s', $line_matchings[1], $tag_matchings)) {
+                    // add tag to the beginning of $open_tags list
+                    array_unshift($open_tags, strtolower($tag_matchings[1]));
+                }
+                // add html-tag to $truncate'd text
+                $truncate .= $line_matchings[1];
+            }
+
+            // calculate the length of the plain text part of the line; handle entities as one character
+            $content_length = strlen(preg_replace('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', ' ', $line_matchings[2]));
+            if ($total_length+$content_length> $length) {
+                // the number of characters which are left
+                $left = $length - $total_length;
+                $entities_length = 0;
+                // search for html entities
+                if (preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', $line_matchings[2], $entities, PREG_OFFSET_CAPTURE)) {
+                    // calculate the real length of all entities in the legal range
+                    foreach ($entities[0] as $entity) {
+                        if ($entity[1]+1-$entities_length <= $left) {
+                            $left--;
+                            $entities_length += strlen($entity[0]);
+                        } else {
+                            // no more characters left
+                            break;
+                        }
+                    }
+                }
+                $truncate .= substr($line_matchings[2], 0, $left+$entities_length);
+                // maximum lenght is reached, so get off the loop
+                break;
+            } else {
+                $truncate .= $line_matchings[2];
+                $total_length += $content_length;
+            }
+            // if the maximum length is reached, get off the loop
+            if($total_length>= $length) {
+                break;
+            }
+        }
+    } else {
+        if (strlen($text) <= $length) {
+            return $text;
+        } else {
+            $truncate = substr($text, 0, $length - strlen($ending));
+        }
+    }
+
+    // if the words shouldn't be cut in the middle...
+    if (!$exact) {
+        // ...search the last occurance of a space...
+        $spacepos = strrpos($truncate, ' ');
+        if (isset($spacepos)) {
+            // ...and cut the text in this position
+            $truncate = substr($truncate, 0, $spacepos);
+        }
+    }
+
+    // add the defined ending to the text
+    $truncate .= $ending;
+    if($considerHtml) {
+        // close all unclosed html-tags
+        foreach ($open_tags as $tag) {
+            $truncate .= '</' . $tag . '>';
+        }
+    }
+    return $truncate;
 }
 
 function wrap($str, $width = 75, $break = "\n", $cut = true) {
@@ -965,33 +1152,21 @@ function fileExists($url) {
 
 //-> Funktion um Sonderzeichen zu konvertieren
 function spChars($txt) {
-  $txt = str_replace("Ä","&Auml;",$txt);
-  $txt = str_replace("ä","&auml;",$txt);
-  $txt = str_replace("Ü","&Uuml;",$txt);
-  $txt = str_replace("ü","&uuml;",$txt);
-  $txt = str_replace("Ö","&Ouml;",$txt);
-  $txt = str_replace("ö","&ouml;",$txt);
-  $txt = str_replace("ß","&szlig;",$txt);
-  return str_replace("€","&euro;",$txt);
+  $txt = str_replace("Ã„","&Auml;",$txt);
+  $txt = str_replace("Ã¤","&auml;",$txt);
+  $txt = str_replace("Ãœ","&Uuml;",$txt);
+  $txt = str_replace("Ã¼","&uuml;",$txt);
+  $txt = str_replace("Ã–","&Ouml;",$txt);
+  $txt = str_replace("Ã¶","&ouml;",$txt);
+  $txt = str_replace("ÃŸ","&szlig;",$txt);
+  return str_replace("â‚¬","&euro;",$txt);
 }
 
 //-> Funktion um sauber in die DB einzutragen
-function up($txt, $bbcode=false, $charset_set='') {
+function up($txt,$escape=true) {
     global $charset;
-
-    if(!empty($charset_set))
-        $charset = $charset_set;
-
-    $txt = str_replace("& ","&amp; ",$txt);
-    $txt = str_replace("\"","&#34;",$txt);
-
-    if(!$bbcode) {
-        $txt = htmlentities(html_entity_decode($txt), ENT_QUOTES, $charset);
-        $txt = nl2br($txt);
-    }
-
-    $txt = str_replace("'","&#39;",$txt);
-    return trim(spChars($txt));
+    $return = utf8_encode(stripcslashes(spChars(htmlentities($txt, ENT_COMPAT, $charset))));
+    return $escape ? _real_escape_string($return) : $return;
 }
 
 //-> Funktion um diverse Dinge aus Tabellen auszaehlen zu lassen
@@ -1061,29 +1236,36 @@ function highlight($word) {
 
 //-> Counter updaten
 function updateCounter() {
-    global $db,$reload,$today,$datum,$userip;
-    $ipcheck = db("SELECT id,ip,datum FROM ".$db['c_ips']." WHERE ip = '".$userip."' AND FROM_UNIXTIME(datum,'%d.%m.%Y') = '".date("d.m.Y")."'");
+    global $db,$reload,$today,$datum,$userip,$CrawlerDetect;
+    $ipcheck = db("SELECT `id`,`ip`,`datum` FROM `".$db['c_ips']."` WHERE `ip` = '".$userip."' AND FROM_UNIXTIME(datum,'%d.%m.%Y') = '".date("d.m.Y")."'");
     db("DELETE FROM ".$db['c_ips']." WHERE datum+".$reload." <= ".time()." OR FROM_UNIXTIME(datum,'%d.%m.%Y') != '".date("d.m.Y")."'");
     $count = db("SELECT id,visitors,today FROM ".$db['counter']." WHERE today = '".$today."'");
     if(_rows($ipcheck)>=1) {
         $get = _fetch($ipcheck);
         $sperrzeit = $get['datum']+$reload;
         if($sperrzeit <= time()) {
-            db("DELETE FROM ".$db['c_ips']." WHERE ip = '".$userip."'");
-
             if(_rows($count))
-                db("UPDATE ".$db['counter']." SET `visitors` = visitors+1 WHERE today = '".$today."'");
+                db("UPDATE `".$db['counter']."` SET `visitors` = (visitors+1) WHERE `today` = '".$today."';");
             else
-                db("INSERT INTO ".$db['counter']." SET `visitors` = '1', `today` = '".$today."'");
+                db("INSERT INTO `".$db['counter']."` SET `visitors` = '1', `today` = '".$today."'");
 
-            db("INSERT INTO ".$db['c_ips']." SET `ip` = '".$userip."', `datum` = '".((int)$datum)."'");
+            if(db("SELECT `id` FROM `".$db['c_ips']."` WHERE `ip` = '".$userip."';",true)) {
+                db("UPDATE ".$db['c_ips']." SET `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."' WHERE `ip` = '".$userip."';");
+            } else {
+                db("INSERT INTO `".$db['c_ips']."` SET `ip` = '".$userip."', `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."';");
+            }
         }
     } else {
         if(_rows($count))
-            db("UPDATE ".$db['counter']." SET `visitors` = visitors+1 WHERE today = '".$today."'");
+            db("UPDATE `".$db['counter']."` SET `visitors` = (visitors+1) WHERE `today` = '".$today."';");
        else
-            db("INSERT INTO ".$db['counter']." SET `visitors` = '1', `today` = '".$today."'");
-        db("INSERT INTO ".$db['c_ips']." SET `ip` = '".$userip."', `datum` = '".((int)$datum)."'");
+            db("INSERT INTO `".$db['counter']."` SET `visitors` = '1', `today` = '".$today."'");
+
+        if(db("SELECT `id` FROM `".$db['c_ips']."` WHERE `ip` = '".$userip."';",true)) {
+            db("UPDATE `".$db['c_ips']."` SET `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."' WHERE `ip` = '".$userip."';");
+        } else {
+            db("INSERT INTO `".$db['c_ips']."` SET `ip` = '".$userip."', `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."';");
+        }
     }
 }
 
@@ -1108,7 +1290,7 @@ function online_guests($where='') {
         db("REPLACE INTO ".$db['c_who']."
                SET `ip`       = '".$userip."',
                    `online`   = '".((int)(time()+$useronline))."',
-                   `whereami` = '".up($where,true)."',
+                   `whereami` = '".up($where)."',
                    `login`    = '".((int)$logged)."'");
         return cnt($db['c_who']);
     }
@@ -1123,6 +1305,7 @@ function online_reg() {
 function checkme($userid_set=0) {
     global $db;
     if(!$userid = ($userid_set != 0 ? intval($userid_set) : userid())) return 0;
+    if(rootAdmin($userid)) return 4;
     if(empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
     if(!dbc_index::issetIndex('user_'.$userid)) {
         $qry = db("SELECT * FROM ".$db['users']." WHERE id = ".$userid." AND pwd = '".$_SESSION['pwd']."' AND ip = '".$_SESSION['ip']."'");
@@ -1165,11 +1348,11 @@ function isBanned($userid_set=0,$logout=true) {
 function permission($check,$uid=0) {
     global $db,$userid,$chkMe;
     if(!$uid) $uid = $userid;
-
+    if(rootAdmin($uid)) return true;
     if($chkMe == 4)
         return true;
     else {
-        if($userid) {
+        if($uid) {
             // check rank permission
             if(db("SELECT s1.`".$check."` FROM ".$db['permissions']." AS s1
                    LEFT JOIN ".$db['userpos']." AS s2 ON s1.`pos` = s2.`posi`
@@ -1319,9 +1502,24 @@ function squad($code) {
     return '<img src="../inc/images/gameicons/nogame.gif" alt="" class="icon" />';
 }
 
-//-> Funktion um bei DB-Eintraegen URLs einem http:// zuzuweisen
+//-> Funktion um bei DB-Eintraegen URLs einem http:// oder https:// zuzuweisen
 function links($hp) {
-    return !empty($hp) ? 'http://'.str_replace("http://","",$hp) : $hp;
+    if(!empty($hp)) {
+        //SSL
+        $count = 0;
+        $hp = str_replace("https://", "", $hp, $count);
+        if ($count >= 1) {
+            return 'https://' . $hp;
+        }
+
+        $count = 0;
+        $hp = str_replace("http://", "", $hp, $count);
+        if ($count >= 1) {
+            return 'http://' . $hp;
+        }
+    }
+
+    return $hp;
 }
 
 //-> Funktion um Passwoerter generieren zu lassen
@@ -1477,12 +1675,12 @@ function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
             $get = _fetch($qry);
             dbc_index::setIndex('user_'.$get['id'], $get);
         } else {
-            $nickname = (!empty($cut)) ? cut(re($nick), $cut) : re($nick);
-            return show(_user_link_noreg, array("nick" => $nickname, "class" => $class, "email" => eMailAddr($email)));
+            $nickname = (!empty($cut)) ? cut($nick, $cut,true,false) : $nick;
+            return show(_user_link_noreg, array("nick" => re($nickname), "class" => $class, "email" => eMailAddr($email)));
         }
     }
 
-    $nickname = (!empty($cut)) ? cut(re(dbc_index::getIndexKey('user_'.intval($uid), 'nick')), $cut) : re(dbc_index::getIndexKey('user_'.intval($uid), 'nick'));
+    $nickname = (!empty($cut)) ? cut(re(dbc_index::getIndexKey('user_'.intval($uid), 'nick')), $cut,true,false) : re(dbc_index::getIndexKey('user_'.intval($uid), 'nick'));
     return show(_user_link, array("id" => $uid,
                                   "country" => flag(dbc_index::getIndexKey('user_'.intval($uid), 'country')),
                                   "class" => $class,
@@ -1499,11 +1697,11 @@ function cleanautor($uid, $class="", $nick="", $email="", $cut="") {
             dbc_index::setIndex('user_'.$get['id'], $get);
         }
         else
-            return show(_user_link_noreg, array("nick" => re($nick), "class" => $class, "email" => eMailAddr($email)));
+            return show(_user_link_noreg, array("nick" => re(cut($nick,$cut,false,false)), "class" => $class, "email" => eMailAddr($email)));
     }
 
     return show(_user_link_preview, array("id" => $uid, "country" => flag(dbc_index::getIndexKey('user_'.intval($uid), 'country')),
-                                          "class" => $class, "nick" => re(dbc_index::getIndexKey('user_'.intval($uid), 'nick'))));
+                                          "class" => $class, "nick" => re(cut(dbc_index::getIndexKey('user_'.intval($uid),$cut,false,false), 'nick'))));
 }
 
 function rawautor($uid) {
@@ -1596,7 +1794,6 @@ function userstats($what,$tid=0) {
 
 //- Funktion zum versenden von Emails
 function sendMail($mailto,$subject,$content) {
-    global $language;
     $mail = new PHPMailer;
     if(phpmailer_use_smtp) {
         $mail->isSMTP();
@@ -1613,8 +1810,18 @@ function sendMail($mailto,$subject,$content) {
     $mail->Subject = $subject;
     $mail->msgHTML($content);
     $mail->AltBody = bbcode_nletter_plain($content);
-    $mail->setLanguage(($language=='deutsch')?'de':'en', basePath.'/inc/lang/sendmail/');
+    $mail->setLanguage(language_short_tag(), basePath.'/inc/lang/sendmail/');
     return $mail->Send();
+}
+
+function language_short_tag() {
+    global $language;
+    switch ($language) {
+        case "spanish": return 'es';
+        case "deutsch": return 'de';
+        case "russian": return 'ru';
+        default: return 'en';
+    }
 }
 
 function check_msg_emal() {
@@ -1761,7 +1968,7 @@ function voteanswer($what, $vid) {
 
 //Profilfelder konvertieren
 function conv($txt) {
-    return str_replace(array("ä","ü","ö","Ä","Ü","Ö","ß"), array("ae","ue","oe","Ae","Ue","Oe","ss"), $txt);
+    return str_replace(array("Ã¤","Ã¼","Ã¶","","Ã„","Ã–",""), array("ae","ue","oe","Ae","Ue","Oe","ss"), $txt);
 }
 
 //-> Geburtstag errechnen
@@ -1987,9 +2194,11 @@ function hoveruserpic($userid, $width=170,$height=210) {
 // Adminberechtigungen ueberpruefen
 function admin_perms($userid) {
     global $db,$chkMe;
-
     if(empty($userid))
         return false;
+    
+    if(rootAdmin($userid)) 
+        return true;
 
    // no need for these admin areas
     $e = array('gb', 'shoutbox', 'editusers', 'votes', 'contact', 'joinus', 'intnews', 'forum', 
@@ -2022,49 +2231,6 @@ function admin_perms($userid) {
     }
 
     return ($chkMe == 4) ? true : false;
-}
-
-//-> blacklist um spider/crawler von der Besucherstatistik auszuschliessen
-function isSpider() {
-    $bots_basic = array('bot', 'b o t', 'spider', 'spyder', 'crawl', 'slurp', 'robo', 'yahoo', 'ask', 'google', '80legs', 'acoon',
-            'altavista', 'al_viewer', 'appie', 'appengine-google', 'arachnoidea', 'archiver', 'asterias', 'ask jeeves', 'beholder',
-            'bildsauger', 'bingsearch', 'bingpreview', 'bumblebee', 'bramptonmoose', 'cherrypicker', 'crescent', 'coccoc', 'cosmos',
-            'docomo', 'drupact', 'emailsiphon', 'emailwolf', 'extractorpro', 'exalead ng', 'ezresult', 'feedfetcher', 'fido', 'fireball',
-            'flipboardproxy', 'gazz', 'getweb', 'gigabaz', 'gulliver', 'harvester', 'hcat', 'heritrix', 'hloader', 'hoge', 'httrack',
-            'incywincy', 'infoseek', 'infohelfer', 'inktomi', 'indy library', 'informant', 'internetami', 'internetseer', 'link', 'larbin',
-            'jakarta', 'mata hari', 'medicalmatrix', 'mercator', 'miixpc', 'moget', 'msnptc', 'muscatferret', 'netcraftsurveyagent',
-            'openxxx', 'picmole', 'piranha', 'pldi.net', 'p357x', 'quosa', 'rambler', 'rippers', 'rganalytics', 'scan', 'scooter', 'ScoutJet',
-            'siclab', 'siteexplorer', 'sly', 'suchen', 'searchme', 'spy', 'swisssearch', 'sqworm', 'trivial', 't-h-u-n-d-e-r-s-t-o-n-e', 'teoma',
-            'twiceler', 'ultraseek', 'validator', 'webbandit', 'webmastercoffee', 'webwhacker', 'wevika', 'wisewire', 'yandex', 'zyborg', 'agentname');
-
-	$BotList = array("Teoma", "alexa", "froogle", "Gigabot", "inktomi", "looksmart", "URL_Spider_SQL", "Firefly", 
-				 "NationalDirectory", "Ask Jeeves", "TECNOSEEK", "InfoSeek", "WebFindBot", "girafabot", "crawler", 
-				 "www.galaxy.com", "Googlebot", "Googlebot/2.1", "Google Webmaster", "Scooter", "James Bond", "Slurp", 
-				 "msnbot", "appie", "FAST", "WebBug", "Spade", "ZyBorg", "rabaz", "Baiduspider", "Feedfetcher-Google", 
-				 "TechnoratiSnoop", "Rankivabot", "Mediapartners-Google", "Sogou web spider", "WebAlta Crawler", "MJ12bot",
-				 "Yandex/", "YaDirectBot", "StackRambler","DotBot","dotbot");
-			
-    $spiders = file_get_contents(basePath.'/inc/_spiders.txt');
-    $UserAgent = $_SERVER['HTTP_USER_AGENT'];
-    if(empty($UserAgent)) return false;
-    foreach ($bots_basic as $bot) {
-        if(stristr($UserAgent, $bot) !== FALSE)
-            return true;
-    }
-
-    $ex = explode("\n", $spiders);
-    for($i=0;$i<=count($ex)-1;$i++) {
-        if(stristr($UserAgent, trim($ex[$i])))
-            return true;
-    }
-
-   foreach($BotList as $bot) {
-      if(strpos($bot, $UserAgent)) {
-         return true;
-      }
-    }
-	
-	return false;
 }
 
 //-> filter placeholders
@@ -2183,10 +2349,12 @@ function getBoardPermissions($checkID = 0, $pos = 0) {
     return $i_forum;
 }
 
-//-> schreibe in dei IPCheck Tabelle
-function setIpcheck($what = '') {
+//-> schreibe in die IPCheck Tabelle
+function setIpcheck($what = '',$time=true) {
     global $db, $userip;
-    db("INSERT INTO ".$db['ipcheck']." SET `ip` = '".$userip."', `user_id` = '".userid()."', `what` = '".$what."', `time` = ".time().";");
+    db("INSERT INTO ".$db['ipcheck']." SET `ip` = '".$userip."', "
+            . "`user_id` = '".userid()."', `what` = '".$what."', "
+            . "`time` = ".($time ? time() : 0).", `created` = ".time().";");
 }
 
 function is_php($version='5.3.0')
@@ -2210,7 +2378,7 @@ function hextobin($hexstr) {
     return $sbin;
 }
 
-//-> Speichert Rückgaben der MySQL Datenbank zwischen um SQL-Queries einzusparen
+//-> Speichert RÃ¼ckgaben der MySQL Datenbank zwischen um SQL-Queries einzusparen
 final class dbc_index {
     private static $index = array();
     public static final function setIndex($index_key,$data) {
@@ -2220,7 +2388,7 @@ final class dbc_index {
             if(show_dbc_debug)
                 DebugConsole::insert_info('dbc_index::setIndex()', 'Set index: "'.$index_key.'" to cache');
 
-            $cache->set('dbc_'.$index_key, serialize($data), 1);
+            $cache->set('dbc_'.$index_key, serialize($data), 1.2);
         }
 
         if(show_dbc_debug)
@@ -2247,44 +2415,43 @@ final class dbc_index {
         if(empty($data) || !array_key_exists($key,$data))
             return false;
 
-        if(show_dbc_debug)
-            DebugConsole::insert_info('dbc_index::getIndexKey()', 'Get from index: "'.$index_key.'" get key: "'.$key.'"');
-
         return $data[$key];
     }
 
     public static final function issetIndex($index_key) {
         global $cache;
         if(isset(self::$index[$index_key])) return true;
-        if(self::MemSetIndex() && $cache->isExisting('dbc_'.$index_key)) {
+        if(self::MemSetIndex()) {
+            $data = $cache->get('dbc_'.$index_key);
+            if(!is_null($data)) {
+                if(show_dbc_debug)
+                    DebugConsole::insert_loaded('dbc_index::issetIndex()', 'Load index: "'.$index_key.'" from cache');
 
-            if(show_dbc_debug)
-                DebugConsole::insert_loaded('dbc_index::issetIndex()', 'Load index: "'.$index_key.'" from cache');
-
-            self::$index[$index_key] = unserialize($cache->get('dbc_'.$index_key));
-            return true;
+                self::$index[$index_key] = unserialize($data);
+                return true;
+            }
         }
 
         return false;
     }
 
     private static final function MemSetIndex() {
-        global $config_cache;
-        if(!$config_cache['dbc']) return false;
-        switch ($config_cache['storage']) {
-            case 'apc': return (extension_loaded('apc') && ini_get('apc.enabled') && strpos(PHP_SAPI,"CGI") === false); break;
-            case 'memcached': return (ping_port($config_cache['server'][0][0],$config_cache['server'][0][1],0.2) && class_exists("memcached")); break;
-            case 'memcache': return (ping_port($config_cache['server'][0][0],$config_cache['server'][0][1],0.2) && function_exists("memcache_connect")); break;
-            case 'xcache': return (extension_loaded('xcache') && function_exists("xcache_get")); break;
-            case 'wincache': return (extension_loaded('wincache') && function_exists("wincache_ucache_set")); break;
-            case 'auto':
-                return ((extension_loaded('apc') && ini_get('apc.enabled') && strpos(PHP_SAPI,"CGI") === false) ||
-                       ($config_cache['dbc_auto_memcache'] && ping_port($config_cache['server'][0][0],$config_cache['server'][0][1],0.2) && class_exists("memcached")) ||
-                       ($config_cache['dbc_auto_memcache'] && ping_port($config_cache['server'][0][0],$config_cache['server'][0][1],0.2) && function_exists("memcache_connect")) ||
-                       (extension_loaded('xcache') && function_exists("xcache_get")) ||
-                       (extension_loaded('wincache') && function_exists("wincache_ucache_set")));
-            break;
-            default: return false; break;
+        global $config_cache,$cache;
+        if (!$config_cache['dbc'] || $cache->fallback) {
+            return false;
+        }
+
+        switch(strtolower(str_replace('\\phpFastCache\\Drivers\\', '', $cache->config['class']))) {
+            case 'apc':
+            case 'memcache':
+            case 'memcached':
+            case 'mongodb':
+            case 'predis':
+            case 'redis':
+            case 'ssdb':
+            case 'wincache':
+            case 'xcache': 
+                return true;
         }
 
         return false;
@@ -2355,7 +2522,6 @@ function get_elapsed_time( $timestamp, $aktuell = null, $anzahl_einheiten = null
     return $ret;
 }
 
-
 //-> Neue Languages einbinden, sofern vorhanden
 if($language_files = get_files(basePath.'/inc/additional-languages/'.$language.'/',false,true,array('php'))) {
     foreach($language_files AS $languages)
@@ -2376,20 +2542,20 @@ include_once(basePath.'/inc/menu-functions/navi.php');
 //-> Ausgabe des Indextemplates
 function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
 {
-    global $db,$userid,$userip,$tmpdir,$chkMe,$charset,$mysql;
-    global $designpath,$language,$cp_color,$copyright,$time_start;
+    global $db,$userid,$userip,$tmpdir,$chkMe,$charset,$mysql,$isSpider;
+    global $designpath,$language,$cp_color,$time_start;
 
     // Timer Stop
     $time = round(generatetime() - $time_start,4);
 
     // JS-Dateine einbinden
-    $lng = ($language=='deutsch')?'de':'en';
+    $lng = language_short_tag();
     $edr = ($wysiwyg=='_word')?'advanced':'normal';
     $lcolor = ($cp_color==1)?'lcolor=true;':'';
     $java_vars = '<script language="javascript" type="text/javascript">var maxW = '.config('maxwidth').',lng = \''.$lng.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
 
     if(!strstr($_SERVER['HTTP_USER_AGENT'],'Android') && !strstr($_SERVER['HTTP_USER_AGENT'],'webOS'))
-        $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.js"></script>'."\n";;
+        $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.js"></script>'."\n";
 
     if(settings("wmodus") && $chkMe != 4) {
         if(config('securelogin'))
@@ -2405,15 +2571,17 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
                                          "title" => re(strip_tags($title)),
                                          "login" => $login));
     } else {
-        updateCounter();
-        update_maxonline();
+        if(!$isSpider) {
+            updateCounter();
+            update_maxonline();
+        }
 
         //check permissions
         if(!$chkMe)
             include_once(basePath.'/inc/menu-functions/login.php');
         else {
             $check_msg = check_msg(); set_lastvisit(); $login = "";
-            db("UPDATE ".$db['users']." SET `time` = '".time()."', `whereami` = '".up($where,true)."' WHERE id = '".intval($userid)."'");
+            db("UPDATE ".$db['users']." SET `time` = '".time()."', `whereami` = '".up($where)."' WHERE id = '".intval($userid)."'");
         }
 
         //init templateswitch
@@ -2436,7 +2604,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
         if(check_internal_url())
             $index = error(_error_have_to_be_logged, 1);
 
-        $where = preg_replace_callback("#autor_(.*?)$#",create_function('$id', 'return data("nick","$id[1]");'),$where);
+        $where = preg_replace_callback("#autor_(.*?)$#",create_function('$id', 'return re(data("nick","$id[1]"));'),$where);
         $index = empty($index) ? '' : (empty($check_msg) ? '' : $check_msg).'<table class="mainContent" cellspacing="1">'.$index.'</table>';
 
         //-> Sort & filter placeholders
@@ -2475,8 +2643,9 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
         }
 
         $pholdervars = explode("^",$pholdervars);
-        for($i=0;$i<=count($pholdervars)-1;$i++)
-        { $arr[$pholdervars[$i]] = $$pholdervars[$i]; }
+        foreach ($pholdervars as $pholdervar) {
+            $arr[$pholdervar] = $$pholdervar;
+        }
 
         //index output
         $index = (file_exists("../inc/_templates_/".$tmpdir."/".$index_templ.".html") ? show($index_templ, $arr) : show("index", $arr));

@@ -54,14 +54,14 @@
             <li><a href="#install">2. Installation</a></li>
             <li><a href="#autoupdate">3. Automatisches Update</a></li>
             <li><a href="#support">4. Hilfe und Support</a></li>
-            <li>5. DZCP v1.6.0.3
+            <li>5. DZCP v1.6.0.4
               <ul>
-                <li><a href="#v16manuel">5.1 DZCP V1.6.0.3 manuelles Update</a></li>
-                <li><a href="#v16fixes"> 5.2 DZCP v1.6.0.3 Bugfixes, Updates, Neuerungen</a></li>
+                <li><a href="#v16manuel">5.1 DZCP V1.6.0.4 manuelles Update</a></li>
+                <li><a href="#v16fixes"> 5.2 DZCP v1.6.0.4 Bugfixes, Updates, Neuerungen</a></li>
               </ul>
             </li>
-            </ul>
-        </section>
+  </ul>
+    </section>
         <section>
             <h3><a name="equirements">1. Voraussetzungen</a></h3>
              <ul>
@@ -97,8 +97,8 @@
               <p>
                   Folge hier den Anweisungen, die dich durch die Installationsroutine begleiten.
                   Anschließend bitte unbedingt den Ordner _installer/ vom webspace löschen und CHMOD der inc/mysql.php auf 644 setzen.
-               </p>
-        </section>
+  </p>
+    </section>
         <section>
             <h3><a name="autoupdate">3. Automatisches Update</a></h3>
                 <p>
@@ -110,7 +110,7 @@
               <p><a href="#" target="_blank">http://www.Deine-Domain.de/_installer/update.php</a></p>
               <p>
               Nach erfolgreichem Update bitte unbedingt den Ordner _installer/ vom Webspace löschen
-               </p>
+          </p>
         </section>
         <section>
         <h3><a name="support">4. Hilfe und Support</a></h3>
@@ -118,7 +118,7 @@
              <ul>
                  <li><a href="http://www.dzcp.de/forum/?action=show&amp;id=40" target="_blank">Fragen zur Installation oder zum Update</a></li>
                 <li><a href="http://www.dzcp.de/forum/?action=show&amp;id=22" target="_blank">Probleme</a> oder<a href="http://www.dzcp.de/forum/?action=show&amp;id=6" target="_blank"> Bugs</a></li>
-               </ul>
+          </ul>
         </section>
         <section>
         <h3><a name="v16manuel">5.1 DZCP v1.6 manuelles Update</a></h3>
@@ -288,7 +288,23 @@
                     <li>Links in der Slideshow waren fehlerhaft wenn die Einstellung: 'Neues Fenster?: Ja' gesetzt ist, wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/13" target="_blank">Issue: #13</a></li>
                     <li>Es wurden fehlende BF4  Map Namen hinzugefügt.</li>
                 </ul>
-                 <h4>Thanks</h4>
+                 <h4>DZCP 1.6.0.4 Bugfix Update</h4>
+                 <ul>
+                   <li>Beim anfordern eines neuen Passworts, wird die Fehlermeldung „Loginname und E-Mailadresse stimmen nicht überein! “ ausgegeben, dies wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/8" target="_blank">Issue: #8</a></li>
+                   <li>Wenn in einem Link ein „page=0“ vorhanden war, wurde ein SQL-Fehler ausgegeben, dies wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/16" target="_blank">Issue: #16</a></li>
+                   <li>Beim bearbeiten einer Gallery und hinzufügen neuer PNG Bilder werden diese nicht richtig hochgeladen. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/19" target="_blank">Issue: #19</a></li>
+                   <li>Transparenz für Thumbgen generierte Vorschaubilder. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/23" target="_blank">Issue: #23</a></li>
+                   <li>Mehrfach Votes bei Internen Umfragen oder Forum-Votes waren möglich, dies wurde nachgebessert. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/26" target="_blank">Issue: #26</a></li>
+                   <li>Upload von php Code über die Bilder Uploads möglich. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/24" target="_blank">Issue: #24</a></li>
+                   <li>Probleme mit Sonderzeichen, wurden behoben.  <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/21" target="_blank">Issue: #21</a></li>
+                   <li>Neue Version des TinyMCE Compressors. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/aff87605abba22993fb4b65f7d1e5617d0f33bbc" target="_blank">Commit: #81456ad</a><a href="https://github.com/DZCP-Community/DZCP-1.6/commit/81456ade3c3e9f6fc2640f7dec63667defe125bc" data-hotkey="p"></a></li>
+                   <li>Aktualisierung der User-Systeminfos mit Windows 10 und Microsoft Edge. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/f8d4bcc3d9ef60b021da8a41142e0757fe37917f" target="_blank">Commit: #1ee10e8 </a></li>
+                   <li>Das TineMCE Plugin von DZCP wurde aktualisiert und nachgebessert. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/8ea199dc53664ee4c5ca52339c8ae1ed64ed984b" target="_blank">Commit: #6c207f3 </a></li>
+                   <li>JSON_UNESCAPED_UNICODE wurde aus der funktion cookie::save() entfernt um kompatibilität mit PHP 5.3.x zu erreichen. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/c8a0b4e13068f4a3d15726cc169cb7c7e8c461b2" target="_blank">Commit: #63fe6a1 </a></li>
+				   <li> Zugriff auf externe Quellen wird über die neue get_external_contents() funktion geregelt, sie setzt bevorzugt CURL ein. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/9dbf57043d5cf13c3076017f15d529f1605ecc9c" target="_blank">Commit: #fe39c8b</a></li>
+                 </ul>
+      <p>&nbsp;</p>
+      <h4>Thanks</h4>
                     <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
                     <HTML>
                     <!--  		@page { margin: 2cm }  		P { margin-bottom: 0.21cm }  		A:link { so-language: zxx }  	-->Wir bedanken uns bei allen die mit an  der DZCP v1.6 helfen und uns fleißig bei der Entwicklung und  Erprobung helfen. 
@@ -300,5 +316,5 @@
                 über 800 Commits.<br>
     </section>
     <footer><a href="http://www.dzcp.de/" target="_blank">Powered by DZCP - deV!L`z Clanportal</a></footer>
-    </body>
+</body>
 </html>

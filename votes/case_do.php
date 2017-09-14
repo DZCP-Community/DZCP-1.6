@@ -20,7 +20,7 @@ if(defined('_Votes')) {
                     db("UPDATE ".$db['userstats']." SET `votes` = votes+1 WHERE user = '".$userid."'");
                     db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = '".intval($_POST['vote'])."'");
 
-                    setIpcheck("vid_".intval($_GET['id']));
+                    setIpcheck("vid_".intval($_GET['id']),false);
                     setIpcheck("vid(".intval($_GET['id']).")");
 
                     if(!isset($_GET['ajax']))
@@ -37,7 +37,7 @@ if(defined('_Votes')) {
 
                     db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = ".intval($_POST['vote']));
 
-                    setIpcheck("vid_".intval($_GET['id']));
+                    setIpcheck("vid_".intval($_GET['id']),false);
                     setIpcheck("vid(".intval($_GET['id']).")");
 
                     if(!isset($_GET['ajax']))
@@ -79,7 +79,7 @@ if(defined('_Votes')) {
 
                 db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = '".intval($_POST['vote'])."'");
 
-                setIpcheck("vid_".intval($_GET['id']));
+                setIpcheck("vid_".intval($_GET['id']),false);
                 setIpcheck("vid(".intval($_GET['id']).")");
 
                 if(!isset($_GET['fajax']))

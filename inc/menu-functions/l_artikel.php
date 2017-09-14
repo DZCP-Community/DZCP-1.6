@@ -22,7 +22,7 @@ function l_artikel() {
                 $info = 'onmouseover="DZCP.showInfo(\''.jsconvert(re($get['titel'])).'\', \''._datum.';'._autor.';'._news_admin_kat.';'._comments_head.'\', \''.date("d.m.Y H:i", $get['datum'])._uhr.';'.fabo_autor($get['autor']).';'.jsconvert(re($getkat['kategorie'])).';'.cnt($db['acomments'],"WHERE artikel = '".$get['id']."'").'\')" onmouseout="DZCP.hideInfo()"';
 
             $l_articles .= show("menu/last_artikel", array("id" => $get['id'],
-                                                           "titel" => re(cut($get['titel'],config('l_lartikel'))),
+                                                           "titel" => re(cut($get['titel'],config('l_lartikel'),true,false)),
                                                            "text" => cut(bbcode($text),260),
                                                            "datum" => date("d.m.Y", $get['datum']),
                                                            "info" => $info));
