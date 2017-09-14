@@ -5,13 +5,13 @@
  * @return array
  */
 function show_dzcp_version() {
-    global $cache,$config_cache;
+    global $cache;
     $dzcp_version_info = 'onmouseover="DZCP.showInfo(\'<tr><td colspan=2 align=center padding=3 class=infoTop>DZCP Versions Checker</td></tr><tr><td>'._dzcp_vcheck.'</td></tr>\')" onmouseout="DZCP.hideInfo()"';
     $return = array();
     if(dzcp_version_checker && allow_url_fopen_support()) {
         if(!$cache->isExisting('dzcp_version')) {
 			$input = json_encode(array('event' => 'version', 'dzcp' => _version, 'edition' => _edition, 'type' => 'xml'));
-            if($dzcp_online_v = get_external_contents('http://www.dzcp.de/api.php?input='.$input)) {
+            if($dzcp_online_v = get_external_contents('http://www.dzcp.de/api.php?input='.$input,false,true)) {
 		        $cache->set('dzcp_version',$dzcp_online_v);
 	        }
         } else

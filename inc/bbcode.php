@@ -354,9 +354,12 @@ function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_
         }
 
         if($gzip) {
+			$org_content = $content;
             $curl_info = curl_getinfo($curl,CURLINFO_HEADER_OUT);
-            if(stristr($curl_info, 'accept-encoding') && stristr($curl_info, 'gzip')) {
-                $content = gzinflate( substr($content,10,-8) );
+            if(stristr($curl_info, 'accept-encoding') && stristr($curl_info, 'gzip') && !$nogzip) {
+                $content = @gzinflate( substr($content,10,-8) );
+				if(!$content)
+					$content = $org_content;
             }
         }
 
@@ -2644,7 +2647,9 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
 
         $pholdervars = explode("^",$pholdervars);
         foreach ($pholdervars as $pholdervar) {
-            $arr[$pholdervar] = $$pholdervar;
+			if(isset($$pholdervar)) {
+				$arr[$pholdervar] = $$pholdervar;
+			}
         }
 
         //index output

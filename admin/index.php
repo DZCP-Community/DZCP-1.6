@@ -97,7 +97,7 @@ else {
         if(admin_view_dzcp_news) {
             $dzcp_news = $cache->get("admin_news");
             if(is_null($dzcp_news)) {
-                if($dzcp_news = get_external_contents("http://www.dzcp.de/dzcp_news.php"))
+                if($dzcp_news = get_external_contents("http://www.dzcp.de/dzcp_news.php",false,true))
                     $cache->set("admin_news", base64_encode($dzcp_news), 1200);
             } else
                 $dzcp_news = base64_decode($dzcp_news);
