@@ -9,6 +9,14 @@ if(!defined('DEBUG_LOADER'))
     exit('<b>Die Debug-Console wurde nicht geladen!<p>
     Bitte überprüfen Sie ob die index.php einen "include(basePath."/inc/debugger.php");" Eintrag hat.</b>');
 
+//Filter 404
+$test = strtolower($_SERVER["REQUEST_URI"]);
+if (strpos($test, 'index.php/') !== false ||
+    strpos($test, 'ajax.php/') !== false) {
+    header("HTTP/1.0 404 Not Found");
+    exit();
+}
+
 ## INCLUDES/REQUIRES ##
 require_once(basePath.'/inc/secure.php');
 require_once(basePath.'/inc/_version.php');
