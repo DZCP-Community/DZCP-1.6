@@ -9,6 +9,14 @@ if(!defined('DEBUG_LOADER'))
     exit('<b>Die Debug-Console wurde nicht geladen!<p>
     Bitte überprüfen Sie ob die index.php einen "include(basePath."/inc/debugger.php");" Eintrag hat.</b>');
 
+//Filter 404
+$test = strtolower($_SERVER["REQUEST_URI"]);
+if (strpos($test, 'index.php/') !== false ||
+    strpos($test, 'ajax.php/') !== false) {
+    header("HTTP/1.0 404 Not Found");
+    exit();
+}
+
 ## INCLUDES/REQUIRES ##
 require_once(basePath.'/inc/secure.php');
 require_once(basePath.'/inc/_version.php');
@@ -354,9 +362,12 @@ function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_
         }
 
         if($gzip) {
+			$org_content = $content;
             $curl_info = curl_getinfo($curl,CURLINFO_HEADER_OUT);
-            if(stristr($curl_info, 'accept-encoding') && stristr($curl_info, 'gzip')) {
-                $content = gzinflate( substr($content,10,-8) );
+            if(stristr($curl_info, 'accept-encoding') && stristr($curl_info, 'gzip') && !$nogzip) {
+                $content = @gzinflate( substr($content,10,-8) );
+				if(!$content)
+					$content = $org_content;
             }
         }
 
@@ -2644,7 +2655,9 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
 
         $pholdervars = explode("^",$pholdervars);
         foreach ($pholdervars as $pholdervar) {
-            $arr[$pholdervar] = $$pholdervar;
+			if(isset($$pholdervar)) {
+				$arr[$pholdervar] = $$pholdervar;
+			}
         }
 
         //index output
