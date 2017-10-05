@@ -1,4 +1,5 @@
 <table width="100%" cellpadding="2" cellspacing="1">
+<p align="center"><button onclick="location.reload()">Rechtevergabe TESTEN - Seite neu laden</button></p>
   <tr>
     <td colspan="4" align="justify" class="head"><br /><b>&raquo; Automatische Rechtevergabe</b></td>
   </tr>
@@ -31,6 +32,5 @@
   </tr>
 </table>
 
-    
-      
-    
+
+
