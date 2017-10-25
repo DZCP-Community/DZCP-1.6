@@ -41,11 +41,11 @@ class TinyMCE_Compressor {
     private static $opt_params = array();
     private static $defaultSettings = array("plugins"    => "",
                                             "themes"     => "",
-                                            "languages"  => "",
+                                            "languages"  => "en",
                                             "disk_cache" => true,
                                             "core"       => true,
                                             "expires"    => "30d",
-                                            "headers"    => true,
+                                            "headers"    => false,
                                             "compress"   => true,
                                             "debug"      => false,
                                             "cc"         => true,

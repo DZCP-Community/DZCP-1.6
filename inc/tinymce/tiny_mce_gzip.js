@@ -2,7 +2,7 @@ var tinyMCE_GZ = {
 	settings : {
 		themes : '',
 		plugins : '',
-		languages : '',
+		languages : 'en',
 		disk_cache : true,
 		page_name : 'tiny_mce_gzip.php',
 		debug : false,

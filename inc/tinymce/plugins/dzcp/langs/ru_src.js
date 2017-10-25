@@ -1,4 +1,4 @@
-tinyMCE.addI18n({en:{dzcp:{
+tinyMCE.addI18n({ru:{dzcp:{
     title : 'Insert smiley',
     desc : 'Smileys',
     fldesc : 'Flags',

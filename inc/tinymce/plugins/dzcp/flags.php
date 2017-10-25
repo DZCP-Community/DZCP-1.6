@@ -51,7 +51,7 @@ include_once(basePath."/inc/bbcode.php");
               <td><a href="javascript:insertFlag('at.gif')"><img src="../../../images/flaggen/at.gif" border="0" alt="" /></a></td>
               <td><a href="javascript:insertFlag('ch.gif')"><img src="../../../images/flaggen/ch.gif" border="0" alt="" /></a></td>
               <td><a href="javascript:insertFlag('us.gif')"><img src="../../../images/flaggen/us.gif" border="0" alt="" /></a></td>
-              <td><a href="javascript:insertFlag('ca.gif')"><img src="../../../images/flaggen/ca.gif" border="0" alt="" /></a></td>
+              <td><a href="javascript:insertFlag('ru.gif')"><img src="../../../images/flaggen/ru.gif" border="0" alt="" /></a></td>
               <td><a href="javascript:insertFlag('uk.gif')"><img src="../../../images/flaggen/uk.gif" border="0" alt="" /></a></td>
               <td><a href="javascript:insertFlag('fr.gif')"><img src="../../../images/flaggen/fr.gif" border="0" alt="" /></a></td>
               <td><a href="javascript:insertFlag('it.gif')"><img src="../../../images/flaggen/it.gif" border="0" alt="" /></a></td>
@@ -75,7 +75,7 @@ include_once(basePath."/inc/bbcode.php");
 
       if(
         $files[$i] != 'de.gif' && $files[$i] != 'en.gif' && $files[$i] != 'eu.gif' && $files[$i] != 'at.gif' && $files[$i] != 'ch.gif'
-     && $files[$i] != 'us.gif' && $files[$i] != 'ca.gif' && $files[$i] != 'uk.gif' && $files[$i] != 'fr.gif' && $files[$i] != 'it.gif'
+     && $files[$i] != 'us.gif' && $files[$i] != 'ru.gif' && $files[$i] != 'uk.gif' && $files[$i] != 'fr.gif' && $files[$i] != 'it.gif'
      && $files[$i] != 'es.gif' && $files[$i] != 'tr.gif'
       ) {
 
