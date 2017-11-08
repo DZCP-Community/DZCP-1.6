@@ -1,6 +1,6 @@
-﻿<?php
+<?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final /// Translation Version 0.6ru
+ * DZCP - deV!L`z ClanPortal 1.6 Final /// Translation Version 0.61ru
  * http://www.dzcp.de
  * Russian Translation by www.russian-speznas.com /// xero.ru
  * Russian Translation by www.russian-instinct.ru /// xero.ru
@@ -27,7 +27,7 @@ define('_txt_teams', 'Команды');
 define('_txt_gallerie', 'Наши галереи');
 define('_txt_top_match', 'Топ матч');
 define('_txt_shout', 'Мини-чат');
-define('_txt_template_switch', 'Изменить тему');
+define('_txt_template_switch', 'Изменить шаблон');
 define('_txt_events', 'События');
 define('_txt_kalender', 'Календарь');
 define('_txt_l_artikel', 'товар');
@@ -90,7 +90,7 @@ define('_perm_config', 'изменений конфигурации Страни
 define('_perm_positions', 'Управление рангами пользователей');
 define('_perm_partners', 'Управление партнеров');
 define('_perm_profile', 'Управление поля в профилe');
-define('_dzcp_vcheck', 'DZCP Versions Checker сообщает вам, если новая версия вышла и ваша текущая версия актуальнa.<br><br><span class=fontBold>описание:</span><br><font color=#17D427>зеленый:</font>Up to Date!<br><font color=#FFFF00>желтый:</font> Не удается подключиться к серверу<br><font color=#FF0000>Rot:</font>Существует новое обновление!');
+define('_dzcp_vcheck', 'DZCP Versions Checker сообщает вам, если новая версия вышла и ваша текущая версия актуальнa.<br><br><span class=fontBold>описание:</span><br><font color=#17D427>зеленый:</font>Up to Date!<br><font color=#FFFF00>желтый:</font> Не удается подключиться к серверу<br><font color=#FF0000>красный:</font>Существует новое обновление!');
 define('_cw_dont_exist', 'Clanwar-ID не существует!');
 //Steam
 define('_steam', 'Steam');
@@ -502,27 +502,27 @@ define('_server_admin_qport', 'Optional: Queryport');
 define('_admin_server_nostatus', 'Нет запроса в прямом эфире');
 define('_nletter_head', 'Начать Рассылкy');
 define('_squad', 'команда');
-define('_confirm_del_cw', 'Этот Clanwar  на самом деле удалить?');
-define('_confirm_del_vote', 'Этот Опрос  на самом деле удалить?');
-define('_confirm_del_dl', 'Этот Download на самом деле удалить?');
-define('_confirm_del_galpic', 'Эту Картинку  на самом деле удалить?');
-define('_confirm_del_gallery', 'Эту Галерию на самом деле удалить?');
-define('_confirm_del_entry', 'Это сообщение на самом деле удалить?');
+define('_confirm_del_cw', 'Действительно удалить КланВар');
+define('_confirm_del_vote', 'Действительно oпрос удалить');
+define('_confirm_del_dl', 'Действительно удалить загрузку');
+define('_confirm_del_galpic', 'Действительно удалить картинку');
+define('_confirm_del_gallery', 'Эту Галерию на самом деле удалить');
+define('_confirm_del_entry', 'Это сообщение на самом деле удалить');
 define('_confirm_del_navi', 'Действительно удалить Link?');
 define('_confirm_del_profil', 'Действительно удалить поля в профилe? \n Все данные вводимыe будут потеряны!');
 define('_confirm_del_smiley', 'Действительно удалить Smiley');
-define('_confirm_del_kat', 'Действительно удалить категорию?');
-define('_confirm_del_news', 'Действительно удалить Новость?');
-define('_confirm_del_site', 'Действительно удалить страницу?');
-define('_confirm_del_server', 'Действительно удалить сервер?');
-define('_confirm_del_artikel', 'Действительно удалить товар?');
-define('_confirm_del_team', 'Действительно удалить команду?');
-define('_confirm_del_award', 'Действительно удалить награду?');
-define('_confirm_del_ranking', 'Действительно удалить Рейтинг?');
-define('_confirm_del_link', 'Действительно удалить ссылку?');
-define('_confirm_del_sponsor', 'Действительно удалить спонсора?');
-define('_confirm_del_kalender', 'Действительно удалить событие?');
-define('_confirm_del_taktik', 'Действительно удалить тактику?');
+define('_confirm_del_kat', 'Действительно удалить категорию');
+define('_confirm_del_news', 'Действительно удалить Новость');
+define('_confirm_del_site', 'Действительно удалить страницу');
+define('_confirm_del_server', 'Действительно удалить сервер');
+define('_confirm_del_artikel', 'Действительно удалить товар');
+define('_confirm_del_team', 'Действительно удалить команду');
+define('_confirm_del_award', 'Действительно удалить награду');
+define('_confirm_del_ranking', 'Действительно удалить Рейтинг');
+define('_confirm_del_link', 'Действительно удалить ссылку');
+define('_confirm_del_sponsor', 'Действительно удалить спонсора');
+define('_confirm_del_kalender', 'Действительно удалить событие');
+define('_confirm_del_taktik', 'Действительно удалить тактику');
 define('_link_type', 'Тип связи');
 define('_sponsor', 'Cпонсор');
 //-----------------------------------------------
@@ -582,7 +582,7 @@ define('_config_kalender', 'Календарь');
 define('_config_einst', 'Настройки');
 define('_profil_sig', 'Подпись в форуме');
 define('_akt_version', 'DZCP версия');
-define('_forum_searchlink', '- <a href="../search/">поиск в форумах</a> -');
+define('_forum_searchlink', '- <a href="../search/">Поиск по блогам и форумам</a> -');
 define('_msg_deleted', 'Сообщение удалено успешно!');
 define('_info_reg_valid', 'Вы успешно зарегистрировались!<br />Ваш пароль был отправлен на адрес электронной почты [email].');
 define('_edited_by', '<br /><br /><i>Последний раз редактировалал [autor] в [time]</i>');
