@@ -299,6 +299,13 @@ $designpath = '../inc/_templates_/'.$tmpdir;
 
 //-> Languagefiles einlesen
 function lang($lng) {
+    //-> Neue Languages einbinden, sofern vorhanden
+    if($language_files = get_files(basePath.'/inc/additional-languages/'.$lng.'/',false,true,array('php'))) {
+        foreach($language_files AS $languages)
+        { include(basePath.'/inc/additional-languages/'.$lng.'/'.$languages); }
+        unset($language_files,$languages);
+    }
+
     if(!file_exists(basePath."/inc/lang/languages/".$lng.".php"))
     {
         $files = get_files(basePath.'/inc/lang/languages/',false,true,array('php'));
@@ -2531,13 +2538,6 @@ function get_elapsed_time( $timestamp, $aktuell = null, $anzahl_einheiten = null
         unset( $arr[$key] );
     }
     return $ret;
-}
-
-//-> Neue Languages einbinden, sofern vorhanden
-if($language_files = get_files(basePath.'/inc/additional-languages/'.$language.'/',false,true,array('php'))) {
-    foreach($language_files AS $languages)
-    { include(basePath.'/inc/additional-languages/'.$language.'/'.$languages); }
-    unset($language_files,$languages);
 }
 
 //-> Neue Funktionen einbinden, sofern vorhanden
