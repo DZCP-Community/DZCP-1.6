@@ -162,8 +162,8 @@ function show($tpl="", $array=array(), $array_lang_constant=array(), $array_bloc
 //-> MySQL-Datenbankangaben
 $prefix = $sql_prefix;
 $db = array("host" =>           $sql_host,
-            "user" =>           $sql_user,
-            "pass" =>           $sql_pass,
+            "user" =>           stripslashes($sql_user),
+            "pass" =>           stripslashes($sql_pass),
             "db" =>             $sql_db,
             "prefix" =>         $prefix,
             "artikel" =>        $prefix."artikel",
@@ -249,7 +249,7 @@ function _real_escape_string($string='') {
 }
 
 function db($query='',$rows=false,$fetch=false) {
-    global $prefix,$mysql,$clanname,$updater;
+    global $mysql,$clanname,$updater;
 
     if(debug_all_sql_querys) DebugConsole::wire_log('debug', 9, 'SQL_Query', $query);
     if($updater) { $qry = $mysql->query($query); } else {

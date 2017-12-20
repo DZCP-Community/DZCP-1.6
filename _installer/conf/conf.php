@@ -54,8 +54,8 @@ function _m ($prefix, $host, $user, $pwd, $db) {
     @fwrite($fp,"<?php
                  \$sql_prefix = '".$prefix."';
                  \$sql_host = '".$host."';
-                 \$sql_user =  '".$user."';
-                 \$sql_pass = '".$pwd."';
+                 \$sql_user =  '".addslashes($user)."';
+                 \$sql_pass = '".addslashes($pwd)."';
                  \$sql_db = '".$db."';
                ?>");
     @fclose($fp);
@@ -95,7 +95,7 @@ function spChars($txt) {
     $txt = str_replace("Ö","&Ouml;",$txt);
     $txt = str_replace("ö","&ouml;",$txt);
     $txt = str_replace("ß","&szlig;",$txt);
-    return str_replace("€","&euro;",$txt);
+    return str_replace("?","&euro;",$txt);
 }
 
 function visitorIp() {
