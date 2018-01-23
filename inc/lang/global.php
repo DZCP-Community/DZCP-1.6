@@ -140,7 +140,7 @@ $language_text['_forum_dowhat_edit_post'] = 'editpost&amp;id=[id]';
 $language_text['_forum_select_field_kat'] = '<option value="[value]" class="dropdownKat">[what]</option> [skat]';
 $language_text['_forum_select_field_skat'] = '<option value="[value]">-> [what]</option>';
 $language_text['_forum_select_field_search'] = '<option value="[value]" [sel]>-> [what]</option>';
-## G�stebuch ##
+## Gästebuch ##
 $language_text['_gb_commenticon'] = '<a href="?action=admin&amp;do=addcomment&amp;id=[id]"><img src="../inc/images/comment.gif" alt="" title="[title]" class="icon" /></a>';
 ## DropDownmenu-Datum/Zeit ##
 $language_text['_dropdown_date'] = '<select id="t" name="t" class="dropdown">[day]</select> <select id="m" name="m" class="dropdown">[month]</select> <select id="j" name="j" class="dropdown">[year]</select>';

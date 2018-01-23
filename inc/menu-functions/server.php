@@ -90,7 +90,7 @@ function server($serverID = 0) {
         }
 
         if($count == 0)
-            $players = 'Keine Spieler';
+            $players = 'no players';
 
         $servername = jsconvert(re(cut($server['hostname'],config('l_servernavi'),true,false)));
         $servernameout = (!empty($servername)) ? $servername : "no name available";

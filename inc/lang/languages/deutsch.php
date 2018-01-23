@@ -1363,6 +1363,7 @@ $language_text['_msg_sended_msg'] = 'Nachricht an [nick]';
 $language_text['_msg_answer_done'] = 'Die Nachricht wurde erfolgreich versendet!';
 $language_text['_msg_titel'] = 'Neue Nachricht schreiben';
 $language_text['_msg_titel_answer'] = 'Antworten';
+$language_text['_msg_select_all'] = 'alle auswählen';
 $language_text['_to'] = 'An';
 $language_text['_or'] = 'oder';
 $language_text['_msg_to_just_1'] = 'Du kannst nur einen Empfänger angeben!';

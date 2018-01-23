@@ -1360,6 +1360,7 @@ $language_text['_msg_sended_msg'] = 'Message to [nick]';
 $language_text['_msg_answer_done'] = 'The message was successfuly sent!';
 $language_text['_msg_titel'] = 'Write new message';
 $language_text['_msg_titel_answer'] = 'Answer';
+$language_text['_msg_select_all'] = 'select all';
 $language_text['_to'] = 'To';
 $language_text['_or'] = 'or';
 $language_text['_msg_to_just_1'] = 'You can indicate just one receiver!';
