@@ -9,25 +9,34 @@ function show_dzcp_version() {
     $dzcp_version_info = 'onmouseover="DZCP.showInfo(\'<tr><td colspan=2 align=center padding=3 class=infoTop>DZCP Versions Checker</td></tr><tr><td>'._dzcp_vcheck.'</td></tr>\')" onmouseout="DZCP.hideInfo()"';
     $return = array();
     if(dzcp_version_checker && allow_url_fopen_support()) {
-        if(!$cache->isExisting('dzcp_version')) {
-			$input = json_encode(array('event' => 'version', 'dzcp' => _version, 'edition' => _edition, 'type' => 'xml'));
-            if($dzcp_online_v = get_external_contents('http://www.dzcp.de/api.php?input='.$input,false,true)) {
-		        $cache->set('dzcp_version',$dzcp_online_v);
+        if(true||!$cache->isExisting('dzcp_version_'.(function_exists('xmlrpc_decode') ? 'xmlrpc' : 'json'))) {
+			$input = json_encode(array('event' => 'version', 'dzcp' => _version, 'edition' => _edition, 'type' => (function_exists('xmlrpc_decode') ? 'xmlrpc' : 'json')));
+            if($dzcp_online_v = get_external_contents('https://beta.dzcp.de/api.php?input='.$input,false,true)) {
+		        $cache->set('dzcp_version_'.(function_exists('xmlrpc_decode') ? 'xmlrpc' : 'json'),$dzcp_online_v);
 	        }
         } else
-            $dzcp_online_v = $cache->get('dzcp_version');
+            $dzcp_online_v = $cache->get('dzcp_version_'.(function_exists('xmlrpc_decode') ? 'xmlrpc' : 'json'));
 	    unset($input);
-
+		
         if($dzcp_online_v && !empty($dzcp_online_v) && strpos($dzcp_online_v, 'not found') === false) {
-            $xml = simplexml_load_string($dzcp_online_v, 'SimpleXMLElement', LIBXML_NOCDATA);
-			if(empty($xml) || is_bool($xml) || !is_object($xml)) {
+			if(function_exists('xmlrpc_decode'))
+				$xml = xmlrpc_decode($dzcp_online_v);
+			else
+				$xml = json_decode($dzcp_online_v);
+			
+			if(empty($xml) || is_bool($xml) || (!is_array($xml) && !is_object($xml))) {
 				$return['version'] = '<b>'._akt_version.': <a href="" [info]><font color="#FFFF00">'._version.'</font></a> / Release: '._release.' / Build: '._build.'</b>';
 				$return['version'] = show($return['version'],array('info' => $dzcp_version_info));
 				$return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
 				return $return;
 			}
-			
-			$xml = SteamAPI::objectToArray($xml);
+
+			if(function_exists('xmlrpc_decode')) {
+				$xml = $xml['dzcp'];
+			} else {
+				$xml = json_decode($xml->dzcp,true);
+			}
+		
 			if(empty($xml) || is_bool($xml) || !is_array($xml)) {
 				$return['version'] = '<b>'._akt_version.': <a href="" [info]><font color="#FFFF00">'._version.'</font></a> / Release: '._release.' / Build: '._build.'</b>';
 				$return['version'] = show($return['version'],array('info' => $dzcp_version_info));
