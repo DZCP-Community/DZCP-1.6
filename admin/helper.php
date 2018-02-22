@@ -7,72 +7,67 @@
 function show_dzcp_version() {
     global $cache;
     $dzcp_version_info = 'onmouseover="DZCP.showInfo(\'<tr><td colspan=2 align=center padding=3 class=infoTop>DZCP Versions Checker</td></tr><tr><td>'._dzcp_vcheck.'</td></tr>\')" onmouseout="DZCP.hideInfo()"';
-    $return = array();
+    $return = array(); $recache = false;
     if(dzcp_version_checker && allow_url_fopen_support()) {
-        if(true||!$cache->isExisting('dzcp_version_'.(function_exists('xmlrpc_decode') ? 'xmlrpc' : 'json'))) {
-			$input = json_encode(array('event' => 'version', 'dzcp' => _version, 'edition' => _edition, 'type' => (function_exists('xmlrpc_decode') ? 'xmlrpc' : 'json')));
-            if($dzcp_online_v = get_external_contents('https://beta.dzcp.de/api.php?input='.$input,false,true)) {
-		        $cache->set('dzcp_version_'.(function_exists('xmlrpc_decode') ? 'xmlrpc' : 'json'),$dzcp_online_v);
+        if(!$cache->isExisting('dzcp_version')) {
+            $recache = true;
+			$input = array('event' => 'version', 'version' => _version, 'edition' => _edition, 'build' => _build, 'release' => _release, 'type' => 'json');
+            if($dzcp_online_v = get_external_contents('https://api.dzcp.de',$input)) {
+                $dzcp_online_v = explode('[hash]',$dzcp_online_v);
+		        if($dzcp_online_v[1] == sha1($dzcp_online_v[0])) {
+                    $dzcp_online_v = $dzcp_online_v[0];
+                } else {
+                    $dzcp_online_v = json_encode(array(
+                        "version"=> _version,
+                        "release"=> _release,
+                        "build"=> _build,
+                        "error"=> true));
+                }
 	        }
-        } else
-            $dzcp_online_v = $cache->get('dzcp_version_'.(function_exists('xmlrpc_decode') ? 'xmlrpc' : 'json'));
+        } else {
+            $dzcp_online_v = $cache->get('dzcp_version');
+        }
+
 	    unset($input);
-		
         if($dzcp_online_v && !empty($dzcp_online_v) && strpos($dzcp_online_v, 'not found') === false) {
-			if(function_exists('xmlrpc_decode'))
-				$xml = xmlrpc_decode($dzcp_online_v);
-			else
-				$xml = json_decode($dzcp_online_v);
-			
-			if(empty($xml) || is_bool($xml) || (!is_array($xml) && !is_object($xml))) {
-				$return['version'] = '<b>'._akt_version.': <a href="" [info]><font color="#FFFF00">'._version.'</font></a> / Release: '._release.' / Build: '._build.'</b>';
+            $json = @json_decode($dzcp_online_v,true);
+			if(empty($json) || is_bool($json) || (!is_array($json) && !is_object($json))) {
+				$return['version'] = '<b>'._akt_version.': <a href="" [info]><span style="color:#FFFF00">'._version.'</span></a> / Release: '._release.' / Build: '._build.'</b>';
 				$return['version'] = show($return['version'],array('info' => $dzcp_version_info));
 				$return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
 				return $return;
 			}
 
-			if(function_exists('xmlrpc_decode')) {
-				$xml = $xml['dzcp'];
-			} else {
-				$xml = json_decode($xml->dzcp,true);
-			}
-		
-			if(empty($xml) || is_bool($xml) || !is_array($xml)) {
-				$return['version'] = '<b>'._akt_version.': <a href="" [info]><font color="#FFFF00">'._version.'</font></a> / Release: '._release.' / Build: '._build.'</b>';
-				$return['version'] = show($return['version'],array('info' => $dzcp_version_info));
-				$return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
-				return $return;
-			}
-			
-			if(strtolower($xml['edition']) != strtolower(_edition)) {
-				$return['version'] = '<b>'._akt_version.': <a href="" [info]><font color="#FFFF00">'._version.'</font></a> / Release: '._release.' / Build: '._build.'</b>';
-				$return['version'] = show($return['version'],array('info' => $dzcp_version_info));
-				$return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
-				return $return;
-			}
-			
-            $cache->set('dzcp_version', $dzcp_online_v, dzcp_version_checker_refresh);
-			unset($dzcp_online_v);
-			
-			$_build = _build;
-            if($xml['build'] > _build) $_build = '<font color="#FF0000">'._build.'</font> => <font color="#00FF00">'.$xml['build'].'</font>';
+            if($json['error']) {
+                $return['version'] = '<b>'._akt_version.': <a href="" [info]><div style="color:#0000FF">'._version.'</div></a> ___ Server Error ___ </b>';
+                $return['version'] = show($return['version'],array('info' => $dzcp_version_info));
+                $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
+                return $return;
+            }
 
-            if($xml['version'] <= _version) {
-                $return['version'] = '<b>'._akt_version.': <a href="" [info]><span class="fontGreen">'._version.'</span></a> / Release: '._release.' / Build: '.$_build.'</b>';
+            if($recache)
+                $cache->set('dzcp_version',$dzcp_online_v,dzcp_version_checker_refresh);
+
+			$_build = '<span class="spanGreen">'._build.'</span>';
+            if($json['build'] > _build)
+                $_build = '<span style="color:#FF0000">'._build.'</span> => <span class="spanGreen">'.$json['build'].'</span>';
+
+            if(str_replace('.','',$json['version']) >= str_replace('.','',_version)) {
+                $return['version'] = '<b>'._akt_version.': <a href="" [info]><span class="spanGreen">'._version.'</span></a> / Release: '._release.' / Build: '.$_build.'</b>';
                 $return['version'] = show($return['version'],array('info' => $dzcp_version_info));
                 $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
             } else {
-                $return['version'] = '<a href="http://www.dzcp.de/" target="_blank" title="external Link: www.dzcp.de"><b>'._akt_version.':</b> <span class="fontRed">'._version.'</span> / Update Version: <span class="fontGreen">'.$xml['version'].'</span></a> / Release: <span class="fontGreen">'.$xml['release'].'</span> / Build: <span class="fontGreen">'.$xml['build'].'</span>';
+                $return['version'] = '<a href="https://www.dzcp.de/" target="_blank" title="external Link: www.dzcp.de"><b>'._akt_version.':</b> <span class="spanRed">'._version.'</span> / Update Version: <span class="spanGreen">'.$json['version'].'</span></a> / Release: <span class="spanGreen">'.$json['release'].'</span> / Build: <span class="spanGreen">'.$json['build'].'</span>';
                 $return['version_img'] = '<img src="../inc/images/admin/version_old.gif" align="absmiddle" width="111" height="14" />';
             }
         } else {
-            $return['version'] = '<b>'._akt_version.': <a href="" [info]><font color="#FFFF00">'._version.'</font></a> / Release: '._release.' / Build: '._build.'</b>';
+            $return['version'] = '<b>'._akt_version.': <a href="" [info]><span style="color:#FFFF00">'._version.'</span></a> / Release: '._release.' / Build: '._build.'</b>';
             $return['version'] = show($return['version'],array('info' => $dzcp_version_info));
             $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
         }
     } else {
         //check disabled
-        $return['version'] = '<b><font color="#999999">'._akt_version.': '._version.'</font> / Release: '._release.' / Build: '._build.'</b>';
+        $return['version'] = '<b><span style="color:#999999">'._akt_version.': '._version.'</span> / Release: '._release.' / Build: '._build.'</b>';
         $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
     }
 
