@@ -113,10 +113,9 @@ class SteamAPI {
     private static final function get_api($interface='ISteamUser',$method='GetPlayerSummaries',$version='v0002') {
         global $cache;
         if(empty(self::$api_key) || empty(self::$user_data['steamID'])) return false;
-        $cache_tag = 'steam_api_'.$interface.'_'.$method.'_'.self::$profile_url;
-        
-        self::$api_data = $cache->get('steam_api_'.$interface.'_'.$method.'_'.self::$profile_url);
-        if (is_null(self::$api_data)) {
+        $cache_tag = md5('steam_api_'.$interface.'_'.$method.'_'.self::$profile_url);
+        $CachedString = $cache->getItem($cache_tag);
+        if (is_null($CachedString->get())) {
             self::$send_data_api['format'] = 'xml';
             self::$send_data_api['key'] = self::$api_key;
             self::$send_data_api['steamids'] = self::$user_data['steamID'];
@@ -125,7 +124,8 @@ class SteamAPI {
                 if(function_exists('SteamAPI_Proxy')) {
                     $proxy = SteamAPI_Proxy(self::$profile_url,'api',array('interface' => $interface,'method' => $method, 'version' => $version));
                     if($proxy['status'] != 'available' || empty($proxy['data']) || !is_array($proxy['data'])) return false;
-                    $cache->set($cache_tag, base64_encode(serialize($proxy['data'])), steam_api_refresh);
+                    $CachedString->set(serialize($proxy['data']), steam_api_refresh);
+                    $cache->save($CachedString);
                     self::$api_data = $proxy['data'];
                     return is_array(self::$api_data);
                 } else {
@@ -145,10 +145,11 @@ class SteamAPI {
             if(!$xml = simplexml_load_string($xml_stream, 'SimpleXMLElement', LIBXML_NOCDATA)) return false;
             self::$send_data_api = array();
             self::$api_data = self::objectToArray($xml->players->player);
-            $cache->set('steam_api_'.$interface.'_'.$method.'_'.self::$profile_url, base64_encode(serialize(self::$api_data)), steam_api_refresh);
+            $CachedString->set(base64_encode(serialize(self::$api_data)))->expiresAfter(steam_api_refresh);
+            $cache->save($CachedString);
             return is_array(self::$api_data);
         } else {
-            self::$api_data = unserialize(base64_decode(self::$api_data));
+            self::$api_data = unserialize(base64_decode($CachedString->get()));
             return is_array(self::$api_data);
         }
 
@@ -163,17 +164,17 @@ class SteamAPI {
     private static final function get_steamcommunity($zone='',$xml='profile') {
         global $cache;
         $zone_url = !empty($zone) ? '/'.$zone.'/' : ''; $zone_tag = !empty($zone) ? $zone.'_' : 'profile';
-        self::$community_data[str_replace('_', '', $zone_tag)] = $cache->get('steam_'.self::$profile_url);
-        if (is_null(self::$community_data[str_replace('_', '', $zone_tag)]) || !steam_infos_cache) {
+        $CachedString = $cache->getItem(md5('steam_'.self::$profile_url));
+        if (is_null($CachedString->get()) || !steam_infos_cache) {
             $xml_stream = steam_only_proxy ? false : get_external_contents(self::$api_com.'/id/'.self::$profile_url.$zone_url.'/?xml=1');
             if(empty($xml_stream) || !$xml_stream) {
                 //-> Use SteamAPI Proxy
                 if(function_exists('SteamAPI_Proxy')) {
                    $proxy = SteamAPI_Proxy(self::$profile_url,'com',$zone);
                    if($proxy['status'] != 'available' || empty($proxy['data']) || !is_array($proxy['data'])) return false;
-                   
                    if(steam_infos_cache) {
-                        $cache->set('steam_'.self::$profile_url, base64_encode(serialize($proxy['data'])), steam_refresh);
+                       $CachedString->set(serialize($proxy['data']))->expiresAfter(steam_refresh);
+                       $cache->save($CachedString);
                     }
                    
                    self::$community_data[str_replace('_', '', $zone_tag)] = $proxy['data'];
@@ -201,12 +202,13 @@ class SteamAPI {
             if(!$xml = simplexml_load_string($xml_stream, 'SimpleXMLElement', LIBXML_NOCDATA)) return false;
             self::$community_data[str_replace('_', '', $zone_tag)] = self::objectToArray($xml);
             if (steam_infos_cache) {
-                $cache->set('steam_' . self::$profile_url, base64_encode(serialize(self::$community_data[str_replace('_', '', $zone_tag)])), steam_refresh);
+                $CachedString->set(serialize(self::$community_data[str_replace('_', '', $zone_tag)]))->expiresAfter(steam_refresh);
+                $cache->save($CachedString);
             }
 
             return is_array(self::$community_data[str_replace('_', '', $zone_tag)]);
         } else {
-            self::$community_data[str_replace('_', '', $zone_tag)] = unserialize(base64_decode(self::$community_data[str_replace('_', '', $zone_tag)]));
+            self::$community_data[str_replace('_', '', $zone_tag)] = unserialize($CachedString->get());
             return is_array(self::$community_data[str_replace('_', '', $zone_tag)]);
         }
 

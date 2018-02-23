@@ -32,14 +32,15 @@ function server($serverID = 0) {
             include(basePath.'/inc/server_query/'.strtolower($get['status']).'.php');
         }
 
-        $server_cache = $cache->get('nav_server_'.$serverID);
-        if(is_null($server_cache)) {
+        $CachedString = $cache->getItem('nav_server_'.$serverID);
+        if(is_null($CachedString->get())) {
             $server = gs_normalise(@call_user_func('server_query_'.$get['status'], $get['ip'], $get['port'], $get['qport'], 'info'));
             $player_list = call_user_func('server_query_'.$get['status'], $get['ip'], $get['port'], $get['qport'], 'players');
-            $cache->set('nav_server_'.$serverID, serialize(array('server' => $server, 'players' => $player_list)), config('cache_server'));
+            $CachedString->set(serialize(array('server' => $server, 'players' => $player_list)))->expiresAfter(config('cache_server'));
+            $cache->save($CachedString);
             unset($server_cache);
         } else {
-            $server_cache = unserialize($server_cache);
+            $server_cache = unserialize($CachedString->get());
             $server = gs_normalise($server_cache['server']);
             $player_list = $server_cache['players'];
             unset($server_cache);
@@ -67,14 +68,11 @@ function server($serverID = 0) {
           if(!file_exists($image_map)) $image_map = "../inc/images/maps/no_map.gif";
         }
 
-        $pws_txt = ''; $pwd_txt = ''; $pwd_info = ''; $pwd = '';
+        $pwd_txt = ''; $pwd_info = ''; $pwd = '';
         if(!empty($get['pwd']) && permission("gs_showpw")) {
             $pwd =  show(_server_pwd, array("pwd" => $get['pwd']));
             $pwd_info = "Passwort";
-            $pws_txt = $get['pwd'];
         }
-
-        $players = '<a class="navServerStats" href="../server/?show='.$get['id'].'">Players</a>';
 
         if(!empty($server_name_config[$server['gamemod']])) $server_name_short = $server_name_config[$server['gamemod']][1];
         if(!empty($server_link_config[$server['gamemod']])) $server_link = $server_link_config[$server['gamemod']];

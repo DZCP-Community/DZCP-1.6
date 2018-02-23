@@ -4,17 +4,6 @@
  * http://www.dzcp.de
  */
 
-// Start session if no headers were sent
-if(!headers_sent()) {
-    session_start();
-
-    if(!isset($_SESSION['PHPSESSID'])) {
-        @session_destroy();
-        @session_start();
-        $_SESSION['PHPSESSID'] = true;
-    }
-}
-
 function mtime() {
     list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);

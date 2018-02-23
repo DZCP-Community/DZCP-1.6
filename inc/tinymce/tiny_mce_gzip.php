@@ -77,13 +77,12 @@ class TinyMCE_Compressor {
      */
     public function handleRequest() {
         global $cache;
-        $files = array();
+        $files = array(); $buffer = "";
         $this->settings["debug"] = (self::getParam("debug") && view_error_reporting);
         $expiresOffset = $this->parseTime($this->settings["expires"]);
         $tinymceDir = dirname(__FILE__);
-        $cacheHash = md5(implode($_GET));
-        $buffer = $cache->get($cacheHash);
-        if (!$this->settings["disk_cache"] || $this->settings["debug"] || is_null($buffer)) {
+        $CachedString = $cache->getItem(md5(implode($_GET)));
+        if (!$this->settings["disk_cache"] || $this->settings["debug"] || is_null($CachedString->get())) {
             // Override settings with querystring params
             if ($plugins = self::getParam("plugins")) {
                 $this->settings["plugins"] = $plugins;
@@ -231,8 +230,11 @@ class TinyMCE_Compressor {
             $buffer .= 'tinymce.each("' . implode(',', $files) . '".split(","),function(f){tinymce.ScriptLoader.markDone(tinyMCE.baseURL+"/"+f+".js");});';
            
             if($this->settings["disk_cache"]) {
-                $cache->set($cacheHash, $buffer, $expiresOffset);
+                $CachedString->set($buffer)->expiresAfter($expiresOffset);
+                $cache->save($CachedString);
             }
+        } else {
+            $buffer = $CachedString->get();
         }
 
         if($this->settings["debug"]) {

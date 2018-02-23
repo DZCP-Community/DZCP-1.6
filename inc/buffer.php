@@ -8,6 +8,12 @@ ob_start();
 ob_implicit_flush(false);
 define('basePath', dirname(dirname(__FILE__).'../'));
 
+if (version_compare(phpversion(), '5.6', '<')) {
+    die('Bitte verwende PHP-Version 5.6 oder h&ouml;her.<p>Please use PHP-Version 5.6 or higher.');
+}
+
+include(basePath.'/vendor/autoload.php');
+
 function getmicrotime() {
     list($usec,$sec) = explode(" ",microtime());
     return((float)$usec+(float)$sec);

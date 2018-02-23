@@ -4,11 +4,6 @@
  * http://www.dzcp.de
  */
 
-## Error Reporting ##
-if(!defined('DEBUG_LOADER'))
-    exit('<b>Die Debug-Console wurde nicht geladen!<p>
-    Bitte überprüfen Sie ob die index.php einen "include(basePath."/inc/debugger.php");" Eintrag hat.</b>');
-
 //Filter 404
 $test = strtolower($_SERVER["REQUEST_URI"]);
 if (strpos($test, 'index.php/') !== false ||
@@ -20,57 +15,40 @@ if (strpos($test, 'index.php/') !== false ||
 ## INCLUDES/REQUIRES ##
 require_once(basePath.'/inc/secure.php');
 require_once(basePath.'/inc/_version.php');
-require_once(basePath.'/inc/pop3.php');
-require_once(basePath.'/inc/smtp.php');
-require_once(basePath.'/inc/phpmailer.php');
 require_once(basePath."/inc/cookie.php");
 require_once(basePath.'/inc/server_query/_functions.php');
 require_once(basePath."/inc/teamspeak_query.php");
-require_once(basePath."/inc/phpfastcache/phpfastcache.php");
 require_once(basePath.'/inc/steamapi.php');
-require_once(basePath.'/inc/crawler-detect/CrawlerDetect.php');
 
-//CrawlerDetect
-use Jaybizzle\CrawlerDetect as CrawlerDetect;
+//Libs
+use phpFastCache\CacheManager;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
+use PHPMailer\PHPMailer\PHPMailer;
 
 ## Is AjaxJob ##
 $ajaxJob = (!isset($ajaxJob) ? false : $ajaxJob);
 
-//Cache
-use phpFastCache\CacheManager;
-use phpFastCache\Util;
-Util\Languages::setEncoding("UTF-8");
-CacheManager::CachingMethod("phpfastcache");
-
-//Auto Cache
-if($config_cache['storage'] == 'auto') {
-    if((extension_loaded('apc') && ini_get('apc.enabled') && strpos(PHP_SAPI,"CGI") === false))
-        $config_cache['storage'] = "apc";
-    else if((extension_loaded('xcache') && function_exists("xcache_get")))
-        $config_cache['storage'] = "xcache";
-    else if((extension_loaded('wincache') && function_exists("wincache_ucache_set")))
-        $config_cache['storage'] = "wincache";
-    else
-        $config_cache['storage'] = "files";
-}
-
-CacheManager::setup(array(
+// Cache
+CacheManager::setDefaultConfig(array(
     "path" => basePath."/inc/_cache_/",
-    "allow_search" => false,
+    "defaultTtl" => 10,
     "storage" => $config_cache['storage'],
     "memcache" => $config_cache['server_mem'],
     "redis" => $config_cache['server_redis'],
     "ssdb" => $config_cache['server_ssdb'],
+    "default_chmod" => 0775,
+    "compress_data" => true,
+    "cacheFileExtension" => 'pfc',
     "fallback" => "files"
 ));
-$cache = CacheManager::getInstance(); // return your setup storage
+
+$cache = CacheManager::getInstance($config_cache['storage']); // return your setup storage
 
 //-> Automatische Datenbank Optimierung
 if(auto_db_optimize && settings('db_optimize',false) <= time() && !$installer && !$updater) {
     @ignore_user_abort(true);
     db("UPDATE `".$db['settings']."` SET `db_optimize` = '".(time()+auto_db_optimize_interval)."' WHERE `id` = 1;");
     db_optimize();
-    $cache->autoCleanExpired(3600*1);
     @ignore_user_abort(false);
 }
 
@@ -98,7 +76,7 @@ SteamAPI::set('apikey',re(settings('steam_api_key')));
 $language = (cookie::get('language') != false ? (file_exists(basePath.'/inc/lang/languages/'.cookie::get('language').'.php') ? cookie::get('language') : re(settings('language'))) : re(settings('language')));
 
 //-> einzelne Definitionen
-$CrawlerDetect = new CrawlerDetect\CrawlerDetect();
+$CrawlerDetect = new CrawlerDetect();
 $isSpider = $CrawlerDetect->isCrawler();
 $subfolder = basename(dirname(dirname($_SERVER['PHP_SELF']).'../'));
 $httphost = $_SERVER['HTTP_HOST'].(empty($subfolder) ? '' : '/'.$subfolder);
@@ -1829,24 +1807,26 @@ function userstats($what,$tid=0) {
 
 //- Funktion zum versenden von Emails
 function sendMail($mailto,$subject,$content) {
-    $mail = new PHPMailer;
+    $mail = new PHPMailer(false);
     if(phpmailer_use_smtp) {
         $mail->isSMTP();
         $mail->Host = phpmailer_smtp_host;
-        $mail->Port = phpmailer_smtp_port;
         $mail->SMTPAuth = phpmailer_use_auth;
         $mail->Username = phpmailer_smtp_user;
         $mail->Password = phpmailer_smtp_password;
+        $mail->SMTPSecure = phpmailer_smtp_secure;
+        $mail->Port = phpmailer_smtp_port;
     }
-    
-    $mail->From = ($mailfrom =settings('mailfrom'));
-    $mail->FromName = $mailfrom;
+
+    $mail->setFrom(($mailfrom=re(settings('mailfrom'))), $mailfrom);
     $mail->AddAddress(preg_replace('/(\\n+|\\r+|%0A|%0D)/i', '',$mailto));
-    $mail->Subject = $subject;
-    $mail->msgHTML($content);
+    $mail->isHTML(true);
+    $mail->Subject = re($subject);
+    $mail->Body    = $content;
     $mail->AltBody = bbcode_nletter_plain($content);
-    $mail->setLanguage(language_short_tag(), basePath.'/inc/lang/sendmail/');
-    return $mail->Send();
+
+    $mail->setLanguage(language_short_tag(), basePath.'/vendor/phpmailer/phpmailer/language');
+    return $mail->send();
 }
 
 function language_short_tag() {
@@ -2419,13 +2399,17 @@ function hextobin($hexstr) {
 final class dbc_index {
     private static $index = array();
     public static final function setIndex($index_key,$data) {
-        global $cache;
+        global $cache,$config_cache;
 
         if(self::MemSetIndex()) {
             if(show_dbc_debug)
                 DebugConsole::insert_info('dbc_index::setIndex()', 'Set index: "'.$index_key.'" to cache');
 
-            $cache->set('dbc_'.$index_key, serialize($data), 1.2);
+            if($config_cache['dbc']) {
+                $data_cache = $cache->getItem('dbc_'.$index_key);
+                $data_cache->set(serialize($data))->expiresAfter(1);
+                $cache->save($data_cache);
+            }
         }
 
         if(show_dbc_debug)
@@ -2459,12 +2443,12 @@ final class dbc_index {
         global $cache;
         if(isset(self::$index[$index_key])) return true;
         if(self::MemSetIndex()) {
-            $data = $cache->get('dbc_'.$index_key);
-            if(!is_null($data)) {
+            $data = $cache->getItem('dbc_'.$index_key);
+            if(!is_null($data->get())) {
                 if(show_dbc_debug)
                     DebugConsole::insert_loaded('dbc_index::issetIndex()', 'Load index: "'.$index_key.'" from cache');
 
-                self::$index[$index_key] = unserialize($data);
+                self::$index[$index_key] = unserialize($data->get());
                 return true;
             }
         }
@@ -2472,26 +2456,20 @@ final class dbc_index {
         return false;
     }
 
-    private static final function MemSetIndex() {
+    public static final function MemSetIndex() {
         global $config_cache,$cache;
-        if (!$config_cache['dbc'] || $cache->fallback) {
+        if (!$config_cache['dbc'] || CacheManager::$fallback) {
             return false;
         }
 
-        switch(strtolower(str_replace('\\phpFastCache\\Drivers\\', '', $cache->config['class']))) {
-            case 'apc':
-            case 'memcache':
-            case 'memcached':
-            case 'mongodb':
-            case 'predis':
-            case 'redis':
-            case 'ssdb':
-            case 'wincache':
-            case 'xcache': 
-                return true;
+        switch($cache->getDriverName()) {
+            case 'Files':
+            case 'Zenddisk':
+            case 'Sqlite':
+                return false;
         }
 
-        return false;
+        return true;
     }
 }
 

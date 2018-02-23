@@ -8,7 +8,7 @@
 //-> DZCP Settings Start
 #########################################
 
-define('view_error_reporting', false); // Zeigt alle Fehler und Notices etc.
+define('view_error_reporting', true); // Zeigt alle Fehler und Notices etc.
 define('debug_all_sql_querys', false);
 define('debug_save_to_file', false);
 define('debug_dzcp_handler', true);
@@ -58,6 +58,7 @@ define('phpmailer_smtp_host', 'localhost'); //Hostname of the mail server
 define('phpmailer_smtp_port', 25); //SMTP port number
 define('phpmailer_smtp_user', ''); //Username to use for SMTP authentication
 define('phpmailer_smtp_password', '');//Password to use for SMTP authentication
+define('phpmailer_smtp_secure', 'tls');//Enable TLS encryption, `ssl` also accepted
 
 /*
  * Cache Configuration
@@ -68,6 +69,7 @@ $config_cache = array(
     "server_redis" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'database' => '', 'timeout' => ''),
     "server_ssdb" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'timeout' => ''),
     "dbc" => true,  //use database query caching * only use with memory cache
+    "tpl" => true,  //use template caching * only use with memory cache
 );
 
 //-> Legt die UserID des Rootadmins fest
@@ -121,13 +123,23 @@ if(!isset($updater)) $updater = false;
 if(!isset($global_index)) $global_index = false;
 
 function show($tpl="", $array=array(), $array_lang_constant=array(), $array_block=array()) {
-    global $tmpdir,$chkMe;
+    global $tmpdir,$chkMe,$cache,$config_cache;
     if(!empty($tpl) && $tpl != null) {
         $template = basePath."/inc/_templates_/".$tmpdir."/".$tpl;
         $array['dir'] = '../inc/_templates_/'.$tmpdir;
 
-        if(file_exists($template.".html"))
-            $tpl = file_get_contents($template.".html");
+        $CachedString = $cache->getItem(md5('tpl_'.$tmpdir.$template));
+        if(is_null($CachedString->get())) {
+            if(file_exists($template.".html")) {
+                $tpl = file_get_contents($template.".html");
+                if(!view_error_reporting && $config_cache['tpl'] && dbc_index::MemSetIndex()) {
+                    $CachedString->set(base64_encode($tpl))->expiresAfter(60);
+                    $cache->save($CachedString);
+                }
+            }
+        } else {
+            $tpl = base64_decode($CachedString->get());
+        }
 
         //put placeholders in array
         $pholder = explode("^",pholderreplace($tpl));
@@ -162,76 +174,90 @@ function show($tpl="", $array=array(), $array_lang_constant=array(), $array_bloc
 //-> MySQL-Datenbankangaben
 $prefix = $sql_prefix;
 $db = array("host" =>           $sql_host,
-            "user" =>           stripslashes($sql_user),
-            "pass" =>           stripslashes($sql_pass),
-            "db" =>             $sql_db,
-            "prefix" =>         $prefix,
-            "artikel" =>        $prefix."artikel",
-            "acomments" =>      $prefix."acomments",
-            "awards" =>         $prefix."awards",
-            "away" =>           $prefix."away",
-            "banned" =>         $prefix."banned",
-            "buddys" =>         $prefix."userbuddys",
-            "ipcheck" =>        $prefix."ipcheck",
-            "clankasse" =>      $prefix."clankasse",
-            "c_kats" =>         $prefix."clankasse_kats",
-            "c_payed" =>        $prefix."clankasse_payed",
-            "config" =>         $prefix."config",
-            "counter" =>        $prefix."counter",
-            "c_ips" =>          $prefix."counter_ips",
-            "c_who" =>          $prefix."counter_whoison",
-            "cw" =>             $prefix."clanwars",
-            "cw_comments" =>    $prefix."cw_comments",
-            "cw_player" =>      $prefix."clanwar_players",
-            "downloads" =>      $prefix."downloads",
-            "dl_kat" =>         $prefix."download_kat",
-            "events" =>         $prefix."events",
-            "f_access" =>       $prefix."f_access",
-            "f_abo" =>          $prefix."f_abo",
-            "f_kats" =>         $prefix."forumkats",
-            "f_posts" =>        $prefix."forumposts",
-            "f_skats" =>        $prefix."forumsubkats",
-            "f_threads" =>      $prefix."forumthreads",
-            "gallery" =>        $prefix."gallery",
-            "gb" =>             $prefix."gb",
-            "glossar" =>        $prefix."glossar",
-            "links" =>          $prefix."links",
-            "linkus" =>         $prefix."linkus",
-            "msg" =>            $prefix."messages",
-            "news" =>           $prefix."news",
-            "navi" =>           $prefix."navi",
-            "navi_kats" =>      $prefix."navi_kats",
-            "newscomments" =>   $prefix."newscomments",
-            "newskat" =>        $prefix."newskat",
-            "partners" =>       $prefix."partners",
-            "permissions" =>    $prefix."permissions",
-            "pos" =>            $prefix."positions",
-            "profile" =>        $prefix."profile",
-            "rankings" =>       $prefix."rankings",
-            "reg" =>            $prefix."reg",
-            "server" =>         $prefix."server",
-            "serverliste" =>    $prefix."serverliste",
-            "settings" =>       $prefix."settings",
-            "shout" =>          $prefix."shoutbox",
-            "sites" =>          $prefix."sites",
-            "squads" =>         $prefix."squads",
-            "squaduser" =>      $prefix."squaduser",
-            "sponsoren" =>      $prefix."sponsoren",
-            "slideshow" =>      $prefix."slideshow",
-            "taktik" =>         $prefix."taktiken",
-            "users" =>          $prefix."users",
-            "usergallery" =>    $prefix."usergallery",
-            "usergb" =>         $prefix."usergb",
-            "userpos" =>        $prefix."userposis",
-            "userstats" =>      $prefix."userstats",
-            "votes" =>          $prefix."votes",
-            "vote_results" =>   $prefix."vote_results");
+    "user" =>           stripslashes($sql_user),
+    "pass" =>           stripslashes($sql_pass),
+    "db" =>             $sql_db,
+    "prefix" =>         $prefix,
+    "artikel" =>        $prefix."artikel",
+    "acomments" =>      $prefix."acomments",
+    "awards" =>         $prefix."awards",
+    "away" =>           $prefix."away",
+    "banned" =>         $prefix."banned",
+    "buddys" =>         $prefix."userbuddys",
+    "ipcheck" =>        $prefix."ipcheck",
+    "clankasse" =>      $prefix."clankasse",
+    "c_kats" =>         $prefix."clankasse_kats",
+    "c_payed" =>        $prefix."clankasse_payed",
+    "config" =>         $prefix."config",
+    "counter" =>        $prefix."counter",
+    "c_ips" =>          $prefix."counter_ips",
+    "c_who" =>          $prefix."counter_whoison",
+    "cw" =>             $prefix."clanwars",
+    "cw_comments" =>    $prefix."cw_comments",
+    "cw_player" =>      $prefix."clanwar_players",
+    "downloads" =>      $prefix."downloads",
+    "dl_kat" =>         $prefix."download_kat",
+    "events" =>         $prefix."events",
+    "f_access" =>       $prefix."f_access",
+    "f_abo" =>          $prefix."f_abo",
+    "f_kats" =>         $prefix."forumkats",
+    "f_posts" =>        $prefix."forumposts",
+    "f_skats" =>        $prefix."forumsubkats",
+    "f_threads" =>      $prefix."forumthreads",
+    "gallery" =>        $prefix."gallery",
+    "gb" =>             $prefix."gb",
+    "glossar" =>        $prefix."glossar",
+    "links" =>          $prefix."links",
+    "linkus" =>         $prefix."linkus",
+    "msg" =>            $prefix."messages",
+    "news" =>           $prefix."news",
+    "navi" =>           $prefix."navi",
+    "navi_kats" =>      $prefix."navi_kats",
+    "newscomments" =>   $prefix."newscomments",
+    "newskat" =>        $prefix."newskat",
+    "partners" =>       $prefix."partners",
+    "permissions" =>    $prefix."permissions",
+    "pos" =>            $prefix."positions",
+    "profile" =>        $prefix."profile",
+    "rankings" =>       $prefix."rankings",
+    "reg" =>            $prefix."reg",
+    "server" =>         $prefix."server",
+    "serverliste" =>    $prefix."serverliste",
+    "settings" =>       $prefix."settings",
+    "shout" =>          $prefix."shoutbox",
+    "sites" =>          $prefix."sites",
+    "squads" =>         $prefix."squads",
+    "squaduser" =>      $prefix."squaduser",
+    "sponsoren" =>      $prefix."sponsoren",
+    "slideshow" =>      $prefix."slideshow",
+    "sessions" =>        $prefix."sessions",
+    "taktik" =>         $prefix."taktiken",
+    "users" =>          $prefix."users",
+    "usergallery" =>    $prefix."usergallery",
+    "usergb" =>         $prefix."usergb",
+    "userpos" =>        $prefix."userposis",
+    "userstats" =>      $prefix."userstats",
+    "votes" =>          $prefix."votes",
+    "vote_results" =>   $prefix."vote_results");
 unset($prefix,$sql_host,$sql_user,$sql_pass,$sql_db);
 
 if($db['host'] != '' && $db['user'] != '' && $db['pass'] != '' && $db['db'] != '' && !$thumbgen) {
     $db_host = (mysqli_persistconns ? 'p:' : '').$db['host'];
     $mysql = new mysqli($db_host,$db['user'],$db['pass'],$db['db']);
     if ($mysql->connect_error) { die("<b>Fehler beim Zugriff auf die Datenbank!"); }
+}
+
+// Start session if no headers were sent
+if(!headers_sent()) {
+    session_start();
+
+    if(!isset($_SESSION['PHPSESSID'])) {
+        @session_destroy();
+        @session_start();
+        $_SESSION['PHPSESSID'] = true;
+    }
+} else {
+    exit("Die Session konnte nicht gestartet werden! ( headers has already sent )<p> STOP!");
 }
 
 //MySQLi-Funktionen
@@ -278,15 +304,15 @@ function db($query='',$rows=false,$fetch=false) {
 function db_stmt($query,$params=array('si', 'hallo', '4'),$rows=false,$fetch=false) {
     global $prefix,$mysql;
     if(!$statement = $mysql->prepare($query)) die('<b>MySQL-Query failed:</b><br /><br /><ul>'.
-                                     '<li><b>ErrorNo</b> = '.!empty($prefix) ? str_replace($prefix,'',$mysql->connect_errno) : $mysql->connect_errno.
-                                     '<li><b>Error</b>   = '.!empty($prefix) ? str_replace($prefix,'',$mysql->connect_error) : $mysql->connect_error.
-                                     '<li><b>Query</b>   = '.!empty($prefix) ? str_replace($prefix,'',$query).'</ul>' : $query);
+    '<li><b>ErrorNo</b> = '.!empty($prefix) ? str_replace($prefix,'',$mysql->connect_errno) : $mysql->connect_errno.
+    '<li><b>Error</b>   = '.!empty($prefix) ? str_replace($prefix,'',$mysql->connect_error) : $mysql->connect_error.
+    '<li><b>Query</b>   = '.!empty($prefix) ? str_replace($prefix,'',$query).'</ul>' : $query);
 
     call_user_func_array(array($statement, 'bind_param'), refValues($params));
     if(!$statement->execute()) die('<b>MySQL-Query failed:</b><br /><br /><ul>'.
-                                     '<li><b>ErrorNo</b> = '.!empty($prefix) ? str_replace($prefix,'',$mysql->connect_errno) : $mysql->connect_errno.
-                                     '<li><b>Error</b>   = '.!empty($prefix) ? str_replace($prefix,'',$mysql->connect_error) : $mysql->connect_error.
-                                     '<li><b>Query</b>   = '.!empty($prefix) ? str_replace($prefix,'',$query).'</ul>' : $query);
+    '<li><b>ErrorNo</b> = '.!empty($prefix) ? str_replace($prefix,'',$mysql->connect_errno) : $mysql->connect_errno.
+    '<li><b>Error</b>   = '.!empty($prefix) ? str_replace($prefix,'',$mysql->connect_error) : $mysql->connect_error.
+    '<li><b>Query</b>   = '.!empty($prefix) ? str_replace($prefix,'',$query).'</ul>' : $query);
 
     $meta = mysqli_stmt_result_metadata($statement);
     if(!$meta || empty($meta)) { mysqli_stmt_close($statement); return; }
@@ -342,11 +368,11 @@ function refValues($arr) {
 
 //Auto Update Detect
 if(file_exists(basePath."/_installer/index.php") &&
-   file_exists(basePath."/inc/mysql.php") && !$installation && !$thumbgen) {
+    file_exists(basePath."/inc/mysql.php") && !$installation && !$thumbgen) {
     $user_check = db("SELECT * FROM `".$db['users']."` WHERE `id` = 1",false,true);
     if(!array_key_exists('banned',$user_check) && !$installer)
         $global_index ? header('Location: _installer/update.php') :
-                        header('Location: ../_installer/update.php');
+            header('Location: ../_installer/update.php');
     unset($user_check);
 }
 

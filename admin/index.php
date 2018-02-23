@@ -95,12 +95,14 @@ else {
     $dzcp_news = '';
     if(allow_url_fopen_support()) {
         if(admin_view_dzcp_news) {
-            $dzcp_news = $cache->get("admin_news");
-            if(is_null($dzcp_news)) {
-                if($dzcp_news = get_external_contents("http://www.dzcp.de/dzcp_news.php",false,true))
-                    $cache->set("admin_news", base64_encode($dzcp_news), 1200);
+            $CachedString = $cache->getItem('admin_news');
+            if(is_null($CachedString->get())) {
+                if($dzcp_news = get_external_contents("http://www.dzcp.de/dzcp_news.php",false,true)) {
+                    $CachedString->set(base64_encode($dzcp_news))->expiresAfter(1200);
+                    $cache->save($CachedString);
+                }
             } else
-                $dzcp_news = base64_decode($dzcp_news);
+                $dzcp_news = base64_decode($CachedString->get());
         }
     }
 

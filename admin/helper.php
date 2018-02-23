@@ -9,7 +9,8 @@ function show_dzcp_version() {
     $dzcp_version_info = 'onmouseover="DZCP.showInfo(\'<tr><td colspan=2 align=center padding=3 class=infoTop>DZCP Versions Checker</td></tr><tr><td>'._dzcp_vcheck.'</td></tr>\')" onmouseout="DZCP.hideInfo()"';
     $return = array(); $recache = false;
     if(dzcp_version_checker && allow_url_fopen_support()) {
-        if(!$cache->isExisting('dzcp_version')) {
+        $CachedString = $cache->getItem('dzcp_version');
+        if(is_null($CachedString->get())) {
             $recache = true;
 			$input = array('event' => 'version', 'version' => _version, 'edition' => _edition, 'build' => _build, 'release' => _release, 'type' => 'json');
             if($dzcp_online_v = get_external_contents('https://api.dzcp.de',$input)) {
@@ -25,7 +26,7 @@ function show_dzcp_version() {
                 }
 	        }
         } else {
-            $dzcp_online_v = $cache->get('dzcp_version');
+            $dzcp_online_v = unserialize($CachedString->get());
         }
 
 	    unset($input);
@@ -45,8 +46,10 @@ function show_dzcp_version() {
                 return $return;
             }
 
-            if($recache)
-                $cache->set('dzcp_version',$dzcp_online_v,dzcp_version_checker_refresh);
+            if($recache) {
+                $CachedString->set(serialize($dzcp_online_v))->expiresAfter(dzcp_version_checker_refresh);
+                $cache->save($CachedString);
+            }
 
 			$_build = '<span class="spanGreen">'._build.'</span>';
             if($json['build'] > _build)

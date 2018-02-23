@@ -22,6 +22,7 @@ function teamspeak2() {
             fputs($fp, "sel ".settings('ts_port')."\n");
             fputs($fp, "si\n");
             fputs($fp, "quit\n");
+          $out = '';
             while(!feof($fp))
         {
              $out .= fgets($fp, 1024);
@@ -1037,7 +1038,7 @@ class TSStatus
     var $_showIcons;
     var $_showOnly;
 
-    function TSStatus($host, $port, $queryPort, $customicon, $showchannel)
+    function __construct($host, $port, $queryPort, $customicon, $showchannel)
     {
         $this->_host = $host;
         $this->_port = $port;

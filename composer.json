@@ -1,0 +1,17 @@
+{
+  "name": "dzcp/full",
+  "description": "DZCP-CMS Full Install",
+  "minimum-stability": "stable",
+  "license": "opensource",
+  "authors": [
+    {
+      "name": "DZCP.de Team",
+      "email": "info@dzcp.de"
+    }
+  ],
+  "require": {
+    "phpfastcache/phpfastcache": "6.1.0",
+    "phpmailer/phpmailer": "v6.0.3",
+    "jaybizzle/crawler-detect": "v1.2.59"
+  }
+}

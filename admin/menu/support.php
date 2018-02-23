@@ -35,9 +35,9 @@ $support .= "\r\n";
 $support .= "#####################\r\n";
 $support .= "Server Cache\r\n";
 $support .= "#####################\r\n";
-$support .= "Cache Storage: ".str_replace('\\phpFastCache\\Drivers\\', '', $cache->config['class'])."\r\n";
-$support .= "Cache Fallback Storage: ".$cache->config['fallback']."\r\n";
-$support .= "Cache Fallback Enabled: ".($cache->fallback ? 'On' : 'Off')."\r\n";
+$support .= "Cache Storage: ".str_replace('\\phpFastCache\\Drivers\\', '', $cache->getDriverName())."\r\n";
+$support .= "Cache Fallback Storage: ".$cache->getConfig()['fallback']."\r\n";
+$support .= "Cache Fallback Enabled: ".(\phpFastCache\CacheManager::$fallback ? 'On' : 'Off')."\r\n";
 $support .= "\r\n";
 
 $support .= "#####################\r\n";

@@ -8,9 +8,14 @@
 define('basePath', dirname(dirname(__FILE__).'../'));
 ob_start();
 ob_implicit_flush(false);
+    if (version_compare(phpversion(), '5.6', '<')) {
+        die('Bitte verwende PHP-Version 5.6 oder h&ouml;her.<p>Please use PHP-Version 5.6 or higher.');
+    }
+
     $ajaxJob = true;
 
     ## INCLUDES ##
+    include(basePath.'/vendor/autoload.php');
     include(basePath."/inc/debugger.php");
     include(basePath."/inc/config.php");
     include(basePath."/inc/bbcode.php");
@@ -34,14 +39,20 @@ ob_implicit_flush(false);
         if(!$steam || empty($steam) || !is_array($steam) || count($steam) <= 1) return '-';
 
         //Avatar
-        $user_avatar = $cache->get('steam_avatar_'.$steamID);
-        if(is_null($user_avatar)) {
+        //$user_avatar = $cache->get('steam_avatar_'.$steamID);
+
+        $CachedString = $cache->getItem('steam_avatar_'.$steamID);
+        if(is_null($CachedString->get())) {
             if(($img_stream = get_external_contents($steam['user']['avatarIcon_url'],false,true)) && !empty($img_stream)) {
                 $steam['user']['avatarIcon_url'] = 'data:image/png;base64,'.base64_encode($img_stream);
-                if(steam_avatar_cache)
-                    $cache->set('steam_avatar_'.$steamID, bin2hex($img_stream), steam_avatar_refresh);
-            } else return '-';
-        } else $steam['user']['avatarIcon_url'] = 'data:image/png;base64,'.base64_encode(hextobin($user_avatar));
+                if(steam_avatar_cache) {
+                    $CachedString->set(bin2hex($img_stream))->expiresAfter(steam_avatar_refresh);
+                    $cache->save($CachedString);
+                }
+            } else
+                return '-';
+        } else
+            $steam['user']['avatarIcon_url'] = 'data:image/png;base64,'.base64_encode(hextobin($CachedString->get()));
 
         switch($steam['user']['onlineState']) {
             case 'in-game': $status_set = '2'; $text_1 = _steam_in_game; $text_2 = $steam['user']['gameextrainfo']; break;
