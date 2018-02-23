@@ -298,6 +298,9 @@ unset($files);
 $designpath = '../inc/_templates_/'.$tmpdir;
 
 //-> Languagefiles einlesen
+/**
+ * @param $lng
+ */
 function lang($lng) {
     if(!file_exists(basePath."/inc/lang/languages/".$lng.".php"))
     {
@@ -352,7 +355,7 @@ function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_
         curl_setopt($curl, CURLOPT_AUTOREFERER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
-        curl_setopt($curl, CURLOPT_USERAGENT, "DZCP-HTTP-CLIENT");
+        curl_setopt($curl, CURLOPT_USERAGENT, "DZCP");
 		
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $timeout);
         curl_setopt($curl, CURLOPT_TIMEOUT, $timeout * 2); // x 2
@@ -2100,18 +2103,20 @@ function pfields_name($name) {
 //-> Checkt versch. Dinge anhand der Hostmaske eines Users
 function ipcheck($what,$time = "") {
     global $db,$userip;
-    $get = db("SELECT time,what FROM ".$db['ipcheck']." WHERE what = '".$what."' AND ip = '".$userip."' ORDER BY time DESC",false,true);
-    if(preg_match("#vid#", $get['what']))
-        return true;
-    else {
-        if($get['time']+$time<time())
-            db("DELETE FROM ".$db['ipcheck']." WHERE what = '".$what."' AND ip = '".$userip."' AND time+'".$time."'<'".time()."'");
-
-        if($get['time']+$time>time())
+    $get = db("SELECT `time`,`what` FROM `".$db['ipcheck']."` WHERE `what` = '".$what."' AND `ip` = '".$userip."' ORDER BY `time` DESC;",false,true);
+    if(count($get) >= 1) {
+        if (preg_match("#vid#", $get['what']))
             return true;
-        else
-            return false;
+        else {
+            if ($get['time'] + intval($time) < time())
+                db("DELETE FROM `" . $db['ipcheck'] . "` WHERE `what` = '" . $what . "' AND `ip` = '" . $userip . "' AND `time`+'" . $time . "'<'" . time() . "'");
+
+            if ($get['time'] + $time > time())
+                return true;
+        }
     }
+
+    return false;
 }
 
 //-> Gibt die Tageszahl eines Monats aus
@@ -2179,7 +2184,7 @@ function convert_feed($txt) {
 
 // Userpic ausgeben
 function userpic($userid, $width=170,$height=210) {
-    global $picformat;
+    global $picformat; $pic = '';
     foreach($picformat as $endung) {
         if(file_exists(basePath."/inc/images/uploads/userpics/".$userid.".".$endung)) {
             $pic = show(_userpic_link, array("id" => $userid, "endung" => $endung, "width" => $width, "height" => $height));
@@ -2194,7 +2199,7 @@ function userpic($userid, $width=170,$height=210) {
 
 // Useravatar ausgeben
 function useravatar($uid=0, $width=100,$height=100) {
-    global $picformat,$userid;
+    global $picformat,$userid; $pic = '';
     $uid = $uid == 0 ? $userid : $uid;
     foreach($picformat as $endung) {
         if(file_exists(basePath."/inc/images/uploads/useravatare/".$uid.".".$endung))
@@ -2358,7 +2363,7 @@ function getPermissions($checkID = 0, $pos = 0) {
 
 //-> interne Foren-Rechte abfragen
 function getBoardPermissions($checkID = 0, $pos = 0) {
-    global $db, $dir;
+    global $db;
 
     $break = 0; $i_forum = ''; $fkats = '';
     $qry = db("SELECT id,name FROM ".$db['f_kats']." WHERE intern = '1' ORDER BY `kid` ASC");

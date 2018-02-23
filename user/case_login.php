@@ -7,7 +7,9 @@
 if(defined('_UserMenu')) {
     $where = _site_user_login;
     if($do == "yes") {
-        if(config('securelogin') && ($_POST['secure'] != $_SESSION['sec_login'] || empty($_SESSION['sec_login'])))
+        if(config('securelogin') && (!array_key_exists('sec_login_page',$_SESSION) && !array_key_exists('login_menu',$_SESSION)) ||
+            (($_POST['secure'] != $_SESSION['sec_login_page'] && $_POST['secure'] != $_SESSION['login_menu']) ||
+                (empty($_SESSION['sec_login_page']) && empty($_SESSION['login_menu']))))
             $index = error(_error_invalid_regcode, 1);
         else {
             if(checkpwd($_POST['user'], md5($_POST['pwd']))) {
