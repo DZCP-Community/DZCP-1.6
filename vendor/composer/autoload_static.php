@@ -21,6 +21,10 @@ class ComposerStaticInit7f32bae2ad99270bbc88900cec1943e9
         array (
             'Jaybizzle\\CrawlerDetect\\' => 24,
         ),
+        'G' => 
+        array (
+            'GameQ\\' => 6,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -43,6 +47,10 @@ class ComposerStaticInit7f32bae2ad99270bbc88900cec1943e9
         'Jaybizzle\\CrawlerDetect\\' => 
         array (
             0 => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src',
+        ),
+        'GameQ\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/austinb/gameq/src/GameQ',
         ),
     );
 
