@@ -98,7 +98,7 @@ $language_text['_perm_positions'] = 'gestione grado utente';
 $language_text['_perm_partners'] = 'gestione partner';
 $language_text['_perm_profile'] = 'gestione campi (fields) nel profilo';
 
-$language_text['_dzcp_vcheck'] = 'Il controllo della versione di DZCP vi informera\' se la versione e\' aggiornata o sono disponibili nuovi aggiornamenti.<br><br><span class=fontBold>Descrizione:</span><br><span style=color:#17D427>Verde:</span>Aggiornato!<br><span style=color:#FFFF00>Giallo:</span> Impossibile connettersi al server</br><span style=color:#FF0000>Rosso:</span>Un nuovo aggiornamento e\' disponibile<br><span style=color:#7783ff>Gentian blue:</span> Error in response of the API server'; //TODO: Tranclate
+$language_text['_dzcp_vcheck'] = 'Il controllo della versione di DZCP vi informera\' se la versione e\' aggiornata o sono disponibili nuovi aggiornamenti.<br><br><span class=fontBold>Descrizione:</span><br><span style=color:#17D427>Verde:</span>Aggiornato!<br><span style=color:#FFFF00>Giallo:</span> Impossibile connettersi al server</br><span style=color:#FF0000>Rosso:</span>Un nuovo aggiornamento e\' disponibile<br><span style=color:#7783ff>Blu genziana:</span>Errore: il server API non risponde';
 $language_text['_cw_dont_exist'] = 'La clanwar ID specificata non esiste!';
 
 //Steam
