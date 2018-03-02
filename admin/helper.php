@@ -52,16 +52,16 @@ function show_dzcp_version() {
             }
 
 			$_build = '<span class="spanGreen">'._build.'</span>';
-            if($json['build'] > _build)
+            if(intval(str_replace('.','',$json['build'])) > intval(str_replace('.','',_build)))
                 $_build = '<span style="color:#FF0000">'._build.'</span> => <span class="spanGreen">'.$json['build'].'</span>';
 
-            if(str_replace('.','',$json['version']) >= str_replace('.','',_version)) {
+            if(intval(str_replace('.','',$json['version'])) > intval(str_replace('.','',_version))) {
+                $return['version'] = '<a href="https://www.dzcp.de/" target="_blank" title="external Link: www.dzcp.de"><b>'._akt_version.':</b> <span class="spanRed">'._version.'</span> / Update Version: <span class="spanGreen">'.$json['version'].'</span></a> / Release: <span class="spanGreen">'.$json['release'].'</span> / Build: <span class="spanGreen">'.$json['build'].'</span>';
+                $return['version_img'] = '<img src="../inc/images/admin/version_old.gif" align="absmiddle" width="111" height="14" />';
+            } else {
                 $return['version'] = '<b>'._akt_version.': <a href="" [info]><span class="spanGreen">'._version.'</span></a> / Release: '._release.' / Build: '.$_build.'</b>';
                 $return['version'] = show($return['version'],array('info' => $dzcp_version_info));
                 $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
-            } else {
-                $return['version'] = '<a href="https://www.dzcp.de/" target="_blank" title="external Link: www.dzcp.de"><b>'._akt_version.':</b> <span class="spanRed">'._version.'</span> / Update Version: <span class="spanGreen">'.$json['version'].'</span></a> / Release: <span class="spanGreen">'.$json['release'].'</span> / Build: <span class="spanGreen">'.$json['build'].'</span>';
-                $return['version_img'] = '<img src="../inc/images/admin/version_old.gif" align="absmiddle" width="111" height="14" />';
             }
         } else {
             $return['version'] = '<b>'._akt_version.': <a href="" [info]><span style="color:#FFFF00">'._version.'</span></a> / Release: '._release.' / Build: '._build.'</b>';
