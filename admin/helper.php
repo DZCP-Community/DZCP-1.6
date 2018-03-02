@@ -33,7 +33,7 @@ function show_dzcp_version() {
         if($dzcp_online_v && !empty($dzcp_online_v) && strpos($dzcp_online_v, 'not found') === false) {
             $json = @json_decode($dzcp_online_v,true);
 			if(empty($json) || is_bool($json) || (!is_array($json) && !is_object($json))) {
-				$return['version'] = '<b><a href="" [info]>'._akt_version.': <span style="color:#FFFF00">'._version.'</span> / Release: '._release.' / Build: '._build.'</a></b>';
+				$return['version'] = '<b><a href="" [info]>'._akt_version.': <span style="color:#FFFF00">'._version.'</span> / Release: <span style="color:#FFFF00">'._release.'</span> / Build: <span style="color:#FFFF00">'._build.'</span></a></b>';
 				$return['version'] = show($return['version'],array('info' => $dzcp_version_info));
 				$return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
 				return $return;
@@ -51,26 +51,26 @@ function show_dzcp_version() {
                 $cache->save($CachedString);
             }
 
-			$_build = '<span class="spanGreen">'._build.'</span>';
+			$_build = '<span style="color:#17D427">'._build.'</span>';
             if(intval(str_replace('.','',$json['build'])) > intval(str_replace('.','',_build)))
-                $_build = '<span style="color:#FF0000">'._build.'</span> => <span class="spanGreen">'.$json['build'].'</span>';
+                $_build = '<span style="color:#FF0000">'._build.'</span> => <span style="color:#17D427">'.$json['build'].'</span>';
 
             if(intval(str_replace('.','',$json['version'])) > intval(str_replace('.','',_version))) {
-                $return['version'] = '<a href="https://www.dzcp.de/" target="_blank" title="external Link: www.dzcp.de"><b>'._akt_version.':</b> <span class="spanRed">'._version.'</span> / Update Version: <span class="spanGreen">'.$json['version'].'</span> / Release: <span class="spanGreen">'.$json['release'].'</span> / Build: <span class="spanGreen">'.$json['build'].'</span></a>';
+                $return['version'] = '<a href="https://www.dzcp.de/" target="_blank" title="external Link: www.dzcp.de"><b>'._akt_version.':</b> <span style="color:#FF0000">'._version.'</span> / Update Version: <span style="color:#17D427">'.$json['version'].'</span> / Release: <span style="color:#17D427">'.$json['release'].'</span> / Build: <span style="color:#17D427">'.$json['build'].'</span></a>';
                 $return['version_img'] = '<img src="../inc/images/admin/version_old.gif" align="absmiddle" width="111" height="14" />';
             } else {
-                $return['version'] = '<b><a href="" [info]>'._akt_version.': <span class="spanGreen">'._version.'</span> / Release: '._release.' / Build: '.$_build.'</b></a>';
+                $return['version'] = '<b><a href="" [info]>'._akt_version. ': <span style="color:#17D427">' ._version.'</span> / Release: <span style="color:#17D427">'._release.'</span> / Build: '.$_build.'</b></a>';
                 $return['version'] = show($return['version'],array('info' => $dzcp_version_info));
                 $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
             }
         } else {
-            $return['version'] = '<a href="" [info]><b>'._akt_version.': <span style="color:#FFFF00">'._version.'</span> / Release: '._release.' / Build: '._build.'</b></a>';
+            $return['version'] = '<a  href="" [info]><b>'._akt_version.': <span style="color:#FFFF00">'._version.'</span> / Release: <span style="color:#FFFF00">'._release.'</span> / Build: <span style="color:#FFFF00">'._build.'</span></b></a>';
             $return['version'] = show($return['version'],array('info' => $dzcp_version_info));
             $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
         }
     } else {
         //check disabled
-        $return['version'] = '<b><span style="color:#999999">'._akt_version.': '._version.'</span> / Release: '._release.' / Build: '._build.'</b>';
+        $return['version'] = '<b><span style="color:#999999">'._akt_version.': '._version.'</span> / Release: <span style="color:#999999">'._release.'</span> / Build: <span style="color:#999999">'._build.'</span></b>';
         $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
     }
 
