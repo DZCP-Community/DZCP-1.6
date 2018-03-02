@@ -21,10 +21,11 @@ define('basePath', dirname(dirname(dirname(__FILE__))));
 ob_start();
 
 ## Require ##
-$ajaxJob = true;
-require_once(basePath."/inc/debugger.php");
-require_once(basePath."/inc/config.php");
-require_once(basePath."/inc/bbcode.php");
+$ajaxJob = false;
+include(basePath.'/vendor/autoload.php');
+include(basePath."/inc/debugger.php");
+include(basePath."/inc/config.php");
+include(basePath."/inc/bbcode.php");
 TinyMCE_Compressor::getParams();
 
 // Handle incoming request if it's a script call
