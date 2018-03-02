@@ -90,7 +90,7 @@ $language_text['_perm_config'] = 'изменений конфигурации С
 $language_text['_perm_positions'] = 'Управление рангами пользователей';
 $language_text['_perm_partners'] = 'Управление партнеров';
 $language_text['_perm_profile'] = 'Управление поля в профилe';
-$language_text['_dzcp_vcheck'] = 'DZCP Versions Checker сообщает вам, если новая версия вышла и ваша текущая версия актуальнa.<br><br><span class=fontBold>описание:</span><br><font color=#17D427>зеленый:</font>Up to Date!<br><font color=#FFFF00>желтый:</font> Не удается подключиться к серверу<br><font color=#FF0000>красный:</font>Существует новое обновление!';
+$language_text['_dzcp_vcheck'] = 'DZCP Versions Checker сообщает вам, если новая версия вышла и ваша текущая версия актуальнa.<br><br><span class=fontBold>описание:</span><br><span style=color:#17D427>зеленый:</span>Up to Date!<br><span style=color:#FFFF00>желтый:</span> Не удается подключиться к серверу<br><span style=color:#FF0000>красный:</span>Существует новое обновление<br><span style=color:#7783ff>Gentian blue:</span> Error in response of the API server'; //TODO: Tranclate
 $language_text['_cw_dont_exist'] = 'Clanwar-ID не существует!';
 //Steam
 $language_text['_steam'] = 'Steam';

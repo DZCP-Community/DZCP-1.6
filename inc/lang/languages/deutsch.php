@@ -88,7 +88,7 @@ $language_text['_perm_config'] = 'Seitenkonfiguration ändern';
 $language_text['_perm_positions'] = 'User Ränge verwalten';
 $language_text['_perm_partners'] = 'Partner verwalten';
 $language_text['_perm_profile'] = 'Profilfelder verwalten';
-$language_text['_dzcp_vcheck'] = 'Der DZCP Versions Checker informiert dich über neue DZCP Updates und zeigt dir, ob deine Version aktuell ist.<br><br><span class=fontBold>Beschreibung:</span><br><font color=#17D427>Grün:</font>Up to Date!<br><font color=#FFFF00>Gelb:</font> Keine Verbindung zu Server<br><font color=#FF0000>Rot:</font> Es ist ein neues Update verfügbar!';
+$language_text['_dzcp_vcheck'] = 'Der DZCP Versions Checker informiert dich über neue DZCP Updates und zeigt dir, ob deine Version aktuell ist.<br><br><span class=fontBold>Beschreibung:</span><br><span style=color:#17D427>Grün:</span>Up to Date!<br><span style=color:#FFFF00>Gelb:</span> Keine Verbindung zu Server<br><span style=color:#FF0000>Rot:</span> Es ist ein neues Update verfügbar<br><span style=color:#7783ff>Enzianblau:</span> Fehler bei der Antwort des API-Servers';
 $language_text['_cw_dont_exist'] = 'Die angegebene Clanwar-ID existiert nicht!';
 //Steam
 $language_text['_steam'] = 'Steam';

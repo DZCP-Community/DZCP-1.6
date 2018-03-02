@@ -13,7 +13,7 @@ function show_dzcp_version() {
         if(is_null($CachedString->get())) {
             $recache = true;
 			$input = array('event' => 'version', 'version' => _version, 'edition' => _edition, 'build' => _build, 'release' => _release, 'type' => 'json');
-            if($dzcp_online_v = get_external_contents('https://api.dzcp.de',$input)) {
+            if($dzcp_online_v = get_external_contents('https://lapi.dzcp.de',$input)) {
                 $dzcp_online_v = explode('[hash]',$dzcp_online_v);
 		        if($dzcp_online_v[1] == sha1($dzcp_online_v[0])) {
                     $dzcp_online_v = $dzcp_online_v[0];
@@ -40,7 +40,7 @@ function show_dzcp_version() {
 			}
 
             if($json['error']) {
-                $return['version'] = '<b>'._akt_version.': <a href="" [info]><div style="color:#0000FF">'._version.'</div></a> ___ Server Error ___ </b>';
+                $return['version'] = '<b><a href="" [info]>'._akt_version. ': <span style="color:#7783ff">' ._version.'</span> / Release: <span style="color:#7783ff">'._release.'</span> / Build: <span style="color:#7783ff">'._build.'</span> / <span style="color:#FF0000">== API ERROR ==</span></a></b>';
                 $return['version'] = show($return['version'],array('info' => $dzcp_version_info));
                 $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
                 return $return;
