@@ -168,6 +168,7 @@ case 'prepare';
   $c .= check_file_dir('../inc/tinymce/plugins/ajaxfilemanager/session/gc_counter.ajax.php',1);
   $c .= check_file_dir('../inc/config.php',1);
 
+  $formcheck = "";
   $check = preg_match("#false#Uis",$c);
 
   if($check == FALSE)
