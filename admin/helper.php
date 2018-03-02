@@ -13,7 +13,7 @@ function show_dzcp_version() {
         if(is_null($CachedString->get())) {
             $recache = true;
 			$input = array('event' => 'version', 'version' => _version, 'edition' => _edition, 'build' => _build, 'release' => _release, 'type' => 'json');
-            if($dzcp_online_v = get_external_contents('https://lapi.dzcp.de',$input)) {
+            if($dzcp_online_v = get_external_contents('https://api.dzcp.de',$input)) {
                 $dzcp_online_v = explode('[hash]',$dzcp_online_v);
 		        if($dzcp_online_v[1] == sha1($dzcp_online_v[0])) {
                     $dzcp_online_v = $dzcp_online_v[0];
