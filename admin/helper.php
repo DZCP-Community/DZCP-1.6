@@ -52,7 +52,7 @@ function show_dzcp_version() {
             }
 
 			$_build = '<span style="color:#17D427">'._build.'</span>';
-            if(intval(str_replace('.','',$json['build'])) > intval(str_replace('.','',_build)))
+            if((int)(str_replace('.','',$json['build'])) > (int)(str_replace('.','',_build)))
                 $_build = '<span style="color:#FF0000">'._build.'</span> => <span style="color:#17D427">'.$json['build'].'</span>';
 
             if(intval(str_replace('.','',$json['version'])) > intval(str_replace('.','',_version))) {
