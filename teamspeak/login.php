@@ -1,6 +1,6 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
+ * DZCP - deV!L`z ClanPortal 1.7.0
  * http://www.dzcp.de
  */
 
@@ -8,15 +8,13 @@
 include("../inc/buffer.php");
 
 ## INCLUDES ##
-include(basePath."/inc/debugger.php");
-include(basePath."/inc/config.php");
-include(basePath."/inc/bbcode.php");
+include(basePath."/inc/common.php");
 
 ## SECTIONS ##
-    $uip         = settings('ts_ip');
-    $tPort     = settings('ts_sport');
-    $port     = settings('ts_port');
-    $version     = settings('ts_version');
+$uip       = settings::get('ts_ip');
+$tPort     = settings::get('ts_sport');
+$port      = settings::get('ts_port');
+$version   = settings::get('ts_version');
 
     if($_POST) {
         $ok = false;
@@ -28,11 +26,11 @@ include(basePath."/inc/bbcode.php");
 
         $password    = $_POST['password'];
         $channel  = $_POST['channel'];
-        $channel  = str_replace("¶","'",$channel);
+        $channel  = str_replace("Â¶","'",$channel);
         $channelpassword = $_POST['channelpassword'];
         $time = time();
 
-           $cookie_data =  $nickname.'¶'.$reg.'¶'.$loginname.'¶'.$password;
+           $cookie_data =  $nickname.'Â¶'.$reg.'Â¶'.$loginname.'Â¶'.$password;
            cookie::put('Teamspeakdata', $cookie_data);
            cookie::save(); //Save Cookie
       } elseif($_GET) {
@@ -42,8 +40,9 @@ include(basePath."/inc/bbcode.php");
           $reg = "";
            $loginname = "";
            $password = "";
-        if( !empty(cookie::get('Teamspeakdata'))) {
-            $cookie_info = explode("¶", cookie::get('Teamspeakdata'));
+        $cookie_data = cookie::get('Teamspeakdata');
+        if( !empty($cookie_data)) {
+            $cookie_info = explode("Â¶", $cookie_data);
             $nickname = $cookie_info[0];
             $reg = $cookie_info[1];
             $loginname = $cookie_info[2];
@@ -103,7 +102,7 @@ if($_POST) {
     <table class="hperc" cellspacing="1">
     <?php if($ok) { ?>
   <tr>
-    <td class="contentHead" colspan="2"><span class="fontBold">Channel: <?php echo rawurldecode($_GET['cName'])?></span></td>
+      <td class="contentHead" colspan="2"><span class="fontBold">Channel: <?php echo base64_decode($_GET['cName'])?></span></td>
   </tr>
     <tr>
         <td class="contentMainTop"><span class="fontBold">Nickname:</span></td>

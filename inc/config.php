@@ -8,7 +8,7 @@
 //-> DZCP Settings Start
 #########################################
 
-define('view_error_reporting', false); // Zeigt alle Fehler und Notices etc.
+define('view_error_reporting', true); // Zeigt alle Fehler und Notices etc.
 define('debug_all_sql_querys', false);
 define('debug_save_to_file', false);
 define('debug_dzcp_handler', true);
@@ -230,8 +230,9 @@ $db = array("host" =>           $sql_host,
     "squaduser" =>      $prefix."squaduser",
     "sponsoren" =>      $prefix."sponsoren",
     "slideshow" =>      $prefix."slideshow",
-    "sessions" =>        $prefix."sessions",
+    "sessions" =>       $prefix."sessions",
     "taktik" =>         $prefix."taktiken",
+    "teamspeak" =>      $prefix."teamspeak",
     "users" =>          $prefix."users",
     "usergallery" =>    $prefix."usergallery",
     "usergb" =>         $prefix."usergb",

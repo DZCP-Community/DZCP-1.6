@@ -9,6 +9,34 @@
 /* Is set to utf-8 by default */
 //$charset = 'utf-8';
 
+## ADDED / REDEFINED FOR 1.6.0.5
+$language_text['_custom_game_icon'] = 'Custom-Icon';
+$language_text['_custom_game_icon_none'] = 'Not use custom icon';
+$language_text['_ts_fport'] = 'File Port';
+$language_text['_ts_port'] = 'Voice Port';
+$language_text['_ts_version'] = 'Version';
+$language_text['_ts_ip_dns'] = 'IP oder DNS';
+$language_text['_ts_sport'] = 'Query Port';
+$language_text['_config_teamspeak'] = 'Teamspeak';
+$language_text['_perm_editteamspeak'] = 'Teamspeak Server management';
+$language_text['_teamspekadmin_head'] = 'Teamspeak Server';
+$language_text['_ts_head_extra'] = 'Teamspeak 3 Zusatzeinstellungen';
+$language_text['_teamspeak_admin_head'] = 'Teamspeak Server';
+$language_text['_ts_empty_fport'] = 'Du hast keinen Server File Port angegeben!';
+$language_text['_ts_empty_port'] = 'Du hast keinen Server Voice Port angegeben!';
+$language_text['_ts_empty_qport'] = 'Du hast keinen Server Query Port angegeben!';
+$language_text['_ts_empty_ip_dns'] = 'IP oder DNS fehlt!';
+$language_text['_ts_settings_default_server'] = 'Standard Server';
+$language_text['_ts_settings_default_server_desc'] = 'Diesen Server als Standard eintragen, der aktuelle Standard Server wird mit dem neuen &uuml;berschrieben.';
+$language_text['_teamspeak_legendemenu'] = 'Server ist im Menu eingetragen? (auf das Icon klicken um den Status zu &auml;ndern)';
+$language_text['_teamspeak_default_legendemenu'] = 'Server als Standard eingetragen? (auf das Icon klicken um den Status zu &auml;ndern)';
+$language_text['_config_ts_updated'] = 'Der Teamspeak Server wurde erfogreich editiert!';
+$language_text['_config_ts_added'] = 'Der Teamspeak Server wurde erfogreich eingetragen!';
+$language_text['_no_ts_page'] = 'Es ist kein Teamspeak 3 Server eingetragen';
+$language_text['_no_connect_to_ts'] = 'Teamspeak 3 Server is offline!';
+$language_text['_server_nousers'] = '<tr><td class="contentMainFirst" align="center" colspan="99"><span class="fontBold">No Users on the server</span></td></tr>';
+$language_text['_perm_teamspeak'] = 'Manage Teamspeak 3 Servers';
+
 ## ADDED / REDEFINED FOR 1.6 Final
 $language_text['_txt_navi_main'] = 'Главная Навигация';
 $language_text['_txt_navi_clan'] = 'Kлана Навигация';

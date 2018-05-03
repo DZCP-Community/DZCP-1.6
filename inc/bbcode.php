@@ -17,7 +17,7 @@ require_once(basePath.'/inc/secure.php');
 require_once(basePath.'/inc/_version.php');
 require_once(basePath."/inc/cookie.php");
 require_once(basePath.'/inc/server_query/_functions.php');
-require_once(basePath."/inc/teamspeak_query.php");
+require_once(basePath."/inc/teamspeak.php");
 require_once(basePath.'/inc/steamapi.php');
 
 //Libs
@@ -28,19 +28,47 @@ use PHPMailer\PHPMailer\PHPMailer;
 ## Is AjaxJob ##
 $ajaxJob = (!isset($ajaxJob) ? false : $ajaxJob);
 
+//Set DSGVO to false
+if(!array_key_exists('DSGVO',$_SESSION)) {
+    $_SESSION['DSGVO'] = false;
+}
+
+//$_SESSION['do_show_dsgvo'] = false;
+//$_SESSION['DSGVO'] = false;
+
+//Check is DSGVO Set?
+if(isset($_GET['dsgvo'])) {
+    switch ((int)$_GET['dsgvo']) {
+        case 1:
+            $_SESSION['DSGVO'] = true;
+            $_SESSION['do_show_dsgvo'] = true;
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+            exit();
+            break;
+        default:
+            $_SESSION['DSGVO'] = false;
+            $_SESSION['do_show_dsgvo'] = true;
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+            exit();
+    }
+}
+
 // Cache
-CacheManager::setDefaultConfig(array(
-    "path" => basePath."/inc/_cache_/",
-    "defaultTtl" => 10,
-    "storage" => $config_cache['storage'],
-    "memcache" => $config_cache['server_mem'],
-    "redis" => $config_cache['server_redis'],
-    "ssdb" => $config_cache['server_ssdb'],
-    "default_chmod" => 0775,
-    "compress_data" => true,
-    "cacheFileExtension" => 'pfc',
-    "fallback" => "files"
-));
+try {
+    CacheManager::setDefaultConfig(array(
+        "path" => basePath . "/inc/_cache_/",
+        "defaultTtl" => 10,
+        "storage" => $config_cache['storage'],
+        "memcache" => $config_cache['server_mem'],
+        "redis" => $config_cache['server_redis'],
+        "ssdb" => $config_cache['server_ssdb'],
+        "default_chmod" => 0775,
+        "compress_data" => true,
+        "cacheFileExtension" => 'pfc',
+        "fallback" => "files"
+    ));
+} catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
+}
 
 $cache = CacheManager::getInstance($config_cache['storage']); // return your setup storage
 
@@ -73,7 +101,19 @@ cookie::init('dzcp_'.settings('prev'));
 SteamAPI::set('apikey',re(settings('steam_api_key')));
 
 //-> Language auslesen
-$language = (cookie::get('language') != false ? (file_exists(basePath.'/inc/lang/languages/'.cookie::get('language').'.php') ? cookie::get('language') : re(settings('language'))) : re(settings('language')));
+if(HasDSGVO()){
+    $_SESSION['language'] = (cookie::get('language') != false ?
+        (file_exists(basePath.'/inc/lang/languages/'.cookie::get('language').'.php')
+            ? cookie::get('language') : re(settings('language'))) : re(settings('language')));
+} else {
+    if(array_key_exists('language',$_SESSION) && !empty($_SESSION['language'])) {
+        if(!file_exists(basePath.'/inc/lang/languages/'.$_SESSION['language'].'.php')) {
+            $_SESSION['language'] = re(settings('language'));
+        }
+    } else {
+        $_SESSION['language'] = re(settings('language'));
+    }
+}
 
 //-> einzelne Definitionen
 $CrawlerDetect = new CrawlerDetect();
@@ -88,7 +128,7 @@ $reload = 3600 * 24;
 $datum = time();
 $today = date("j.n.Y");
 $picformat = array("jpg", "gif", "png");
-$userip = visitorIp();
+$userip = HasDSGVO() ? visitorIp() : '0.0.0.0';
 $maxpicwidth = 90;
 $maxadmincw = 10;
 $maxfilesize = @ini_get('upload_max_filesize');
@@ -101,9 +141,10 @@ $do = isset($_GET['do']) ? $_GET['do'] : '';
 $index = ''; $show = ''; $color = 0;
 
 //-> Auslesen der Cookies und automatisch anmelden
-if(cookie::get('id') != false && cookie::get('pkey') != false && empty($_SESSION['id']) && !checkme()) {
+if(HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && empty($_SESSION['id']) && !checkme())) {
     //-> User aus der Datenbank suchen
-    $sql = db_stmt("SELECT id,user,nick,pwd,email,level,time,pkey FROM ".$db['users']." WHERE id = ? AND pkey = ? AND level != '0'",array('is', cookie::get('id'), cookie::get('pkey')));
+    $sql = db_stmt("SELECT id,user,nick,pwd,email,level,time,pkey FROM ".$db['users']." WHERE id = ? AND pkey = ? AND level != '0'",
+        array('is', cookie::get('id'), cookie::get('pkey')));
     if(_rows($sql)) {
         $get = _fetch($sql);
 
@@ -144,14 +185,19 @@ if(cookie::get('id') != false && cookie::get('pkey') != false && empty($_SESSION
 //-> Sprache aendern
 if(isset($_GET['set_language'])) {
     if(file_exists(basePath."/inc/lang/languages/".$_GET['set_language'].".php")) {
-        cookie::put('language', $_GET['set_language']);
-        cookie::save();
+        if(HasDSGVO()) {
+            cookie::put('language', $_GET['set_language']);
+            cookie::save();
+        }
+
+        $_SESSION['language'] = $_GET['set_language'];
     }
 
     header("Location: ".$_SERVER['HTTP_REFERER']);
 }
 
-lang($language); //Lade Sprache
+lang($_SESSION['language']); //Lade Sprache
+
 $userid = userid();
 $chkMe = checkme();
 if(!$chkMe) {
@@ -171,9 +217,22 @@ if($chkMe && $userid && !empty($_SESSION['ip'])) {
         session_unset();
         session_destroy();
         session_regenerate_id();
-        cookie::clear();
+        if(HasDSGVO()) {
+            cookie::clear();
+        }
         header("Location: ../news/");
     }
+}
+
+/**
+ * Prüft ob die DSGVO akzeptiert wurde
+ * @return bool
+ */
+function HasDSGVO() {
+    if(array_key_exists('DSGVO',$_SESSION) && $_SESSION['DSGVO'])
+        return true;
+
+    return false;
 }
 
 /**
@@ -235,17 +294,20 @@ function allow_url_fopen_support() {
 //-> Auslesen der UserID
 function userid() {
     global $db;
+    if(HasDSGVO()) {
+        if (empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
+        if (!dbc_index::issetIndex('user_' . $_SESSION['id'])) {
+            $sql = db("SELECT * FROM " . $db['users'] . " WHERE id = '" . $_SESSION['id'] . "' AND pwd = '" . $_SESSION['pwd'] . "'");
+            if (!_rows($sql)) return 0;
+            $get = _fetch($sql);
+            dbc_index::setIndex('user_' . $get['id'], $get);
+            return $get['id'];
+        }
 
-    if(empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
-    if(!dbc_index::issetIndex('user_'.$_SESSION['id'])) {
-        $sql = db("SELECT * FROM ".$db['users']." WHERE id = '".$_SESSION['id']."' AND pwd = '".$_SESSION['pwd']."'");
-        if(!_rows($sql)) return 0;
-        $get = _fetch($sql);
-        dbc_index::setIndex('user_'.$get['id'], $get);
-        return $get['id'];
+        return dbc_index::getIndexKey('user_' . $_SESSION['id'], 'id');
     }
 
-    return dbc_index::getIndexKey('user_'.$_SESSION['id'], 'id');
+    return 0;
 }
 
 //-> Templateswitch
@@ -253,8 +315,10 @@ $files = get_files(basePath.'/inc/_templates_/',true);
 if(isset($_GET['tmpl_set'])) {
     foreach ($files as $templ) {
         if($templ == $_GET['tmpl_set']) {
-            cookie::put('tmpdir', $templ);
-            cookie::save();
+            if(HasDSGVO()) {
+                cookie::put('tmpdir', $templ);
+                cookie::save();
+            }
             header("Location: ".$_SERVER['HTTP_REFERER']);
         }
     }
@@ -422,7 +486,7 @@ function languages() {
 }
 
 //-> Userspezifiesche Dinge
-if($userid >= 1 && $ajaxJob != true)
+if($userid >= 1 && $ajaxJob != true && HasDSGVO())
     db("UPDATE ".$db['userstats']." SET `hits` = hits+1, `lastvisit` = '".((int)$_SESSION['lastvisit'])."' WHERE user = ".$userid);
 
 //-> Settings auslesen
@@ -588,7 +652,7 @@ function glossar_load_index() {
 }
 
 function glossar($txt) {
-    global $db,$gl_words,$gl_desc,$use_glossar,$ajaxJob;
+    global $gl_words,$gl_desc,$use_glossar,$ajaxJob;
 
     if(!$use_glossar || $ajaxJob)
         return $txt;
@@ -697,7 +761,6 @@ function hl($text, $word) {
 
 //-> Emailadressen in Unicode umwandeln
 function eMailAddr($email) {
-    $address = trim($email);
     $output = "";
 
     for($i=0;$i<strlen($email);$i++)
@@ -1142,7 +1205,6 @@ function array_var_exists($var,$search)
 //-> Funktion um eine Datei im Web auf Existenz zu prfen
 function fileExists($url) {
     $url_p = @parse_url($url);
-    $host = $url_p['host'];
     $port = isset($url_p['port']) ? $url_p['port'] : 80;
 
     if(!allow_url_fopen_support()) return false;
@@ -1317,18 +1379,22 @@ function online_reg() {
 //-> Prueft, ob der User eingeloggt ist und wenn ja welches Level besitzt er
 function checkme($userid_set=0) {
     global $db;
-    if(!$userid = ($userid_set != 0 ? intval($userid_set) : userid())) return 0;
-    if(rootAdmin($userid)) return 4;
-    if(empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
-    if(!dbc_index::issetIndex('user_'.$userid)) {
-        $qry = db("SELECT * FROM ".$db['users']." WHERE id = ".$userid." AND pwd = '".$_SESSION['pwd']."' AND ip = '".$_SESSION['ip']."'");
-        if(!_rows($qry)) return 0;
-        $get = _fetch($qry);
-        dbc_index::setIndex('user_'.$get['id'], $get);
-        return $get['level'];
+    if(HasDSGVO() || $userid_set!=0) {
+        if (!$userid = ($userid_set != 0 ? intval($userid_set) : userid())) return 0;
+        if (rootAdmin($userid)) return 4;
+        if (empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
+        if (!dbc_index::issetIndex('user_' . $userid)) {
+            $qry = db("SELECT * FROM " . $db['users'] . " WHERE id = " . $userid . " AND pwd = '" . $_SESSION['pwd'] . "' AND ip = '" . $_SESSION['ip'] . "'");
+            if (!_rows($qry)) return 0;
+            $get = _fetch($qry);
+            dbc_index::setIndex('user_' . $get['id'], $get);
+            return $get['level'];
+        }
+
+        return dbc_index::getIndexKey('user_' . $userid, 'level');
     }
 
-    return dbc_index::getIndexKey('user_'.$userid, 'level');
+    return 0;
 }
 
 //-> Prueft, ob der User gesperrt ist und meldet ihn ab
@@ -1346,8 +1412,10 @@ function isBanned($userid_set=0,$logout=true) {
                 session_unset();
                 session_destroy();
                 session_regenerate_id();
-                cookie::clear();
-                $userid = 0; $chkMe = 0;
+                if(HasDSGVO()) {
+                    cookie::clear();
+                }
+                $userid = 0;
             }
 
             return true;
@@ -1830,8 +1898,7 @@ function sendMail($mailto,$subject,$content) {
 }
 
 function language_short_tag() {
-    global $language;
-    switch ($language) {
+    switch ($_SESSION['language']) {
         case "spanish": return 'es';
         case "deutsch": return 'de';
         case "russian": return 'ru';
@@ -1852,7 +1919,7 @@ function check_msg_emal() {
     }
 }
 
-if(!$ajaxJob)
+if(!$ajaxJob && HasDSGVO())
     check_msg_emal();
 
 //-> Checkt ob ein Ereignis neu ist
@@ -1926,52 +1993,72 @@ function dropdown($what, $wert, $age = 0) {
     return $return;
 }
 
-//Games fuer den Livestatus
-function sgames($game = '') {
-    $protocols = get_files(basePath.'/inc/server_query/',false,true,array('php')); $games = '';
-    foreach($protocols AS $protocol) {
-        unset($gamemods, $server_name_config);
-        $protocol = str_replace('.php', '', $protocol);
-        if(substr($protocol, 0, 1) != '_') {
-            $explode = '##############################################################################################################################';
-            $protocol_config = explode($explode, file_get_contents(basePath.'/inc/server_query/'.$protocol.'.php'));
-            eval(str_replace('<?php', '', $protocol_config[0]));
+function getgames() {
+    $protocols_path = basePath . "/vendor/austinb/gameq/src/GameQ/Protocols/";
+    $protocols = [];
 
-            if(!empty($server_name_config) && count($server_name_config) > 2) {
-                $gamemods = '';
-                foreach($server_name_config AS $slabel => $sconfig)
-                    $gamemods .= $sconfig[1].', ';
-            }
-
-            $gamemods = empty($gamemods) ? '' : ' ('.substr($gamemods, 0, strlen($gamemods) - 2).')';
-            $games .= '<option value="'.$protocol.'">';
-
-            switch($protocol):
-                case 'bf1942'; case 'bf2142'; case 'bf2'; case 'bfvietnam'; case 'bfbc2';
-                    $protocol = strtr($protocol, array('bfbc2' => 'Battlefield Bad Company 2', 'bfv' => 'Battlefield V', 'bf' => 'Battlefield '));
-                break;
-                case 'bf3'; $protocol = 'Battlefield 3'; break;
-                case 'bf4'; $protocol = 'Battlefield 4'; break;
-                case 'swat4'; $protocol = strtoupper($protocol); break;
-                case 'aarmy'; $protocol = 'Americas Army'; break;
-                case 'arma'; $protocol = 'Armed Assault'; break;
-                case 'wet'; $protocol = 'Wolfenstein: Enemy Territory'; break;
-                case 'mta'; $protocol = 'Multi-Theft-Auto'; break;
-                case 'cnc'; $protocol = 'Command &amp; Conquer'; break;
-                case 'sof2'; $protocol = 'Soldiers of Fortune 2'; break;
-                case 'ut'; $protocol = 'Unreal Tournament'; break;
-                default;
-                    $protocol = ucfirst(str_replace('_', ' ', $protocol));
-                    $protocol = (strlen($protocol) < 4) ? strtoupper($protocol) : $protocol;
-                break;
-            endswitch;
-
-            $games .= $protocol.$gamemods;
-            $games .= '</option>';
+    $files = get_files($protocols_path);
+    foreach ($files as $entry) {
+        if (!is_file($protocols_path . $entry)) {
+            continue;
         }
+
+        // Lets get some info on the class
+        $reflection = new ReflectionClass('\\GameQ\\Protocols\\' . pathinfo($entry, PATHINFO_FILENAME));
+
+        // Check to make sure we can actually load the class
+        if (!$reflection->IsInstantiable()) {
+            continue;
+        }
+
+        // Load up the class so we can get info
+        $class = $reflection->newInstance();
+
+        if(in_array($class->name(),['ventrilo','teamspeak2','teamspeak3',
+            'gamespy','gamespy3','won']))
+            continue;
+
+        // Add it to the list
+        $protocols[ $class->name() ] = [
+            'name'  => $class->nameLong(),
+            'state' => $class->state(),
+        ];
+
+        unset($class);
     }
 
-    return str_replace("value=\"".$game."\"","value=\"".$game."\" selected=\"selected\"",$games);
+    unset($files,$protocols_path);
+    ksort($protocols);
+    return $protocols;
+}
+
+/**
+ * Sucht nach Game Icons
+ *
+ * @param string $icon
+ * @return array
+ */
+function search_game_icon($icon='') {
+    global $picformat;
+    $image = '../inc/images/gameicons/unknown.gif'; $found = false;
+    foreach($picformat AS $end) {
+        if(file_exists(basePath.'/inc/images/gameicons/'.$icon.'.'.$end)) {
+            $found = true;
+            $image = '../inc/images/gameicons/'.$icon.'.'.$end;
+            break;
+        }
+    }
+    return array('image'=> $image, 'found'=> $found);
+}
+
+function listgame($games,$game) {
+    $content = '';
+    foreach ($games AS $sname => $info) {
+        $selected = (!empty($game) && $game != false && $game == $sname ? 'selected="selected" ' : '');
+        $content .= '<option '.$selected.'value="'.$sname.'">'.htmlentities($info['name']).'</option>';
+    }
+
+    return $content;
 }
 
 //Umfrageantworten selektieren
@@ -2406,7 +2493,11 @@ final class dbc_index {
                 DebugConsole::insert_info('dbc_index::setIndex()', 'Set index: "'.$index_key.'" to cache');
 
             if($config_cache['dbc']) {
-                $data_cache = $cache->getItem('dbc_'.$index_key);
+                $data_cache = null;
+                try {
+                    $data_cache = $cache->getItem('dbc_' . $index_key);
+                } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
+                }
                 $data_cache->set(serialize($data))->expiresAfter(1);
                 $cache->save($data_cache);
             }
@@ -2443,7 +2534,11 @@ final class dbc_index {
         global $cache;
         if(isset(self::$index[$index_key])) return true;
         if(self::MemSetIndex()) {
-            $data = $cache->getItem('dbc_'.$index_key);
+            $data = null;
+            try {
+                $data = $cache->getItem('dbc_' . $index_key);
+            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
+            }
             if(!is_null($data->get())) {
                 if(show_dbc_debug)
                     DebugConsole::insert_loaded('dbc_index::issetIndex()', 'Load index: "'.$index_key.'" from cache');
@@ -2551,7 +2646,7 @@ include_once(basePath.'/inc/menu-functions/navi.php');
 function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
 {
     global $db,$userid,$userip,$tmpdir,$chkMe,$charset,$mysql,$isSpider;
-    global $designpath,$language,$cp_color,$time_start;
+    global $designpath,$cp_color,$time_start;
 
     // Timer Stop
     $time = round(generatetime() - $time_start,4);
@@ -2560,17 +2655,20 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
     $lng = language_short_tag();
     $edr = ($wysiwyg=='_word')?'advanced':'normal';
     $lcolor = ($cp_color==1)?'lcolor=true;':'';
-    $java_vars = '<script language="javascript" type="text/javascript">var maxW = '.config('maxwidth').',lng = \''.$lng.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
+    $dsgvo = (!array_key_exists('do_show_dsgvo',$_SESSION) || !$_SESSION['do_show_dsgvo'] ? 1 : 0);
+    $java_vars = '<script language="javascript" type="text/javascript">var maxW = '.config('maxwidth').',lng = \''.$lng.'\',dsgvo = \''.$dsgvo.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
 
-    if(!strstr($_SERVER['HTTP_USER_AGENT'],'Android') && !strstr($_SERVER['HTTP_USER_AGENT'],'webOS'))
-        $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.js"></script>'."\n";
+   // if(!strstr($_SERVER['HTTP_USER_AGENT'],'Android') && !strstr($_SERVER['HTTP_USER_AGENT'],'webOS'))
+    //    $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.js"></script>'."\n";
 
     if(settings("wmodus") && $chkMe != 4) {
-        if(config('securelogin'))
-            $secure = show("menu/secure", array("help" => _login_secure_help, "security" => _register_confirm));
+        if(HasDSGVO()) {
+            if (config('securelogin'))
+                $secure = show("menu/secure", array("help" => _login_secure_help, "security" => _register_confirm));
 
-        $login = show("errors/wmodus_login", array("what" => _login_login, "secure" => $secure, "signup" => _login_signup, "permanent" => _login_permanent, "lostpwd" => _login_lostpwd));
-        cookie::save(); //Save Cookie
+            $login = show("errors/wmodus_login", array("what" => _login_login, "secure" => $secure, "signup" => _login_signup, "permanent" => _login_permanent, "lostpwd" => _login_lostpwd));
+            cookie::save(); //Save Cookie
+        }
         echo show("errors/wmodus", array("wmodus" => _wartungsmodus,
                                          "head" => _wartungsmodus_head,
                                          "tmpdir" => $tmpdir,
@@ -2579,7 +2677,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
                                          "title" => re(strip_tags($title)),
                                          "login" => $login));
     } else {
-        if(!$isSpider) {
+        if(!$isSpider && HasDSGVO()) {
             updateCounter();
             update_maxonline();
         }
@@ -2600,6 +2698,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
         }
 
         //misc vars
+        $language = $_SESSION['language'];
         $lang = $language;
         $template_switch = show("menu/tmp_switch", array("templates" => $tmpldir));
         $clanname = re(settings("clanname"));
@@ -2660,9 +2759,17 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
         //index output
         $index = (file_exists("../inc/_templates_/".$tmpdir."/".$index_templ.".html") ? show($index_templ, $arr) : show("index", $arr));
         if(!mysqli_persistconns) $mysql->close(); //MySQL
-        cookie::save(); //Save Cookie
+
+        if(HasDSGVO())
+            cookie::save(); //Save Cookie
+
         if(debug_save_to_file) DebugConsole::save_log(); //Debug save to file
         $output = view_error_reporting ? DebugConsole::show_logs().$index : $index; //Debug Console + Index Out
+
+        if(!array_key_exists('do_show_dsgvo',$_SESSION)) {
+            $_SESSION['do_show_dsgvo'] = true;
+        }
+
         gz_output($output); // OUTPUT BUFFER END
     }
 }
