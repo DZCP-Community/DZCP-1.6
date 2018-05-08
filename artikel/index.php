@@ -60,14 +60,14 @@ default:
 break;
 case 'show';
     $qry = db("SELECT * FROM ".$db['artikel']."
-               WHERE id = '".intval($_GET['id'])."'".(permission("artikel") ? "" : " AND public = 1"));
+               WHERE id = '".(int)($_GET['id'])."'".(permission("artikel") ? "" : " AND public = 1"));
 
     if(_rows($qry) == 0) {
         $index = error(_id_dont_exist,1);
     } else {
         while($get = _fetch($qry)) {
             $getkat = db("SELECT katimg FROM ".$db['newskat']."
-                          WHERE id = '".intval($get['kat'])."'",false,true);
+                          WHERE id = '".(int)($get['kat'])."'",false,true);
 
             $links1 = ""; $links2 = ""; $links3 = ""; $links = "";
             if($get['url1']) {
@@ -95,9 +95,9 @@ case 'show';
                                                     "rel" => $rel));
             }
 
-            $entrys = cnt($db['acomments'], " WHERE artikel = ".intval($_GET['id']));
+            $entrys = cnt($db['acomments'], " WHERE artikel = ".(int)($_GET['id']));
             $qryc = db("SELECT * FROM ".$db['acomments']."
-                        WHERE artikel = ".intval($_GET['id'])."
+                        WHERE artikel = ".(int)($_GET['id'])."
                         ORDER BY datum DESC
                         LIMIT ".($page - 1)*config('m_comments').",".config('m_comments')."");
 
@@ -213,7 +213,7 @@ case 'show';
                                                    "showmore" => $showmore,
                                                    "icq" => "",
                                                    "text" => bbcode($get['text']),
-                                                   "datum" => date("j.m.y H:i", intval($get['datum']))._uhr,
+                                                   "datum" => date("j.m.y H:i", (int)($get['datum']))._uhr,
                                                    "links" => $links,
                                                    "autor" => autor($get['autor'])));
         }
@@ -299,13 +299,13 @@ case 'show';
         }
   } elseif($do == "delete") {
     $qry = db("SELECT * FROM ".$db['acomments']."
-               WHERE id = '".intval($_GET['cid'])."'");
+               WHERE id = '".(int)($_GET['cid'])."'");
     $get = _fetch($qry);
 
     if($get['reg'] == $userid || permission('artikel'))
     {
       $qry = db("DELETE FROM ".$db['acomments']."
-                 WHERE id = '".intval($_GET['cid'])."'");
+                 WHERE id = '".(int)($_GET['cid'])."'");
 
       $index = info(_comment_deleted, "?action=show&amp;id=".$_GET['id']."");
     } else {
@@ -313,7 +313,7 @@ case 'show';
     }
   } elseif($do == "editcom") {
     $qry = db("SELECT * FROM ".$db['acomments']."
-               WHERE id = '".intval($_GET['cid'])."'");
+               WHERE id = '".(int)($_GET['cid'])."'");
     $get = _fetch($qry);
 
     if($get['reg'] == $userid || permission('artikel'))
@@ -326,7 +326,7 @@ case 'show';
                        `hp`       = '".links($_POST['hp'])."',
                        `comment`  = '".up($_POST['comment'])."',
                        `editby`   = '".addslashes($editedby)."'
-                   WHERE id = '".intval($_GET['cid'])."'");
+                   WHERE id = '".(int)($_GET['cid'])."'");
 
         $index = info(_comment_edited, "?action=show&amp;id=".$_GET['id']."");
       } else {
@@ -334,7 +334,7 @@ case 'show';
       }
     } elseif($do == "edit") {
       $qry = db("SELECT * FROM ".$db['acomments']."
-                 WHERE id = '".intval($_GET['cid'])."'");
+                 WHERE id = '".(int)($_GET['cid'])."'");
       $get = _fetch($qry);
 
       if($get['reg'] == $userid || permission('artikel'))
@@ -381,7 +381,7 @@ case 'preview';
     header("Content-type: text/html; charset=utf-8");
 
     $qrykat = db("SELECT katimg FROM ".$db['newskat']."
-                  WHERE id = '".intval($_POST['kat'])."'");
+                  WHERE id = '".(int)($_POST['kat'])."'");
     $getkat = _fetch($qrykat);
 
     if($_POST['url1'])
@@ -450,7 +450,7 @@ case 'preview';
 break;
     case 'compreview';
         if($do == 'edit') {
-            $get = db("SELECT * FROM ".$db['acomments']." WHERE id = '".intval($_GET['cid'])."'",false,true);
+            $get = db("SELECT * FROM ".$db['acomments']." WHERE id = '".(int)($_GET['cid'])."'",false,true);
 
             $get_id = '?';
             $get_userid = $get['reg'];
@@ -465,7 +465,7 @@ break;
             $editedby = show(_edited_by, array("autor" => cleanautor($userid),
                                                "time" => date("d.m.Y H:i", time())._uhr));
         } else {
-            $get_id = cnt($db['acomments'], " WHERE artikel = ".intval($_GET['id'])."")+1;
+            $get_id = cnt($db['acomments'], " WHERE artikel = ".(int)($_GET['id'])."")+1;
             $get_userid = $userid;
             $get_date = time();
             $regCheck = false;

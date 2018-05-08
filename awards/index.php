@@ -146,7 +146,7 @@ switch ($action):
                                           "show" => $show_));
     break;
     case 'showall';
-        $qry = db("SELECT * FROM ".$db['squads']." WHERE id = '".intval($_GET['id'])."'");
+        $qry = db("SELECT * FROM ".$db['squads']." WHERE id = '".(int)($_GET['id'])."'");
         while($get = _fetch($qry)) {
             if(isset($_GET['showsquad'])) {
                 if($_GET['showsquad'] == $get['id']) {

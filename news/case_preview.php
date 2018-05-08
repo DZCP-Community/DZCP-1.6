@@ -6,7 +6,7 @@
 
 if(defined('_News')) {
         header("Content-type: text/html; charset=utf-8");
-        $getkat = db("SELECT katimg FROM ".$db['newskat']." WHERE id = '".intval($_POST['kat'])."'",false,true);
+        $getkat = db("SELECT katimg FROM ".$db['newskat']." WHERE id = '".(int)($_POST['kat'])."'",false,true);
 
         $klapp = "";
         if($_POST['klapptitel']) {

@@ -35,12 +35,12 @@ switch ($do)
         $show = info(_config_server_ts_updated,"?admin=server");
     break;
     case 'menu':
-        $get = db("SELECT * FROM ".$db['server']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['server']." WHERE id = '".(int)($_GET['id'])."'",false,true);
         if($get['navi'])
-            db("UPDATE ".$db['server']." SET `navi` = '0' WHERE id = '".intval($_GET['id'])."'");
+            db("UPDATE ".$db['server']." SET `navi` = '0' WHERE id = '".(int)($_GET['id'])."'");
         else {
             if($get['status'] != "nope")
-                db("UPDATE ".$db['server']." SET `navi` = '1' WHERE id = '".intval($_GET['id'])."'");
+                db("UPDATE ".$db['server']." SET `navi` = '1' WHERE id = '".(int)($_GET['id'])."'");
             else {
                 $show = error(_server_isnt_live,1);
 
@@ -54,7 +54,7 @@ switch ($do)
         $show = header("Location: ?admin=server");
     break;
     case 'edit':
-        $get = db("SELECT * FROM ".$db['server']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['server']." WHERE id = '".(int)($_GET['id'])."'",false,true);
         $files = get_files('../inc/images/gameicons/',false,true,$picformat); $game = '';
         foreach($files as $file) {
             if($file == 'unknown.gif') continue;
@@ -100,13 +100,13 @@ switch ($do)
                                              ".$game."
                                              ".$status."
                                              `pwd` = '".up($_POST['pwd'])."'
-                                         WHERE id = '".intval($_GET['id'])."'");
+                                         WHERE id = '".(int)($_GET['id'])."'");
 
             $show = info(_server_admin_edited, "?admin=server");
         }
     break;
     case 'delete':
-        db("DELETE FROM ".$db['server']." WHERE id = '".intval($_GET['id'])."'");
+        db("DELETE FROM ".$db['server']." WHERE id = '".(int)($_GET['id'])."'");
         $show = info(_server_admin_deleted, "?admin=server");
     break;
     case 'new':

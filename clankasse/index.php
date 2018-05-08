@@ -180,7 +180,7 @@ switch ($action):
                     $index = info(_clankasse_saved, "../clankasse/");
                 }
             } elseif ($do == "delete" && isset($_GET['id'])) {
-                db("DELETE FROM ".$db['clankasse']." WHERE id = ".intval($_GET['id']));
+                db("DELETE FROM ".$db['clankasse']." WHERE id = ".(int)($_GET['id']));
                 $index = info(_clankasse_deleted, "../clankasse/");
             } elseif ($do == "update" && isset($_GET['id'])) {
                 if(!$_POST['datum'])
@@ -196,12 +196,12 @@ switch ($action):
                             `transaktion`  = '".up($_POST['transaktion'])."',
                             `pm`           = '".((int)$_POST['pm'])."',
                             `betrag`       = '".up($_POST['betrag'])."'
-                        WHERE id = ".intval($_POST['id']));
+                        WHERE id = ".(int)($_POST['id']));
 
                     $index = info(_clankasse_edited, "../clankasse/");
                 }
             } elseif ($do == "edit") {
-                $get = db("SELECT * FROM ".$db['clankasse']." WHERE id = '".intval($_GET['id'])."'",false,true);
+                $get = db("SELECT * FROM ".$db['clankasse']." WHERE id = '".(int)($_GET['id'])."'",false,true);
                 $dropdown_date = show(_dropdown_date, array("day" => dropdown("day",date("d",$get['datum'])),
                                                             "month" => dropdown("month",date("m",$get['datum'])),
                                                             "year" => dropdown("year",date("Y",$get['datum']))));
@@ -254,12 +254,12 @@ switch ($action):
                             `transaktion`  = '".up($_POST['transaktion'])."',
                             `pm`           = '".((int)$_POST['pm'])."',
                             `betrag`       = '".up($betrag)."'
-                        WHERE id = '".intval($_GET['id'])."'");
+                        WHERE id = '".(int)($_GET['id'])."'");
 
                     $index = info(_clankasse_edited, "../clankasse/");
                 }
             } elseif($do == "paycheck") {
-                $qry = db("SELECT payed FROM ".$db['c_payed']." WHERE user = '".intval($_GET['id'])."'");
+                $qry = db("SELECT payed FROM ".$db['c_payed']." WHERE user = '".(int)($_GET['id'])."'");
                 if(_rows($qry))
                 {
                     $get = _fetch($qry);
@@ -282,13 +282,13 @@ switch ($action):
                                                       "m" => $monat,
                                                       "j" => $jahr));
             } elseif($do == "editpaycheck") {
-                $qry = db("SELECT payed FROM ".$db['c_payed']." WHERE user = '".intval($_GET['id'])."'");
+                $qry = db("SELECT payed FROM ".$db['c_payed']." WHERE user = '".(int)($_GET['id'])."'");
                 $datum = mktime(0,0,0,$_POST['m'],$_POST['t'],$_POST['j']);
                 if(_rows($qry))
                 {
                     db("UPDATE ".$db['c_payed']."
                         SET `payed` = '".((int)$datum)."'
-                        WHERE user = '".intval($_GET['id'])."'");
+                        WHERE user = '".(int)($_GET['id'])."'");
                 } else {
                     db("INSERT INTO ".$db['c_payed']."
                         SET `user`  = '".((int)$_GET['id'])."',

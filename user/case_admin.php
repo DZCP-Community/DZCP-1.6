@@ -15,7 +15,7 @@ if(defined('_UserMenu')) {
                 $check = db("SELECT id FROM ".$db['userpos']."
                              WHERE posi = '".$getpos['id']."'
                              AND squad = '".$getsq['id']."'
-                             AND user = '".intval($_GET['edit'])."'",true);
+                             AND user = '".(int)($_GET['edit'])."'",true);
 
                 $sel = $check ? 'selected="selected"' : '';
                 $posi .= show(_select_field_posis, array("value" => $getpos['id'],
@@ -24,7 +24,7 @@ if(defined('_UserMenu')) {
             }
 
             $checkquser = db("SELECT id FROM ".$db['squaduser']."
-                             WHERE user = '".intval($_GET['edit'])."'
+                             WHERE user = '".(int)($_GET['edit'])."'
                              AND squad = '".$getsq['id']."'",true);
 
             $check = $checkquser ? 'checked="checked"' : '';
@@ -44,12 +44,12 @@ if(defined('_UserMenu')) {
                                                 "squad" => _member_admin_squad,
                                                 "posi" => _profil_position));
     }
-    elseif(isset($_GET['edit']) && data("level",intval($_GET['edit'])) == 4 && !rootAdmin($userid))
+    elseif(isset($_GET['edit']) && data("level",(int)($_GET['edit'])) == 4 && !rootAdmin($userid))
         $index = error(_error_edit_admin, 1);
     else {
         if($do == "identy")
         {
-            if(data("level",intval($_GET['id'])) == 4 && !rootAdmin($userid))
+            if(data("level",(int)($_GET['id'])) == 4 && !rootAdmin($userid))
                 $index = error(_identy_admin, 1);
             else {
                 $msg = show(_admin_user_get_identy, array("nick" => autor($_GET['id'])));
@@ -57,40 +57,40 @@ if(defined('_UserMenu')) {
                 session_regenerate_id();
 
                 $_SESSION['id'] = $_GET['id'];
-                $_SESSION['pwd'] = data("pwd",intval($_GET['id']));
+                $_SESSION['pwd'] = data("pwd",(int)($_GET['id']));
                 $_SESSION['ip'] = $userip;
 
-                db("UPDATE ".$db['users']." SET `online` = '1', `sessid` = '".session_id()."', `ip` = '".$userip."' WHERE id = ".intval($_GET['id']));
-                setIpcheck("ident(".$userid."_".intval($_GET['id']).")");
+                db("UPDATE ".$db['users']." SET `online` = '1', `sessid` = '".session_id()."', `ip` = '".$userip."' WHERE id = ".(int)($_GET['id']));
+                setIpcheck("ident(".$userid."_".(int)($_GET['id']).")");
 
                 $index = info($msg, "?action=user&amp;id=".$_GET['id']."");
             }
         } else if($do == "update") {
             if($_POST && isset($_GET['user'])) {
                 // permissions
-                db("DELETE FROM ".$db['permissions']." WHERE `user` = '".intval($_GET['user'])."'");
+                db("DELETE FROM ".$db['permissions']." WHERE `user` = '".(int)($_GET['user'])."'");
                 if(!empty($_POST['perm'])) {
                     $p = '';
                     foreach($_POST['perm'] AS $v => $k) {
-                        $p .= "`".substr($v, 2)."` = '".intval($k)."',";
+                        $p .= "`".substr($v, 2)."` = '".(int)($k)."',";
                     }
 
                     if(!empty($p))
                         $p = ', '.substr($p, 0, strlen($p) - 1);
 
-                    db("INSERT INTO ".$db['permissions']." SET `user` = '".intval($_GET['user'])."'".$p);
+                    db("INSERT INTO ".$db['permissions']." SET `user` = '".(int)($_GET['user'])."'".$p);
                 }
 
                 // internal boardpermissions
-                db("DELETE FROM ".$db['f_access']." WHERE `user` = '".intval($_GET['user'])."'");
+                db("DELETE FROM ".$db['f_access']." WHERE `user` = '".(int)($_GET['user'])."'");
                 if(!empty($_POST['board'])) {
                     foreach($_POST['board'] AS $v) {
-                        db("INSERT INTO ".$db['f_access']." SET `user` = '".intval($_GET['user'])."', `forum` = '".$v."'");
+                        db("INSERT INTO ".$db['f_access']." SET `user` = '".(int)($_GET['user'])."', `forum` = '".$v."'");
                     }
                 }
 
-                db("DELETE FROM ".$db['squaduser']." WHERE user = '".intval($_GET['user'])."'");
-                db("DELETE FROM ".$db['userpos']." WHERE user = '".intval($_GET['user'])."'");
+                db("DELETE FROM ".$db['squaduser']." WHERE user = '".(int)($_GET['user'])."'");
+                db("DELETE FROM ".$db['userpos']." WHERE user = '".(int)($_GET['user'])."'");
 
                 $sq = db("SELECT id FROM ".$db['squads']."");
                 while($getsq = _fetch($sq)) {
@@ -119,9 +119,9 @@ if(defined('_UserMenu')) {
                         `listck` = '".(isset($_POST['listck']) ? ((int)$_POST['listck']) : 0)."',
                         `level`  = '".((int)$update_level)."',
                         `banned`  = '".((int)$update_banned)."'
-                    WHERE id = '".intval($_GET['user'])."'");
+                    WHERE id = '".(int)($_GET['user'])."'");
 
-                setIpcheck("upduser(".$userid."_".intval($_GET['user']).")");
+                setIpcheck("upduser(".$userid."_".(int)($_GET['user']).")");
             }
 
             $index = info(_admin_user_edited, "?action=userlist");
@@ -149,34 +149,34 @@ if(defined('_UserMenu')) {
         }
         elseif($do == "delete")
         {
-            $index = show(_user_delete_verify, array("user" => autor(intval($_GET['id'])), "id" => $_GET['id']));
+            $index = show(_user_delete_verify, array("user" => autor((int)($_GET['id'])), "id" => $_GET['id']));
             if($_GET['verify'] == "yes")
             {
-                if(data("level",intval($_GET['id'])) == 4 || data("level",intval($_GET['id'])) == 3)
+                if(data("level",(int)($_GET['id'])) == 4 || data("level",(int)($_GET['id'])) == 3)
                     $index = error(_user_cant_delete_admin, 2);
                 else {
-                    setIpcheck("deluser(".$userid."_".intval($_GET['id']).")");
-                    db("UPDATE ".$db['f_posts']." SET `reg` = 0 WHERE reg = ".intval($_GET['id'])."");
-                    db("UPDATE ".$db['f_threads']." SET `t_reg` = 0 WHERE t_reg = ".intval($_GET['id'])."");
-                    db("UPDATE ".$db['gb']." SET `reg` = 0 WHERE reg = ".intval($_GET['id'])."");
-                    db("UPDATE ".$db['newscomments']." SET `reg` = 0 WHERE reg = ".intval($_GET['id'])."");
-                    db("DELETE FROM ".$db['msg']." WHERE von = '".intval($_GET['id'])."' OR an = '".intval($_GET['id'])."'");
-                    db("DELETE FROM ".$db['news']." WHERE autor = '".intval($_GET['id'])."'");
-                    db("DELETE FROM ".$db['permissions']." WHERE user = '".intval($_GET['id'])."'");
-                    db("DELETE FROM ".$db['squaduser']." WHERE user = '".intval($_GET['id'])."'");
-                    db("DELETE FROM ".$db['taktik']." WHERE autor = '".intval($_GET['id'])."'");
-                    db("DELETE FROM ".$db['buddys']." WHERE user = '".intval($_GET['id'])."' OR buddy = '".intval($_GET['id'])."'");
-                    db("UPDATE ".$db['usergb']." SET `reg` = 0 WHERE reg = ".intval($_GET['id'])."");
-                    db("DELETE FROM ".$db['userpos']." WHERE user = '".intval($_GET['id'])."'");
-                    db("DELETE FROM ".$db['users']." WHERE id = '".intval($_GET['id'])."'");
-                    db("DELETE FROM ".$db['userstats']." WHERE user = '".intval($_GET['id'])."'");
+                    setIpcheck("deluser(".$userid."_".(int)($_GET['id']).")");
+                    db("UPDATE ".$db['f_posts']." SET `reg` = 0 WHERE reg = ".(int)($_GET['id'])."");
+                    db("UPDATE ".$db['f_threads']." SET `t_reg` = 0 WHERE t_reg = ".(int)($_GET['id'])."");
+                    db("UPDATE ".$db['gb']." SET `reg` = 0 WHERE reg = ".(int)($_GET['id'])."");
+                    db("UPDATE ".$db['newscomments']." SET `reg` = 0 WHERE reg = ".(int)($_GET['id'])."");
+                    db("DELETE FROM ".$db['msg']." WHERE von = '".(int)($_GET['id'])."' OR an = '".(int)($_GET['id'])."'");
+                    db("DELETE FROM ".$db['news']." WHERE autor = '".(int)($_GET['id'])."'");
+                    db("DELETE FROM ".$db['permissions']." WHERE user = '".(int)($_GET['id'])."'");
+                    db("DELETE FROM ".$db['squaduser']." WHERE user = '".(int)($_GET['id'])."'");
+                    db("DELETE FROM ".$db['taktik']." WHERE autor = '".(int)($_GET['id'])."'");
+                    db("DELETE FROM ".$db['buddys']." WHERE user = '".(int)($_GET['id'])."' OR buddy = '".(int)($_GET['id'])."'");
+                    db("UPDATE ".$db['usergb']." SET `reg` = 0 WHERE reg = ".(int)($_GET['id'])."");
+                    db("DELETE FROM ".$db['userpos']." WHERE user = '".(int)($_GET['id'])."'");
+                    db("DELETE FROM ".$db['users']." WHERE id = '".(int)($_GET['id'])."'");
+                    db("DELETE FROM ".$db['userstats']." WHERE user = '".(int)($_GET['id'])."'");
                     $index = info(_user_deleted, "?action=userlist");;
                 }
             }
         }
         else
         {
-            $qry = db("SELECT id,user,nick,pwd,email,level,position,listck FROM ".$db['users']." WHERE id = '".intval($_GET['edit'])."'");
+            $qry = db("SELECT id,user,nick,pwd,email,level,position,listck FROM ".$db['users']." WHERE id = '".(int)($_GET['edit'])."'");
             if(_rows($qry))
             {
                 $where = _user_profile_of.'autor_'.$_GET['edit'];
@@ -195,7 +195,7 @@ if(defined('_UserMenu')) {
                         $check = db("SELECT id FROM ".$db['userpos']."
                                      WHERE posi = '".$getpos['id']."'
                                      AND squad = '".$getsq['id']."'
-                                     AND user = '".intval($_GET['edit'])."'",true);
+                                     AND user = '".(int)($_GET['edit'])."'",true);
 
                         $sel = $check ? 'selected="selected"' : '';
                         $posi .= show(_select_field_posis, array("value" => $getpos['id'],
@@ -203,7 +203,7 @@ if(defined('_UserMenu')) {
                                                                  "what" => re($getpos['position'])));
                     }
 
-                    $checksquser = db("SELECT squad FROM ".$db['squaduser']." WHERE user = '".intval($_GET['edit'])."' AND squad = '".$getsq['id']."'",true);
+                    $checksquser = db("SELECT squad FROM ".$db['squaduser']." WHERE user = '".(int)($_GET['edit'])."' AND squad = '".$getsq['id']."'",true);
 
                     $check = $checksquser ? 'checked="checked"' : '';
                     $esquads .= show(_checkfield_squads, array("id" => $getsq['id'],
@@ -237,7 +237,7 @@ if(defined('_UserMenu')) {
                 }
 
                 $index = show($dir."/admin", array("enick" => re($get['nick']),
-                                                   "user" => intval($_GET['edit']),
+                                                   "user" => (int)($_GET['edit']),
                                                    "value" => _button_value_edit,
                                                    "eemail" => re($get['email']),
                                                    "eloginname" => $get['user'],
@@ -245,8 +245,8 @@ if(defined('_UserMenu')) {
                                                    "editpwd" => $editpwd,
                                                    "eposi" => $posi,
                                                    "rechte" => _config_positions_rights,
-                                                   "getpermissions" => getPermissions(intval($_GET['edit'])),
-                                                   "getboardpermissions" => getBoardPermissions(intval($_GET['edit'])),
+                                                   "getpermissions" => getPermissions((int)($_GET['edit'])),
+                                                   "getboardpermissions" => getBoardPermissions((int)($_GET['edit'])),
                                                    "forenrechte" => _config_positions_boardrights,
                                                    "showpos" => getrank($_GET['edit']),
                                                    "nothing" => _nothing,

@@ -191,7 +191,7 @@ switch ($do) {
     break;
     case 'edit':
         $_SESSION['news_return'] = isset($_GET['return']) ? up($_GET['return'],false) : '';
-        $get = db("SELECT * FROM ".$db['news']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['news']." WHERE id = '".(int)($_GET['id'])."'",false,true);
         $qryk = db("SELECT id,kategorie FROM ".$db['newskat'].""); $kat = '';
         while($getk = _fetch($qryk)) {
             $sel = ($get['kat'] == $getk['id'] ? 'selected="selected"' : '');
@@ -233,8 +233,8 @@ switch ($do) {
 
         $newsimage = ""; $delnewspic = "";
         foreach($picformat as $tmpendung) {
-            if(file_exists(basePath."/inc/images/uploads/news/".intval($_GET['id']).".".$tmpendung)) {
-                $newsimage = img_size('inc/images/uploads/news/'.intval($_GET['id']).'.'.$tmpendung)."<br /><br />";
+            if(file_exists(basePath."/inc/images/uploads/news/".(int)($_GET['id']).".".$tmpendung)) {
+                $newsimage = img_size('inc/images/uploads/news/'.(int)($_GET['id']).'.'.$tmpendung)."<br /><br />";
                 $delnewspic = '<a href="?admin=newsadmin&do=delnewspic&id='.$_GET['id'].'">'._newspic_del.'</a><br /><br />';
                 break;
             }
@@ -309,31 +309,31 @@ switch ($do) {
                     ".$public."
                     ".$datum."
                     `sticky`     = '".((int)$stickytime)."'
-                WHERE id = '".intval($_GET['id'])."'");
+                WHERE id = '".(int)($_GET['id'])."'");
 
             if(isset($_FILES['newspic']['tmp_name']) && !empty($_FILES['newspic']['tmp_name'])) {
                 foreach($picformat as $tmpendung) {
-                    if(file_exists(basePath."/inc/images/uploads/news/".intval($_GET['id']).".".$tmpendung))
-                        @unlink(basePath."/inc/images/uploads/news/".intval($_GET['id']).".".$tmpendung);
+                    if(file_exists(basePath."/inc/images/uploads/news/".(int)($_GET['id']).".".$tmpendung))
+                        @unlink(basePath."/inc/images/uploads/news/".(int)($_GET['id']).".".$tmpendung);
                 }
 
                 //Remove minimize
                 $files = get_files(basePath."/inc/images/uploads/news/",false,true,$picformat);
                 foreach ($files as $file) {
-                    if(preg_match("#".intval($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
-                        $res = preg_match("#".intval($_GET['id'])."_(.*)#",$file,$match);
-                        if(file_exists(basePath."/inc/images/uploads/news/".intval($_GET['id'])."_".$match[1]))
-                            @unlink(basePath."/inc/images/uploads/news/".intval($_GET['id'])."_".$match[1]);
+                    if(preg_match("#".(int)($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
+                        $res = preg_match("#".(int)($_GET['id'])."_(.*)#",$file,$match);
+                        if(file_exists(basePath."/inc/images/uploads/news/".(int)($_GET['id'])."_".$match[1]))
+                            @unlink(basePath."/inc/images/uploads/news/".(int)($_GET['id'])."_".$match[1]);
                     }
                 }
 
                 $endung = explode(".", $_FILES['newspic']['name']);
                 $endung = strtolower($endung[count($endung)-1]);
-                move_uploaded_file($_FILES['newspic']['tmp_name'], basePath."/inc/images/uploads/news/".intval($_GET['id']).".".strtolower($endung));
+                move_uploaded_file($_FILES['newspic']['tmp_name'], basePath."/inc/images/uploads/news/".(int)($_GET['id']).".".strtolower($endung));
             }
 
             if(!empty($_SESSION['news_return'])) {
-                $show = info(_news_edited, "../".$_SESSION['news_return']."/?action=show&id=".intval($_GET['id']));
+                $show = info(_news_edited, "../".$_SESSION['news_return']."/?action=show&id=".(int)($_GET['id']));
             } else {
                 $show = info(_news_edited, "?admin=newsadmin");
             }
@@ -341,29 +341,29 @@ switch ($do) {
     break;
     case 'public':
         if(isset($_GET['what']) && $_GET['what'] == 'set')
-            db("UPDATE ".$db['news']." SET `public` = '1', `datum`  = '".time()."' WHERE id = '".intval($_GET['id'])."'");
+            db("UPDATE ".$db['news']." SET `public` = '1', `datum`  = '".time()."' WHERE id = '".(int)($_GET['id'])."'");
         else
-            db("UPDATE ".$db['news']." SET `public` = '0' WHERE id = '".intval($_GET['id'])."'");
+            db("UPDATE ".$db['news']." SET `public` = '0' WHERE id = '".(int)($_GET['id'])."'");
 
         header("Location: ?admin=newsadmin");
     break;
     case 'delete':
-        db("DELETE FROM ".$db['news']." WHERE id = '".intval($_GET['id'])."'");
-        db("DELETE FROM ".$db['newscomments']." WHERE news = '".intval($_GET['id'])."'");
+        db("DELETE FROM ".$db['news']." WHERE id = '".(int)($_GET['id'])."'");
+        db("DELETE FROM ".$db['newscomments']." WHERE news = '".(int)($_GET['id'])."'");
 
         //Remove Pic
         foreach($picformat as $tmpendung) {
-            if(file_exists(basePath."/inc/images/uploads/news/".intval($_GET['id']).".".$tmpendung))
-                @unlink(basePath."/inc/images/uploads/news/".intval($_GET['id']).".".$tmpendung);
+            if(file_exists(basePath."/inc/images/uploads/news/".(int)($_GET['id']).".".$tmpendung))
+                @unlink(basePath."/inc/images/uploads/news/".(int)($_GET['id']).".".$tmpendung);
         }
 
         //Remove minimize
         $files = get_files(basePath."/inc/images/uploads/news/",false,true,$picformat);
         foreach ($files as $file) {
-            if(preg_match("#".intval($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
-                $res = preg_match("#".intval($_GET['id'])."_(.*)#",$file,$match);
-                if(file_exists(basePath."/inc/images/uploads/news/".intval($_GET['id'])."_".$match[1]))
-                    @unlink(basePath."/inc/images/uploads/news/".intval($_GET['id'])."_".$match[1]);
+            if(preg_match("#".(int)($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
+                $res = preg_match("#".(int)($_GET['id'])."_(.*)#",$file,$match);
+                if(file_exists(basePath."/inc/images/uploads/news/".(int)($_GET['id'])."_".$match[1]))
+                    @unlink(basePath."/inc/images/uploads/news/".(int)($_GET['id'])."_".$match[1]);
             }
         }
 
@@ -379,21 +379,21 @@ switch ($do) {
     case 'delnewspic':
         //Remove Pic
         foreach($picformat as $tmpendung) {
-            if(file_exists(basePath."/inc/images/uploads/news/".intval($_GET['id']).".".$tmpendung))
-                @unlink(basePath."/inc/images/uploads/news/".intval($_GET['id']).".".$tmpendung);
+            if(file_exists(basePath."/inc/images/uploads/news/".(int)($_GET['id']).".".$tmpendung))
+                @unlink(basePath."/inc/images/uploads/news/".(int)($_GET['id']).".".$tmpendung);
         }
 
         //Remove minimize
         $files = get_files(basePath."/inc/images/uploads/news/",false,true,$picformat);
         foreach ($files as $file) {
-            if(preg_match("#".intval($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
-                $res = preg_match("#".intval($_GET['id'])."_(.*)#",$file,$match);
-                if(file_exists(basePath."/inc/images/uploads/news/".intval($_GET['id'])."_".$match[1]))
-                    @unlink(basePath."/inc/images/uploads/news/".intval($_GET['id'])."_".$match[1]);
+            if(preg_match("#".(int)($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
+                $res = preg_match("#".(int)($_GET['id'])."_(.*)#",$file,$match);
+                if(file_exists(basePath."/inc/images/uploads/news/".(int)($_GET['id'])."_".$match[1]))
+                    @unlink(basePath."/inc/images/uploads/news/".(int)($_GET['id'])."_".$match[1]);
             }
         }
 
-        $show = info(_newspic_deleted, "?admin=newsadmin&do=edit&id=".intval($_GET['id'])."");
+        $show = info(_newspic_deleted, "?admin=newsadmin&do=edit&id=".(int)($_GET['id'])."");
     break;
     default:
         $entrys = cnt($db['news']); $show_ = '';

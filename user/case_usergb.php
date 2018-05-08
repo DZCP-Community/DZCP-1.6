@@ -71,7 +71,7 @@ if(defined('_UserMenu')) {
                                                  `nachricht`  = '".up($_POST['eintrag'])."',
                                                  `ip`         = '".$userip."'");
 
-                    setIpcheck("mgbid(".intval($_GET['id']).")");
+                    setIpcheck("mgbid(".(int)($_GET['id']).")");
 
                     $index = info(_usergb_entry_successful, "?action=user&amp;id=".$_GET['id']."&show=gb");
                 }
@@ -94,7 +94,7 @@ if(defined('_UserMenu')) {
                                                  `nachricht`  = '".up($_POST['eintrag'])."',
                                                  `reg`        = '".((int)$_POST['reg'])."',
                                                  `editby`     = '".addslashes($editedby)."'
-                                         WHERE id = '".intval($_GET['gbid'])."'");
+                                         WHERE id = '".(int)($_GET['gbid'])."'");
 
                     $index = info(_gb_edited, "?action=user&show=gb&id=".$_GET['id']);
                 } else {

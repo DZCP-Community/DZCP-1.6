@@ -76,7 +76,7 @@ if(_adminMenu != 'true') exit;
 
               $qry = db("UPDATE ".$db['userstats']."
                          SET `writtenmsg` = writtenmsg+1
-                         WHERE user = ".intval($userid));
+                         WHERE user = ".(int)($userid));
 
               $show = info(_msg_reg_answer_done, "?admin=nletter");
 
@@ -93,7 +93,7 @@ if(_adminMenu != 'true') exit;
 
               $qry = db("UPDATE ".$db['userstats']."
                         SET `writtenmsg` = writtenmsg+1
-                        WHERE user = ".intval($userid));
+                        WHERE user = ".(int)($userid));
 
               $show = info(_msg_member_answer_done, "?admin=nletter");
         } else {
@@ -111,7 +111,7 @@ if(_adminMenu != 'true') exit;
 
               $qry = db("UPDATE ".$db['userstats']."
                           SET `writtenmsg` = writtenmsg+1
-                          WHERE user = ".intval($userid));
+                          WHERE user = ".(int)($userid));
 
               $show = info(_msg_squad_answer_done, "?admin=nletter");
         }

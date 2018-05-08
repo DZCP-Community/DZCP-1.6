@@ -4,7 +4,7 @@
  *
  * @package MCManager.utils
  * @author Moxiecode
- * @copyright Copyright © 2007, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2007, Moxiecode Systems AB, All rights reserved.
  */
 
 define('JSON_BOOL', 1);
@@ -268,7 +268,7 @@ class Moxiecode_JSONReader {
 	}
 
 	function _int2utf8($int) {
-		$int = intval($int);
+		$int = (int)($int);
 
 		switch ($int) {
 			case 0:
@@ -311,7 +311,7 @@ class Moxiecode_JSONReader {
 			$this->_token = JSON_FLOAT;
 			$this->_value = floatval($value);
 		} else
-			$this->_value = intval($value);
+			$this->_value = (int)($value);
 
 		if ($this->_location == JSON_IN_OBJECT && !$this->_needProp)
 			$this->_needProp = true;

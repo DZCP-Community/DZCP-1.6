@@ -172,7 +172,7 @@ switch ($action):
             $index = error(_error_wrong_permissions, 1);
         } else {
             $qry = db("SELECT * FROM ".$db['away']."
-               WHERE id = '".intval($_GET['id'])."'");
+               WHERE id = '".(int)($_GET['id'])."'");
             $get = _fetch($qry);
 
             if($get['start'] > time()) $status = _away_status_new;
@@ -204,7 +204,7 @@ switch ($action):
         {
             $index = error(_error_wrong_permissions, 1);
         } else {
-            $qry = db("DELETE FROM ".$db['away']." WHERE id = '".intval($_GET['id'])."'");
+            $qry = db("DELETE FROM ".$db['away']." WHERE id = '".(int)($_GET['id'])."'");
 
             $index = info(_away_successful_del, "../away/");
         }
@@ -214,7 +214,7 @@ switch ($action):
         {
             $index = error(_error_wrong_permissions, 1);
         } else {
-            $qry = db("SELECT * FROM ".$db['away']." WHERE id = '".intval($_GET['id'])."'");
+            $qry = db("SELECT * FROM ".$db['away']." WHERE id = '".(int)($_GET['id'])."'");
             $get = _fetch($qry);
 
             $date1 = show(_dropdown_date, array("day" => dropdown("day",date("d",$get['start'])),
@@ -281,7 +281,7 @@ switch ($action):
                         `titel`= '".up($_POST['titel'])."',
                         `reason`= '".up($_POST['reason'])."',
                         `lastedit`= '".addslashes($editedby)."'
-                        WHERE id = '".intval($_GET['id'])."'");
+                        WHERE id = '".(int)($_GET['id'])."'");
 
                     $index = info(_away_successful_edit, "../away/");
                 }

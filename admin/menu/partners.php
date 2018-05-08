@@ -34,13 +34,13 @@ if(_adminMenu != 'true') exit;
           $qry = db("INSERT INTO ".$db['partners']."
                      SET `link`     = '".links($_POST['link'])."',
                          `banner`   = '".up(empty($_POST['textlink']) ? $_POST['banner'] : $_POST['textlink'])."',
-                         `textlink` = '".intval(empty($_POST['textlink']) ? 0 : 1)."'");
+                         `textlink` = '".(int)(empty($_POST['textlink']) ? 0 : 1)."'");
 
           $show = info(_partners_added, "?admin=partners");
         }
       } elseif($do == "edit") {
         $qry = db("SELECT * FROM ".$db['partners']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $files = get_files('../banner/partners/',false,true);
@@ -71,14 +71,14 @@ if(_adminMenu != 'true') exit;
           $qry = db("UPDATE ".$db['partners']."
                      SET `link`     = '".links($_POST['link'])."',
                          `banner`   = '".up(empty($_POST['textlink']) ? $_POST['banner'] : $_POST['textlink'])."',
-                         `textlink` = '".intval(empty($_POST['textlink']) ? 0 : 1)."'
-                     WHERE id = '".intval($_GET['id'])."'");
+                         `textlink` = '".(int)(empty($_POST['textlink']) ? 0 : 1)."'
+                     WHERE id = '".(int)($_GET['id'])."'");
 
           $show = info(_partners_edited, "?admin=partners");
         }
       } elseif($do == "delete") {
         $del = db("DELETE FROM ".$db['partners']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_partners_deleted,"?admin=partners");
       } else {

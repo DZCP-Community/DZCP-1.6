@@ -11,12 +11,12 @@ if(defined('_Forum')) {
     {
       $f_abo = db("INSERT INTO ".$db['f_abo']."
                     SET `user` = '".((int)$userid)."',
-                        `fid`  = '".intval($_GET['id'])."',
+                        `fid`  = '".(int)($_GET['id'])."',
                         `datum`  = '".time()."'");
     } else {
       $f_abo = db("DELETE FROM ".$db['f_abo']."
                    WHERE user = '".((int)$userid)."'
-                   AND fid = '".intval($_GET['id'])."'");
+                   AND fid = '".(int)($_GET['id'])."'");
     }
     $index = info(_forum_fabo_do, "?action=showthread&amp;id=".$_GET['id']."");
   }

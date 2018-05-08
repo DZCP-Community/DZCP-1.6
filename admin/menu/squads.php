@@ -88,7 +88,7 @@ switch ($do) {
             if($_POST['position'] == 1 || $_POST['position'] == 2) $sign = ">= ";
             else $sign = "> ";
 
-            db("UPDATE ".$db['squads']." SET `pos` = pos+1 WHERE pos ".$sign." '".intval($_POST['position'])."'");
+            db("UPDATE ".$db['squads']." SET `pos` = pos+1 WHERE pos ".$sign." '".(int)($_POST['position'])."'");
             db("INSERT INTO ".$db['squads']."
                 SET `name`         = '".up($_POST['squad'])."',
                     `game`         = '".up($_POST['game'])."',
@@ -111,7 +111,7 @@ switch ($do) {
                 $kat = preg_replace('/-(\d+)/','',$_POST['navi']);
                 $pos = preg_replace("=nav_(.*?)-=","",$_POST['navi']);
 
-                db("UPDATE ".$db['navi']." SET `pos` = pos+1 WHERE pos ".$signnav." '".intval($pos)."'");
+                db("UPDATE ".$db['navi']." SET `pos` = pos+1 WHERE pos ".$signnav." '".(int)($pos)."'");
                 db("INSERT INTO ".$db['navi']."
                     SET `pos`   = '".((int)$pos)."',
                         `kat`       = '".up($kat)."',
@@ -157,12 +157,12 @@ switch ($do) {
         $show = error(_admin_squad_no_game, 1);
         else {
             $get = db("SELECT pos FROM ".$db['squads']."
-                    WHERE id = '".intval($_GET['id'])."'",false,true);
+                    WHERE id = '".(int)($_GET['id'])."'",false,true);
 
             if($_POST['position'] != $get['pos']) {
                 if($_POST['position'] == 1 || $_POST['position'] == 2) $sign = ">= ";
                 else $sign = "> ";
-                db("UPDATE ".$db['squads']." SET `pos` = pos+1 WHERE pos ".$sign." '".intval($_POST['position'])."'");
+                db("UPDATE ".$db['squads']." SET `pos` = pos+1 WHERE pos ".$sign." '".(int)($_POST['position'])."'");
             }
 
             if($_POST['position'] == "lazy") $newpos = "";
@@ -183,10 +183,10 @@ switch ($do) {
                     `team_joinus`  = '".((int)$_POST['team_joinus'])."',
                     `team_fightus` = '".((int)$_POST['team_fightus'])."',
                     `status`       = '".(isset($_POST['status']) ? ((int)$_POST['status']) : 0)."'
-                WHERE id = '".intval($_GET['id'])."'");
+                WHERE id = '".(int)($_GET['id'])."'");
 
             if(isset($_POST['navi']) && $_POST['navi'] != "lazy") {
-                $qry = db("SELECT * FROM ".$db['navi']." WHERE url = '../squads/?action=shows&amp;id=".intval($_GET['id'])."'");
+                $qry = db("SELECT * FROM ".$db['navi']." WHERE url = '../squads/?action=shows&amp;id=".(int)($_GET['id'])."'");
                 if(_rows($qry)) {
                     $get = _fetch($qry);
                     if($_POST['navi'] == "1" || "2") $sign = ">= ";
@@ -195,12 +195,12 @@ switch ($do) {
                     $kat = preg_replace('/-(\d+)/','',$_POST['navi']);
                     $pos = preg_replace("=nav_(.+)-=","",$_POST['navi']);
 
-                    db("UPDATE ".$db['navi']." SET pos = pos+1 WHERE pos ".$sign." '".intval($pos)."'");
+                    db("UPDATE ".$db['navi']." SET pos = pos+1 WHERE pos ".$sign." '".(int)($pos)."'");
                     db("UPDATE ".$db['navi']." SET `pos` = '".((int)$pos)."',
                                                    `kat`       = '".up($kat)."',
                                                    `name`      = '".up($_POST['squad'])."',
-                                                   `url`       = '../squads/?action=shows&amp;id=".intval($_GET['id'])."'
-                                               WHERE id = '".intval($get['id'])."'");
+                                                   `url`       = '../squads/?action=shows&amp;id=".(int)($_GET['id'])."'
+                                               WHERE id = '".(int)($get['id'])."'");
                 } else {
                     if($_POST['navi'] == "1" || "2") $signnav = ">= ";
                     else $signnav = "> ";
@@ -208,21 +208,21 @@ switch ($do) {
                     $kat = preg_replace('/-(\d+)/','',$_POST['navi']);
                     $pos = preg_replace("=nav_(.*?)-=","",$_POST['navi']);
 
-                    db("UPDATE ".$db['navi']." SET `pos` = pos+1 WHERE pos ".$signnav." '".intval($pos)."'");
+                    db("UPDATE ".$db['navi']." SET `pos` = pos+1 WHERE pos ".$signnav." '".(int)($pos)."'");
 
                     db("INSERT INTO ".$db['navi']."
                         SET `pos`       = '".((int)$pos)."',
                             `kat`       = '".up($kat)."',
                             `name`      = '".up($_POST['squad'])."',
-                            `url`       = '../squads/?action=shows&amp;id=".intval($_GET['id'])."',
+                            `url`       = '../squads/?action=shows&amp;id=".(int)($_GET['id'])."',
                             `shown`     = '1',
                             `type`      = '2'");
                 }
             } else {
-                $qry = db("SELECT * FROM ".$db['navi']." WHERE url = '../squads/?action=shows&amp;id=".intval($_GET['id'])."'");
+                $qry = db("SELECT * FROM ".$db['navi']." WHERE url = '../squads/?action=shows&amp;id=".(int)($_GET['id'])."'");
 
                 if(_rows($qry))
-                    db("DELETE FROM ".$db['navi']." WHERE url = '../squads/?action=shows&amp;id=".intval($_GET['id'])."'");
+                    db("DELETE FROM ".$db['navi']." WHERE url = '../squads/?action=shows&amp;id=".(int)($_GET['id'])."'");
             }
 
             //Banner
@@ -234,14 +234,14 @@ switch ($do) {
             if(!empty($tmp)) {
                 $img = getimagesize($tmp);
                 foreach($picformat AS $end1) {
-                    if(file_exists(basePath.'/inc/images/squads/'.intval($_GET['id']).'.'.$end1)) {
-                        @unlink(basePath.'/inc/images/squads/'.intval($_GET['id']).'.'.$end1);
+                    if(file_exists(basePath.'/inc/images/squads/'.(int)($_GET['id']).'.'.$end1)) {
+                        @unlink(basePath.'/inc/images/squads/'.(int)($_GET['id']).'.'.$end1);
                         break;
                     }
                 }
 
                 if($type == "image/gif" || $type == "image/png" || $type == "image/jpeg" || !$img[0])
-                    move_uploaded_file($tmp, basePath."/inc/images/squads/".intval($_GET['id']).".".strtolower($end));
+                    move_uploaded_file($tmp, basePath."/inc/images/squads/".(int)($_GET['id']).".".strtolower($end));
             }
 
             //Logo
@@ -253,14 +253,14 @@ switch ($do) {
             if(!empty($tmp)) {
                 $img = getimagesize($tmp);
                 foreach($picformat AS $end1) {
-                    if(file_exists(basePath.'/inc/images/squads/'.intval($_GET['id']).'_logo.'.$end1)) {
-                        @unlink(basePath.'/inc/images/squads/'.intval($_GET['id']).'_logo.'.$end1);
+                    if(file_exists(basePath.'/inc/images/squads/'.(int)($_GET['id']).'_logo.'.$end1)) {
+                        @unlink(basePath.'/inc/images/squads/'.(int)($_GET['id']).'_logo.'.$end1);
                         break;
                     }
                 }
 
                 if($type == "image/gif" || $type == "image/png" || $type == "image/jpeg" || !$img[0])
-                    move_uploaded_file($tmp, basePath."/inc/images/squads/".intval($_GET['id'])."_logo.".strtolower($end));
+                    move_uploaded_file($tmp, basePath."/inc/images/squads/".(int)($_GET['id'])."_logo.".strtolower($end));
             }
 
             $show = info(_admin_squad_edit_successful, "?admin=squads");
@@ -268,36 +268,36 @@ switch ($do) {
     break;
 
     case 'delete':
-        db("DELETE FROM ".$db['squads']." WHERE id = '".intval($_GET['id'])."'");
-        db("DELETE FROM ".$db['navi']." WHERE url = '../squads/?action=shows&amp;id=".intval($_GET['id'])."'");
+        db("DELETE FROM ".$db['squads']." WHERE id = '".(int)($_GET['id'])."'");
+        db("DELETE FROM ".$db['navi']." WHERE url = '../squads/?action=shows&amp;id=".(int)($_GET['id'])."'");
 
         //Remove Pic
         foreach($picformat as $tmpendung) {
-            if(file_exists(basePath."/inc/images/squads/".intval($_GET['id']).".".$tmpendung))
-                @unlink(basePath."/inc/images/squads/".intval($_GET['id']).".".$tmpendung);
+            if(file_exists(basePath."/inc/images/squads/".(int)($_GET['id']).".".$tmpendung))
+                @unlink(basePath."/inc/images/squads/".(int)($_GET['id']).".".$tmpendung);
         }
 
         foreach($picformat as $tmpendung) {
-            if(file_exists(basePath."/inc/images/squads/".intval($_GET['id'])."_logo.".$tmpendung))
-                @unlink(basePath."/inc/images/squads/".intval($_GET['id'])."_logo.".$tmpendung);
+            if(file_exists(basePath."/inc/images/squads/".(int)($_GET['id'])."_logo.".$tmpendung))
+                @unlink(basePath."/inc/images/squads/".(int)($_GET['id'])."_logo.".$tmpendung);
         }
 
         //Remove minimize
         $files = get_files(basePath."/inc/images/squads/",false,true,$picformat);
         foreach ($files as $file) {
-            if(preg_match("#".intval($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
-                $res = preg_match("#".intval($_GET['id'])."_(.*)#",$file,$match);
-                if(file_exists(basePath."/inc/images/squads/".intval($_GET['id'])."_".$match[1]))
-                    @unlink(basePath."/inc/images/squads/".intval($_GET['id'])."_".$match[1]);
+            if(preg_match("#".(int)($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
+                $res = preg_match("#".(int)($_GET['id'])."_(.*)#",$file,$match);
+                if(file_exists(basePath."/inc/images/squads/".(int)($_GET['id'])."_".$match[1]))
+                    @unlink(basePath."/inc/images/squads/".(int)($_GET['id'])."_".$match[1]);
             }
         }
 
         $files = get_files(basePath."/inc/images/squads/",false,true,$picformat);
         foreach ($files as $file) {
-            if(preg_match("#".intval($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
-                $res = preg_match("#".intval($_GET['id'])."_logo_(.*)#",$file,$match);
-                if(file_exists(basePath."/inc/images/squads/".intval($_GET['id'])."_logo_".$match[1]))
-                    @unlink(basePath."/inc/images/squads/".intval($_GET['id'])."_logo_".$match[1]);
+            if(preg_match("#".(int)($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
+                $res = preg_match("#".(int)($_GET['id'])."_logo_(.*)#",$file,$match);
+                if(file_exists(basePath."/inc/images/squads/".(int)($_GET['id'])."_logo_".$match[1]))
+                    @unlink(basePath."/inc/images/squads/".(int)($_GET['id'])."_logo_".$match[1]);
             }
         }
 
@@ -305,14 +305,14 @@ switch ($do) {
     break;
 
     case 'edit':
-        $get = db("SELECT * FROM ".$db['squads']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['squads']." WHERE id = '".(int)($_GET['id'])."'",false,true);
         $pos = db("SELECT pos,name FROM ".$db['squads']." ORDER BY pos"); $positions = '';
         while($getpos = _fetch($pos))
         {
             if($getpos['name'] != $get['name']) {
                 $mp = db("SELECT pos FROM ".$db['squads']."
-                          WHERE id != '".intval($get['id'])."'
-                          AND pos = '".intval(($get['pos']-1))."'",false,true);
+                          WHERE id != '".(int)($get['id'])."'
+                          AND pos = '".(int)(($get['pos']-1))."'",false,true);
 
                 $sel = $getpos['pos'] == $mp['pos'] ? 'selected="selected"' : '' ;
                 $positions .= show(_select_field, array("value" => $getpos['pos']+1,
@@ -331,7 +331,7 @@ switch ($do) {
             }
 
             $thiskat = $getnav['kat'];
-            $sel[$i] = ($getnav['url'] == '../squads/?action=shows&amp;id='.intval($_GET['id'])) ? 'selected="selected"' : '';
+            $sel[$i] = ($getnav['url'] == '../squads/?action=shows&amp;id='.(int)($_GET['id'])) ? 'selected="selected"' : '';
             $navigation .= empty($getnav['name']) ? '' : '<option value="'.re($getnav['placeholder']).'-'.($getnav['pos']+1).'" '.$sel[$i].'>'._nach.' -> '.navi_name(re($getnav['name'])).'</option>';
             $i++;
         }
@@ -355,25 +355,25 @@ switch ($do) {
         $image = ''; $logoimage = '';
         foreach($picformat AS $end)
         {
-            if(file_exists(basePath.'/inc/images/squads/'.intval($_GET['id']).'.'.$end))
+            if(file_exists(basePath.'/inc/images/squads/'.(int)($_GET['id']).'.'.$end))
             {
-                $image = '<img src="../inc/images/squads/'.intval($_GET['id']).'.'.$end.'" width="200" alt="" onmouseover="DZCP.showInfo(\'<tr><td><img src=../inc/images/squads/'.intval($_GET['id']).'.'.$end.' alt= /></tr></td>\')" onmouseout="DZCP.hideInfo()" /><br />';
+                $image = '<img src="../inc/images/squads/'.(int)($_GET['id']).'.'.$end.'" width="200" alt="" onmouseover="DZCP.showInfo(\'<tr><td><img src=../inc/images/squads/'.(int)($_GET['id']).'.'.$end.' alt= /></tr></td>\')" onmouseout="DZCP.hideInfo()" /><br />';
                 break;
             }
         }
 
         foreach($picformat AS $end)
         {
-            if(file_exists(basePath.'/inc/images/squads/'.intval($_GET['id']).'_logo.'.$end))
+            if(file_exists(basePath.'/inc/images/squads/'.(int)($_GET['id']).'_logo.'.$end))
             {
-                $logoimage = '<img src="../inc/images/squads/'.intval($_GET['id']).'_logo.'.$end.'" height="60" alt="" onmouseover="DZCP.showInfo(\'<tr><td><img src=../inc/images/squads/'.intval($_GET['id']).'_logo.'.$end.' alt= /></tr></td>\')" onmouseout="DZCP.hideInfo()" /><br />';
+                $logoimage = '<img src="../inc/images/squads/'.(int)($_GET['id']).'_logo.'.$end.'" height="60" alt="" onmouseover="DZCP.showInfo(\'<tr><td><img src=../inc/images/squads/'.(int)($_GET['id']).'_logo.'.$end.' alt= /></tr></td>\')" onmouseout="DZCP.hideInfo()" /><br />';
                 break;
             }
         }
 
         $show = show($dir."/squads_edit", array("memberadminaddheader" => _member_admin_edit_header,
                                                 "squad" => _member_admin_squad,
-                                                "id" => intval($_GET['id']),
+                                                "id" => (int)($_GET['id']),
                                                 "pos" => _position,
                                                 "icon" => _member_admin_icon,
                                                 "gameicons" => $gameicons,
@@ -392,7 +392,7 @@ switch ($do) {
                                                 "first" => _admin_first,
                                                 "info" => _admin_squad_show_info,
                                                 "navi" => _admin_squads_nav,
-                                                "upload" => show(_member_admin_icon_upload_edit,array('id' => intval($_GET['id']))),
+                                                "upload" => show(_member_admin_icon_upload_edit,array('id' => (int)($_GET['id']))),
                                                 "sshown" => $sshown,
                                                 "nothing" => _nothing,
                                                 "selr" => $roster,

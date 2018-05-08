@@ -55,7 +55,7 @@ function show_dzcp_version() {
             if((int)(str_replace('.','',$json['build'])) > (int)(str_replace('.','',_build)))
                 $_build = '<span style="color:#FF0000">'._build.'</span> => <span style="color:#17D427">'.$json['build'].'</span>';
 
-            if(intval(str_replace('.','',$json['version'])) > intval(str_replace('.','',_version))) {
+            if((int)(str_replace('.','',$json['version'])) > (int)(str_replace('.','',_version))) {
                 $return['version'] = '<a href="https://www.dzcp.de/" target="_blank" title="external Link: www.dzcp.de"><b>'._akt_version.':</b> <span style="color:#FF0000">'._version.'</span> / Update Version: <span style="color:#17D427">'.$json['version'].'</span> / Release: <span style="color:#17D427">'.$json['release'].'</span> / Build: <span style="color:#17D427">'.$json['build'].'</span></a>';
                 $return['version_img'] = '<img src="../inc/images/admin/version_old.gif" align="absmiddle" width="111" height="14" />';
             } else {

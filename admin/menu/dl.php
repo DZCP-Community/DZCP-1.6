@@ -38,7 +38,7 @@ if(_adminMenu != 'true') exit;
       if($do == "edit")
       {
         $qry = db("SELECT * FROM ".$db['dl_kat']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $show = show($dir."/dlkats_form", array("newhead" => _dl_edit_head,
@@ -53,13 +53,13 @@ if(_adminMenu != 'true') exit;
         } else {
           $qry = db("UPDATE ".$db['dl_kat']."
                      SET `name` = '".up($_POST['kat'])."'
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
 
           $show = info(_dl_admin_edited, "?admin=dl");
         }
       } elseif($do == "delete") {
         $qry = db("DELETE FROM ".$db['dl_kat']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_dl_admin_deleted, "?admin=dl");
 

@@ -47,16 +47,16 @@ if(_adminMenu != 'true') exit;
         }
 
         $qry = db("SELECT * FROM ".$db['pos']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $show = show($dir."/form_pos", array("newhead" => _pos_edit_head,
-                                             "do" => "editpos&amp;id=".intval($_GET['id'])."",
+                                             "do" => "editpos&amp;id=".(int)($_GET['id'])."",
                                              "kat" => $get['position'],
                                              "pos" => _position,
                                              "rechte" => _config_positions_rights,
-                                             "getpermissions" => getPermissions(intval($_GET['id']), 1),
-                                             "getboardpermissions" => getBoardPermissions(intval($_GET['id']), 1),
+                                             "getpermissions" => getPermissions((int)($_GET['id']), 1),
+                                             "getboardpermissions" => getBoardPermissions((int)($_GET['id']), 1),
                                              "forenrechte" => _config_positions_boardrights,
                                              "positions" => $positions,
                                              "nothing" => _nothing,
@@ -78,38 +78,38 @@ if(_adminMenu != 'true') exit;
 
             $posi = db("UPDATE ".$db['pos']."
                         SET `pid` = pid+1
-                        WHERE pid ".$sign." '".intval($_POST['pos'])."'");
+                        WHERE pid ".$sign." '".(int)($_POST['pos'])."'");
               }
 
           $qry = db("UPDATE ".$db['pos']."
                      SET `position` = '".up($_POST['kat'])."'
                          ".$pid."
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
     // permissions
-          db("DELETE FROM ".$db['permissions']." WHERE `pos` = '".intval($_GET['id'])."'");
+          db("DELETE FROM ".$db['permissions']." WHERE `pos` = '".(int)($_GET['id'])."'");
           if(!empty($_POST['perm']))
           {
-            foreach($_POST['perm'] AS $v => $k) $p .= "`".substr($v, 2)."` = '".intval($k)."',";
+            foreach($_POST['perm'] AS $v => $k) $p .= "`".substr($v, 2)."` = '".(int)($k)."',";
                                   if(!empty($p))$p = ', '.substr($p, 0, strlen($p) - 1);
 
-            db("INSERT INTO ".$db['permissions']." SET `pos` = '".intval($_GET['id'])."'".$p);
+            db("INSERT INTO ".$db['permissions']." SET `pos` = '".(int)($_GET['id'])."'".$p);
           }
     ////////////////////
 
     // internal boardpermissions
-          db("DELETE FROM ".$db['f_access']." WHERE `pos` = '".intval($_GET['id'])."'");
+          db("DELETE FROM ".$db['f_access']." WHERE `pos` = '".(int)($_GET['id'])."'");
           if(!empty($_POST['board']))
           {
             foreach($_POST['board'] AS $v)
-              db("INSERT INTO ".$db['f_access']." SET `pos` = '".intval($_GET['id'])."', `forum` = '".$v."'");
+              db("INSERT INTO ".$db['f_access']." SET `pos` = '".(int)($_GET['id'])."', `forum` = '".$v."'");
           }
     ////////////////////
 
           $show = info(_pos_admin_edited, "?admin=positions");
         }
       } elseif($do == "delete") {
-        db("DELETE FROM ".$db['pos']." WHERE id = '".intval($_GET['id'])."'");
-        db("DELETE FROM ".$db['permissions']." WHERE pos = '".intval($_GET['id'])."'");
+        db("DELETE FROM ".$db['pos']." WHERE id = '".(int)($_GET['id'])."'");
+        db("DELETE FROM ".$db['permissions']." WHERE pos = '".(int)($_GET['id'])."'");
 
         $show = info(_pos_admin_deleted, "?admin=positions");
 
@@ -144,14 +144,14 @@ if(_adminMenu != 'true') exit;
 
           $posi = db("UPDATE ".$db['pos']."
                       SET `pid` = pid+1
-                      WHERE pid ".$sign." '".intval($_POST['pos'])."'");
+                      WHERE pid ".$sign." '".(int)($_POST['pos'])."'");
 
           $qry = db("INSERT INTO ".$db['pos']."
                      SET `pid`        = '".((int)$_POST['pos'])."',
                          `position`  = '".up($_POST['kat'])."'");
           $posID = mysqli_insert_id($mysql);
     // permissions
-          foreach($_POST['perm'] AS $v => $k) $p .= "`".substr($v, 2)."` = '".intval($k)."',";
+          foreach($_POST['perm'] AS $v => $k) $p .= "`".substr($v, 2)."` = '".(int)($k)."',";
                                 if(!empty($p))$p = ', '.substr($p, 0, strlen($p) - 1);
 
           db("INSERT INTO ".$db['permissions']." SET `pos` = '".$posID."'".$p);

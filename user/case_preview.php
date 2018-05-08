@@ -9,7 +9,7 @@ if(defined('_UserMenu')) {
   if($do == 'edit')
   {
     $qry = db("SELECT * FROM ".$db['usergb']."
-               WHERE id = '".intval($_GET['gbid'])."'");
+               WHERE id = '".(int)($_GET['gbid'])."'");
     $get = _fetch($qry);
 
     $get_id = '?';
@@ -20,7 +20,7 @@ if(defined('_UserMenu')) {
     $editby = show(_edited_by, array("autor" => cleanautor($userid),
                                      "time" => date("d.m.Y H:i", time())._uhr));
   } else {
-    $get_id = cnt($db['usergb'], "WHERE user = ".intval($_GET['uid']))+1;
+    $get_id = cnt($db['usergb'], "WHERE user = ".(int)($_GET['uid']))+1;
     $get_userid = $userid;
     $get_date = time();
 

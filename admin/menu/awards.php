@@ -40,7 +40,7 @@ if(_adminMenu != 'true') exit;
                                                 "award_prize" => ""));
       } elseif($do == "edit") {
         $qry = db("SELECT * FROM ".$db['awards']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
           $qrym = db("SELECT * FROM ".$db['squads']."
@@ -131,12 +131,12 @@ if(_adminMenu != 'true') exit;
                        `url`    = '".links($_POST['url'])."',
                                  `place`  = '".up($place)."',
                                  `prize`  = '".up($prize)."'
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_awards_admin_edited, "?admin=awards");
       } elseif($do == "delete") {
         $qry = db("DELETE FROM ".$db['awards']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_awards_admin_deleted, "?admin=awards");
       } else {

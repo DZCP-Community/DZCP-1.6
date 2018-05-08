@@ -156,7 +156,7 @@ case 'do';
             $sqlAnd = '';
             while($get = _fetch($qry))
             {
-                $sqlAnd .= " AND s2.`user` != '".intval($get['id'])."'";
+                $sqlAnd .= " AND s2.`user` != '".(int)($get['id'])."'";
                 $qrys = db("INSERT INTO ".$db['msg']."
                             SET `datum`     = '".time()."',
                                 `von`       = '0',
@@ -219,7 +219,7 @@ case 'do';
       $sqlAnd = '';
       while($get = _fetch($qry))
       {
-        $sqlAnd .= " AND s2.`user` != '".intval($get['id'])."'";
+        $sqlAnd .= " AND s2.`user` != '".(int)($get['id'])."'";
 
         $qrys = db("INSERT INTO ".$db['msg']."
                     SET `datum`     = '".time()."',
@@ -268,7 +268,7 @@ case 'do';
       }
 
       $qrysq = db("SELECT name FROM ".$db['squads']."
-                   WHERE id = '".intval($_POST['squad'])."'");
+                   WHERE id = '".(int)($_POST['squad'])."'");
       $getsq = _fetch($qrysq);
 
       $msg = show(_contact_text_fightus, array("icq" => $icq,
@@ -286,7 +286,7 @@ case 'do';
                                                "map" => $_POST['maps'],
                                                "nick" => $_POST['nick']));
 
-      if($chkMe != 4) $add = " AND s2.squad = '".intval($_POST['squad'])."'";
+      if($chkMe != 4) $add = " AND s2.squad = '".(int)($_POST['squad'])."'";
       $who = db("SELECT s1.user FROM ".$db['permissions']." AS s1
                  LEFT JOIN ".$db['squaduser']." AS s2
                  ON s1.user = s2.user
@@ -295,7 +295,7 @@ case 'do';
       $sqlAnd = '';
       while($get = _fetch($who))
       {
-        $sqlAnd .= " AND s2.`user` != '".intval($get['user'])."'";
+        $sqlAnd .= " AND s2.`user` != '".(int)($get['user'])."'";
         $qry = db("INSERT INTO ".$db['msg']."
                    SET `datum`      = '".time()."',
                        `von`        = '0',

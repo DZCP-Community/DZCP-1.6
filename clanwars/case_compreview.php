@@ -9,7 +9,7 @@ if(defined('_Clanwars')) {
   if($do == 'edit')
   {
     $qry = db("SELECT * FROM ".$db['cw_comments']."
-               WHERE id = '".intval($_GET['cid'])."'");
+               WHERE id = '".(int)($_GET['cid'])."'");
     $get = _fetch($qry);
 
     $get_id = '?';
@@ -26,7 +26,7 @@ if(defined('_Clanwars')) {
                                        "time" => date("d.m.Y H:i", time())._uhr));
   } else {
 
-    $get_id = cnt($db['cw_comments'], " WHERE cw = ".intval($_GET['id'])."")+1;
+    $get_id = cnt($db['cw_comments'], " WHERE cw = ".(int)($_GET['id'])."")+1;
     $get_userid = $userid;
     $get_date = time();
 

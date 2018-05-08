@@ -448,7 +448,7 @@ switch ($action):
                     }
                 break;
                 case 'edit':
-                    $get = db("SELECT id,user,pic,beschreibung FROM ".$db['usergallery']." WHERE id = '".intval($_GET['gid'])."'",false,true);
+                    $get = db("SELECT id,user,pic,beschreibung FROM ".$db['usergallery']." WHERE id = '".(int)($_GET['gid'])."'",false,true);
                     if($get['user'] == $userid) {
                         $infos = show(_upload_usergallery_info, array("userpicsize" => config('upicsize')));
                         $index = show($dir."/usergallery_edit", array("uploadhead" => _upload_head_usergallery,
@@ -466,7 +466,7 @@ switch ($action):
                         $index = error(_error_wrong_permissions, 1);
                 break;
                 case 'editfile':
-                    $get = db("SELECT pic FROM ".$db['usergallery']." WHERE id = ".intval($_POST['id']),false,true);
+                    $get = db("SELECT pic FROM ".$db['usergallery']." WHERE id = ".(int)($_POST['id']),false,true);
                     if(!empty($_FILES['file']['size'])) {
                         if(file_exists(basePath."/inc/images/uploads/usergallery/".$userid."_".$get['pic']))
                             @unlink(basePath."/inc/images/uploads/usergallery/".$userid."_".$get['pic']);
@@ -499,7 +499,7 @@ switch ($action):
                                             db("UPDATE ".$db['usergallery']." SET "
                                                     . "`pic` = '".$_FILES['file']['name']."',"
                                                     . "`beschreibung` = '".up($_POST['beschreibung'])."' "
-                                                    . "WHERE id = '".intval($_POST['id'])."' AND `user` = '".((int)$userid)."'");
+                                                    . "WHERE id = '".(int)($_POST['id'])."' AND `user` = '".((int)$userid)."'");
                                             
                                             $index = info(_edit_gallery_done, "../user/?action=editprofile&show=gallery");
                                         }

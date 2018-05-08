@@ -28,7 +28,7 @@ switch ($action):
                 $files = get_files("images/",false,true,$picformat,false,array(),'minimize');
 
                 foreach($files AS $file) {
-                    if(intval($file) == $get['id'])
+                    if((int)($file) == $get['id'])
                         array_push($imgArr, $file);
                 }
 
@@ -56,7 +56,7 @@ switch ($action):
         $index = show($dir."/gallery",array("show" => $show, "head" => _gallery_head));
     break;
     case 'show';
-        $get = db("SELECT * FROM ".$db['gallery']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['gallery']." WHERE id = '".(int)($_GET['id'])."'",false,true);
         if(!permission('galleryintern') && $get['intern']) {
             $index = error(_error_no_access);
             break;
@@ -88,7 +88,7 @@ switch ($action):
                 $show .= show($dir."/show_gallery", array("img" => gallery_size($file),
                                                           "tr1" => $tr1,
                                                           "max" => config('gallery'),
-                                                          "width" => intval(round(100/config('gallery'))),
+                                                          "width" => (int)(round(100/config('gallery'))),
                                                           "del" => $del,
                                                           "tr2" => $tr2));
                 $t++; $cnt++;

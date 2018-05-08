@@ -219,7 +219,7 @@ case 'do';
   {
           if(permission('gb'))
         {
-            db("UPDATE ".$db['gb']." SET `public` = '1' WHERE id = '".intval($_GET['id'])."'");
+            db("UPDATE ".$db['gb']." SET `public` = '1' WHERE id = '".(int)($_GET['id'])."'");
             header("Location: ../gb/");
         }
         else
@@ -229,7 +229,7 @@ case 'do';
     {
         if(permission('gb'))
         {
-               db("UPDATE ".$db['gb']." SET `public` = '0' WHERE id = '".intval($_GET['id'])."'");
+               db("UPDATE ".$db['gb']." SET `public` = '0' WHERE id = '".(int)($_GET['id'])."'");
                header("Location: ../gb/");
         }
         else
@@ -237,12 +237,12 @@ case 'do';
     }
     elseif(isset($_GET['what']) && $_GET['what'] == "delete")
     {
-        $qry = db("SELECT * FROM ".$db['gb']." WHERE id = '".intval($_GET['id'])."'");
+        $qry = db("SELECT * FROM ".$db['gb']." WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
     if($get['reg'] == $userid && $chkMe >= 1 or permission('gb'))
     {
-      db("DELETE FROM ".$db['gb']." WHERE id = '".intval($_GET['id'])."'");
+      db("DELETE FROM ".$db['gb']." WHERE id = '".(int)($_GET['id'])."'");
       $index = info(_gb_delete_successful, "../gb/");
     }
     else
@@ -251,7 +251,7 @@ case 'do';
     }
     elseif(isset($_GET['what']) && $_GET['what'] == "edit")
     {
-    $qry = db("SELECT * FROM ".$db['gb']."  WHERE id = '".intval($_GET['id'])."'");
+    $qry = db("SELECT * FROM ".$db['gb']."  WHERE id = '".(int)($_GET['id'])."'");
     $get = _fetch($qry);
 
     if($get['reg'] == $userid && $chkMe >= 1 or permission('gb'))
@@ -308,7 +308,7 @@ case 'do';
                        `nachricht`  = '".up($_POST['eintrag'])."',
                        `reg`        = '".((int)$_POST['reg'])."',
                        `editby`     = '".addslashes($editedby)."'
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $index = info(_gb_edited, "../gb/");
       } else {
@@ -324,7 +324,7 @@ case 'admin';
     if($do == "addcomment")
     {
       $qry = db("SELECT * FROM ".$db['gb']."
-                 WHERE id = '".intval($_GET['id'])."'");
+                 WHERE id = '".(int)($_GET['id'])."'");
       $get = _fetch($qry);
 
       if($get['hp']) $gbhp = show(_hpicon, array("hp" => $get['hp']));
@@ -376,7 +376,7 @@ case 'admin';
                                                  "head_gb" => _gb_addcomment_headgb));
     } elseif($do == "postcomment") {
       $qry = db("SELECT * FROM ".$db['gb']."
-                 WHERE id = '".intval($_GET['id'])."'");
+                 WHERE id = '".(int)($_GET['id'])."'");
       $get = _fetch($qry);
 
       $comment = show($dir."/commentlayout", array("nick" => autor($userid),
@@ -386,7 +386,7 @@ case 'admin';
 
       $upd = db("UPDATE ".$db['gb']."
                  SET `nachricht` = '".$comment."'
-                 WHERE id = '".intval($_GET['id'])."'");
+                 WHERE id = '".(int)($_GET['id'])."'");
 
       $index = info(_gb_comment_added, "../gb/");
     }
@@ -397,7 +397,7 @@ case 'preview';
   if(isset($_GET['edit']) && !empty($_GET['edit']))
   {
     $qry = db("SELECT * FROM ".$db['gb']."
-               WHERE id = '".intval($_GET['edit'])."'");
+               WHERE id = '".(int)($_GET['edit'])."'");
     $get = _fetch($qry);
 
     $get_id = '?';

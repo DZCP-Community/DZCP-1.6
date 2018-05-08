@@ -26,7 +26,7 @@ $use_glossar = false;
 ## SECTIONS ##
 $check = db("SELECT s1.user FROM ".$db['permissions']." s1, ".$db['users']." s2
              WHERE s1.user = '".$userid."'
-             AND s2.id = '".intval($userid)."'
+             AND s2.id = '".(int)($userid)."'
              AND s2.pwd = '".$_SESSION['pwd']."'");
 
 if(!admin_perms($userid))

@@ -53,7 +53,7 @@ switch ($action):
                                           "show" => $show));
     break;
     case 'link';
-        $get = db("SELECT `url` FROM ".$db['linkus']." WHERE `id` = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT `url` FROM ".$db['linkus']." WHERE `id` = '".(int)($_GET['id'])."'",false,true);
         header("Location: ".$get['url']);
     break;
 endswitch;

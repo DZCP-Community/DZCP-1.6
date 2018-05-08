@@ -48,7 +48,7 @@ if(_adminMenu != 'true') exit;
         }
       } elseif($do == "edit") {
         $qry = db("SELECT * FROM ".$db['rankings']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $qrys = db("SELECT * FROM ".$db['squads']."
@@ -82,7 +82,7 @@ if(_adminMenu != 'true') exit;
           elseif(empty($_POST['rank'])) $show = error(_error_empty_rank,1);
         } else {
           $qry = db("SELECT rank FROM ".$db['rankings']."
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
           $get = _fetch($qry);
 
           $qry = db("UPDATE ".$db['rankings']."
@@ -92,13 +92,13 @@ if(_adminMenu != 'true') exit;
                          `rank`         = '".((int)$_POST['rank'])."',
                          `lastranking`  = '".((int)$get['rank'])."',
                          `postdate`     = '".time()."'
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
 
           $show = info(_ranking_edited, "?admin=rankings");
         }
       } elseif($do == "delete") {
         $del = db("DELETE FROM ".$db['rankings']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_ranking_deleted, "?admin=rankings");
       } else {

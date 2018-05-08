@@ -10,7 +10,7 @@ if(defined('_Forum')) {
   {
     if($do == 'editthread')
     {
-      $qry = db("SELECT * FROM ".$db['f_threads']." WHERE id = '".intval($_GET['id'])."'");
+      $qry = db("SELECT * FROM ".$db['f_threads']." WHERE id = '".(int)($_GET['id'])."'");
       $get = _fetch($qry);
 
       $get_datum = $get['t_date'];
@@ -74,7 +74,7 @@ if(defined('_Forum')) {
                 FROM ".$db['f_threads']." AS s1
                 LEFT JOIN ".$db['f_skats']." AS s2
                 ON s1.kid = s2.id
-                WHERE s1.id = '".intval($tID)."'");
+                WHERE s1.id = '".(int)($tID)."'");
     $getw = _fetch($qryw);
 
     $qrykat = db("SELECT name FROM ".$db['f_kats']."
@@ -134,7 +134,7 @@ if(defined('_Forum')) {
     if($do == 'editpost')
     {
       $qry = db("SELECT * FROM ".$db['f_posts']."
-                 WHERE id = '".intval($_GET['id'])."'");
+                 WHERE id = '".(int)($_GET['id'])."'");
       $get = _fetch($qry);
 
       $get_datum = $get['date'];
@@ -157,7 +157,7 @@ if(defined('_Forum')) {
         $pUId = $userid;
       }
       $tID = $_GET['id'];
-      $cnt = cnt($db['f_posts'], " WHERE sid = '".intval($_GET['id'])."'")+2;
+      $cnt = cnt($db['f_posts'], " WHERE sid = '".(int)($_GET['id'])."'")+2;
     }
 
     $titel = show(_eintrag_titel_forum, array("postid" => $cnt,
@@ -169,7 +169,7 @@ if(defined('_Forum')) {
     if($guestCheck)
     {
       $qryu = db("SELECT nick,icq,hp,email FROM ".$db['users']."
-                  WHERE id = '".intval($pUId)."'");
+                  WHERE id = '".(int)($pUId)."'");
       $getu = _fetch($qryu);
 
       $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));

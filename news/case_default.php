@@ -5,7 +5,7 @@
  */
 
 if(defined('_News')) {
-    if(!($kat = isset($_GET['kat']) ? intval($_GET['kat']) : 0)) {
+    if(!($kat = isset($_GET['kat']) ? (int)($_GET['kat']) : 0)) {
         $navKat = 'lazy';
         $n_kat = '';
         $navWhere = "WHERE public = 1 ".(!permission("intnews") ? "AND `intern` = '0'" : '')."";

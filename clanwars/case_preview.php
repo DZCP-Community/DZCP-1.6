@@ -7,7 +7,7 @@
 if(defined('_Clanwars')) {
   header("Content-type: text/html; charset=utf-8");
   $qry = db("SELECT * FROM ".$db['squads']."
-             WHERE id = '".intval($_POST['squad'])."'");
+             WHERE id = '".(int)($_POST['squad'])."'");
   $get = _fetch($qry);
 
   $serverpwd = show(_cw_serverpwd, array("cw_serverpwd" => re($_POST['serverpwd'])));

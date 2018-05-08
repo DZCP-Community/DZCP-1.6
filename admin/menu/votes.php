@@ -144,17 +144,17 @@ if(_adminMenu != 'true') exit;
         }
       } elseif($do == "delete") {
         $qry = db("DELETE FROM ".$db['votes']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $qry = db("DELETE FROM ".$db['vote_results']."
-                   WHERE vid = '".intval($_GET['id'])."'");
+                   WHERE vid = '".(int)($_GET['id'])."'");
 
         db("DELETE FROM ".$db['ipcheck']." WHERE what = 'vid_".$_GET['id']."'");
 
         $show = info(_vote_admin_delete_successful, "?admin=votes");
       } elseif($do == "edit") {
         $qry = db("SELECT * FROM ".$db['votes']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         if($get['intern'] == "1") $intern = 'checked="checked"';
@@ -189,35 +189,35 @@ if(_adminMenu != 'true') exit;
                                               "answer" => _votes_admin_answer));
       } elseif($do == "editvote") {
         $qry = db("SELECT * FROM ".$db['vote_results']."
-                  WHERE vid = '".intval($_GET['id'])."'");
+                  WHERE vid = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $upd = db("UPDATE ".$db['votes']."
                    SET `titel`  = '".up($_POST['question'])."',
                        `intern` = '".((int)$_POST['intern'])."',
                        `closed` = '".((int)$_POST['closed'])."'
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $upd1 = db("UPDATE ".$db['vote_results']."
                     SET `sel` = '".up($_POST['a1'])."'
                     WHERE what = 'a1'
-                    AND vid = '".intval($_GET['id'])."'");
+                    AND vid = '".(int)($_GET['id'])."'");
 
         $upd2 = db("UPDATE ".$db['vote_results']."
                     SET `sel` = '".up($_POST['a2'])."'
                     WHERE what = 'a2'
-                    AND vid = '".intval($_GET['id'])."'");
+                    AND vid = '".(int)($_GET['id'])."'");
 
         for($i=3; $i<=10; $i++)
         {
           if(!empty($_POST['a'.$i.'']))
           {
-            if(cnt($db['vote_results'], " WHERE vid = '".intval($_GET['id'])."' AND what = 'a".$i."'") != 0)
+            if(cnt($db['vote_results'], " WHERE vid = '".(int)($_GET['id'])."' AND what = 'a".$i."'") != 0)
             {
               $upd = db("UPDATE ".$db['vote_results']."
                          SET `sel` = '".up($_POST['a'.$i.''])."'
                          WHERE what = 'a".$i."'
-                         AND vid = '".intval($_GET['id'])."'");
+                         AND vid = '".(int)($_GET['id'])."'");
             } else {
               $ins = db("INSERT INTO ".$db['vote_results']."
                          SET `vid` = '".$_GET['id']."',
@@ -226,10 +226,10 @@ if(_adminMenu != 'true') exit;
             }
           }
 
-          if(cnt($db['vote_results'], " WHERE vid = '".intval($_GET['id'])."' AND what = 'a".$i."'") != 0 && empty($_POST['a'.$i.'']))
+          if(cnt($db['vote_results'], " WHERE vid = '".(int)($_GET['id'])."' AND what = 'a".$i."'") != 0 && empty($_POST['a'.$i.'']))
           {
             $del = db("DELETE FROM ".$db['vote_results']."
-                       WHERE vid = '".intval($_GET['id'])."'
+                       WHERE vid = '".(int)($_GET['id'])."'
                        AND what = 'a".$i."'");
           }
         }
@@ -237,14 +237,14 @@ if(_adminMenu != 'true') exit;
         $show = info(_vote_admin_successful_edited, "?admin=votes");
       } elseif($do == "menu") {
         $qryv = db("SELECT intern FROM ".$db['votes']."
-                    WHERE id = '".intval($_GET['id'])."'
+                    WHERE id = '".(int)($_GET['id'])."'
                     AND intern = 1");
         if(_rows($qryv))
         {
           $show = error(_vote_admin_menu_isintern, 1);
         } else {
           $qrys = db("SELECT * FROM ".$db['votes']."
-                      WHERE id = '".intval($_GET['id'])."'");
+                      WHERE id = '".(int)($_GET['id'])."'");
           $get = _fetch($qrys);
 
           if($get['menu'] == 1)
@@ -259,7 +259,7 @@ if(_adminMenu != 'true') exit;
 
             $qry = db("UPDATE ".$db['votes']."
                        SET menu = '1'
-                       WHERE id = '".intval($_GET['id'])."'");
+                       WHERE id = '".(int)($_GET['id'])."'");
 
             header("Location: ?admin=votes");
           }

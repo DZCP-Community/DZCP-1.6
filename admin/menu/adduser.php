@@ -26,7 +26,7 @@ if(_adminMenu != 'true') exit;
             $check = db("SELECT * FROM ".$db['userpos']."
                          WHERE posi = '".$getpos['id']."'
                          AND squad = '".$getsq['id']."'
-                         AND user = '".intval($_GET['edit'])."'");
+                         AND user = '".(int)($_GET['edit'])."'");
             if(_rows($check)) $sel = 'selected="selected"';
             else $sel = "";
 
@@ -36,7 +36,7 @@ if(_adminMenu != 'true') exit;
           }
 
           $qrysquser = db("SELECT squad FROM ".$db['squaduser']."
-                           WHERE user = '".intval($_GET['edit'])."'
+                           WHERE user = '".(int)($_GET['edit'])."'
                            AND squad = '".$getsq['id']."'");
 
           if(_rows($qrysquser))$check = 'checked="checked"';
@@ -138,10 +138,10 @@ if(_adminMenu != 'true') exit;
     // permissions
       if(!empty($_POST['perm']))
       {
-        foreach($_POST['perm'] AS $v => $k) $p .= "`".substr($v, 2)."` = '".intval($k)."',";
+        foreach($_POST['perm'] AS $v => $k) $p .= "`".substr($v, 2)."` = '".(int)($k)."',";
                          if(!empty($p)) $p = ', '.substr($p, 0, strlen($p) - 1);
 
-        db("INSERT INTO ".$db['permissions']." SET `user` = '".intval($insert_id)."'".$p);
+        db("INSERT INTO ".$db['permissions']." SET `user` = '".(int)($insert_id)."'".$p);
       }
     ////////////////////
 
@@ -149,7 +149,7 @@ if(_adminMenu != 'true') exit;
       if(!empty($_POST['board']))
       {
           foreach($_POST['board'] AS $v)
-            db("INSERT INTO ".$db['f_access']." SET `user` = '".intval($insert_id)."', `forum` = '".$v."'");
+            db("INSERT INTO ".$db['f_access']." SET `user` = '".(int)($insert_id)."', `forum` = '".$v."'");
       }
     ////////////////////
 

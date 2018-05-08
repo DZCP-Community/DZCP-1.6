@@ -20,10 +20,10 @@ define('_UserMenu', true);
 function custom_content($kid=1) {
     global $db;
     $custom_content = ''; $i = 0;
-    $qrycustom = db("SELECT * FROM ".$db['profile']." WHERE kid = '".intval($kid)."' AND shown = '1' ORDER BY id ASC");
+    $qrycustom = db("SELECT * FROM ".$db['profile']." WHERE kid = '".(int)($kid)."' AND shown = '1' ORDER BY id ASC");
     if(_rows($qrycustom) >= 1) {
         while($getcustom = _fetch($qrycustom)) {
-            $getcontent = db("SELECT ".$getcustom['feldname']." FROM ".$db['users']." WHERE id = '".intval($_GET['id'])."' LIMIT 1",false,true);
+            $getcontent = db("SELECT ".$getcustom['feldname']." FROM ".$db['users']." WHERE id = '".(int)($_GET['id'])."' LIMIT 1",false,true);
             if(!empty($getcontent[$getcustom['feldname']])) {
                 switch($getcustom['type']) {
                     case 2:

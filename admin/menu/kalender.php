@@ -43,7 +43,7 @@ if(_adminMenu != 'true') exit;
       }
     } elseif($do == "edit") {
       $qry = db("SELECT * FROM ".$db['events']."
-                 WHERE id = '".intval($_GET['id'])."'");
+                 WHERE id = '".(int)($_GET['id'])."'");
       $get = _fetch($qry);
 
       $dropdown_date = show(_dropdown_date, array("day" => dropdown("day",date("d",$get['datum'])),
@@ -75,13 +75,13 @@ if(_adminMenu != 'true') exit;
                       SET `datum` = '".((int)$time)."',
                           `title` = '".up($_POST['title'])."',
                           `event` = '".up($_POST['event'])."'
-                      WHERE id = '".intval($_GET['id'])."'");
+                      WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_kalender_successful_edited,"?admin=kalender");
       }
     } elseif($do == "delete") {
       $del = db("DELETE FROM ".$db['events']."
-                 WHERE id = '".intval($_GET['id'])."'");
+                 WHERE id = '".(int)($_GET['id'])."'");
 
       $show = info(_kalender_deleted,"?admin=kalender");
     } else {

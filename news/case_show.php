@@ -5,18 +5,18 @@
  */
 
 if(defined('_News')) {
-        $check = db("SELECT intern FROM ".$db['news']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $check = db("SELECT intern FROM ".$db['news']." WHERE id = '".(int)($_GET['id'])."'",false,true);
 
         if($check['intern'] && !permission("intnews"))
             $index = error(_error_wrong_permissions, 1);
         else
         {
-            $qry = db("SELECT * FROM ".$db['news']." WHERE id = '".intval($_GET['id'])."'".(permission("news") ? "" : " AND public = 1") );
+            $qry = db("SELECT * FROM ".$db['news']." WHERE id = '".(int)($_GET['id'])."'".(permission("news") ? "" : " AND public = 1") );
             if(_rows($qry) == 0)
                 $index = error(_id_dont_exist,1);
             else
             {
-                db("UPDATE ".$db['news']." SET `viewed` = viewed+1 WHERE id = '".intval($_GET['id'])."'");
+                db("UPDATE ".$db['news']." SET `viewed` = viewed+1 WHERE id = '".(int)($_GET['id'])."'");
 
                 $get = _fetch($qry);
                 $getkat = db("SELECT katimg FROM ".$db['newskat']." WHERE id = '".$get['kat']."'",false,true);
@@ -58,11 +58,11 @@ if(defined('_News')) {
                             "rel" => $rel));
 
                 $qryc = db("SELECT * FROM ".$db['newscomments']."
-                            WHERE news = ".intval($_GET['id'])."
+                            WHERE news = ".(int)($_GET['id'])."
                             ORDER BY datum DESC
                             LIMIT ".($page - 1)*config('m_comments').",".config('m_comments')."");
 
-                $entrys = cnt($db['newscomments'], " WHERE news = ".intval($_GET['id']));
+                $entrys = cnt($db['newscomments'], " WHERE news = ".(int)($_GET['id']));
                 $i = $entrys-($page - 1)*config('m_comments');
 
                 $comments = '';
@@ -193,7 +193,7 @@ if(defined('_News')) {
             switch($do)
             {
                 case 'add':
-                    if(db("SELECT `id` FROM ".$db['news']." WHERE `id` = ".intval($_GET['id']),true,false) != 0)
+                    if(db("SELECT `id` FROM ".$db['news']." WHERE `id` = ".(int)($_GET['id']),true,false) != 0)
                     {
                         if(settings("reg_newscomments") && !$chkMe)
                             $index = error(_error_have_to_be_logged, 1);
@@ -242,16 +242,16 @@ if(defined('_News')) {
                                                                              "error" => $error,
                                                                              "eintraghead" => _eintrag));
                                 } else {
-                                    db("INSERT INTO ".$db['newscomments']." SET `news`     = '".intval($_GET['id'])."',
+                                    db("INSERT INTO ".$db['newscomments']." SET `news`     = '".(int)($_GET['id'])."',
                                                                                 `datum`    = '".time()."',
                                                                                 `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : data('nick'))."',
                                                                                 `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : data('email'))."',
                                                                                 `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : links(data('hp')))."',
-                                                                                `reg`      = '".intval($userid)."',
+                                                                                `reg`      = '".(int)($userid)."',
                                                                                 `comment`  = '".up($_POST['comment'],1)."',
                                                                                 `ip`       = '".$userip."'");
 
-                                    setIpcheck("ncid(".intval($_GET['id']).")");
+                                    setIpcheck("ncid(".(int)($_GET['id']).")");
                                     $index = info(_comment_added, "?action=show&amp;id=".$_GET['id']."");
                                 }
                             }
@@ -263,7 +263,7 @@ if(defined('_News')) {
                         $index = error(_id_dont_exist,1);
                 break;
                 case 'delete':
-                    $get = db("SELECT `reg` FROM ".$db['newscomments']." WHERE `id` = '".($cid=intval($_GET['cid']))."'",false,true);
+                    $get = db("SELECT `reg` FROM ".$db['newscomments']." WHERE `id` = '".($cid=(int)($_GET['cid']))."'",false,true);
                     if($get['reg'] == $userid || permission('news')) {
                         db("DELETE FROM ".$db['newscomments']." WHERE `id` = '".$cid."'");
                         $index = info(_comment_deleted, "?action=show&amp;id=".$_GET['id']."");
@@ -272,7 +272,7 @@ if(defined('_News')) {
                         $index = error(_error_wrong_permissions, 1);
                 break;
                 case 'editcom':
-                    $get = db("SELECT `reg` FROM ".$db['newscomments']." WHERE `id` = '".($cid=intval($_GET['cid']))."'",false,true);
+                    $get = db("SELECT `reg` FROM ".$db['newscomments']." WHERE `id` = '".($cid=(int)($_GET['cid']))."'",false,true);
                     if($get['reg'] == $userid || permission('news')) {
                         $editedby = show(_edited_by, array("autor" => autor($userid), "time" => date("d.m.Y H:i", time())._uhr));
                         $qry = db("UPDATE ".$db['newscomments']."
@@ -289,7 +289,7 @@ if(defined('_News')) {
                         $index = error(_error_edit_post,1);
                 break;
                 case 'edit':
-                    $get = db("SELECT `reg`,`comment` FROM ".$db['newscomments']." WHERE `id` = '".intval($_GET['cid'])."'",false,true);
+                    $get = db("SELECT `reg`,`comment` FROM ".$db['newscomments']." WHERE `id` = '".(int)($_GET['cid'])."'",false,true);
                     if($get['reg'] == $userid || permission('news')) {
                         if($get['reg'] != 0)
                             $form = show("page/editor_regged", array("nick" => autor($get['reg']), "von" => _autor));

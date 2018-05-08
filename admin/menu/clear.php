@@ -17,26 +17,26 @@ if(_adminMenu != 'true') exit;
           if(isset($_POST['news']))
           {
             $del = db("DELETE FROM ".$db['news']."
-                       WHERE datum <= '".intval($time)."'");
+                       WHERE datum <= '".(int)($time)."'");
             $del = db("DELETE FROM ".$db['newscomments']."
-                       WHERE datum <= '".intval($time)."'");
+                       WHERE datum <= '".(int)($time)."'");
           }
           if(isset($_POST['away']))
           {
             $del = db("DELETE FROM ".$db['away']."
-                       WHERE date <= '".intval($time)."'");
+                       WHERE date <= '".(int)($time)."'");
           }
           if(isset($_POST['forum']))
           {
             $qry = db("SELECT id FROM ".$db['f_threads']."
-                       WHERE t_date <= '".intval($time)."'
+                       WHERE t_date <= '".(int)($time)."'
                        AND sticky != 1");
             while($get = _fetch($qry))
             {
               $del = db("DELETE FROM ".$db['f_threads']."
-                         WHERE id = '".intval($get['id'])."'");
+                         WHERE id = '".(int)($get['id'])."'");
               $del = db("DELETE FROM ".$db['f_posts']."
-                         WHERE sid = '".intval($get['id'])."'");
+                         WHERE sid = '".(int)($get['id'])."'");
             }
           }
           $show = info(_clear_deleted, "../admin/");

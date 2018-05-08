@@ -8,7 +8,7 @@ if(defined('_Forum')) {
   if($do == "edit")
   {
     $get = db("SELECT * FROM ".$db['f_threads']."
-               WHERE id = '".intval($_GET['id'])."'",false,true);
+               WHERE id = '".(int)($_GET['id'])."'",false,true);
     if($get['t_reg'] == $userid || permission("forum"))
     {
       if(permission("forum"))
@@ -36,7 +36,7 @@ if(defined('_Forum')) {
         $getv = db("SELECT * FROM ".$db['votes']." WHERE id = '".$get['vote']."'",false,true);
         $fget = db("SELECT s1.intern,s2.id FROM ".$db['f_kats']." AS s1
                     LEFT JOIN ".$db['f_skats']." AS s2 ON s2.`sid` = s1.id
-                    WHERE s2.`id` = '".intval($get['kid'])."'",false,true);
+                    WHERE s2.`id` = '".(int)($get['kid'])."'",false,true);
 
         $intern = ''; $intern_kat = ''; $isclosed = ''; $display = ''; $toggle = 'collapse';
         $internVisible = '';
@@ -141,7 +141,7 @@ if(defined('_Forum')) {
     }
   } elseif($do == "editthread") {
     $qry = db("SELECT * FROM ".$db['f_threads']."
-               WHERE id = '".intval($_GET['id'])."'");
+               WHERE id = '".(int)($_GET['id'])."'");
     $get = _fetch($qry);
 
     if($get['t_reg'] == $userid || permission("forum"))
@@ -193,7 +193,7 @@ if(defined('_Forum')) {
 
             $fget = _fetch(db("SELECT s1.intern,s2.id FROM ".$db['f_kats']." AS s1
                          LEFT JOIN ".$db['f_skats']." AS s2 ON s2.`sid` = s1.id
-                         WHERE s2.`id` = '".intval($_GET['kid'])."'"));
+                         WHERE s2.`id` = '".(int)($_GET['kid'])."'"));
 
             if($_POST['intern']) $intern = 'checked="checked"';
           $intern = ''; $intern_kat = ''; $internVisible = '';
@@ -257,7 +257,7 @@ if(defined('_Forum')) {
                                             "eintraghead" => _eintrag));
       } else {
         $qryt = db("SELECT * FROM ".$db['f_threads']."
-                    WHERE id = '".intval($_GET['id'])."'");
+                    WHERE id = '".(int)($_GET['id'])."'");
         $gett = _fetch($qryt);
           if(!empty($gett['vote']))
       {
@@ -411,7 +411,7 @@ if(defined('_Forum')) {
                        `global`   = '".((int)$_POST['global'])."',
                                             `vote`     = '".$vid."',
                        `edited`   = '".addslashes($editedby)."'
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
       $checkabo = db("SELECT s1.user,s1.fid,s2.nick,s2.id,s2.email FROM ".$db['f_abo']." AS s1
                         LEFT JOIN ".$db['users']." AS s2 ON s2.id = s1.user
@@ -420,7 +420,7 @@ if(defined('_Forum')) {
         {
         if($userid != $getabo['user'])
         {
-          $topic = db("SELECT topic FROM ".$db['f_threads']." WHERE id = '".intval($_GET['id'])."'");
+          $topic = db("SELECT topic FROM ".$db['f_threads']." WHERE id = '".(int)($_GET['id'])."'");
           $gettopic = _fetch($topic);
 
           $subj = show(re(settings('eml_fabo_tedit_subj')), array("titel" => $title));
@@ -430,7 +430,7 @@ if(defined('_Forum')) {
                                                             "topic" => $gettopic['topic'],
                                                             "titel" => $title,
                                                             "domain" => $httphost,
-                                                            "id" => intval($_GET['id']),
+                                                            "id" => (int)($_GET['id']),
                                                             "entrys" => "1",
                                                             "page" => "1",
                                                             "text" => bbcode($_POST['eintrag']),
@@ -465,7 +465,7 @@ if(defined('_Forum')) {
         $internVisible = '';
         $fget = _fetch(db("SELECT s1.intern,s2.id FROM ".$db['f_kats']." AS s1
                        LEFT JOIN ".$db['f_skats']." AS s2 ON s2.`sid` = s1.id
-                       WHERE s2.`id` = '".intval($_GET['kid'])."'"));
+                       WHERE s2.`id` = '".(int)($_GET['kid'])."'"));
                 $intern = ''; $intern_kat = ''; $internVisible = '';
                 if($fget['intern'] == "1") { $intern = 'checked="checked"'; $internVisible = 'style="display:none"'; };
 
@@ -537,7 +537,7 @@ if(defined('_Forum')) {
       }
     }
   } elseif($do == "addthread") {
-      if(_rows(db("SELECT id FROM ".$db['f_skats']." WHERE id = '".intval($_GET['kid'])."'")) == 0) {
+      if(_rows(db("SELECT id FROM ".$db['f_skats']." WHERE id = '".(int)($_GET['kid'])."'")) == 0) {
           $index = error(_id_dont_exist, 1);
       } else {
         if(settings("reg_forum") && !$chkMe)
@@ -591,7 +591,7 @@ if(defined('_Forum')) {
 
             $fget = _fetch(db("SELECT s1.intern,s2.id FROM ".$db['f_kats']." AS s1
                                                  LEFT JOIN ".$db['f_skats']." AS s2 ON s2.`sid` = s1.id
-                                                 WHERE s2.`id` = '".intval($_GET['kid'])."'"));
+                                                 WHERE s2.`id` = '".(int)($_GET['kid'])."'"));
 
             if($_POST['intern']) $intern = 'checked="checked"';
             $intern = ''; $intern_kat = ''; $internVisible = '';
@@ -658,7 +658,7 @@ if(defined('_Forum')) {
                 {
                         $fgetvote = _fetch(db("SELECT s1.intern,s2.id FROM ".$db['f_kats']." AS s1
                                                                      LEFT JOIN ".$db['f_skats']." AS s2 ON s2.`sid` = s1.id
-                                                                     WHERE s2.`id` = '".intval($_GET['kid'])."'"));
+                                                                     WHERE s2.`id` = '".(int)($_GET['kid'])."'"));
 
                         if($fgetvote['intern'] == 1) $ivote = "`intern` = '1',";
                         else $ivote = "`intern` = '".((int)$_POST['intern'])."',";

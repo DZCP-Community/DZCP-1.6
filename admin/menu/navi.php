@@ -56,7 +56,7 @@ if(_adminMenu != 'true') exit;
 
           $posi = db("UPDATE ".$db['navi']."
                       SET `pos` = pos+1
-                      WHERE pos ".$sign." '".intval($pos)."'");
+                      WHERE pos ".$sign." '".(int)($pos)."'");
 
           $posi = db("INSERT INTO ".$db['navi']."
                       SET `pos`       = '".((int)$pos)."',
@@ -72,14 +72,14 @@ if(_adminMenu != 'true') exit;
         }
       } elseif($do == "delete") {
         $qry = db("SELECT * FROM ".$db['navi']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $del = db("DELETE FROM ".$db['sites']."
-                   WHERE id = '".intval($get['editor'])."'");
+                   WHERE id = '".(int)($get['editor'])."'");
 
         $del = db("DELETE FROM ".$db['navi']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_navi_deleted, "?admin=navi");
       } elseif($do == "edit") {
@@ -104,7 +104,7 @@ if(_adminMenu != 'true') exit;
         }
 
         $qry = db("SELECT * FROM ".$db['navi']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         if($get['type'] == "1")
@@ -150,7 +150,7 @@ if(_adminMenu != 'true') exit;
 
         $posi = db("UPDATE ".$db['navi']."
                     SET pos = pos+1
-                    WHERE pos ".$sign." '".intval($pos)."'");
+                    WHERE pos ".$sign." '".(int)($pos)."'");
 
         $posi = db("UPDATE ".$db['navi']."
                     SET `pos`       = '".((int)$pos)."',
@@ -161,23 +161,23 @@ if(_adminMenu != 'true') exit;
                         `shown`     = '".((int)$_POST['sichtbar'])."',
                         `internal`  = '".((int)$_POST['internal'])."',
                         `wichtig`   = '".((int)$_POST['wichtig'])."'
-                    WHERE id = '".intval($_GET['id'])."'");
+                    WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_navi_edited,"?admin=navi");
       } elseif($do == "menu") {
         $posi = db("UPDATE ".$db['navi']."
                     SET `shown`     = '".((int)$_GET['set'])."'
-                    WHERE id = '".intval($_GET['id'])."'");
+                    WHERE id = '".(int)($_GET['id'])."'");
 
         header("Location: ?admin=navi");
       } else if($do == 'intern') {
         $posi = db("UPDATE ".$db['navi_kats']."
                     SET `intern` = '".((int)$_GET['set'])."'
-                    WHERE id = '".intval($_GET['id'])."'");
+                    WHERE id = '".(int)($_GET['id'])."'");
 
         header("Location: ?admin=navi");
       } else if($do == 'editkat') {
-        $get = _fetch(db("SELECT * FROM ".$db['navi_kats']." WHERE `id` = '".intval($_GET['id'])."'"));
+        $get = _fetch(db("SELECT * FROM ".$db['navi_kats']." WHERE `id` = '".(int)($_GET['id'])."'"));
 
         $show = show($dir."/form_navi_kats", array("head" => _menu_edit_kat,
                                                    "name" => _sponsors_admin_name,
@@ -202,15 +202,15 @@ if(_adminMenu != 'true') exit;
         db("UPDATE ".$db['navi_kats']."
             SET `name`        = '".up($_POST['name'])."',
                 `placeholder` = 'nav_".up($_POST['placeholder'])."',
-                `level`       = '".intval($_POST['level'])."'
-            WHERE `id` = '".intval($_GET['id'])."'");
+                `level`       = '".(int)($_POST['level'])."'
+            WHERE `id` = '".(int)($_GET['id'])."'");
 
         $show = info(_menukat_updated, '?admin=navi');
       } else if($do == 'deletekat') {
-        db("DELETE FROM ".$db['navi_kats']." WHERE `id` = '".intval($_GET['id'])."'");
+        db("DELETE FROM ".$db['navi_kats']." WHERE `id` = '".(int)($_GET['id'])."'");
         $show = info(_menukat_deleted, '?admin=navi');
       }  else if($do == 'addkat') {
-        $get = _fetch(db("SELECT * FROM ".$db['navi_kats']." WHERE `id` = '".intval($_GET['id'])."'"));
+        $get = _fetch(db("SELECT * FROM ".$db['navi_kats']." WHERE `id` = '".(int)($_GET['id'])."'"));
 
         $show = show($dir."/form_navi_kats", array("head" => _menu_add_kat,
                                                    "name" => _sponsors_admin_name,
@@ -235,7 +235,7 @@ if(_adminMenu != 'true') exit;
         db("INSERT INTO ".$db['navi_kats']."
             SET `name`        = '".up($_POST['name'])."',
                 `placeholder` = 'nav_".up($_POST['placeholder'])."',
-                `level`       = '".intval($_POST['intern'])."'");
+                `level`       = '".(int)($_POST['intern'])."'");
 
         $show = info(_menukat_inserted, '?admin=navi');
       } else {

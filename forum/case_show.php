@@ -8,7 +8,7 @@ if(defined('_Forum')) {
   $check = db("SELECT s2.id,s1.intern FROM ".$db['f_kats']." AS s1
                LEFT JOIN ".$db['f_skats']." AS s2
                ON s2.sid = s1.id
-               WHERE s2.id = '".intval($_GET['id'])."'");
+               WHERE s2.id = '".(int)($_GET['id'])."'");
   $checks = _fetch($check);
 
   if($checks['intern'] == 1 && (!permission("intforum") && !fintern($checks['id'])))
@@ -18,7 +18,7 @@ if(defined('_Forum')) {
     if(empty($_POST['suche']))
     {
       $qry = db("SELECT * FROM ".$db['f_threads']."
-                 WHERE kid ='".intval($_GET['id'])."'
+                 WHERE kid ='".(int)($_GET['id'])."'
                  OR global = 1
                  ORDER BY global DESC, sticky DESC, lp DESC, t_date DESC
                  LIMIT ".($page - 1)*config('m_fthreads').",".config('m_fthreads')."");
@@ -26,16 +26,16 @@ if(defined('_Forum')) {
       $qry = db("SELECT s1.global,s1.topic,s1.subtopic,s1.t_text,s1.t_email,s1.hits,s1.t_reg,s1.t_date,s1.closed,s1.sticky,s1.id
                  FROM ".$db['f_threads']." AS s1
                  WHERE s1.topic LIKE '%".$_POST['suche']."%'
-                 AND s1.kid = '".intval($_GET['id'])."'
+                 AND s1.kid = '".(int)($_GET['id'])."'
                  OR s1.subtopic LIKE '%".$_POST['suche']."%'
-                 AND s1.kid = '".intval($_GET['id'])."'
+                 AND s1.kid = '".(int)($_GET['id'])."'
                  OR s1.t_text LIKE '%".$_POST['suche']."%'
-                 AND s1.kid = '".intval($_GET['id'])."'
+                 AND s1.kid = '".(int)($_GET['id'])."'
                  ORDER BY s1.global DESC, s1.sticky DESC, s1.lp DESC, s1.t_date DESC
                  LIMIT ".($page - 1)*config('m_fthreads').",".config('m_fthreads')."");
     }
 
-    $entrys = cnt($db['f_threads'], " WHERE kid = ".intval($_GET['id']));
+    $entrys = cnt($db['f_threads'], " WHERE kid = ".(int)($_GET['id']));
     $i = 2;
 
     $threads = '';
@@ -58,7 +58,7 @@ if(defined('_Forum')) {
       if(empty($_POST['suche']))
       {
         $gets = db("SELECT id FROM ".$db['f_skats']."
-                    WHERE id = '".intval($_GET['id'])."'",false,true);
+                    WHERE id = '".(int)($_GET['id'])."'",false,true);
 
         $threadlink = show(_forum_thread_link, array("topic" => re(cut($get['topic'],config('l_forumtopic'),true,false)),
                                                      "id" => $get['id'],
@@ -105,7 +105,7 @@ if(defined('_Forum')) {
     }
 
     $gets = db("SELECT id,kattopic FROM ".$db['f_skats']."
-                WHERE id = '".intval($_GET['id'])."'",false,true);
+                WHERE id = '".(int)($_GET['id'])."'",false,true);
 
     $search = show($dir."/forum_skat_search", array("head_search" => _forum_head_skat_search,
                                                     "id" => $_GET['id'],
@@ -136,7 +136,7 @@ if(defined('_Forum')) {
     }
 
     $subkat = db("SELECT sid FROM ".$db['f_skats']."
-                  WHERE id = '".intval($_GET['id'])."'",false,true);
+                  WHERE id = '".(int)($_GET['id'])."'",false,true);
 
     $kat = db("SELECT name FROM ".$db['f_kats']."
                 WHERE id = '".$subkat['sid']."'",false,true);

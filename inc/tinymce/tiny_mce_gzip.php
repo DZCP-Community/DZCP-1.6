@@ -378,7 +378,7 @@ class TinyMCE_Compressor {
         }
 
         // Trim string
-        return intval($time) * $multipel;
+        return (int)($time) * $multipel;
     }
 
     /**

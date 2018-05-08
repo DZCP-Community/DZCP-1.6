@@ -107,7 +107,7 @@ switch($do) {
         }
     break;
     case 'edit':
-        $get = db("SELECT * FROM ".$db['artikel']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['artikel']." WHERE id = '".(int)($_GET['id'])."'",false,true);
         $qryk = db("SELECT id,kategorie FROM ".$db['newskat'].""); $kat = '';
         while($getk = _fetch($qryk)) {
             $sel = ($get['kat'] == $getk['id'] ? 'selected="selected"' : '');
@@ -118,8 +118,8 @@ switch($do) {
 
         $artikelimage = ""; $delartikelpic = "";
         foreach($picformat as $tmpendung) {
-            if(file_exists(basePath."/inc/images/uploads/artikel/".intval($_GET['id']).".".$tmpendung)) {
-                $artikelimage = img_size('inc/images/uploads/artikel/'.intval($_GET['id']).'.'.$tmpendung)."<br /><br />";
+            if(file_exists(basePath."/inc/images/uploads/artikel/".(int)($_GET['id']).".".$tmpendung)) {
+                $artikelimage = img_size('inc/images/uploads/artikel/'.(int)($_GET['id']).'.'.$tmpendung)."<br /><br />";
                 $delartikelpic = '<a href="?admin=artikel&do=delartikelpic&id='.$_GET['id'].'">'._artikelpic_del.'</a><br /><br />';
             }
         }
@@ -162,49 +162,49 @@ switch($do) {
                     `url1`   = '".links($_POST['url1'])."',
                     `url2`   = '".links($_POST['url2'])."',
                     `url3`   = '".links($_POST['url3'])."'
-                WHERE id = '".intval($_GET['id'])."'");
+                WHERE id = '".(int)($_GET['id'])."'");
 
             if(isset($_FILES['artikelpic']['tmp_name']) && !empty($_FILES['artikelpic']['tmp_name'])) {
                 foreach($picformat as $tmpendung) {
-                    if(file_exists(basePath."/inc/images/uploads/artikel/".intval($_GET['id']).".".$tmpendung))
-                        @unlink(basePath."/inc/images/uploads/artikel/".intval($_GET['id']).".".$tmpendung);
+                    if(file_exists(basePath."/inc/images/uploads/artikel/".(int)($_GET['id']).".".$tmpendung))
+                        @unlink(basePath."/inc/images/uploads/artikel/".(int)($_GET['id']).".".$tmpendung);
                 }
 
                 //Remove minimize
                 $files = get_files(basePath."/inc/images/uploads/artikel/",false,true,$picformat);
                 foreach ($files as $file) {
-                    if(preg_match("#".intval($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
-                        $res = preg_match("#".intval($_GET['id'])."_(.*)#",$file,$match);
-                        if(file_exists(basePath."/inc/images/uploads/artikel/".intval($_GET['id'])."_".$match[1]))
-                            @unlink(basePath."/inc/images/uploads/artikel/".intval($_GET['id'])."_".$match[1]);
+                    if(preg_match("#".(int)($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
+                        $res = preg_match("#".(int)($_GET['id'])."_(.*)#",$file,$match);
+                        if(file_exists(basePath."/inc/images/uploads/artikel/".(int)($_GET['id'])."_".$match[1]))
+                            @unlink(basePath."/inc/images/uploads/artikel/".(int)($_GET['id'])."_".$match[1]);
                     }
                 }
 
                 $endung = explode(".", $_FILES['artikelpic']['name']);
                 $endung = strtolower($endung[count($endung)-1]);
-                move_uploaded_file($_FILES['artikelpic']['tmp_name'], basePath."/inc/images/uploads/artikel/".intval($_GET['id']).".".strtolower($endung));
+                move_uploaded_file($_FILES['artikelpic']['tmp_name'], basePath."/inc/images/uploads/artikel/".(int)($_GET['id']).".".strtolower($endung));
             }
 
             $show = info(_artikel_edited, "?admin=artikel");
         }
     break;
     case 'delete':
-        db("DELETE FROM ".$db['artikel']." WHERE id = '".intval($_GET['id'])."'");
-        db("DELETE FROM ".$db['acomments']." WHERE artikel = '".intval($_GET['id'])."'");
+        db("DELETE FROM ".$db['artikel']." WHERE id = '".(int)($_GET['id'])."'");
+        db("DELETE FROM ".$db['acomments']." WHERE artikel = '".(int)($_GET['id'])."'");
 
         //Remove Pic
         foreach($picformat as $tmpendung) {
-            if(file_exists(basePath."/inc/images/uploads/artikel/".intval($_GET['id']).".".$tmpendung))
-                @unlink(basePath."/inc/images/uploads/artikel/".intval($_GET['id']).".".$tmpendung);
+            if(file_exists(basePath."/inc/images/uploads/artikel/".(int)($_GET['id']).".".$tmpendung))
+                @unlink(basePath."/inc/images/uploads/artikel/".(int)($_GET['id']).".".$tmpendung);
         }
 
         //Remove minimize
         $files = get_files(basePath."/inc/images/uploads/artikel/",false,true,$picformat);
         foreach ($files as $file) {
-            if(preg_match("#".intval($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
-                $res = preg_match("#".intval($_GET['id'])."_(.*)#",$file,$match);
-                if(file_exists(basePath."/inc/images/uploads/artikel/".intval($_GET['id'])."_".$match[1]))
-                    @unlink(basePath."/inc/images/uploads/artikel/".intval($_GET['id'])."_".$match[1]);
+            if(preg_match("#".(int)($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
+                $res = preg_match("#".(int)($_GET['id'])."_(.*)#",$file,$match);
+                if(file_exists(basePath."/inc/images/uploads/artikel/".(int)($_GET['id'])."_".$match[1]))
+                    @unlink(basePath."/inc/images/uploads/artikel/".(int)($_GET['id'])."_".$match[1]);
             }
         }
 
@@ -213,27 +213,27 @@ switch($do) {
     case 'delartikelpic':
         //Remove Pic
         foreach($picformat as $tmpendung) {
-            if(file_exists(basePath."/inc/images/uploads/artikel/".intval($_GET['id']).".".$tmpendung))
-                @unlink(basePath."/inc/images/uploads/artikel/".intval($_GET['id']).".".$tmpendung);
+            if(file_exists(basePath."/inc/images/uploads/artikel/".(int)($_GET['id']).".".$tmpendung))
+                @unlink(basePath."/inc/images/uploads/artikel/".(int)($_GET['id']).".".$tmpendung);
         }
 
         //Remove minimize
         $files = get_files(basePath."/inc/images/uploads/artikel/",false,true,$picformat);
         foreach ($files as $file) {
-            if(preg_match("#".intval($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
-                $res = preg_match("#".intval($_GET['id'])."_(.*)#",$file,$match);
-                if(file_exists(basePath."/inc/images/uploads/artikel/".intval($_GET['id'])."_".$match[1]))
-                    @unlink(basePath."/inc/images/uploads/artikel/".intval($_GET['id'])."_".$match[1]);
+            if(preg_match("#".(int)($_GET['id'])."(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
+                $res = preg_match("#".(int)($_GET['id'])."_(.*)#",$file,$match);
+                if(file_exists(basePath."/inc/images/uploads/artikel/".(int)($_GET['id'])."_".$match[1]))
+                    @unlink(basePath."/inc/images/uploads/artikel/".(int)($_GET['id'])."_".$match[1]);
             }
         }
 
-        $show = info(_newspic_deleted, "?admin=artikel&do=edit&id=".intval($_GET['id'])."");
+        $show = info(_newspic_deleted, "?admin=artikel&do=edit&id=".(int)($_GET['id'])."");
     break;
     case 'public':
         if(isset($_GET['what']) && $_GET['what'] == 'set')
-            db("UPDATE ".$db['artikel']." SET `public` = '1', `datum`  = '".time()."' WHERE id = '".intval($_GET['id'])."'");
+            db("UPDATE ".$db['artikel']." SET `public` = '1', `datum`  = '".time()."' WHERE id = '".(int)($_GET['id'])."'");
         else
-            db("UPDATE ".$db['artikel']." SET `public` = '0' WHERE id = '".intval($_GET['id'])."'");
+            db("UPDATE ".$db['artikel']." SET `public` = '0' WHERE id = '".(int)($_GET['id'])."'");
 
         header("Location: ?admin=artikel");
     break;

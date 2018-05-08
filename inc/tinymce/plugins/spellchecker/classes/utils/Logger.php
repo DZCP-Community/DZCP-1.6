@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 // File type contstants
@@ -112,7 +112,7 @@ class Moxiecode_Logger {
 
 	function setMaxSize($size) {
 		// Fix log max size
-		$logMaxSizeBytes = intval(preg_replace("/[^0-9]/", "", $size));
+		$logMaxSizeBytes = (int)(preg_replace("/[^0-9]/", "", $size));
 
 		// Is KB
 		if (strpos((strtolower($size)), "k") > 0)

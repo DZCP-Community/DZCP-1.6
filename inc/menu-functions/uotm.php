@@ -12,7 +12,7 @@ function uotm() {
 
     $uotm = '';
     if(count($files) != 0) {
-        $userid = intval($files[rand(0, count($files) - 1)]);
+        $userid = (int)($files[rand(0, count($files) - 1)]);
         $qry = db("SELECT `id`,`bday` FROM ".$db['users']." WHERE `id` = '".$userid."'");
         if(_rows($qry)) {
             $get = _fetch($qry);

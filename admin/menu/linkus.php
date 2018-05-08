@@ -39,7 +39,7 @@ if(_adminMenu != 'true') exit;
         }
       } elseif($do == "edit") {
         $qry = db("SELECT * FROM ".$db['linkus']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $show = show($dir."/form_linkus", array("head" => _linkus_admin_edit,
@@ -66,13 +66,13 @@ if(_adminMenu != 'true') exit;
                          `text`         = '".up($_POST['text'])."',
                          `banner`       = '".up($_POST['banner'])."',
                          `beschreibung` = '".up($_POST['beschreibung'])."'
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
 
           $show = info(_linkus_edited, "?admin=linkus");
         }
       } elseif($do == "delete") {
         $qry = db("DELETE FROM ".$db['linkus']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_linkus_deleted, "?admin=linkus");
       } else {

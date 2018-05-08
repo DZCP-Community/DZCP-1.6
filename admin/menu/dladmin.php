@@ -66,7 +66,7 @@ if(_adminMenu != 'true') exit;
         }
       } elseif($do == "edit") {
         $qry  = db("SELECT * FROM ".$db['downloads']."
-                    WHERE id = '".intval($_GET['id'])."'");
+                    WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $qryk = db("SELECT * FROM ".$db['dl_kat']."
@@ -115,13 +115,13 @@ if(_adminMenu != 'true') exit;
                          `beschreibung` = '".up($_POST['beschreibung'])."',
                          `kat`          = '".((int)$_POST['kat'])."',
                          `intern`          = '".((int)$_POST['intern'])."'
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
 
           $show = info(_downloads_edited, "?admin=dladmin");
         }
       } elseif($do == "delete") {
         $qry = db("DELETE FROM ".$db['downloads']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_downloads_deleted, "?admin=dladmin");
       } else {

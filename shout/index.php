@@ -66,7 +66,7 @@ case 'admin';
     if($do == "delete")
     {
       $qry = db("DELETE FROM ".$db['shout']."
-                 WHERE id = '".intval($_GET['id'])."'");
+                 WHERE id = '".(int)($_GET['id'])."'");
 
       header("Location: ".$_SERVER['HTTP_REFERER'].'#shoutbox');
     }

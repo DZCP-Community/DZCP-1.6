@@ -13,13 +13,13 @@ if(defined('_UserMenu')) {
       if($do == "show")
       {
       $qry = db("SELECT * FROM ".$db['msg']."
-                           WHERE id = ".intval($_GET['id']));
+                           WHERE id = ".(int)($_GET['id']));
         $get = _fetch($qry);
       if($get['von'] == $userid || $get['an'] == $userid)
       {
             $update = db("UPDATE ".$db['msg']."
                                         SET `readed` = 1
-                                        WHERE id = ".intval($_GET['id']));
+                                        WHERE id = ".(int)($_GET['id']));
 
             $delete = show(_delete, array("id" => $get['id']));
 
@@ -49,20 +49,20 @@ if(defined('_UserMenu')) {
       }
       } elseif($do == "sendnewsdone") {
           $qry = db("SELECT * FROM ".$db['msg']."
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
           while($get = _fetch($qry))
           {
              $update = db("UPDATE ".$db['msg']."
                                SET `sendnews` = 3,
                                `sendnewsuser` = '".$userid."',
                                `readed`= 1
-                               WHERE datum = '".intval($_GET['datum'])."'");
+                               WHERE datum = '".(int)($_GET['datum'])."'");
 
             $index = info(_send_news_done, "?action=msg&do=show&id=".$get['id']."");
           }
       } elseif($do == "showsended") {
           $qry = db("SELECT * FROM ".$db['msg']."
-                     WHERE id = ".intval($_GET['id']));
+                     WHERE id = ".(int)($_GET['id']));
           $get = _fetch($qry);
 
       if($get['von'] == $userid || $get['an'] == $userid)
@@ -79,7 +79,7 @@ if(defined('_UserMenu')) {
       }
       } elseif($do == "answer") {
           $qry = db("SELECT * FROM ".$db['msg']."
-                               WHERE id = ".intval($_GET['id']));
+                               WHERE id = ".(int)($_GET['id']));
           $get = _fetch($qry);
 
       if($get['von'] == $userid || $get['an'] == $userid)
@@ -150,11 +150,11 @@ if(defined('_UserMenu')) {
           if($get['see'] == 0)
           {
             $del = db("DELETE FROM ".$db['msg']."
-                       WHERE id = ".intval($_POST['pe'.$get['id']]));
+                       WHERE id = ".(int)($_POST['pe'.$get['id']]));
           } else {
                 $del = db("UPDATE ".$db['msg']."
                                      SET `see_u` = 1
-                                      WHERE id = ".intval($_POST['pe'.$get['id']]));
+                                      WHERE id = ".(int)($_POST['pe'.$get['id']]));
           }
         }
           }
@@ -162,17 +162,17 @@ if(defined('_UserMenu')) {
         header("Location: ?action=msg");
       } elseif($do == "deletethis") {
       $qry = db("SELECT * FROM ".$db['msg']."
-                 WHERE id = '".intval($_GET['id'])."'");
+                 WHERE id = '".(int)($_GET['id'])."'");
       $get = _fetch($qry);
 
       if($get['see'] == 0)
       {
         $del = db("DELETE FROM ".$db['msg']."
-                   WHERE id = ".intval($_GET['id']));
+                   WHERE id = ".(int)($_GET['id']));
       } else {
             $del = db("UPDATE ".$db['msg']."
                                 SET `see_u` = 1
-                              WHERE id = ".intval($_GET['id']));
+                              WHERE id = ".(int)($_GET['id']));
       }
 
       $index = info(_msg_deleted, "?action=msg");
@@ -187,11 +187,11 @@ if(defined('_UserMenu')) {
           if($get['see_u'] == "1")
           {
             $del = db("DELETE FROM ".$db['msg']."
-                       WHERE id = ".intval($_POST['pa'.$get['id']]));
+                       WHERE id = ".(int)($_POST['pa'.$get['id']]));
           } else {
                 $del = db("UPDATE ".$db['msg']."
                                      SET `see` = 0
-                                      WHERE id = ".intval($_POST['pa'.$get['id']]));
+                                      WHERE id = ".(int)($_POST['pa'.$get['id']]));
           }
         }
           }

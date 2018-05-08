@@ -18,12 +18,12 @@ $title = $pagetitle." - ".$where."";
 $dir = "squads";
 
 ## SECTIONS ##
-  if(!empty($_GET['showsquad'])) header('Location: ?action=shows&id='.intval($_GET['showsquad']));
-  else if(!empty($_GET['show'])) header('Location: ?action=shows&id='.intval($_GET['show']));
+  if(!empty($_GET['showsquad'])) header('Location: ?action=shows&id='.(int)($_GET['showsquad']));
+  else if(!empty($_GET['show'])) header('Location: ?action=shows&id='.(int)($_GET['show']));
 
   switch(strtolower($action)):
     case 'shows';
-      $get = _fetch(db("SELECT * FROM ".$db['squads']." WHERE `id` = '".intval($_GET['id'])."'"));
+      $get = _fetch(db("SELECT * FROM ".$db['squads']." WHERE `id` = '".(int)($_GET['id'])."'"));
       $qrym = db("SELECT s1.user,s1.squad,s2.id,s2.nick,s2.icq,s2.email,s2.hlswid,s2.rlname,
                          s2.steamid,s2.level,s2.bday,s2.hp,s3.posi,s4.pid
                   FROM ".$db['squaduser']." AS s1
@@ -33,7 +33,7 @@ $dir = "squads";
                   ON s3.squad=s1.squad AND s3.user=s1.user
                   LEFT JOIN ".$db['pos']." AS s4
                   ON s4.id=s3.posi
-                  WHERE s1.squad='".intval($_GET['id'])."'
+                  WHERE s1.squad='".(int)($_GET['id'])."'
                   ORDER BY s4.pid, s2.nick");
 
       $member = "";
@@ -79,10 +79,10 @@ $dir = "squads";
       $squad = re($get['name']); $style = '';
       foreach($picformat AS $end)
       {
-        if(file_exists(basePath.'/inc/images/squads/'.intval($get['id']).'.'.$end))
+        if(file_exists(basePath.'/inc/images/squads/'.(int)($get['id']).'.'.$end))
         {
           $style = 'padding:0;';
-          $squad = '<img src="../inc/images/squads/'.intval($get['id']).'.'.$end.'" alt="'.re($get['name']).'" />';
+          $squad = '<img src="../inc/images/squads/'.(int)($get['id']).'.'.$end.'" alt="'.re($get['name']).'" />';
           break;
         }
       }
@@ -92,7 +92,7 @@ $dir = "squads";
                                                "squad" => $squad,
                                                "style" => $style,
                                                "back" => _error_back,
-                                               "id"   => intval($_GET['id'])));
+                                               "id"   => (int)($_GET['id'])));
     break;
     default;
       $qry = db("SELECT * FROM ".$db['squads']." WHERE team_show = 1 ORDER BY pos");
@@ -103,10 +103,10 @@ $dir = "squads";
 
         foreach($picformat AS $end)
         {
-          if(file_exists(basePath.'/inc/images/squads/'.intval($get['id']).'.'.$end))
+          if(file_exists(basePath.'/inc/images/squads/'.(int)($get['id']).'.'.$end))
           {
             $style = 'text-align:center;padding:0';
-            $squad = '<img src="../inc/images/squads/'.intval($get['id']).'.'.$end.'" alt="'.re($get['name']).'" />';
+            $squad = '<img src="../inc/images/squads/'.(int)($get['id']).'.'.$end.'" alt="'.re($get['name']).'" />';
             break;
           }
         }

@@ -9,19 +9,19 @@ if(defined('_Votes')) {
         if(empty($_POST['vote']))
             $index = error(_vote_no_answer);
         else {
-            $get = db("SELECT * FROM ".$db['votes']." WHERE id = '".intval($_GET['id'])."'",false,true);
+            $get = db("SELECT * FROM ".$db['votes']." WHERE id = '".(int)($_GET['id'])."'",false,true);
             if($get['intern']) {
-                $ipcheck = db("SELECT ip FROM ".$db['ipcheck']." WHERE what = 'vid_".intval($_GET['id'])."'",false,true);
+                $ipcheck = db("SELECT ip FROM ".$db['ipcheck']." WHERE what = 'vid_".(int)($_GET['id'])."'",false,true);
                 if($ipcheck['ip'] == $userid)
                     $index = error(_error_voted_again,1);
                 else if($get['closed'])
                     $index = error(_error_vote_closed,1);
                 else {
                     db("UPDATE ".$db['userstats']." SET `votes` = votes+1 WHERE user = '".$userid."'");
-                    db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = '".intval($_POST['vote'])."'");
+                    db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = '".(int)($_POST['vote'])."'");
 
-                    setIpcheck("vid_".intval($_GET['id']),false);
-                    setIpcheck("vid(".intval($_GET['id']).")");
+                    setIpcheck("vid_".(int)($_GET['id']),false);
+                    setIpcheck("vid(".(int)($_GET['id']).")");
 
                     if(!isset($_GET['ajax']))
                         $index = info(_vote_successful, "?show=".$_GET['id']."");
@@ -35,10 +35,10 @@ if(defined('_Votes')) {
                     if($userid >= 1)
                         db("UPDATE ".$db['userstats']." SET `votes` = votes+1 WHERE user = '".$userid."'");
 
-                    db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = ".intval($_POST['vote']));
+                    db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = ".(int)($_POST['vote']));
 
-                    setIpcheck("vid_".intval($_GET['id']),false);
-                    setIpcheck("vid(".intval($_GET['id']).")");
+                    setIpcheck("vid_".(int)($_GET['id']),false);
+                    setIpcheck("vid(".(int)($_GET['id']).")");
 
                     if(!isset($_GET['ajax']))
                         $index = info(_vote_successful, "?show=".$_GET['id']."");
@@ -67,7 +67,7 @@ if(defined('_Votes')) {
         if(empty($_POST['vote']))
             $index = error(_vote_no_answer);
         else {
-            $get = db("SELECT * FROM ".$db['votes']." WHERE id = '".intval($_GET['id'])."'",false,true);
+            $get = db("SELECT * FROM ".$db['votes']." WHERE id = '".(int)($_GET['id'])."'",false,true);
 
             if(ipcheck("vid_".$_GET['id']))
                 $index = error(_error_voted_again,1);
@@ -77,10 +77,10 @@ if(defined('_Votes')) {
                 if($userid >= 1)
                     db("UPDATE ".$db['userstats']." SET `votes` = votes+1 WHERE user = '".$userid."'");
 
-                db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = '".intval($_POST['vote'])."'");
+                db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = '".(int)($_POST['vote'])."'");
 
-                setIpcheck("vid_".intval($_GET['id']),false);
-                setIpcheck("vid(".intval($_GET['id']).")");
+                setIpcheck("vid_".(int)($_GET['id']),false);
+                setIpcheck("vid(".(int)($_GET['id']).")");
 
                 if(!isset($_GET['fajax']))
                     $index = info(_vote_successful, "../forum/?action=showthread&amp;kid=".$_POST['kid']."&amp;id=".$_POST['fid']."");

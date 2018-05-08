@@ -84,7 +84,7 @@ if(_adminMenu != 'true') exit;
       } elseif($do == "edit") {
 
         $qry = db("SELECT * FROM ".$db['cw']."
-WHERE id = '".intval($_GET['id'])."'");
+WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         list($xonx1,$xonx2) = explode('on', $get['xonx']);
@@ -272,9 +272,9 @@ SET ".$xonx."
 `glineup` = '".up($_POST['glineup'])."',
 `matchadmins` = '".up($_POST['match_admins'])."',
 `bericht` = '".up($_POST['bericht'],1)."'
-WHERE id = '".intval($_GET['id'])."'");
+WHERE id = '".(int)($_GET['id'])."'");
 
-        $cwid = intval($_GET['id']);
+        $cwid = (int)($_GET['id']);
 
         //Logo Upload
         $tmpname = $_FILES['logo']['tmp_name'];
@@ -325,16 +325,16 @@ WHERE id = '".intval($_GET['id'])."'");
 elseif($do == "delete")
 {
         $qry = db("DELETE FROM ".$db['cw']."
-WHERE id = '".intval($_GET['id'])."'");
+WHERE id = '".(int)($_GET['id'])."'");
 
         $qry = db("DELETE FROM ".$db['cw_comments']."
-WHERE cw = '".intval($_GET['id'])."'");
+WHERE cw = '".(int)($_GET['id'])."'");
 
         $show = info(_cw_admin_deleted, "?admin=cw");
       } elseif($do == "top") {
         $qry = db("UPDATE ".$db['cw']."
-SET `top` = '".intval($_GET['set'])."'
-WHERE id = '".intval($_GET['id'])."'");
+SET `top` = '".(int)($_GET['set'])."'
+WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info((empty($_GET['set']) ? _cw_admin_top_unsetted : _cw_admin_top_setted), "?admin=cw");
       } else {

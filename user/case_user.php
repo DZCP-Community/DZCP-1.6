@@ -6,14 +6,14 @@
 
 if(defined('_UserMenu')) {
     $where = _user_profile_of.'autor_'.$_GET['id'];
-    if(!db("SELECT id FROM ".$db['users']." WHERE id = '".intval($_GET['id'])."'",true) ? true : false)
+    if(!db("SELECT id FROM ".$db['users']." WHERE id = '".(int)($_GET['id'])."'",true) ? true : false)
         $index = error(_user_dont_exist, 1);
     else {
         db("UPDATE ".$db['userstats']."
             SET `profilhits` = profilhits+1
-            WHERE user = '".intval($_GET['id'])."'");
+            WHERE user = '".(int)($_GET['id'])."'");
 
-        $get = db("SELECT * FROM ".$db['users']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['users']." WHERE id = '".(int)($_GET['id'])."'",false,true);
         $sex = '-';
         if($get['sex'] == "1")
             $sex = _male;
@@ -38,11 +38,11 @@ if(defined('_UserMenu')) {
         }
 
         $status = ($get['status'] == 1 || ($getl['level'] != 1 && isset($_GET['sq']))) ? _aktiv_icon : _inaktiv_icon;
-        $getl = db("SELECT * FROM ".$db['users']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $getl = db("SELECT * FROM ".$db['users']." WHERE id = '".(int)($_GET['id'])."'",false,true);
 
         $clan = "";
         if($getl['level'] != 1 || isset($_GET['sq'])) {
-            $sq = db("SELECT * FROM ".$db['userpos']." WHERE user = '".intval($_GET['id'])."'");
+            $sq = db("SELECT * FROM ".$db['userpos']." WHERE user = '".(int)($_GET['id'])."'");
             $cnt = cnt($db['userpos'], " WHERE user = '".$get['id']."'"); $i=1;
 
             if(_rows($sq) && !isset($_GET['sq'])) {
@@ -62,7 +62,7 @@ if(defined('_UserMenu')) {
 
             $qrycustom = db("SELECT * FROM ".$db['profile']." WHERE kid = '2' AND shown = '1' ORDER BY id ASC"); $custom_clan = '';
             while($getcustom = _fetch($qrycustom)) {
-                $getcontent = db("SELECT ".$getcustom['feldname']." FROM ".$db['users']." WHERE id = '".intval($_GET['id'])."' LIMIT 1",false,true);
+                $getcontent = db("SELECT ".$getcustom['feldname']." FROM ".$db['users']." WHERE id = '".(int)($_GET['id'])."' LIMIT 1",false,true);
                 if(!empty($getcontent[$getcustom['feldname']])) {
                     if($getcustom['type'] == 2)
                         $custom_clan .= show(_profil_custom_url, array("name" => re(pfields_name($getcustom['name'])), "value" => re($getcontent[$getcustom['feldname']])));
@@ -93,7 +93,7 @@ if(defined('_UserMenu')) {
 
         if(isset($_GET['show']) && $_GET['show'] == "gallery") {
             $qrygl = db("SELECT * FROM ".$db['usergallery']."
-                          WHERE user = '".intval($_GET['id'])."'
+                          WHERE user = '".(int)($_GET['id'])."'
                           ORDER BY id DESC");
 
             $qryperm = db("SELECT id,perm_gallery FROM ".$db['users']." WHERE id = ".$_GET['id'],false,true);
@@ -123,11 +123,11 @@ if(defined('_UserMenu')) {
         {
         $addgb = show(_usergb_eintragen, array("id" => $_GET['id']));
         $qrygb = db("SELECT * FROM ".$db['usergb']."
-                     WHERE user = ".intval($_GET['id'])."
+                     WHERE user = ".(int)($_GET['id'])."
                      ORDER BY datum DESC
                      LIMIT ".($page - 1)*config('m_usergb').",".config('m_usergb')."");
 
-        $entrys = cnt($db['usergb'], " WHERE user = ".intval($_GET['id']));
+        $entrys = cnt($db['usergb'], " WHERE user = ".(int)($_GET['id']));
         $i = $entrys-($page - 1)*config('m_usergb');
 
         $membergb = '';
@@ -350,8 +350,8 @@ if(defined('_UserMenu')) {
         if($do == "delete") {
             if($chkMe == "4" || $_GET['id'] == $userid) {
                 db("DELETE FROM ".$db['usergb']."
-                    WHERE user = '".intval($_GET['id'])."'
-                    AND id = '".intval($_GET['gbid'])."'");
+                    WHERE user = '".(int)($_GET['id'])."'
+                    AND id = '".(int)($_GET['gbid'])."'");
 
                 $index = info(_gb_delete_successful, "?action=user&amp;id=".$_GET['id']."&show=gb");
             }
@@ -362,7 +362,7 @@ if(defined('_UserMenu')) {
         else if($do == "edit")
         {
             $get = db("SELECT * FROM ".$db['usergb']."
-                       WHERE id = '".intval($_GET['gbid'])."'",false,true);
+                       WHERE id = '".(int)($_GET['gbid'])."'",false,true);
 
             if($get['reg'] == $userid || permission('editusers')) {
                 if($get['reg'] != 0) {

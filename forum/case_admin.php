@@ -12,7 +12,7 @@ if(defined('_Forum')) {
       if(isset($_POST['delete']))
       {
          $qryv = db("SELECT * FROM ".$db['f_threads']."
-                    WHERE id = '".intval($_GET['id'])."'");
+                    WHERE id = '".(int)($_GET['id'])."'");
         $getv = _fetch($qryv);
         
         $userPostReduction = array();
@@ -29,10 +29,10 @@ if(defined('_Forum')) {
         setIpcheck("vid_".$getv['vote'],false);
         }
         $del = db("DELETE FROM ".$db['f_threads']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         // grab user to reduce post count
-        $tmpSid = intval($_GET['id']);
+        $tmpSid = (int)($_GET['id']);
         $userPosts = db('SELECT p.`reg` FROM ' . $db['f_posts'] . ' p WHERE sid = ' . $tmpSid . ' AND p.`reg` != 0');
         while($get = _fetch($userPosts)) {
             if(!isset($userPostReduction[$get['reg']])) {
@@ -49,40 +49,40 @@ if(defined('_Forum')) {
         $delp = db("DELETE FROM ".$db['f_posts']."
                     WHERE sid = '" . $tmpSid . "'");
         $delabo = db("DELETE FROM ".$db['f_abo']."
-                      WHERE fid = '".intval($_GET['id'])."'");
+                      WHERE fid = '".(int)($_GET['id'])."'");
         $index = info(_forum_admin_thread_deleted, "../forum/");
       } else {
         if($_POST['closed'] == "0")
         {
           $open = db("UPDATE ".$db['f_threads']."
                       SET `closed` = '0'
-                      WHERE id = '".intval($_GET['id'])."'");
+                      WHERE id = '".(int)($_GET['id'])."'");
         } elseif($_POST['closed'] == "1") {
           $close = db("UPDATE ".$db['f_threads']."
                        SET `closed` = '1'
-                       WHERE id = '".intval($_GET['id'])."'");
+                       WHERE id = '".(int)($_GET['id'])."'");
         }
 
         if(isset($_POST['sticky']))
         {
           $sticky = db("UPDATE ".$db['f_threads']."
                         SET `sticky` = '1'
-                        WHERE id = '".intval($_GET['id'])."'");
+                        WHERE id = '".(int)($_GET['id'])."'");
         } else {
           $sticky = db("UPDATE ".$db['f_threads']."
                         SET `sticky` = '0'
-                        WHERE id = '".intval($_GET['id'])."'");
+                        WHERE id = '".(int)($_GET['id'])."'");
         }
 
         if(isset($_POST['global']))
         {
           $sticky = db("UPDATE ".$db['f_threads']."
                         SET `global` = '1'
-                        WHERE id = '".intval($_GET['id'])."'");
+                        WHERE id = '".(int)($_GET['id'])."'");
         } else {
           $sticky = db("UPDATE ".$db['f_threads']."
                         SET `global` = '0'
-                        WHERE id = '".intval($_GET['id'])."'");
+                        WHERE id = '".(int)($_GET['id'])."'");
         }
 
         if($_POST['move'] == "lazy")
@@ -91,17 +91,17 @@ if(defined('_Forum')) {
         } else {
           $move = db("UPDATE ".$db['f_threads']."
                       SET `kid` = '".$_POST['move']."'
-                      WHERE id = '".intval($_GET['id'])."'");
+                      WHERE id = '".(int)($_GET['id'])."'");
 
                     $move = db("UPDATE ".$db['f_posts']."
                       SET `kid` = '".$_POST['move']."'
-                      WHERE sid = '".intval($_GET['id'])."'");
+                      WHERE sid = '".(int)($_GET['id'])."'");
 
           $qrym = db("SELECT s1.kid,s2.kattopic,s2.id
                       FROM ".$db['f_threads']." AS s1
                       LEFT JOIN ".$db['f_skats']." AS s2
                       ON s1.kid = s2.id
-                      WHERE s1.id = '".intval($_GET['id'])."'");
+                      WHERE s1.id = '".(int)($_GET['id'])."'");
           $getm = _fetch($qrym);
 
           $i_move = show(_forum_admin_do_move, array("kat" => re($getm['kattopic'])));

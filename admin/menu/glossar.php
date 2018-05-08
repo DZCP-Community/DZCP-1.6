@@ -32,7 +32,7 @@ if(_adminMenu != 'true') exit;
         }
       } elseif($do == 'edit') {
         $qry = db("SELECT * FROM ".$db['glossar']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $show = show($dir."/form_glossar", array("head" => _admin_glossar_add,
@@ -53,13 +53,13 @@ if(_adminMenu != 'true') exit;
           $ins = db("UPDATE ".$db['glossar']."
                      SET `word`    = '".up($_POST['link'])."',
                          `glossar` = '".up($_POST['beschreibung'])."'
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
 
           $show = info(_admin_glossar_edited,'?admin=glossar');
         }
       } elseif($do == 'delete') {
         $del = db("DELETE FROM ".$db['glossar']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_admin_glossar_deleted,'?admin=glossar');
       } else {

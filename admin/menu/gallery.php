@@ -16,7 +16,7 @@ switch ($do) {
             }
 
             db("INSERT INTO ".$db['gallery']." SET `kat` = '".up($_POST['gallery'])."',
-                                                   `intern`   = ".(isset($_POST['intern']) ? intval($_POST['intern']) : 0).",
+                                                   `intern`   = ".(isset($_POST['intern']) ? (int)($_POST['intern']) : 0).",
                                                    `beschreibung`   = '".up($_POST['beschreibung'])."',
                                                    `datum`          = '".time()."'");
 
@@ -49,7 +49,7 @@ switch ($do) {
         $show = info(_gallery_added, "?admin=gallery");
     break;
     case 'delgal':
-        db("DELETE FROM ".$db['gallery']." WHERE id = '".intval($_GET['id'])."'");
+        db("DELETE FROM ".$db['gallery']." WHERE id = '".(int)($_GET['id'])."'");
         $files = get_files("../gallery/images/",false,true,$picformat);
         foreach ($files as $file) {
             if(preg_match("#".$_GET['id']."_(.*?).(gif|jpg|jpeg|png)#",strtolower($file))!= FALSE) {
@@ -76,7 +76,7 @@ switch ($do) {
         $show = info(_gallery_pic_deleted, "../gallery/?action=show&amp;id=".$pid[1]."");
     break;
     case 'edit':
-        $get = db("SELECT * FROM ".$db['gallery']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['gallery']." WHERE id = '".(int)($_GET['id'])."'",false,true);
         $show = show($dir."/form_gallery_edit", array("head" => _gallery_admin_edit,
                                                       "gallery" => _gallery_gallery,
                                                       "intern" => _internal,
@@ -91,12 +91,12 @@ switch ($do) {
         db("UPDATE ".$db['gallery']." SET `kat` = '".up($_POST['gallery'])."',
                                           `intern` = '".((int)$_POST['intern'])."',
                                           `beschreibung` = '".up($_POST['beschreibung'], 1)."'
-                                      WHERE id = '".intval($_GET['id'])."'");
+                                      WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_gallery_edited, "?admin=gallery");
     break;
     case 'new':
-        $get = db("SELECT * FROM ".$db['gallery']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['gallery']." WHERE id = '".(int)($_GET['id'])."'",false,true);
         $option = '';
         for($i=1;$i<=100;$i++) {
             $option .= "<option value=\"".$i."\">".$i."</option>";
@@ -111,7 +111,7 @@ switch ($do) {
                                                      "option" => $option));
     break;
     case 'editstep2':
-        $get = db("SELECT * FROM ".$db['gallery']." WHERE id = '".intval($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['gallery']." WHERE id = '".(int)($_GET['id'])."'",false,true);
         $addfile = '';
         for($i=1;$i<=$_POST['anzahl'];$i++) {
             $addfile .= show($dir."/form_gallery_addfile", array("file" => _gallery_image, "i" => $i));

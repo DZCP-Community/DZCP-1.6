@@ -54,7 +54,7 @@
                     }
                     break;
                 case "crop":
-                    if(!$image->cropToDimensions($_POST['x'], $_POST['y'], intval($_POST['x']) + intval($_POST['width']), intval($_POST['y']) + intval($_POST['height'])))
+                    if(!$image->cropToDimensions($_POST['x'], $_POST['y'], (int)($_POST['x']) + (int)($_POST['width']), (int)($_POST['y']) + (int)($_POST['height'])))
                     {
                         $error = IMG_SAVE_CROP_FAILED;
                     }
@@ -67,7 +67,7 @@
                     }
                     break;
                 case "rotate":
-                    if(!$image->rotate(intval($_POST['angle'])))
+                    if(!$image->rotate((int)($_POST['angle'])))
                     {
                         $error = IMG_SAVE_ROTATE_FAILED;
                     }

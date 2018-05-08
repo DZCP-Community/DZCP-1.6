@@ -5,7 +5,7 @@
  */
 
 if(defined('_Votes')) {
-    $get = db("SELECT `id`,`intern`,`closed` FROM `".$db['votes']."` WHERE `id` = ".intval($_GET['id']).";",false,true);
+    $get = db("SELECT `id`,`intern`,`closed` FROM `".$db['votes']."` WHERE `id` = ".(int)($_GET['id']).";",false,true);
     if(!$get['intern'] || ($get['intern'] && $chkMe)) {
         $qryv = db("SELECT `user_id`,`created` FROM `".$db['ipcheck']."` WHERE `what` = 'vid_".$get['id']."' ORDER BY time DESC;");
         if($chkMe == 4 || $get['closed'] || permission('votesadmin') || db("SELECT `id` FROM `".$db['ipcheck']."` WHERE `user_id` = ".$userid." "

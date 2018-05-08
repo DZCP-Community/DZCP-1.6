@@ -154,7 +154,7 @@ else if(!$installer && !$updater && !file_exists(basePath.'/inc/public_key.php')
 
 //-> Global
 $action = isset($_GET['action']) ? $_GET['action'] : '';
-$page = (isset($_GET['page']) && intval($_GET['page']) >= 1) ? intval($_GET['page']) : 1;
+$page = (isset($_GET['page']) && (int)($_GET['page']) >= 1) ? (int)($_GET['page']) : 1;
 $do = isset($_GET['do']) ? $_GET['do'] : '';
 $index = ''; $show = ''; $color = 0;
 
@@ -1426,7 +1426,7 @@ function online_reg() {
 function checkme($userid_set=0) {
     global $db;
     if(HasDSGVO() || $userid_set!=0) {
-        if (!$userid = ($userid_set != 0 ? intval($userid_set) : userid())) return 0;
+        if (!$userid = ($userid_set != 0 ? (int)($userid_set) : userid())) return 0;
         if (rootAdmin($userid)) return 4;
         if (empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
         if (!dbc_index::issetIndex('user_' . $userid)) {
@@ -1448,7 +1448,7 @@ function isBanned($userid_set=0,$logout=true) {
     global $db,$userid;
     $userid_set = $userid_set ? $userid_set : $userid;
     if(checkme($userid_set) >= 1 || $userid_set) {
-        $get = db("SELECT `banned` FROM `".$db['users']."` WHERE `id` = ".intval($userid_set)." LIMIT 1;",false,true);
+        $get = db("SELECT `banned` FROM `".$db['users']."` WHERE `id` = ".(int)($userid_set)." LIMIT 1;",false,true);
         if($get['banned']) {
             if($logout) {
                 $_SESSION['id']        = '';
@@ -1483,12 +1483,12 @@ function permission($check,$uid=0) {
             // check rank permission
             if(db("SELECT s1.`".$check."` FROM ".$db['permissions']." AS s1
                    LEFT JOIN ".$db['userpos']." AS s2 ON s1.`pos` = s2.`posi`
-                   WHERE s2.`user` = '".intval($uid)."' AND s1.`".$check."` = '1' AND s2.`posi` != '0'",true))
+                   WHERE s2.`user` = '".(int)($uid)."' AND s1.`".$check."` = '1' AND s2.`posi` != '0'",true))
                 return true;
 
             // check user permission
             if(!dbc_index::issetIndex('user_permission_'.$uid)) {
-                $permissions = db("SELECT * FROM ".$db['permissions']." WHERE user = '".intval($uid)."'",false,true);
+                $permissions = db("SELECT * FROM ".$db['permissions']." WHERE user = '".(int)($uid)."'",false,true);
                 dbc_index::setIndex('user_permission_'.$uid, $permissions);
             }
 
@@ -1513,13 +1513,13 @@ function check_msg() {
 //-> Prueft sicherheitsrelevante Gegebenheiten im Forum
 function forumcheck($tid, $what) {
     global $db;
-    return db("SELECT ".$what." FROM ".$db['f_threads']." WHERE id = '".intval($tid)."' AND ".$what." = '1'",true) ? true : false;
+    return db("SELECT ".$what." FROM ".$db['f_threads']." WHERE id = '".(int)($tid)."' AND ".$what." = '1'",true) ? true : false;
 }
 
 //-> Prueft ob ein User schon in der Buddyliste vorhanden ist
 function check_buddy($buddy) {
     global $db,$userid;
-    return !db("SELECT buddy FROM ".$db['buddys']." WHERE user = '".intval($userid)."' AND buddy = '".intval($buddy)."'",true) ? true : false;
+    return !db("SELECT buddy FROM ".$db['buddys']." WHERE user = '".(int)($userid)."' AND buddy = '".(int)($buddy)."'",true) ? true : false;
 }
 
 //-> Funktion um bei Clanwars Endergebnisse auszuwerten
@@ -1719,15 +1719,15 @@ function check_email($email) {
 
 //-> Bilder verkleinern
 function img_size($img) {
-    return "<a href=\"../".$img."\" rel=\"lightbox[l_".intval($img)."]\"><img src=\"../thumbgen.php?img=".$img."\" alt=\"\" /></a>";
+    return "<a href=\"../".$img."\" rel=\"lightbox[l_".(int)($img)."]\"><img src=\"../thumbgen.php?img=".$img."\" alt=\"\" /></a>";
 }
 
 function img_cw($folder="", $img="") {
-    return "<a href=\"../".$folder.$img."\" rel=\"lightbox[cw_".intval($folder)."]\"><img src=\"../thumbgen.php?img=".$folder.$img."\" alt=\"\" /></a>";
+    return "<a href=\"../".$folder.$img."\" rel=\"lightbox[cw_".(int)($folder)."]\"><img src=\"../thumbgen.php?img=".$folder.$img."\" alt=\"\" /></a>";
 }
 
 function gallery_size($img="") {
-    return "<a href=\"../gallery/images/".$img."\" rel=\"lightbox[gallery_".intval($img)."]\"><img src=\"../thumbgen.php?img=gallery/images/".$img."\" alt=\"\" /></a>";
+    return "<a href=\"../gallery/images/".$img."\" rel=\"lightbox[gallery_".(int)($img)."]\"><img src=\"../thumbgen.php?img=gallery/images/".$img."\" alt=\"\" /></a>";
 }
 
 //-> URL wird auf Richtigkeit ueberprueft
@@ -1805,8 +1805,8 @@ function artikelSites($sites, $id) {
 //-> Nickausgabe mit Profillink oder Emaillink (reg/nicht reg)
 function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
     global $db;
-    if(!dbc_index::issetIndex('user_'.intval($uid))) {
-        $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".intval($uid).";");
+    if(!dbc_index::issetIndex('user_'.(int)($uid))) {
+        $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($uid).";");
         if(_rows($qry)) {
             $get = _fetch($qry);
             dbc_index::setIndex('user_'.$get['id'], $get);
@@ -1816,10 +1816,10 @@ function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
         }
     }
 
-    $nickname = (!empty($cut)) ? cut(re(decode(dbc_index::getIndexKey('user_'.intval($uid), 'nick'))), $cut,true,false) :
-        re(decode(dbc_index::getIndexKey('user_'.intval($uid), 'nick')));
+    $nickname = (!empty($cut)) ? cut(re(decode(dbc_index::getIndexKey('user_'.(int)($uid), 'nick'))), $cut,true,false) :
+        re(decode(dbc_index::getIndexKey('user_'.(int)($uid), 'nick')));
     return show(_user_link, array("id" => $uid,
-                                  "country" => flag(dbc_index::getIndexKey('user_'.intval($uid), 'country')),
+                                  "country" => flag(dbc_index::getIndexKey('user_'.(int)($uid), 'country')),
                                   "class" => $class,
                                   "get" => $add,
                                   "nick" => $nickname));
@@ -1827,8 +1827,8 @@ function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
 
 function cleanautor($uid, $class="", $nick="", $email="", $cut="") {
     global $db;
-    if(!dbc_index::issetIndex('user_'.intval($uid))) {
-        $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".intval($uid).";");
+    if(!dbc_index::issetIndex('user_'.(int)($uid))) {
+        $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($uid).";");
         if(_rows($qry)) {
             $get = _fetch($qry);
             dbc_index::setIndex('user_'.$get['id'], $get);
@@ -1837,14 +1837,14 @@ function cleanautor($uid, $class="", $nick="", $email="", $cut="") {
             return show(_user_link_noreg, array("nick" => re(cut($nick,$cut,false,false)), "class" => $class, "email" => eMailAddr($email)));
     }
 
-    return show(_user_link_preview, array("id" => $uid, "country" => flag(dbc_index::getIndexKey('user_'.intval($uid), 'country')),
-                                          "class" => $class, "nick" => re(cut(decode(dbc_index::getIndexKey('user_'.intval($uid),'nick')),$cut,false,false))));
+    return show(_user_link_preview, array("id" => $uid, "country" => flag(dbc_index::getIndexKey('user_'.(int)($uid), 'country')),
+                                          "class" => $class, "nick" => re(cut(decode(dbc_index::getIndexKey('user_'.(int)($uid),'nick')),$cut,false,false))));
 }
 
 function rawautor($uid) {
     global $db;
-    if(!dbc_index::issetIndex('user_'.intval($uid))) {
-        $qry = db("SELECT * FROM ".$db['users']." WHERE id = '".intval($uid)."'");
+    if(!dbc_index::issetIndex('user_'.(int)($uid))) {
+        $qry = db("SELECT * FROM ".$db['users']." WHERE id = '".(int)($uid)."'");
         if(_rows($qry)) {
             $get = _fetch($qry);
             dbc_index::setIndex('user_'.$get['id'], $get);
@@ -1853,8 +1853,8 @@ function rawautor($uid) {
             return rawflag('')." ".jsconvert(re($uid));
     }
 
-    return rawflag(dbc_index::getIndexKey('user_'.intval($uid), 'country'))." ".
-    jsconvert(re(decode(dbc_index::getIndexKey('user_'.intval($uid), 'nick'))));
+    return rawflag(dbc_index::getIndexKey('user_'.(int)($uid), 'country'))." ".
+    jsconvert(re(decode(dbc_index::getIndexKey('user_'.(int)($uid), 'nick'))));
 }
 
 //-> Nickausgabe ohne Profillink oder Emaillink fr das ForenAbo
@@ -1887,14 +1887,14 @@ function jsconvert($txt)
 //-> interner Forencheck
 function fintern($id) {
     global $db,$userid,$chkMe;
-    $fget = _fetch(db("SELECT s1.intern,s2.id FROM ".$db['f_kats']." AS s1 LEFT JOIN ".$db['f_skats']." AS s2 ON s2.`sid` = s1.id WHERE s2.`id` = '".intval($id)."'"));
+    $fget = _fetch(db("SELECT s1.intern,s2.id FROM ".$db['f_kats']." AS s1 LEFT JOIN ".$db['f_skats']." AS s2 ON s2.`sid` = s1.id WHERE s2.`id` = '".(int)($id)."'"));
 
     if(!$chkMe)
         return empty($fget['intern']) ? true : false;
     else
     {
-      $team = db("SELECT * FROM ".$db['f_access']." AS s1 LEFT JOIN ".$db['userpos']." AS s2 ON s1.`pos` = s2.`posi` WHERE s2.`user` = '".intval($userid)."' AND s2.`posi` != '0' AND s1.`forum` = '".intval($id)."'");
-      $user = db("SELECT * FROM ".$db['f_access']." WHERE `user` = '".intval($userid)."' AND `forum` = '".intval($id)."'");
+      $team = db("SELECT * FROM ".$db['f_access']." AS s1 LEFT JOIN ".$db['userpos']." AS s2 ON s1.`pos` = s2.`posi` WHERE s2.`user` = '".(int)($userid)."' AND s2.`posi` != '0' AND s1.`forum` = '".(int)($id)."'");
+      $user = db("SELECT * FROM ".$db['f_access']." WHERE `user` = '".(int)($userid)."' AND `forum` = '".(int)($id)."'");
 
       if(_rows($user) || _rows($team) || $chkMe == 4 || !$fget['intern'])
           return true;
@@ -1910,7 +1910,7 @@ function data($what,$tid=0) {
     global $db,$userid;
     if(!$tid) $tid = $userid;
     if(!dbc_index::issetIndex('user_'.$tid)) {
-        $get = db("SELECT * FROM ".$db['users']." WHERE id = '".intval($tid)."'",false,true);
+        $get = db("SELECT * FROM ".$db['users']." WHERE id = '".(int)($tid)."'",false,true);
         dbc_index::setIndex('user_'.$tid, $get);
     }
 
@@ -1922,7 +1922,7 @@ function userstats($what,$tid=0) {
     global $db,$userid;
     if(!$tid) $tid = $userid;
     if(!dbc_index::issetIndex('userstats_'.$tid)) {
-        $get = db("SELECT * FROM ".$db['userstats']." WHERE user = '".intval($tid)."'",false,true);
+        $get = db("SELECT * FROM ".$db['userstats']." WHERE user = '".(int)($tid)."'",false,true);
         dbc_index::setIndex('userstats_'.$tid, $get);
     }
 
@@ -2152,19 +2152,19 @@ function getrank($tid, $squad="", $profil=false) {
     global $db;
     if($squad) {
         if($profil)
-            $qry = db("SELECT * FROM ".$db['userpos']." AS s1 LEFT JOIN ".$db['squads']." AS s2 ON s1.squad = s2.id WHERE s1.user = '".intval($tid)."' AND s1.squad = '".intval($squad)."' AND s1.posi != '0'");
+            $qry = db("SELECT * FROM ".$db['userpos']." AS s1 LEFT JOIN ".$db['squads']." AS s2 ON s1.squad = s2.id WHERE s1.user = '".(int)($tid)."' AND s1.squad = '".(int)($squad)."' AND s1.posi != '0'");
         else
-            $qry = db("SELECT * FROM ".$db['userpos']." WHERE user = '".intval($tid)."' AND squad = '".intval($squad)."' AND posi != '0'");
+            $qry = db("SELECT * FROM ".$db['userpos']." WHERE user = '".(int)($tid)."' AND squad = '".(int)($squad)."' AND posi != '0'");
 
         if(_rows($qry)) {
             while($get = _fetch($qry)) {
-                $getp = db("SELECT * FROM ".$db['pos']." WHERE id = '".intval($get['posi'])."'",false,true);
+                $getp = db("SELECT * FROM ".$db['pos']." WHERE id = '".(int)($get['posi'])."'",false,true);
                 if(!empty($get['name'])) $squadname = '<b>'.$get['name'].':</b> ';
                 else $squadname = '';
                 return $squadname.$getp['position'];
             }
         } else {
-            $get = _fetch(db("SELECT level,banned FROM ".$db['users']." WHERE id = '".intval($tid)."'"));
+            $get = _fetch(db("SELECT level,banned FROM ".$db['users']." WHERE id = '".(int)($tid)."'"));
             if(!$get['level'] && !$get['banned'])     return _status_unregged;
             else if($get['level'] == 1)               return _status_user;
             else if($get['level'] == 2)               return _status_trial;
@@ -2174,12 +2174,12 @@ function getrank($tid, $squad="", $profil=false) {
             else return _gast;
         }
     } else {
-        $qry = db("SELECT s1.*,s2.position FROM ".$db['userpos']." AS s1 LEFT JOIN ".$db['pos']." AS s2 ON s1.posi = s2.id WHERE s1.user = '".intval($tid)."' AND s1.posi != '0' ORDER BY s2.pid ASC");
+        $qry = db("SELECT s1.*,s2.position FROM ".$db['userpos']." AS s1 LEFT JOIN ".$db['pos']." AS s2 ON s1.posi = s2.id WHERE s1.user = '".(int)($tid)."' AND s1.posi != '0' ORDER BY s2.pid ASC");
         if(_rows($qry)) {
             $get = _fetch($qry);
             return $get['position'];
         } else {
-            $get = _fetch(db("SELECT level,banned FROM ".$db['users']." WHERE id = '".intval($tid)."'"));
+            $get = _fetch(db("SELECT level,banned FROM ".$db['users']." WHERE id = '".(int)($tid)."'"));
             if(!$get['level'] && !$get['banned'])    return _status_unregged;
             elseif($get['level'] == 1)               return _status_user;
             elseif($get['level'] == 2)               return _status_trial;
@@ -2195,7 +2195,7 @@ function getrank($tid, $squad="", $profil=false) {
 function set_lastvisit() {
     global $db,$useronline,$userid;
     if($userid) {
-        if(!db("SELECT id FROM ".$db['users']." WHERE id = ".intval($userid)." AND time+'".$useronline."'>'".time()."'",true)) {
+        if(!db("SELECT id FROM ".$db['users']." WHERE id = ".(int)($userid)." AND time+'".$useronline."'>'".time()."'",true)) {
             $_SESSION['lastvisit'] = data("time");
         }
     }
@@ -2204,7 +2204,7 @@ function set_lastvisit() {
 //-> Checkt welcher User gerade noch online ist
 function onlinecheck($tid) {
     global $db,$useronline;
-    $row = db("SELECT id FROM ".$db['users']." WHERE id = '".intval($tid)."' AND time+'".$useronline."'>'".time()."' AND online = 1",true);
+    $row = db("SELECT id FROM ".$db['users']." WHERE id = '".(int)($tid)."' AND time+'".$useronline."'>'".time()."' AND online = 1",true);
     return $row ? "<img src=\"../inc/images/online.gif\" alt=\"\" class=\"icon\" />" : "<img src=\"../inc/images/offline.gif\" alt=\"\" class=\"icon\" />";
 }
 
@@ -2231,7 +2231,7 @@ function ipcheck($what,$time = "") {
         if (preg_match("#vid#", $get['what']))
             return true;
         else {
-            if ($get['time'] + intval($time) < time())
+            if ($get['time'] + (int)($time) < time())
                 db("DELETE FROM `" . $db['ipcheck'] . "` WHERE `what` = '" . $what . "' AND `ip` = '" . $userip . "' AND `time`+'" . $time . "'<'" . time() . "'");
 
             if ($get['time'] + $time > time())
@@ -2365,7 +2365,7 @@ function admin_perms($userid) {
 	'gs_showpw','dlintern','intforum','galleryintern');
 
    // check user permission
-    $c = db("SELECT * FROM ".$db['permissions']." WHERE user = '".intval($userid)."'",false,true);
+    $c = db("SELECT * FROM ".$db['permissions']." WHERE user = '".(int)($userid)."'",false,true);
     if(!empty($c)) {
         foreach($c AS $v => $k) {
             if($v != 'id' && $v != 'user' && $v != 'pos' && !in_array($v, $e)) {
@@ -2378,7 +2378,7 @@ function admin_perms($userid) {
     }
 
    // check rank permission
-    $qry = db("SELECT s1.* FROM ".$db['permissions']." AS s1 LEFT JOIN ".$db['userpos']." AS s2 ON s1.`pos` = s2.`posi` WHERE s2.`user` = '".intval($userid)."' AND s2.`posi` != '0'");
+    $qry = db("SELECT s1.* FROM ".$db['permissions']." AS s1 LEFT JOIN ".$db['userpos']." AS s2 ON s1.`pos` = s2.`posi` WHERE s2.`user` = '".(int)($userid)."' AND s2.`posi` != '0'");
     while($r = _fetch($qry)) {
         foreach($r AS $v => $k) {
             if($v != 'id' && $v != 'user' && $v != 'pos' && !in_array($v, $e)) {
@@ -2461,7 +2461,7 @@ function getPermissions($checkID = 0, $pos = 0) {
 
     if(!empty($checkID)) {
         $check = empty($pos) ? 'user' : 'pos'; $checked = array();
-        $qry = db("SELECT * FROM ".$db['permissions']." WHERE `".$check."` = '".intval($checkID)."'");
+        $qry = db("SELECT * FROM ".$db['permissions']." WHERE `".$check."` = '".(int)($checkID)."'");
         if(_rows($qry)) foreach(_fetch($qry) AS $k => $v) $checked[$k] = $v;
     }
 
@@ -2498,7 +2498,7 @@ function getBoardPermissions($checkID = 0, $pos = 0) {
         $qry2 = db("SELECT kattopic,id FROM ".$db['f_skats']." WHERE `sid` = '".$get['id']."' ORDER BY `kattopic` ASC"); $break = 0; $fkats = '';
         while($get2 = _fetch($qry2)) {
             $br = ($break % 2) ? '<br />' : ''; $break++;
-            $check =  db("SELECT * FROM ".$db['f_access']." WHERE `".(empty($pos) ? 'user' : 'pos')."` = '".intval($checkID)."' AND ".(empty($pos) ? 'user' : 'pos')." != '0' AND `forum` = '".$get2['id']."'");
+            $check =  db("SELECT * FROM ".$db['f_access']." WHERE `".(empty($pos) ? 'user' : 'pos')."` = '".(int)($checkID)."' AND ".(empty($pos) ? 'user' : 'pos')." != '0' AND `forum` = '".$get2['id']."'");
             $chk = _rows($check) ? ' checked="checked"' : '';
             $fkats .= '<input type="checkbox" class="checkbox" id="board_'.$get2['id'].'" name="board['.$get2['id'].']" value="'.$get2['id'].'"'.$chk.' /><label for="board_'.$get2['id'].'"> '.re($get2['kattopic']).'</label> '.$br;
         }
@@ -2743,7 +2743,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
             include_once(basePath.'/inc/menu-functions/login.php');
         else {
             $check_msg = check_msg(); set_lastvisit(); $login = "";
-            db("UPDATE ".$db['users']." SET `time` = '".time()."', `whereami` = '".up($where)."' WHERE id = '".intval($userid)."'");
+            db("UPDATE ".$db['users']." SET `time` = '".time()."', `whereami` = '".up($where)."' WHERE id = '".(int)($userid)."'");
         }
 
         //init templateswitch

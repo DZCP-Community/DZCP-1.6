@@ -4,7 +4,7 @@
  *
  * @package MCManager.includes
  * @author Moxiecode
- * @copyright Copyright © 2004-2007, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2004-2007, Moxiecode Systems AB, All rights reserved.
  */
 
 require_once("./includes/general.php");
@@ -68,7 +68,7 @@ if (isset($config['general.remote_rpc_url'])) {
 
 	$errno = $errstr = "";
 
-	$socket = fsockopen($url['host'], intval($url['port']), $errno, $errstr, 30);
+	$socket = fsockopen($url['host'], (int)($url['port']), $errno, $errstr, 30);
 	if ($socket) {
 		// Send request headers
 		fputs($socket, $req);

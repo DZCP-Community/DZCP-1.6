@@ -84,7 +84,7 @@ switch ($action):
                         if(_rows($qryu)) {
                             while($getu = _fetch($qryu)) {
                                 $c = (!$z ? 'WHERE (' : 'OR ');
-                                $dosearch .= $c."s1.`t_reg` = ".intval($getu['id'])." OR s2.`reg` = ".intval($getu['id'])." ";
+                                $dosearch .= $c."s1.`t_reg` = ".(int)($getu['id'])." OR s2.`reg` = ".(int)($getu['id'])." ";
                             } //while
                             $z++;
                         }
@@ -100,7 +100,7 @@ switch ($action):
                     if(_rows($qryu)) {
                         while($getu = _fetch($qryu)) {
                             $c = (!$x ? 'WHERE (' : 'OR ');
-                            $dosearch .= $c."s1.`t_reg` = ".intval($getu['id'])." OR s2.`reg` = ".intval($getu['id'])." ";
+                            $dosearch .= $c."s1.`t_reg` = ".(int)($getu['id'])." OR s2.`reg` = ".(int)($getu['id'])." ";
                             $x++;
                         } //while
                     }
@@ -144,7 +144,7 @@ switch ($action):
                     $d = (!$y ? '' : 'OR ');
                     $k = $kat[$y];
                     $k = str_replace("k_","",$k);
-                    $dosearch .= $d."s3.`id` = ".intval($k)." ";
+                    $dosearch .= $d."s3.`id` = ".(int)($k)." ";
                 }
                 $dosearch .= ')';
             } unset($strkat,$k,$y,$kat);

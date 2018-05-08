@@ -36,7 +36,7 @@ if(_adminMenu != 'true') exit;
           $feldname = "custom_".$insID;
               $add = db("UPDATE ".$db['profile']."
                      SET `feldname` = '".$feldname."'
-                             WHERE id = '".intval($insID)."'");
+                             WHERE id = '".(int)($insID)."'");
 
               $add = db("ALTER TABLE `".$db['users']."` ADD `".$feldname."` VARCHAR( 249 ) NOT NULL");
 
@@ -44,15 +44,15 @@ if(_adminMenu != 'true') exit;
         }
       } elseif($do == "delete") {
         $qry = db("SELECT feldname FROM ".$db['profile']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
           $del = db("ALTER TABLE ".$db['users']." DROP `".$get['feldname']."`");
         $del = db("DELETE FROM ".$db['profile']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $show = info(_profil_deleted, "?admin=profile");
       } elseif($do == "edit") {
         $qry = db("SELECT * FROM ".$db['profile']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $shown = str_replace("<option value='".$get['shown']."'>", "<option selected=\"selected\" value='".$get['shown']."'>", _profile_shown_dropdown);
@@ -80,7 +80,7 @@ if(_adminMenu != 'true') exit;
                                    `kid`   = '".((int)$_POST['kat'])."',
                                    `type`  = '".((int)$_POST['type'])."',
                                    `shown` = '".((int)$_POST['shown'])."'
-                             WHERE id = '".intval($_GET['id'])."'");
+                             WHERE id = '".(int)($_GET['id'])."'");
 
               $show = info(_profile_edited,"?admin=profile");
         }
@@ -89,11 +89,11 @@ if(_adminMenu != 'true') exit;
         {
           $upd = db("UPDATE ".$db['profile']."
                      SET `shown` = '1'
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
         } elseif($_GET['what'] == 'unset') {
           $upd = db("UPDATE ".$db['profile']."
                      SET `shown` = '0'
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
         }
         header("Location: ?admin=profile");
       } else {

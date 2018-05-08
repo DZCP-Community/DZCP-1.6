@@ -23,7 +23,7 @@ if(defined('_News')) {
             $pmonth = isset($_POST['month']) ? $_POST['month'] : '';
         }
 
-        $kat = isset($_GET['kat']) ? intval($_GET['kat']) : 0;
+        $kat = isset($_GET['kat']) ? (int)($_GET['kat']) : 0;
         $n_kat = !$kat ? "" : "AND kat = '".$kat."'";
 
         if(($search = isset($_GET['search']) && !empty($_GET['search']) ? $_GET['search'] : false)) {

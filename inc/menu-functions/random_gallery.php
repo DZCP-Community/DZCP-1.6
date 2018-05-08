@@ -14,7 +14,7 @@ function random_gallery() {
 
         $imgArr = array();
         foreach($files AS $file) {
-            if(intval($file) == $get['id'])
+            if((int)($file) == $get['id'])
                 array_push($imgArr, $file);
         }
 

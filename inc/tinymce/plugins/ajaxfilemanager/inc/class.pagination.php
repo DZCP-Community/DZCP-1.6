@@ -49,7 +49,7 @@ class pagination
 	 */
 	function setLimit($value)
 	{
-		$this->itemsPerPage = intval($value);
+		$this->itemsPerPage = (int)($value);
 	}
 	/**
 	 * get maximum number of items per page
@@ -68,7 +68,7 @@ class pagination
 	 */
 	function setTotal($value)
 	{
-		$this->totalItems = intval($value);
+		$this->totalItems = (int)($value);
 	}
 	/**
 	 * get the total number of items
@@ -116,7 +116,7 @@ class pagination
 	 */
 	function __resetCurrentPage()
 	{
-		$this->currentPage = ((isset($_GET[$this->pageIndex]) && intval($_GET[$this->pageIndex]) > 0)?intval($_GET[$this->pageIndex]):1);
+		$this->currentPage = ((isset($_GET[$this->pageIndex]) && (int)($_GET[$this->pageIndex]) > 0)?(int)($_GET[$this->pageIndex]):1);
 	}
 
 	/**
@@ -260,7 +260,7 @@ class pagination
 	 */
 	function setGroupLimit($value)
 	{
-		$this->groupLimit = intval($value);
+		$this->groupLimit = (int)($value);
 	}
 	/**
 	 * get page grouping limit

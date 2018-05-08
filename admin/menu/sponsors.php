@@ -72,7 +72,7 @@ if(_adminMenu != 'true') exit;
             {
               $mpos = db("SELECT pos FROM ".$db['sponsoren']."
                           WHERE name != '".$_POST['posname']."'
-                          AND pos = '".intval(($_POST['position']-1))."'");
+                          AND pos = '".(int)(($_POST['position']-1))."'");
               $mp = _fetch($mpos);
 
               if($getpos['pos'] == $mp['pos']) $sel = 'selected="selected"';
@@ -154,7 +154,7 @@ if(_adminMenu != 'true') exit;
 
           $posi = db("UPDATE ".$db['sponsoren']."
                       SET `pos` = pos+1
-                      WHERE pos ".$sign." '".intval($_POST['position'])."'");
+                      WHERE pos ".$sign." '".(int)($_POST['position'])."'");
 
           $qry = db("INSERT INTO ".$db['sponsoren']."
                      SET `name`         = '".up($_POST['name'])."',
@@ -183,7 +183,7 @@ if(_adminMenu != 'true') exit;
               @copy($tmp1, basePath."/banner/sponsors/site_".$id.".".strtolower($end1));
               @unlink($_FILES['sdata']['tmp_name']);
             }
-                    db("UPDATE ".$db['sponsoren']." SET `send` = '".$end1."' WHERE id = '".intval($id)."'");
+                    db("UPDATE ".$db['sponsoren']." SET `send` = '".$end1."' WHERE id = '".(int)($id)."'");
           }
 
                   $tmp2 = $_FILES['bdata']['tmp_name'];
@@ -198,7 +198,7 @@ if(_adminMenu != 'true') exit;
               @copy($tmp2, basePath."/banner/sponsors/banner_".$id.".".strtolower($end2));
               @unlink($_FILES['bdata']['tmp_name']);
             }
-                    db("UPDATE ".$db['sponsoren']." SET `bend` = '".$end2."' WHERE id = '".intval($id)."'");
+                    db("UPDATE ".$db['sponsoren']." SET `bend` = '".$end2."' WHERE id = '".(int)($id)."'");
           }
 
                   $tmp3 = $_FILES['xdata']['tmp_name'];
@@ -214,7 +214,7 @@ if(_adminMenu != 'true') exit;
               @copy($tmp3, basePath."/banner/sponsors/box_".$id.".".strtolower($end3));
               @unlink($_FILES['xdata']['tmp_name']);
             }
-                    db("UPDATE ".$db['sponsoren']." SET `xend` = '".$end3."' WHERE id = '".intval($id)."'");
+                    db("UPDATE ".$db['sponsoren']." SET `xend` = '".$end3."' WHERE id = '".(int)($id)."'");
           }
 
           $show = info(_sponsor_added, "?admin=sponsors");
@@ -222,7 +222,7 @@ if(_adminMenu != 'true') exit;
       } elseif($do == "edit") {
 
         $qry = db("SELECT * FROM ".$db['sponsoren']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
           $pos = db("SELECT pos,name FROM ".$db['sponsoren']."
@@ -233,7 +233,7 @@ if(_adminMenu != 'true') exit;
             {
               $mpos = db("SELECT pos FROM ".$db['sponsoren']."
                           WHERE name != '".$get['name']."'
-                          AND pos = '".intval(($get['pos']-1))."'");
+                          AND pos = '".(int)(($get['pos']-1))."'");
               $mp = _fetch($mpos);
 
               if($getpos['pos'] == $mp['pos']) $sel = 'selected="selected"';
@@ -343,7 +343,7 @@ if(_adminMenu != 'true') exit;
           if(empty($_POST['name']))         $error = show("errors/errortable", array("error" => _sponsors_empty_name));
 
           $qry = db("SELECT * FROM ".$db['sponsoren']."
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
           $get = _fetch($qry);
 
           $pos = db("SELECT pos,name FROM ".$db['sponsoren']."
@@ -354,7 +354,7 @@ if(_adminMenu != 'true') exit;
             {
               $mpos = db("SELECT pos FROM ".$db['sponsoren']."
                           WHERE name != '".$get['name']."'
-                          AND pos = '".intval(($_POST['position']-1))."'");
+                          AND pos = '".(int)(($_POST['position']-1))."'");
               $mp = _fetch($mpos);
 
               if($getpos['pos'] == $mp['pos']) $sel = 'selected="selected"';
@@ -460,7 +460,7 @@ if(_adminMenu != 'true') exit;
 
         } else {
           $ask = db("SELECT pos FROM ".$db['sponsoren']."
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
           $get = _fetch($ask);
 
           if($_POST['position'] != $get['pos'])
@@ -470,7 +470,7 @@ if(_adminMenu != 'true') exit;
 
             $posi = db("UPDATE ".$db['sponsoren']."
                         SET `pos` = pos+1
-                        WHERE pos ".$sign." '".intval($_POST['position'])."'");
+                        WHERE pos ".$sign." '".(int)($_POST['position'])."'");
           }
 
           if($_POST['position'] == "lazy") $newpos = "";
@@ -487,9 +487,9 @@ if(_adminMenu != 'true') exit;
                              `box`           = '".((int)$_POST['box'])."',
                              `xlink`         = '".up($_POST['xlink'])."',
                              ".$newpos."
-                       WHERE id = '".intval($_GET['id'])."'");
+                       WHERE id = '".(int)($_GET['id'])."'");
 
-          $id = intval($_GET['id']);
+          $id = (int)($_GET['id']);
 
                   $tmp1 = $_FILES['sdata']['tmp_name'];
           $type1 = $_FILES['sdata']['type'];
@@ -511,7 +511,7 @@ if(_adminMenu != 'true') exit;
               @copy($tmp1, basePath."/banner/sponsors/site_".$id.".".strtolower($end1));
               @unlink($_FILES['sdata']['tmp_name']);
             }
-                    db("UPDATE ".$db['sponsoren']." SET `send` = '".$end1."' WHERE id = '".intval($id)."'");
+                    db("UPDATE ".$db['sponsoren']." SET `send` = '".$end1."' WHERE id = '".(int)($id)."'");
           }
 
                   $tmp2 = $_FILES['bdata']['tmp_name'];
@@ -534,7 +534,7 @@ if(_adminMenu != 'true') exit;
                           @copy($tmp2, basePath."/banner/sponsors/banner_".$id.".".strtolower($end2));
               @unlink($_FILES['bdata']['tmp_name']);
             }
-                    db("UPDATE ".$db['sponsoren']." SET `bend` = '".$end2."' WHERE id = '".intval($id)."'");
+                    db("UPDATE ".$db['sponsoren']." SET `bend` = '".$end2."' WHERE id = '".(int)($id)."'");
           }
 
                   $tmp3 = $_FILES['xdata']['tmp_name'];
@@ -557,14 +557,14 @@ if(_adminMenu != 'true') exit;
                           @copy($tmp3, basePath."/banner/sponsors/box_".$id.".".strtolower($end3));
               @unlink($_FILES['xdata']['tmp_name']);
             }
-                    db("UPDATE ".$db['sponsoren']." SET `xend` = '".$end3."' WHERE id = '".intval($id)."'");
+                    db("UPDATE ".$db['sponsoren']." SET `xend` = '".$end3."' WHERE id = '".(int)($id)."'");
           }
 
           $show = info(_sponsor_edited, "?admin=sponsors");
         }
       } elseif($do == "delete") {
         $qry = db("DELETE FROM ".$db['sponsoren']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_sponsor_deleted, "?admin=sponsors");
       } else {

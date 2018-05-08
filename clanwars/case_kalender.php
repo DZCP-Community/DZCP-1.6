@@ -9,12 +9,12 @@ if(defined('_Clanwars')) {
                     s1.servername,s1.serverpwd,s1.bericht,s1.squad_id,s1.gametype,s1.gcountry,s2.icon,s2.name
              FROM ".$db['cw']." AS s1
              LEFT JOIN ".$db['squads']." AS s2 ON s1.squad_id = s2.id
-             WHERE DATE_FORMAT(FROM_UNIXTIME(s1.datum), '%d.%m.%Y') = '".date("d.m.Y",intval($_GET['time']))."'
+             WHERE DATE_FORMAT(FROM_UNIXTIME(s1.datum), '%d.%m.%Y') = '".date("d.m.Y",(int)($_GET['time']))."'
              ORDER BY s1.datum DESC
              LIMIT ".($page - 1)*config('m_clanwars').",".config('m_clanwars')."");
 
   $i = $entrys-($page - 1)*config('m_clanwars');
-  $entrys = cnt($db['cw'], " WHERE DATE_FORMAT(FROM_UNIXTIME('".$get['datum']."'), '%d.%m.%Y') = '".date("d.m.Y",intval($_GET['time']))."'");
+  $entrys = cnt($db['cw'], " WHERE DATE_FORMAT(FROM_UNIXTIME('".$get['datum']."'), '%d.%m.%Y') = '".date("d.m.Y",(int)($_GET['time']))."'");
 
   if(_rows($qry))
   {

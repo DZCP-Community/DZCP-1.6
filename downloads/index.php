@@ -23,7 +23,7 @@ switch ($action):
         $qry = db("SELECT * FROM ".$db['dl_kat']." ORDER BY name");
         $t = 1; $cnt = 0; $kats = '';
         while($get = _fetch($qry)) {
-            $kid = isset($_GET['kat']) ? " WHERE id = '".intval($_GET['kat'])."'" : "";
+            $kid = isset($_GET['kat']) ? " WHERE id = '".(int)($_GET['kat'])."'" : "";
             $intern =  permission('dlintern') ? "" : " AND intern = '0'";
             $qrydl = db("SELECT * FROM ".$db['downloads']."
                          WHERE kat = '".$get['id']."'".$intern."
@@ -82,7 +82,7 @@ switch ($action):
             $index = error(_error_unregistered);
         else {
             $qry = db("SELECT * FROM ".$db['downloads']."
-                       WHERE id = '".intval($_GET['id'])."'");
+                       WHERE id = '".(int)($_GET['id'])."'");
 
             if(_rows($qry)) {
                 $get = _fetch($qry);
@@ -182,7 +182,7 @@ switch ($action):
             $index = error(_error_unregistered,1);
         else {
             $get = db("SELECT url FROM ".$db['downloads']."
-                       WHERE id = '".intval($_GET['id'])."'",false,true);
+                       WHERE id = '".(int)($_GET['id'])."'",false,true);
 
             $file = preg_replace("#added...#Uis", "", $get['url']);
             if(preg_match("=added...=Uis",$get['url']) != FALSE)
@@ -190,7 +190,7 @@ switch ($action):
             else
                 $dlFile = $get['url'];
 
-            db("UPDATE ".$db['downloads']." SET `hits` = hits+1, `last_dl` = '".time()."' WHERE id = '".intval($_GET['id'])."'");
+            db("UPDATE ".$db['downloads']." SET `hits` = hits+1, `last_dl` = '".time()."' WHERE id = '".(int)($_GET['id'])."'");
 
             ## download file ##
             header("Location: ".$dlFile);

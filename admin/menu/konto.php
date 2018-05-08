@@ -93,7 +93,7 @@ if(_adminMenu != 'true') exit;
         }
       } elseif($do == "edit") {
         $qry = db("SELECT * FROM ".$db['c_kats']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $show = show($dir."/form_clankasse", array("newhead" => _clankasse_edit_head,
@@ -109,13 +109,13 @@ if(_adminMenu != 'true') exit;
         } else {
           $qry = db("UPDATE ".$db['c_kats']."
                      SET `kat` = '".up($_POST['kat'])."'
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
 
           $show = info(_clankasse_kat_edited, "?admin=konto");
         }
       } elseif($do == "delete") {
         $qry = db("DELETE FROM ".$db['c_kats']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_clankasse_kat_deleted, "?admin=konto");
       }

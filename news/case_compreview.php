@@ -7,7 +7,7 @@
 if(defined('_News')) {
     header("Content-type: text/html; charset=utf-8");
     if($do == 'edit') {
-        $get = db("SELECT * FROM ".$db['newscomments']." WHERE `id` = '".intval($_GET['cid'])."'",false,true);
+        $get = db("SELECT * FROM ".$db['newscomments']." WHERE `id` = '".(int)($_GET['cid'])."'",false,true);
         $get_id = '?';
         $get_userid = $get['reg'];
         $get_date = $get['datum'];
@@ -15,7 +15,7 @@ if(defined('_News')) {
         $editedby = show(_edited_by, array("autor" => cleanautor($userid),
                                            "time" => date("d.m.Y H:i", time())._uhr));
     } else {
-        $get_id = cnt($db['newscomments'], " WHERE news = ".intval($_GET['id']))+1;
+        $get_id = cnt($db['newscomments'], " WHERE news = ".(int)($_GET['id']))+1;
         $get_userid = $userid;
         $get_date = time();
         $regCheck = $chkMe >= 1 ? true : false;

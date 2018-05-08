@@ -9,12 +9,12 @@ if(defined('_Clanwars')) {
                     s1.servername,s1.serverpwd,s1.bericht,s1.squad_id,s1.gametype,s1.gcountry,s2.icon,s2.name
              FROM ".$db['cw']." AS s1
              LEFT JOIN ".$db['squads']." AS s2 ON s1.squad_id = s2.id
-             WHERE s1.datum < ".time()." AND s1.squad_id = ".intval($_GET['id'])."
+             WHERE s1.datum < ".time()." AND s1.squad_id = ".(int)($_GET['id'])."
              ORDER BY s1.datum DESC
              LIMIT ".($page - 1)*config('m_clanwars').",".config('m_clanwars')."");
 
   $i = $entrys-($page - 1)*config('m_clanwars');
-  $entrys = cnt($db['cw'], "  WHERE datum < ".time()." AND squad_id = ".intval($_GET['id'])."");
+  $entrys = cnt($db['cw'], "  WHERE datum < ".time()." AND squad_id = ".(int)($_GET['id'])."");
   if(_rows($qry))
   {
       $show = "";
@@ -28,7 +28,7 @@ if(defined('_Clanwars')) {
       $details = show(_cw_show_details, array("id" => $get['id']));
       $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
       $squad = show(_member_squad_squadlink, array("squad" => re($get['name']),
-                                                   "id" => intval($_GET['id'])));
+                                                   "id" => (int)($_GET['id'])));
       $icon = show(_gameicon, array("icon" => $get['icon']));
 
       $show .= show($dir."/clanwars_show", array("datum" => date("d.m.Y", $get['datum']),
@@ -44,10 +44,10 @@ if(defined('_Clanwars')) {
     }
     if(_rows($qry))
     {
-      $anz_wo_wars = cnt($db['cw'], " WHERE punkte > gpunkte AND squad_id = ".intval($_GET['id'])."");
-      $anz_lo_wars = cnt($db['cw'], " WHERE punkte < gpunkte AND squad_id = ".intval($_GET['id'])."");
-      $anz_dr_wars = cnt($db['cw'], " WHERE datum < ".time()." && punkte = gpunkte AND squad_id = ".intval($_GET['id'])."");
-      $anz_ge_wars = cnt($db['cw'], "  WHERE datum < ".time()." AND squad_id = ".intval($_GET['id'])."");
+      $anz_wo_wars = cnt($db['cw'], " WHERE punkte > gpunkte AND squad_id = ".(int)($_GET['id'])."");
+      $anz_lo_wars = cnt($db['cw'], " WHERE punkte < gpunkte AND squad_id = ".(int)($_GET['id'])."");
+      $anz_dr_wars = cnt($db['cw'], " WHERE datum < ".time()." && punkte = gpunkte AND squad_id = ".(int)($_GET['id'])."");
+      $anz_ge_wars = cnt($db['cw'], "  WHERE datum < ".time()." AND squad_id = ".(int)($_GET['id'])."");
 
       if(!$_GET['time'])
       {
@@ -63,12 +63,12 @@ if(defined('_Clanwars')) {
       $anz_ges_wars = show(_cw_stats_ges_wars, array("ge_wars" => $anz_ge_wars));
 
       $cnt = db("SELECT SUM(punkte) AS num FROM ".$db['cw']."
-                   WHERE squad_id = ".intval($_GET['id'])."");
+                   WHERE squad_id = ".(int)($_GET['id'])."");
       $cnt = _fetch($cnt);
       $sum_punkte = $cnt['num'];
 
       $cnt = db("SELECT SUM(gpunkte) AS num FROM ".$db['cw']."
-                   WHERE squad_id = ".intval($_GET['id'])."");
+                   WHERE squad_id = ".(int)($_GET['id'])."");
       $cnt = _fetch($cnt);
       $sum_gpunkte = $cnt['num'];
 

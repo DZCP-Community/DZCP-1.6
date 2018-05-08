@@ -82,7 +82,7 @@ case 'spar':
     $index = error(_error_wrong_permissions, 1);
   } else {
     $qry = db("SELECT * FROM ".$db['taktik']."
-               WHERE id = ".intval($_GET['id']));
+               WHERE id = ".(int)($_GET['id']));
     $get = _fetch($qry);
 
     if($_GET['what'] == "ct")
@@ -112,7 +112,7 @@ case 'standard':
     $index = error(_error_wrong_permissions, 1);
   } else {
     $qry = db("SELECT * FROM ".$db['taktik']."
-               WHERE id = ".intval($_GET['id']));
+               WHERE id = ".(int)($_GET['id']));
     $get = _fetch($qry);
 
     if($_GET['what'] == "ct")
@@ -188,12 +188,12 @@ case 'do':
       }
     } elseif ($_GET['what'] == "delete" && $_GET['id']) {
       $qry = db("DELETE FROM ".$db['taktik']."
-                 WHERE id = ".intval($_GET['id']));
+                 WHERE id = ".(int)($_GET['id']));
 
       $index = info(_taktik_deleted, "../taktik/");
     } elseif ($_GET['what'] == "edit" && $_GET['id']) {
       $qry = db("SELECT * FROM ".$db['taktik']."
-                 WHERE id = ".intval($_GET['id']));
+                 WHERE id = ".(int)($_GET['id']));
       $get = _fetch($qry);
 
       $files = get_files("../inc/images/uploads/taktiken/",false,true,$picformat,false,array(),'minimize');
@@ -233,7 +233,7 @@ case 'do':
                        `spart`      = '".up($_POST['spart'], 1)."',
                        `standardct` = '".up($_POST['standardct'], 1)."',
                        `standardt`  = '".up($_POST['standardt'], 1)."'
-                   WHERE id = ".intval($_POST['id']));
+                   WHERE id = ".(int)($_POST['id']));
 
         $index = info(_error_taktik_edited, "../taktik/");
       }

@@ -114,7 +114,7 @@ if(_adminMenu != 'true') exit;
 
           $posi = db("UPDATE ".$db['navi']."
                       SET `pos` = pos+1
-                      WHERE pos ".$sign." '".intval($pos)."'");
+                      WHERE pos ".$sign." '".(int)($pos)."'");
 
           $posi = db("INSERT INTO ".$db['navi']."
                       SET `pos`     = '".((int)$pos)."',
@@ -130,7 +130,7 @@ if(_adminMenu != 'true') exit;
         }
       } elseif($do == "edit") {
         $qrys = db("SELECT * FROM ".$db['sites']."
-                    WHERE id = '".intval($_GET['id'])."'");
+                    WHERE id = '".(int)($_GET['id'])."'");
         $gets = _fetch($qrys);
 
         $qry = db("SELECT s2.*, s1.name AS katname, s1.placeholder FROM ".$db['navi_kats']." AS s1 LEFT JOIN ".$db['navi']." AS s2 ON s1.`placeholder` = s2.`kat`
@@ -151,7 +151,7 @@ if(_adminMenu != 'true') exit;
         }
 
         $qryn = db("SELECT * FROM ".$db['navi']."
-                    WHERE editor = '".intval($_GET['id'])."'");
+                    WHERE editor = '".(int)($_GET['id'])."'");
         $getn = _fetch($qryn);
 
         if($gets['html'] == "1") $checked = 'checked="checked"';
@@ -227,7 +227,7 @@ if(_adminMenu != 'true') exit;
                      SET `titel` = '".up($_POST['titel'])."',
                          `text`  = '".up($_POST['inhalt'])."',
                          `html`   = '".((int)$_POST['html'])."'
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
 
           if($_POST['pos'] == "1" || "2") $sign = ">= ";
           else $sign = "> ";
@@ -239,22 +239,22 @@ if(_adminMenu != 'true') exit;
 
           $posi = db("UPDATE ".$db['navi']."
                       SET `pos` = pos+1
-                      WHERE pos ".$sign." '".intval($pos)."'");
+                      WHERE pos ".$sign." '".(int)($pos)."'");
 
           $posi = db("UPDATE ".$db['navi']."
                       SET `pos`     = '".((int)$pos)."',
                           `kat`     = '".up($kat)."',
                           `name`    = '".up($_POST['name'])."',
                           `url`     = '".up($url)."'
-                      WHERE editor = '".intval($_GET['id'])."'");
+                      WHERE editor = '".(int)($_GET['id'])."'");
 
           $show = info(_site_edited, "?admin=editor");
         }
       } elseif($do == "delete") {
         $qry = db("DELETE FROM ".$db['sites']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $qry = db("DELETE FROM ".$db['navi']."
-                   WHERE editor = '".intval($_GET['id'])."'");
+                   WHERE editor = '".(int)($_GET['id'])."'");
         $show = info(_editor_deleted, "?admin=editor");
       } else {
         $qry = db("SELECT * FROM ".$db['sites']."");

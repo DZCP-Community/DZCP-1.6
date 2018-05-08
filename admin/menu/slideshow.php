@@ -114,7 +114,7 @@ $where = $where.': '._slider;
 
         $posi = db("UPDATE ".$db['slideshow']."
                     SET `pos` = pos+1
-                    WHERE `pos` ".$sign." '".intval($_POST['position'])."'");
+                    WHERE `pos` ".$sign." '".(int)($_POST['position'])."'");
 
         $qry = db("INSERT INTO ".$db['slideshow']."
                    SET `pos` = '".((int)$_POST['position'])."',
@@ -132,11 +132,11 @@ $where = $where.': '._slider;
     }
   }elseif($do == 'edit'){
     $qry = db("SELECT * FROM ".$db['slideshow']."
-               WHERE `id` = '".intval($_GET['id'])."'");
+               WHERE `id` = '".(int)($_GET['id'])."'");
     $get = _fetch($qry);
 
     $qrypos = db("SELECT * FROM ".$db['slideshow']."
-                  WHERE `id` != '".intval($get['id'])."'
+                  WHERE `id` != '".(int)($get['id'])."'
                   ORDER BY `pos` ASC");
     while($getpos = _fetch($qrypos)) {
         $positions .= show(_select_field, array("value" => $getpos['pos']+1,
@@ -212,7 +212,7 @@ $where = $where.': '._slider;
 
             $posi = db("UPDATE ".$db['slideshow']."
                         SET `pos` = pos+1
-                        WHERE `pos` ".$sign." '".intval($_POST['position'])."'");
+                        WHERE `pos` ".$sign." '".(int)($_POST['position'])."'");
 
             $pos = "`pos` = '".((int)$_POST['position'])."',";
         } else $pos = "";
@@ -224,20 +224,20 @@ $where = $where.': '._slider;
                       `url` = '".up($_POST['url'])."',
                       `desc` = '".up($_POST['desc'])."',
                       `target` = '".up($_POST['target'])."'
-                  WHERE `id` = '".intval($_POST['id'])."'");
+                  WHERE `id` = '".(int)($_POST['id'])."'");
 
         if($_FILES['bild']['tmp_name']) {
             $tmpname = $_FILES['bild']['tmp_name'];
-                @unlink(basePath."/inc/images/slideshow/".intval($_POST['id']).".jpg");
-                @copy($tmpname, basePath."/inc/images/slideshow/".intval($_POST['id']).".jpg");
+                @unlink(basePath."/inc/images/slideshow/".(int)($_POST['id']).".jpg");
+                @copy($tmpname, basePath."/inc/images/slideshow/".(int)($_POST['id']).".jpg");
                 @unlink($tmpname);
         }
         $show = info(_slider_admin_edit_done, "?admin=slideshow");
     }
 }elseif($do == 'delete'){
     $qry = db("DELETE FROM ".$db['slideshow']."
-               WHERE `id` = '".intval($_GET['id'])."'");
-    @unlink(basePath."/inc/images/slideshow/".intval($_GET['id']).".jpg");
+               WHERE `id` = '".(int)($_GET['id'])."'");
+    @unlink(basePath."/inc/images/slideshow/".(int)($_GET['id']).".jpg");
 
     $show = info(_slider_admin_del_done, "?admin=slideshow");
 }

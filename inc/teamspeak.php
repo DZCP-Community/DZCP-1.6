@@ -20,7 +20,7 @@ class TS3Renderer {
     }
 
     /**
-     * Setzt einige Einstellungen für das Rendern
+     * Setzt einige Einstellungen fï¿½r das Rendern
      * @param string $key
      * @param mixed $var
      */
@@ -34,7 +34,7 @@ class TS3Renderer {
     }
 
     /**
-     * Setzt den Input für den Renderer
+     * Setzt den Input fï¿½r den Renderer
      * @param array $gameq_data
      * @param array $sql_data
      */
@@ -63,7 +63,7 @@ class TS3Renderer {
         $out .= '<div class="tstree_right">'.self::icon(self::$data['virtualserver_icon_id']).'</div>'."\n";
         $out .= '<div class="tstree_clear"></div>'."\n";
         foreach($channels as $channel) {
-            //Nur Hauptchannel, subchannel filtern + Filter für 'Show only channels with users'
+            //Nur Hauptchannel, subchannel filtern + Filter fï¿½r 'Show only channels with users'
             if(!$channel['pid'] && ((self::$showOnlyChannelsWithUsers && (($channel['total_clients_family'] > 0 && $channel['channel_flag_default'] == 0) || ($channel['total_clients_family'] > 1 && $channel['channel_flag_default']))) || !self::$showOnlyChannelsWithUsers)) {
                 $players = self::renderPlayers($channel['cid'],0.05,$template); //Render Users in Channel
                 $subchannel = self::sub_channel($channels,$channel['cid'],0,$template,$channel['channel_name']); //SubChannel Rendern
@@ -152,7 +152,7 @@ class TS3Renderer {
     }
 
     /**
-     * Fügt die Channel Name hinzu.
+     * Fï¿½gt die Channel Name hinzu.
      * @param array $channel
      * @param boolean $tpl
      * @param string $joints
@@ -166,7 +166,7 @@ class TS3Renderer {
     }
 
     /**
-     * Fügt die Channel Icons hinzu.
+     * Fï¿½gt die Channel Icons hinzu.
      * @param array $channel
      * @return string
      */
@@ -222,7 +222,7 @@ class TS3Renderer {
     }
 
     /**
-     * Fügt die Guppen und User Icons hinzu.
+     * Fï¿½gt die Guppen und User Icons hinzu.
      * @param array $player
      * @return string | HTML Objekt
      */
@@ -437,7 +437,7 @@ class TS3Renderer {
                 }
             }
 
-            if(array_key_exists('status', $output) && intval($output['status']) != 0) {
+            if(array_key_exists('status', $output) && (int)($output['status']) != 0) {
                 DebugConsole::insert_error('TS3Renderer::ftInitDownload()', 'ErrorID: '.$output['status'].' | Message: '.$output['msg']. ' | Packet: '.$packet);
                 return false;
             }
@@ -583,7 +583,7 @@ class TS3Renderer {
     }
 
     /**
-     * TS3 Server Host/Port zurückgeben.
+     * TS3 Server Host/Port zurï¿½ckgeben.
      * @return array|ip|port
      */
     public static function gethost() {

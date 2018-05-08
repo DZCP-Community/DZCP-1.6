@@ -38,13 +38,13 @@ if(_adminMenu != 'true') exit;
       if($do == "delete")
       {
         $qry = db("SELECT katimg FROM ".$db['newskat']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         @unlink(basePath."/inc/images/newskat/".$get['katimg']);
 
         $del = db("DELETE FROM ".$db['newskat']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_config_newskat_deleted, "?admin=news");
       } elseif($do == "add") {
@@ -78,7 +78,7 @@ if(_adminMenu != 'true') exit;
         }
       } elseif($do == "edit") {
         $qry = db("SELECT * FROM ".$db['newskat']."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         $files = get_files('../inc/images/newskat/',false,true);
@@ -116,7 +116,7 @@ if(_adminMenu != 'true') exit;
           $qry = db("UPDATE ".$db['newskat']."
                      SET ".$katimg."
                          `kategorie` = '".up($_POST['kat'])."'
-                     WHERE id = '".intval($_GET['id'])."'");
+                     WHERE id = '".(int)($_GET['id'])."'");
 
           $show = info(_config_newskats_edited, "?admin=news");
         }

@@ -59,7 +59,7 @@ if(_adminMenu != 'true') exit;
       } elseif($do == "edit") {
 
         $qry = db("SELECT * FROM ".$db[$_GET['type']]."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
         $get = _fetch($qry);
 
         if($get['banner'] == 1){
@@ -100,13 +100,13 @@ if(_adminMenu != 'true') exit;
                            `text`         = '".up($_POST['text'])."',
                            `banner`       = '".up($_POST['banner'])."',
                            `beschreibung` = '".up($_POST['beschreibung'])."'
-                       WHERE id = '".intval($_GET['id'])."'");
+                       WHERE id = '".(int)($_GET['id'])."'");
 
           $show = info(_link_edited, "?admin=links");
         }
       } elseif($do == "delete") {
         $qry = db("DELETE FROM ".$db[$_GET['type']]."
-                   WHERE id = '".intval($_GET['id'])."'");
+                   WHERE id = '".(int)($_GET['id'])."'");
 
         $show = info(_link_deleted, "?admin=links");
       } else {

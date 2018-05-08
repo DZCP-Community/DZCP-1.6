@@ -27,7 +27,7 @@ function server($serverID = 0) {
           ';
         }
     } else {
-        $get = db("SELECT `id`,`ip`,`port`,`qport`,`status` FROM ".$db['server']." WHERE `navi` = '1' AND `id` = '".intval($serverID)."'",false,true);
+        $get = db("SELECT `id`,`ip`,`port`,`qport`,`status` FROM ".$db['server']." WHERE `navi` = '1' AND `id` = '".(int)($serverID)."'",false,true);
         if(!function_exists('server_query_'.$get['status']) && file_exists(basePath.'/inc/server_query/'.strtolower($get['status']).'.php')) {
             include(basePath.'/inc/server_query/'.strtolower($get['status']).'.php');
         }

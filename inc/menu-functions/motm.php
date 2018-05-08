@@ -13,7 +13,7 @@ function motm() {
     if(_rows($qry)) {
         while($rs = _fetch($qry)) {
             foreach($userpics AS $userpic) {
-                $tmpId = intval($userpic);
+                $tmpId = (int)($userpic);
                 if($tmpId == $rs['id']) {
                     $temparr[] = $rs['id'];
                     $a++;

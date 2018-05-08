@@ -14,11 +14,11 @@ if(defined('_UserMenu')) {
     {
       $qrygl = db("SELECT * FROM ".$db['usergallery']."
                    WHERE user = '".$userid."'
-                   AND id = '".intval($_GET['gid'])."'");
+                   AND id = '".(int)($_GET['gid'])."'");
         while($getgl = _fetch($qrygl))
         {
         $qry = db("DELETE FROM ".$db['usergallery']."
-                   WHERE id = '".intval($_GET['gid'])."'");
+                   WHERE id = '".(int)($_GET['gid'])."'");
 
         $unlinkgallery = show(_gallery_edit_unlink, array("img" => $getgl['pic'],
                                                           "user" => $userid));
@@ -113,7 +113,7 @@ if(defined('_UserMenu')) {
           }
       } elseif($do == "delete") {
                 $qrydel = db("SELECT id,nick,email,hp FROM ".$db['users']."
-                                            WHERE id = '".intval($userid)."'");
+                                            WHERE id = '".(int)($userid)."'");
                 $getdel = _fetch($qrydel);
 
                 $qry = db("UPDATE ".$db['f_threads']."
@@ -121,68 +121,68 @@ if(defined('_UserMenu')) {
                                              `t_email`  = '".$getdel['email']."',
                                              `t_hp`            = '".links($getdel['hp'])."',
                                              `t_reg`        = '0'
-                                     WHERE t_reg = '".intval($getdel['id'])."'");
+                                     WHERE t_reg = '".(int)($getdel['id'])."'");
 
                 $qry = db("UPDATE ".$db['f_posts']."
                                      SET `nick`   = '".$getdel['nick']."',
                                              `email`  = '".$getdel['email']."',
                                              `hp`            = '".links($getdel['hp'])."',
                                              `reg`        = '0'
-                                     WHERE reg = '".intval($getdel['id'])."'");
+                                     WHERE reg = '".(int)($getdel['id'])."'");
 
                 $qry = db("UPDATE ".$db['newscomments']."
                                      SET `nick`     = '".$getdel['nick']."',
                                              `email`    = '".$getdel['email']."',
                                              `hp`       = '".links($getdel['hp'])."',
                                              `reg`            = '0'
-                                     WHERE reg = '".intval($getdel['id'])."'");
+                                     WHERE reg = '".(int)($getdel['id'])."'");
 
                 $qry = db("UPDATE ".$db['acomments']."
                                      SET `nick`     = '".$getdel['nick']."',
                                              `email`    = '".$getdel['email']."',
                                              `hp`       = '".links($getdel['hp'])."',
                                              `reg`            = '0'
-                                     WHERE reg = '".intval($getdel['id'])."'");
+                                     WHERE reg = '".(int)($getdel['id'])."'");
 
                 $del = db("DELETE FROM ".$db['msg']."
-                                     WHERE von = '".intval($getdel['id'])."'
-                                     OR an = '".intval($getdel['id'])."'");
+                                     WHERE von = '".(int)($getdel['id'])."'
+                                     OR an = '".(int)($getdel['id'])."'");
 
                 $del = db("DELETE FROM ".$db['news']."
-                                     WHERE autor = '".intval($getdel['id'])."'");
+                                     WHERE autor = '".(int)($getdel['id'])."'");
 
                 $del = db("DELETE FROM ".$db['permissions']."
-                                     WHERE user = '".intval($getdel['id'])."'");
+                                     WHERE user = '".(int)($getdel['id'])."'");
 
                 $del = db("DELETE FROM ".$db['squaduser']."
-                                     WHERE user = '".intval($getdel['id'])."'");
+                                     WHERE user = '".(int)($getdel['id'])."'");
 
                 $del = db("DELETE FROM ".$db['buddys']."
-                                     WHERE user = '".intval($getdel['id'])."'
-                                     OR buddy = '".intval($getdel['id'])."'");
+                                     WHERE user = '".(int)($getdel['id'])."'
+                                     OR buddy = '".(int)($getdel['id'])."'");
 
                 $upd = db("UPDATE ".$db['usergb']."
                                      SET `reg` = 0
-                                     WHERE reg = ".intval($getdel['id'])."");
+                                     WHERE reg = ".(int)($getdel['id'])."");
 
                 $del = db("DELETE FROM ".$db['userpos']."
-                                     WHERE user = '".intval($getdel['id'])."'");
+                                     WHERE user = '".(int)($getdel['id'])."'");
 
                 $del = db("DELETE FROM ".$db['users']."
-                                     WHERE id = '".intval($getdel['id'])."'");
+                                     WHERE id = '".(int)($getdel['id'])."'");
 
                 $del = db("DELETE FROM ".$db['userstats']."
-                                     WHERE user = '".intval($getdel['id'])."'");
+                                     WHERE user = '".(int)($getdel['id'])."'");
 
                 foreach($picformat as $tmpendung)
                 {
-                    if(file_exists(basePath."/inc/images/uploads/userpics/".intval($getdel['id']).".".$tmpendung))
+                    if(file_exists(basePath."/inc/images/uploads/userpics/".(int)($getdel['id']).".".$tmpendung))
                     {
-                        @unlink(basePath."/inc/images/uploads/userpics/".intval($getdel['id']).".".$tmpendung);
+                        @unlink(basePath."/inc/images/uploads/userpics/".(int)($getdel['id']).".".$tmpendung);
                     }
-                    if(file_exists(basePath."/inc/images/uploads/useravatare/".intval($getdel['id']).".".$tmpendung))
+                    if(file_exists(basePath."/inc/images/uploads/useravatare/".(int)($getdel['id']).".".$tmpendung))
                     {
-                        @unlink(basePath."/inc/images/uploads/useravatare/".intval($getdel['id']).".".$tmpendung);
+                        @unlink(basePath."/inc/images/uploads/useravatare/".(int)($getdel['id']).".".$tmpendung);
                     }
                 }
 

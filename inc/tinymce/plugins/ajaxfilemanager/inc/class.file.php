@@ -162,7 +162,7 @@
 				$status = @mkdir(slashToBackslash($path));			
 				if ($mask)
 				{
-					@chmod(slashToBackslash($path), intval($mask, 8));
+					@chmod(slashToBackslash($path), (int)($mask, 8));
 				}					
 				if($dirOwner)
 				{

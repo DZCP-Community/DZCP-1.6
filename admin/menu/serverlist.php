@@ -53,14 +53,14 @@ if(_adminMenu != 'true') exit;
     {
       $qry = db("UPDATE ".$db['serverliste']."
                  SET `checked` = '".((int)$_POST['checked'])."'
-                 WHERE id = '".intval($_POST['id'])."'");
+                 WHERE id = '".(int)($_POST['id'])."'");
 
       if($_POST['checked'] == "1") $show = info(_error_server_accept, "?admin=serverlist");
       else $show = info(_error_server_dont_accept, "?admin=serverlist");
 
     } elseif($do == "delete") {
       $qry = db("DELETE FROM ".$db['serverliste']."
-                 WHERE id = '".intval($_GET['id'])."'");
+                 WHERE id = '".(int)($_GET['id'])."'");
 
       $show = info(_slist_server_deleted, "?admin=serverlist");
     }
