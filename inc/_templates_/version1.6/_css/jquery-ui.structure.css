@@ -872,7 +872,7 @@ button.ui-button::-moz-focus-inner {
 .ui-tabs .ui-tabs-panel {
 	display: block;
 	border-width: 0;
-	padding: 1em 1.4em;
+	padding: 0px;
 	background: none;
 }
 .ui-tooltip {
@@ -883,4 +883,10 @@ button.ui-button::-moz-focus-inner {
 }
 body .ui-tooltip {
 	border-width: 2px;
+}
+.ui-widget.ui-widget-content {
+	border: none !important;
+}
+.ui-widget-header {
+	border: none !important;
 }

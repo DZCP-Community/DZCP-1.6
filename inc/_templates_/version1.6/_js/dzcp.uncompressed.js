@@ -9,7 +9,6 @@ var isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
 
 // DZCP JAVASCRIPT LIBARY FOR JQUERY >= V1.9
 var DZCP = {
-
     //init
     init: function() {
         doc.body.id = 'dzcp-engine-1.6';
@@ -36,8 +35,9 @@ var DZCP = {
             interval: 6000
         });
 
-        //  $(".tabs").tabs("> .switchs");
-        //  $(".tabs2").tabs(".switchs2 > div", { effect: 'fade', rotate: true });
+        $( ".int_tabs" ).each(function() {
+            $( this ).tabs();
+        });
 
         if(dsgvo == 1) {
             DZCP.show_dsgvo();
