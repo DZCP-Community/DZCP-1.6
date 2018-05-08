@@ -13,6 +13,6 @@
     "phpfastcache/phpfastcache": "6.1.0",
     "phpmailer/phpmailer": "v6.0.3",
     "jaybizzle/crawler-detect": "v1.2.59",
-    "austinb/gameq": "v3.0.13"
+    "phpseclib/phpseclib": "2.0.11"
   }
 }

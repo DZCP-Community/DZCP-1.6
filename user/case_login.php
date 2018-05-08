@@ -13,27 +13,26 @@ if(defined('_UserMenu')) {
                 (empty($_SESSION['sec_login_page']) && empty($_SESSION['login_menu'])))))
             $index = error(_error_invalid_regcode, 1);
         else {
-            if(checkpwd($_POST['user'], md5($_POST['pwd']))) {
-                $get = db_stmt("SELECT id,user,nick,pwd,email,level,time FROM ".$db['users']." WHERE user = ? AND pwd = ? AND level != '0'", array('ss', up($_POST['user']), md5($_POST['pwd'])),false,true);
+            if($get = checkpwd($_POST['user'],$_POST['pwd'])) {
                 if(!isBanned($get['id'])) {
                     $permanent_key = '';
                     if(isset($_POST['permanent'])) {
                         cookie::put('id', $get['id']);
-                        $permanent_key = md5(mkpwd(8));
+                        $permanent_key = hash('sha256', mkpwd(12));
                         cookie::put('pkey', $permanent_key);
                         cookie::save();
                     }
 
                     ## Aktualisiere Datenbank ##
-                    db("UPDATE ".$db['users']." SET `online` = '1', `sessid` = '".session_id()."', `ip` = '".$_SESSION['ip']."', `pkey` = '".$permanent_key."' WHERE id = '".$get['id']."'");
+                    db("UPDATE `".$db['users']."` SET `online` = 1, `sessid` = '".session_id()."', `ip` = '"._real_escape_string(encrypt($userip))."', `pkey` = '".$permanent_key."' WHERE `id` = ".$get['id'].";");
 
                     $_SESSION['id']         = $get['id'];
                     $_SESSION['pwd']        = $get['pwd'];
                     $_SESSION['lastvisit']  = $get['time'];
                     $_SESSION['ip']         = $userip;
 
-                    db("UPDATE ".$db['userstats']." SET `logins` = logins+1 WHERE user = ".$get['id']);
-                    db("UPDATE ".$db['users']." SET `online` = '1', `sessid` = '".session_id()."', `ip` = '".$userip."', `pkey` = '".$permanent_key."' WHERE id = ".$get['id']);
+                    db("UPDATE `".$db['userstats']."` SET `logins` = (logins+1) WHERE `user` = ".$get['id'].";");
+                    db("UPDATE `".$db['users']."` SET `online` = 1, `sessid` = '".session_id()."', `ip` = '"._real_escape_string(encrypt($userip))."', `pkey` = '".$permanent_key."' WHERE `id` = ".$get['id'].";");
                     setIpcheck("login(".$get['id'].")");
 
                     header("Location: ?action=userlobby");
@@ -41,7 +40,7 @@ if(defined('_UserMenu')) {
                 else
                     $index = error(_login_banned);
             } else {
-                $qry = db("SELECT id FROM ".$db['users']." WHERE user = '".up($_POST['user'])."'");
+                $qry = db("SELECT `id` FROM `".$db['users']."` WHERE `user` = '"._real_escape_string(encrypt($_POST['user']))."';");
                 if(_rows($qry)) {
                     $get = _fetch($qry);
                     setIpcheck("trylogin(".$get['id'].")");

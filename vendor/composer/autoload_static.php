@@ -6,9 +6,14 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit7f32bae2ad99270bbc88900cec1943e9
 {
+    public static $files = array (
+        'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'p' => 
         array (
+            'phpseclib\\' => 10,
             'phpFastCache\\' => 13,
         ),
         'P' => 
@@ -21,13 +26,13 @@ class ComposerStaticInit7f32bae2ad99270bbc88900cec1943e9
         array (
             'Jaybizzle\\CrawlerDetect\\' => 24,
         ),
-        'G' => 
-        array (
-            'GameQ\\' => 6,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'phpseclib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
         'phpFastCache\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpfastcache/phpfastcache/src/phpFastCache',
@@ -47,10 +52,6 @@ class ComposerStaticInit7f32bae2ad99270bbc88900cec1943e9
         'Jaybizzle\\CrawlerDetect\\' => 
         array (
             0 => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src',
-        ),
-        'GameQ\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/austinb/gameq/src/GameQ',
         ),
     );
 

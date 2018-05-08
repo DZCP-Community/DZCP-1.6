@@ -1,0 +1,4238 @@
+#####################################################################
+   Datum   = 20.03.18 21:43
+   URL     = http://localhost/dzcp/admin/?admin=teamspeak
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Table 'dzcp_test.dzcp_teamspeak' doesn't exist
+
+   Query   = SELECT * FROM `dzcp_teamspeak` ORDER BY id;
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:45
+   URL     = http://localhost/dzcp/admin/?admin=teamspeak
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Table 'dzcp_test.dzcp_teamspeak' doesn't exist
+
+   Query   = SELECT * FROM `dzcp_teamspeak` ORDER BY id;
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:47
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:50
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:50
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:51
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:52
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:52
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:58
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 21:58
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 22:00
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 22:00
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 22:00
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 22:03
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 22:03
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 22:03
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 20.03.18 22:04
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 28.03.18 17:38
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 28.03.18 17:46
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:28
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:28
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:28
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:28
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:29
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:29
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:29
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:31
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:33
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:34
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:34
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:34
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:34
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:34
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:34
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:34
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:34
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 00:35
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 02:13
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 02:15
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 02:16
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 02:16
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 02:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 02:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 02:19
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 02:20
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 14.04.18 02:22
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 01:52
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 01:58
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:00
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:00
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:01
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:03
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:08
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:08
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:15
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:16
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:16
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:16
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:16
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:16
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:17
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:20
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:20
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 15.04.18 02:20
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:38
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:40
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:42
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:42
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:42
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:43
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:43
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:43
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:44
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:52
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:56
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 21:56
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:00
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:00
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:00
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:01
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:01
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:01
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:01
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:05
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:05
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:05
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:06
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:06
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:36
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:36
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:36
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:44
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:44
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:45
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:45
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:45
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:45
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:46
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:46
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:47
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:47
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:47
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:47
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:56
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:56
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:57
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:57
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:57
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:57
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:58
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:58
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:58
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:58
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:58
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:58
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:59
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 22:59
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:04
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:04
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:04
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:04
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:04
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:06
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:07
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:07
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:09
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:11
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:11
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:11
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:13
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:13
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:14
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:14
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:14
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:14
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:14
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:17
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:17
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:17
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:20
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:20
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:22
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:22
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:27
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:28
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:28
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:28
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:38
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:38
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:38
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:38
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:44
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:44
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:44
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:46
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:46
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:51
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:51
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:51
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:51
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:52
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:52
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:52
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:52
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:55
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 01.05.18 23:56
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:39
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:40
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:42
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:45
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:46
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:46
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:46
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:47
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:47
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:50
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:51
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:52
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 21:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:03
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:03
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:04
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:05
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:05
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:06
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:06
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:06
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:06
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:06
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:06
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:35
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:35
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:35
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:35
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:35
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:36
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:36
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:36
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=2
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '2'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:36
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:36
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:36
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:40
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:41
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:42
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:42
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:48
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:50
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:53
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:54
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 22:56
+   URL     = http://localhost/dzcp/server/
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Table 'dzcp_test.{prefix_server}' doesn't exist
+
+   Query   = SELECT * FROM `{prefix_server}` WHERE `id` = 1;
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 23:08
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 23:08
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 23:08
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 23:08
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 23:10
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 02.05.18 23:10
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 21:49
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 21:56
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:00
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:00
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:01
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:01
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:01
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:02
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:14
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:15
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:15
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:15
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:15
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:15
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:17
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:17
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:18
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:19
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:20
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:20
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:20
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:21
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:21
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:21
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:22
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:22
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:22
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:23
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:24
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:25
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:45
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:46
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 22:56
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 23:14
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 23:40
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+
+#####################################################################
+   Datum   = 03.05.18 23:45
+   URL     = http://localhost/dzcp/inc/ajax.php?i=server&serverID=1
+
+   MySQLi-Query failed:
+   ConnectErrorNo = 0
+   ConnectError   = 
+
+   QueryError   = Unknown column 'status' in 'field list'
+
+   Query   = SELECT `id`,`ip`,`port`,`qport`,`status` FROM dzcp_server WHERE `navi` = '1' AND `id` = '1'
+#####################################################################
+

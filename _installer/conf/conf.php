@@ -52,12 +52,11 @@ function set_ftp_chmod($file,$pfad,$host,$user,$pwd) {
 function _m ($prefix, $host, $user, $pwd, $db) {
     $fp = @fopen("../inc/mysql.php","w");
     @fwrite($fp,"<?php
-                 \$sql_prefix = '".$prefix."';
-                 \$sql_host = '".$host."';
-                 \$sql_user =  '".addslashes($user)."';
-                 \$sql_pass = '".addslashes($pwd)."';
-                 \$sql_db = '".$db."';
-               ?>");
+    \$sql_prefix = '".$prefix."';
+    \$sql_host = '".$host."';
+    \$sql_user =  '".addslashes($user)."';
+    \$sql_pass = '".addslashes($pwd)."';
+    \$sql_db = '".$db."';");
     @fclose($fp);
 }
 

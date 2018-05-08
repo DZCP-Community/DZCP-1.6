@@ -7,12 +7,15 @@
 //MySQL-Daten einlesen
 $installation = true;
 include(basePath.'/inc/config.php');
+use phpseclib\Crypt\RSA;
+set_time_limit(600);
+ini_set('max_execution_time', 600);
 
 function install_mysql($login, $nick, $pwd, $email)
 {
   global $db;
 //-> Awards
-  $qry = db("DROP TABLE IF EXISTS ".$db['awards']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['awards'].";");
   $qry = db("CREATE TABLE ".$db['awards']." (
             `id` int(5) NOT NULL auto_increment,
             `squad` int(10) NOT NULL,
@@ -25,7 +28,7 @@ function install_mysql($login, $nick, $pwd, $email)
             PRIMARY KEY  (`id`)
             )");
 //-> Bannliste
-  $qry = db("DROP TABLE IF EXISTS ".$db['banned']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['banned'].";");
   $qry = db("CREATE TABLE ".$db['banned']." (
             `id` int(5) NOT NULL auto_increment,
             `server` int(5) NOT NULL,
@@ -36,7 +39,7 @@ function install_mysql($login, $nick, $pwd, $email)
             PRIMARY KEY  (`id`)
             ) ");
 //-> Clankasse
-  $qry = db("DROP TABLE IF EXISTS ".$db['clankasse']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['clankasse'].";");
   $qry = db("CREATE TABLE ".$db['clankasse']." (
              `id` int(20) NOT NULL auto_increment,
              `datum` varchar(20) NOT NULL default '',
@@ -46,7 +49,7 @@ function install_mysql($login, $nick, $pwd, $email)
              `betrag` varchar(10) NOT NULL default '0',
              PRIMARY KEY  (`id`)
              ) ");
-  $qry = db("DROP TABLE IF EXISTS ".$db['c_payed']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['c_payed'].";");
   $qry = db("CREATE TABLE ".$db['c_payed']." (
              `id` int(5) NOT NULL auto_increment,
              `user` int(5) NOT NULL default '0',
@@ -54,7 +57,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Clankassenkategorien
-  $qry = db("DROP TABLE IF EXISTS ".$db['c_kats']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['c_kats'].";");
   $qry = db("CREATE TABLE ".$db['c_kats']." (
             `id` int(5) NOT NULL auto_increment,
             `kat` varchar(30) NOT NULL default '',
@@ -63,7 +66,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['c_kats']." (`id`, `kat`) VALUES (1, 'Servermiete')");
   $qry = db("INSERT INTO ".$db['c_kats']." (`id`, `kat`) VALUES (2, 'Serverbeitrag')");
 //-> Clanwars
-  $qry = db("DROP TABLE IF EXISTS ".$db['cw']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['cw'].";");
   $qry = db("CREATE TABLE ".$db['cw']." (
             `id` int(5) NOT NULL auto_increment,
             `squad_id` int(19) NOT NULL,
@@ -91,7 +94,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['cw']." (`id`, `squad_id`, `gametype`, `gcountry`, `matchadmins`, `lineup`, `glineup`, `datum`, `clantag`, `gegner`, `url`, `xonx`, `liga`, `punkte`, `gpunkte`, `maps`, `serverip`, `servername`, `serverpwd`, `bericht`) VALUES
 (1, 1, '', 'de', '', '', '', ".(time()-90000).", 'DZCP', 'deV!L`z Clanportal', 'http://www.dzcp.de', '5on5', 'DZCP', 0, 21, 'de_dzcp', '', '', '', '');");
 //-> Clanwarkommentare
-  $qry = db("DROP TABLE IF EXISTS ".$db['cw_comments']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['cw_comments'].";");
   $qry = db("CREATE TABLE `".$db['cw_comments']."` (
              `id` int(10) NOT NULL auto_increment,
              `cw` int(10) NOT NULL default '0',
@@ -105,14 +108,14 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Clanwarplayers
-  $qry = db("DROP TABLE IF EXISTS ".$db['cw_player']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['cw_player'].";");
   $qry = db("CREATE TABLE ".$db['cw_player']." (
             `cwid` int(5) NOT NULL default '0',
             `member` int(5) NOT NULL default '0',
             `status` int(5) NOT NULL default '0'
             ) ");
 //-> Config
-  $qry = db("DROP TABLE IF EXISTS ".$db['config']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['config'].";");
   $qry = db("CREATE TABLE ".$db['config']." (
              `upicsize` int(5) NOT NULL default '100',
              `gallery` int(5) NOT NULL default '4',
@@ -167,7 +170,7 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
 
 //-> Counter
-  $qry = db("DROP TABLE IF EXISTS ".$db['counter']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['counter'].";");
   $qry = db("CREATE TABLE ".$db['counter']." (
              `id` int(5) NOT NULL auto_increment,
              `visitors` int(20) NOT NULL default '0',
@@ -175,14 +178,14 @@ function install_mysql($login, $nick, $pwd, $email)
              `maxonline` int(5) NOT NULL default '0',
              PRIMARY KEY  (`id`)
              ) ");
-  $qry = db("DROP TABLE IF EXISTS ".$db['c_ips']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['c_ips'].";");
   $qry = db("CREATE TABLE ".$db['c_ips']." (
              `id` int(10) NOT NULL auto_increment,
              `ip` varchar(30) NOT NULL default '0',
              `datum` int(20) NOT NULL default '0',
              PRIMARY KEY  (`id`)
              ) ");
-  $qry = db("DROP TABLE IF EXISTS ".$db['c_who']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['c_who'].";");
   $qry = db("CREATE TABLE ".$db['c_who']." (
              `id` int(50) NOT NULL auto_increment,
              `ip` char(50) NOT NULL default '',
@@ -191,7 +194,7 @@ function install_mysql($login, $nick, $pwd, $email)
              UNIQUE KEY `ip` (`ip`)
              ) ");
 //-> Downloadkategorien
-  $qry = db("DROP TABLE IF EXISTS ".$db['dl_kat']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['dl_kat'].";");
   $qry = db("CREATE TABLE ".$db['dl_kat']." (
              `id` int(11) NOT NULL auto_increment,
              `name` varchar(249) NOT NULL default '',
@@ -201,7 +204,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['dl_kat']." (`id`, `name`) VALUES (2, 'Demos')");
   $qry = db("INSERT INTO ".$db['dl_kat']." (`id`, `name`) VALUES (3, 'Stuff')");
 //-> Downloads
-  $qry = db("DROP TABLE IF EXISTS ".$db['downloads']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['downloads'].";");
   $qry = db("CREATE TABLE ".$db['downloads']." (
              `id` int(11) NOT NULL auto_increment,
              `download` varchar(249) NOT NULL default '',
@@ -214,7 +217,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['downloads']." (`id`, `download`, `url`, `beschreibung`, `hits`, `kat`) VALUES
 (1, 'Testdownload', 'http://www.url.de/test.zip', '<p>Das ist ein Testdownload</p>', 0, 1);");
 //-> Events (Kalender)
-  $qry = db("DROP TABLE IF EXISTS ".$db['events']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['events'].";");
   $qry = db("CREATE TABLE ".$db['events']." (
              `id` int(5) NOT NULL auto_increment,
              `datum` int(20) NOT NULL default '0',
@@ -230,7 +233,7 @@ function install_mysql($login, $nick, $pwd, $email)
 
   $httphost = $_SERVER['HTTP_HOST'];
   $host = str_replace('www.','',$httphost);
-  $qry = db("DROP TABLE IF EXISTS ".$db['settings']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['settings'].";");
   $qry = db("CREATE TABLE ".$db['settings']." (
              `clanname` varchar(50) NOT NULL default 'Dein Clanname hier!',
              `pfad` varchar(50) NOT NULL default '',
@@ -277,13 +280,13 @@ function install_mysql($login, $nick, $pwd, $email)
              SET `badwords` = 'arsch,Arsch,arschloch,Arschloch,hure,Hure',
                  `ts_ip` = '80.190.204.164', `ts_port` = '7000', `ts_sport` = '10011'");
 //-> Forum: Access
-  $qry = db("DROP TABLE IF EXISTS ".$db['f_access']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['f_access'].";");
   $qry = db("CREATE TABLE ".$db['f_access']." (
              `user` int(10) NOT NULL default '0',
              `forum` int(10) NOT NULL default '0'
              ) ");
 //-> Forum: Kategorien
-  $qry = db("DROP TABLE IF EXISTS ".$db['f_kats']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['f_kats'].";");
   $qry = db("CREATE TABLE ".$db['f_kats']." (
              `id` int(10) NOT NULL auto_increment,
              `kid` int(10) NOT NULL default '0',
@@ -295,7 +298,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['f_kats']." (`id`, `kid`, `name`, `intern`) VALUES (2, 2, 'OFFtopic', 0)");
   $qry = db("INSERT INTO ".$db['f_kats']." (`id`, `kid`, `name`, `intern`) VALUES (3, 3, 'Clanforum', 1)");
 //-> Forum Unterkategorien
-  $qry = db("DROP TABLE IF EXISTS ".$db['f_skats']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['f_skats'].";");
   $qry = db("CREATE TABLE ".$db['f_skats']." (
              `id` int(10) NOT NULL auto_increment,
              `sid` int(10) NOT NULL default '0',
@@ -313,7 +316,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['f_skats']." (`id`, `sid`, `kattopic`, `subtopic`) VALUES (8, 3, 'Server intern', 'interne Serverangelegenheiten')");
   $qry = db("INSERT INTO ".$db['f_skats']." (`id`, `sid`, `kattopic`, `subtopic`) VALUES (9, 3, 'War Forum', 'Alles &uuml;ber und rundum Clanwars')");
 //-> Forumposts
-  $qry = db("DROP TABLE IF EXISTS ".$db['f_posts']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['f_posts'].";");
   $qry = db("CREATE TABLE ".$db['f_posts']." (
              `id` int(10) NOT NULL auto_increment,
              `kid` int(2) NOT NULL default '0',
@@ -328,7 +331,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Forumthreads
-  $qry = db("DROP TABLE IF EXISTS ".$db['f_threads']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['f_threads'].";");
   $qry = db("CREATE TABLE ".$db['f_threads']." (
              `id` int(10) NOT NULL auto_increment,
              `kid` int(10) NOT NULL default '0',
@@ -350,7 +353,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Gaestebuch
-  $qry = db("DROP TABLE IF EXISTS ".$db['gb']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['gb'].";");
   $qry = db("CREATE TABLE ".$db['gb']." (
              `id` int(5) NOT NULL auto_increment,
              `datum` int(20) NOT NULL default '0',
@@ -363,7 +366,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Galerie
-  $qry = db("DROP TABLE IF EXISTS ".$db['gallery']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['gallery'].";");
   $qry = db("CREATE TABLE ".$db['gallery']." (
              `id` int(5) NOT NULL auto_increment,
              `datum` int(20) NOT NULL default '0',
@@ -374,7 +377,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['gallery']." (`id`, `datum`, `kat`, `beschreibung`) VALUES (1, ".time().", 'Testgalerie', '<p>Das ist die erste Testgalerie.</p>\r\n<p>Hier seht ihr ein paar Bilder die eigentlich nur als Platzhalter dienen :)</p>');");
 
 //-> ipcheck
-  $qry = db("DROP TABLE IF EXISTS ".$db['ipcheck']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['ipcheck'].";");
   $qry = db("CREATE TABLE ".$db['ipcheck']." (
              `id` int(11) NOT NULL auto_increment,
              `ip` varchar(100) NOT NULL default '',
@@ -383,7 +386,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Links
-  $qry = db("DROP TABLE IF EXISTS ".$db['links']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['links'].";");
   $qry = db("CREATE TABLE ".$db['links']." (
              `id` int(5) NOT NULL auto_increment,
              `url` varchar(249) NOT NULL default '',
@@ -397,7 +400,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['links']." (`id`, `url`, `text`, `banner`, `beschreibung`, `hits`) VALUES (1, 'http://www.dzcp.de', 'http://www.dzcp.de/banner/dzcp.gif', 1, 'deV!L`z Clanportal', 0)");
 
 //-> LinkUs
-  $qry = db("DROP TABLE IF EXISTS ".$db['linkus']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['linkus'].";");
   $qry = db("CREATE TABLE ".$db['linkus']." (
              `id` int(5) NOT NULL auto_increment,
              `url` varchar(249) NOT NULL default '',
@@ -409,7 +412,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['linkus']." (`id`, `url`, `text`, `banner`, `beschreibung`) VALUES (1, 'http://www.dzcp.de', 'http://www.dzcp.de/banner/button.gif', 1, 'deV!L`z Clanportal')");
 
 //-> Nachrichten
-  $qry = db("DROP TABLE IF EXISTS ".$db['msg']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['msg'].";");
   $qry = db("CREATE TABLE ".$db['msg']." (
              `id` int(5) NOT NULL auto_increment,
              `datum` int(20) NOT NULL default '0',
@@ -424,7 +427,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Navigation
-  $qry = db("DROP TABLE IF EXISTS ".$db['navi']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['navi'].";");
   $qry = db("CREATE TABLE ".$db['navi']." (
             `id` int(11) NOT NULL auto_increment,
             `pos` int(20) NOT NULL default '0',
@@ -476,7 +479,7 @@ function install_mysql($login, $nick, $pwd, $email)
         $qry = db("INSERT INTO ".$db['navi']." (id, pos, kat, shown, name, url, type, internal) VALUES (34, 1, 'nav_member', 1, '_clankasse_', '../clankasse/', 1, 0)");
         $qry = db("INSERT INTO ".$db['navi']." (id, pos, kat, shown, name, url, type, internal) VALUES (35, 2, 'nav_member', 1, '_taktiken_', '../taktik/', 1, 0)");
 //-> Newskategorien
-  $qry = db("DROP TABLE IF EXISTS ".$db['newskat']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['newskat'].";");
   $qry = db("CREATE TABLE ".$db['newskat']." (
              `id` int(5) NOT NULL auto_increment,
              `katimg` varchar(20) NOT NULL default '',
@@ -485,7 +488,7 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
   $qry = db("INSERT INTO ".$db['newskat']." (`id`, `katimg`, `kategorie`) VALUES (1, 'hp.jpg', 'Homepage')");
 //-> News
-  $qry = db("DROP TABLE IF EXISTS ".$db['news']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['news'].";");
   $qry = db("CREATE TABLE ".$db['news']."(
              `id` int(10) NOT NULL auto_increment,
              `autor` varchar(5) NOT NULL default '',
@@ -508,7 +511,7 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
   $qry = db("INSERT INTO ".$db['news']." (`id`, `autor`, `datum`, `kat`, `titel`, `text`, `klapplink`, `klapptext`, `link1`, `url1`, `link2`, `url2`, `link3`, `url3`, `viewed`) VALUES (1, '1', ".time().", 1, 'deV!L`z Clanportal', '<p>deV!L`z Clanportal wurde erfolgreich installiert!</p><p>Bei Fragen oder Problemen kannst du gerne das Forum unter <a href=\"http://www.dzcp.de/\" target=\"_blank\">www.dzcp.de</a> kontaktieren.</p><p>Mehr Designtemplates und Modifikationen findest du unter <a href=\"http://www.templatebar.de/\" target=\"_blank\" title=\"Templates, Designs &amp; Modifikationen\">www.templatebar.de</a>.</p><p><br /></p><p>Viel Spass mit dem DZCP w&uuml;nscht dir das Team von www.dzcp.de.</p>', '', '', 'www.dzcp.de', 'http://www.dzcp.de', 'TEMPLATEbar.de', 'http://www.templatebar.de', '', '', 0)");
 //-> Newskommentare
-  $qry = db("DROP TABLE IF EXISTS ".$db['newscomments']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['newscomments'].";");
   $qry = db("CREATE TABLE ".$db['newscomments']." (
              `id` int(10) NOT NULL auto_increment,
              `news` int(10) NOT NULL default '0',
@@ -522,7 +525,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Artikel
-  $qry = db("DROP TABLE IF EXISTS ".$db['artikel']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['artikel'].";");
   $qry = db("CREATE TABLE ".$db['artikel']."(
              `id` int(10) NOT NULL auto_increment,
              `autor` varchar(5) NOT NULL default '',
@@ -540,7 +543,7 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
   $qry = db("INSERT INTO ".$db['artikel']." (`id`, `autor`, `datum`, `kat`, `titel`, `text`, `link1`, `url1`, `link2`, `url2`, `link3`, `url3`) VALUES (1, '1', '".time()."', 1, 'Testartikel', '<p>Hier k&ouml;nnte dein Artikel stehen!</p>\r\n<p> </p>', '', '', '', '', '', '');");
 //-> Artikelkommentare
-  $qry = db("DROP TABLE IF EXISTS ".$db['acomments']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['acomments'].";");
   $qry = db("CREATE TABLE ".$db['acomments']." (
              `id` int(10) NOT NULL auto_increment,
              `artikel` int(10) NOT NULL default '0',
@@ -554,7 +557,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Profilfelder
-  $qry = db("DROP TABLE IF EXISTS ".$db['profile']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['profile'].";");
   $qry = db("CREATE TABLE ".$db['profile']." (
              `id` int(5) unsigned NOT NULL auto_increment,
              `kid` int(11) NOT NULL default '0',
@@ -597,7 +600,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['profile']." VALUES (33, 5, '_headset_', 'headset', 1, 1);");
   $qry = db("INSERT INTO ".$db['profile']." VALUES (34, 5, '_inet_', 'inet', 1, 1);");
 //-> Partnerbuttons
-  $qry = db("DROP TABLE IF EXISTS ".$db['partners']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['partners'].";");
   $qry = db("CREATE TABLE ".$db['partners']." (
             `id` int(5) NOT NULL auto_increment,
             `link` varchar(100) NOT NULL default '',
@@ -609,7 +612,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['partners']." (`link`, `banner`) VALUES ('http://www.dzcp.de', 'dzcp.gif');");
 
 //-> Rechte
-  $qry = db("DROP TABLE IF EXISTS ".$db['permissions']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['permissions'].";");
   $qry = db("CREATE TABLE ".$db['permissions']." (
              `id` int(5) NOT NULL auto_increment,
              `user` int(5) NOT NULL default '0',
@@ -642,7 +645,7 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
   $qry = db("INSERT INTO ".$db['permissions']." (`id`, `user`, `intforum`, `clankasse`, `clanwars`, `gallery`, `serverliste`, `editusers`, `edittactics`, `editsquads`, `editserver`, `editkalender`, `news`, `gb`, `forum`, `votes`, `votesadmin`, `links`, `downloads`, `newsletter`, `intnews`, `rankings`, `contact`, `joinus`, `awards`, `shoutbox`, `artikel`) VALUES (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)");
 //-> Positionen
-  $qry = db("DROP TABLE IF EXISTS ".$db['pos']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['pos'].";");
   $qry = db("CREATE TABLE ".$db['pos']." (
              `id` int(2) NOT NULL auto_increment,
              `pid` int(2) NOT NULL default '0',
@@ -654,7 +657,7 @@ function install_mysql($login, $nick, $pwd, $email)
   $qry = db("INSERT INTO ".$db['pos']." (`id`, `pid`, `position`) VALUES (3, 3, 'Webmaster')");
   $qry = db("INSERT INTO ".$db['pos']." (`id`, `pid`, `position`) VALUES (4, 4, 'Member')");
 //-> Rankings
-  $qry = db("DROP TABLE IF EXISTS ".$db['rankings']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['rankings'].";");
   $qry = db("CREATE TABLE ".$db['rankings']." (
              `id` INT(5) NOT NULL AUTO_INCREMENT,
              `league` VARCHAR(50) NOT NULL,
@@ -666,7 +669,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY (`id`)
              )");
 //-> Seiten
-  $qry = db("DROP TABLE IF EXISTS ".$db['sites']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['sites'].";");
   $qry = db("CREATE TABLE ".$db['sites']." (
             `id` int(5) NOT NULL auto_increment,
             `titel` varchar(50) NOT NULL default '',
@@ -675,7 +678,7 @@ function install_mysql($login, $nick, $pwd, $email)
             PRIMARY KEY  (`id`)
             ) ");
 //-> Server
-  $qry = db("DROP TABLE IF EXISTS ".$db['server']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['server'].";");
   $qry = db("CREATE TABLE ".$db['server']." (
              `id` int(5) NOT NULL auto_increment,
              `status` varchar(100) NOT NULL default '',
@@ -695,7 +698,7 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
   $qry = db("INSERT INTO ".$db['server']." (`id`, `navi`, `status`, `name`, `ip`, `port`, `pwd`, `game`) VALUES (1, 1, 'bf2', 'Battlefield-Basis.de II von Hogibo.net', '80.190.178.115', 9260, '', 'bf2.gif')");
 //-> Serverliste
-  $qry = db("DROP TABLE IF EXISTS ".$db['serverliste']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['serverliste'].";");
   $qry = db("CREATE TABLE ".$db['serverliste']." (
              `id` int(20) NOT NULL auto_increment,
              `datum` int(4) NOT NULL default '0',
@@ -711,7 +714,7 @@ function install_mysql($login, $nick, $pwd, $email)
 
   $qry = db("INSERT INTO ".$db['serverliste']." (`id`, `datum`, `clanname`, `clanurl`, `ip`, `port`, `pwd`, `checked`, `slots`) VALUES (1, ".time().", '[-tHu-] teamHanau', 'http://www.thu-clan.de', '82.98.216.10', '27015', '', 1, '17')");
 //-> Shoutbox
-  $qry = db("DROP TABLE IF EXISTS ".$db['shout']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['shout'].";");
   $qry = db("CREATE TABLE ".$db['shout']." (
              `id` int(11) NOT NULL auto_increment,
              `datum` int(30) NOT NULL default '0',
@@ -723,7 +726,7 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
   $qry = db("INSERT INTO ".$db['shout']." (`id`, `datum`, `nick`, `email`, `text`) VALUES (1, '".time()."', 'deV!L', 'webmaster@dzcp.de', 'Viel Gl&uuml;ck und Erfolg mit eurem Clan!')");
 //-> Sponsoren
-  $qry = db("DROP TABLE IF EXISTS ".$db['sponsoren']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['sponsoren'].";");
   $qry = db("CREATE TABLE ".$db['sponsoren']." (
              `id` int(5) NOT NULL auto_increment,
              `url` varchar(249) NOT NULL default '',
@@ -734,7 +737,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Squads
-  $qry = db("DROP TABLE IF EXISTS ".$db['squads']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['squads'].";");
   $qry = db("CREATE TABLE ".$db['squads']." (
              `id` int(5) NOT NULL auto_increment,
              `name` varchar(40) NOT NULL default '',
@@ -746,7 +749,7 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
   $qry = db("INSERT INTO ".$db['squads']." (`id`, `name`, `game`, `icon`, `pos`, `shown`) VALUES (1, 'Testsquad', 'Counter-Strike', 'cs.gif', 1, 1)");
 //-> Squadusers
-  $qry = db("DROP TABLE IF EXISTS ".$db['squaduser']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['squaduser'].";");
   $qry = db("CREATE TABLE ".$db['squaduser']." (
              `id` int(5) NOT NULL auto_increment,
              `user` int(5) NOT NULL default '0',
@@ -755,7 +758,7 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
   $qry = db("INSERT INTO ".$db['squaduser']." (`id`, `user`, `squad`) VALUES (1, 1, 1)");
 //-> Taktiken
-  $qry = db("DROP TABLE IF EXISTS ".$db['taktik']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['taktik'].";");
   $qry = db("CREATE TABLE ".$db['taktik']." (
              `id` int(10) NOT NULL auto_increment,
              `datum` int(20) NOT NULL default '0',
@@ -768,7 +771,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Users
-  $qry = db("DROP TABLE IF EXISTS ".$db['users']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['users'].";");
   $qry = db("CREATE TABLE ".$db['users']." (
              `id` int(5) NOT NULL auto_increment,
              `user` varchar(200) NOT NULL default '',
@@ -835,7 +838,7 @@ function install_mysql($login, $nick, $pwd, $email)
                                                                 ADD `beschreibung` text NULL");
   $qry = db("INSERT INTO ".$db['users']." (`id`, `user`, `nick`, `pwd`, `regdatum`, `email`, `level`, `position`, `status`, `online`, `ip`, `sessid`) VALUES (1, '".$login."', '".$nick."', '".md5($pwd)."', '".time()."', '".$email."', '4', 1, 1, 1, '".visitorIp()."', '".session_id()."')");
 //-> Userposis
-  $qry = db("DROP TABLE IF EXISTS ".$db['userpos']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['userpos'].";");
   $qry = db("CREATE TABLE ".$db['userpos']." (
              `id` int(11) NOT NULL auto_increment,
              `user` int(5) NOT NULL default '0',
@@ -844,7 +847,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
             ) ");
 //-> Buddys
-  $qry = db("DROP TABLE IF EXISTS ".$db['buddys']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['buddys'].";");
   $qry = db("CREATE TABLE ".$db['buddys']." (
              `id` int(10) NOT NULL auto_increment,
              `user` int(5) NOT NULL default '0',
@@ -852,7 +855,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Usergallery
-  $qry = db("DROP TABLE IF EXISTS ".$db['usergallery']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['usergallery'].";");
   $qry = db("CREATE TABLE ".$db['usergallery']." (
              `id` int(5) NOT NULL auto_increment,
              `user` int(5) NOT NULL default '0',
@@ -861,7 +864,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> UserGB
-  $qry = db("DROP TABLE IF EXISTS ".$db['usergb']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['usergb'].";");
   $qry = db("CREATE TABLE ".$db['usergb']." (
              `id` int(5) NOT NULL auto_increment,
              `user` int(5) NOT NULL default '0',
@@ -875,7 +878,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
 //-> Userstats
-  $qry = db("DROP TABLE IF EXISTS ".$db['userstats']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['userstats'].";");
   $qry = db("CREATE TABLE ".$db['userstats']." (
              `id` int(5) NOT NULL auto_increment,
              `user` int(10) NOT NULL default '0',
@@ -891,7 +894,7 @@ function install_mysql($login, $nick, $pwd, $email)
              ) ");
   $qry = db("INSERT INTO ".$db['userstats']." (`id`, `user`, `hits`) VALUES (1, 1, 1)");
 //-> Votes
-  $qry = db("DROP TABLE IF EXISTS ".$db['votes']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['votes'].";");
   $qry = db("CREATE TABLE ".$db['votes']." (
              `id` int(5) NOT NULL auto_increment,
              `datum` int(20) NOT NULL default '0',
@@ -903,7 +906,7 @@ function install_mysql($login, $nick, $pwd, $email)
              PRIMARY KEY  (`id`)
              ) ");
   $qry = db("INSERT INTO ".$db['votes']." (`id`, `datum`, `titel`, `intern`, `menu`, `von`) VALUES (1, '".time()."', 'Wie findet ihr unsere Seite?', 0, 1, 1)");
-  $qry = db("DROP TABLE IF EXISTS ".$db['vote_results']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['vote_results'].";");
   $qry = db("CREATE TABLE ".$db['vote_results']." (
              `id` int(5) NOT NULL auto_increment,
              `vid` int(5) NOT NULL default '0',
@@ -1169,12 +1172,12 @@ function update_mysql_1_4()
                                              ADD `gmaps_who` int(1) NOT NULL default '1',
                                              ADD `prev` int(3) NOT NULL default '0'");
 
-  $qry = db("DROP TABLE IF EXISTS ".$db['reg']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['reg'].";");
 
   $qry = db("ALTER TABLE ".$db['permissions']." ADD `receivecws` int(1) NOT NULL default '0',
                                                 ADD `editor` int(1) NOT NULL default '0',
                                                 ADD `glossar` int(1) NOT NULL default '0'");
-  $qry = db("DROP TABLE IF EXISTS ".$db['glossar']."");
+  $qry = db("DROP TABLE IF EXISTS ".$db['glossar'].";");
   $qry = db("CREATE TABLE ".$db['glossar']." (
               `id` int(11) NOT NULL auto_increment,
               `word` varchar(200) NOT NULL,
@@ -1252,7 +1255,7 @@ function update_mysql_1_5()
   db("ALTER TABLE ".$db['settings']." ADD `eml_pn` text NOT NULL");
   db("ALTER TABLE ".$db['settings']." ADD `k_vwz` varchar(200) NOT NULL");
 
-  db("DROP TABLE IF EXISTS ".$db['f_abo']."");
+  db("DROP TABLE IF EXISTS ".$db['f_abo'].";");
   db("CREATE TABLE ".$db['f_abo']." (
         `id` int(10) NOT NULL auto_increment,
         `fid` int(10) NOT NULL,
@@ -1529,7 +1532,7 @@ function update_mysql_1_6()
     db("ALTER TABLE ".$db['f_skats']." ADD `pos` int(5) NOT NULL");
 
     //-> Forum Sortieren funktion: schreibe id von spalte in pos feld um konflikte zu vermeiden!
-    $qry = db("SELECT id FROM ".$db['f_skats']."");
+    $qry = db("SELECT id FROM ".$db['f_skats'].";");
      while($get = mysqli_fetch_assoc($qry)){
         db("UPDATE ".$db['f_skats']." SET `pos` = '".$get['id']."' WHERE `id` = '".$get['id']."'");
      }
@@ -1545,7 +1548,7 @@ function update_mysql_1_6()
      }
 
      //-> Slideshow
-     db("DROP TABLE IF EXISTS ".$db['slideshow']."");
+     db("DROP TABLE IF EXISTS ".$db['slideshow'].";");
      db("CREATE TABLE ".$db['slideshow']." (
         `id` int(11) NOT NULL auto_increment,
         `pos` int(5) NOT NULL default '0',
@@ -1559,17 +1562,93 @@ function update_mysql_1_6()
     $qry = db("SELECT id FROM ".$db['users']." WHERE level = 4");
     if(mysqli_num_rows($qry)>= 1)
     while($get = mysqli_fetch_assoc($qry)) {
-        db("UPDATE ".$db['permissions']." SET slideshow = 1, gs_showpw = 1 WHERE id = '".$get['id']."'");
+        db("UPDATE ".$db['permissions']." SET `slideshow` = 1, `gs_showpw` = 1 WHERE `id` = ".$get['id'].";");
     }
 }
 function update_mysql_1_6_0_4()
 {
-    global $db,$updater;
+    global $db;
     db("ALTER TABLE `".$db['ipcheck']."` ADD `created` INT(11) NOT NULL DEFAULT '0' AFTER `time`;");
     db("ALTER TABLE `".$db['c_ips']."` ADD  `agent` text DEFAULT NULL AFTER `datum`;");
+}
+function update_mysql_1_6_1_0()
+{
+    global $db,$updater;
+    db("ALTER TABLE `".$db['users']."` ADD `dsgvo_lock` INT(1) NOT NULL DEFAULT '1' AFTER `level`;");
+    db("ALTER TABLE `".$db['users']."` ADD `pwd_md5` INT(1) NOT NULL DEFAULT '1' AFTER `pwd`;");
+
+    //Generate Keys
+    $rsa = new RSA();
+    $keys = $rsa->createKey();
+
+    $private_key_file = 'private_key.php';
+    if(!file_exists(basePath.'/inc/'.$private_key_file)) {
+        $keys['privatekey'] = '<?php /* '.$keys['privatekey'].' */';
+        file_put_contents(basePath.'/inc/'.$private_key_file,$keys['privatekey']);
+    }
+
+    $public_key_file = 'public_key.php';
+    if(!file_exists(basePath.'/inc/'.$public_key_file)) {
+        $keys['publickey'] = '<?php /* '.$keys['publickey'].' */';
+        file_put_contents(basePath.'/inc/'.$public_key_file,$keys['publickey']);
+    }
+
+    $key = file_get_contents(basePath.'/inc/public_key.php');
+    $key = str_replace(array('<?php /* ',' */'),'',$key);
+    $rsa->loadKey($key);
+
+    ignore_user_abort(true);
+    set_time_limit(0);
+
+    //List all Users
+    $users_array = array();
+    $qry = db("SELECT * FROM ".$db['users'].";");
+    while($get = _fetch($qry)) {
+        $users_array[$get['id']] = $get;
+    }
+
+    //TRUNCATE User Table
+    db("TRUNCATE ".$db['users'].";");
+
+    //Update Table
+    $qry = db("SHOW FIELDS FROM ".$db['users'].";");
+    while($get = _fetch($qry)) {
+        db("ALTER TABLE `dzcp_users` CHANGE `ip` `ip` BLOB NOT NULL DEFAULT '';");
+    }
+
+    $ar_update = array('ip','nick','user','email','icq','hlswid','steamid','battlenetid','originid','skypename','psnid','xboxid','rlname',
+        'city','hobbys','motto','hp','cpu','ram','monitor','maus','mauspad','headset','board','os','graka','hdd','inet','signatur',
+        'ex','job','drink','essen','film','musik','song','buch','autor','person','sport','sportler','auto','game','favoclan','spieler',
+        'map','waffe','rasse','url2','url3','beschreibung','gmaps_koord');
+    $qry = db("SHOW FIELDS FROM `".$db['users']."`;");
+    while($get = _fetch($qry)) {
+        if(in_array($get['Field'],$ar_update)) {
+            db("ALTER TABLE `".$db['users']."` CHANGE `".$get['Field']."` `".$get['Field']."` BLOB NOT NULL DEFAULT '';");
+        }
+    }
+
+    foreach($users_array as $id => $user) {
+        $sql_q = "INSERT INTO `".$db['users']."` SET ";
+        foreach ($user as $key => $var) {
+            if(in_array($key,$ar_update)) {
+                if(!empty($var))
+                    $sql_q .= "`".$key."` = '"._real_escape_string($rsa->encrypt($var))."',";
+                 else
+                     $sql_q .= "`".$key."` = '',";
+            } else {
+                $sql_q .= "`" . $key . "` = '" . $var . "',";
+            }
+        }
+
+        $sql_q = substr($sql_q, 0, -1);
+        db($sql_q.";");
+    }
 
     if($updater) {
         db("UPDATE `".$db['settings']."` SET `db_optimize` = '".(time()+auto_db_optimize_interval)."' WHERE `id` = 1;");
         db_optimize();
     }
+
+    ignore_user_abort(false);
+    set_time_limit(30);
 }

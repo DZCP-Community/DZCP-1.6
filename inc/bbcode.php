@@ -17,13 +17,14 @@ require_once(basePath.'/inc/secure.php');
 require_once(basePath.'/inc/_version.php');
 require_once(basePath."/inc/cookie.php");
 require_once(basePath.'/inc/server_query/_functions.php');
-require_once(basePath."/inc/teamspeak.php");
+require_once(basePath."/inc/teamspeak_query.php");
 require_once(basePath.'/inc/steamapi.php');
 
 //Libs
 use phpFastCache\CacheManager;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use PHPMailer\PHPMailer\PHPMailer;
+use phpseclib\Crypt\RSA;
 
 ## Is AjaxJob ##
 $ajaxJob = (!isset($ajaxJob) ? false : $ajaxJob);
@@ -82,14 +83,14 @@ if(auto_db_optimize && settings('db_optimize',false) <= time() && !$installer &&
 
 //-> Settingstabelle auslesen * Use function settings('xxxxxx');
 if(!dbc_index::issetIndex('settings')) {
-    $get_settings = db("SELECT * FROM ".$db['settings'],false,true);
+    $get_settings = db("SELECT * FROM `".$db['settings']."`;",false,true);
     dbc_index::setIndex('settings', $get_settings);
     unset($get_settings);
 }
 
 //-> Configtabelle auslesen * Use function config('xxxxxx');
 if(!dbc_index::issetIndex('config')) {
-    $get_config = db("SELECT * FROM ".$db['config'],false,true);
+    $get_config = db("SELECT * FROM `".$db['config']."`;",false,true);
     dbc_index::setIndex('config', $get_config);
     unset($get_config);
 }
@@ -134,6 +135,23 @@ $maxadmincw = 10;
 $maxfilesize = @ini_get('upload_max_filesize');
 $search_forum = false;
 
+//Encode / Decode
+$rsa = array();
+$rsa['encode'] = new RSA();
+$rsa['decode']  = new RSA();
+
+if(file_exists(basePath.'/inc/public_key.php') && file_exists(basePath.'/inc/private_key.php') && !$installer && !$updater) {
+    $key = file_get_contents(basePath . '/inc/public_key.php');
+    $key = str_replace(array('<?php /* ', ' */'), '', $key);
+    $rsa['encode']->loadKey($key);
+
+    $key = file_get_contents(basePath . '/inc/private_key.php');
+    $key = str_replace(array('<?php /* ', ' */'), '', $key);
+    $rsa['decode']->loadKey($key);
+}
+else if(!$installer && !$updater && !file_exists(basePath.'/inc/public_key.php') || !file_exists(basePath.'/inc/private_key.php'))
+    die('No "public" or "private" key!!<p> Run Installer for Upgrade!');
+
 //-> Global
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $page = (isset($_GET['page']) && intval($_GET['page']) >= 1) ? intval($_GET['page']) : 1;
@@ -143,13 +161,13 @@ $index = ''; $show = ''; $color = 0;
 //-> Auslesen der Cookies und automatisch anmelden
 if(HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && empty($_SESSION['id']) && !checkme())) {
     //-> User aus der Datenbank suchen
-    $sql = db_stmt("SELECT id,user,nick,pwd,email,level,time,pkey FROM ".$db['users']." WHERE id = ? AND pkey = ? AND level != '0'",
+    $sql = db_stmt("SELECT `id`,`user`,`nick`,`pwd`,`email`,`level`,`time`,`pkey` FROM `".$db['users']."` WHERE `id` = ? AND `pkey` = ? AND `level` != 0;",
         array('is', cookie::get('id'), cookie::get('pkey')));
     if(_rows($sql)) {
         $get = _fetch($sql);
 
-        //-> Generiere neuen permanent-key
-        $permanent_key = md5(mkpwd(8));
+        //-> Generiere neuen permanent-key - sha256
+        $permanent_key = hash('sha256', mkpwd(12));
         cookie::put('pkey', $permanent_key);
         cookie::save();
 
@@ -157,7 +175,7 @@ if(HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && 
         $_SESSION['id']         = $get['id'];
         $_SESSION['pwd']        = $get['pwd'];
         $_SESSION['lastvisit']  = $get['time'];
-        $_SESSION['ip']         = visitorIp();
+        $_SESSION['ip']         = $userip;
 
         if(data("ip",$get['id']) != $_SESSION['ip'])
             $_SESSION['lastvisit'] = data("time",$get['id']);
@@ -166,10 +184,10 @@ if(HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && 
             $_SESSION['lastvisit'] = data("time",$get['id']);
 
         //-> Aktualisiere Datenbank
-        db("UPDATE ".$db['users']." SET `online` = '1', `sessid` = '".session_id()."', `ip` = '".$_SESSION['ip']."', `pkey` = '".$permanent_key."' WHERE id = '".$get['id']."'");
+        db("UPDATE `".$db['users']."` SET `online` = 1, `sessid` = '".session_id()."', `ip` = '".$userip."', `pkey` = '".$permanent_key."' WHERE `id` = ".$get['id'].";");
 
         //-> Aktualisiere die User-Statistik
-        db("UPDATE ".$db['userstats']." SET `logins` = logins+1 WHERE user = '".$get['id']."'");
+        db("UPDATE `".$db['userstats']."` SET `logins` = (logins+1) WHERE `user` = ".$get['id'].";");
         unset($get,$permanent_key);
     } else {
         $_SESSION['id']        = '';
@@ -235,6 +253,22 @@ function HasDSGVO() {
     return false;
 }
 
+function encrypt($input) {
+    global $rsa;
+    if(array_key_exists('encode',$rsa))
+        return $rsa['encode']->encrypt($input);
+
+    return '';
+}
+
+function decode($input) {
+    global $rsa;
+    if(array_key_exists('decode',$rsa))
+        return $rsa['decode']->decrypt($input);
+
+    return '';
+}
+
 /**
 * Gibt die IP des Besuchers / Users zurück
 * Forwarded IP Support
@@ -297,7 +331,7 @@ function userid() {
     if(HasDSGVO()) {
         if (empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
         if (!dbc_index::issetIndex('user_' . $_SESSION['id'])) {
-            $sql = db("SELECT * FROM " . $db['users'] . " WHERE id = '" . $_SESSION['id'] . "' AND pwd = '" . $_SESSION['pwd'] . "'");
+            $sql = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = ".$_SESSION['id']." AND `pwd` = '".$_SESSION['pwd']."';");
             if (!_rows($sql)) return 0;
             $get = _fetch($sql);
             dbc_index::setIndex('user_' . $get['id'], $get);
@@ -361,8 +395,8 @@ function lang($lng) {
     //-> Neue Languages einbinden, sofern vorhanden
     if($language_files = get_files(basePath.'/inc/additional-languages/'.$lng.'/',false,true,array('php'))) {
         foreach($language_files AS $languages) {
-            if(is_file(basePath.'/inc/additional-languages/'.$lng.'/'.$languages))
-                require_once(basePath.'/inc/additional-languages/'.$lng.'/'.$languages);
+            if(file_exists(basePath.'/inc/additional-languages/'.$lng.'/'.$languages))
+                include_once(basePath.'/inc/additional-languages/'.$lng.'/'.$languages);
         }
         unset($language_files,$languages);
     }
@@ -486,8 +520,9 @@ function languages() {
 }
 
 //-> Userspezifiesche Dinge
-if($userid >= 1 && $ajaxJob != true && HasDSGVO())
-    db("UPDATE ".$db['userstats']." SET `hits` = hits+1, `lastvisit` = '".((int)$_SESSION['lastvisit'])."' WHERE user = ".$userid);
+if($userid >= 1 && $ajaxJob != true && HasDSGVO()) {
+    db("UPDATE `".$db['userstats']."` SET `hits` = (hits+1), `lastvisit` = '".((int)$_SESSION['lastvisit'])."' WHERE `user` = ".$userid.";");
+}
 
 //-> Settings auslesen
 function settings($what,$use_dbc=true) {
@@ -497,7 +532,7 @@ function settings($what,$use_dbc=true) {
         if($use_dbc)
             $dbd = dbc_index::getIndex('settings');
         else
-            $dbd = db("SELECT * FROM ".$db['settings'],false,true);
+            $dbd = db("SELECT * FROM `".$db['settings']."`;",false,true);
 
         $return = array();
         foreach ($dbd as $key => $var) {
@@ -512,7 +547,7 @@ function settings($what,$use_dbc=true) {
         if($use_dbc)
             return dbc_index::getIndexKey('settings', $what);
 
-        $get = db("SELECT `".$what."` FROM ".$db['settings'],false,true);
+        $get = db("SELECT `".$what."` FROM `".$db['settings']."`;",false,true);
         return $get[$what];
     }
 }
@@ -525,7 +560,7 @@ function config($what,$use_dbc=true) {
         if($use_dbc)
             $dbd = dbc_index::getIndex('config');
         else
-            $dbd = db("SELECT * FROM ".$db['config'],false,true);
+            $dbd = db("SELECT * FROM `".$db['config']."`;",false,true);
 
         $return = array();
         foreach ($dbd as $key => $var) {
@@ -540,7 +575,7 @@ function config($what,$use_dbc=true) {
         if($use_dbc)
             return dbc_index::getIndexKey('config', $what);
 
-        $get = db("SELECT `".$what."` FROM ".$db['config'],false,true);
+        $get = db("SELECT `".$what."` FROM `".$db['config']."`;",false,true);
         return $get[$what];
     }
 }
@@ -642,7 +677,7 @@ function glossar_load_index() {
     if(!$use_glossar) return false;
 
     $gl_words = array(); $gl_desc = array();
-    $qryglossar = db("SELECT `word`,`glossar` FROM ".$db['glossar']);
+    $qryglossar = db("SELECT `word`,`glossar` FROM `".$db['glossar']."`;");
     while($getglossar = _fetch($qryglossar)) {
         $gl_words[] = re($getglossar['word']);
         $gl_desc[]  = $getglossar['glossar'];
@@ -717,11 +752,22 @@ function replace($txt,$type=false,$no_vid_tag=false) {
                   "<span style=\"color:$1\">$2</span>");
 
     $txt = preg_replace($var,$repl,$txt);
-    $txt = preg_replace_callback("#\<img(.*?)\>#", create_function('$img','if(preg_match("#class#i",$img[1])) return "<img".$img[1].">"; else return "<img class=\"content\"".$img[1].">";'), $txt);
+    $txt = preg_replace_callback("#\<img(.*?)\>#", function($img) {
+        if(preg_match("#class#i",$img[1])) {
+            return "<img".$img[1].">";
+        } else {
+            return "<img class=\"content\"".$img[1].">";
+        }
+    }, $txt);
 
     if(!$no_vid_tag) {
             $txt = preg_replace_callback("/\[youtube\](?:http?s?:\/\/)?(?:www\.)?youtu(?:\.be\/|be\.com\/watch\?v=)([A-Z0-9\-_]+)(?:&(.*?))?\[\/youtube\]/i",
-            create_function('$match','return \'<object width="425" height="344"><param name="movie" value="//www.youtube.com/v/\'.trim($match[1]).\'?hl=de_DE&amp;version=3&amp;rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/\'.trim($match[1]).\'?hl=de_DE&amp;version=3&amp;rel=0" type="application/x-shockwave-flash" width="425" height="344" allowscriptaccess="always" allowfullscreen="true"></embed></object>\';'), $txt);
+                function($match) {
+                    return '<object width="425" height="344"><param name="movie" value="//www.youtube.com/v/'.trim($match[1]).'?hl=de_DE&amp;version=3&amp;rel=0"></param>
+            <param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param>
+            <embed src="//www.youtube.com/v/'.trim($match[1]).'?hl=de_DE&amp;version=3&amp;rel=0" type="application/x-shockwave-flash" width="425" height="344" allowscriptaccess="always" allowfullscreen="true">
+            </embed></object>';
+                }, $txt);
     }
 
     $txt = str_replace("\"","&#34;",$txt);
@@ -1384,7 +1430,7 @@ function checkme($userid_set=0) {
         if (rootAdmin($userid)) return 4;
         if (empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
         if (!dbc_index::issetIndex('user_' . $userid)) {
-            $qry = db("SELECT * FROM " . $db['users'] . " WHERE id = " . $userid . " AND pwd = '" . $_SESSION['pwd'] . "' AND ip = '" . $_SESSION['ip'] . "'");
+            $qry = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . $userid . " AND `pwd` = '" . $_SESSION['pwd'] . "' AND `ip` = '" . $_SESSION['ip'] . "';");
             if (!_rows($qry)) return 0;
             $get = _fetch($qry);
             dbc_index::setIndex('user_' . $get['id'], $get);
@@ -1402,7 +1448,7 @@ function isBanned($userid_set=0,$logout=true) {
     global $db,$userid;
     $userid_set = $userid_set ? $userid_set : $userid;
     if(checkme($userid_set) >= 1 || $userid_set) {
-        $get = db("SELECT banned FROM ".$db['users']." WHERE `id` = ".intval($userid_set)." LIMIT 1",false,true);
+        $get = db("SELECT `banned` FROM `".$db['users']."` WHERE `id` = ".intval($userid_set)." LIMIT 1;",false,true);
         if($get['banned']) {
             if($logout) {
                 $_SESSION['id']        = '';
@@ -1612,14 +1658,23 @@ function mkpwd() {
     return $pw;
 }
 
-//-> Passwortabfrage
+//-> Passwortabfrage und rückgabe des users
 function checkpwd($user, $pwd) {
     global $db;
-    return db("SELECT id,user,nick,pwd
-               FROM ".$db['users']."
-               WHERE user = '".up($user)."'
-               AND pwd = '".up($pwd)."'
-               AND level != '0'",true) ? true : false;
+    $sql = db("SELECT * FROM `".$db['users']."` WHERE `user` = '"._real_escape_string(encrypt($user))."' AND `pwd` = '".up($pwd)."' AND `level` != 0;");
+    if(_rows($sql) == 1) {
+        $get = _fetch($sql);
+        if($get['pwd_md5']) {
+            //Update Password to SHA256
+            db("UPDATE `".$db['users']."` SET `pwd` = '".hash('sha256',$pwd)."' AND `pwd_md5` = 0 WHERE `id` = ".$get['id'].";");
+            $get['pwd'] = hash('sha256',$pwd);
+            $get['pwd_md5'] = 0;
+        }
+
+        return $get;
+    }
+
+    return false;
 }
 
 //-> Infomeldung ausgeben
@@ -1751,7 +1806,7 @@ function artikelSites($sites, $id) {
 function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
     global $db;
     if(!dbc_index::issetIndex('user_'.intval($uid))) {
-        $qry = db("SELECT * FROM ".$db['users']." WHERE id = '".intval($uid)."'");
+        $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".intval($uid).";");
         if(_rows($qry)) {
             $get = _fetch($qry);
             dbc_index::setIndex('user_'.$get['id'], $get);
@@ -1761,7 +1816,8 @@ function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
         }
     }
 
-    $nickname = (!empty($cut)) ? cut(re(dbc_index::getIndexKey('user_'.intval($uid), 'nick')), $cut,true,false) : re(dbc_index::getIndexKey('user_'.intval($uid), 'nick'));
+    $nickname = (!empty($cut)) ? cut(re(decode(dbc_index::getIndexKey('user_'.intval($uid), 'nick'))), $cut,true,false) :
+        re(decode(dbc_index::getIndexKey('user_'.intval($uid), 'nick')));
     return show(_user_link, array("id" => $uid,
                                   "country" => flag(dbc_index::getIndexKey('user_'.intval($uid), 'country')),
                                   "class" => $class,
@@ -1772,7 +1828,7 @@ function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
 function cleanautor($uid, $class="", $nick="", $email="", $cut="") {
     global $db;
     if(!dbc_index::issetIndex('user_'.intval($uid))) {
-        $qry = db("SELECT * FROM ".$db['users']." WHERE id = '".intval($uid)."'");
+        $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".intval($uid).";");
         if(_rows($qry)) {
             $get = _fetch($qry);
             dbc_index::setIndex('user_'.$get['id'], $get);
@@ -1782,7 +1838,7 @@ function cleanautor($uid, $class="", $nick="", $email="", $cut="") {
     }
 
     return show(_user_link_preview, array("id" => $uid, "country" => flag(dbc_index::getIndexKey('user_'.intval($uid), 'country')),
-                                          "class" => $class, "nick" => re(cut(dbc_index::getIndexKey('user_'.intval($uid),$cut,false,false), 'nick'))));
+                                          "class" => $class, "nick" => re(cut(decode(dbc_index::getIndexKey('user_'.intval($uid),'nick')),$cut,false,false))));
 }
 
 function rawautor($uid) {
@@ -1798,7 +1854,7 @@ function rawautor($uid) {
     }
 
     return rawflag(dbc_index::getIndexKey('user_'.intval($uid), 'country'))." ".
-    jsconvert(re(dbc_index::getIndexKey('user_'.intval($uid), 'nick')));
+    jsconvert(re(decode(dbc_index::getIndexKey('user_'.intval($uid), 'nick'))));
 }
 
 //-> Nickausgabe ohne Profillink oder Emaillink fr das ForenAbo
@@ -1807,7 +1863,7 @@ function fabo_autor($uid) {
     $qry = db("SELECT nick FROM ".$db['users']." WHERE id = '".$uid."'");
     if(_rows($qry)) {
         $get = _fetch($qry);
-        return show(_user_link_fabo, array("id" => $uid, "nick" => re($get['nick'])));
+        return show(_user_link_fabo, array("id" => $uid, "nick" => re(decode($get['nick']))));
     }
 
     return '';
@@ -1818,7 +1874,7 @@ function blank_autor($uid) {
     $qry = db("SELECT nick FROM ".$db['users']." WHERE id = '".$uid."'");
     if(_rows($qry)) {
         $get = _fetch($qry);
-        return show(_user_link_blank, array("id" => $uid, "nick" => re($get['nick'])));
+        return show(_user_link_blank, array("id" => $uid, "nick" => re(decode($get['nick']))));
     }
 
     return '';

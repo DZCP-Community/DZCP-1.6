@@ -16,11 +16,11 @@ $action = isset($_GET['action']) ? $_GET['action'] : '';
 $do = isset($_GET['do']) ? $_GET['do'] : '';
 $installer = true; $updater = false;
 
+require_once(basePath.'/vendor/autoload.php');
 require_once(basePath.'/inc/_version.php');
 require_once(basePath."/inc/debugger.php");
 require_once(basePath.'/_installer/conf/conf.php');
 require_once(basePath.'/_installer/conf/mysql.php');
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 DebugConsole::initCon();
@@ -462,6 +462,7 @@ case 'database';
         update_mysql_1_5_4();
         update_mysql_1_6();
         update_mysql_1_6_0_4();
+        update_mysql_1_6_1_0();
         header("Location: install.php?action=done");
     } else {
       echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
