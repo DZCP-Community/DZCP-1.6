@@ -37,10 +37,7 @@ function counter() {
 
         $info = '';
         if(abs(online_reg()) != 0) {
-            $qryo = db("SELECT `id` FROM ".$db['users']."
-                WHERE time+'".$useronline."'>'".time()."'
-                AND `online` = 1
-                ORDER BY nick");
+            $qryo = db("SELECT `id` FROM `".$db['users']."` WHERE (time+".$useronline.") > ".time()." AND `online` = 1 ORDER BY `nick`;");
 
             $kats = ''; $text = '';
             if(_rows($qryo)) {

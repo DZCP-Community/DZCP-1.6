@@ -10,51 +10,51 @@ if(defined('_UserMenu')) {
     $show_sql = isset($_GET['show']) ? $_GET['show'] : '';
 
     if($show_sql == "search") {
-        $qry = db("SELECT id,nick,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position,regdatum
-                   FROM ".$db['users']."
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum`
+                   FROM `".$db['users']."`
                    WHERE nick LIKE '%".$_GET['search']."%'
                    AND level != 0
                    ORDER BY nick
                    LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
     } elseif($show_sql == "newreg") {
-        $qry = db("SELECT id,nick,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position,regdatum FROM ".$db['users']."
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
                    WHERE regdatum > '".$_SESSION['lastvisit']."'
                    AND level != '0'
                    ORDER BY regdatum DESC,nick
                    LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
     } elseif($show_sql == "lastlogin") {
-        $qry = db("SELECT id,nick,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position,regdatum FROM ".$db['users']."
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
                    WHERE level != '0'
                    ORDER BY time DESC,nick
                    LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
     } elseif($show_sql == "lastreg") {
-        $qry = db("SELECT id,nick,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position,regdatum FROM ".$db['users']."
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
                    WHERE level != '0'
                    ORDER BY regdatum DESC,nick
                    LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
     } elseif($show_sql == "online") {
-        $qry = db("SELECT id,nick,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position,time FROM ".$db['users']."
+        $qry = db("SELECT `id`,`nick`,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position,time FROM `".$db['users']."`
                    WHERE level != '0'
                    ORDER BY time DESC,nick
                    LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
     } elseif($show_sql == "country") {
-        $qry = db("SELECT id,nick,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position,country FROM ".$db['users']."
+        $qry = db("SELECT `id`,`nick`,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position,country FROM `".$db['users']."`
                    WHERE level != '0'
                    ORDER BY country,nick
                    LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
     } elseif($show_sql == "sex") {
-        $qry = db("SELECT id,nick,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position FROM ".$db['users']."
+        $qry = db("SELECT `id`,`nick`,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position FROM `".$db['users']."`
                    WHERE level != '0'
                    ORDER BY sex DESC
                    LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
     } elseif($show_sql == "banned") {
-        $qry = db("SELECT id,nick,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position FROM ".$db['users']."
+        $qry = db("SELECT `id`,`nick`,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position FROM `".$db['users']."`
                    WHERE level = '0'
                    ORDER BY nick
                    LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
     } else {
-        $qry = db("SELECT id,nick,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,
-                  icq,status,position FROM ".$db['users']."
+        $qry = db("SELECT `id`,`nick`,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,
+                  icq,status,position FROM `".$db['users']."`
                   WHERE level != '0'
                   ".orderby_sql(array("nick","bday"), 'ORDER BY level DESC,nick')."
                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
@@ -63,18 +63,19 @@ if(defined('_UserMenu')) {
     $userliste = '';
     while($get = _fetch($qry)) {
         $email = show(_emailicon, array("email" => eMailAddr($get['email'])));
-        $hlsw = empty($get['hlswid']) ? "-" : show(_hlswicon, array("id" => re($get['hlswid']), "img" => "1", "css" => ""));
-        $xboxu = empty($get['xboxid']) ? "-" : show(_xboxicon, array("id" => re($get['xboxid']), "img" => "1", "css" => ""));
-        $psnu = empty($get['psnid']) ? "-" : show(_psnicon, array("id" => re($get['psnid']), "img" => "1", "css" => ""));
-        $originu = empty($get['originid']) ? "-" : show(_originicon, array("id" => re($get['originid']), "img" => "1", "css" => ""));
-        $battlenetu = empty($get['battlenetid']) ? "-" : show(_battleneticon, array("id" => re($get['battlenetid']), "img" => "1", "css" => ""));
-        $skypename = empty($get['skypename']) ? "-" : "<a href=\"skype:".$get['skypename']."?chat\"><img src=\"http://mystatus.skype.com/smallicon/".$get['skypename']."\" style=\"border: none;\" width=\"16\" height=\"16\" alt=\"".$get['skypename']."\"/></a>";
-        $hp = empty($get['hp']) ? "-" : show(_hpicon, array("hp" => $get['hp']));
+        $hlsw = empty($get['hlswid']) ? "-" : show(_hlswicon, array("id" => decode($get['hlswid']), "img" => "1", "css" => ""));
+        $xboxu = empty($get['xboxid']) ? "-" : show(_xboxicon, array("id" => decode($get['xboxid']), "img" => "1", "css" => ""));
+        $psnu = empty($get['psnid']) ? "-" : show(_psnicon, array("id" => decode($get['psnid']), "img" => "1", "css" => ""));
+        $originu = empty($get['originid']) ? "-" : show(_originicon, array("id" => decode($get['originid']), "img" => "1", "css" => ""));
+        $battlenetu = empty($get['battlenetid']) ? "-" : show(_battleneticon, array("id" => decode($get['battlenetid']), "img" => "1", "css" => ""));
+
+        $skypename = empty($get['skypename']) ? "-" : "<a href=\"skype:".decode($get['skypename'])."?chat\"><img src=\"http://mystatus.skype.com/smallicon/".decode($get['skypename'])."\" style=\"border: none;\" width=\"16\" height=\"16\" alt=\"".decode($get['skypename'])."\"/></a>";
+        $hp = empty($get['hp']) ? "-" : show(_hpicon, array("hp" => decode($get['hp'])));
 
         $icq = "-";
         if(!empty($get['icq'])) {
-            $uin = show(_icqstatus, array("uin" => $get['icq']));
-            $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin='.$get['icq'].'" target="_blank">'.$uin.'</a>';
+            $uin = show(_icqstatus, array("uin" => decode($get['icq'])));
+            $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin='.decode($get['icq']).'" target="_blank">'.$uin.'</a>';
         }
 
         $sex = "-";
@@ -92,6 +93,7 @@ if(defined('_UserMenu')) {
             $edit = show("page/button_edit", array("id" => "",
                                                    "action" => "action=admin&amp;edit=".$get['id'],
                                                    "title" => _button_title_edit));
+
             $edit = str_replace("&amp;id=","",$edit);
             $delete = show("page/button_delete", array("id" => $get['id'],
                                                        "action" => "action=admin&amp;do=delete",
@@ -100,9 +102,9 @@ if(defined('_UserMenu')) {
 
         $steam = '-';
         if(!empty($get['steamid']))
-            $steam = '<div id="infoSteam_'.md5($get['steamid']).'">
+            $steam = '<div id="infoSteam_'.md5(decode($get['steamid'])).'">
             <div style="width:100%;text-align:center"><img src="../inc/images/ajax-loader-mini.gif" alt="" /></div>
-            <script language="javascript" type="text/javascript">DZCP.initDynLoader("infoSteam_'.md5($get['steamid']).'","steam","&steamid='.$get['steamid'].'&list=true");</script></div>';
+            <script language="javascript" type="text/javascript">DZCP.initDynLoader("infoSteam_'.md5(decode($get['steamid'])).'","steam","&steamid='.decode($get['steamid']).'&list=true");</script></div>';
 
         $userliste .= show($dir."/userliste_show", array("nick" => autor($get['id'],'','',10),
                                                          "level" => getrank($get['id']),
@@ -115,7 +117,7 @@ if(defined('_UserMenu')) {
                                                          "class" => $class,
                                                          "icq" => $icq,
                                                          "skypename" => $skypename,
-                                                         "icquin" => $get['icq'],
+                                                         "icquin" => decode($get['icq']),
                                                          "onoff" => onlinecheck($get['id']),
                                                          "hp" => $hp,
                                                          "steam" => $steam,

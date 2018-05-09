@@ -7,7 +7,6 @@
 //MySQL-Daten einlesen
 $installation = true;
 include(basePath.'/inc/config.php');
-use phpseclib\Crypt\RSA;
 set_time_limit(600);
 ini_set('max_execution_time', 600);
 
@@ -1578,24 +1577,19 @@ function update_mysql_1_6_1_0()
     db("ALTER TABLE `".$db['users']."` ADD `pwd_md5` INT(1) NOT NULL DEFAULT '1' AFTER `pwd`;");
 
     //Generate Keys
-    $rsa = new RSA();
-    $keys = $rsa->createKey();
+    $rsa = new Crypt();
+    $key = hash('sha256', mkpwd(12));
 
-    $private_key_file = 'private_key.php';
-    if(!file_exists(basePath.'/inc/'.$private_key_file)) {
-        $keys['privatekey'] = '<?php /* '.$keys['privatekey'].' */';
-        file_put_contents(basePath.'/inc/'.$private_key_file,$keys['privatekey']);
+    $key_file = 'crypt_key.php';
+    if(!file_exists(basePath.'/inc/'.$key_file)) {
+        $key = '<?php /* '.$key.' */';
+        file_put_contents(basePath.'/inc/'.$key_file,$key);
     }
 
-    $public_key_file = 'public_key.php';
-    if(!file_exists(basePath.'/inc/'.$public_key_file)) {
-        $keys['publickey'] = '<?php /* '.$keys['publickey'].' */';
-        file_put_contents(basePath.'/inc/'.$public_key_file,$keys['publickey']);
-    }
-
-    $key = file_get_contents(basePath.'/inc/public_key.php');
+    $key = file_get_contents(basePath.'/inc/'.$key_file);
     $key = str_replace(array('<?php /* ',' */'),'',$key);
-    $rsa->loadKey($key);
+    $rsa->__set('Mode',Crypt::MODE_HEX);
+    $rsa->__set('Key',$key);
 
     ignore_user_abort(true);
     set_time_limit(0);
@@ -1611,11 +1605,6 @@ function update_mysql_1_6_1_0()
     db("TRUNCATE ".$db['users'].";");
 
     //Update Table
-    $qry = db("SHOW FIELDS FROM ".$db['users'].";");
-    while($get = _fetch($qry)) {
-        db("ALTER TABLE `dzcp_users` CHANGE `ip` `ip` BLOB NOT NULL DEFAULT '';");
-    }
-
     $ar_update = array('ip','nick','user','email','icq','hlswid','steamid','battlenetid','originid','skypename','psnid','xboxid','rlname',
         'city','hobbys','motto','hp','cpu','ram','monitor','maus','mauspad','headset','board','os','graka','hdd','inet','signatur',
         'ex','job','drink','essen','film','musik','song','buch','autor','person','sport','sportler','auto','game','favoclan','spieler',
@@ -1623,7 +1612,7 @@ function update_mysql_1_6_1_0()
     $qry = db("SHOW FIELDS FROM `".$db['users']."`;");
     while($get = _fetch($qry)) {
         if(in_array($get['Field'],$ar_update)) {
-            db("ALTER TABLE `".$db['users']."` CHANGE `".$get['Field']."` `".$get['Field']."` BLOB NOT NULL DEFAULT '';");
+            db("ALTER TABLE `".$db['users']."` CHANGE `".$get['Field']."` `".$get['Field']."` TEXT NULL;");
         }
     }
 

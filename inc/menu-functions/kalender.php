@@ -49,7 +49,7 @@ function kalender($month="",$year="") {
                 $data .= "<td class=\"navKalEmpty\"></td>";
             } else {
 				$titlebd = ''; $bdays = '';
-                $qry = db("SELECT id,bday FROM ".$db['users']." WHERE bday != 0");
+                $qry = db("SELECT `id`,`bday` FROM `".$db['users']."` WHERE `bday` != 0;");
                 while($get = _fetch($qry)) {
                     if(date("d.m",$get['bday']) == cal($i).".".$monat) {
                         $bdays = "set";
@@ -58,7 +58,7 @@ function kalender($month="",$year="") {
                 }
 
                 $cws = ""; $titlecw = "";
-                $qry = db("SELECT datum,gegner FROM ".$db['cw']." WHERE DATE_FORMAT(FROM_UNIXTIME(datum), '%d.%m.%Y') = '".cal($i).".".$monat.".".$jahr."'");
+                $qry = db("SELECT `datum`,`gegner` FROM `".$db['cw']."` WHERE DATE_FORMAT(FROM_UNIXTIME(datum), '%d.%m.%Y') = '".cal($i).".".$monat.".".$jahr."';");
                 if(_rows($qry)) {
                     while($get = _fetch($qry)) {
                         $cws = "set";
@@ -67,7 +67,7 @@ function kalender($month="",$year="") {
                 }
 
                 $event = ""; $titleev = "";
-                $qry = db("SELECT datum,title FROM ".$db['events']." WHERE DATE_FORMAT(FROM_UNIXTIME(datum), '%d.%m.%Y') = '".cal($i).".".$monat.".".$jahr."'");
+                $qry = db("SELECT `datum`,`title` FROM `".$db['events']."` WHERE DATE_FORMAT(FROM_UNIXTIME(datum), '%d.%m.%Y') = '".cal($i).".".$monat.".".$jahr."';");
                 if(_rows($qry)) {
                     while($get = _fetch($qry)) {
                         $event = "set";

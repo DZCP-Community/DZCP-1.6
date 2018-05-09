@@ -7,8 +7,10 @@
 function team($tID = '') {
     global $db;
 
-    if(!empty($tID)) $where = "WHERE `id` = '".(int)($tID)."' AND `navi` = 1";
-    else             $where = "WHERE `navi` = '1' ORDER BY RAND()";
+    if(!empty($tID))
+        $where = "WHERE `id` = '".(int)($tID)."' AND `navi` = 1";
+    else
+        $where = "WHERE `navi` = '1' ORDER BY RAND()";
 
     $get = db("SELECT `id`,`name` FROM ".$db['squads']." ".$where."",false,true);
 

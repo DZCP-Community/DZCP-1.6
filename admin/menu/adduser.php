@@ -85,14 +85,14 @@ if(_adminMenu != 'true') exit;
                                                                                      "value" => _button_value_reg));
       if($do == "add")
       {
-        $check_user = db_stmt("SELECT id FROM ".$db['users']." WHERE `user`= ?",
-                  array('s', up($_POST['user'])),true,false);
+        $check_user = db_stmt("SELECT `id` FROM ".$db['users']." WHERE `user`= ?;",
+                  array('s', _real_escape_string(encrypt($_POST['user']))),true,false);
 
-        $check_nick = db_stmt("SELECT id FROM ".$db['users']." WHERE `nick`= ?",
-                  array('s', up($_POST['nick'])),true,false);
+        $check_nick = db_stmt("SELECT `id` FROM ".$db['users']." WHERE `nick`= ?;",
+                  array('s', _real_escape_string(encrypt($_POST['nick']))),true,false);
 
-        $check_email = db_stmt("SELECT id FROM ".$db['users']." WHERE `email`= ?",
-                  array('s', up($_POST['email'])),true,false);
+        $check_email = db_stmt("SELECT `id` FROM ".$db['users']." WHERE `email`= ?;",
+                  array('s', _real_escape_string(encrypt($_POST['email']))),true,false);
 
         if(empty($_POST['user']))
         {
@@ -111,26 +111,30 @@ if(_adminMenu != 'true') exit;
             $show = error(_error_email_exists, 1);
         } else {
 
-        if(empty($_POST['pwd']))  $mkpwd = mkpwd();
-        else                      $mkpwd = $_POST['pwd'];
-        $pwd = md5($mkpwd);
+        if(empty($_POST['pwd']))
+            $mkpwd = mkpwd();
+        else
+            $mkpwd = $_POST['pwd'];
+
+        $pwd = hash('sha256', $mkpwd);
 
         $bday = ($_POST['t'] && $_POST['m'] && $_POST['j'] ? cal($_POST['t']).".".cal($_POST['m']).".".$_POST['j'] : 0);
-        $qry = db("INSERT INTO ".$db['users']."
-                             SET `user`     = '".up($_POST['user'])."',
-                                 `nick`     = '".up($_POST['nick'])."',
-                                 `email`    = '".up($_POST['email'])."',
-                                 `pwd`      = '".up($pwd)."',
-                                 `rlname`   = '".up($_POST['rlname'])."',
-                                 `sex`      = '".((int)$_POST['sex'])."',
+        $qry = db("INSERT INTO `".$db['users']."`
+                             SET `user`     = '"._real_escape_string(encrypt($_POST['user']))."',
+                                 `nick`     = '"._real_escape_string(encrypt($_POST['nick']))."',
+                                 `email`    = '"._real_escape_string(encrypt($_POST['email']))."',
+                                 `pwd`      = '".$pwd."',
+                                 `rlname`   = '"._real_escape_string(encrypt($_POST['rlname']))."',
+                                 `sex`      = ".((int)$_POST['sex']).",
                                  `bday`     = '".(!$bday ? 0 : strtotime($bday))."',
-                                 `city`     = '".up($_POST['city'])."',
-                                 `country`  = '".up($_POST['land'])."',
-                                 `regdatum` = '".time()."',
-                                 `level`    = '".((int)$_POST['level'])."',
-                                 `time`     = '".time()."',
-                                 `gmaps_koord`  = '".up($_POST['gmaps_koord'])."',
-                                 `status`   = '1'");
+                                 `city`     = '"._real_escape_string(encrypt($_POST['city']))."',
+                                 `country`  = '"._real_escape_string(encrypt($_POST['land']))."',
+                                 `regdatum` = ".time().",
+                                 `level`    = ".((int)$_POST['level']).",
+                                 `time`     = ".time().",
+                                 `pwd_md5`  = 0,
+                                 `gmaps_koord`  = '"._real_escape_string(encrypt($_POST['gmaps_koord']))."',
+                                 `status`   = 1;");
 
       $insert_id = mysqli_insert_id($mysql);
       setIpcheck("createuser(".$userid."_".$insert_id.")");

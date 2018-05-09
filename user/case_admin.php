@@ -8,26 +8,18 @@ if(defined('_UserMenu')) {
     if(!permission("editusers"))
         $index = error(_error_wrong_permissions, 1);
     elseif(isset($_GET['edit']) && $_GET['edit'] == $userid) {
-        $qrysq = db("SELECT id,name FROM ".$db['squads']." ORDER BY pos"); $esquads = '';
+        $qrysq = db("SELECT `id`,`name` FROM `".$db['squads']."` ORDER BY `pos`;"); $esquads = '';
         while($getsq = _fetch($qrysq)) {
-            $qrypos = db("SELECT id,position FROM ".$db['pos']." ORDER BY pid"); $posi = "";
+            $qrypos = db("SELECT `id`,`position` FROM `".$db['pos']."` ORDER BY `pid`;"); $posi = "";
             while($getpos = _fetch($qrypos)) {
-                $check = db("SELECT id FROM ".$db['userpos']."
-                             WHERE posi = '".$getpos['id']."'
-                             AND squad = '".$getsq['id']."'
-                             AND user = '".(int)($_GET['edit'])."'",true);
-
+                $check = db("SELECT `id` FROM `".$db['userpos']."` WHERE `posi` = ".$getpos['id']." AND `squad` = ".$getsq['id']." AND `user` = ".(int)($_GET['edit']).";",true);
                 $sel = $check ? 'selected="selected"' : '';
                 $posi .= show(_select_field_posis, array("value" => $getpos['id'],
                                                          "sel" => $sel,
                                                          "what" => re($getpos['position'])));
             }
 
-            $checkquser = db("SELECT id FROM ".$db['squaduser']."
-                             WHERE user = '".(int)($_GET['edit'])."'
-                             AND squad = '".$getsq['id']."'",true);
-
-            $check = $checkquser ? 'checked="checked"' : '';
+            $check = db("SELECT `id` FROM `".$db['squaduser']."` WHERE `user` = ".(int)($_GET['edit'])." AND `squad` = ".$getsq['id'].";",true) ? 'checked="checked"' : '';
             $esquads .= show(_checkfield_squads, array("id" => $getsq['id'],
                                                        "check" => $check,
                                                        "eposi" => $posi,
@@ -53,7 +45,7 @@ if(defined('_UserMenu')) {
                 $index = error(_identy_admin, 1);
             else {
                 $msg = show(_admin_user_get_identy, array("nick" => autor($_GET['id'])));
-                db("UPDATE ".$db['users']." SET `online` = '0', `sessid` = '', `pkey` = '' WHERE id = ".$userid); //Logout
+                db("UPDATE ".$db['users']." SET `online` = 0, `sessid` = '', `pkey` = '' WHERE id = ".$userid.";"); //Logout
                 session_regenerate_id();
 
                 $_SESSION['id'] = $_GET['id'];
@@ -68,7 +60,7 @@ if(defined('_UserMenu')) {
         } else if($do == "update") {
             if($_POST && isset($_GET['user'])) {
                 // permissions
-                db("DELETE FROM ".$db['permissions']." WHERE `user` = '".(int)($_GET['user'])."'");
+                db("DELETE FROM `".$db['permissions']."` WHERE `user` = ".(int)($_GET['user']).";");
                 if(!empty($_POST['perm'])) {
                     $p = '';
                     foreach($_POST['perm'] AS $v => $k) {

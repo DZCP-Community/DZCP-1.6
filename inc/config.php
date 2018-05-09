@@ -64,7 +64,7 @@ define('phpmailer_smtp_secure', 'tls');//Enable TLS encryption, `ssl` also accep
  * Cache Configuration
  */
 $config_cache = array(
-    "storage" => "auto", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, cookie, wincache
+    "storage" => "zendshm", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
     "server_mem" => array(array("127.0.0.1",11211,1)), //memcache / memcached
     "server_redis" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'database' => '', 'timeout' => ''),
     "server_ssdb" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'timeout' => ''),
@@ -370,8 +370,8 @@ function refValues($arr) {
 //Auto Update Detect
 if(file_exists(basePath."/_installer/index.php") &&
     file_exists(basePath."/inc/mysql.php") && !$installation && !$thumbgen) {
-    $user_check = db("SELECT * FROM `".$db['users']."` WHERE `id` = 1",false,true);
-    if(!array_key_exists('banned',$user_check) && !$installer)
+    $user_check = db("SELECT * FROM `".$db['users']."` WHERE `id` = 1;",false,true);
+    if(!array_key_exists('pwd_md5',$user_check) && !$installer)
         $global_index ? header('Location: _installer/update.php') :
             header('Location: ../_installer/update.php');
     unset($user_check);

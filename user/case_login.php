@@ -13,7 +13,7 @@ if(defined('_UserMenu')) {
                 (empty($_SESSION['sec_login_page']) && empty($_SESSION['login_menu'])))))
             $index = error(_error_invalid_regcode, 1);
         else {
-            if($get = checkpwd($_POST['user'],$_POST['pwd'])) {
+            if(($get = checkpwd($_POST['user'],$_POST['pwd'])) != false) {
                 if(!isBanned($get['id'])) {
                     $permanent_key = '';
                     if(isset($_POST['permanent'])) {
@@ -55,11 +55,11 @@ if(defined('_UserMenu')) {
         if(!$chkMe) {
             $secure = config('securelogin') ? show($dir."/secure", array("help" => _login_secure_help, "security" => _register_confirm)) : '';
             $index = show($dir."/login", array("loginhead" => _login_head,
-                                               "loginname" => _loginname,
-                                               "secure" => $secure,
-                                               "lostpwd" => _login_lostpwd,
-                                               "permanent" => _login_permanent,
-                                               "pwd" => _pwd));
+                                                   "loginname" => _loginname,
+                                                   "secure" => $secure,
+                                                   "lostpwd" => _login_lostpwd,
+                                                   "permanent" => _login_permanent,
+                                                   "pwd" => _pwd));
         } else {
             $index = error(_error_user_already_in, 1);
             cookie::put('id', '');

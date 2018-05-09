@@ -3,13 +3,15 @@
  * DZCP - deV!L`z ClanPortal 1.6 Final
  * http://www.dzcp.de
  * Menu: Teamspeak
+ * @param int $js
+ * @return bool|mixed|null|string|string[]
+ * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
  */
 function teamspeak($js = 0) {
     global $language, $cache;
 
     header('Content-Type: text/html; charset=utf-8');
     if(!fsockopen_support()) return _fopen;
-    $teamspeak = '';
 
     if(empty($js)) {
         $teamspeak = '
@@ -32,9 +34,11 @@ function teamspeak($js = 0) {
                 $teamspeak = teamspeakViewer();
                 $CachedString->set($teamspeak)->expiresAfter(config('cache_teamspeak'));
                 $cache->save($CachedString);
+            } else {
+                $teamspeak = $CachedString->get();
             }
         } else {
-            $teamspeak = '<br /><center>'._no_ts.'</center><br />';
+            $teamspeak = '<br /><div style="text-align:center;">'._no_ts.'</div><br />';
         }
     }
 

@@ -6,29 +6,27 @@
 
 if(defined('_UserMenu')) {
     $where = _user_profile_of.'autor_'.$_GET['id'];
-    if(!db("SELECT id FROM ".$db['users']." WHERE id = '".(int)($_GET['id'])."'",true) ? true : false)
+    if(!db("SELECT id FROM `".$db['users']."` WHERE `id` = ".(int)($_GET['id']).";",true) ? true : false)
         $index = error(_user_dont_exist, 1);
     else {
-        db("UPDATE ".$db['userstats']."
-            SET `profilhits` = profilhits+1
-            WHERE user = '".(int)($_GET['id'])."'");
+        db("UPDATE `".$db['userstats']."` SET `profilhits` = (profilhits+1) WHERE `user` = ".(int)($_GET['id']).";");
 
-        $get = db("SELECT * FROM ".$db['users']." WHERE id = '".(int)($_GET['id'])."'",false,true);
+        $get = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($_GET['id']).";",false,true);
         $sex = '-';
-        if($get['sex'] == "1")
+        if($get['sex'] == 1)
             $sex = _male;
-        elseif($get['sex'] == "2")
+        elseif($get['sex'] == 2)
             $sex = _female;
 
-        $hp = empty($get['hp']) ? "-" : "<a href=\"".$get['hp']."\" target=\"_blank\">".$get['hp']."</a>";
-        $email = empty($get['email']) ? "-" : "<img src=\"../inc/images/mailto.gif\" alt=\"\" align=\"texttop\"> <a href=\"mailto:".eMailAddr($get['email'])."\" target=\"_blank\">".eMailAddr($get['email'])."</a>";
-        $pn = show(_pn_write, array("id" => $_GET['id'], "nick" => $get['nick']));
-        $hlsw = empty($get['hlswid']) ? "-" : show(_hlswicon, array("id" => re($get['hlswid']), "img" => "1", "css" => ""));
-        $xboxu = empty($get['xboxid']) ? "-" : show(_xboxicon, array("id" => str_replace(" ","%20",trim(re($get['xboxid']))), "img" => "1", "css" => ""));
-        $xboxuser = empty($get['xboxid']) ? _noxboxavatar : show(_xboxpic, array("id" => str_replace(" ","%20",trim(re($get['xboxid']))), "img" => "1", "css" => ""));
-        $psnu = empty($get['psnid']) ? "-" : show(_psnicon, array("id" => str_replace(" ","%20",trim(re($get['psnid']))), "img" => "1", "css" => ""));
-        $originu = empty($get['originid']) ? '-' : show(_originicon, array("id" => str_replace(" ","%20",trim(re($get['originid']))), "img" => "1", "css" => ""));
-        $battlenetu = empty($get['battlenetid']) ? '-' : show(_battleneticon, array("id" => str_replace(" ","%20",trim(re($get['battlenetid']))), "img" => "1", "css" => ""));
+        $hp = empty($get['hp']) ? "-" : "<a href=\"".$get['hp']."\" target=\"_blank\">".decode($get['hp'])."</a>";
+        $email = empty($get['email']) ? "-" : "<img src=\"../inc/images/mailto.gif\" alt=\"\" align=\"texttop\"> <a href=\"mailto:".eMailAddr(decode($get['email']))."\" target=\"_blank\">".eMailAddr(decode($get['email']))."</a>";
+        $pn = show(_pn_write, array("id" => $_GET['id'], "nick" => decode($get['nick'])));
+        $hlsw = empty($get['hlswid']) ? "-" : show(_hlswicon, array("id" => decode($get['hlswid']), "img" => "1", "css" => ""));
+        $xboxu = empty($get['xboxid']) ? "-" : show(_xboxicon, array("id" => str_replace(" ","%20",decode($get['xboxid'])), "img" => "1", "css" => ""));
+        $xboxuser = empty($get['xboxid']) ? _noxboxavatar : show(_xboxpic, array("id" => str_replace(" ","%20",decode($get['xboxid'])), "img" => "1", "css" => ""));
+        $psnu = empty($get['psnid']) ? "-" : show(_psnicon, array("id" => str_replace(" ","%20",decode($get['psnid'])), "img" => "1", "css" => ""));
+        $originu = empty($get['originid']) ? '-' : show(_originicon, array("id" => str_replace(" ","%20",decode($get['originid'])), "img" => "1", "css" => ""));
+        $battlenetu = empty($get['battlenetid']) ? '-' : show(_battleneticon, array("id" => str_replace(" ","%20",decode($get['battlenetid'])), "img" => "1", "css" => ""));
         $bday = (!$get['bday'] || empty($get['bday'])) ? "-" : date('d.m.Y',$get['bday']);
 
         $icq = "-"; $icqnr = '';
@@ -38,12 +36,12 @@ if(defined('_UserMenu')) {
         }
 
         $status = ($get['status'] == 1 || ($getl['level'] != 1 && isset($_GET['sq']))) ? _aktiv_icon : _inaktiv_icon;
-        $getl = db("SELECT * FROM ".$db['users']." WHERE id = '".(int)($_GET['id'])."'",false,true);
+        $getl = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($_GET['id']).";",false,true);
 
         $clan = "";
         if($getl['level'] != 1 || isset($_GET['sq'])) {
-            $sq = db("SELECT * FROM ".$db['userpos']." WHERE user = '".(int)($_GET['id'])."'");
-            $cnt = cnt($db['userpos'], " WHERE user = '".$get['id']."'"); $i=1;
+            $sq = db("SELECT * FROM `".$db['userpos']."` WHERE `user` = ".(int)($_GET['id']).";");
+            $cnt = cnt($db['userpos'], " WHERE `user` = ".$get['id']); $i=1;
 
             if(_rows($sq) && !isset($_GET['sq'])) {
                 $pos = '';
@@ -60,25 +58,25 @@ if(defined('_UserMenu')) {
             else
                 $pos = getrank($get['id']);
 
-            $qrycustom = db("SELECT * FROM ".$db['profile']." WHERE kid = '2' AND shown = '1' ORDER BY id ASC"); $custom_clan = '';
+            $qrycustom = db("SELECT * FROM `".$db['profile']."` WHERE `kid` = 2 AND `shown` = 1 ORDER BY `id` ASC;"); $custom_clan = '';
             while($getcustom = _fetch($qrycustom)) {
-                $getcontent = db("SELECT ".$getcustom['feldname']." FROM ".$db['users']." WHERE id = '".(int)($_GET['id'])."' LIMIT 1",false,true);
+                $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".(int)($_GET['id'])." LIMIT 1;",false,true);
                 if(!empty($getcontent[$getcustom['feldname']])) {
                     if($getcustom['type'] == 2)
-                        $custom_clan .= show(_profil_custom_url, array("name" => re(pfields_name($getcustom['name'])), "value" => re($getcontent[$getcustom['feldname']])));
+                        $custom_clan .= show(_profil_custom_url, array("name" => re(pfields_name($getcustom['name'])), "value" => decode($getcontent[$getcustom['feldname']])));
                     else if($getcustom['type'] == 3)
-                        $custom_clan .= show(_profil_custom_mail, array("name" => re(pfields_name($getcustom['name'])), "value" => eMailAddr(re($getcontent[$getcustom['feldname']]))));
+                        $custom_clan .= show(_profil_custom_mail, array("name" => re(pfields_name($getcustom['name'])), "value" => eMailAddr(decode($getcontent[$getcustom['feldname']]))));
                     else
-                        $custom_clan .= show(_profil_custom, array("name" => re(pfields_name($getcustom['name'])), "value" => re($getcontent[$getcustom['feldname']])));
+                        $custom_clan .= show(_profil_custom, array("name" => re(pfields_name($getcustom['name'])), "value" => decode($getcontent[$getcustom['feldname']])));
                 }
             }
 
             $clan = show($dir."/clan", array("clan" => _profil_clan,
-                                             "pposition" => _profil_position,
-                                             "pstatus" => _profil_status,
-                                             "position" => $pos,
-                                             "status" => $status,
-                                             "custom_clan" => $custom_clan));
+                                                 "pposition" => _profil_position,
+                                                 "pstatus" => _profil_status,
+                                                 "position" => $pos,
+                                                 "status" => $status,
+                                                 "custom_clan" => $custom_clan));
         }
 
         $buddyadd = show(_addbuddyicon, array("id" => $_GET['id']));
@@ -239,11 +237,12 @@ if(defined('_UserMenu')) {
             if($custom_favos['count'] != 0)
                 $favos_head = show(_profil_head_cont, array("what" => _profil_favos));
 
-            $rlname = $get['rlname'] ? re($get['rlname']) : "-";
-            $skypename = $get['skypename'] ? "<a href=\"skype:".$get['skypename']."?chat\"><img src=\"http://mystatus.skype.com/smallicon/".$get['skypename']."\" style=\"border: none;\" width=\"16\" height=\"16\" alt=\"".$get['skypename']."\"/></a>" : "-";
-            $steam = (!empty($get['steamid']) && steam_enable ? '<div id="infoSteam_'.md5(re($get['steamid'])).'"><div style="width:100%;text-align:center"><img src="../inc/images/ajax-loader-mini.gif" alt="" /></div><script language="javascript" type="text/javascript">DZCP.initDynLoader("infoSteam_'.md5(re($get['steamid'])).'","steam","&steamid='.re($get['steamid']).'");</script></div>' : '-');
+            $rlname = $get['rlname'] ? decode($get['rlname']) : "-";
+            $skypename = $get['skypename'] ? '<div id="SkypeButton_Call_'.decode($get['skypename']).'"><script type="text/javascript">Skype.ui({"name": "dropdown", "element": "SkypeButton_Call_'.decode($get['skypename']).'", "participants": ["'.decode($get['skypename']).'"]});</script></div>' : '-';
+            $steam = (!empty($get['steamid']) && steam_enable ? '<div id="infoSteam_'.md5(decode($get['steamid'])).'"><div style="width:100%;text-align:center"><img src="../inc/images/ajax-loader-mini.gif" alt="" /></div><script language="javascript" type="text/javascript">DZCP.initDynLoader("infoSteam_'.md5(decode($get['steamid'])).'","steam","&steamid='.decode($get['steamid']).'");</script></div>' : '-');
 
-            $city = re($get['city']); $beschreibung = bbcode($get['beschreibung']);
+            $city = decode($get['city']);
+            $beschreibung = bbcode(decode($get['beschreibung']));
 			$email =  ($chkMe >= 1 ? $email : '');
             $show = show($dir."/profil_show",array("hardware_head" => $hardware_head,
                                                    "about" => _profil_about,
@@ -286,11 +285,11 @@ if(defined('_UserMenu')) {
                                                    "page" => _profil_age,
                                                    "psex" => _profil_sex,
                                                    "gamestuff" => _profil_gamestuff,
-                                                   "xfire" => re($get['hlswid']),
-                                                   "xboxx" => re($get['xboxid']),
-                                                   "psnn" => re($get['psnid']),
-                                                   "originn" => re($get['originid']),
-                                                   "battlenett" => re($get['battlenetid']),
+                                                   "xfire" => decode($get['hlswid']),
+                                                   "xboxx" => decode($get['xboxid']),
+                                                   "psnn" => decode($get['psnid']),
+                                                   "originn" => decode($get['originid']),
+                                                   "battlenett" => decode($get['battlenetid']),
                                                    "buddyadd" => $buddyadd,
                                                    "userstats" => _profil_userstats,
                                                    "pos" => _profil_os,
@@ -341,18 +340,15 @@ if(defined('_UserMenu')) {
         $profil_head = show(_profil_head, array("profilhits" => userstats("profilhits",$_GET['id'])));
 
         $index = show($dir."/profil", array("profilhead" => $profil_head,
-                                            "show" => $show,
-                                            "nick" => autor($_GET['id']),
-                                            "profil" => $navi_profil,
-                                            "gb" => $navi_gb,
-                                            "gallery" => $navi_gallery));
+                                                "show" => $show,
+                                                "nick" => autor($_GET['id']),
+                                                "profil" => $navi_profil,
+                                                "gb" => $navi_gb,
+                                                "gallery" => $navi_gallery));
 
         if($do == "delete") {
             if($chkMe == "4" || $_GET['id'] == $userid) {
-                db("DELETE FROM ".$db['usergb']."
-                    WHERE user = '".(int)($_GET['id'])."'
-                    AND id = '".(int)($_GET['gbid'])."'");
-
+                db("DELETE FROM `".$db['usergb']."` WHERE `user` = ".(int)($_GET['id'])." AND `id` = ".(int)($_GET['gbid']).";");
                 $index = info(_gb_delete_successful, "?action=user&amp;id=".$_GET['id']."&show=gb");
             }
             else
@@ -361,9 +357,7 @@ if(defined('_UserMenu')) {
         }
         else if($do == "edit")
         {
-            $get = db("SELECT * FROM ".$db['usergb']."
-                       WHERE id = '".(int)($_GET['gbid'])."'",false,true);
-
+            $get = db("SELECT * FROM `".$db['usergb']."` WHERE `id` = ".(int)($_GET['gbid']).";",false,true);
             if($get['reg'] == $userid || permission('editusers')) {
                 if($get['reg'] != 0) {
                     $form = show("page/editor_regged", array("nick" => autor($get['reg']), "von" => _autor));

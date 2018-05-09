@@ -1037,7 +1037,7 @@ class TSStatus
     var $_showIcons;
     var $_showOnly;
 
-    function TSStatus($host, $port, $queryPort, $customicon, $showchannel)
+    function __construct($host, $port, $queryPort, $customicon, $showchannel)
     {
         $this->_host = $host;
         $this->_port = $port;

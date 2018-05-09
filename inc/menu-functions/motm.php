@@ -8,7 +8,7 @@ function motm() {
     global $db,$picformat;
 
     $userpics = get_files(basePath.'/inc/images/uploads/userpics/',false,true,$picformat,false,array(),'minimize');
-    $qry = db("SELECT `id` FROM ".$db['users']." WHERE level >= 2");
+    $qry = db("SELECT `id` FROM `".$db['users']."` WHERE `level` >= 2;");
     $a = 0; $temparr = array(); $member = '';
     if(_rows($qry)) {
         while($rs = _fetch($qry)) {
@@ -25,10 +25,11 @@ function motm() {
         $arrayID = rand(0, count($temparr) - 1);
         $uid = $temparr[$arrayID];
 
-        $get = db("SELECT `id`,`level`,`status`,`bday` FROM ".$db['users']." WHERE id = '".$uid."'",false,true);
+        $get = db("SELECT `id`,`level`,`status`,`bday` FROM `".$db['users']."` WHERE `id` = ".$uid.";",false,true);
         if(!empty($get) && !empty($temparr)) {
             $status = ($get['status'] == 1 || $get['level'] == 1) ? "aktiv" : "inaktiv";
 
+            $info = '';
             if(config('allowhover') == 1)
                 $info = 'onmouseover="DZCP.showInfo(\''.fabo_autor($get['id']).'\', \''._posi.';'._status.';'._age.'\', \''.getrank($get['id']).';'.$status.';'.getAge($get['bday']).'\', \''.hoveruserpic($get['id']).'\')" onmouseout="DZCP.hideInfo()"';
 

@@ -5,8 +5,8 @@
  */
 
 ## Check PHP Version ##
-if(version_compare(PHP_VERSION, '5.3.0', '>=') === false)
-    die('DZCP required PHP 5.3.0 or newer!<p> Found PHP ' . PHP_VERSION);
+if(version_compare(PHP_VERSION, '5.6.0', '>=') === false)
+    die('DZCP required PHP 5.6.0 or newer!<p> Found PHP ' . PHP_VERSION);
 
 ob_start();
 session_start();
@@ -19,6 +19,7 @@ require_once(basePath.'/inc/_version.php');
 require_once(basePath."/inc/debugger.php");
 require_once(basePath.'/_installer/conf/conf.php');
 require_once(basePath.'/_installer/conf/mysql.php');
+require_once(basePath.'/inc/crypt.php');
 
 include(basePath.'/_installer/html/header_u.php');
 

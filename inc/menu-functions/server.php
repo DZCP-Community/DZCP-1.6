@@ -3,6 +3,9 @@
  * DZCP - deV!L`z ClanPortal 1.6 Final
  * http://www.dzcp.de
  * Menu: Gameserver
+ * @param int $serverID
+ * @return string
+ * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
  */
 function server($serverID = 0) {
     global $db, $cache;
@@ -101,12 +104,11 @@ function server($serverID = 0) {
                                                 "data_gamemod" => $server_name_short,
                                                 "icon" => $game_icon,
                                                 "pwd" => $pwd,
-                                                "launch" => strtr($server_link, array('{IP}' => $get['ip'], '{S_PORT}' => $get['port'])),
                                                 "port" => $get['port'],
                                                 "aktplayers" => $server['players'],
                                                 "info" => $info,
                                                 "maxplayers" => $server['maxplayers']));
     }
 
-    return empty($servernavi) ? '<center style="margin:2px 0">'._no_server_navi.'</center>' : (empty($st) ? '<table class="navContent" cellspacing="0">'.$servernavi.'</table>' : $servernavi);
+    return empty($servernavi) ? '<div style="text-align:center;margin:2px 0;">'._no_server_navi.'</div>' : (empty($st) ? '<table class="navContent" cellspacing="0">'.$servernavi.'</table>' : $servernavi);
 }

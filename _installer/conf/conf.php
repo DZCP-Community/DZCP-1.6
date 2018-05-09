@@ -114,3 +114,11 @@ function visitorIp() {
 
     return '0.0.0.0';
 }
+
+function mkpwd() {
+    $chars = '1234567890abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $len = strlen($chars) - 1; $pw = '';
+    for($i = 0; $i < 10; $i++)
+    { $pw .= $chars{rand(0, $len)}; }
+    return $pw;
+}
