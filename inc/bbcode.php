@@ -2729,8 +2729,8 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
     $dsgvo = (!array_key_exists('do_show_dsgvo',$_SESSION) || !$_SESSION['do_show_dsgvo'] ? 1 : 0);
     $java_vars = '<script language="javascript" type="text/javascript">var maxW = '.config('maxwidth').',lng = \''.$lng.'\',dsgvo = \''.$dsgvo.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
 
-   // if(!strstr($_SERVER['HTTP_USER_AGENT'],'Android') && !strstr($_SERVER['HTTP_USER_AGENT'],'webOS'))
-    //    $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.js"></script>'."\n";
+    if(!strstr($_SERVER['HTTP_USER_AGENT'],'Android') && !strstr($_SERVER['HTTP_USER_AGENT'],'webOS'))
+        $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.js"></script>'."\n";
 
     if(settings("wmodus") && $chkMe != 4) {
         if(HasDSGVO()) {
