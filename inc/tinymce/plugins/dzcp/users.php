@@ -76,8 +76,8 @@ if(empty($_GET['sort']) || $_GET['sort'] == 'clan') {
         $qry = db("SELECT `id`,`nick`,`country` FROM `".$db['users']."` ".$order." ORDER BY `nick`;");
         while($get = _fetch($qry)) {
             echo "<tr>\n";
-            echo "  <td>".flag_tinymce($get['country'])." ".re(decode($get['nick']))."</td>\n";
-            echo "  <td style=\"text-align:right\"><a href=\"javascript:insertUser(".$get['id'].",'".addslashes(decode($get['nick']))."','".rawflag_tinymce($get['country'])."')\"><img src=\"images/insert.gif\" alt=\"insert\" title=\"{#dzcp.users_add_en}".decode($get['nick'])."{#dzcp.users_add_de}\" border=\"0\"></a></td>\n";
+            echo "  <td>".flag_tinymce($get['country'])." ".re($get['nick'])."</td>\n";
+            echo "  <td style=\"text-align:right\"><a href=\"javascript:insertUser(".$get['id'].",'".addslashes($get['nick'])."','".rawflag_tinymce($get['country'])."')\"><img src=\"images/insert.gif\" alt=\"insert\" title=\"{#dzcp.users_add_en}".$get['nick']."{#dzcp.users_add_de}\" border=\"0\"></a></td>\n";
             echo "</tr>\n";
         }
     ?>

@@ -1576,63 +1576,6 @@ function update_mysql_1_6_1_0()
     db("ALTER TABLE `".$db['users']."` ADD `dsgvo_lock` INT(1) NOT NULL DEFAULT '1' AFTER `level`;");
     db("ALTER TABLE `".$db['users']."` ADD `pwd_md5` INT(1) NOT NULL DEFAULT '1' AFTER `pwd`;");
 
-    //Generate Keys
-    $rsa = new Crypt();
-    $key = hash('sha256', mkpwd(12));
-
-    $key_file = 'crypt_key.php';
-    if(!file_exists(basePath.'/inc/'.$key_file)) {
-        $key = '<?php /* '.$key.' */';
-        file_put_contents(basePath.'/inc/'.$key_file,$key);
-    }
-
-    $key = file_get_contents(basePath.'/inc/'.$key_file);
-    $key = str_replace(array('<?php /* ',' */'),'',$key);
-    $rsa->__set('Mode',Crypt::MODE_HEX);
-    $rsa->__set('Key',$key);
-
-    ignore_user_abort(true);
-    set_time_limit(0);
-
-    //List all Users
-    $users_array = array();
-    $qry = db("SELECT * FROM ".$db['users'].";");
-    while($get = _fetch($qry)) {
-        $users_array[$get['id']] = $get;
-    }
-
-    //TRUNCATE User Table
-    db("TRUNCATE ".$db['users'].";");
-
-    //Update Table
-    $ar_update = array('ip','nick','user','email','icq','hlswid','steamid','battlenetid','originid','skypename','psnid','xboxid','rlname',
-        'city','hobbys','motto','hp','cpu','ram','monitor','maus','mauspad','headset','board','os','graka','hdd','inet','signatur',
-        'ex','job','drink','essen','film','musik','song','buch','autor','person','sport','sportler','auto','game','favoclan','spieler',
-        'map','waffe','rasse','url2','url3','beschreibung','gmaps_koord');
-    $qry = db("SHOW FIELDS FROM `".$db['users']."`;");
-    while($get = _fetch($qry)) {
-        if(in_array($get['Field'],$ar_update)) {
-            db("ALTER TABLE `".$db['users']."` CHANGE `".$get['Field']."` `".$get['Field']."` TEXT NULL;");
-        }
-    }
-
-    foreach($users_array as $id => $user) {
-        $sql_q = "INSERT INTO `".$db['users']."` SET ";
-        foreach ($user as $key => $var) {
-            if(in_array($key,$ar_update)) {
-                if(!empty($var))
-                    $sql_q .= "`".$key."` = '"._real_escape_string($rsa->encrypt($var))."',";
-                 else
-                     $sql_q .= "`".$key."` = '',";
-            } else {
-                $sql_q .= "`" . $key . "` = '" . $var . "',";
-            }
-        }
-
-        $sql_q = substr($sql_q, 0, -1);
-        db($sql_q.";");
-    }
-
     if($updater) {
         db("UPDATE `".$db['settings']."` SET `db_optimize` = '".(time()+auto_db_optimize_interval)."' WHERE `id` = 1;");
         db_optimize();

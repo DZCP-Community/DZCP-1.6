@@ -63,19 +63,19 @@ if(defined('_UserMenu')) {
     $userliste = '';
     while($get = _fetch($qry)) {
         $email = show(_emailicon, array("email" => eMailAddr($get['email'])));
-        $hlsw = empty($get['hlswid']) ? "-" : show(_hlswicon, array("id" => decode($get['hlswid']), "img" => "1", "css" => ""));
-        $xboxu = empty($get['xboxid']) ? "-" : show(_xboxicon, array("id" => decode($get['xboxid']), "img" => "1", "css" => ""));
-        $psnu = empty($get['psnid']) ? "-" : show(_psnicon, array("id" => decode($get['psnid']), "img" => "1", "css" => ""));
-        $originu = empty($get['originid']) ? "-" : show(_originicon, array("id" => decode($get['originid']), "img" => "1", "css" => ""));
-        $battlenetu = empty($get['battlenetid']) ? "-" : show(_battleneticon, array("id" => decode($get['battlenetid']), "img" => "1", "css" => ""));
+        $hlsw = empty($get['hlswid']) ? "-" : show(_hlswicon, array("id" => re($get['hlswid']), "img" => "1", "css" => ""));
+        $xboxu = empty($get['xboxid']) ? "-" : show(_xboxicon, array("id" => re($get['xboxid']), "img" => "1", "css" => ""));
+        $psnu = empty($get['psnid']) ? "-" : show(_psnicon, array("id" => re($get['psnid']), "img" => "1", "css" => ""));
+        $originu = empty($get['originid']) ? "-" : show(_originicon, array("id" => re($get['originid']), "img" => "1", "css" => ""));
+        $battlenetu = empty($get['battlenetid']) ? "-" : show(_battleneticon, array("id" => re($get['battlenetid']), "img" => "1", "css" => ""));
 
-        $skypename = empty($get['skypename']) ? "-" : "<a href=\"skype:".decode($get['skypename'])."?chat\"><img src=\"http://mystatus.skype.com/smallicon/".decode($get['skypename'])."\" style=\"border: none;\" width=\"16\" height=\"16\" alt=\"".decode($get['skypename'])."\"/></a>";
-        $hp = empty($get['hp']) ? "-" : show(_hpicon, array("hp" => decode($get['hp'])));
+        $skypename = empty($get['skypename']) ? "-" : "<a href=\"skype:".re($get['skypename'])."?chat\"><img src=\"http://mystatus.skype.com/smallicon/".re($get['skypename'])."\" style=\"border: none;\" width=\"16\" height=\"16\" alt=\"".re($get['skypename'])."\"/></a>";
+        $hp = empty($get['hp']) ? "-" : show(_hpicon, array("hp" => re($get['hp'])));
 
         $icq = "-";
         if(!empty($get['icq'])) {
-            $uin = show(_icqstatus, array("uin" => decode($get['icq'])));
-            $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin='.decode($get['icq']).'" target="_blank">'.$uin.'</a>';
+            $uin = show(_icqstatus, array("uin" => re($get['icq'])));
+            $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin='.re($get['icq']).'" target="_blank">'.$uin.'</a>';
         }
 
         $sex = "-";
@@ -102,9 +102,9 @@ if(defined('_UserMenu')) {
 
         $steam = '-';
         if(!empty($get['steamid']))
-            $steam = '<div id="infoSteam_'.md5(decode($get['steamid'])).'">
+            $steam = '<div id="infoSteam_'.md5(re($get['steamid'])).'">
             <div style="width:100%;text-align:center"><img src="../inc/images/ajax-loader-mini.gif" alt="" /></div>
-            <script language="javascript" type="text/javascript">DZCP.initDynLoader("infoSteam_'.md5(decode($get['steamid'])).'","steam","&steamid='.decode($get['steamid']).'&list=true");</script></div>';
+            <script language="javascript" type="text/javascript">DZCP.initDynLoader("infoSteam_'.md5(re($get['steamid'])).'","steam","&steamid='.re($get['steamid']).'&list=true");</script></div>';
 
         $userliste .= show($dir."/userliste_show", array("nick" => autor($get['id'],'','',10),
                                                          "level" => getrank($get['id']),
@@ -117,7 +117,7 @@ if(defined('_UserMenu')) {
                                                          "class" => $class,
                                                          "icq" => $icq,
                                                          "skypename" => $skypename,
-                                                         "icquin" => decode($get['icq']),
+                                                         "icquin" => re($get['icq']),
                                                          "onoff" => onlinecheck($get['id']),
                                                          "hp" => $hp,
                                                          "steam" => $steam,

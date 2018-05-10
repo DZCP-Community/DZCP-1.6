@@ -24,13 +24,13 @@ if(defined('_UserMenu')) {
 
         } elseif($do == "edit")    {
             $check_user = db_stmt("SELECT id FROM ".$db['users']." WHERE `user`= ? AND id != ?",
-                array('is', $userid, encrypt($_POST['user'])),true,false);
+                array('is', $userid, up($_POST['user'])),true,false);
 
             $check_nick = db_stmt("SELECT id FROM ".$db['users']." WHERE `nick`= ? AND id != ?",
-                array('is', $userid, encrypt($_POST['nick'])),true,false);
+                array('is', $userid, up($_POST['nick'])),true,false);
 
             $check_email = db_stmt("SELECT id FROM ".$db['users']." WHERE `email`= ? AND id != ?",
-                array('is', $userid, encrypt($_POST['email'])),true,false);
+                array('is', $userid, up($_POST['email'])),true,false);
 
             if(empty($_POST['user']))
             {
@@ -77,35 +77,35 @@ if(defined('_UserMenu')) {
                 while($getcustom = _fetch($qrycustom))
                 {
                     if($getcustom['type'] == 2)
-                        $customfields .= " ".$getcustom['feldname']." = '".encrypt(links($_POST[$getcustom['feldname']]))."', ";
+                        $customfields .= " ".$getcustom['feldname']." = '".up(links($_POST[$getcustom['feldname']]))."', ";
                     else
-                        $customfields .= " ".$getcustom['feldname']." = '".encrypt($_POST[$getcustom['feldname']])."', ";
+                        $customfields .= " ".$getcustom['feldname']." = '".up($_POST[$getcustom['feldname']])."', ";
                 }
 
                 $qry = db("UPDATE `".$db['users']."` SET ".$newpwd." ".$customfields."
                   `country`      = '"._real_escape_string($_POST['land'])."',
-                  `user`         = '".encrypt($_POST['user'])."',
-                  `nick`         = '".encrypt($_POST['nick'])."',
-                  `rlname`       = '".encrypt($_POST['rlname'])."',
+                  `user`         = '".up($_POST['user'])."',
+                  `nick`         = '".up($_POST['nick'])."',
+                  `rlname`       = '".up($_POST['rlname'])."',
                   `sex`          = ".((int)$_POST['sex']).",
                   `status`       = ".((int)$_POST['status']).",
                   `bday`         = '".(!$bday ? 0 : strtotime($bday))."',
-                  `email`        = '".encrypt($_POST['email'])."',
+                  `email`        = '".up($_POST['email'])."',
                   `nletter`      = ".((int)$_POST['nletter']).",
                   `pnmail`       = ".((int)$_POST['pnmail']).",
-                  `city`         = '".encrypt($_POST['city'])."',
-                  `gmaps_koord`  = '".encrypt($_POST['gmaps_koord'])."',
-                  `hp`           = '".encrypt(links($_POST['hp']))."',
+                  `city`         = '".up($_POST['city'])."',
+                  `gmaps_koord`  = '".up($_POST['gmaps_koord'])."',
+                  `hp`           = '".up(links($_POST['hp']))."',
                   `icq`          = ".((int)$icq).",
-                  `hlswid`       = '".encrypt(trim($_POST['hlswid']))."',
-                  `xboxid`       = '".encrypt(trim($_POST['xboxid']))."',
-                  `psnid`        = '".encrypt(trim($_POST['psnid']))."',
-                  `originid`     = '".encrypt(trim($_POST['originid']))."',
-                  `battlenetid`  = '".encrypt(trim($_POST['battlenetid']))."',
-                  `steamid`      = '".encrypt(trim($_POST['steamid']))."',
-				  `skypename`    = '".encrypt(trim($_POST['skypename']))."',
-                  `signatur`     = '".encrypt($_POST['sig'])."',
-                  `beschreibung` = '".encrypt($_POST['ich'])."',
+                  `hlswid`       = '".up(trim($_POST['hlswid']))."',
+                  `xboxid`       = '".up(trim($_POST['xboxid']))."',
+                  `psnid`        = '".up(trim($_POST['psnid']))."',
+                  `originid`     = '".up(trim($_POST['originid']))."',
+                  `battlenetid`  = '".up(trim($_POST['battlenetid']))."',
+                  `steamid`      = '".up(trim($_POST['steamid']))."',
+				  `skypename`    = '".up(trim($_POST['skypename']))."',
+                  `signatur`     = '".up($_POST['sig'])."',
+                  `beschreibung` = '".up($_POST['ich'])."',
                   `perm_gb`      = ".(int)($_POST['visibility_gb']).",
                   `perm_gallery` = ".(int)($_POST['visibility_gallery'])."
                    WHERE `id` = ".$userid.";");
@@ -216,7 +216,7 @@ if(defined('_UserMenu')) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid.";",false,true);
                     $custom_clan .= show(_profil_edit_custom, array("name" => pfields_name($getcustom['name']).":",
                                                                         "feldname" => $getcustom['feldname'],
-                                                                        "value" => decode($getcontent[$getcustom['feldname']])));
+                                                                        "value" => $getcontent[$getcustom['feldname']]));
                 }
 
                 $clan = show($dir."/edit_clan", array("clan" => _profil_clan,
@@ -267,7 +267,7 @@ if(defined('_UserMenu')) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
                     $custom_about .= show(_profil_edit_custom, array("name" => re(pfields_name($getcustom['name'])).":",
                                                                          "feldname" => $getcustom['feldname'],
-                                                                         "value" => decode($getcontent[$getcustom['feldname']])));
+                                                                         "value" => $getcontent[$getcustom['feldname']]));
                 }
 
                 $custom_contact = '';
@@ -276,7 +276,7 @@ if(defined('_UserMenu')) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
                     $custom_contact .= show(_profil_edit_custom, array("name" => re(pfields_name($getcustom['name'])).":",
                                                                            "feldname" => $getcustom['feldname'],
-                                                                           "value" => decode($getcontent[$getcustom['feldname']])));
+                                                                           "value" => $getcontent[$getcustom['feldname']]));
                 }
 
                 $custom_favos = '';
@@ -285,7 +285,7 @@ if(defined('_UserMenu')) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
                     $custom_favos .= show(_profil_edit_custom, array("name" => re(pfields_name($getcustom['name'])).":",
                                                                          "feldname" => $getcustom['feldname'],
-                                                                         "value" => decode($getcontent[$getcustom['feldname']])));
+                                                                         "value" => $getcontent[$getcustom['feldname']]));
                 }
 
                 $custom_hardware = '';
@@ -294,12 +294,12 @@ if(defined('_UserMenu')) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
                     $custom_hardware .= show(_profil_edit_custom, array("name" => re(pfields_name($getcustom['name'])).":",
                                                                             "feldname" => $getcustom['feldname'],
-                                                                            "value" => decode($getcontent[$getcustom['feldname']])));
+                                                                            "value" => $getcontent[$getcustom['feldname']]));
                 }
 
                 $icq = ''; $pnl = ''; $pnm = ''; $deleteava = ''; $deletepic = '';
                 if(!empty($get['icq']) && $get['icq'] != 0)
-                    $icq = decode($get['icq']);
+                    $icq = $get['icq'];
 
                 if($get['nletter'] == 1)
                     $pnl = 'checked="checked"';
@@ -356,10 +356,10 @@ if(defined('_UserMenu')) {
                                                             "originidl" => _originid,
                                                             "battlenetidl" => _battlenetid,
                                                             "pcity" => _profil_city,
-                                                            "city" => decode($get['city']),
+                                                            "city" => $get['city'],
                                                             "psteamid" => _steamid,
-                                                            "v_steamid" => decode($get['steamid']),
-                                                            "skypename" => decode($get['skypename']),
+                                                            "v_steamid" => $get['steamid'],
+                                                            "skypename" => $get['skypename'],
                                                             "nletter" => _profil_nletter,
                                                             "pnmail" => _profil_pnmail,
                                                             "pnl" => $pnl,
@@ -367,26 +367,26 @@ if(defined('_UserMenu')) {
                                                             "pwd" => "",
                                                             "dropdown_age" => $dropdown_age,
                                                             "ava" => $avatar,
-                                                            "hp" => decode($get['hp']),
+                                                            "hp" => $get['hp'],
                                                             "gmaps" => $gmaps,
-                                                            "nick" => decode($get['nick']),
-                                                            "name" => decode($get['user']),
-                                                            "gmaps_koord" => decode($get['gmaps_koord']),
-                                                            "rlname" => decode($get['rlname']),
+                                                            "nick" => $get['nick'],
+                                                            "name" => $get['user'],
+                                                            "gmaps_koord" => $get['gmaps_koord'],
+                                                            "rlname" => $get['rlname'],
                                                             "bdayday" => $bdayday,
                                                             "bdaymonth" => $bdaymonth,
                                                             "bdayyear" =>$bdayyear,
                                                             "sex" => $sex,
-                                                            "email" => decode($get['email']),
+                                                            "email" => $get['email'],
                                                             "visibility_gb" => $perm_gb,
                                                             "visibility_gallery" => $perm_gallery,
                                                             "icqnr" => $icq,
                                                             "sig" => re_bbcode($get['signatur']),
-                                                            "hlswid" => decode($get['hlswid']),
-                                                            "xboxid" => decode($get['xboxid']),
-                                                            "psnid" => decode($get['psnid']),
-                                                            "originid" => decode($get['originid']),
-                                                            "battlenetid" => decode($get['battlenetid']),
+                                                            "hlswid" => $get['hlswid'],
+                                                            "xboxid" => $get['xboxid'],
+                                                            "psnid" => $get['psnid'],
+                                                            "originid" => $get['originid'],
+                                                            "battlenetid" => $get['battlenetid'],
                                                             "clan" => $clan,
                                                             "pic" => $pic,
                                                             "editpic" => _profil_edit_pic,
@@ -405,7 +405,7 @@ if(defined('_UserMenu')) {
                                                             "custom_contact" => $custom_contact,
                                                             "custom_favos" => $custom_favos,
                                                             "custom_hardware" => $custom_hardware,
-                                                            "ich" => re_bbcode(decode($get['beschreibung'])),
+                                                            "ich" => re_bbcode($get['beschreibung']),
                                                             "del" => _profil_del_account,
                                                             "delete" => $delete));
             }

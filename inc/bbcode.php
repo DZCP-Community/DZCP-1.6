@@ -19,7 +19,6 @@ require_once(basePath."/inc/cookie.php");
 require_once(basePath.'/inc/server_query/_functions.php');
 require_once(basePath."/inc/teamspeak_query.php");
 require_once(basePath.'/inc/steamapi.php');
-require_once(basePath.'/inc/crypt.php');
 
 //Libs
 use phpFastCache\CacheManager;
@@ -135,17 +134,6 @@ $maxadmincw = 10;
 $maxfilesize = @ini_get('upload_max_filesize');
 $search_forum = false;
 
-//Encode / Decode
-$rsa = new Crypt();
-if(file_exists(basePath.'/inc/crypt_key.php') && !$installer && !$updater) {
-    $key = file_get_contents(basePath.'/inc/crypt_key.php');
-    $key = str_replace(array('<?php /* ', ' */'), '', $key);
-    $rsa->__set('Mode',Crypt::MODE_HEX);
-    $rsa->__set('Key',$key);
-}
-else if(!$installer && !$updater && !file_exists(basePath.'/inc/crypt_key.php'))
-    die('No "crypt_key" found!!<p> Run Installer for Upgrade!');
-
 //-> Global
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $page = (isset($_GET['page']) && (int)($_GET['page']) >= 1) ? (int)($_GET['page']) : 1;
@@ -245,22 +233,6 @@ function HasDSGVO() {
         return true;
 
     return false;
-}
-
-function encrypt($input) {
-    global $rsa;
-    if(!empty($input))
-        return $rsa->encrypt($input);
-
-    return $input;
-}
-
-function decode($input) {
-    global $rsa;
-    if(!empty($input))
-        return $rsa->decrypt($input);
-
-    return $input;
 }
 
 /**
@@ -1425,7 +1397,7 @@ function checkme($userid_set=0) {
         if (rootAdmin($userid)) return 4;
         if (empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
         if (!dbc_index::issetIndex('user_' . $userid)) {
-            $qry = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = ".$userid." AND `pwd` = '".$_SESSION['pwd']."' AND `ip` = '"._real_escape_string(encrypt($_SESSION['ip']))."';");
+            $qry = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = ".$userid." AND `pwd` = '".$_SESSION['pwd']."' AND `ip` = '"._real_escape_string(up($_SESSION['ip']))."';");
             if (!_rows($qry)) return 0;
             $get = _fetch($qry);
             dbc_index::setIndex('user_' . $get['id'], $get);
@@ -1656,7 +1628,7 @@ function mkpwd() {
 //-> Passwortabfrage und rückgabe des users
 function checkpwd($user, $pwd) {
     global $db;
-    $sql = db("SELECT * FROM `".$db['users']."` WHERE `user` = '"._real_escape_string(encrypt($user)).
+    $sql = db("SELECT * FROM `".$db['users']."` WHERE `user` = '"._real_escape_string(up($user)).
         "' AND (`pwd` = '".hash('sha256',$pwd)."' OR (`pwd` = '".md5($pwd)."' AND `pwd_md5` = 1)) AND `level` != 0;");
     if(_rows($sql)) {
         $get = _fetch($sql);
@@ -1812,8 +1784,8 @@ function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
         }
     }
 
-    $nickname = (!empty($cut)) ? cut(re(decode(dbc_index::getIndexKey('user_'.(int)($uid), 'nick'))), $cut,true,false) :
-        re(decode(dbc_index::getIndexKey('user_'.(int)($uid), 'nick')));
+    $nickname = (!empty($cut)) ? cut(re(dbc_index::getIndexKey('user_'.(int)($uid), 'nick')), $cut,true,false) :
+        re(dbc_index::getIndexKey('user_'.(int)($uid), 'nick'));
     return show(_user_link, array("id" => $uid,
                                   "country" => flag(dbc_index::getIndexKey('user_'.(int)($uid), 'country')),
                                   "class" => $class,
@@ -1834,7 +1806,7 @@ function cleanautor($uid, $class="", $nick="", $email="", $cut="") {
     }
 
     return show(_user_link_preview, array("id" => $uid, "country" => flag(dbc_index::getIndexKey('user_'.(int)($uid), 'country')),
-                                          "class" => $class, "nick" => re(cut(decode(dbc_index::getIndexKey('user_'.(int)($uid),'nick')),$cut,false,false))));
+                                          "class" => $class, "nick" => re(cut(dbc_index::getIndexKey('user_'.(int)($uid),'nick'),$cut,false,false))));
 }
 
 function rawautor($uid) {
@@ -1850,7 +1822,7 @@ function rawautor($uid) {
     }
 
     return rawflag(dbc_index::getIndexKey('user_'.(int)($uid), 'country'))." ".
-    jsconvert(re(decode(dbc_index::getIndexKey('user_'.(int)($uid), 'nick'))));
+    jsconvert(re(dbc_index::getIndexKey('user_'.(int)($uid), 'nick')));
 }
 
 //-> Nickausgabe ohne Profillink oder Emaillink fr das ForenAbo
@@ -1859,7 +1831,7 @@ function fabo_autor($uid) {
     $qry = db("SELECT `nick` FROM `".$db['users']."` WHERE `id` = ".$uid.";");
     if(_rows($qry)) {
         $get = _fetch($qry);
-        return show(_user_link_fabo, array("id" => $uid, "nick" => re(decode($get['nick']))));
+        return show(_user_link_fabo, array("id" => $uid, "nick" => re($get['nick'])));
     }
 
     return '';
@@ -1870,7 +1842,7 @@ function blank_autor($uid) {
     $qry = db("SELECT `nick` FROM `".$db['users']."` WHERE `id` = ".$uid.";");
     if(_rows($qry)) {
         $get = _fetch($qry);
-        return show(_user_link_blank, array("id" => $uid, "nick" => re(decode($get['nick']))));
+        return show(_user_link_blank, array("id" => $uid, "nick" => re($get['nick'])));
     }
 
     return '';
@@ -1967,7 +1939,7 @@ function check_msg_emal() {
             if ($get['pnmail']) {
                 db("UPDATE ".$db['msg']." SET `sendmail` = 1 WHERE `id` = ".(int)$get['mid'].";");
                 $subj = show(settings('eml_pn_subj'), array("domain" => $httphost));
-                $message = show(bbcode_email(settings('eml_pn')), array("nick" => re(decode($get['nick'])), "domain" => $httphost, "titel" => $get['titel'], "clan" => settings('clanname')));
+                $message = show(bbcode_email(settings('eml_pn')), array("nick" => re($get['nick']), "domain" => $httphost, "titel" => $get['titel'], "clan" => settings('clanname')));
                 sendMail(re($get['email']), $subj, $message);
             }
         }
@@ -2783,7 +2755,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
         if(check_internal_url())
             $index = error(_error_have_to_be_logged, 1);
 
-        $where = preg_replace_callback("#autor_(.*?)$#",function($id) { return re(decode(data("nick","$id[1]"))); },$where);
+        $where = preg_replace_callback("#autor_(.*?)$#",function($id) { return re(data("nick","$id[1]")); },$where);
         $index = empty($index) ? '' : (empty($check_msg) ? '' : $check_msg).'<table class="mainContent" cellspacing="1">'.$index.'</table>';
 
         //-> Sort & filter placeholders
