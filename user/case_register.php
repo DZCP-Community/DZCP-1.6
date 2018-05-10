@@ -94,23 +94,24 @@ if(defined('_UserMenu')) {
         } else {
             if(empty($_POST['pwd'])) {
                 $mkpwd = mkpwd();
-                $pwd = md5($mkpwd);
+                $pwd = hash('sha256',$mkpwd);
                 $msg = _info_reg_valid;
             } else {
                 $mkpwd = $_POST['pwd'];
-                $pwd = md5($mkpwd);
+                $pwd = hash('sha256',$mkpwd);
                 $msg = _info_reg_valid_pwd;
             }
 
             db("INSERT INTO ".$db['users']."
-                SET `user`     = '".up($_POST['user'])."',
-                    `nick`     = '".up($_POST['nick'])."',
-                    `email`    = '".up($_POST['email'])."',
+                SET `user`     = '"._real_escape_string(up($_POST['user']))."',
+                    `nick`     = '"._real_escape_string(up($_POST['nick']))."',
+                    `email`    = '"._real_escape_string(up($_POST['email']))."',
                     `pwd`      = '".$pwd."',
-                    `regdatum` = '".time()."',
-                    `level`    = '1',
-                    `time`     = '".time()."',
-                    `status`   = '1'");
+                    `regdatum` = ".time().",
+                    `level`    = 1,
+                    `pwd_md5`  = 0,
+                    `time`     = ".time().",
+                    `status`   = 1;");
 
             $insert_id = mysqli_insert_id($mysql);
             db("INSERT INTO ".$db['permissions']." SET `user` = '".((int)$insert_id)."'");

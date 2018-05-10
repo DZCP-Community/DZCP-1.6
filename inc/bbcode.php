@@ -541,9 +541,14 @@ function config($what,$use_dbc=true) {
         if($use_dbc)
             return dbc_index::getIndexKey('config', $what);
 
-        $get = db("SELECT `".$what."` FROM `".$db['config']."`;",false,true);
-        return $get[$what];
+        $query = db("SELECT `".$what."` FROM `".$db['config']."`;");
+        if(_rows($query)) {
+            $get = _fetch($query);
+            return $get[$what];
+        }
     }
+
+    return 0;
 }
 
 //-> Prueft ob der User ein Rootadmin ist
@@ -1259,7 +1264,7 @@ function up($txt,$escape=true) {
 
 //-> Funktion um diverse Dinge aus Tabellen auszaehlen zu lassen
 function cnt($count, $where = "", $what = "id") {
-    $cnt_sql = db("SELECT COUNT(".$what.") AS num FROM ".$count." ".$where.";");
+    $cnt_sql = db("SELECT COUNT(".$what.") AS `num` FROM ".$count." ".$where.";");
     if(_rows($cnt_sql)) {
         $cnt = _fetch($cnt_sql);
         return $cnt['num'];
@@ -1270,7 +1275,7 @@ function cnt($count, $where = "", $what = "id") {
 
 //-> Funktion um diverse Dinge aus Tabellen zusammenzaehlen zu lassen
 function sum($db, $where = "", $what) {
-    $cnt_sql = db("SELECT SUM(".$what.") AS num FROM ".$db.$where.";");
+    $cnt_sql = db("SELECT SUM(".$what.") AS `num` FROM ".$db.$where.";");
     if(_rows($cnt_sql)) {
         $cnt = _fetch($cnt_sql);
         return $cnt['num'];

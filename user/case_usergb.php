@@ -6,7 +6,7 @@
 
 if(defined('_UserMenu')) {
     $where = _site_user_profil;
-    if(db("SELECT `id` FROM ".$db['users']." WHERE `id` = '".(int)$_GET['id']."'",true) != 0)
+    if(db("SELECT `id` FROM `".$db['users']."` WHERE `id` = '".(int)$_GET['id']."'",true) != 0)
     {
         if($do == "add")
         {
@@ -23,11 +23,16 @@ if(defined('_UserMenu')) {
 
                     $form = show("page/editor_regged", array("nick" => autor($userid),"von" => _autor));
                 } else {
-                    if(($_POST['secure'] != $_SESSION['sec_'.$dir]) || empty($_SESSION['sec_'.$dir])) $error = _error_invalid_regcode;
-                    elseif(empty($_POST['nick']))  $error = _empty_nick;
-                    elseif(empty($_POST['email'])) $error = _empty_email;
-                    elseif(!check_email($_POST['email'])) $error = _error_invalid_email;
-                    elseif(empty($_POST['eintrag'])) $error = _empty_eintrag;
+                    if(($_POST['secure'] != $_SESSION['sec_'.$dir]) || empty($_SESSION['sec_'.$dir]))
+                        $error = _error_invalid_regcode;
+                    elseif(empty($_POST['nick']))
+                        $error = _empty_nick;
+                    elseif(empty($_POST['email']))
+                        $error = _empty_email;
+                    elseif(!check_email($_POST['email']))
+                        $error = _error_invalid_email;
+                    elseif(empty($_POST['eintrag']))
+                        $error = _empty_eintrag;
 
                     $form = show("page/editor_notregged", array("nickhead" => _nick,
                         "emailhead" => _email,
@@ -58,17 +63,17 @@ if(defined('_UserMenu')) {
                     "ip" => _iplog_info,
                     "eintraghead" => _eintrag));
             } else {
-                $qryperm = _fetch(db("SELECT perm_gb FROM ".$db['users']." WHERE id = ".$_GET['id']));
-                if ($qryperm['perm_gb'] == 1)
+                $qryperm = db("SELECT perm_gb FROM ".$db['users']." WHERE id = ".$_GET['id'],false,true);
+                if ($qryperm['perm_gb'])
                 {
                     $qry = db("INSERT INTO ".$db['usergb']."
                                          SET `user`       = '".((int)$_GET['id'])."',
                                                  `datum`      = '".time()."',
-                                                 `nick`       = '".up($_POST['nick'])."',
-                                                 `email`      = '".up($_POST['email'])."',
-                                                 `hp`         = '".links($_POST['hp'])."',
+                                                 `nick`       = '"._real_escape_string(up($_POST['nick']))."',
+                                                 `email`      = '"._real_escape_string(up($_POST['email']))."',
+                                                 `hp`         = '"._real_escape_string(up(links($_POST['hp'])))."',
                                                  `reg`        = '".((int)$userid)."',
-                                                 `nachricht`  = '".up($_POST['eintrag'])."',
+                                                 `nachricht`  = '"._real_escape_string(up($_POST['eintrag']))."',
                                                  `ip`         = '".$userip."'");
 
                     setIpcheck("mgbid(".(int)($_GET['id']).")");
@@ -82,8 +87,8 @@ if(defined('_UserMenu')) {
                 if($_POST['reg'] == 0)
                 {
                     $addme = "`nick`       = '".up($_POST['nick'])."',
-                                             `email`      = '".up($_POST['email'])."',
-                                             `hp`         = '".links($_POST['hp'])."',";
+                                             `email`      = '"._real_escape_string(up($_POST['email']))."',
+                                             `hp`         = '"._real_escape_string(links($_POST['hp']))."',";
                 }
 
                 $editedby = show(_edited_by, array("autor" => autor($userid),
@@ -91,7 +96,7 @@ if(defined('_UserMenu')) {
 
                 $upd = db("UPDATE ".$db['usergb']."
                                          SET ".$addme."
-                                                 `nachricht`  = '".up($_POST['eintrag'])."',
+                                                 `nachricht`  = '"._real_escape_string(up($_POST['eintrag']))."',
                                                  `reg`        = '".((int)$_POST['reg'])."',
                                                  `editby`     = '".addslashes($editedby)."'
                                          WHERE id = '".(int)($_GET['gbid'])."'");

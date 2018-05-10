@@ -6,10 +6,8 @@
 
 if(defined('_UserMenu')) {
     if($userid) {
-        $_SESSION['lastvisit'] = data("time");
-        db("UPDATE ".$db['userstats']."
-            SET `lastvisit` = '".((int)$_SESSION['lastvisit'])."'
-            WHERE user = '".$userid."'");
+        $_SESSION['lastvisit'] = time();
+        db("UPDATE `".$db['userstats']."` SET `lastvisit` = ".((int)$_SESSION['lastvisit'])." WHERE `user` = ".$userid.";");
     }
 
     header("Location: ?action=userlobby");
