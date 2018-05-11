@@ -19,7 +19,7 @@ if(defined('_UserMenu')) {
             $sex = _female;
 
         $hp = empty($get['hp']) ? "-" : "<a href=\"".$get['hp']."\" target=\"_blank\">".re($get['hp'])."</a>";
-        $email = empty($get['email']) ? "-" : "<img src=\"../inc/images/mailto.gif\" alt=\"\" align=\"texttop\"> <a href=\"mailto:".eMailAddr(re($get['email']))."\" target=\"_blank\">".eMailAddr(decode($get['email']))."</a>";
+        $email = empty($get['email']) ? "-" : "<img src=\"../inc/images/mailto.gif\" alt=\"\" align=\"texttop\"> <a href=\"mailto:".eMailAddr(re($get['email']))."\" target=\"_blank\">".eMailAddr(re($get['email']))."</a>";
         $pn = show(_pn_write, array("id" => $_GET['id'], "nick" => re($get['nick'])));
         $hlsw = empty($get['hlswid']) ? "-" : show(_hlswicon, array("id" => re($get['hlswid']), "img" => "1", "css" => ""));
         $xboxu = empty($get['xboxid']) ? "-" : show(_xboxicon, array("id" => str_replace(" ","%20",re($get['xboxid'])), "img" => "1", "css" => ""));
