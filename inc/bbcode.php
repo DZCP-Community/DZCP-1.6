@@ -344,8 +344,7 @@ $designpath = '../inc/_templates_/'.$tmpdir;
  * @param $lng
  */
 function lang($lng) {
-    if(!file_exists(basePath."/inc/lang/languages/".$lng.".php"))
-    {
+    if(!file_exists(basePath."/inc/lang/languages/".$lng.".php")) {
         $files = get_files(basePath.'/inc/lang/languages/',false,true,array('php'));
         $lng = str_replace('.php','',$files[0]);
     }
@@ -353,7 +352,11 @@ function lang($lng) {
     $language_text = array(); $charset = 'utf-8';
     require_once(basePath."/inc/lang/global.php");
     require_once(basePath."/inc/lang/languages/english.php"); //Load Base Language
+    require_once(basePath."/inc/lang/languages/dsgvo/english.php"); //Load Base DSGVO
     require_once(basePath."/inc/lang/languages/".$lng.".php");
+
+    if(file_exists(basePath."/inc/lang/languages/dsgvo/".$lng.".php"))
+        require_once(basePath."/inc/lang/languages/dsgvo/".$lng.".php");
 
     //Set bBase-Content-type header
     header("Content-type: text/html; charset=".$charset);

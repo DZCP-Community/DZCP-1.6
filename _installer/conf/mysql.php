@@ -1556,7 +1556,7 @@ function update_mysql_1_6()
         `desc` varchar(249) NOT NULL default '',
         `url` varchar(200) NOT NULL default '',
         `target` int(1) NOT NULL default '0',
-        PRIMARY KEY  (`id`))");
+        PRIMARY KEY  (`id`));");
 
     $qry = db("SELECT id FROM ".$db['users']." WHERE level = 4");
     if(mysqli_num_rows($qry)>= 1)
@@ -1575,6 +1575,34 @@ function update_mysql_1_6_1_0()
     global $db,$updater;
     db("ALTER TABLE `".$db['users']."` ADD `dsgvo_lock` INT(1) NOT NULL DEFAULT '1' AFTER `level`;");
     db("ALTER TABLE `".$db['users']."` ADD `pwd_md5` INT(1) NOT NULL DEFAULT '1' AFTER `pwd`;");
+
+    db("CREATE TABLE `".$db['dsgvo']."` (
+        `id` int(11) NOT NULL auto_increment,
+        `title` varchar(200) NOT NULL DEFAULT '',
+        `info` varchar(200) NOT NULL default '',
+        `text` varchar(200) NOT NULL default '',
+        `persid` int(1) NOT NULL DEFAULT '0',
+        `show` int(1) NOT NULL DEFAULT '0',
+        PRIMARY KEY (`id`));");
+
+    db("CREATE TABLE `".$db['dsgvo_pers']."` (
+        `id` int(5) NOT NULL auto_increment,
+        `organisation` text,
+        `titel` text,
+        `first_name` text,
+        `last_name` text,
+        `address` text,
+        `zip_code` text,
+        `place` text,
+        `country` text,
+        `e-mail` text,
+        `phone` text,
+        `website` text,
+        PRIMARY KEY (`id`));");
+
+    db("INSERT INTO `".$db['dsgvo_pers']."` (`id`, `organisation`,`titel`, `first_name`, `last_name`, `address`, `zip_code`, `place`, `country`, `e-mail`, `phone`, `website`) VALUES ".
+              "(1, 'Muster Unternehmen', 'Herr', 'Max', 'Mustermann', 'Eisenweg. 1', '123456', 'Musterdorf', 'Germany', 'max.mustermann@musterdorf.de', '049 12345 67891234566', 'http://www.deineUrl.de'),".
+              "(2, 'Muster Unternehmen', 'Herr', 'Max', 'Mustermann', 'Eisenweg. 1', '123456', 'Musterdorf', 'Germany', 'max.mustermann@musterdorf.de', '049 12345 67891234566', 'http://www.deineUrl.de');");
 
     if($updater) {
         db("UPDATE `".$db['settings']."` SET `db_optimize` = '".(time()+auto_db_optimize_interval)."' WHERE `id` = 1;");
