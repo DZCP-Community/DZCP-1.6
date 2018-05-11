@@ -7,7 +7,7 @@
 function dsgvo() {
     global $db;
     $qry = db("SELECT * FROM `".$db['dsgvo']."` WHERE `show` = 1 ORDER BY `id` ASC;");$dsgvo_texts = '';
-    if(_rows($qry)) {
+    if(_rows($qry)) { $i = 0;
         while ($get = _fetch($qry)) {
             $ph = array();
             $ph['organisation'] = ''; $ph['first_name'] = '';
@@ -34,14 +34,20 @@ function dsgvo() {
                 unset($pers);
             }
 
+            if(!empty($get['title']) && defined($get['title']) && $get['id'] != 1) {
+                $title = constant($get['title']);
+                if(!empty($title) && $title != '')
+                    $i++;
+            }
+
             //Output
-            $text = !empty($get['text_tag']) && defined($get['text_tag']) ? show(constant($get['text_tag']),$ph) : '';
-            $title = !empty($get['title']) && defined($get['title']) ? constant($get['title']) : '';
+            $text = !empty($get['text_tag']) && defined(re($get['text_tag'])) ? show(constant(re($get['text_tag'])),$ph) : '';
+            $title = !empty($get['title']) && defined(re($get['title'])) ? show(constant(re($get['title'])),array('count' => strval($i))) : '';
             $dsgvo_texts .= show("menu/dsgvo_texts", array('title' => bbcode_html($title), 'text' => bbcode_html($text)));
             unset($ph);
         }
     }
 
     $return = show("menu/dsgvo", array("content" => $dsgvo_texts, "dsgvo_base_title" => _dsgvo_base_title));
-    //die($return);
+    die($return);
 }
