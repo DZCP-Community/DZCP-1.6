@@ -63,11 +63,11 @@ if(defined('_UserMenu')) {
                 $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".(int)($_GET['id'])." LIMIT 1;",false,true);
                 if(!empty($getcontent[$getcustom['feldname']])) {
                     if($getcustom['type'] == 2)
-                        $custom_clan .= show(_profil_custom_url, array("name" => re(pfields_name($getcustom['name'])), "value" => re($getcontent[$getcustom['feldname']])));
+                        $custom_clan .= show(_profil_custom_url, array("name" => pfields_name($getcustom['name']), "value" => re($getcontent[$getcustom['feldname']])));
                     else if($getcustom['type'] == 3)
-                        $custom_clan .= show(_profil_custom_mail, array("name" => re(pfields_name($getcustom['name'])), "value" => eMailAddr(re($getcontent[$getcustom['feldname']]))));
+                        $custom_clan .= show(_profil_custom_mail, array("name" => pfields_name($getcustom['name']), "value" => eMailAddr(re($getcontent[$getcustom['feldname']]))));
                     else
-                        $custom_clan .= show(_profil_custom, array("name" => re(pfields_name($getcustom['name'])), "value" => re($getcontent[$getcustom['feldname']])));
+                        $custom_clan .= show(_profil_custom, array("name" => pfields_name($getcustom['name']), "value" => re($getcontent[$getcustom['feldname']])));
                 }
             }
 

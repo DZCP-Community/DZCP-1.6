@@ -27,13 +27,13 @@ function custom_content($kid=1) {
             if(!empty($getcontent[$getcustom['feldname']])) {
                 switch($getcustom['type']) {
                     case 2:
-                        $custom_content .= show(_profil_custom_url, array("name" => re(pfields_name($getcustom['name'])), "value" => re($getcontent[$getcustom['feldname']])));
+                        $custom_content .= show(_profil_custom_url, array("name" => pfields_name($getcustom['name']), "value" => re($getcontent[$getcustom['feldname']])));
                         break;
                     case 3:
-                        $custom_content .= show(_profil_custom_mail, array("name" => re(pfields_name($getcustom['name'])), "value" => eMailAddr(re($getcontent[$getcustom['feldname']]))));
+                        $custom_content .= show(_profil_custom_mail, array("name" => pfields_name($getcustom['name']), "value" => eMailAddr(re($getcontent[$getcustom['feldname']]))));
                         break;
                     default:
-                        $custom_content .= show(_profil_custom, array("name" => re(pfields_name($getcustom['name'])), "value" => re($getcontent[$getcustom['feldname']])));
+                        $custom_content .= show(_profil_custom, array("name" => pfields_name($getcustom['name']), "value" => re($getcontent[$getcustom['feldname']])));
                         break;
                 }
             }
@@ -49,6 +49,6 @@ if(file_exists(basePath."/user/case_".$action.".php"))
     require_once(basePath."/user/case_".$action.".php");
 
 ## INDEX OUTPUT ##
-$whereami = preg_replace_callback("#autor_(.*?)$#",create_function('$id', 'return re(data("nick","$id[1]"));'),$where);
+$whereami = preg_replace_callback("#autor_(.*?)$#",function ($id) { return re(data("nick",$id[1])); },$where);
 $title = $pagetitle." - ".$whereami."";
 page($index, $title, $where);

@@ -265,7 +265,7 @@ if(defined('_UserMenu')) {
                 $qrycustom = db("SELECT `name`,`feldname` FROM `".$db['profile']."` WHERE `kid` = 1 AND `shown` = 1 ORDER BY `id` ASC;");
                 while($getcustom = _fetch($qrycustom)) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
-                    $custom_about .= show(_profil_edit_custom, array("name" => re(pfields_name($getcustom['name'])).":",
+                    $custom_about .= show(_profil_edit_custom, array("name" => pfields_name($getcustom['name']).":",
                                                                          "feldname" => $getcustom['feldname'],
                                                                          "value" => $getcontent[$getcustom['feldname']]));
                 }
@@ -274,7 +274,7 @@ if(defined('_UserMenu')) {
                 $qrycustom = db("SELECT `name`,`feldname` FROM `".$db['profile']."` WHERE `kid` = 3 AND `shown` = 1 ORDER BY `id` ASC;");
                 while($getcustom = _fetch($qrycustom)) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
-                    $custom_contact .= show(_profil_edit_custom, array("name" => re(pfields_name($getcustom['name'])).":",
+                    $custom_contact .= show(_profil_edit_custom, array("name" => pfields_name($getcustom['name']).":",
                                                                            "feldname" => $getcustom['feldname'],
                                                                            "value" => $getcontent[$getcustom['feldname']]));
                 }
@@ -283,7 +283,7 @@ if(defined('_UserMenu')) {
                 $qrycustom = db("SELECT `name`,`feldname` FROM `".$db['profile']."` WHERE `kid` = 4 AND `shown` = 1 ORDER BY `id` ASC;");
                 while($getcustom = _fetch($qrycustom)) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
-                    $custom_favos .= show(_profil_edit_custom, array("name" => re(pfields_name($getcustom['name'])).":",
+                    $custom_favos .= show(_profil_edit_custom, array("name" => pfields_name($getcustom['name']).":",
                                                                          "feldname" => $getcustom['feldname'],
                                                                          "value" => $getcontent[$getcustom['feldname']]));
                 }
@@ -292,7 +292,7 @@ if(defined('_UserMenu')) {
                 $qrycustom = db("SELECT `name`,`feldname` FROM `".$db['profile']."` WHERE `kid` = 5 AND `shown` = 1 ORDER BY `id` ASC;");
                 while($getcustom = _fetch($qrycustom)) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
-                    $custom_hardware .= show(_profil_edit_custom, array("name" => re(pfields_name($getcustom['name'])).":",
+                    $custom_hardware .= show(_profil_edit_custom, array("name" => pfields_name($getcustom['name']).":",
                                                                             "feldname" => $getcustom['feldname'],
                                                                             "value" => $getcontent[$getcustom['feldname']]));
                 }
