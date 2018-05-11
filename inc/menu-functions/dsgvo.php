@@ -17,6 +17,7 @@ function dsgvo() {
             $ph['phone'] = ''; $ph['website'] = '';
             $ph['titel'] = '';
             $ph['clanname'] = re(settings('clanname'));
+            $ph['lang'] = language_short_tag();
 
             if($get['persid']) {
                 $pers = db("SELECT * FROM `".$db['dsgvo_pers']."` WHERE `id` = " . $get['persid'] . ";", false, true);
@@ -48,6 +49,5 @@ function dsgvo() {
         }
     }
 
-    $return = show("menu/dsgvo", array("content" => $dsgvo_texts, "dsgvo_base_title" => _dsgvo_base_title));
-    die($return);
+    return show("menu/dsgvo", array("content" => $dsgvo_texts, "dsgvo_base_title" => _dsgvo_base_title));
 }
