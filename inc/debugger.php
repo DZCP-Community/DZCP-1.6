@@ -18,6 +18,7 @@ define('show_warning', true);
 define('show_dbc_debug', false);
 define('show_deprecation_debug', true);
 define('show_gameserver_debug', true);
+define('show_api_debug', false);
 
 #############################################
 ############### Debug Console ###############

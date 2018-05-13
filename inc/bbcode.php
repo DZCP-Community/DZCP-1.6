@@ -19,6 +19,7 @@ require_once(basePath."/inc/cookie.php");
 require_once(basePath.'/inc/server_query/_functions.php');
 require_once(basePath."/inc/teamspeak_query.php");
 require_once(basePath.'/inc/steamapi.php');
+require_once(basePath.'/inc/api.php');
 
 //Libs
 use phpFastCache\CacheManager;
@@ -133,6 +134,7 @@ $maxpicwidth = 90;
 $maxadmincw = 10;
 $maxfilesize = @ini_get('upload_max_filesize');
 $search_forum = false;
+$api = new api('api.dzcp.de');
 
 //-> Global
 $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -1959,7 +1961,7 @@ if(!$ajaxJob && HasDSGVO())
 
 //-> Checkt ob ein Ereignis neu ist
 function check_new($datum,$new = "",$datum2 = "") {
-    global $db,$userid;
+    global $userid;
     if($userid) {
         if($datum >= userstats('lastvisit') || $datum2 >= userstats('lastvisit'))
             return (empty($new) ? _newicon : $new);
