@@ -12,7 +12,7 @@
       Das Installationsscript ist so aufgebaut, das man nur Punkt f&uuml;r Punkt alles abarbeiten muss. Sollte ein Fehler vorliegen wird Ihnen dieser sofort mitgeteilt.<br /><br />
       Viel Spass mit deV!L`z Clanportal w&uuml;nscht Ihnen das gesamte Team von DZCP.de.<br /><br />
     </div>
-    <font class="head">&raquo; Lizenzbestimmungen:</font>
+        <span class="head">&raquo; Lizenzbestimmungen:</span>
     </td>
   </tr>
   <tr>

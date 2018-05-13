@@ -20,7 +20,7 @@ require_once(basePath.'/inc/_version.php');
 require_once(basePath."/inc/debugger.php");
 require_once(basePath.'/_installer/conf/conf.php');
 require_once(basePath.'/_installer/conf/mysql.php');
-require_once(basePath.'/inc/crypt.php');
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 DebugConsole::initCon();
@@ -216,10 +216,10 @@ if(isset($_GET['agb']) && $_GET['agb']) {
     header("Location: install.php?agb=false");
 } else {
     include(basePath.'/_installer/html/require.php');
-    $mcrypt_decrypt = extension_loaded('mcrypt') ? _true."<font color='green'><b>" : _false."<font color='red'><b>";
-    $mcrypt_decrypt.= "</b>&nbsp;&nbsp;&nbsp; Mcrypt</font><br />";
-    $apc = extension_loaded('apc') ? _true."<font color='green'><b>" : _false."<font color='red'><b>";
-    $apc.= "</b>&nbsp;&nbsp;&nbsp; Alternative PHP Cache (APC)</font><br />";
+    $mcrypt_decrypt = extension_loaded('mcrypt') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";
+    $mcrypt_decrypt.= "</b>&nbsp;&nbsp;&nbsp; Mcrypt</span><br />";
+    $apc = extension_loaded('apc') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";
+    $apc.= "</b>&nbsp;&nbsp;&nbsp; Alternative PHP Cache (APC)</span><br />";
 
     $opt = '';
     $opt .= $mcrypt_decrypt;

@@ -13,7 +13,7 @@
 
       Viel Spass mit deV!L`z Clanportal w&uuml;nscht Ihnen das geamte Team von DZCP.de.<br /><br />
     </div>
-    <font class="head">&raquo; Lizenzbestimmungen:</font>
+    <span class="head">&raquo; Lizenzbestimmungen:</span>
     </td>
   </tr>
   <tr>

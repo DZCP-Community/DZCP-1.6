@@ -11,23 +11,23 @@ define('_disabled_fopen', 'Dein Webserver unterst&uuml;tzt die Funktion <i>fopen
 define('_do_config', 'Du musst die Konfiguration erfolgreich abschlie&szlig;en, um die Datenbank installieren zu k&ouml;nnen!');
 define('_true', '<img src="img/true.gif" border="0" alt="" vspace="0" align="center"> ');
 define('_false', '<img src="img/false.gif" border="0" alt="" vspace="0" align="center"> ');
-define('_link_start', '<font class="enabled">&raquo; Lizenz</font>');
-define('_link_start_1', '<font class="disabled">1. Lizenz</font>');
-define('_link_require', '<font class="enabled">&raquo; Erweiterungen</font>');
-define('_link_require_1', '<font class="disabled">2. Erweiterungen</font>');
-define('_link_prepare', '<font class="enabled">&raquo; Vorbereitung</font>');
-define('_link_prepare_1', '<font class="disabled">3. Vorbereitung</font>');
-define('_link_install', '<font class="enabled">&raquo; MySQL</font>');
-define('_link_install_1', '<font class="disabled">4. MySQL</font>');
-define('_link_db', '<font class="enabled">&raquo; Installation</font>');
-define('_link_db_1', '<font class="disabled">5. Installation</font>');
-define('_link_dbu', '<font class="enabled">&raquo; Update</font>');
-define('_link_dbu_1', '<font class="disabled">4. Update</font>');
-define('_link_done', '<font class="enabled">&raquo; Done</font>');
-define('_link_done_1', '<font class="disabled">6. Done</font>');
+define('_link_start', '<span class="enabled">&raquo; Lizenz</span>');
+define('_link_start_1', '<span class="disabled">1. Lizenz</span>');
+define('_link_require', '<span class="enabled">&raquo; Erweiterungen</span>');
+define('_link_require_1', '<span class="disabled">2. Erweiterungen</span>');
+define('_link_prepare', '<span class="enabled">&raquo; Vorbereitung</span>');
+define('_link_prepare_1', '<span class="disabled">3. Vorbereitung</span>');
+define('_link_install', '<span class="enabled">&raquo; MySQL</span>');
+define('_link_install_1', '<span class="disabled">4. MySQL</span>');
+define('_link_db', '<span class="enabled">&raquo; Installation</span>');
+define('_link_db_1', '<span class="disabled">5. Installation</span>');
+define('_link_dbu', '<span class="enabled">&raquo; Update</span>');
+define('_link_dbu_1', '<span class="disabled">4. Update</span>');
+define('_link_done', '<span class="enabled">&raquo; Done</span>');
+define('_link_done_1', '<span class="disabled">6. Done</span>');
 
-define('_link_update_done', '<font class="enabled">&raquo; Done</font>');
-define('_link_update_done_1', '<font class="disabled">5. Done</font>');
+define('_link_update_done', '<span class="enabled">&raquo; Done</span>');
+define('_link_update_done_1', '<span class="disabled">5. Done</span>');
 
 ################
 ## Funktionen ##
@@ -38,9 +38,9 @@ function check_file_dir($file, $is_file=false) {
 
     $_file = preg_replace("#\.\.#Uis", "", $file);
     if(is_writable($file))
-        return _true."<font color='green'><b>".$what."</b>&nbsp;&nbsp;&nbsp; ".$_file."</font><br />";
+        return _true."<span style='color:green'><b>".$what."</b>&nbsp;&nbsp;&nbsp; ".$_file."</span><br />";
     else
-        return _false."<font color='red'><b>".$what."</b>&nbsp;&nbsp;&nbsp; ".$_file."</font><br />";
+        return _false."<span style='color:red'><b>".$what."</b>&nbsp;&nbsp;&nbsp; ".$_file."</span><br />";
 }
 
 function set_ftp_chmod($file,$pfad,$host,$user,$pwd) {
