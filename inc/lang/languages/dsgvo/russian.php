@@ -236,3 +236,16 @@ $language_text['_dsgvo_base_037'] = <<<EOD
 EOD;
 $language_text['_dsgvo_base_text_037'] = <<<EOD
 EOD;
+
+/****************************************************************************
+ * Datenschutzerklärung - Account-Aktivierung
+ ***************************************************************************/
+
+//Title
+$language_text['_dsgvo_base_title_201'] = '<strong>Datenschutzerkl&auml;rung zur Account-Aktivierung</strong>';
+//Administrations Info
+$language_text['_dsgvo_base_201'] = <<<EOD
+EOD;
+//Text
+$language_text['_dsgvo_base_text_201'] = <<<EOD
+EOD;

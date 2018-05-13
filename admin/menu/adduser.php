@@ -133,6 +133,7 @@ if(_adminMenu != 'true') exit;
                                  `level`    = ".((int)$_POST['level']).",
                                  `time`     = ".time().",
                                  `pwd_md5`  = 0,
+                                 `dsgvo_lock`  = 0,
                                  `gmaps_koord`  = '"._real_escape_string(up($_POST['gmaps_koord']))."',
                                  `status`   = 1;");
 

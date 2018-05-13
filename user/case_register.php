@@ -110,6 +110,7 @@ if(defined('_UserMenu')) {
                     `regdatum` = ".time().",
                     `level`    = 1,
                     `pwd_md5`  = 0,
+                    `dsgvo_lock` = 0,
                     `time`     = ".time().",
                     `status`   = 1;");
 

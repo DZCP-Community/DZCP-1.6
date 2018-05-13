@@ -11,7 +11,7 @@ var isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
 var DZCP = {
     //init
     init: function() {
-        doc.body.id = 'dzcp-engine-1.6';
+        doc.body.id = 'dzcp-engine-1.6-1-0';
         $('body').append('<div id="infoDiv"></div>');
 
         layer = $('#infoDiv')[0];
@@ -40,13 +40,37 @@ var DZCP = {
         });
 
         if(dsgvo == 1) {
-            DZCP.show_dsgvo();
+            DZCP.show_dsgvo("#dialog-confirm");
+        }
+
+        if(dsgvo_lock == 1) {
+            DZCP.show_dsgvo_lock("#dialog-confirm-lock");
         }
     },
 
-    show_dsgvo: function() {
-        $("#dialog-confirm").show();
-        $("#dialog-confirm").dialog({
+    show_dsgvo_lock: function(name) {
+        $(name).show();
+        $(name).dialog({
+            resizable: false,
+            height: "auto",
+            width: 800,
+            modal: true,
+            buttons: {
+                "Akzeptieren": function () {
+                    var url = "../user/?action=userlock&dsgvo-lock=1";
+                    $(location).attr('href', url);
+                },
+                "Ablehnen": function () {
+                    var url = "../user/?action=userlock&dsgvo-lock=0";
+                    $(location).attr('href', url);
+                }
+            }
+        });
+    },
+
+    show_dsgvo: function(name) {
+        $(name).show();
+        $(name).dialog({
             resizable: false,
             height: "auto",
             width: 800,
@@ -54,11 +78,11 @@ var DZCP = {
             buttons: {
                 "Akzeptieren": function () {
                     var url = "?dsgvo=1";
-                    $(location).attr('href',url);
+                    $(location).attr('href', url);
                 },
                 "Ablehnen": function () {
                     var url = "?dsgvo=0";
-                    $(location).attr('href',url);
+                    $(location).attr('href', url);
                 }
             }
         });
@@ -132,24 +156,24 @@ var DZCP = {
 
     // init Gameserver via Ajax
     initGameServer: function(serverID) {
-        DZCP.initDynLoader('navGameServer_' + serverID,'server','&serverID=' + serverID,true);
+        DZCP.initDynLoader('navGameServer_' + serverID,'server','&serverID=' + serverID);
     },
 
     // init Teamspeakserver via Ajax
     initTeamspeakServer: function() {
-        DZCP.initDynLoader('navTeamspeakServer','teamspeak','',true);
+        DZCP.initDynLoader('navTeamspeakServer','teamspeak','');
     },
 
     // init Ajax DynLoader
-    initDynLoader: function(tag,menu,options,fade) {
-        var request = $.ajax({ url: "../inc/ajax.php?i=" + menu + options });
-        request.done(function(msg) { if(fade) { $('#' + tag).html( msg ).hide().fadeIn("normal"); } else { $('#' + tag).html( msg ); } });
+    initDynLoader: function(tag,menu,options) {
+        var request = $.ajax({ url: "../inc/ajax.php?i=" + menu + options, type: "GET", data: {}, cache:true, dataType: "html", contentType: "application/x-www-form-urlencoded; charset=iso-8859-1" });
+        request.done(function(msg) { $('#' + tag).html( msg ).hide().fadeIn("normal"); });
     },
 
-    // init Ajax DynLoader Sides via Ajax
-    initPageDynLoader: function(tag,url) {
-        var request = $.ajax({ url: url });
-        request.done(function(msg) { $('#' + tag).html(msg).hide().fadeIn("normal"); DZCP.initLightbox(); });
+    // init Ajax DynCaptcha
+    initDynCaptcha: function(tag,num,secure) {
+        var request = $.ajax({ url: "../antispam.php?secure=" + secure + "&num=" + num, type: "GET", data: {}, cache:false, dataType: "html", contentType: "application/x-www-form-urlencoded; charset=iso-8859-1" });
+        request.done(function(msg) { $('#' + tag).html( msg ).hide().fadeIn("normal"); });
     },
 
     // submit shoutbox

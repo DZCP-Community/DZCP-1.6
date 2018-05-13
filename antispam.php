@@ -16,10 +16,8 @@ if(isset($_GET['secure']) && !empty($_GET['secure'])) {
     $lineColor        = '#555555';
 ## /COLORS
 
-    if(function_exists('gd_info'))
-    {
-        if(isset($_GET['num']) && $_GET['num'] != 0 && $_GET['num'] >= 2 && !empty($_GET['num']))
-        {
+    if(function_exists('gd_info')) {
+        if(isset($_GET['num']) && $_GET['num'] != 0 && $_GET['num'] >= 2 && !empty($_GET['num'])) {
             $num = ((int)$_GET['num']);
             $x = 100; $y = 30;
             $space = 10;
@@ -34,8 +32,7 @@ if(isset($_GET['secure']) && !empty($_GET['secure'])) {
         $rectMin = -20;
         $rectMax = 20;
 
-        function hex2rgb($color,$type)
-        {
+        function hex2rgb($color,$type){
             $r = '';
             if($type == 'r')     $r = hexdec(substr($color, 1, 2));
             elseif($type == 'g') $r = hexdec(substr($color, 3, 2));
@@ -52,8 +49,7 @@ if(isset($_GET['secure']) && !empty($_GET['secure'])) {
         $lineColor       = imagecolorallocate($im, hex2rgb($lineColor,'r') , hex2rgb($lineColor,'g') , hex2rgb($lineColor,'b'));
 
 // Pixel einf�gen
-        if(function_exists('imagesetpixel'))
-        {
+        if(function_exists('imagesetpixel')) {
             $noise = $x * $y / 10;
             for($i = 0; $i < $noise; $i++)
                 imagesetpixel($im, mt_rand(0, $x), mt_rand(0, $y), $noiseColor);
@@ -61,8 +57,7 @@ if(isset($_GET['secure']) && !empty($_GET['secure'])) {
 
 // Linien zeichnen
         if(function_exists('imagesetpixel')) imagesetthickness($im, 1);
-        if(function_exists('imageline'))
-        {
+        if(function_exists('imageline')) {
             $anz = mt_rand(4, 9);
             for($i = 1; $i <= $anz; $i++)
                 imageline($im, mt_rand(0, $x), mt_rand(0, $y), $x - mt_rand(0, 0), mt_rand(0, $y), $lineColor);
@@ -70,8 +65,7 @@ if(isset($_GET['secure']) && !empty($_GET['secure'])) {
 // Zahlencode einfuegen
         $code = '';
         $z = array("1","2","3","4","5","6","7","8","9","0","A","C","D","E","F","G","H","J","K","M","N","P","R","S","T","U","V","W","X","Y","Z");
-        for($f=0; $f<$num; $f++)
-        {
+        for($f=0; $f<$num; $f++) {
             $spamcode = $z[rand(0,30)];
             $w = (16 * $f) + $space;
 
@@ -85,7 +79,6 @@ if(isset($_GET['secure']) && !empty($_GET['secure'])) {
         }
 
         //Code in Session abspeichern
-        unset($_SESSION["sec_".trim($_GET['secure'])]);
         $_SESSION["sec_".trim($_GET['secure'])] = $code;
 
         if(!function_exists('imagettftext'))

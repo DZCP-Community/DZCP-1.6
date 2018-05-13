@@ -1935,6 +1935,6 @@ img.border {
 	display:none
 }
 
-#dialog-confirm {
+#dialog-confirm, #dialog-confirm-lock {
     display: none;
 }

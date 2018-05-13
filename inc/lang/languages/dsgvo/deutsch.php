@@ -4,6 +4,7 @@
  * http://www.dzcp.de
  */
 $language_text['_dsgvo_base_title'] = 'Datenschutz-Grundverordnung (EU-DSGVO)';
+$language_text['_dsgvo_base_lock_title'] = 'Datenschutz-Grundverordnung (EU-DSGVO) - Account-Aktivierung';
 
 //Title
 $language_text['_dsgvo_base_title_001'] = '<strong>Datenschutzerkl&auml;rung</strong>';
@@ -1047,4 +1048,22 @@ $language_text['_dsgvo_base_text_037'] = <<<EOD
 <p>Diese Datenschutzerkl&auml;rung wurde durch den Datenschutzerkl&auml;rungs-Generator der DGD Deutsche Gesellschaft f&uuml;r Datenschutz GmbH, 
 die als <a href="https://dg-datenschutz.de/datenschutz-dienstleistungen/externer-datenschutzbeauftragter/" target="_blank">Externer Datenschutzbeauftragter M&uuml;nchen</a> t&auml;tig ist, in Kooperation mit dem 
 <a href="https://www.wbs-law.de/" target="_blank">Rechtsanwalt f&uuml;r Datenschutzrecht Christian Solmecke</a> erstellt.</p><br>
+EOD;
+
+/****************************************************************************
+ * Datenschutzerklärung - Account-Aktivierung
+ ***************************************************************************/
+
+//Title
+$language_text['_dsgvo_base_title_201'] = '<strong>Datenschutzerkl&auml;rung zur Account-Aktivierung</strong>';
+//Administrations Info
+$language_text['_dsgvo_base_201'] = <<<EOD
+Allgemeine Datenschutzerkl&auml;rung (Info Text)
+EOD;
+//Text
+$language_text['_dsgvo_base_text_201'] = <<<EOD
+<p>Wir freuen uns sehr &uuml;ber Ihr Interesse an unserem Unternehmen. Datenschutz hat einen besonders hohen Stellenwert f&uuml;r die Gesch&auml;ftsleitung der "[clanname]". 
+Eine Nutzung der Internetseiten der "[clanname]" ist grunds&auml;tzlich ohne jede Angabe personenbezogener Daten m&ouml;glich. 
+Sofern eine betroffene Person besondere Services unseres Unternehmens &uuml;ber unsere Internetseite in Anspruch nehmen m&ouml;chte, k&ouml;nnte jedoch eine Verarbeitung personenbezogener Daten erforderlich werden. 
+Ist die Verarbeitung personenbezogener Daten erforderlich und besteht f&uuml;r eine solche Verarbeitung keine gesetzliche Grundlage, holen wir generell eine Einwilligung der betroffenen Person ein.</p><br>
 EOD;

@@ -10,54 +10,52 @@ if(defined('_UserMenu')) {
     $show_sql = isset($_GET['show']) ? $_GET['show'] : '';
 
     if($show_sql == "search") {
-        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum`
-                   FROM `".$db['users']."`
-                   WHERE nick LIKE '%".$_GET['search']."%'
-                   AND level != 0
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
+                   WHERE `nick` LIKE '%".$_GET['search']."%'
+                   AND level != 0 ".(permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ')."
                    ORDER BY nick
-                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
+                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist').";");
     } elseif($show_sql == "newreg") {
         $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
                    WHERE regdatum > '".$_SESSION['lastvisit']."'
-                   AND level != '0'
+                   AND `level` != 0 ".(permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ')."
                    ORDER BY regdatum DESC,nick
-                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
+                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist').";");
     } elseif($show_sql == "lastlogin") {
         $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
-                   WHERE level != '0'
+                   WHERE `level` != 0 ".(permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ')."
                    ORDER BY time DESC,nick
-                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
+                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist').";");
     } elseif($show_sql == "lastreg") {
         $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
-                   WHERE level != '0'
+                   WHERE `level` != 0 ".(permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ')."
                    ORDER BY regdatum DESC,nick
-                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
+                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist').";");
     } elseif($show_sql == "online") {
-        $qry = db("SELECT `id`,`nick`,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position,time FROM `".$db['users']."`
-                   WHERE level != '0'
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
+                   WHERE `level` != 0 ".(permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ')."
                    ORDER BY time DESC,nick
-                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
+                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist').";");
     } elseif($show_sql == "country") {
-        $qry = db("SELECT `id`,`nick`,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position,country FROM `".$db['users']."`
-                   WHERE level != '0'
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
+                   WHERE `level` != 0 ".(permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ')." 
                    ORDER BY country,nick
-                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
+                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist').";");
     } elseif($show_sql == "sex") {
-        $qry = db("SELECT `id`,`nick`,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position FROM `".$db['users']."`
-                   WHERE level != '0'
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
+                   WHERE `level` != 0 ".(permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ')."
                    ORDER BY sex DESC
-                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
+                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist').";");
     } elseif($show_sql == "banned") {
-        $qry = db("SELECT `id`,`nick`,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,icq,status,position FROM `".$db['users']."`
-                   WHERE level = '0'
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
+                   WHERE `level` = 0 ".(permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ')." 
                    ORDER BY nick
-                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
+                   LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist').";");
     } else {
-        $qry = db("SELECT `id`,`nick`,level,email,hp,steamid,hlswid,skypename,xboxid,psnid,originid,battlenetid,bday,sex,
-                  icq,status,position FROM `".$db['users']."`
-                  WHERE level != '0'
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`hlswid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `".$db['users']."`
+                  WHERE `level` != 0 ".(permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ')."
                   ".orderby_sql(array("nick","bday"), 'ORDER BY level DESC,nick')."
-                  LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist')."");
+                  LIMIT ".($page - 1)*config('m_userlist').",".config('m_userlist').";");
     }
 
     $userliste = '';

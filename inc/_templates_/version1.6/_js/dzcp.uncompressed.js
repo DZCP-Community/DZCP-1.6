@@ -11,7 +11,7 @@ var isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
 var DZCP = {
     //init
     init: function() {
-        doc.body.id = 'dzcp-engine-1.6';
+        doc.body.id = 'dzcp-engine-1.6-1-0';
         $('body').append('<div id="infoDiv"></div>');
 
         layer = $('#infoDiv')[0];
@@ -40,13 +40,37 @@ var DZCP = {
         });
 
         if(dsgvo == 1) {
-            DZCP.show_dsgvo();
+            DZCP.show_dsgvo("#dialog-confirm");
+        }
+
+        if(dsgvo_lock == 1) {
+            DZCP.show_dsgvo_lock("#dialog-confirm-lock");
         }
     },
 
-    show_dsgvo: function() {
-        $("#dialog-confirm").show();
-        $("#dialog-confirm").dialog({
+    show_dsgvo_lock: function(name) {
+        $(name).show();
+        $(name).dialog({
+            resizable: false,
+            height: "auto",
+            width: 800,
+            modal: true,
+            buttons: {
+                "Akzeptieren": function () {
+                    var url = "../user/?action=userlock&dsgvo-lock=1";
+                    $(location).attr('href', url);
+                },
+                "Ablehnen": function () {
+                    var url = "../user/?action=userlock&dsgvo-lock=0";
+                    $(location).attr('href', url);
+                }
+            }
+        });
+    },
+
+    show_dsgvo: function(name) {
+        $(name).show();
+        $(name).dialog({
             resizable: false,
             height: "auto",
             width: 800,
@@ -54,11 +78,11 @@ var DZCP = {
             buttons: {
                 "Akzeptieren": function () {
                     var url = "?dsgvo=1";
-                    $(location).attr('href',url);
+                    $(location).attr('href', url);
                 },
                 "Ablehnen": function () {
                     var url = "?dsgvo=0";
-                    $(location).attr('href',url);
+                    $(location).attr('href', url);
                 }
             }
         });

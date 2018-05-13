@@ -34,8 +34,10 @@ if(!array_key_exists('DSGVO',$_SESSION)) {
     $_SESSION['DSGVO'] = false;
 }
 
-//$_SESSION['do_show_dsgvo'] = false;
-//$_SESSION['DSGVO'] = false;
+//Set DSGVO Lock
+if(!array_key_exists('user_has_dsgvo_lock',$_SESSION)) {
+    $_SESSION['user_has_dsgvo_lock'] = false;
+}
 
 //Check is DSGVO Set?
 if(isset($_GET['dsgvo'])) {
@@ -49,6 +51,7 @@ if(isset($_GET['dsgvo'])) {
         default:
             $_SESSION['DSGVO'] = false;
             $_SESSION['do_show_dsgvo'] = true;
+            $_SESSION['user_has_dsgvo_lock'] = false;
             header("Location: " . $_SERVER['HTTP_REFERER']);
             exit();
     }
@@ -145,34 +148,41 @@ $index = ''; $show = ''; $color = 0;
 //-> Auslesen der Cookies und automatisch anmelden
 if(HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && empty($_SESSION['id']) && !checkme())) {
     //-> User aus der Datenbank suchen
-    $sql = db_stmt("SELECT `id`,`user`,`nick`,`pwd`,`email`,`level`,`time`,`pkey` FROM `".$db['users']."` WHERE `id` = ? AND `pkey` = ? AND `level` != 0;",
+    $sql = db_stmt("SELECT `id`,`user`,`nick`,`pwd`,`email`,`level`,`time`,`pkey`,`dsgvo_lock` FROM `".$db['users']."` WHERE `id` = ? AND `pkey` = ? AND `level` != 0;",
         array('is', cookie::get('id'), cookie::get('pkey')));
     if(_rows($sql)) {
         $get = _fetch($sql);
+        if($get['dsgvo_lock']) {
+            $_SESSION['user_has_dsgvo_lock'] = true;
+            $_SESSION['dsgvo_lock_permanent_login'] = true;
+            $_SESSION['dsgvo_lock_login_id'] = $get['id'];
+            if(!array_key_exists('dsgvo_lock_login_id',$_SESSION))
+                header("Location: ?action=userlock");
+        } else {
+            //-> Generiere neuen permanent-key - sha256
+            $permanent_key = hash('sha256', mkpwd(12));
+            cookie::put('pkey', $permanent_key);
+            cookie::save();
 
-        //-> Generiere neuen permanent-key - sha256
-        $permanent_key = hash('sha256', mkpwd(12));
-        cookie::put('pkey', $permanent_key);
-        cookie::save();
+            //-> Schreibe Werte in die Server Sessions
+            $_SESSION['id'] = $get['id'];
+            $_SESSION['pwd'] = $get['pwd'];
+            $_SESSION['lastvisit'] = $get['time'];
+            $_SESSION['ip'] = $userip;
 
-        //-> Schreibe Werte in die Server Sessions
-        $_SESSION['id']         = $get['id'];
-        $_SESSION['pwd']        = $get['pwd'];
-        $_SESSION['lastvisit']  = $get['time'];
-        $_SESSION['ip']         = $userip;
+            if (data("ip", $get['id']) != $_SESSION['ip'])
+                $_SESSION['lastvisit'] = data("time", $get['id']);
 
-        if(data("ip",$get['id']) != $_SESSION['ip'])
-            $_SESSION['lastvisit'] = data("time",$get['id']);
+            if (empty($_SESSION['lastvisit']))
+                $_SESSION['lastvisit'] = data("time", $get['id']);
 
-        if(empty($_SESSION['lastvisit']))
-            $_SESSION['lastvisit'] = data("time",$get['id']);
+            //-> Aktualisiere Datenbank
+            db("UPDATE `" . $db['users'] . "` SET `online` = 1, `sessid` = '" . session_id() . "', `ip` = '" . $userip . "', `pkey` = '" . $permanent_key . "' WHERE `id` = " . $get['id'] . ";");
 
-        //-> Aktualisiere Datenbank
-        db("UPDATE `".$db['users']."` SET `online` = 1, `sessid` = '".session_id()."', `ip` = '".$userip."', `pkey` = '".$permanent_key."' WHERE `id` = ".$get['id'].";");
-
-        //-> Aktualisiere die User-Statistik
-        db("UPDATE `".$db['userstats']."` SET `logins` = (logins+1) WHERE `user` = ".$get['id'].";");
-        unset($get,$permanent_key);
+            //-> Aktualisiere die User-Statistik
+            db("UPDATE `" . $db['userstats'] . "` SET `logins` = (logins+1) WHERE `user` = " . $get['id'] . ";");
+            unset($get, $permanent_key);
+        }
     } else {
         $_SESSION['id']        = '';
         $_SESSION['pwd']       = '';
@@ -2391,6 +2401,7 @@ function admin_perms($userid) {
 
 //-> filter placeholders
 function pholderreplace($pholder) {
+    /** @noinspection CssInvalidAtRule */
     $search = array('@<script[^>]*?>.*?</script>@si',
                     '@<style[^>]*?>.*?</style>@siU',
                     '@<[\/\!]*?[^<>]*?>@si',
@@ -2453,7 +2464,7 @@ function generatetime() {
 
 //-> Rechte abfragen
 function getPermissions($checkID = 0, $pos = 0) {
-    global $db;
+    global $db,$lang;
 
     if(!empty($checkID)) {
         $check = empty($pos) ? 'user' : 'pos'; $checked = array();
@@ -2709,7 +2720,9 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
     $edr = ($wysiwyg=='_word')?'advanced':'normal';
     $lcolor = ($cp_color==1)?'lcolor=true;':'';
     $dsgvo = (!array_key_exists('do_show_dsgvo',$_SESSION) || !$_SESSION['do_show_dsgvo'] ? 1 : 0);
-    $java_vars = '<script language="javascript" type="text/javascript">var maxW = '.config('maxwidth').',lng = \''.$lng.'\',dsgvo = \''.$dsgvo.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
+    $dsgvo_lock = (!array_key_exists('user_has_dsgvo_lock',$_SESSION) || !$_SESSION['user_has_dsgvo_lock'] ? 0 : 1);
+    $java_vars = '<script language="javascript" type="text/javascript">var maxW = '.config('maxwidth').',lng = \''.$lng.'\',dsgvo = \''.$dsgvo.'\',
+    dsgvo_lock = \''.$dsgvo_lock.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
 
     if(!strstr($_SERVER['HTTP_USER_AGENT'],'Android') && !strstr($_SERVER['HTTP_USER_AGENT'],'webOS'))
         $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.js"></script>'."\n";
