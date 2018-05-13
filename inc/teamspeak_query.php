@@ -138,7 +138,7 @@ function teamspeak2() {
                                                 ));
       }
 
-      if(empty($teamspeak)) $teamspeak = '<br /><center>'._error_no_teamspeak.'</center><br />';
+      if(empty($teamspeak)) $teamspeak = '<br /><div style="text-align:center;">'._error_no_teamspeak.'</div><br />';
 
    return $teamspeak;
 }
@@ -1130,7 +1130,7 @@ class TSStatus
 
             return $response;
         } else {
-        $this->error = '<br /><center>'._error_no_teamspeak.'</center><br />';
+        $this->error = '<br /><div style="text-align:center;">'._error_no_teamspeak.'</div><br />';
         }
         return false;
     }

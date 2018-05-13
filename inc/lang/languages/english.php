@@ -124,7 +124,7 @@ $language_text['_profil_del_admin'] = '<b>Deleting not possible!</b>';
 $language_text['_news_get_timeshift'] = 'Timeshift News?';
 $language_text['_news_timeshift_from'] = 'Show news from:';
 $language_text['_config_gb_activ'] = 'Guestbook';
-$language_text['_config_gb_activ_info'] = '<center>Here you can specify whether an item will only be released by an admin must.</center>';
+$language_text['_config_gb_activ_info'] = '<div style="text-align:center;">Here you can specify whether an item will only be released by an admin must.</div>';
 $language_text['_placeholder'] = 'Template Placeholder';
 $language_text['_menu_kats_head'] = 'Menu Categories';
 $language_text['_menu_add_kat'] = 'Add new menu category';
@@ -149,10 +149,10 @@ $language_text['_eintrag_titel'] = '<span class="fontBold">#[postid]</span> at [
 ## ADDED / REDEFINED FOR 1.5.1
 $language_text['_config_double_post'] = 'Forum double post';
 $language_text['_config_fotum_vote'] = 'Forum-Vote';
-$language_text['_config_fotum_vote_info'] = '<center>Here you can specify whether a Forum-Vote also Vote to be displayed.</center>';
+$language_text['_config_fotum_vote_info'] = '<div style="text-align:center;">Here you can specify whether a Forum-Vote also Vote to be displayed.</div>';
 ## ADDED / REDEFINED FOR 1.5
 $language_text['_side_membermap'] = 'Membermap';
-$language_text['_installdir'] = '<tr><td colspan=\"15\" class=\"contentMainFirst\"><br /><center>In case of security reasons, please remove the folder \"<b>/_installer</b>\" from your webserver! Only then the admin menu available!</center><br /></td></tr>';
+$language_text['_installdir'] = '<tr><td colspan=\"15\" class=\"contentMainFirst\"><br /><div style="text-align:center;">In case of security reasons, please remove the folder \"<b>/_installer</b>\" from your webserver! Only then the admin menu available!</div><br /></td></tr>';
 $language_text['_no_ts'] = 'no Teamspeak';
 $language_text['_search_sites'] = 'Sites';
 $language_text['_search_results'] = 'Search Results';
@@ -269,7 +269,7 @@ $language_text['_away_today'] = 'including <b>today</b>';
 $language_text['_public'] = 'Public';
 $language_text['_non_public'] = 'non Public';
 $language_text['_no_public'] = '<b>unpublished</b>';
-$language_text['_no_events'] = '<center>no events available</center>';
+$language_text['_no_events'] = '<div style="text-align:center;">no events available</div>';
 $language_text['_config_c_events'] = 'Menu: Events';
 $language_text['_news_send'] = 'Send News';
 $language_text['_news_send_source'] = 'Source';
@@ -424,7 +424,7 @@ $language_text['_error_vote_show'] = 'This is a public vote! Just internal votes
 $language_text['_login_pwd_dont_match'] = 'Loginname and/or password are invalid or account has been banned!';
 $language_text['_sq_aktiv'] = 'Active';
 $language_text['_sq_inaktiv'] = 'Inactive';
-$language_text['_sq_sstatus'] = '<center>If checked, the team will be also shown in figtus form, etc</center>';
+$language_text['_sq_sstatus'] = '<div style="text-align:center;">If checked, the team will be also shown in figtus form, etc</div>';
 $language_text['_internal'] = 'Internal';
 $language_text['_sticky'] = 'Important';
 $language_text['_lobby_new_cwc_1'] = 'new clanwar comment';
@@ -1118,7 +1118,7 @@ $language_text['_awards_head_link'] = 'Link';
 $language_text['_awards_no_show'] = 'No award registered yet!';
 $language_text['_list_all_link'] = '<tr><td colspan ="7" class="contentMainTop" align="center"><a href="../awards/?action=showall&amp;id=[id]">Show all awards of this team</td></tr>';
 $language_text['_head_stats'] = 'Statistic';
-$language_text['_awards_stats'] = '<center>We alltogether won <span class="fontBold">[anz] awards</span>!</center>';
+$language_text['_awards_stats'] = '<div style="text-align:center;">We alltogether won <span class="fontBold">[anz] awards</span>!</div>';
 $language_text['_awards_stats_1'] = '<span class="fontBold">[anz]x</span> Place no.1';
 $language_text['_awards_stats_2'] = '<span class="fontBold">[anz]x</span> Place no.2';
 $language_text['_awards_stats_3'] = '<span class="fontBold">[anz]x</span> Place no.3';

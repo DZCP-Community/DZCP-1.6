@@ -126,7 +126,7 @@ $language_text['_info_account_deletet'] = 'Ваш аккаунт был успе
 $language_text['_news_get_timeshift'] = 'С задержкой Новости?'; ##xero##
 $language_text['_news_timeshift_from'] = 'объявления от:'; ##xero##
 $language_text['_config_gb_activ'] = 'гостевая книга';
-$language_text['_config_gb_activ_info'] = '<center>Объявление должно быть одобрено администратором.</center>';
+$language_text['_config_gb_activ_info'] = '<div style="text-align:center;">Объявление должно быть одобрено администратором.</div>';
 $language_text['_placeholder'] = 'местозаполнитель';
 $language_text['_menu_kats_head'] = 'Меню Категории';
 $language_text['_menu_add_kat'] = 'Добавить новою меню категорию';
@@ -151,10 +151,10 @@ $language_text['_eintrag_titel'] = '<span class="fontBold">#[postid]</span> [dat
 ## ADDED / REDEFINED FOR 1.5.1
 $language_text['_config_double_post'] = 'Двойное сообщение в форуме';
 $language_text['_config_fotum_vote'] = 'Голосования форума';
-$language_text['_config_fotum_vote_info'] = '<center>Показывает Голосования форума также под Опросоми на сайте.</center>';
+$language_text['_config_fotum_vote_info'] = '<div style="text-align:center;">Показывает Голосования форума также под Опросоми на сайте.</div>';
 ## ADDED / REDEFINED FOR 1.5
 $language_text['_side_membermap'] = 'Карта пользователeй';
-$language_text['_installdir'] = '<tr><td colspan=\"15\" class=\"contentMainFirst\"><br /><center><b>Внимание! для безопасности!!</b><br><br>Пожалуйста, удалите сначала папку <b>\'/_installer\'</b>вашего веб-пространства. Только после этого администратор меню доступно!</center><br /></td></tr>';
+$language_text['_installdir'] = '<tr><td colspan=\"15\" class=\"contentMainFirst\"><br /><div style="text-align:center;"><b>Внимание! для безопасности!!</b><br><br>Пожалуйста, удалите сначала папку <b>\'/_installer\'</b>вашего веб-пространства. Только после этого администратор меню доступно!</div><br /></td></tr>';
 $language_text['_no_ts'] = 'Teamspeak не зарегистрирован';
 $language_text['_search_sites'] = 'Подстраницы';
 $language_text['_search_results'] = 'Результаты поиска';
@@ -428,7 +428,7 @@ $language_text['_error_vote_show'] = 'Это открытый опрос, вы �
 $language_text['_login_pwd_dont_match'] = 'Имя пользователя или пароль неверны !';
 $language_text['_sq_aktiv'] = 'активный';
 $language_text['_sq_inaktiv'] = 'неактивный';
-$language_text['_sq_sstatus'] = '<center>Определяет, будет ли команда указана для FightUs</center>';
+$language_text['_sq_sstatus'] = '<div style="text-align:center;">Определяет, будет ли команда указана для FightUs</div>';
 $language_text['_internal'] = 'Внутренне';
 $language_text['_sticky'] = 'Важно';
 $language_text['_lobby_new_cwc_1'] = 'Новая комментария в Клан Вары ';
@@ -544,7 +544,7 @@ $language_text['_login_secure_help'] = 'Введите двузначный ко
 $language_text['_online_head_guests'] = 'Гости онлайн';
 $language_text['_admin_first'] = 'первой';
 $language_text['_admin_squads_nav'] = 'навигация';
-$language_text['_admin_squad_show_info'] = '<center>Определяет Обзор Команды по умолчанию свернут или развернут</center>';
+$language_text['_admin_squad_show_info'] = '<div style="text-align:center;">Определяет Обзор Команды по умолчанию свернут или развернут</div>';
 //Edited
 $language_text['_config_c_gallerypics_what'] = 'Максимальное количество фотографий в галерее пользователя';
 $language_text['_dl_getfile'] = '[file] Скачать';
@@ -1123,7 +1123,7 @@ $language_text['_awards_head_link'] = 'Ссылка события';
 $language_text['_awards_no_show'] = 'К сожалению, пока нет наград!';
 $language_text['_list_all_link'] = '<tr><td colspan ="7" class="contentMainTop" align="center"><a href="../awards/?action=showall&amp;id=[id]">Показать все награды этой команды</td></tr>';
 $language_text['_head_stats'] = 'статистика';
-$language_text['_awards_stats'] = '<center>У нас есть в общем <span class="fontBold">[anz] Наград</span>!</center>';
+$language_text['_awards_stats'] = '<div style="text-align:center;">У нас есть в общем <span class="fontBold">[anz] Наград</span>!</div>';
 $language_text['_awards_stats_1'] = '<span class="fontBold">[anz]x</span> 1. Место';
 $language_text['_awards_stats_2'] = '<span class="fontBold">[anz]x</span> 2. Место';
 $language_text['_awards_stats_3'] = '<span class="fontBold">[anz]x</span> 3. Место';

@@ -140,7 +140,7 @@ $language_text['_profil_del_admin'] = '<b>L\'eliminazione non e\' possibile!</b>
 $language_text['_news_get_timeshift'] = 'Differita News?';
 $language_text['_news_timeshift_from'] = 'Mostra news da:';
 $language_text['_config_gb_activ'] = 'Guestbook';
-$language_text['_config_gb_activ_info'] = '<center>Qui e\' possibile specificare se un elemento sara\' rilasciato solo da un amministratore.</center>';
+$language_text['_config_gb_activ_info'] = '<div style="text-align:center;">Qui e\' possibile specificare se un elemento sara\' rilasciato solo da un amministratore.</div>';
 $language_text['_placeholder'] = 'Segnaposto Template';
 $language_text['_menu_kats_head'] = 'Menu Categorie';
 $language_text['_menu_add_kat'] = 'Aggiungi nuovo menu categoria';
@@ -165,9 +165,9 @@ $language_text['_eintrag_titel'] = '<span class="fontBold">#[postid]</span> il [
 ## ADDED / REDEFINED FOR 1.5.1
 $language_text['_config_double_post'] = 'Forum doppio post';
 $language_text['_config_fotum_vote'] = 'Voti Forum';
-$language_text['_config_fotum_vote_info'] = '<center>Qui e\' possibile specificare se i Voti Forum gia\' votati devo essere visualizzati.</center>';
+$language_text['_config_fotum_vote_info'] = '<div style="text-align:center;">Qui e\' possibile specificare se i Voti Forum gia\' votati devo essere visualizzati.</div>';
 ## ADDED / REDEFINED FOR 1.5
-$language_text['_installdir'] = '<tr><td colspan=\"15\" class=\"contentMainFirst\"><br /><center>Per motivi di sicurezza, si prega di rimuovere la cartella \"<b>/_installer</b>\" dal tuo webserver! Solo allora il menu di amministrazione sara\' disponibile!</center><br /></td></tr>';
+$language_text['_installdir'] = '<tr><td colspan=\"15\" class=\"contentMainFirst\"><br /><div style="text-align:center;">Per motivi di sicurezza, si prega di rimuovere la cartella \"<b>/_installer</b>\" dal tuo webserver! Solo allora il menu di amministrazione sara\' disponibile!</div><br /></td></tr>';
 $language_text['_no_ts'] = 'no Teamspeak';
 $language_text['_search_sites'] = 'Siti';
 $language_text['_search_results'] = 'Risultati di ricerca';
@@ -287,7 +287,7 @@ $language_text['_away_today'] = 'includi <b>oggi</ b>';
 $language_text['_public'] = '- NON PUBBLICATO - clicca per cambiare lo stato';
 $language_text['_non_public'] = '- PUBBLICATO - clicca per cambiare lo stato';
 $language_text['_no_public'] = '<b>non pubblicata</b>';
-$language_text['_no_events'] = '<center>Non ci sono eventi disponibili</center>';
+$language_text['_no_events'] = '<div style="text-align:center;">Non ci sono eventi disponibili</div>';
 $language_text['_config_c_events'] = 'Menu: Eventi';
 $language_text['_news_send'] = 'Invia News';
 $language_text['_news_send_source'] = 'Fonte';
@@ -443,7 +443,7 @@ $language_text['_error_vote_show'] = 'Si tratta di una votazione pubblica! Solo 
 $language_text['_login_pwd_dont_match'] = 'Loginname e/o la password non sono validi o l\'account e\' stato bannato!';
 $language_text['_sq_aktiv'] = 'Attivo';
 $language_text['_sq_inaktiv'] = 'Inattivo';
-$language_text['_sq_sstatus'] = '<center>Se selezionata, il team sara\' anche mostrato nei moduli combattenti, ecc</center>';
+$language_text['_sq_sstatus'] = '<div style="text-align:center;">Se selezionata, il team sara\' anche mostrato nei moduli combattenti, ecc</div>';
 $language_text['_internal'] = 'Interno';
 $language_text['_sticky'] = 'Importante';
 $language_text['_lobby_new_cwc_1'] = 'nuovo commento clanwar';
@@ -1133,7 +1133,7 @@ $language_text['_awards_head_link'] = 'Link';
 $language_text['_awards_no_show'] = 'Nessun premio ancora registrato!';
 $language_text['_list_all_link'] = '<tr><td colspan ="7" class="contentMainTop" align="center"><a href="../awards/?action=showall&amp;id=[id]">Mostra tutti i premi di questo team</td></tr>';
 $language_text['_head_stats'] = 'Statistica';
-$language_text['_awards_stats'] = '<center>Noi tutti ora abbiamo insieme<span class="fontBold">[anz] premi</span>!</center>';
+$language_text['_awards_stats'] = '<div style="text-align:center;">Noi tutti ora abbiamo insieme<span class="fontBold">[anz] premi</span>!</div>';
 $language_text['_awards_stats_1'] = '<span class="fontBold">[anz]x</span> Luogo no.1';
 $language_text['_awards_stats_2'] = '<span class="fontBold">[anz]x</span> Luogo no.2';
 $language_text['_awards_stats_3'] = '<span class="fontBold">[anz]x</span> Luogo no.3';

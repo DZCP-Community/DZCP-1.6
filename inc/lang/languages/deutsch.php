@@ -124,7 +124,7 @@ $language_text['_info_account_deletet'] = 'Dein Account wurde erfolgreich gelös
 $language_text['_news_get_timeshift'] = 'Zeitversetzte News?';
 $language_text['_news_timeshift_from'] = 'News Anzeigen ab:';
 $language_text['_config_gb_activ'] = 'Gästebuch';
-$language_text['_config_gb_activ_info'] = '<center>Definiert, ob ein Eintrag zunächst von einem Admin freigegeben werden muss.</center>';
+$language_text['_config_gb_activ_info'] = '<div style="text-align:center;">Definiert, ob ein Eintrag zunächst von einem Admin freigegeben werden muss.</div>';
 $language_text['_placeholder'] = 'Template Platzhalter';
 $language_text['_menu_kats_head'] = 'Menu Kategorien';
 $language_text['_menu_add_kat'] = 'Neue Menu Kategorie hinzufügen';
@@ -149,10 +149,10 @@ $language_text['_eintrag_titel'] = '<span class="fontBold">#[postid]</span> am [
 ## ADDED / REDEFINED FOR 1.5.1
 $language_text['_config_double_post'] = 'Forum Doppelpost';
 $language_text['_config_fotum_vote'] = 'Forum-Vote';
-$language_text['_config_fotum_vote_info'] = '<center>Zeigt die Forum-Votes auch unter Umfragen an.</center>';
+$language_text['_config_fotum_vote_info'] = '<div style="text-align:center;">Zeigt die Forum-Votes auch unter Umfragen an.</div>';
 ## ADDED / REDEFINED FOR 1.5
 $language_text['_side_membermap'] = 'Mitgliederkarte';
-$language_text['_installdir'] = '<tr><td colspan=\"15\" class=\"contentMainFirst\"><br /><center><b>Achtung! Sicherheitsrisiko!!</b><br><br>Bitte lösche zuerst den Ordner <b>\'/_installer\'</b> von deinem Webspace. Erst dann steht das Adminmenü zur Verfügung!</center><br /></td></tr>';
+$language_text['_installdir'] = '<tr><td colspan=\"15\" class=\"contentMainFirst\"><br /><div style="text-align:center;"><b>Achtung! Sicherheitsrisiko!!</b><br><br>Bitte lösche zuerst den Ordner <b>\'/_installer\'</b> von deinem Webspace. Erst dann steht das Adminmenü zur Verfügung!</div><br /></td></tr>';
 $language_text['_no_ts'] = 'kein Teamspeak eingetragen';
 $language_text['_search_sites'] = 'Unterseiten';
 $language_text['_search_results'] = 'Suchergebnisse';
@@ -426,7 +426,7 @@ $language_text['_error_vote_show'] = 'Dies ist eine öffentliche Umfrage und kan
 $language_text['_login_pwd_dont_match'] = 'Benutzername und/oder Passwort sind ungültig oder der Account wurde gesperrt!';
 $language_text['_sq_aktiv'] = 'Aktiv';
 $language_text['_sq_inaktiv'] = 'Inaktiv';
-$language_text['_sq_sstatus'] = '<center>Gibt an, ob das Team im Fightus Formular etc. aufgelistet werden soll</center>';
+$language_text['_sq_sstatus'] = '<div style="text-align:center;">Gibt an, ob das Team im Fightus Formular etc. aufgelistet werden soll</div>';
 $language_text['_internal'] = 'Intern';
 $language_text['_sticky'] = 'Wichtig';
 $language_text['_lobby_new_cwc_1'] = 'neuer Clanwarkommentar';
@@ -542,7 +542,7 @@ $language_text['_login_secure_help'] = 'Gib den zweistelligen Zahlencode in das 
 $language_text['_online_head_guests'] = 'Gäste online';
 $language_text['_admin_first'] = 'als erstes';
 $language_text['_admin_squads_nav'] = 'Navigation';
-$language_text['_admin_squad_show_info'] = '<center>Definiert, ob ein Team in der Teamübersicht standardmäßig ein- oder aufgeklappt ist</center>';
+$language_text['_admin_squad_show_info'] = '<div style="text-align:center;">Definiert, ob ein Team in der Teamübersicht standardmäßig ein- oder aufgeklappt ist</div>';
 //Edited
 $language_text['_config_c_gallerypics_what'] = 'Maximale Anzahl der Bilder in der Usergalerie';
 $language_text['_dl_getfile'] = '[file] jetzt herunterladen';
@@ -1121,7 +1121,7 @@ $language_text['_awards_head_link'] = 'Event-Link';
 $language_text['_awards_no_show'] = 'Leider noch keine Awards vorhanden!';
 $language_text['_list_all_link'] = '<tr><td colspan ="7" class="contentMainTop" align="center"><a href="../awards/?action=showall&amp;id=[id]">Alle Awards dieses Teams anzeigen</td></tr>';
 $language_text['_head_stats'] = 'Statistik';
-$language_text['_awards_stats'] = '<center>Wir haben insgesamt <span class="fontBold">[anz] Awards</span> geholt!</center>';
+$language_text['_awards_stats'] = '<div style="text-align:center;">Wir haben insgesamt <span class="fontBold">[anz] Awards</span> geholt!</div>';
 $language_text['_awards_stats_1'] = '<span class="fontBold">[anz]x</span> Platz Nr.1';
 $language_text['_awards_stats_2'] = '<span class="fontBold">[anz]x</span> Platz Nr.2';
 $language_text['_awards_stats_3'] = '<span class="fontBold">[anz]x</span> Platz Nr.3';

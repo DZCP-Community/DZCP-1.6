@@ -156,8 +156,8 @@ $language_text['_votes_balken'] = '<img src="../inc/images/vote.gif" width="[wid
 ## Downloads ##
 $language_text['_downloads_files_exists'] = '<option value="[dl]" [sel]>[dl]</option>';
 ## Links ##
-$language_text['_links_textlink'] = '<center><a href="?action=link&amp;id=[id]" target="_blank">[text]</a></center>';
-$language_text['_links_bannerlink'] = '<center><a href="?action=link&amp;id=[id]" target="_blank"><img src="[banner]" alt="" /></a></center>';
+$language_text['_links_textlink'] = '<div style="text-align:center;"><a href="?action=link&amp;id=[id]" target="_blank">[text]</a></div>';
+$language_text['_links_bannerlink'] = '<div style="text-align:center;"><a href="?action=link&amp;id=[id]" target="_blank"><img src="[banner]" alt="" /></a></div>';
 ## Squads ##
 $language_text['_member_squad_squadlink'] = '<a href="javascript:DZCP.toggle(\'[id]\')">[squad]</a>';
 $language_text['_userpic_small_link'] = '<a href="../user/?action=user&amp;id=[id]"><img src="../inc/images/uploads/userpics/[id].[endung]" width="60" height="80" alt="" /></a>';

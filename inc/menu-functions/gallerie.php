@@ -29,5 +29,5 @@ function gallerie() {
         }
     }
 
-    return empty($gallery) ? '<center>No Pictures Added</center>' : $gallery;
+    return empty($gallery) ? '<div style="text-align:center;">No Pictures Added</div>' : $gallery;
 }

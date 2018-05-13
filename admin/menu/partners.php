@@ -98,7 +98,7 @@ if(_adminMenu != 'true') exit;
           $button = '<img src="../banner/partners/'.re($get['banner']).'" alt="'.$rlink.'" title="'.$rlink.'" />';
           $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
           $show_ .= show($dir."/partners_show", array("class" => $class,
-                                                      "button" => (empty($get['textlink']) ? $button : '<center>'._partnerbuttons_textlink.': <b>'.re($get['banner']).'</b></center>'),
+                                                      "button" => (empty($get['textlink']) ? $button : '<div style="text-align:center;">'._partnerbuttons_textlink.': <b>'.re($get['banner']).'</b></div>'),
                                                       "link" => re($get['link']),
                                                       "id" => $get['id'],
                                                       "edit" => $edit,
