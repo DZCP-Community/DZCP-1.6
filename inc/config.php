@@ -161,6 +161,7 @@ function show($tpl="", $array=array(), $array_lang_constant=array(), $array_bloc
 
         unset($pholder);
 
+        $tpl = (!defined('_Admin') || _Admin != 'true' ? preg_replace("|<is_admin>.*?</is_admin>|is", "", $tpl) : preg_replace("|<not_admin_menu>.*?</not_admin_menu>|is", "", $tpl));
         $tpl = (!$chkMe ? preg_replace("|<logged_in>.*?</logged_in>|is", "", $tpl) : preg_replace("|<logged_out>.*?</logged_out>|is", "", $tpl));
         $tpl = str_ireplace(array("<logged_in>","</logged_in>","<logged_out>","</logged_out>"), '', $tpl);
 

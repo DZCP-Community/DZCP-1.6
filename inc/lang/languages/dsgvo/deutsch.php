@@ -10,7 +10,7 @@ $language_text['_dsgvo_base_lock_title'] = 'Datenschutz-Grundverordnung (EU-DSGV
 $language_text['_dsgvo_base_title_001'] = '<strong>Datenschutzerkl&auml;rung</strong>';
 //Administrations Info
 $language_text['_dsgvo_base_001'] = <<<EOD
-Allgemeine Datenschutzerkl&auml;rung (Info Text)
+Titel der Datenschutzerkl&auml;rung
 EOD;
 //Text
 $language_text['_dsgvo_base_text_001'] = <<<EOD
@@ -22,7 +22,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_002'] = '';
 $language_text['_dsgvo_base_002'] = <<<EOD
-Allgemeine Datenschutzerkl&auml;rung (Info Text)
+Einleitung der allgemeinen Datenschutzerkl&auml;rung
 EOD;
 $language_text['_dsgvo_base_text_002'] = <<<EOD
 <p>Die Verarbeitung personenbezogener Daten, beispielsweise des Namens, der Anschrift, E-Mail-Adresse oder Telefonnummer einer betroffenen Person, 
@@ -33,7 +33,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_003'] = '';
 $language_text['_dsgvo_base_003'] = <<<EOD
-Allgemeine Datenschutzerkl&auml;rung (Info Text)
+Erweiterte Einleitung der Datenschutzerkl&auml;rung
 EOD;
 $language_text['_dsgvo_base_text_003'] = <<<EOD
 <p>Die "[clanname]" hat als f&uuml;r die Verarbeitung Verantwortlicher zahlreiche technische und organisatorische Ma&szlig;nahmen umgesetzt, 
@@ -44,7 +44,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_004'] = '<strong>[count]. Begriffsbestimmungen</strong>';
 $language_text['_dsgvo_base_004'] = <<<EOD
-Allgemeine Begriffsbestimmungen (Info Text)
+Begriffsbestimmungen der Datenschutzerkl&auml;rung
 EOD;
 $language_text['_dsgvo_base_text_004'] = <<<EOD
 <p>Die Datenschutzerkl&auml;rung der "[clanname]" beruht auf den Begrifflichkeiten, die durch den Europ&auml;ischen Richtlinien- und Verordnungsgeber beim Erlass der Datenschutz-Grundverordnung (DS-GVO) verwendet wurden. 
@@ -54,7 +54,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_005'] = '';
 $language_text['_dsgvo_base_005'] = <<<EOD
-Allgemeine Begriffsbestimmungen (Info Text)
+Titel der Begriffsbestimmungen
 EOD;
 $language_text['_dsgvo_base_text_005'] = <<<EOD
 <p><u>Wir verwenden in dieser Datenschutzerkl&auml;rung unter anderem die folgenden Begriffe:</u></p><br>
@@ -62,7 +62,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_006'] = '';
 $language_text['_dsgvo_base_006'] = <<<EOD
-Allgemeine Begriffsbestimmungen (Info Text)
+Tabelle der Begriffsbestimmungen
 EOD;
 $language_text['_dsgvo_base_text_006'] = <<<EOD
 <ul style="list-style: none">
@@ -104,7 +104,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_007'] = '<strong>[count]. Name und Anschrift des f&uuml;r die Verarbeitung Verantwortlichen</strong>';
 $language_text['_dsgvo_base_007'] = <<<EOD
-Name und Anschrift des f&uuml;r die Verarbeitung Verantwortlichen
+Kontaktdaten der verantwortlichen Person ( Hauptverantwortlicher )
 EOD;
 $language_text['_dsgvo_base_text_007'] = <<<EOD
 <p>Verantwortlicher im Sinne der Datenschutz-Grundverordnung, sonstiger in den Mitgliedstaaten der Europ&auml;ischen Union geltenden Datenschutzgesetze und anderer Bestimmungen mit datenschutzrechtlichem Charakter ist die:</p><br>
@@ -120,7 +120,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_008'] = '<strong>[count]. Name und Anschrift des Datenschutzbeauftragten</strong>';
 $language_text['_dsgvo_base_008'] = <<<EOD
-Name und Anschrift des Datenschutzbeauftragten
+Kontaktdaten des Datenschutzbeauftragten ( Datenschutzbeauftragter )
 EOD;
 $language_text['_dsgvo_base_text_008'] = <<<EOD
 <p><u>Der Datenschutzbeauftragte des f&uuml;r die Verarbeitung Verantwortlichen ist:</u></p>
@@ -138,7 +138,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_009'] = '';
 $language_text['_dsgvo_base_009'] = <<<EOD
-Kontakt der f&uuml;r die Verarbeitung Verantwortlichen Personen
+Zusatz für betroffene Personen mit Fragen oder Anregungen
 EOD;
 $language_text['_dsgvo_base_text_009'] = <<<EOD
 <p>Jede betroffene Person kann sich jederzeit bei allen Fragen und Anregungen zum Datenschutz direkt an unseren Datenschutzbeauftragten wenden.</p><br>
@@ -146,7 +146,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_010'] = '<strong>[count]. Cookies</strong>';
 $language_text['_dsgvo_base_010'] = <<<EOD
-Allgemeine Infos &uuml;ber Cookies
+Allgemeine Infos &uuml;ber die Verwendung von Cookies
 EOD;
 $language_text['_dsgvo_base_text_010'] = <<<EOD
 <p>Die Internetseiten der "[clanname]" verwenden Cookies. Cookies sind Textdateien, welche &uuml;ber einen Internetbrowser auf einem Computersystem abgelegt und gespeichert werden.</p><br>
@@ -175,7 +175,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_011'] = '<strong>[count]. Erfassung von allgemeinen Daten und Informationen</strong>';
 $language_text['_dsgvo_base_011'] = <<<EOD
-Erfassung von allgemeinen Daten und Informationen
+Erfassung von allgemeinen Daten und Informationen der G&auml;ste
 EOD;
 $language_text['_dsgvo_base_text_011'] = <<<EOD
 <p>Die Internetseite der "[clanname]" erfasst mit jedem Aufruf der Internetseite durch eine betroffene Person oder ein automatisiertes System eine Reihe von allgemeinen Daten und Informationen. 
@@ -201,7 +201,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_012'] = '<strong>[count]. Registrierung auf unserer Internetseite</strong>';
 $language_text['_dsgvo_base_012'] = <<<EOD
-Registrierung auf unserer Internetseit
+Registrierungen auf unserer Internetseite und Umgang mit personenbezogenen Daten
 EOD;
 $language_text['_dsgvo_base_text_012'] = <<<EOD
 <p>Die betroffene Person hat die M&ouml;glichkeit, sich auf der Internetseite des f&uuml;r die Verarbeitung Verantwortlichen unter Angabe von personenbezogenen Daten zu registrieren. 
@@ -254,7 +254,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_014'] = '<strong>[count]. Newsletter-Tracking</strong>';
 $language_text['_dsgvo_base_014'] = <<<EOD
-Newsletter-Tracking
+Verwendung von Newsletter-Tracking
 EOD;
 $language_text['_dsgvo_base_text_014'] = <<<EOD
 <p>Die Newsletter der "[clanname]" enthalten sogenannte Z&auml;hlpixel. Ein Z&auml;hlpixel ist eine Miniaturgrafik, die in solche E-Mails eingebettet wird, welche im HTML-Format versendet werden, 
@@ -282,7 +282,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_015'] = '<strong>[count]. Kommentarfunktion auf der Internetseite</strong>';
 $language_text['_dsgvo_base_015'] = <<<EOD
-Kommentarfunktion auf der Internetseite
+Verwendung der Kommentarfunktion auf der Internetseite
 EOD;
 $language_text['_dsgvo_base_text_015'] = <<<EOD
 <p>Die "[clanname]" bietet den Nutzern, der sich auf der Internetseite des f&uuml;r die Verarbeitung Verantwortlichen befindet, 
@@ -326,7 +326,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_018'] = '<strong>[count]. Rechte der betroffenen Person</strong>';
 $language_text['_dsgvo_base_018'] = <<<EOD
-Rechte der betroffenen Person
+Rechte der betroffenen Personen ( Tabelle )
 EOD;
 $language_text['_dsgvo_base_text_018'] = <<<EOD
 <ul style="list-style: none;">
@@ -483,7 +483,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_019'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von Facebook</strong>';
 $language_text['_dsgvo_base_019'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von Facebook
+Einsatz und Verwendung von Facebook
 EOD;
 $language_text['_dsgvo_base_text_019'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat auf dieser Internetseite Komponenten des Unternehmens Facebook integriert. Facebook ist ein soziales Netzwerk.</p><br>
@@ -520,7 +520,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_020'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von Funktionen des Amazon-Partnerprogramms</strong>';
 $language_text['_dsgvo_base_020'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von Funktionen des Amazon-Partnerprogramms
+Einsatz und Verwendung von Funktionen des Amazon-Partnerprogramms
 EOD;
 $language_text['_dsgvo_base_text_020'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat als Teilnehmer des Amazon-Partnerprogramms auf dieser Internetseite Amazon-Komponenten integriert. 
@@ -548,7 +548,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_021'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von Google AdSense</strong>';
 $language_text['_dsgvo_base_021'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von Google AdSense
+Einsatz und Verwendung von Google AdSense
 EOD;
 $language_text['_dsgvo_base_text_021'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat auf dieser Internetseite Google AdSense integriert. Google AdSense ist ein Online-Dienst, &uuml;ber welchen eine Vermittlung von Werbung auf Drittseiten erm&ouml;glicht wird. 
@@ -579,7 +579,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_022'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von Google Analytics (mit Anonymisierungsfunktion)</strong>';
 $language_text['_dsgvo_base_022'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von Google Analytics (mit Anonymisierungsfunktion)
+Einsatz und Verwendung von Google Analytics (mit Anonymisierungsfunktion)
 EOD;
 $language_text['_dsgvo_base_text_022'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat auf dieser Internetseite die Komponente Google Analytics (mit Anonymisierungsfunktion) integriert. 
@@ -630,7 +630,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_023'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von Google Remarketing</strong>';
 $language_text['_dsgvo_base_023'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von Google Remarketing
+Einsatz und Verwendung von Google Remarketing
 EOD;
 $language_text['_dsgvo_base_text_023'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat auf dieser Internetseite Dienste von Google Remarketing integriert. 
@@ -667,7 +667,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_024'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von Google+</strong>';
 $language_text['_dsgvo_base_024'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von Google+
+Einsatz und Verwendung von Google+
 EOD;
 $language_text['_dsgvo_base_text_024'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat auf dieser Internetseite als Komponente die Google+ Schaltfl&auml;che integriert. 
@@ -711,7 +711,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_025'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von Google-AdWords</strong>';
 $language_text['_dsgvo_base_025'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von Google-AdWords
+Einsatz und Verwendung von Google-AdWords
 EOD;
 $language_text['_dsgvo_base_text_025'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat auf dieser Internetseite Google AdWords integriert. Google AdWords ist ein Dienst zur Internetwerbung, 
@@ -754,7 +754,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_026'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von Instagram</strong>';
 $language_text['_dsgvo_base_026'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von Instagram
+Einsatz und Verwendung von Instagram
 EOD;
 $language_text['_dsgvo_base_text_026'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat auf dieser Internetseite Komponenten des Dienstes Instagram integriert. Instagram ist ein Dienst, 
@@ -783,7 +783,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_027'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von LiveZilla</strong>';
 $language_text['_dsgvo_base_027'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von LiveZilla
+Einsatz und Verwendung von LiveZilla
 EOD;
 $language_text['_dsgvo_base_text_027'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat auf dieser Internetseite die Komponente LiveZilla integriert. LiveZilla ist eine Live-Support-Helpdesk-Software, 
@@ -813,7 +813,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_028'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von Twitter</strong>';
 $language_text['_dsgvo_base_028'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von Twitter
+Einsatz und Verwendung von Twitter
 EOD;
 $language_text['_dsgvo_base_text_028'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat auf dieser Internetseite Komponenten von Twitter integriert. Twitter ist ein multilingualer &ouml;ffentlich zug&auml;nglicher Mikroblogging-Dienst, 
@@ -846,7 +846,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_029'] = '<strong>[count]. Datenschutzbestimmungen zu Einsatz und Verwendung von YouTube</strong>';
 $language_text['_dsgvo_base_029'] = <<<EOD
-Datenschutzbestimmungen zu Einsatz und Verwendung von YouTube
+Einsatz und Verwendung von YouTube
 EOD;
 $language_text['_dsgvo_base_text_029'] = <<<EOD
 <p>Der f&uuml;r die Verarbeitung Verantwortliche hat auf dieser Internetseite Komponenten von YouTube integriert. 
@@ -1024,8 +1024,7 @@ EOD;
 $language_text['_dsgvo_base_title_036'] = '<strong>[count]. Gesetzliche oder vertragliche Vorschriften zur Bereitstellung der personenbezogenen Daten; Erforderlichkeit f&uuml;r den Vertragsabschluss; 
 Verpflichtung der betroffenen Person, die personenbezogenen Daten bereitzustellen; m&ouml;gliche Folgen der Nichtbereitstellung</strong>';
 $language_text['_dsgvo_base_036'] = <<<EOD
-Gesetzliche oder vertragliche Vorschriften zur Bereitstellung der personenbezogenen Daten; Erforderlichkeit f&uuml;r den Vertragsabschluss; Verpflichtung der betroffenen Person, 
-die personenbezogenen Daten bereitzustellen; m&ouml;gliche Folgen der Nichtbereitstellung
+Gesetzliche oder vertragliche Vorschriften zur Bereitstellung der personenbezogenen Daten
 EOD;
 $language_text['_dsgvo_base_text_036'] = <<<EOD
 <p>Wir kl&auml;ren Sie dar&uuml;ber auf, dass die Bereitstellung personenbezogener Daten zum Teil gesetzlich vorgeschrieben ist (z.B. Steuervorschriften) oder sich auch aus vertraglichen Regelungen (z.B. Angaben zum Vertragspartner) ergeben kann.
@@ -1058,7 +1057,7 @@ EOD;
 $language_text['_dsgvo_base_title_201'] = '<strong>Datenschutzerkl&auml;rung zur Account-Aktivierung</strong>';
 //Administrations Info
 $language_text['_dsgvo_base_201'] = <<<EOD
-Allgemeine Datenschutzerkl&auml;rung (Info Text)
+Einleitung der Datenschutzerkl&auml;rung zur Account-Aktivierung
 EOD;
 //Text
 $language_text['_dsgvo_base_text_201'] = <<<EOD

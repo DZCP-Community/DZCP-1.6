@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<settings>
+	<Menu>rootmenu</Menu>
+	<Rights>datenschutz</Rights>
+	<Only_Admin>0</Only_Admin>
+	<Only_Root>1</Only_Root>
+</settings>

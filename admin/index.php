@@ -6,6 +6,7 @@
 
 ## OUTPUT BUFFER START ##
 include("../inc/buffer.php");
+define('_Admin', true);
 
 ## INCLUDES ##
 include(basePath."/inc/debugger.php");
@@ -22,7 +23,6 @@ $contentmenu = null;
 $amenu = array();
 $wysiwyg = false;
 $use_glossar = false;
-define('_Admin', true);
 
 ## SECTIONS ##
 $check = db("SELECT s1.user FROM ".$db['permissions']." s1, ".$db['users']." s2

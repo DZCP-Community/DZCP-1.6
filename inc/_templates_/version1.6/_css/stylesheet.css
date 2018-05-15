@@ -989,7 +989,7 @@ a.navMain:hover,a.navMain:active {
 
 a.navClan:link,a.navClan:visited,
 a.navServer:link,a.navServer:visited,
-a.navMisc:link,a.navMisc:visited {
+a.navMisc:link,a.navMisc:visited,a.dz {
     font-weight:normal;
     color:#7d7d7d;
     margin:0 1px;
@@ -997,6 +997,7 @@ a.navMisc:link,a.navMisc:visited {
     padding:2px 4px;
     display:block;
 }
+a.pointer {cursor: pointer;}
 
 a.navClan:hover,a.navClan:active,
 a.navServer:hover,a.navServer:active,

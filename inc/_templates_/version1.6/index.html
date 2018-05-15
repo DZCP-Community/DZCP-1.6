@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--[ DZCP by Frank "deV!L" Herrmann - www.dzcp.de & Patrick "Richy" Richert - www.my-starmedia.de]-->
 <html>
 <head>
 	<title>[title]</title>
@@ -28,7 +27,6 @@
 </head>
 <body>
 <a name="toplink"></a>
-<a onclick="DZCP.show_dsgvo('#dialog-confirm')">------ TEST Datenschutz-Grundverordnung (EU-DSGVO) Layer ------</a>
 <!-- Template Start -->
 <!-- Wrapper bereich Start -->
 <div id="wrapper">
@@ -121,11 +119,13 @@
                 <div id="index">[index]</div>
                 <!-- Main Content Frame Ende -->
                 <!-- Gallery Box Start -->
+                <not_admin_menu>
                 <div id="galleriebox" class="corner">
                     <h2 class="headline">[lang_txt_gallerie]</h2>
                     [gallerie]
                     <div class="clearFix"></div>
                 </div>
+                </not_admin_menu>
                 <!-- Gallery Box Ende -->
             </div>
         </div>
@@ -245,6 +245,7 @@
 			<h2>[lang_txt_navi_misc]</h2>
 			<ul>
 				[nav_misc]
+                <li><a onclick="DZCP.show_dsgvo('#dialog-confirm')" class="navMisc corner dz pointer" title="[lang_txt_datenschutz]">- [lang_txt_datenschutz]</a></li>
 			</ul>
 		</div>
 		<!-- Foot Navi Misc Ende -->

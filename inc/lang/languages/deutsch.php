@@ -7,6 +7,20 @@
 /* Is set to utf-8 by default */
 //$charset = 'utf-8';
 
+## ADDED FOR 1.6.1.0
+$language_text['_config_datenschutz'] = 'Datenschutz (EU-DSGVO)';
+$language_text['_txt_datenschutz'] = 'Datenschutz';
+$language_text['_config_title_datenschutz'] = 'Datenschutz-Grundverordnung (EU-DSGVO)';
+$language_text['_datenschutz_pers_head'] = 'Verantwortliche Personen';
+$language_text['_datenschutz_settings_head'] = 'Einstellungen der allgemeinen EU-DSGVO';
+$language_text['_datenschutz_settings_lock_head'] = 'Einstellungen der EU-DSGVO für die Account-Aktivierung';
+
+$language_text['_datenschutz_vname'] = 'Vorname';
+$language_text['_datenschutz_nname'] = 'Familienname';
+$language_text['_datenschutz_rolle'] = 'Rolle';
+$language_text['_datenschutz_rolle_1'] = 'Hauptverantwortlicher ( <span style="color:#FF0000">*Benötigt*</span> )';
+$language_text['_datenschutz_rolle_2'] = 'Datenschutzbeauftragter ( <span style="color:#0000FF">*Optional/Extern*</span> )';
+
 ## ADDED / REDEFINED FOR 1.6 Final
 $language_text['_txt_navi_main'] = 'Hauptnavigation';
 $language_text['_txt_navi_clan'] = 'Clannavigation';
