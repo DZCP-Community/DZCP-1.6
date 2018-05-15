@@ -3,5 +3,5 @@
 	<Menu>rootmenu</Menu>
 	<Rights>datenschutz</Rights>
 	<Only_Admin>0</Only_Admin>
-	<Only_Root>1</Only_Root>
+	<Only_Root>0</Only_Root>
 </settings>

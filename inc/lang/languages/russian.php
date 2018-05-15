@@ -11,6 +11,7 @@
 
 ## ADDED FOR 1.6.1.0
 $language_text['_config_datenschutz'] = 'Datenschutz (EU-DSGVO)';
+$language_text['_perm_datenschutz'] = 'Datenschutz (EU-DSGVO) verwalten';
 $language_text['_txt_datenschutz'] = 'Datenschutz';
 $language_text['_config_title_datenschutz'] = 'Datenschutz-Grundverordnung (EU-DSGVO)';
 $language_text['_datenschutz_pers_head'] = 'Verantwortliche Personen';

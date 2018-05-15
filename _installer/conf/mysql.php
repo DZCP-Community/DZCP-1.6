@@ -1648,6 +1648,8 @@ function update_mysql_1_6_1_0()
               "(1, 'Muster Unternehmen', 'Herr', 'Max', 'Mustermann', 'Eisenweg. 1', '123456', 'Musterdorf', 'Germany', 'max.mustermann@musterdorf.de', '049 12345 67891234566', 'http://www.deineUrl.de'),".
               "(2, 'Muster Unternehmen', 'Herr', 'Max', 'Mustermann', 'Eisenweg. 1', '123456', 'Musterdorf', 'Germany', 'max.mustermann@musterdorf.de', '049 12345 67891234566', 'http://www.deineUrl.de');");
 
+    db("ALTER TABLE `".$db['permissions']."` ADD `datenschutz` INT(1) NOT NULL DEFAULT '0' AFTER `dlintern`;");
+
     if($updater) {
         db("UPDATE `".$db['settings']."` SET `db_optimize` = '".(time()+auto_db_optimize_interval)."' WHERE `id` = 1;");
         db_optimize();
