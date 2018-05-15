@@ -1398,8 +1398,7 @@ function update_mysql_1_5_2()
                                       ADD `cache_server` INT( 10 ) NOT NULL DEFAULT '30',
                                       ADD `direct_refresh` INT( 1 ) NOT NULL DEFAULT '0'");
 }
-function update_mysql_1_5_4()
-{}
+
 function update_mysql_1_6()
 {
     global $db;

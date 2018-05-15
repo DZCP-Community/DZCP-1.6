@@ -459,7 +459,6 @@ case 'database';
         update_mysql_1_5();
         update_mysql_1_5_1();
         update_mysql_1_5_2();
-        update_mysql_1_5_4();
         update_mysql_1_6();
         update_mysql_1_6_0_4();
         update_mysql_1_6_1_0();
