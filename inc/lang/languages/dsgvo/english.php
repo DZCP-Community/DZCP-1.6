@@ -3,10 +3,10 @@
  * DZCP - deV!L`z ClanPortal 1.6 Final
  * http://www.dzcp.de
  */
-$language_text['_dsgvo_base_title'] = 'Privacy Policy (EU-DSGVO)';
+$language_text['_dsgvo_base_title'] = 'General Data Protection Regulation (EU-GDPR)';
 
 //Title
-$language_text['_dsgvo_base_title_001'] = '<strong>Privacy Policy</strong>';
+$language_text['_dsgvo_base_title_001'] = '<strong>General Data Protection Regulation</strong>';
 //Administrations Info
 $language_text['_dsgvo_base_001'] = <<<EOD
 Privacy Policy
