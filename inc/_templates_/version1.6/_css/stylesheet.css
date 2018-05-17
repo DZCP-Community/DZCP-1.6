@@ -1,11 +1,9 @@
-/*######################################
-  Global Styles, to norm all elements
-######################################*/
+/* 
+Global Styles, to norm all elements 
 
-/*---------------------------------------------
 Set margin padding and font stuff for every element,
-then it should not be required to set them again.
----------------------------------------------*/
+then it should not be required to set them again
+*/
 html,body,table,td,div,form,button,select,input,textarea,h1,h2,h3,h4,h5,h6,a,p,cite,quote,u,i {
   margin: 0px;
   padding: 0px;
@@ -13,56 +11,34 @@ html,body,table,td,div,form,button,select,input,textarea,h1,h2,h3,h4,h5,h6,a,p,c
   font-size: 11px;
   line-height: 1.2;
 }
-
-/*---------------------------------------------
-Set body attributes color and background
----------------------------------------------*/
+/* Set body attributes color and background */
 html,body {
   color: #000;
   background: #dfdfdf url(../images/background.jpg) repeat-x;
 }
-/*---------------------------------------------
-Set as blockelements
----------------------------------------------*/
+/* Set as blockelements */
 h1,h2,h3,h4,h5,h6,hr,p,div,form {
   display: block;
 }
-
-/*---------------------------------------------
-Set vertical align to top, this helps if the
-text flys in the middle of a table (td).
----------------------------------------------*/
+/* Set vertical align to top, this helps if the text flys in the middle of a table (td) */
 td {
   vertical-align: top;
 }
-
-/*---------------------------------------------
-Set font bold inside of this elements.
----------------------------------------------*/
+/* Set font bold inside of this elements */
 strong, caption, optgroup, .strong {
   font-weight: bold;
   font-style: normal;
 }
-
-/*---------------------------------------------
-Set no border for tables and images, the images
-border comes if you link any image <a href=""><img></a>
-and this sheet does make the border invisible
----------------------------------------------*/
+/* Set no border for tables and images, the images border comes if you link any image <a href=""><img></a> and this sheet does make the border invisible */
 img,table {
   border: 0px none;
+  border-radius: 3px;
 }
-
-/*---------------------------------------------
-Set a cursor for the label-TAG
----------------------------------------------*/
+/* Set a cursor for the label-TAG */
 label {
   cursor: pointer;
 }
-
-/*---------------------------------------------
-Set global style of the horizontal line
----------------------------------------------*/
+/* Set global style of the horizontal line */
 hr {
     color : #000;
     height : 1px;
@@ -72,52 +48,41 @@ hr {
     border-style : solid;
     margin: 3px 0 6px 0;
 }
-
-*+html hr { margin: 0 }
-* html hr { margin: 0 }
-
-/*---------------------------------------------
-Set a square as in front of an unordered list
----------------------------------------------*/
+*+html hr { 
+    margin: 0 
+}
+* html hr { 
+    margin: 0 
+}
+/* Set a square as in front of an unordered list */
 ul li {
     list-style: square;
 }
-
-/*---------------------------------------------
-Set general link style
----------------------------------------------*/
+/* Set general link style */
 a:link,a:visited,a:hover,a:active {
-  color: #414141; font-weight: bold;
+  color: #414141; 
+  font-weight: bold;
   text-decoration: none;
 }
 a:hover {
   color: #ff0000;
 }
-
-a:focus { outline: 0 none }
-
-/*####################################
-  DZCP STYLES
-####################################*/
-/*---------------------------------------------
-Set attributes for the Main View (index.html)
----------------------------------------------*/
-/*###### Global defines ######*/
+a:focus { 
+    outline: 0 none 
+}
+/* Global defines */
 /* Cursors */
 .pointer {
-    cursor:pointer
-}
+        cursor:pointer
+    }
+a.pointer {
+       cursor: pointer;
+   }
 .default {
-    cursor:default
-}
+        cursor:default
+    }
 /* Rounded Corners */
-.corner,
-input,
-select,
-textarea,
-.mceEditor,
-.mceLayout,
-table.mainContent td {
+.corner,input,select,textarea,.mceEditor,.mceLayout,table.mainContent td {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -133,9 +98,12 @@ table.mainContent td {
     padding:0px;
 }
 /* Let and Right Float */
-.leftFloat {float:left}
-.rightFloat {float:right}
-
+.leftFloat {
+    float:left
+}
+.rightFloat {
+    float:right
+}
 /* Displaying Website */
 div#wrapper {
     margin:0 auto;
@@ -151,16 +119,14 @@ div#footer     {
     border-bottom:1px solid #c4c4c4;
     margin-top:7px
 }
-
-/* Rotationsbanner im Header */
+/* Rotation banner in header */
 div#rotationsbanner {
     position:absolute;
     right:0px;top:40px;
     background:#fff;
     padding:5px
 }
-
-/* Wo bin ich und Suchfeld */
+/* Where am I and search box */
 div#brackets {
     background:url(../images/brackets.jpg);
     height:52px;line-height:48px;
@@ -168,26 +134,25 @@ div#brackets {
     padding-left:20px;
     margin:4px 0;
     position:relative;
+    border-radius: 3px;
     font-size:13px
 }
 div#brackets div#search {
     position:absolute;
-    right:20px;top:10px
+    right:20px;
+    top:10px
 }
-
-/* Zeige Footer in der Mitte an */
+/* Footer */
 div#footwrapper {
     margin:0 auto;
     width:785px;
     padding-bottom:10px
 }
-
-/* Navigation um Footer */
+/* Footer navigation */
 div.footNavigation {
     width:180px;
     max-width:180px
 }
-
 div.footNavigation h2 {
     height:48px;
     line-height:48px;
@@ -200,47 +165,40 @@ div.footNavigation ul li {
     padding:0px;
     margin:0px
 }
-
-/* Box Stylings */
-/* Global Settings */
-/* linke und rechte Spalte */
+/* Box Stylings, Global Settings, left and right column */
 div.sideContent,
 div#middleContent {
     float:left;
 }
-
 div#middleContent {
     width:799px;
 }
-
 div.sideContent {
     width:221px
 }
-
-/* Index Bereich (Mainframe) */
+/* Index area (mainframe) */
 div#index {
     padding:14px
 }
 .index {
-    margin:    0 7px;
+    margin: 0 7px;
     background: #fff;
     padding:4px;
     color:#7d7d7d
 }
-
-/* Boxen linke und rechte Seite */
+/* Box left and right side */
 .box {
     background:#fff;
     margin-bottom:7px;
     padding:0 7px 7px 7px
 }
-/* Boxen Tabs linke und rechte Seite */
+/* Box tabs left and right side */
 .box_tabs {
     background:transparent;
     margin-bottom: 7px;
     padding: 26px 0 0 0;
 }
-/* Globale Ueberschriftendefinierung */
+/* Global heading definition */
 .headline {
     line-height:41px;
     font-size:13px;
@@ -248,13 +206,13 @@ div#index {
     display:block;
     font-weight:normal;
 }
-/* Ueberschrift normale Boxen */
+/* Heading normal boxes */
 .box .headline {
     height:49px;
     background:url(../images/headBox.jpg) bottom repeat-x;
     margin:0 -7px
 }
-/* Ueberschrift Tabs Boxen */
+/* Heading Tabs Boxing */
 .box_tabs .headline_tabs {
     background: transparent;
     height: 29px;
@@ -265,113 +223,115 @@ div#index {
     left: -2px;
     min-width: 207px;
 }
-
-/* Main Navigation (linke Seite) */
+/* Main Navigation (left side) */
 .mainNavigation {
     background:#2f2f2f;
     padding-bottom:5px;
     margin-bottom:10px
 }
-
 .mainNavigation ul li:nth-last-child(1) a {
-background:none;
+    background:none;
 }
-
-/* Ueberschrift Main Navigation */
+/* Heading Main Navigation */
 .mainNavigation h2.headline {
     height: 45px;
     color:#fff;
-     background:url(../images/headMainNavigation.jpg) bottom repeat-x
+    background:url(../images/headMainNavigation.jpg) bottom repeat-x
 }
-/* Styling der ul liste */
+/* Styling of the ul list */
 .mainNavigation ul,
 .mainNavigation ul li {
     list-style:none;
     padding:0px;
     margin:0px
 }
-
-/* Anzeige der Galleriebox */
+/* Display of the gallery box */
 div#galleriebox {
     border:1px solid #e5e5e5;
     padding:11px 12px 11px 12px;
     margin:0 14px
 }
-/* Ueberschrift Galleriebox */
+/* Title Galleriebox */
 #galleriebox span.headline {
     background:#f0f0f0;
     height:37px;
     line-height:37px;
     margin:-10px -11px 10px -11px
 }
-/* Einzelne Bilder */
+/* Single pictures */
 #galleriebox div.gallerie {
     float:left;
     margin:0 4px
 }
-
-/* Tabswitch Plugin */
-.tabright {
-    width:50%;
-    text-align:left;
-    display:block;
+/* Slideshow Plugin */
+div#slideshow {
+    width:777px; 
+    height:200px; 
+    position:relative; 
+    overflow:hidden; 
+    background:#000;
+    border-radius: 3px
+}
+div.images {
+    width:777px; 
+    height:200px; 
+    position:absolute; 
+    z-index:1; 
+    cursor:pointer;
+    border-radius: 3px
+}
+div.images div.sliderinhalt {
+    display:none
+}
+div.images div.slideroverlay {
+    position:absolute;
+    bottom:0px; 
+    left:0px; 
+    width:287px; 
+    background:url(../images/slideshow/textfield.png) repeat; 
+    padding:14px
+}
+div.slideroverlay h2 {
+    color:#fff; 
+    font-size:12px
+}
+div.slideroverlay span {
+    color:#c6c4c2
+}
+div.slidetabs {
+    position:absolute; 
+    top:5px; 
+    right:10px; 
+    z-index:2
+}
+div.slidetabs a.slidertabs {
+    background:url(../images/slideshow/slidetabs.png); 
+    width:17px; 
+    height:17px; 
+    display:block; 
+    cursor:pointer; 
     float:left
 }
-.tableft {
-    width:50%;
-    text-align:right;
-    display:block;
-    float:right
+div.slidetabs a.slidertabs:hover {
+    background-position:0 17px
 }
-.tabs span {
-    cursor:pointer;
-    color:#CCC
+div.slidetabs a.slidertabs.current {
+    background-position:0 17px; 
+    cursor:default
 }
-.tabs span.current {
-    cursor:default;
-    color:#000
-}
-
-.tabs-list {
-    list-style: none;
-    display: inline-block;
-}
-
-/* Slideshow Plugin */
-div#slideshow {width:777px; height:200px; position:relative; overflow:hidden; background:#000}
-div.images {width:777px; height:200px; position:absolute; z-index:1; cursor:pointer}
-div.slidetabs {position:absolute; top:5px; right:10px; z-index:2}
-div.images div.sliderinhalt {display:none}
-
-div.images div.slideroverlay {position:absolute; bottom:0px; left:0px; width:287px; background:url(../images/slideshow/textfield.png) repeat; padding:14px}
-div.slideroverlay h2 {color:#fff; font-size:12px}
-div.slideroverlay span {color:#c6c4c2}
-div.slidetabs a.slidertabs {background:url(../images/slideshow/slidetabs.png); width:17px; height:17px; display:block; cursor:pointer; float:left}
-div.slidetabs a.slidertabs:hover {background-position:0 17px}
-div.slidetabs a.slidertabs.current {background-position:0 17px; cursor:default}
-
-/*---------------------------------------------
-Set attributes for the main-table
----------------------------------------------*/
+/* Set attributes for the main-table */
 table.maintable {
   background: url(../images/bg_content.jpg) repeat-y;
-  margin: auto; width: 1005px;
+  margin: auto; 
+  width: 1005px;
 }
-
-/*---------------------------------------------
-Set attributes for the content-table
----------------------------------------------*/
+/* Set attributes for the content-table */
 table.content {
   margin: 0px;
   width: 100%;
   max-width: 100%;
 }
-
-/*---------------------------------------------
-persInfobox above the Header
------------------------------------------------
-menu/pers.infos.html
----------------------------------------------*/
+/* persInfobox above the Header e.g. menu/pers.infos.html */
 table.persInfo {
   background-color: #FFF;
   border-bottom: 1px solid #000;
@@ -379,29 +339,21 @@ table.persInfo {
   width: 100%;
   text-align: center;
 }
-
 table.subPersInfos {
   text-align: center;
 }
-
 span.fontBoldPersInfos {
   font-weight: bold;
 }
-
 table.persInfo td, table.persInfo span {
   color: #000;
 }
-/*---------------------------------------------
-Header attributes
------------------------------------------------
-index.html
----------------------------------------------*/
+/* Header attributes e.g. index.html */
 td.pagetitle {
   height: 149px;
   text-align: left;
   vertical-align: bottom;
 }
-
 td.pagetitleContent {
   width: 710px;
   height: 150px;
@@ -411,67 +363,50 @@ td.pagetitleContent {
   text-align: center;
   vertical-align: middle;
 }
-/*---------------------------------------------
-Attributes of the Welcomebar
------------------------------------------------
-index.html
----------------------------------------------*/
+/* Attributes of the Welcomebar e.g. index.html */
 td.welcomebar {
   text-align: left;
 }
-
 span.welcomebar {
   color: #FFF;
 }
-
-/*---------------------------------------------
-Attributes of the main-content (shouldnt be edited)
------------------------------------------------
-index.html
----------------------------------------------*/
+/* Attributes of the main-content (shouldnt be edited) e.g. index.html */
 table.mainContent {
-  width: 100%; background: #fff;
+  width: 100%; 
+  background: #fff;
   padding: 0px;
-  margin: 0px; margin-top: 15px;
+  margin: 0px; 
+  margin-top: 15px;
   text-align: left;
 }
-
 table.navContent {
   width: 100%;
   padding: 0px;
   margin: 0px;
   text-align: left;
 }
-
 table.hperc {
   width: 100%;
   padding: 0px;
   margin: 0px;
   text-align: left;
 }
-
-/*---------------------------------------------
-Attributes of the navigations loginbox
------------------------------------------------
-menu/login.html
----------------------------------------------*/
+/* Attributes of the navigations loginbox e.g. menu/login.html */
 td.loginLeft, td.loginRight {
   width: 3px;
 }
-
 input.loginName_dis,input.loginPwd_dis,input.loginName_en,input.loginPwd_en,input.loginSubmit {
-  width: 198px; color: #4e4e4e;
+  width: 198px; 
+  color: #4e4e4e;
   border: 1px solid #d4d4d4;
   background-color: #fbfbfb;
   padding: 2px;
 }
-
 input.loginName_en,input.loginPwd_en {
   background-color: #FFF;
   border:1px solid #4e4e4e;
   color:#000;
 }
-
 input.loginSubmit {
   width: 60px;
   padding: 1px;
@@ -480,26 +415,16 @@ input.loginSubmit {
   color: #fff;
   cursor: pointer;
 }
-
 input.loginSignUp:hover {
   background-image: url(../images/submit_hover.jpg);
 }
-
 input.loginSubmit {
   font-weight: bold;
 }
-
-/*---------------------------------------------
-Parts of the attributes of the navigations votebox
------------------------------------------------
-menu/vote.html
-menu/vote_results.html
-menu/vote_vote.html
----------------------------------------------*/
+/* Parts of the attributes of the navigations votebox e.g. menu/vote.html, menu/vote_results.html, menu/vote_vote.html */
 td.navVoteButton {
   text-align: center;
 }
-
 input.voteSubmit {
   padding: 1px;
   padding-left: 10px;
@@ -512,55 +437,39 @@ input.voteSubmit {
 input.voteSubmit:hover {
   background-image: url(../images/submit_hover.jpg);
 }
-/*IE Hack*/
-*+html input.voteSubmit { overflow: visible; }
-* html input.voteSubmit { overflow: visible; }
-/*---------------------------------------------
-Parts of the attributes of the navigations votebox
------------------------------------------------
-menu/shout.html
-menu/shout_add.html
-menu/shout_form.html
----------------------------------------------*/
+/* IE Hack */
+*+html input.voteSubmit { 
+    overflow: visible; 
+}
+* html input.voteSubmit { 
+    overflow: visible; 
+}
+/* Parts of the attributes of the navigations votebox e.g. menu/shout.html ,menu/shout_add.html ,menu/shout_form.html */
 td.navShoutContentFirst {
-
 }
-
-td.navShoutContentSecond {
-
+td.navShoutContentSecond { 
 }
-
-/*---------------------------------------------
-Disabled input field (not clicked)
----------------------------------------------*/
+/* Disabled input field (not clicked) */
 input.shoutEmail_dis,input.shoutNick_dis,textarea.shoutTextfield_dis,
 input.shoutEmail_en,input.shoutNick_en,textarea.shoutTextfield_en {
   border: 1px solid #d4d4d4;
   background-color: #fcfcfc;
-  color: #4e4e4e; padding: 1px;
+  color: #4e4e4e; 
+  padding: 1px;
   width: 148px;
 }
-/*---------------------------------------------
-Enabled input fields (clicked)
----------------------------------------------*/
+/* Enabled input fields (clicked) */
 input.shoutEmail_en,input.shoutNick_en,textarea.shoutTextfield_en {
   background-color:#fff;
   border:1px solid #4e4e4e;
   color:#000;
 }
-
-
-/*---------------------------------------------
-Shoutbox-textfield
----------------------------------------------*/
+/* Shoutbox-textfield */
 textarea.shoutTextfield_dis,textarea.shoutTextfield_en {
   overflow: Auto;
   height: 80px;
 }
-
-/*---------------------------------------------
-Shoutbox submit button
----------------------------------------------*/
+/* Shoutbox submit button */
 input.shoutSubmit {
   padding: 1px;
   padding-left: 10px;
@@ -573,12 +482,14 @@ input.shoutSubmit {
 input.shoutSubmit:hover {
   background-image: url(../images/submit_hover.jpg);
 }
-/*IE Hack*/
-*+html input.shoutSubmit { overflow: visible; }
-* html input.shoutSubmit { overflow: visible; }
-/*---------------------------------------------
-Shoutbox submit button
----------------------------------------------*/
+/* IE Hack */
+*+html input.shoutSubmit { 
+    overflow: visible; 
+}
+* html input.shoutSubmit { 
+    overflow: visible; 
+}
+/* Shoutbox submit button */
 input.shoutLength {
   width: 26px;
   height: 13px;
@@ -586,239 +497,179 @@ input.shoutLength {
   background-color: transparent;
   text-align: center;
 }
-
-/*---------------------------------------------
-Parts of the attributes of the navigations votebox
------------------------------------------------
-menu/server.html
-server/server_show.html
----------------------------------------------*/
+/* Parts of the attributes of the navigations votebox e.g. menu/server.html, server/server_show.html */
 img.navServerPic,img.ServerPic {
-  width: 155px;
+  width: 160px;
+  border-radius: 3px;
 }
-
-/*---------------------------------------------
-Attributes of all navigation boxes
------------------------------------------------
-menu/nav_[box].html
----------------------------------------------*/
+/* Attributes of all navigation boxes e.g. menu/nav_[box].html */
 table.tableNav {
   width: 100%;
 }
-
 td.navMainLeft,td.navClanLeft,td.navServerLeft,td.navMiscLeft {
   width: 2px;
 }
-
 td.navMainRight,td.navClanRight,td.navServerRight,td.navMiscRight {
   width: 2px;
 }
-
 td.navMainContent,td.navClanContent,td.navServerContent,td.navMiscContent {
   text-align: left;
 }
-
 td.navUserLeft,td.navMemberLeft,td.navTrialLeft,td.navAdminLeft {
   width: 5px;
 }
-
 td.navUserRight,td.navMemeberRight,td.navTrialRight,td.navAdminRight {
   width: 0px;
 }
-
 td.navUserContent,td.navMemberContent,td.navTrialContent,td.navAdminContent {
   text-align: left;
 }
-
 td.navUotmContent,td.navPartnerContent,td.navSponsorsContent {
   text-align: center;
   padding: 2px 0;
 }
-
 img.uotm {
   width: 130px;
   height: 161px;
 }
-
 td.navLregLeft,td.navTopdlLeft,td.navTeamspeakLeft {
   width: 5px;
 }
-
 td.navLregContent,td.navTopdlContent,td.navTmpswitchContent,td.navPagerankContent,td.navTeamspeakContent {
   text-align: left;
 }
-
-div.navGameServer,
-div#navTeamspeakContent {
+div.navGameServer,div#navTeamspeakContent {
   position: relative;
   width: 207px;
   overflow: auto;
-  overflow-x: auto; overflow-y: hidden;
+  overflow-x: auto; 
+  overflow-y: hidden;
 }
-
-div.navGameServer { width: 207px }
-
-td.navTeamspeakRight {
-  width: 11px;
+div.navGameServer { 
+    width: 207px 
 }
-
-td.navTopdlRight {
-  width: 11px;
+td.navTeamspeakRight { 
+    width: 11px;
 }
-
-td.navTopdlHits {
-  text-align: right; vertical-align: middle;
+td.navTopdlRight { 
+    width: 11px; 
 }
-
+td.navTopdlHits { 
+    text-align: right; 
+    vertical-align: middle;
+}
 td.navTmpswitchLeft {
   width: 13px;
 }
-
 td.navNextCwDate {
   color: #333;
   vertical-align: middle;
 }
-
 td.navLastNewsLeft,td.navFtopicsLeft,td.navLastCwLeft,td.navNextCwLeft,td.navLastArtikelLeft,td.navKalLeft,td.navVoteLeft,td.navShoutLeft,td.navServerStatsLeft,td.navEventsLeft,td.navTeamLeft,td.topMatchLeft {
   width: 2px;
 }
-
 td.navLastNewsContent,td.navFtopicsContent,td.navLastCwContent,td.navNextCwContent,td.navLastArtikelContent,td.navServerStatsContent,td.navEventsContent {
   text-align: left;
   vertical-align: middle;
 }
-
 td.navLastNewsRight,td.navFtopicsRight,td.navLastCwRight,td.navNextCwRight,td.navLastArtikelRight,td.navKalRight,td.navVoteRight,td.navShoutRight,td.navServerStatsRight,td.navEventsRight,td.navTeamRight,td.topMatchRight {
   width: 2px;
 }
-
 td.navLastCwLeft,td.navNextCwLeft,td.navLastCwRight,td.navNextCwRight {
   width: 5px;
 }
-
 td.navServerStatsContent {
   text-align: center;
 }
 td.navServerStatsSpace {
   height: 5px;
 }
-
 td.navKalHead,td.navKalHeadDays,td.navKalDays,td.navKalToday,td.navKalEmpty,td.teamHead {
   text-align: center;
 }
-
 td.navKalHead span, td.navKalHead a {
   font-size: 11px;
 }
-
 td.navKalToday {
-  border: 1px solid #2372fa;
+  border: 1px solid #ff0000;
   font-weight: bold;
   font-style: italic;
-  color: #2372fa;
+  color: #a82f2f;
+  background: #f7c2c2;
 }
-
-/*---------------------------------------------
-Attributes of the counter-box
------------------------------------------------
-menu/counter.html
----------------------------------------------*/
-
+/* Attributes of the counter-box e.g. menu/counter.html */
 td.counterLeft,td.counterRight {
   width: 3px;
 }
-
 td.counterContentHead {
   text-align: left;
 }
-
 td.counterContentLeft {
   text-align: left;
   width: 69px;
 }
-
 td.counterContentRight {
   text-align: right;
 }
-
 td.counterSpace {
   height:5px;
 }
-/*---------------------------------------------
-Global styles of the content
----------------------------------------------*/
+/* Global styles of the content */
 td.contentHead,td.contentMainTop,td.contentMainFirst,td.contentMainSecond,td.contentBottom,td.contentBottomLeft {
   height: 16px;
   padding: 3px;
   vertical-align: middle;
 }
-
-
 td.contentHead,td.infoTop {
   background-color: #303030;
   text-align: center;
   color:#ccc;
   border-bottom: 1px solid red;
 }
-
 td.contentMainTop,tr.contentMainTop {
   background-color: #ededed;
   vertical-align: top;
 }
-
-td.contentMainFirst,
-div#infoInnerLayer,
-td.commentsRight,
-td.navShoutContentFirst,
-td.error,td.calDay,td.calToday,
-.adminBarInner,.adminBarInnerOver,.adminMenuOuter,.adminMenuOuterOver,
-.adminBarOuter,.adminBarOuterOver,.adminMenuInner,.adminMenuInnerOver {
+td.contentMainFirst,div#infoInnerLayer,td.commentsRight,td.navShoutContentFirst,td.error,td.calDay,td.calToday,.adminBarInner,.adminBarInnerOver,.adminMenuOuter,.adminMenuOuterOver,.adminBarOuter,.adminBarOuterOver,.adminMenuInner,.adminMenuInnerOver {
   background-color: #fff;
 }
-
-td.contentMainSecond,
-td.commentsLeft,
-td.navShoutContentSecond,
-.adminMenuInnerOver,.adminMenuOuterOver {
+td.contentMainSecond,td.commentsLeft,td.navShoutContentSecond,.adminMenuInnerOver,.adminMenuOuterOver {
   background-color: #f5f5f5;
 }
-
 td.contentBottom,td.contentBottomLeft {
   background-color: #ededed;
   text-align: center;
   font-weight: bold;
 }
-
 td.contentBottomLeft {
   text-align: left;
 }
-
 td.gray {
   color:#ccc;
 }
-
-/*---------------------------------------------
-Attributes of the Newsarea
------------------------------------------------
-news/news_show.html
-news/comments_show.html
-news/archiv.html
-news/archiv_show.html
----------------------------------------------*/
-
-/* NEWS */
-table.news {margin-bottom:30px}
+/* Attributes of the Newsarea e.g. news/news_show.html, news/comments_show.html, news/archiv.html, news/archiv_show.html */
+table.news {
+    margin-bottom:30px
+}
 /* Newsbild Positionierung */
-td.news img.newsImage {float:left;margin:0 15px 15px 0}
+td.news img.newsImage {
+    float:left;
+    margin:0 15px 15px 0
+}
 /* Settings Newatitel */
-td.news h1 {height:auto;line-height:30px;font-size:13px;color:#676767}
-td.news p {padding-bottom:5px}
-
+td.news h1 {
+    height:auto;
+    line-height:30px;
+    font-size:13px;
+    color:#676767
+}
+td.news p {
+    padding-bottom:5px
+}
 /* Newsbox*/
 td.newsContent {
   padding: 3px;
 }
-
 td.archiveStats {
   text-align: center;
   background-color: #EEE;
@@ -826,169 +677,94 @@ td.archiveStats {
   border: 1px solid #000;
   padding: 2px;
 }
-
-
 /* ARTICLE */
-table.article {margin-bottom:30px}
-/* Newsbild Positionierung */
-td.article img.newsImage {float:left;margin:0 15px 15px 0}
+table.article {
+    margin-bottom:30px
+}
+/* News image positioning */
+td.article img.newsImage {
+    float:left;
+    margin:0 15px 15px 0
+}
 /* Settings Newatitel */
-td.article h1 {height:auto;line-height:30px;font-size:13px;color:#676767}
-td.article p {padding-bottom:5px}
-
-/*---------------------------------------------
-Attributes of all Comments/GB-Entrys/Boardentrys
------------------------------------------------
-news/comments_show.html
-artikel/comments_show.html
-forum/forum_posts.html
-forum/forum_posts_show.html
----------------------------------------------*/
+td.article h1 {
+    height:auto;
+    line-height:30px;
+    font-size:13px;
+    color:#676767
+}
+td.article p {
+    padding-bottom:5px
+}
+/* Attributes of all Comments, GB-Entrys, Boardentrys e.g. news/comments_show.html, artikel/comments_show.html, forum/forum_posts.html, forum/forum_posts_show.html */
 td.commentsLeft {
   width: 25%;
   height: 128px;
   padding: 2px;
 }
-
 td.commentsRight {
   vertical-align: top;
   padding:4px;
 }
-
-/*---------------------------------------------
-Attributes of the calendar
------------------------------------------------
-kalender/day.html
----------------------------------------------*/
+/* Attributes of the calendar e.g. kalender/day.html */
 td.calDay,td.calToday {
   text-align: left;
   vertical-align: top;
   width: 14%;
   height: 70px;
 }
-
 td.calToday {
   border: 1px solid #000;
 }
-
-/*---------------------------------------------
-Attributes of the squads
------------------------------------------------
-squads/squads_show.html
-squads/squads_member.html
-clanwars/stats.html
-clanwars/squads_show.html
-awards/squads_show.html
-awards/squads_show_all.html
-awards/stats.html.html
-server/server_show.html
----------------------------------------------*/
+/*Attributes of the squads e.g. ,squads/squads_show.html ,squads/squads_member.html ,clanwars/stats.html ,clanwars/squads_show.html ,awards/squads_show.html ,awards/squads_show_all.html ,awards/stats.html.html ,server/server_show.html */
 table.highlightSquads,table.highlightStats,table.highlightAwards,table.highlightServer {
   width: 100%;
   border-top: 1px solid #BBB;
   border-bottom: 1px solid #BBB;
   padding: 4px;
 }
-
 table.highlightServer {
   padding: 0px;
 }
-
 table.highlightSquads {
   border: 0px;
 }
-
 table.highlightAwards {
   padding: 0px;
 }
-
 img.squadMember {
   width: 100%;
   height: 1px;
   background-color: #707070;
 }
-/*---------------------------------------------
-Attributes of several links
------------------------------------------------
-menu/*.html
----------------------------------------------*/
-
-a.navUser:link,a.navUser:visited,
-a.navTrial:link,a.navTrial:visited,
-a.navMember:link,a.navMember:visited,
-a.navAdmin:link,a.navAdmin:visited,
-a.navLostPwd:link,a.navLostPwd:visited,
-a.navLastNews:link,a.navLastNews:visited,
-a.navFtopics:link,a.navFtopics:visited,
-a.navTopdl:link,a.navTopdl:visited,
-a.navLastReg:link,a.navLastReg:visited,
-a.navLastArtikel:link,a.navLastArtikel:visited,
-a.navLastCw:link,a.navLastCw:visited,
-a.navNextCw:link,a.navNextCw:visited,
-a.navKal:link,a.navKal:visited,
-a.navVote:link,a.navVote:visited,
-a.navCounter:link,a.navCounter:visited,
-a.navShout:link,a.navShout:visited,
-a.navTeam:link,a.navTeam:visited,
-a.navServerStats:link,a.navServerStats:visited,
-a.navTeamspeak:link,a.navTeamspeak:visited {
+/* Attributes of several links e.g. menu/*.html */
+a.navUser:link,a.navUser:visited,a.navTrial:link,a.navTrial:visited,a.navMember:link,a.navMember:visited,a.navAdmin:link,a.navAdmin:visited,a.navLostPwd:link,a.navLostPwd:visited,a.navLastNews:link,a.navLastNews:visited,a.navFtopics:link,a.navFtopics:visited,a.navTopdl:link,a.navTopdl:visited,a.navLastReg:link,a.navLastReg:visited,a.navLastArtikel:link,a.navLastArtikel:visited,a.navLastCw:link,a.navLastCw:visited,a.navNextCw:link,a.navNextCw:visited,a.navKal:link,a.navKal:visited,a.navVote:link,a.navVote:visited,a.navCounter:link,a.navCounter:visited,a.navShout:link,a.navShout:visited,a.navTeam:link,a.navTeam:visited,a.navServerStats:link,a.navServerStats:visited,a.navTeamspeak:link,a.navTeamspeak:visited {
   font-weight: normal;
   color: #414141;
 }
-
-a.navUser:hover,a.navUser:active,
-a.navTrial:hover,a.navTrial:active,
-a.navMember:hover,a.navMember:active,
-a.navAdmin:hover,a.navAdmin:active,
-a.navLostPwd:hover,a.navLostPwd:active,
-a.navLastNews:hover,a.navLastNews:active,
-a.navFtopics:hover,a.navFtopics:active,
-a.navTopdl:hover,a.navTopdl:active,
-a.navLastCw:hover,a.navLastCw:active,
-a.navNextCw:hover,a.navNextCw:active,
-a.navLastArtikel:hover,a.navLastArtikel:active,
-a.navLastReg:hover,a.navLastReg:active,
-a.navKal:hover,a.navKal:active,
-a.navVote:hover,a.navVote:active,
-a.navCounter:hover,a.navCounter:active,
-a.navShout:hover,a.navShout:active,
-a.navTeam:hover,a.navTeam:active,
-a.navServerStats:hover,a.navServerStats:active,
-a.navTeamspeak:hover,a.navTeamspeak:active {
+a.navUser:hover,a.navUser:active,a.navTrial:hover,a.navTrial:active,a.navMember:hover,a.navMember:active,a.navAdmin:hover,a.navAdmin:active,a.navLostPwd:hover,a.navLostPwd:active,a.navLastNews:hover,a.navLastNews:active,a.navFtopics:hover,a.navFtopics:active,a.navTopdl:hover,a.navTopdl:active,a.navLastCw:hover,a.navLastCw:active,a.navNextCw:hover,a.navNextCw:active,a.navLastArtikel:hover,a.navLastArtikel:active,a.navLastReg:hover,a.navLastReg:active,a.navKal:hover,a.navKal:active,a.navVote:hover,a.navVote:active,a.navCounter:hover,a.navCounter:active,a.navShout:hover,a.navShout:active,a.navTeam:hover,a.navTeam:active,a.navServerStats:hover,a.navServerStats:active,a.navTeamspeak:hover,a.navTeamspeak:active {
   color: #ff0000;
 }
-
-
 a.navLastArtikel:link,a.navLastArtikel:visited {
   display: block; padding: 1px 2px;
 }
-
-a.navTopdl:link,a.navTopdl:visited,
-a.navLastArtikel:link,a.navLastArtikel:visited,
-a.navLastCw:link,a.navLastCw:visited,
-a.navNextCw:link,a.navNextCw:visited,
-a.navLastNews:link,a.navLastNews:visited,
-a.navFtopics:link,a.navFtopics:visited {
+a.navTopdl:link,a.navTopdl:visited,a.navLastArtikel:link,a.navLastArtikel:visited,a.navLastCw:link,a.navLastCw:visited,a.navNextCw:link,a.navNextCw:visited,a.navLastNews:link,a.navLastNews:visited,a.navFtopics:link,a.navFtopics:visited {
   padding: 2px 6px;
   padding-bottom: 4px;
   display: block;
 }
-
-a.navLastCw:link,a.navLastCw:visited,
-a.navNextCw:link,a.navNextCw:visited {
-  padding-left: 1px; padding-right: 1px;
+a.navLastCw:link,a.navLastCw:visited,a.navNextCw:link,a.navNextCw:visited {
+  padding-left: 1px; 
+  padding-right: 1px;
 }
-
-a.navShout:link,a.navShout:visited { font-weight: bold }
-
-a.navCounter:link,a.navCounter:visited,
-a.navKal:link,a.navKal:visited {
+a.navShout:link,a.navShout:visited { 
+    font-weight: bold 
+}
+a.navCounter:link,a.navCounter:visited,a.navKal:link,a.navKal:visited {
   color: #ff0000;
   font-weight: bold;
 }
-
 /* Navigation */
-
 a.navMain:link,a.navMain:visited {
   background: url(../images/main_navigation.jpg) bottom repeat-x;
   font-weight: normal;
@@ -998,20 +774,16 @@ a.navMain:link,a.navMain:visited {
   margin:0 19px;
   color:#cccccc;
 }
-
-
 td.contentHead a:link, td.contentHead a:visited {
   color:#cccccc;
 }
-
 td.contentHead a:hover, td.contentHead a:active,
 a.navMain:hover,a.navMain:active {
   color: #fff;
 }
-
 a.navClan:link,a.navClan:visited,
 a.navServer:link,a.navServer:visited,
-a.navMisc:link,a.navMisc:visited {
+a.navMisc:link,a.navMisc:visited,a.dz {
     font-weight:normal;
     color:#7d7d7d;
     margin:0 1px;
@@ -1019,17 +791,13 @@ a.navMisc:link,a.navMisc:visited {
     padding:2px 4px;
     display:block;
 }
-
 a.navClan:hover,a.navClan:active,
 a.navServer:hover,a.navServer:active,
 a.navMisc:hover,a.navMisc:active {
   color: #7d7d7d;
   background:#e4e4e4;
 }
-
-/*
-  Licence Bar
-*/
+/* Licence Bar */
 div.licencebar{
   background:#DFDFDF;
   text-align:center;
@@ -1048,10 +816,7 @@ a.licencebar:link,a.licencebar:visited {
 a.licencebar:hover,a.licencebar:active{
   color: #ff0000;
 }
-
-/*
-  Welcomelink
-*/
+/* Welcomelink */
 .welcome:link,.welcome:visited,.welcome:hover,.welcome:active {
   color: #414141;
   font-weight: bold;
@@ -1059,130 +824,85 @@ a.licencebar:hover,a.licencebar:active{
 .welcome:hover,.welcome:active {
   color: #ff0000;
 }
-
-/*---------------------------------------------
-Attributes of various font-styles
----------------------------------------------*/
+/* Attributes of various font-styles */
 span.fontText {
   font-weight: normal;
 }
-
 span.fontBold {
   font-weight: bold;
 }
-
 span.fontItalic {
   font-style: italic;
 }
-
 span.fontUnder {
   text-decoration: underline;
 }
-
 span.fontBoldUnder {
   font-weight: bold;
   text-decoration: underline;
 }
-
 span.fontItalicUnder {
   font-style: italic;
   text-decoration: underline;
 }
-
 span.fontError,span.fontWichtig,span.fontMarked,span.fontRed {
   font-weight: bold;
   color: #e50000;
 }
-
 span.fontGreen {
   font-weight: bold;
   color: #17D427;
 }
-
-/*
-  Navigation ( << 1 2 3 >> )
-*/
-
+/* Navigation ( << 1 2 3 >> ) */
 span.fontSites {
   font-weight: bold;
   color: #EE0000;
 }
-
 span.fontSitesMisc {
   color: #000;
 }
-
 .sites:link,.sites:visited,.sites:hover,.sites:active {
   font-size: 10px;
   text-decoration: none;
 }
-
 .sites:hover,.sites:active {
   text-decoration: none;
 }
-
-/*
-  Clanwarresults
-*/
+/* Clanwarresults */
 span.navCwWon,span.navCwDraw,span.navCwLost,span.CwWon,span.CwDraw,span.CwLost {
   font-weight: bold;
 }
-
 span.navCwWon,span.CwWon {
   color: #17D427;
 }
-
 span.navCwDraw,span.CwDraw {
   color: #DBD004;
 }
-
 span.navCwLost,span.CwLost {
   color: #e50000;
 }
-
-/*---------------------------------------------
-Attributes of the errortable
------------------------------------------------
-errors/errortable.html
----------------------------------------------*/
+/* Attributes of the errortable e.g. errors/errortable.html */
 td.error {
   text-align: center;
   padding: 3px;
 }
-
-/*---------------------------------------------
-Style of the preloader
----------------------------------------------*/
+/* Style of the preloader */
 div#preload {
   background-color: #FFF;
   border: 1px solid #000;
 }
-
-/*---------------------------------------------
-Style of the higlighted boxes (Vote,Profil, etc)
----------------------------------------------*/
+/* Style of the higlighted boxes (Vote,Profil, etc) */
 td.highlight {
   text-align: left;
   border-top: 1px solid #BBB;
   border-bottom: 1px solid #BBB;
 }
-/*---------------------------------------------
-Style of the statisitc beam (votes, CWs)
----------------------------------------------*/
+/* Style of the statisitc beam (votes, CWs) */
 td.statsBalken {
   border: 1px solid #000;
   background-image: url('../../../images/vote_bg.gif');
 }
-/*---------------------------------------------
-Attributes of various formulars
----------------------------------------------*/
-/*****************************
-*****************************/
-/*---------------------------------------------
-Templateswitcher dropdown
------------------------------------------------
-menu/tmp_switch.html
----------------------------------------------*/
+/* Templateswitcher dropdown e.g. menu/tmp_switch.html */
 select.tempswitch {
   width: 120px;
   color: #000;
@@ -1190,18 +910,14 @@ select.tempswitch {
   background-color: #FFF;
   border: 1px #000 solid;
 }
-/*---------------------------------------------
-Dropdownmenus
----------------------------------------------*/
+/* Dropdownmenus */
 select.dropdown {
   color: #000;
   font-size: 97%;
   background-color: #FFF;
   border: 1px #000 solid;
 }
-/*---------------------------------------------
-Dropdownmenus -> Categories
----------------------------------------------*/
+/* Dropdownmenus -> Categories */
 option.dropdownKat {
   color: #000;
   font-size: 97%;
@@ -1210,9 +926,7 @@ option.dropdownKat {
   border-top: 1px #000 solid;
   border-bottom: 1px #000 solid;
 }
-/*---------------------------------------------
-Enabled/disabled input fields (not clicked)
----------------------------------------------*/
+/* Enabled/disabled input fields (not clicked) */
 input.inputField_dis,input.inputField_dis_small,input.inputField_dis_mid,input.inputFieldFsearch_dis,input.inputFieldKal_dis,textarea.inputFieldKalDesc_dis,textarea.inputField_dis,input.inputField_dis_profil,textarea.inputField_dis_nletter,input.inputField_en,input.inputField_en_mid,input.inputField_en_small,input.inputFieldFsearch_en,input.inputFieldKal_en,textarea.inputFieldKalDesc_en,textarea.inputField_en,input.inputField_en_profil,textarea.inputField_en_nletter,textarea.inputField_dis_profil,textarea.inputField_en_profil {
   border: 1px solid #d4d4d4;
   background-color: #fcfcfc;
@@ -1225,66 +939,45 @@ input.inputField_en,input.inputField_en_mid,input.inputField_en_small,input.inpu
   border:1px solid #4e4e4e;
   color:#000;
 }
-/*---------------------------------------------
-Several input fields
----------------------------------------------*/
-/*
-  Small inputfields
-*/
+/* Several input fields, Small inputfields */
 input.inputField_dis_small,input.inputField_en_small {
   width: 22px;
   text-align: center;
 }
-/*
-  Middle sized inputfields
-*/
+/* Middle sized inputfields */
 input.inputField_dis_mid,input.inputField_en_mid {
   width: 68px;
 }
-/*
-  Board Search
-*/
+/* Board Search */
 input.inputFieldFsearch_dis,input.inputFieldFsearch_en {
   width: 180px;
 }
-/*
-  Calendar admin
-*/
+/* Calendar admin */
 input.inputFieldKal_dis,input.inputFieldKal_en {
   width: 240px;
 }
-
 textarea.inputFieldKalDesc_dis,textarea.inputFieldKalDesc_en {
   overflow: Auto;
   width: 240px;
   height: 100px;
 }
-/*
-  Edit profile fields
-*/
+/* Edit profile fields */
 input.inputField_dis_profil,input.inputField_en_profil,
 textarea.inputField_dis_profil,textarea.inputField_en_profil {
   width: 200px;
 }
-/*
-  Gallery Admin
-*/
+/* Gallery Admin */
 textarea.inputField_dis,textarea.inputField_en {
   overflow: Auto;
   height: 100px;
 }
-
-/*
-  Newsletter textarea
-*/
+/* Newsletter textarea */
 textarea.inputField_dis_nletter,textarea.inputField_en_nletter {
   width: 90%;
   height: 200px;
   overflow: Auto;
 }
-/*---------------------------------------------
-Atrributes of (submit)buttons
----------------------------------------------*/
+/* Atrributes of (submit)buttons */
 input.submit {
   margin: 0px;
   padding: 1px;
@@ -1300,38 +993,34 @@ input.submit:hover {
   background-image: url(../images/submit_hover.jpg);
 }
 /*IE Hack*/
-*+html input.submit { overflow: visible; }
-* html input.submit { overflow: visible; }
-/*####################################
-  These sheets shouldn`t be edited
-####################################*/
+*+html input.submit { 
+    overflow: visible; 
+}
+* html input.submit { 
+    overflow: visible; 
+}
+/* These sheets shouldn`t be edited */
 input.checkbox,input#loginCheckbox {
   border:0px;
   cursor: pointer;
 }
-
 .emph,.msg {
   background-color: #FFF;
   color: #000;
   border: 1px solid #000;
   padding: 2px; z-index: 9999999;
 }
-
-.msg * { color: #000 }
-.msg a:link, .msg a:visited { color: #000 }
-
+.msg * { 
+    color: #000 
+}
+.msg a:link, .msg a:visited { 
+    color: #000 
+}
 td.middle,div.middle {
   vertical-align: middle;
   text-align: center;
 }
-
-
-/*####################################
-  DZCP 1.4 Styles
-####################################*/
-/*---------------------------------------------
-  WYSIWYG-Editor
----------------------------------------------*/
+/* WYSIWYG-Editor */
 textarea.editorStyle,
 textarea.editorStyleWord,
 textarea.editorStyleMini,
@@ -1344,34 +1033,26 @@ textarea.editorStyleWord {
   height: 270px;
 }
 textarea.editorStyleMini {
-  width: 90%; height: 100px;
+  width: 90%; 
+  height: 100px;
 }
-
-/*
-  shouldn`t be edited
-*/
-
+/* shouldn`t be edited */
 div.clipMore {
   border-top: 1px dashed #BBB;
   border-bottom: 1px dashed #BBB;
   padding: 2px;
 }
-
 p {
   margin: 0px;
   padding: 0px;
 }
-
 div#previewDIV {
   margin-top: 9px;
   min-height: 100%;
   height: auto !important;
   height: 100%;
 }
-
-/*---------------------------------------------
-  JS Infolayer
----------------------------------------------*/
+/* JS Infolayer */
 div#infoDiv {
   z-index: 100;
   position: absolute;
@@ -1380,48 +1061,41 @@ div#infoDiv {
 }
 div#infoInnerLayer {
   border: 1px solid #000;
+  border-radius: 3px;
+  padding: 5px
 }
-
 div#infoInnerLayer td {
   padding: 2px;
 }
-
 div#infoDiv {
   min-width: 250px; width: 250px;
-/*
-  width: auto !important;
-  width: 280px;
-*/
   min-height: 100%;
   height: auto !important;
   height: 100%;
 }
-
 div#hDiv {
-  min-width: 250px; width: 250px;
-  position: absolute; z-index: 9;
+  min-width: 250px; 
+  width: 250px;
+  position: absolute; 
+  z-index: 9;
   top: 0; left: 0;
 }
-
 iframe#ieFix {
-  position: absolute; z-index:0;
-  top: 0; left: 0;
+  position: absolute; 
+  z-index:0;
+  top: 0; 
+  left: 0;
 }
-
 td.infoTop {
   font-weight: bold;
   border-bottom: 1px solid #000;
 }
-
-/*---------------------------------------------
-  Syntax Highlighting (PHP)
----------------------------------------------*/
+/* Syntax Highlighting (PHP) */
 .codeHead {
   background-color: #20262b;
   border: 1px solid #000;
   padding: 2px;
 }
-
 .code,.codeHead  {
   width: 470px;
   max-height: 200px;
@@ -1430,7 +1104,6 @@ td.infoTop {
   padding: 0px;
   overflow:auto;
 }
-
 .codeHead {
   padding-top: 2px;
   padding-bottom: 2px;
@@ -1439,7 +1112,6 @@ td.infoTop {
   border-bottom: 0px;
   background-color: #DDD;
 }
-
 .codeLines {
   width: 1%;
   color: #000;
@@ -1456,27 +1128,32 @@ td.infoTop {
 .codeContent * {
   padding:0px;
 }
-/*---------------------------------------------
-  Colors of highlighting
----------------------------------------------*/
-td.codeContent .string { color: #800; }
-td.codeContent .comment { color: #C0C0C0; }
-td.codeContent .keyword { color: #000; font-weight:bold; }
-td.codeContent .bg { background: #DDD; }
-td.codeContent .default { color: #000080; }
-td.codeContent .html { color : #880; }
-/*---------------------------------------------
-  Resized Image Text (resized to...)
----------------------------------------------*/
+/* Colors of highlighting */
+td.codeContent .string { 
+    color: #800; 
+}
+td.codeContent .comment { 
+    color: #C0C0C0; 
+}
+td.codeContent .keyword { 
+    color: #000; font-weight:bold; 
+}
+td.codeContent .bg { 
+    background: #DDD; 
+}
+td.codeContent .default { 
+    color: #000080; 
+}
+td.codeContent .html { 
+    color : #880; 
+}
+/* Resized Image Text (resized to...) */
 span.resized {
   font-size: 10px;
   font-weight: normal;
   font-style: italic;
 }
-
-/*---------------------------------------------
-Navigation: Teamswitcher
----------------------------------------------*/
+/* Navigation: Teamswitcher */
 select.teamswitch {
   width: 160px;
   color: #000;
@@ -1484,26 +1161,17 @@ select.teamswitch {
   background-color: #FFF;
   border: 1px #000 solid;
 }
-
-/*---------------------------------------------
-Attributes of all icons (flags/email/hp/teamspeak,etc)
----------------------------------------------*/
+/* Attributes of all icons (flags/email/hp/teamspeak,etc) */
 img.icon,img.helpicon,img.tsicon {
   vertical-align: middle;
 }
-/*
-  helpicon
-*/
+/* helpicon */
 img.helpicon { cursor: help; }
-/*
-  Teamspeak icons
-*/
+/* Teamspeak icons */
 img.tsicon {
   margin: 1px;
 }
-/*---------------------------------------------
-Board Quotes
----------------------------------------------*/
+/* Board Quotes */
 .quote {
   width: 95%;
   margin: auto;
@@ -1521,61 +1189,46 @@ Board Quotes
   font-size: 11px;
   color: #000;
 }
-
-/*---------------------------------------------
-Adminmenu
----------------------------------------------*/
+/* Adminmenu */
 .adminBarInner,.adminBarInnerOver {
   text-align: center;
-    text-decoration: none;
+  text-decoration: none;
   margin: 0px;
-    padding: 3px;
+  padding: 3px;
 }
 .adminBarInnerOver {
-
 }
-
 .adminBarOuter,.adminBarOuterOver {
-    text-decoration : none;
-    border: 1px solid #353535;
+  text-decoration : none;
+  border: 1px solid #353535;
 }
-
 .adminMenuInner,.adminMenuInnerOver {
-    margin: 3px 0 0 22px;
+  margin: 3px 0 0 22px;
 }
-
 .adminMenuOuter,.adminMenuOuterOver {
-    text-decoration : none;
-    border: 1px solid #353535;
-    padding: 0;
+  text-decoration : none;
+  border: 1px solid #353535;
+  padding: 0;
   background-repeat: no-repeat;
   background-position: 2px 50%;
 }
-
 .adminMenuInnerOver,.adminMenuOuterOver  {
-
 }
-
-/**************
-  Search form
-**************/
+/* Search form */
 fieldset.search {
   border: 1px solid #000;
 }
-
 legend.search {
   margin: 0;
   padding: 0;
   color: #000;
 }
-
 ul.search {
   height: 200px;
   overflow: auto;
   width: 100%;
   border: 1px solid #000;
 }
-
 ul.search {
   background: #FFF;
   list-style-type: none;
@@ -1583,12 +1236,10 @@ ul.search {
   padding: 0;
   overflow-x: hidden;
 }
-
 ul.search li {
   margin: 0;
   padding: 0;
 }
-
 label.search, label.searchKat {
   display: block;
   text-align: left;
@@ -1596,44 +1247,33 @@ label.search, label.searchKat {
   margin: 0; padding: 0;
   width: 100%;
 }
-
 label.search:hover {
   background-color: #EEE;
 }
-
 label.searchKat {
   background-color: #dbdbdb;
   font-weight: bold;
 }
-
 td.searchHead {
   border-bottom: 1px solid #888;
 }
-
 input.chksearch {
   margin: 2px;
   border:0px;
   cursor: pointer;
 }
-
 .highlightSearchTarget {
   padding: 2px;
   color: #000;
   background-color: #FEFECE;
 }
-
-/**************
-  Glossar
-**************/
+/* Glossar */
 a.glossar:link,a.glossar:visited,a.glossar:hover,a.glossar:active {
   font-weight: normal;
   text-decoration: none;
   border-bottom: 1px dashed;
 }
-
-/**************
-  Membermap
-**************/
+/* Membermap */
 div#memberMap {
   width: 100%;
   height: 600px;
@@ -1645,39 +1285,34 @@ div#memberMapInner {
   text-align: left;
   padding: 3px;
 }
-
-/*####################################
-  TEMPLATE SPECIFIC STYLES
-####################################*/
+/* TEMPLATE SPECIFIC STYLES */
 #time {
   color: #FFF;
   text-align: center;
   vertical-align: middle;
 }
-td.nautor a:link,td.nautor a:visited,td.nautor a:hover,td.nautor a:active { color: #FFF; }
-
-
-/**************
-  Permission Table
-**************/
-div.permissions input.checkbox {
-  float: left; margin: 1px 2px;
+td.nautor a:link,td.nautor a:visited,td.nautor a:hover,td.nautor a:active { 
+    color: #FFF; 
 }
-
+/* Permission Table */
+div.permissions input.checkbox {
+  float: left; 
+  margin: 1px 2px;
+}
 div.permissions label {
-  display: block; float: left; clear: right;
+  display: block; 
+  float: left; 
+  clear: right;
   width: 45%;
   text-align: left;
 }
-
 div.permissions br {
   clear: both;
-  height: 0; line-height: 0; font-size: 0;
+  height: 0; 
+  line-height: 0; 
+  font-size: 0;
 }
-
-/**************
-  Lightbox
-**************/
+/* Lightbox */
 #jquery-overlay {
     position: absolute;
     top: 0;
@@ -1695,7 +1330,9 @@ div.permissions br {
     text-align: center;
     line-height: 0;
 }
-#jquery-lightbox a img { border: none; }
+#jquery-lightbox a img { 
+    border: none; 
+}
 #lightbox-container-image-box {
     position: relative;
     background-color: #FFF;
@@ -1703,7 +1340,9 @@ div.permissions br {
     height: 250px;
     margin: 0 auto;
 }
-#lightbox-container-image { padding: 10px; }
+#lightbox-container-image { 
+    padding: 10px; 
+}
 #lightbox-loading {
     position: absolute;
     top: 40%;
@@ -1721,8 +1360,12 @@ div.permissions br {
     width: 100%;
     z-index: 10;
 }
-#lightbox-container-image-box > #lightbox-nav { left: 0; }
-#lightbox-nav a { outline: none;}
+#lightbox-container-image-box > #lightbox-nav { 
+    left: 0; 
+}
+#lightbox-nav a { 
+    outline: none;
+}
 #lightbox-nav-btnPrev, #lightbox-nav-btnNext {
     width: 49%;
     height: 100%;
@@ -1755,7 +1398,9 @@ div.permissions br {
     float: left;
     text-align: left;
 }
-#lightbox-image-details-caption { font-weight: bold; }
+#lightbox-image-details-caption { 
+    font-weight: bold; 
+}
 #lightbox-image-details-currentNumber {
     display: block;
     clear: left;
@@ -1766,45 +1411,32 @@ div.permissions br {
     float: right;
     padding-bottom: 15px;
 }
-
-/**************
-  Newsticker
-**************/
+/*  Newsticker */
 div#ticker {
   position: absolute;
-  top: 158px; left: 485px;
+  top: 158px; 
+  left: 485px;
   width: 512px;
   overflow: hidden;
-  padding: 0; text-align: center;
+  padding: 0; 
+  text-align: center;
 }
 div#dzcpticker {
   width: 664px;
   overflow: hidden;
-  padding: 0; text-align: center;
+  padding: 0; 
+  text-align: center;
 }
-
-div#ticker,
-div#dzcpticker,
-div#ticker div.scrollDiv,
-div#dzcpticker div.scrollDiv,
-div#ticker div.scrollDiv td,
-div#dzcpticker div.scrollDiv td {
+div#ticker,div#dzcpticker,div#ticker div.scrollDiv,div#dzcpticker div.scrollDiv,div#ticker div.scrollDiv td,div#dzcpticker div.scrollDiv td {
   white-space: nowrap;
 }
-
-div#ticker a:link,
-div#ticker a:visited {
+div#ticker a:link,div#ticker a:visited {
   color: #FFF;
 }
-
-div#ticker a:hover,
-div#ticker a:active {
+div#ticker a:hover,div#ticker a:active {
   color: red;
 }
-
-/**************
-  globale Suche
-**************/
+/* globale Suche */
 #searchpanel {
     background:url(../images/searchpanel/searchpanel.png);
     width:232px;
@@ -1813,9 +1445,12 @@ div#ticker a:active {
     color:#7d7d7d;
     padding:0 8px;
 }
-* html #searchpanel { margin: -1px 0 }
-*+html #searchpanel { margin: -1px 0 }
-
+* html #searchpanel { 
+    margin: -1px 0 
+}
+*+html #searchpanel { 
+    margin: -1px 0 
+}
 input.searchSubmit {
     background:url(../images/searchpanel/search.png);
     width:31px;
@@ -1828,16 +1463,17 @@ input.searchSubmit {
 input.searchSubmit:hover {
   background-position: 0 30px;
 }
-/*IE Hack*/
-*+html input.searchSubmit { overflow: visible; }
-* html input.searchSubmit { overflow: visible; }
-
-/****************************************/
-
+/* IE Hack */
+*+html input.searchSubmit { 
+    overflow: visible; 
+}
+* html input.searchSubmit { 
+    overflow: visible; 
+}
 img.border {
   border: 1px solid #777;
 }
-/*TeamSpeak Channeltree*/
+/* TeamSpeak Channeltree */
 .tstree_left {
     float:left;
     width:80%;
@@ -1850,15 +1486,16 @@ img.border {
 .tstree_clear {
     clear:both;
 }
-
-/**************
-  Steam Status
-**************/
-
-.steam_box_user, a.steam_box_user, .steam_box_user a { color: #898989; }
-.steam_box_user.in-game, a.steam_box_user.in-game, .steam_box_user.in-game a { color: #8bc53f; }
-.steam_box_user.online, a.steam_box_user.online, .steam_box_user.online a { color: #86b5d9; }
-
+/* Steam Status */
+.steam_box_user, a.steam_box_user, .steam_box_user a { 
+    color: #898989; 
+}
+.steam_box_user.in-game, a.steam_box_user.in-game, .steam_box_user.in-game a { 
+    color: #8bc53f; 
+}
+.steam_box_user.online, a.steam_box_user.online, .steam_box_user.online a { 
+    color: #86b5d9; 
+}
 .steam_box_bg
 {
     background-image: url('../../../images/steam_bg.jpg');
@@ -1871,7 +1508,6 @@ img.border {
     width: 274px;
     height: 56px;
 }
-
 .steam_box
 {
     height: 40px;
@@ -1890,7 +1526,6 @@ img.border {
     filter: alpha(opacity=80);
     -moz-opacity: .8;
 }
-
 .steam_box_avatar
 {
     width: 34px;
@@ -1902,20 +1537,17 @@ img.border {
     border-radius: 3px;
     background-color: #545454;
 }
-
 .steam_box .steam_box_avatar
 {
     float: left;
     margin-right: 7px;
 }
-
 .steam_box_content
 {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
 .steam_box_avatar.in-game {
     background-color: #9bc861;
     background: -moz-linear-gradient(top, #9bc861 5%, #789e4c 95%);
@@ -1927,7 +1559,6 @@ img.border {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9bc861', endColorstr='#789e4c',GradientType=0 );
     filter: none;
 }
-
 .steam_box_avatar.online {
     background-color: #7bafd6;
     background: -moz-linear-gradient(top, #7bafd6 5%, #506d92 95%);
@@ -1939,7 +1570,6 @@ img.border {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7bafd6', endColorstr='#506d92',GradientType=0 );
     filter: none;
 }
-
 .steam_box_avatar.offline {
     background: -moz-linear-gradient(top, #706c6b 5%, #4e4d4d 95%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(5%,#706c6b), color-stop(95%,#4e4d4d));
@@ -1950,14 +1580,12 @@ img.border {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#706c6b', endColorstr='#4e4d4d',GradientType=0 );
     filter: none;
 }
-
 #skypedetectionswf {
 	width:0px !important;
 	height:0px !important;
 	display:none
 }
-
-#dialog-confirm {
+#dialog-confirm, #dialog-confirm-lock {
     display: none;
 }
 
