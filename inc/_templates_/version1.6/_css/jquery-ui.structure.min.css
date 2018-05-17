@@ -840,7 +840,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-tabs .ui-tabs-nav {
     margin: 0;
-    padding: .2em .2em 0;
+    padding: 0;
 }
 .ui-tabs .ui-tabs-nav li {
     list-style: none;
@@ -854,7 +854,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
     float: left;
-    padding: .5em 1em;
+    padding: 7px;
     text-decoration: none;
 }
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
@@ -865,6 +865,8 @@ button.ui-button::-moz-focus-inner {
 .ui-tabs .ui-tabs-nav li.ui-state-disabled .ui-tabs-anchor,
 .ui-tabs .ui-tabs-nav li.ui-tabs-loading .ui-tabs-anchor {
     cursor: text;
+    background: #FFF;
+    color: #000
 }
 .ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {
     cursor: pointer;

@@ -972,7 +972,7 @@ a.ui-button:focus {
 }
 
 .ui-visual-focus {
-	box-shadow: 0 0 3px 1px rgb(94, 158, 214);
+	box-shadow: 0 0 3px 1px #ff9e9f;
 }
 .ui-state-active,
 .ui-widget-content .ui-state-active,
@@ -980,14 +980,14 @@ a.ui-button:focus {
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-	border: 1px solid #003eff;
-	background: #007fff;
+	border: 1px solid ;
+	background: #7c0000;
 	font-weight: normal;
 	color: #ffffff;
 }
 .ui-icon-background,
 .ui-state-active .ui-icon-background {
-	border: #003eff;
+	border: #800800;
 	background-color: #ffffff;
 }
 .ui-state-active a,

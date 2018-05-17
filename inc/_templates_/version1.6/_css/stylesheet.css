@@ -234,6 +234,12 @@ div#index {
     margin-bottom:7px;
     padding:0 7px 7px 7px
 }
+/* Boxen Tabs linke und rechte Seite */
+.box_tabs {
+    background:transparent;
+    margin-bottom: 7px;
+    padding: 26px 0 0 0;
+}
 /* Globale Ueberschriftendefinierung */
 .headline {
     line-height:41px;
@@ -247,6 +253,17 @@ div#index {
     height:49px;
     background:url(../images/headBox.jpg) bottom repeat-x;
     margin:0 -7px
+}
+/* Ueberschrift Tabs Boxen */
+.box_tabs .headline_tabs {
+    background: transparent;
+    height: 29px;
+    margin: -15px 0px;
+    position: relative;
+    top: -16px;
+    width: 102%;
+    left: -2px;
+    min-width: 207px;
 }
 
 /* Main Navigation (linke Seite) */
@@ -313,6 +330,11 @@ div#galleriebox {
 .tabs span.current {
     cursor:default;
     color:#000
+}
+
+.tabs-list {
+    list-style: none;
+    display: inline-block;
 }
 
 /* Slideshow Plugin */
@@ -989,7 +1011,7 @@ a.navMain:hover,a.navMain:active {
 
 a.navClan:link,a.navClan:visited,
 a.navServer:link,a.navServer:visited,
-a.navMisc:link,a.navMisc:visited,a.dz {
+a.navMisc:link,a.navMisc:visited {
     font-weight:normal;
     color:#7d7d7d;
     margin:0 1px;
@@ -997,7 +1019,6 @@ a.navMisc:link,a.navMisc:visited,a.dz {
     padding:2px 4px;
     display:block;
 }
-a.pointer {cursor: pointer;}
 
 a.navClan:hover,a.navClan:active,
 a.navServer:hover,a.navServer:active,
@@ -1936,6 +1957,7 @@ img.border {
 	display:none
 }
 
-#dialog-confirm, #dialog-confirm-lock {
+#dialog-confirm {
     display: none;
 }
+

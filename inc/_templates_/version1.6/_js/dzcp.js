@@ -25,7 +25,10 @@ var DZCP = {
 
         // init lightbox
         DZCP.initLightbox();
-
+/*
+         * Der Slider funktioniert nicht
+         * muss neu gemacht werden
+         * 
         //init slidetabs
         $(".slidetabs").tabs(".images > div", {
             effect: 'fade',
@@ -34,6 +37,7 @@ var DZCP = {
             autoplay: true,
             interval: 6000
         });
+*/
 
         $( ".int_tabs" ).each(function() {
             $( this ).tabs();
