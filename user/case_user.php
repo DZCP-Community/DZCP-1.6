@@ -10,12 +10,12 @@ if(defined('_UserMenu')) {
         $index = error(_user_dont_exist, 1);
     else {
         $get = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . (int)($_GET['id']) . ";", false, true);
-        if ($get['dsgvo_lock'] && !permission("editusers")) {
+        if ($get['dsgvo_lock'] && !permission("editusers") && $get['id'] != $userid) {
             //Has Lock
-
-        } else if ($chkMe < $get['show'] && !permission("editusers")) {
+            $index = error(_user_dont_dsgvo, 1);
+        } else if ($chkMe < $get['show'] && !permission("editusers") && $get['id'] != $userid) {
             //Not show profile
-
+            $index = error(_user_profile_dont_show, 1);
         } else {
             db("UPDATE `" . $db['userstats'] . "` SET `profilhits` = (profilhits+1) WHERE `user` = " . $get['id'] . ";");
 

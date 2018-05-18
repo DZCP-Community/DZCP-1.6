@@ -1574,6 +1574,7 @@ function update_mysql_1_6_1_0()
     global $db,$updater;
     db("ALTER TABLE `".$db['users']."` ADD `dsgvo_lock` INT(1) NOT NULL DEFAULT '1' AFTER `level`;");
     db("ALTER TABLE `".$db['users']."` ADD `pwd_md5` INT(1) NOT NULL DEFAULT '1' AFTER `pwd`;");
+    db("ALTER TABLE `".$db['users']."` ADD `show` INT(1) NOT NULL DEFAULT '4' AFTER `perm_gb`;");
 
     db("CREATE TABLE `".$db['dsgvo']."` (
           `id` int(11) NOT NULL,

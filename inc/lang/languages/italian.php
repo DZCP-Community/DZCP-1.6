@@ -23,6 +23,9 @@ $language_text['_datenschutz_rolle'] = 'Rolle';
 $language_text['_datenschutz_rolle_1'] = 'Hauptverantwortlicher ( <span style="color:#FF0000">*Benötigt*</span> )';
 $language_text['_datenschutz_rolle_2'] = 'Datenschutzbeauftragter ( <span style="color:#0000FF">*Optional/Extern*</span> )';
 
+$language_text['_user_dont_dsgvo'] = 'Dieser User kann nicht eingesehen werden!';
+$language_text['_user_profile_dont_show'] = 'Dieses Profil ist privat';
+
 ## ADDED / REDEFINED FOR 1.6 Final
 $language_text['_txt_navi_main'] = 'Navigazione Principale';
 $language_text['_txt_navi_clan'] = 'Navigazione Clan';
