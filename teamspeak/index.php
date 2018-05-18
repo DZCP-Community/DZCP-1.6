@@ -20,7 +20,7 @@ $dir = "teamspeak";
 ## SECTIONS ##
 if(fsockopen_support())
 {
-    $CachedString = $cache->getItem('teamspeak_'.$language);
+    $CachedString = $cache->getItem('teamspeak_'.$_SESSION['language']);
     if(is_null($CachedString->get()) || isset($_GET['cID']))
     {
         switch(settings('ts_version')):

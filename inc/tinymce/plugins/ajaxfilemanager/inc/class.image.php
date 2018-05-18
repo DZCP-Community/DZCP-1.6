@@ -184,7 +184,6 @@
      */
     function loadImageFromString($string)
     {
-    		$this->imageFile = $filename;
         $this->_imgOrig = imagecreatefromstring($string);
         if (!$this->_imgOrig) {
             $this->_debug('The image (supplied as a string) could not be created.');
@@ -241,7 +240,7 @@
         }else 
         {
         	$this->_imgInfoFinal['size'] = @filesize($filename);
-        	@chmod($filename, (int)($this->chmod, 8));
+        	@chmod($filename, (int)($this->chmod));
         }
 
         return true;
@@ -397,13 +396,7 @@
 					$new_y = $this->_imgInfoOrig['height'];
 				}
 			}
-		
-			
-			
-			if(is_null($this->_imgOrig))
-			{
-				$this->loadImage($filePath);
-			}
+
 			if(sizeof($this->_errors) == 0)
 			{
 				return $this->_resize($new_x, $new_y);
@@ -801,6 +794,8 @@
      */
     function _createFinalImageHandler($dst_w, $dst_h)
     {
+        //???????????????????????????
+        /*
 		 		if(function_exists('ImageCreateTrueColor'))
 		 		{
 					$this->_imgFinal = @imagecreatetruecolor($dst_w,$dst_h);
@@ -813,8 +808,6 @@
             @imagefilledrectangle($this->_imgFinal, 0, 0, $dst_w, $dst_h, $transparent);
             @imagecolortransparent($this->_imgFinal, $transparent);            
         }
-        
-    }	
+        */
+    }
 	}
-	
-?>

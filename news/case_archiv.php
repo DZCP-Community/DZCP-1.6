@@ -86,7 +86,7 @@ if(defined('_News')) {
                                                 "what" => $x));
         }
 
-        $endc = $language == "deutsch" ? 'n' : '';
+        $endc = $_SESSION['language'] == "deutsch" ? 'n' : '';
         $ccount = cnt($db['newscomments']);
         $com = ($ccount == "1" ? _news_kommentar : _news_kommentare.$endc);
 

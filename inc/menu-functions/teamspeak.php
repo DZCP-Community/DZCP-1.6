@@ -8,7 +8,7 @@
  * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
  */
 function teamspeak($js = 0) {
-    global $language, $cache;
+    global $cache;
 
     header('Content-Type: text/html; charset=utf-8');
     if(!fsockopen_support()) return _fopen;
@@ -29,7 +29,7 @@ function teamspeak($js = 0) {
         $ts_sport = settings('ts_sport');
         $ts_port = settings('ts_port');
         if(!empty($ts_ip) && !empty($ts_sport) && !empty($ts_port)) {
-            $CachedString = $cache->getItem('teamspeak_'.$language);
+            $CachedString = $cache->getItem('teamspeak_'.$_SESSION['language']);
             if(is_null($CachedString->get()) || isset($_GET['cID'])) {
                 $teamspeak = teamspeakViewer();
                 $CachedString->set($teamspeak)->expiresAfter(config('cache_teamspeak'));

@@ -28,7 +28,7 @@ switch ($action):
                 $player_list = '';
                 if($get['status'] != "nope" && file_exists(basePath.'/inc/server_query/'.$get['status'].'.php'))
                 {
-                    $CachedString = $cache->getItem('gameserver_'.(int)($get['id']).'_'.$language);
+                    $CachedString = $cache->getItem('gameserver_'.(int)($get['id']).'_'.$_SESSION['language']);
                     if(is_null($CachedString->get()) || isset($_GET['cID'])) {
                         if(!function_exists('server_query_'.$get['status']))
                         {
