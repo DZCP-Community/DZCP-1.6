@@ -24,6 +24,8 @@ $language_text['_datenschutz_rolle_2'] = 'Datenschutzbeauftragter ( <span style=
 
 $language_text['_user_dont_dsgvo'] = 'Dieser User kann nicht eingesehen werden!';
 $language_text['_user_profile_dont_show'] = 'Dieses Profil ist privat';
+$language_text['_pvisibility_profile'] = 'Profilsichtbarkeit';
+$language_text['_pedit_perm_profile'] = '<option value="0">Public</option><option value="1">User only</option><option value="2">Member only</option><option value="4">Admin only</option>';
 
 ## ADDED / REDEFINED FOR 1.6 Final
 $language_text['_txt_navi_main'] = 'Main Navigation';
