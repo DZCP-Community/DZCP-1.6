@@ -316,7 +316,6 @@ if(_adminMenu != 'true') exit;
         }
 
         $show = show($dir."/navi", array("show" => $show_,
-                                         "intern" => _config_forum_intern,
                                          "name" => _navi_name,
                                          "info" => _navi_info,
                                          "kat" => _config_newskats_kat,

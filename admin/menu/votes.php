@@ -163,7 +163,6 @@ if(_adminMenu != 'true') exit;
         $what = "&amp;do=editvote&amp;id=".$_GET['id']."";
 
         $show = show($dir."/form_vote", array("head" => _votes_admin_edit_head,
-                                              "value" => "edit",
                                               "id" => $_GET['id'],
                                               "what" => $what,
                                               "value" => _button_value_edit,

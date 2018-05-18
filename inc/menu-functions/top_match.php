@@ -31,7 +31,6 @@ function top_match() {
                                                       "clantag" => re(cut($get['clantag'],config('l_lwars'),true,false)),
                                                       "team" => re(cut($get['name'],config('l_lwars'),true,false)),
                                                       "game" => substr(strtoupper(str_replace('.'.re($get['icon']), '', re($get['icon']))), 0, 5),
-                                                      "id" => $get['id'],
                                                       "gegner" => $gegner,
                                                       "squad" => $squad,
                                                       "hover" => $hover,

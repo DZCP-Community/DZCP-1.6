@@ -216,7 +216,6 @@ if(defined('_Clanwars')) {
                                                        "hphead" => _hp,
                                                        "security" => _register_confirm,
                                                        "sec" => $dir,
-                                                       "security" => _register_confirm,
                                                        "show" => "none",
                                                        "ip" => _iplog_info,
                                                        "preview" => _preview,

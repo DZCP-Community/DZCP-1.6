@@ -399,7 +399,6 @@ switch ($do) {
                                                 "selt" => $team_show,
                                                 "navigation" => $navigation,
                                                 "roster" => _admin_sqauds_roster,
-                                                "navigation" => $navigation,
                                                 "nav_info" => _admin_squads_nav_info,
                                                 "no_navi" => _admin_squads_no_navi,
                                                 "teams" => _admin_squads_teams,

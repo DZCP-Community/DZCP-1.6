@@ -20,8 +20,7 @@ function gallerie() {
             if(!empty($file))
             {
                 $info = 'onmouseover="DZCP.showInfo(\''.jsconvert(re($get['kat'])).'\', \''._gal_pics.'\', \''.$cnt.'\')" onmouseout="DZCP.hideInfo()"';
-                $gallery .= show("menu/gallerie", array("info" => '<p><b>'.jsconvert(re($get['kat'])).'</b></p><p>'._gal_pics.$cnt.'</p>',
-                                                       "image" => $file,
+                $gallery .= show("menu/gallerie", array("image" => $file,
                                                        "kat" => re($get['kat']),
                                                        "info" => $info,
                                                        "id" => $get['id']));

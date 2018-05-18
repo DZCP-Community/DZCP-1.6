@@ -76,7 +76,6 @@ switch ($do)
                                                 "qport" => $get['qport'],
                                                 "pwd" => _pwd,
                                                 "games" => sgames($get['status']),
-                                                "no_status" => _admin_server_nostatus,
                                                 "status" => _admin_status,
                                                 "no_status" => _no_live_status,
                                                 "value" => _button_value_edit,

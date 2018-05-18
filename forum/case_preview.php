@@ -209,8 +209,7 @@ if(defined('_Forum')) {
                                                   "titel" => $titel,
                                                   "signatur" => $sig,
                                                   "zitat" => _forum_zitat_preview,
-                                                  "onoff" => $onoff,
-                                                  "p" => ""));
+                                                  "onoff" => $onoff));
 
     echo utf8_encode('<table class="mainContent" cellspacing="1" style="margin-top:17px">'.$index.'</table>');
 
