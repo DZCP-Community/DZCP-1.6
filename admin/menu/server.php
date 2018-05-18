@@ -51,7 +51,8 @@ switch ($do)
             }
         }
 
-        $show = header("Location: ?admin=server");
+        header("Location: ?admin=server");
+        exit();
     break;
     case 'edit':
         $get = db("SELECT * FROM ".$db['server']." WHERE id = '".(int)($_GET['id'])."'",false,true);

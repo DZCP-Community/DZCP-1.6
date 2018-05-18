@@ -1021,9 +1021,6 @@ function update_mysql()
              SET `artikel` = '1'
              WHERE id = '1'");
 
-  $u = db("SELECT email FROM ".$db['users']." WHERE id = '1'");
-  $get=mysqli_fetch_array($u);
-  _s($get['email']);
 // Forum Threads
   $qry = db("ALTER TABLE ".$db['f_threads']." ADD `global` int(1) NOT NULL default '0',
                                               ADD `ip` varchar(50) NOT NULL default '0'");

@@ -59,7 +59,7 @@ if(defined('_Forum')) {
       if(data("signatur",$pUId)) $sig = _sig.bbcode(data("signatur",$pUId));
       else $sig = "";
       $onoff = onlinecheck($userid);
-      $userposts = show(_forum_user_posts, array("posts" => userstats("forumposts",$pUId)+1));
+      $userposts = show(_forum_user_posts, array("posts" => (userstats("forumposts",$pUId)+1)));
     } else {
         $pn = "";
         $icq = "";

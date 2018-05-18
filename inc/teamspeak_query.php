@@ -1016,6 +1016,11 @@ function teamspeak3() {
   return  show("menu/teamspeak", array("hostname" => '', "channels" => $tsstatus->render()));
 }
 
+/**
+ * @property array _serverGroup
+ * @property array _channelGroup
+ * @property string serverError
+ */
 class TSStatus
 {
     var $_host;
@@ -1286,7 +1291,7 @@ class TSStatus
                     $div_first = "";
                     $div_sec = "";
                 }
-                $left = $i*20+$style;
+                $left = ($i*20)+$style;
                 $join_ts = $joints."/".$sub_channel['channel_name'];
                 $out .= "<div class=\"tstree_left\" style=\"text-indent:".$left."px;\">".$moreshow."<img src=\"../inc/images/tsicons/trenner.gif\" alt=\"\" class=\"tsicon\" />
                 <img src=\"".$this->channel_icon($sub_channel)."\" alt=\"\" class=\"tsicon\" />".$this->channel_name($sub_channel,$tpl,$join_ts)."</div>\n";

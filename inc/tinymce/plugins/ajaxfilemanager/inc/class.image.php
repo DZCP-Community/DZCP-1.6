@@ -225,6 +225,7 @@
                 {
                     imagetruecolortopalette($this->_imgFinal, false, 255);
                 }
+                break;
             case 'png':
                 $saved = $func($this->_imgFinal, $filename);
                 break;
@@ -279,6 +280,7 @@
                 {
                     @imagetruecolortopalette($this->_imgFinal, false, 255);
                 }
+                break;
             case 'png':
                 $func($this->_imgFinal);
                 break;
@@ -718,11 +720,14 @@
 					break;
 				case 5:
 					$type = 'psd';
+                    break;
 				case 6:
 					$type = 'bmp';
+                    break;
 				case 7:
 				case 8:
 					$type = 'tiff';
+                break;
 				default:
 					$type = '';
 			}

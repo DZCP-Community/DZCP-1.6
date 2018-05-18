@@ -106,6 +106,9 @@ class api {
         }
     }
 
+    /**
+     *
+     */
     private function varying() {
         if(show_api_debug)
             DebugConsole::insert_info('api.php','Call varying');
@@ -115,7 +118,7 @@ class api {
                 $this->api_callback = json_decode($this->api_callback, true);
 
                 if(show_api_debug)
-                    DebugConsole::insert_info(DebugConsole::insert_info('api.php','api_callback = <pre>'.print_r($this->api_callback).'</pre>'));
+                    DebugConsole::insert_info('api.php','api_callback = <pre>'.print_r($this->api_callback).'</pre>');
 
                 if (is_array($this->api_callback) && array_key_exists('error', $this->api_callback)) {
                     $this->api_output = $this->api_callback;

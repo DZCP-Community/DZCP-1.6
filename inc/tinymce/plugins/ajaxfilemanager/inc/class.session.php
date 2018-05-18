@@ -124,7 +124,7 @@ class Session
 						$path=$this->dir.$file;
 						$output .= $path ;
 						//check if this is a expired session file
-						if(filemtime($path) + $this->lifeTime < time())
+						if((filemtime($path) + $this->lifeTime) < time())
 						{							
 							if($fo->delete($path))
 							{
@@ -162,7 +162,7 @@ class Session
 							$path=CONFIG_SYS_ROOT_PATH.$file;
 							$output .= $path ;
 							//check if this is a expired session file
-							if(filemtime($path) + $this->lifeTime < time())
+							if((filemtime($path) + $this->lifeTime) < time())
 							{							
 								if($fo->delete($path))
 								{
@@ -194,12 +194,12 @@ class Session
      */
     function _log($msg)
     {
-    	$msg = "<?php die(); ?>\n" . $msg;
+    	$msg = "<?php die(); ?>\n" . strval($msg);
     	$fp = @fopen($this->gcLogFile, 'w+');
     	if($fp)
     	{
     		@ftruncate($fp, 0);
-    		!@fputs($fp, $msg);
+    		@fputs($fp, $msg);
     		@fclose($fp);
     	}
     }

@@ -198,7 +198,9 @@ class TS3Renderer {
 
     /**
      * Rendert einen User + Icons
-     * @param unknown_type $player
+     * @param array $player
+     * @param $i
+     * @param $template
      * @return string | HTML Objekt
      */
     private static function renderUserFlags($player,$i,$template) {
@@ -214,7 +216,8 @@ class TS3Renderer {
             $player_status_icon = $player['client_output_muted'] ? self::$skin_pholder['OUTPUT_MUTED'] : $player_status_icon;
             $priority_speaker = $player['client_is_priority_speaker'] ? '<img src="../inc/images/tsviewer/'.self::$skin_pholder['CAPTURE'].'" alt="" class="tsicon" />' : '';
             $out = '<div style="text-indent:'.((string)(!$i ? '0' : $i*20+12)).'px;float:left; width:80%;"><img src="../inc/images/tsviewer/trenner.gif" alt="" class="tstrenner" /><img src="../inc/images/tsviewer/'.$player_status_icon.'" alt="" class="tsicon" /> '.$player['client_nickname'].'</div>'."\n";
-            if($template) $out .= '<div style="float:right; width:20%; text-align:right;">'.$priority_speaker.self::user_groups_icons($player).'</div>'."\n";
+            if($template) /** @var TYPE_NAME $player */
+                $out .= '<div style="float:right; width:20%; text-align:right;">'.$priority_speaker.self::user_groups_icons($player).'</div>'."\n";
             $out .= '<div style="clear:both;"></div>'."\n";
         }
 
@@ -299,12 +302,13 @@ class TS3Renderer {
                     DebugConsole::insert_info('TS3Renderer::icon()', 'Download Icon: "icon_'.$id.'"');
                 }
 
-                $ftInitDownload = self::ftInitDownload('/icon_'.$id,$cid);
+                $ftInitDownload = self::ftInitDownload("/icon_".$id,$cid);
                 if(!$ftInitDownload) { self::$nf_pic_ids[strval($id)] = true; return ''; }
                 if(is_array($ftInitDownload) && array_key_exists('ftkey', $ftInitDownload) && $ftInitDownload['size']) {
                     if(show_teamspeak_debug)
                         DebugConsole::insert_info('TS3Renderer::icon()', 'Download Icon: "icon_'.$id.'" with FTKey: "'.$ftInitDownload['ftkey'].'"');
 
+                    /** @var array $ftInitDownload */
                     $file_stream=self::ftDownloadFile($ftInitDownload);
                     if(!empty($file_stream) && $file_stream != false) {
                         if(show_teamspeak_debug)
@@ -364,7 +368,7 @@ class TS3Renderer {
      * @param int $cid
      * @param sting $cpw
      * @param int $seekpos
-     * @return Ambigous <multitype:Ambigous, boolean, multitype:Ambigous <multitype:, boolean, multitype:boolean string mixed > >
+     * @return Ambigous|array|bool
      */
     private static function ftInitDownload($name, $cid=0, $cpw='', $seekpos=0) {
         $server = self::gethost(); $content = null;
@@ -409,7 +413,7 @@ class TS3Renderer {
                 $splittedResponse = explode('error id=', $content);
                 $chooseEnd = count($splittedResponse) - 1;
                 $cutIdAndMsg = explode(' msg=', $splittedResponse[$chooseEnd]);
-		DebugConsole::insert_error('TS3Renderer::ftInitDownload()', 'ErrorID: '.$cutIdAndMsg[0].' | Message: '.$this->unEscapeText($cutIdAndMsg[1]));
+		DebugConsole::insert_error('TS3Renderer::ftInitDownload()', 'ErrorID: '.$cutIdAndMsg[0].' | Message: '.$cutIdAndMsg[1]);
 		return false;
             }
                 

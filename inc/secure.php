@@ -40,7 +40,7 @@ if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
                     &&
                     ($end == 'jpg' || $end == 'jpeg' || $end == 'gif' || $end == 'png')
                     &&
-                    $value['error'] == 0)
+                        $val['error'] == 0)
                         $_FILES[$key] = $val;
                     else {
                         @unlink($val['tmp_name']);

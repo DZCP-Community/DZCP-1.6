@@ -144,7 +144,9 @@ class SteamAPI {
             if(array_key_exists('error',$xml) || empty($xml_stream)) return false;
             if(!$xml = simplexml_load_string($xml_stream, 'SimpleXMLElement', LIBXML_NOCDATA)) return false;
             self::$send_data_api = array();
-            self::$api_data = self::objectToArray($xml->players->player);
+            if (!empty($xml->players)) {
+                self::$api_data = self::objectToArray($xml->players->player);
+            }
             $CachedString->set(base64_encode(serialize(self::$api_data)))->expiresAfter(steam_api_refresh);
             $cache->save($CachedString);
             return is_array(self::$api_data);

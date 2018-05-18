@@ -57,7 +57,7 @@
 		/**
 		 * get the lastest changes for restore
 		 *
-		 * @return array array('name', 'restorable', 'is_original')
+		 * @return int
 		 */
 		function getNumRestorable()
 		{
@@ -71,11 +71,7 @@
 						if(file_exists($this->session->getSessionDir() . $v['name']))
 						{
 							$output++;
-						}else 
-						{
-							
 						}
-						
 					}
 				}
 			}
@@ -85,14 +81,13 @@
 		/**
 		 * get the path of image which keep the lastest changes
 		 *
-		 * @return  return empty array when failed
+		 * @return array
 		 */
 		function getLastestRestorable()
 		{
 			if(isset($_SESSION[$this->path]) && is_array($_SESSION[$this->path]) && sizeof($_SESSION[$this->path]))
 			{	
 				$sessionImages = array_reverse($_SESSION[$this->path], true);
-				$lastestKey = '';
 				foreach($sessionImages as $k=>$v)
 				{
 					if($v['restorable'] && empty($v['is_original']) && file_exists($this->session->getSessionDir() . $v['name']))
@@ -102,7 +97,7 @@
 				}							
 				
 			}
-			return  array();
+			return array();
 			
 		}
 		/**

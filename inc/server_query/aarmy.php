@@ -95,5 +95,6 @@
 
       return $player;
     }
+
+    return array();
   }
-?>

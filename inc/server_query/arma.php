@@ -93,5 +93,6 @@
 
       return $player;
     }
+
+      return array();
   }
-?>

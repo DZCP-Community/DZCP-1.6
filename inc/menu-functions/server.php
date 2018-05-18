@@ -78,7 +78,6 @@ function server($serverID = 0) {
         }
 
         if(!empty($server_name_config[$server['gamemod']])) $server_name_short = $server_name_config[$server['gamemod']][1];
-        if(!empty($server_link_config[$server['gamemod']])) $server_link = $server_link_config[$server['gamemod']];
 
         $players = ""; $count=0;
         if(!empty($player_list))

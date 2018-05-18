@@ -532,7 +532,7 @@ class pagination
 		switch($type)
 		{
 			case "2":
-				$output .= "<span class=\"pagination_summany\">" . $this->getFirstItem() . " to " . $this->getLastItem() . " of " . $this->getTotal() . " results.</span> ";	
+				$output .= "<span class=\"pagination_summany\">" . strval($this->getFirstItem()) . " to " . strval($this->getLastItem()) . " of " . strval($this->getTotal()) . " results.</span> ";
 			if($previousUrl = $this->getPreviousUrl())
 			{
 				$output .= " " . $previousUrl;
@@ -546,7 +546,7 @@ class pagination
 			case 1:
 				//get full summary pagination
 			default:
-				$output .= "<span class=\"pagination_summany\">" . $this->getFirstItem() . "/" . $this->getLastItem() . " (" . $this->getTotal() . ")</span> ";
+				$output .= "<span class=\"pagination_summany\">" . strval($this->getFirstItem()) . "/" . strval($this->getLastItem()) . " (" . strval($this->getTotal()) . ")</span> ";
 			if($firstUrl = $this->getFirstUrl())
 			{
 				$output .= " " . $firstUrl;

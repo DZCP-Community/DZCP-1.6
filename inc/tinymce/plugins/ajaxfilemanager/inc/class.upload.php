@@ -405,11 +405,14 @@ class Upload
 					break;
 				case 5:
 					$type = 'psd';
+                    break;
 				case 6:
 					$type = 'bmp';
+                    break;
 				case 7:
 				case 8:
 					$type = 'tiff';
+                break;
 				default:
 					array_push($this->errors, "We do not recognize this image format");
 

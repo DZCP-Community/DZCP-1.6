@@ -418,6 +418,7 @@ function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_
         curl_setopt($curl, CURLOPT_TIMEOUT, $timeout * 2); // x 2
         
         //For POST
+        /** @var TYPE_NAME $post */
         if(count($post) >= 1 && $post != false) {
             curl_setopt($curl, CURLOPT_POST, 1);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
@@ -670,8 +671,13 @@ function glossar_load_index() {
     }
 
     dbc_index::setIndex('glossar', array('gl_words' => $gl_words, 'gl_desc' => $gl_desc));
+    return true;
 }
 
+/**
+ * @param $txt
+ * @return mixed
+ */
 function glossar($txt) {
     global $gl_words,$gl_desc,$use_glossar,$ajaxJob;
 
@@ -688,21 +694,23 @@ function glossar($txt) {
     $txt = str_replace('&#91;','[',$txt);
 
     // mark words
-    foreach($gl_words as $gl_word) {
-        $w = addslashes(regexChars(html_entity_decode($gl_word)));
-        $txt = str_ireplace(' '.$w.' ', ' <tmp|'.$w.'|tmp> ', $txt);
-        $txt = str_ireplace('>'.$w.'<', '> <tmp|'.$w.'|tmp> <', $txt);
-        $txt = str_ireplace('>'.$w.' ', '> <tmp|'.$w.'|tmp> ', $txt);
-        $txt = str_ireplace(' '.$w.'<', ' <tmp|'.$w.'|tmp> <', $txt);
-    }
+    if(is_array($gl_words)) {
+        foreach ($gl_words as $gl_word) {
+            $w = addslashes(regexChars(html_entity_decode($gl_word)));
+            $txt = str_ireplace(' ' . $w . ' ', ' <tmp|' . $w . '|tmp> ', $txt);
+            $txt = str_ireplace('>' . $w . '<', '> <tmp|' . $w . '|tmp> <', $txt);
+            $txt = str_ireplace('>' . $w . ' ', '> <tmp|' . $w . '|tmp> ', $txt);
+            $txt = str_ireplace(' ' . $w . '<', ' <tmp|' . $w . '|tmp> <', $txt);
+        }
 
-    // replace words
-    for($g=0;$g<=count($gl_words)-1;$g++) {
-        $desc = regexChars($gl_desc[$g]);
-        $info = 'onmouseover="DZCP.showInfo(\''.jsconvert($desc).'\')" onmouseout="DZCP.hideInfo()"';
-        $w = regexChars(html_entity_decode($gl_words[$g]));
-        $r = "<a class=\"glossar\" href=\"../glossar/?word=".$gl_words[$g]."\" ".$info.">".$gl_words[$g]."</a>";
-        $txt = str_ireplace('<tmp|'.$w.'|tmp>', $r, $txt);
+        // replace words
+        for($g=0;$g<=count($gl_words)-1;$g++) {
+            $desc = regexChars($gl_desc[$g]);
+            $info = 'onmouseover="DZCP.showInfo(\''.jsconvert($desc).'\')" onmouseout="DZCP.hideInfo()"';
+            $w = regexChars(html_entity_decode($gl_words[$g]));
+            $r = "<a class=\"glossar\" href=\"../glossar/?word=".$gl_words[$g]."\" ".$info.">".$gl_words[$g]."</a>";
+            $txt = str_ireplace('<tmp|'.$w.'|tmp>', $r, $txt);
+        }
     }
 
     $txt = str_replace(']','&#93;',$txt);
@@ -1402,6 +1410,7 @@ function online_guests($where='') {
                    `login`    = ".((int)$logged).";");
         return cnt($db['c_who']);
     }
+    return true;
 }
 //-> Prueft, wieviele registrierte User gerade online sind
 function online_reg() {
@@ -1667,8 +1676,10 @@ function checkpwd($user, $pwd) {
 
 //-> Infomeldung ausgeben
 function info($msg, $url, $timeout = 5) {
-    if(config('direct_refresh'))
-        return header('Location: '.str_replace('&amp;', '&', $url));
+    if(config('direct_refresh')) {
+        header('Location: '.str_replace('&amp;', '&', $url));
+        exit();
+    }
 
     $u = parse_url($url); $parts = '';
     $u['query'] = array_key_exists('query', $u) ? $u['query'] : '';
@@ -1779,7 +1790,7 @@ function nav($entrys, $perpage, $urlpart='', $icon=true) {
 //-> Funktion um Seiten-Anzahl der Artikel zu erhalten
 function artikelSites($sites, $id) {
     global $part;
-    $i = 0; $seiten = '';
+    $seiten = '';
     for($i=0;$i<$sites;$i++) {
         if ($i == $part)
             $seiten .= show(_page, array("num" => ($i+1)));
@@ -2195,6 +2206,7 @@ function getrank($tid, $squad="", $profil=false) {
                 return _gast;
         }
     }
+    return '';
 }
 
 //-> Session fuer den letzten Besuch setzen
@@ -2240,7 +2252,7 @@ function ipcheck($what,$time = "") {
             if ($get['time'] + (int)($time) < time())
                 db("DELETE FROM `" . $db['ipcheck'] . "` WHERE `what` = '" . $what . "' AND `ip` = '" . $userip . "' AND (`time`+" . $time . ") < " . time() . ";");
 
-            if ($get['time'] + $time > time())
+            if (($get['time'] + $time) > time())
                 return true;
         }
     }
@@ -2779,7 +2791,6 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
             $index = error(_error_have_to_be_logged, 1);
 
         $where = preg_replace_callback("#autor_(.*?)$#",function($id) { return re(data("nick","$id[1]")); },$where);
-        $index = empty($index) ? '' : (empty($check_msg) ? '' : $check_msg).'<table class="mainContent" cellspacing="1">'.$index.'</table>';
 
         //-> Sort & filter placeholders
         //default placeholders

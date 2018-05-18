@@ -160,9 +160,8 @@
 			{
 				$mask = is_null($mask)?$this->mask:$mask;				
 				$status = @mkdir(slashToBackslash($path));			
-				if ($mask)
-				{
-					@chmod(slashToBackslash($path), (int)($mask, 8));
+				if ($mask) {
+					chmod(slashToBackslash($path), (int)($mask));
 				}					
 				if($dirOwner)
 				{
@@ -283,20 +282,19 @@
     			$fileExt = getFileExt($fileToMove);
     			$fileBaseName = basename($fileToMove, '.' . $fileExt);
     			$count = 1;
-    			while(file_exists($destFolder . $fileBaseName . $count . "." . $fileExt))
-    			{
+    			while(file_exists($destFolder . $fileBaseName . $count . "." . $fileExt)) {
     				$count++;
     			}
     			$filePath = $destFolder . $fileBaseName . $count . "." . $fileExt;
-    		}elseif(is_dir())
+    		}
+    		elseif(is_dir())
     		{
     			$folderName = basename($fileToMove);
      			$count = 1;
-    			while(file_exists($destFolder . $folderName . $count))
-    			{
+    			while(file_exists($destFolder . $folderName . $count)) {
     				$count++;
     			}
-    			$filePath = $destFolder . $fileBaseName . $count;   			
+    			$filePath = $destFolder . $folderPath . $count;
     		}
     		
     	}
@@ -309,7 +307,7 @@
      */
     function getFileInfo()
     {
-    	return $this->fileInfo;
+    	return (array)$this->fileInfo;
     }
     /**
      * close 
