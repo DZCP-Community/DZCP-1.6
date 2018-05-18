@@ -123,8 +123,8 @@ if(defined('_Forum')) {
       $check++;
     }
   } else {
-    if(!$chkMe) $nick = "<div style="text-align:center;">"._forum_nobody_is_online."</div>";
-    else                        $nick = "<div style="text-align:center;">"._forum_nobody_is_online2."</div>";
+    if(!$chkMe) $nick = "<div style=\"text-align:center;\">"._forum_nobody_is_online."</div>";
+    else                        $nick = "<div style=\"text-align:center;\">"._forum_nobody_is_online2."</div>";
   }
 
   $online = show($dir."/online", array("nick" => $nick,
