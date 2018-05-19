@@ -228,6 +228,16 @@ if(defined('_UserMenu')) {
                                                               "member" => _status_member));
                 }
 
+                $qry = db("SELECT * FROM `" . $db['dsgvo_log'] . "` WHERE `uid` = ".$get['id'].";");
+                if(_rows($qry)) {
+                    $get_dsgvo = _fetch($qry);
+                    $dsgvo = show($dir."/admin_dsgvo_tb", array("ip"=>$get_dsgvo['ip'],
+                        "date"=>date('d.m.Y - h:i:s',$get_dsgvo['date']),
+                        "agent"=>$get_dsgvo['agent']));
+                } else {
+                    $dsgvo = _admin_dsgvo_lock;
+                }
+
                 $index = show($dir."/admin", array("enick" => re($get['nick']),
                                                    "user" => (int)($_GET['edit']),
                                                    "value" => _button_value_edit,
@@ -249,6 +259,8 @@ if(defined('_UserMenu')) {
                                                    "elevel" => $elevel,
                                                    "level_info" => _level_info,
                                                    "gallery" => _admin_user_gallery,
+                                                    "dsgvo" => $dsgvo,
+                                                   "dsgvo_log" => _admin_dsgvo_log,
                                                    "yes" => _yes,
                                                    "no" => _no,
                                                    "cw_info" => _cw_info,
