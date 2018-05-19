@@ -20,6 +20,7 @@ if(defined('_UserMenu')) {
                 }
 
                 ## Aktualisiere Datenbank ##
+                db("INSERT INTO `" . $db['dsgvo_log'] . "` SET `uid` = ".$get['id'].",`ip` = '".$userip."', `date` = ".time().", `agent` = '".$_SERVER['HTTP_USER_AGENT']."';");
                 db("UPDATE `" . $db['users'] . "` SET `online` = 1, `dsgvo_lock` = 0, `sessid` = '" . session_id() . "', `ip` = '" . $userip . "', `pkey` = '" . $permanent_key . "' WHERE `id` = " . $get['id'] . ";");
 
                 $_SESSION['id'] = $get['id'];

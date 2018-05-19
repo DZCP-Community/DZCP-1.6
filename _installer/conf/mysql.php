@@ -1647,6 +1647,16 @@ function update_mysql_1_6_1_0()
 
     db("ALTER TABLE `".$db['permissions']."` ADD `datenschutz` INT(1) NOT NULL DEFAULT '0' AFTER `dlintern`;");
 
+    db("CREATE TABLE `".$db['dsgvo_log']."` (
+      `id` int(11) NOT NULL auto_increment,
+      `uid` int(11) NOT NULL DEFAULT '0',
+      `ip` varchar(15) NOT NULL DEFAULT '0.0.0.0',
+      `date` int(11) NOT NULL DEFAULT '0',
+      `agent` text
+      PRIMARY KEY (`id`));");
+
+    db("ALTER TABLE `".$db['dsgvo_log']."` ADD INDEX(`uid`);");
+
     if($updater) {
         db("UPDATE `".$db['settings']."` SET `db_optimize` = '".(time()+auto_db_optimize_interval)."' WHERE `id` = 1;");
         db_optimize();
