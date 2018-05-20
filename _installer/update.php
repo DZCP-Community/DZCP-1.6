@@ -148,7 +148,8 @@ case 'prepare';
   $c .= check_file_dir('../upload',1);
   $c .= check_file_dir('../upload/index.php');
   $c .= check_file_dir('../inc',1);
-  $c .=  check_file_dir('../inc/_cache_',1);
+  $c .= check_file_dir('../inc/api.php');
+  $c .= check_file_dir('../inc/_cache_',1);
   $c .= check_file_dir('../inc/images',1);
   $c .= check_file_dir('../inc/images/tsicons',1);
   $c .= check_file_dir('../inc/images/tsicons/server',1);
@@ -215,13 +216,14 @@ if(isset($_GET['agb']) && $_GET['agb']) {
     header("Location: install.php?agb=false");
 } else {
     include(basePath.'/_installer/html/require.php');
-    $mcrypt_decrypt = extension_loaded('mcrypt') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";
-    $mcrypt_decrypt.= "</b>&nbsp;&nbsp;&nbsp; Mcrypt</span><br />";
-    $apc = extension_loaded('apc') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";
-    $apc.= "</b>&nbsp;&nbsp;&nbsp; Alternative PHP Cache (APC)</span><br />";
+    $apc = extension_loaded('apcu') || extension_loaded('apc') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";
+    $apc.= "</b>&nbsp;&nbsp;&nbsp; Alternative PHP Cache (APC / APCu)</span><br />";
+
+    $curl = extension_loaded('curl') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";
+    $curl.= "</b>&nbsp;&nbsp;&nbsp; Client for URLs (cURL)</span><br />";
 
     $opt = '';
-    $opt .= $mcrypt_decrypt;
+    $opt .= $curl;
     $opt .= $apc;
     $check = preg_match("#false#Uis",$opt);
 
