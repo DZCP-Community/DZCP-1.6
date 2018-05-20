@@ -471,9 +471,11 @@ function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_
         }
         
         $context = stream_context_create($opts);
-        if ((!$content = @file_get_contents($url, false, $context, -1, 40000)) || empty($content)) {
+        $content = file_get_contents($url, false, $context);
+        if (!$content || empty($content)) {
             return false;
         }
+        $content = substr($content, -1, 40000);
 
         if($gzip) {
             foreach($http_response_header as $c => $h) {
