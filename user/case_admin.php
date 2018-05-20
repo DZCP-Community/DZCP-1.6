@@ -19,7 +19,7 @@ if(defined('_UserMenu')) {
                                                          "what" => re($getpos['position'])));
             }
 
-            $check = db("SELECT `id` FROM `".$db['squaduser']."` WHERE `user` = ".(int)($_GET['edit'])." AND `squad` = ".$getsq['id'].";",true) ? 'checked="checked"' : '';
+            $check = db("SELECT `id` FROM `".$db['squaduser']."` WHERE `user` = ".$userid." AND `squad` = ".$getsq['id'].";",true) ? 'checked="checked"' : '';
             $esquads .= show(_checkfield_squads, array("id" => $getsq['id'],
                                                        "check" => $check,
                                                        "eposi" => $posi,
@@ -36,7 +36,7 @@ if(defined('_UserMenu')) {
                                                 "squad" => _member_admin_squad,
                                                 "posi" => _profil_position));
     }
-    elseif(isset($_GET['edit']) && data("level",(int)($_GET['edit'])) == 4 && !rootAdmin($userid))
+    elseif(isset($_GET['edit']) && data("level",$userid) == 4 && !rootAdmin($userid) && !data("dsgvo_lock",(int)$_GET['id']))
         $index = error(_error_edit_admin, 1);
     else {
         if($do == "identy")

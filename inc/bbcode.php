@@ -419,7 +419,7 @@ function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_
         
         //For POST
         /** @var TYPE_NAME $post */
-        if(count($post) >= 1 && $post != false) {
+        if($post != false && count($post) >= 1) {
             curl_setopt($curl, CURLOPT_POST, 1);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
             curl_setopt($curl, CURLOPT_VERBOSE , 0 );
