@@ -36,7 +36,39 @@ switch ($do)
         $show = info(_config_set, "?admin=datenschutz", 4);
         break;
     case 'edit':
-        //Todo
+        if($_POST) {
+            db("UPDATE `".$db['dsgvo_pers']."` SET ".
+            "`organisation` = '".up($_POST['organisation'])."', ".
+            "`titel` = '".up($_POST['titel'])."', ".
+            "`first_name` = '".up($_POST['first_name'])."', ".
+            "`last_name` = '".up($_POST['last_name'])."', ".
+            "`address` = '".up($_POST['address'])."', ".
+            "`zip_code` = ".((int)$_POST['zip_code']).", ".
+            "`place` = '".up($_POST['place'])."', ".
+            "`country` = '".up($_POST['country'])."', ".
+            "`e-mail` = '".up($_POST['e-mail'])."', ".
+            "`phone` = '".up($_POST['phone'])."', ".
+            "`website` = '".up(link($_POST['website']))."' ".
+            "WHERE `id` = ".(int)$_GET['id'].";");
+            $show = info(_config_set, "?admin=datenschutz", 4);
+        } else {
+            $get = db("SELECT * FROM `" . $db['dsgvo_pers'] . "` WHERE `id` = " . (int)$_GET['id'] . ";", false, true);
+            $head = ($get['id'] == 1 ? _datenschutz_rolle_1 : _datenschutz_rolle_2);
+            $show = show($dir . "/datenschutz_edit_users", array('head' => $head,
+                'organisation' => re($get['organisation']),
+                'titel' => re($get['titel']),
+                'first_name' => re($get['first_name']),
+                'last_name' => re($get['last_name']),
+                'address' => re($get['address']),
+                'zip_code' => (int)($get['zip_code']),
+                'place' => re($get['place']),
+                'country' => re($get['country']),
+                'e-mail' => re($get['e-mail']),
+                'phone' => re($get['phone']),
+                'website' => re($get['website']),
+                'id' => $get['id'],
+                'value' => _button_value_save));
+        }
         break;
     default:
         $qry = db("SELECT `id`,`first_name`,`last_name` FROM `".$db['dsgvo_pers']."`;");
@@ -71,6 +103,7 @@ switch ($do)
                 'fid' => 'fid1_'.$get['id']));
         }
 
-        $show = show($dir."/datenschutz", array('show' => $show,'selects_1' => $selects_1,'selects_2' => $selects_2, 'value' => _button_value_save));
+        $show = show($dir."/datenschutz", array('show' => $show,'selects_1' => $selects_1,
+            'selects_2' => $selects_2, 'value' => _button_value_save));
         break;
 }
