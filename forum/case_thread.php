@@ -29,6 +29,7 @@ if(defined('_Forum')) {
                     "`t_text` = '', ".
                     "`edited` = '', ".
                     "`t_hp` = '', ".
+                    "`ip` = '', " .
                     "`dsgvo` = 1, ".
                     "WHERE `id` = ".$get['id'].";");
             }
