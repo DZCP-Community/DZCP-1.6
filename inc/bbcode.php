@@ -217,6 +217,7 @@ if(!$chkMe) {
     $_SESSION['pwd']       = '';
     $_SESSION['ip']        = '';
     $_SESSION['lastvisit'] = '';
+    $_SESSION['identy_id'] = '';
 }
 
 //-> Prueft ob der User gebannt ist, oder die IP des Clients warend einer offenen session verändert wurde.
@@ -226,6 +227,7 @@ if($chkMe && $userid && !empty($_SESSION['ip'])) {
         $_SESSION['pwd']       = '';
         $_SESSION['ip']        = '';
         $_SESSION['lastvisit'] = '';
+        $_SESSION['identy_id'] = '';
         session_unset();
         session_destroy();
         session_regenerate_id();
@@ -252,6 +254,11 @@ function HasDSGVO() {
 * Forwarded IP Support
 */
 function visitorIp() {
+    if(array_key_exists('identy_ip',$_SESSION)) {
+        if(!empty($_SESSION['identy_ip']))
+            return $_SESSION['identy_ip'];
+    }
+
     $TheIp=$_SERVER['REMOTE_ADDR'];
     if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR']))
         $TheIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -267,6 +274,54 @@ function visitorIp() {
         return trim($TheIp);
 
     return '0.0.0.0';
+}
+
+/**
+ * Pruft eine IP gegen eine IP-Range
+ * @param ipv4 $ip
+ * @param ipv4 range $range
+ * @return boolean
+ */
+function validateIpV4Range ($ip, $range) {
+    if(!is_array($range)) {
+        $counter = 0;
+        $tip = explode ('.', $ip);
+        $rip = explode ('.', $range);
+        foreach ($tip as $targetsegment) {
+            $rseg = $rip[$counter];
+            $rseg = preg_replace ('=(\[|\])=', '', $rseg);
+            $rseg = explode ('-', $rseg);
+            if (!isset($rseg[1])) {
+                $rseg[1] = $rseg[0];
+            }
+
+            if ($targetsegment < $rseg[0] || $targetsegment > $rseg[1]) {
+                return false;
+            }
+            $counter++;
+        }
+    } else {
+        foreach ($range as $range_num) {
+            $counter = 0;
+            $tip = explode ('.', $ip);
+            $rip = explode ('.', $range_num);
+            foreach ($tip as $targetsegment) {
+                $rseg = $rip[$counter];
+                $rseg = preg_replace ('=(\[|\])=', '', $rseg);
+                $rseg = explode ('-', $rseg);
+                if (!isset($rseg[1])) {
+                    $rseg[1] = $rseg[0];
+                }
+
+                if ($targetsegment < $rseg[0] || $targetsegment > $rseg[1]) {
+                    return false;
+                }
+                $counter++;
+            }
+        }
+    }
+
+    return true;
 }
 
 /**

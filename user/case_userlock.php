@@ -122,14 +122,17 @@ if(defined('_UserMenu')) {
 
                 //IP-Check Loop
                 foreach ($ips as $ip => $null) {
-                    db("DELETE FROM `".$db['acomments']."` WHERE `ip` = '".$ip."';");
-                    db("DELETE FROM `".$db['c_ips']."` WHERE `ip` = '".$ip."';");
-                    db("DELETE FROM `".$db['c_who']."` WHERE `ip` = '".$ip."';");
-                    db("DELETE FROM `".$db['cw_comments']."` WHERE `ip` = '".$ip."';");
-                    db("DELETE FROM `".$db['ipcheck']."` WHERE `ip` = '".$ip."' OR `user_id` = ".$getdel['id'].";");
-                    db("DELETE FROM `".$db['newscomments']."` WHERE `ip` = '".$ip."';");
-                    db("DELETE FROM `".$db['shout']."` WHERE `ip` = '".$ip."';");
-                    db("DELETE FROM `".$db['usergb']."` WHERE `ip` = '".$ip."';");
+                    if(!validateIpV4Range($ip, '[192].[168].[0-255].[0-255]') && !validateIpV4Range($ip, '[127].[0].[0-255].[0-255]') &&
+                        !validateIpV4Range($ip, '[10].[0-255].[0-255].[0-255]') && !validateIpV4Range($ip, '[172].[16-31].[0-255].[0-255]')) {
+                        db("DELETE FROM `" . $db['acomments'] . "` WHERE `ip` = '" . $ip . "';");
+                        db("DELETE FROM `" . $db['c_ips'] . "` WHERE `ip` = '" . $ip . "';");
+                        db("DELETE FROM `" . $db['c_who'] . "` WHERE `ip` = '" . $ip . "';");
+                        db("DELETE FROM `" . $db['cw_comments'] . "` WHERE `ip` = '" . $ip . "';");
+                        db("DELETE FROM `" . $db['ipcheck'] . "` WHERE `ip` = '" . $ip . "' OR `user_id` = " . $getdel['id'] . ";");
+                        db("DELETE FROM `" . $db['newscomments'] . "` WHERE `ip` = '" . $ip . "';");
+                        db("DELETE FROM `" . $db['shout'] . "` WHERE `ip` = '" . $ip . "';");
+                        db("DELETE FROM `" . $db['usergb'] . "` WHERE `ip` = '" . $ip . "';");
+                    }
                 } unset($ips);
 
                 foreach($picformat as $tmpendung) {

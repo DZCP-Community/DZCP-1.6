@@ -49,14 +49,17 @@ if(defined('_UserMenu')) {
                 $index = error(_identy_admin, 1);
             else {
                 $msg = show(_admin_user_get_identy, array("nick" => autor($_GET['id'])));
-                db("UPDATE ".$db['users']." SET `online` = 0, `sessid` = '', `pkey` = '' WHERE id = ".$userid.";"); //Logout
+                $_SESSION['identy_id'] = $userid; //Save Last ID
+
+                db("UPDATE ".$db['users']." SET `online` = 0, `sessid` = '' WHERE `id` = ".$userid.";"); //Logout
                 session_regenerate_id();
 
                 $_SESSION['id'] = $_GET['id'];
                 $_SESSION['pwd'] = data("pwd",(int)($_GET['id']));
-                $_SESSION['ip'] = $userip;
+                $_SESSION['ip'] = data("ip",(int)($_GET['id']));
+                $_SESSION['identy_ip'] = $_SESSION['ip'];
 
-                db("UPDATE ".$db['users']." SET `online` = '1', `sessid` = '".session_id()."', `ip` = '".$userip."' WHERE id = ".(int)($_GET['id']));
+                db("UPDATE ".$db['users']." SET `online` = 1, `sessid` = '".session_id()."' WHERE `id` = ".(int)($_GET['id']));
                 setIpcheck("ident(".$userid."_".(int)($_GET['id']).")");
 
                 $index = info($msg, "?action=user&amp;id=".$_GET['id']."");
