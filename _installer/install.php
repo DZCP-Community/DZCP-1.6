@@ -481,10 +481,6 @@ switch ($action):
                 @set_time_limit(60);
                 @ignore_user_abort(true);
                 install_mysql($_POST['login'], $_POST['nick'], $_POST['pwd'], $_POST['email']);
-                update_mysql_1_4();
-                update_mysql_1_5();
-                update_mysql_1_5_1();
-                update_mysql_1_5_2();
                 update_mysql_1_6();
                 update_mysql_1_6_0_4();
                 update_mysql_1_6_1_0();

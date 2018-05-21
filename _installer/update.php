@@ -329,62 +329,14 @@ switch ($action):
                     }
                 }
 
-                if($_POST['version'] == "1.1")
-                {
-                    update_mysql();
-                    update_mysql_1_3();
-                    update_mysql_1_4();
-                    update_mysql_1_5();
-                    update_mysql_1_5_1();
-                    update_mysql_1_5_2();
-                    update_mysql_1_6();
-                    update_mysql_1_6_0_4();
-                    update_mysql_1_6_1_0();
-                } elseif($_POST['version'] == "1.2.x") {
-                    update_mysql_1_3();
-                    update_mysql_1_4();
-                    update_mysql_1_5();
-                    update_mysql_1_5_1();
-                    update_mysql_1_5_2();
-                    update_mysql_1_6();
-                    update_mysql_1_6_0_4();
-                    update_mysql_1_6_1_0();
-                } elseif($_POST['version'] == "1.3.x") {
-                    update_mysql_1_4();
-                    update_mysql_1_5();
-                    update_mysql_1_5_1();
-                    update_mysql_1_5_2();
-                    update_mysql_1_6();
-                    update_mysql_1_6_0_4();
-                    update_mysql_1_6_1_0();
-                } elseif($_POST['version'] == "1.4.x") {
-                    update_mysql_1_5();
-                    update_mysql_1_5_1();
-                    update_mysql_1_5_2();
-                    update_mysql_1_6();
-                    update_mysql_1_6_0_4();
-                    update_mysql_1_6_1_0();
-                } elseif($_POST['version'] == "1.5") {
-                    update_mysql_1_5_1();
-                    update_mysql_1_5_2();
-                    update_mysql_1_6();
-                    update_mysql_1_6_0_4();
-                    update_mysql_1_6_1_0();
-                } elseif($_POST['version'] == "1.5.1") {
-                    update_mysql_1_5_2();
-                    update_mysql_1_6();
-                    update_mysql_1_6_0_4();
-                    update_mysql_1_6_1_0();
-                } elseif($_POST['version'] == "1.5.2") {
-                    update_mysql_1_6();
-                    update_mysql_1_6_0_4();
-                    update_mysql_1_6_1_0();
-                } elseif($_POST['version'] == "ab 1.5.4 bis 1.5.5.4") {
+                if($_POST['version'] == "ab 1.5.4 bis 1.5.5.4") {
                     update_mysql_1_6();
                     update_mysql_1_6_0_4();
                     update_mysql_1_6_1_0();
                 } elseif($_POST['version'] == "1.6.0.x") {
                     update_mysql_1_6_0_4();
+                    update_mysql_1_6_1_0();
+                } elseif($_POST['version'] == "1.6.0.4") {
                     update_mysql_1_6_1_0();
                 }
 

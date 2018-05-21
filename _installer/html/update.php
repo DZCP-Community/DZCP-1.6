@@ -21,15 +21,9 @@
   </tr>
   <tr>
     <td>
-      <input type="radio" name="version" value="1.1"> <b>1.1</b><br />
-      <input type="radio" name="version" value="1.2.x"> <b>1.2.x</b><br />
-      <input type="radio" name="version" value="1.3.x"> <b>1.3.x</b><br />
-      <input type="radio" name="version" value="1.4.x"> <b>1.4.x</b><br />
-      <input type="radio" name="version" value="1.5"> <b>1.5</b><br />
-      <input type="radio" name="version" value="1.5.1"> <b>1.5.1</b><br />
-      <input type="radio" name="version" value="1.5.2"> <b>1.5.2 oder 1.5.3</b><br />
       <input type="radio" name="version" value="ab 1.5.4 bis 1.5.5.4"> <b>ab 1.5.4 bis 1.5.5.4</b><br />
-      <input type="radio" name="version" value="1.6.0.x"> <b>ab 1.6.0.x</b><br />
+      <input type="radio" name="version" value="1.6.0.x"> <b>ab 1.6.0.x bis 1.6.0.4</b><br />
+      <input type="radio" name="version" value="1.6.0.4"> <b>ab 1.6.0.4</b><br />
     </td>
   </tr>
   <tr>
