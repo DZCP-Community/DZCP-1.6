@@ -27,7 +27,7 @@ define('cookie_expires', (60*60*24*30*12)); // Wie Lange die Cookies des CMS ihr
 define('file_get_contents_timeout', 10);
 
 define('auto_db_optimize', true); // Soll in der Datenbank regelmaessig ein OPTIMIZE TABLE ausgefuehrt werden?
-define('auto_db_optimize_interval', (7*24*60*60)); // Wann soll der OPTIMIZE TABLE ausgefuehrt werden, alle 7 Tage.
+define('auto_db_optimize_interval', (3*24*60*60)); // Wann soll der OPTIMIZE TABLE ausgefuehrt werden, alle 3 Tage.
 
 define('dzcp_version_checker', true); // Version auf DZCP.de abgleichen und benachrichtigen ob eine neue Version zur Verfuegung steht
 define('dzcp_version_checker_refresh', (30*60)); // Wie lange soll gewartet werden um einen Versionsabgleich auszufuehren
@@ -354,7 +354,30 @@ function db_stmt($query,$params=array('si', 'hallo', '4'),$rows=false,$fetch=fal
 }
 
 function db_optimize() {
-    global $db; $sql = '';
+    global $db;
+    //Garbage Collection for ipcheck
+    $qry = db("SELECT `id` FROM `".$db['ipcheck']."` ".
+        "WHERE `created` <= ".(time()-(14*24*60*60))." ". //14 Tage
+        "AND `time` <= ".(time()-(14*24*60*60))." AND `time` >= 1;");
+    while ($get = _fetch($qry)) {
+        db("DELETE FROM `".$db['ipcheck']."` WHERE `id` = ".$get['id'].";");
+    }
+
+    //Garbage Collection for counter ips
+    $qry = db("SELECT `id` FROM `".$db['c_ips']."` ".
+        "WHERE `datum` <= ".(time()-(30*24*60*60)).";"); //30 Tage
+    while ($get = _fetch($qry)) {
+        db("DELETE FROM `".$db['c_ips']."` WHERE `id` = ".$get['id'].";");
+    }
+
+    //Garbage Collection for counter whoison
+    $qry = db("SELECT `id` FROM `".$db['c_who']."` ".
+        "WHERE `online` <= ".(time()-(3*24*60*60)).";"); //3 Tage
+    while ($get = _fetch($qry)) {
+        db("DELETE FROM `".$db['c_who']."` WHERE `id` = ".$get['id'].";");
+    }
+
+    $sql = '';
     $blacklist = array('host','user','pass','db','prefix');
     foreach ($db as $key => $tb) {
         if(!in_array($key,$blacklist))
