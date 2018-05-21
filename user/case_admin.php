@@ -37,7 +37,11 @@ if(defined('_UserMenu')) {
                                                 "posi" => _profil_position));
     }
     elseif(isset($_GET['edit']) && data("level",$userid) == 4 && !rootAdmin($userid) && !data("dsgvo_lock",(int)$_GET['id']))
-        $index = error(_error_edit_admin, 1);
+        if(!data("dsgvo_lock",(int)$_GET['id'])) {
+            $index = error(_admin_dsgvo_indent_lock, 1);
+        } else {
+            $index = error(_error_edit_admin, 1);
+        }
     else {
         if($do == "identy")
         {

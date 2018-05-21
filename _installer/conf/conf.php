@@ -17,24 +17,29 @@ define('_link_require', '<span class="enabled">&raquo; Erweiterungen</span>');
 define('_link_require_1', '<span class="disabled">2. Erweiterungen</span>');
 define('_link_prepare', '<span class="enabled">&raquo; Vorbereitung</span>');
 define('_link_prepare_1', '<span class="disabled">3. Vorbereitung</span>');
+define('_link_autoupdate', '<span class="enabled">&raquo; Autoupdate</span>');
+define('_link_autoupdate_1', '<span class="disabled">4. Autoupdate</span>');
 define('_link_install', '<span class="enabled">&raquo; MySQL</span>');
-define('_link_install_1', '<span class="disabled">4. MySQL</span>');
+define('_link_install_1', '<span class="disabled">5. MySQL</span>');
 define('_link_db', '<span class="enabled">&raquo; Installation</span>');
-define('_link_db_1', '<span class="disabled">5. Installation</span>');
+define('_link_db_1', '<span class="disabled">6. Installation</span>');
+
 define('_link_dbu', '<span class="enabled">&raquo; Update</span>');
-define('_link_dbu_1', '<span class="disabled">4. Update</span>');
+define('_link_dbu_1', '<span class="disabled">5. Update</span>');
 define('_link_done', '<span class="enabled">&raquo; Done</span>');
-define('_link_done_1', '<span class="disabled">6. Done</span>');
+define('_link_done_1', '<span class="disabled">7. Done</span>');
 
 define('_link_update_done', '<span class="enabled">&raquo; Done</span>');
-define('_link_update_done_1', '<span class="disabled">5. Done</span>');
+define('_link_update_done_1', '<span class="disabled">6. Done</span>');
 
 ################
 ## Funktionen ##
 ################
-function check_file_dir($file, $is_file=false) {
-    if($is_file == 1) $what = "Dir:&nbsp;";
-    else $what = "File:";
+function check_file_dir($file, $is_dir=false) {
+    if($is_dir == 1)
+        $what = "Dir:&nbsp;";
+    else
+        $what = "File:";
 
     $_file = preg_replace("#\.\.#Uis", "", $file);
     if(is_writable($file))
@@ -113,12 +118,4 @@ function visitorIp() {
         return trim($TheIp);
 
     return '0.0.0.0';
-}
-
-function mkpwd() {
-    $chars = '1234567890abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $len = strlen($chars) - 1; $pw = '';
-    for($i = 0; $i < 10; $i++)
-    { $pw .= $chars{rand(0, $len)}; }
-    return $pw;
 }

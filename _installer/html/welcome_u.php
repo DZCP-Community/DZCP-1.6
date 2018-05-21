@@ -21,10 +21,10 @@
 <form action="update.php?action=prepare&agb=false" method="post">
 <textarea name="lizenz" style="width:100%;height:400px;overflow:auto" readonly>
 <?php echo utf8_encode(file_get_contents("conf/lizenz.txt")); ?>
-</textarea><br /><br /><b>Ich bin  mit den Lizenzbestimmungen einverstanden</b><br /><br />
-<script language="JavaScript1.2">
-   document.writeln('<input type="button" value="Ja" class="button" onclick="document.forms[0].action=\'update.php?action=require\';document.forms[0].submit()" tabindex="6">');
-   </script> <input type="submit" value="Nein"></td>
+</textarea><br /><br />
+<script>
+   document.writeln('<input type="button" value="Ich bin mit den Lizenzbestimmungen einverstanden" class="button" onclick="document.forms[0].action=\'update.php?action=require\';document.forms[0].submit()" tabindex="6">');
+   </script></td>
       </form>
     </td>
   </tr>

@@ -27,12 +27,12 @@ function dsgvo() {
                 $ph['first_name'] = re($pers['first_name']);
                 $ph['last_name'] = re($pers['last_name']);
                 $ph['address'] = re($pers['address']);
-                $ph['zip_code'] = re($pers['zip_code']);
+                $ph['zip_code'] = ((int)$pers['zip_code']);
                 $ph['place'] = re($pers['place']);
                 $ph['country'] = re($pers['country']);
                 $ph['e-mail'] = re($pers['e-mail']);
                 $ph['phone'] = re($pers['phone']);
-                $ph['website'] = re($pers['website']);
+                $ph['website'] = links(re($pers['website']));
                 unset($pers);
             }
 
@@ -69,12 +69,12 @@ function dsgvo() {
                     $ph['first_name'] = re($pers['first_name']);
                     $ph['last_name'] = re($pers['last_name']);
                     $ph['address'] = re($pers['address']);
-                    $ph['zip_code'] = re($pers['zip_code']);
+                    $ph['zip_code'] = ((int)$pers['zip_code']);
                     $ph['place'] = re($pers['place']);
                     $ph['country'] = re($pers['country']);
                     $ph['e-mail'] = re($pers['e-mail']);
                     $ph['phone'] = re($pers['phone']);
-                    $ph['website'] = re($pers['website']);
+                    $ph['website'] = links(re($pers['website']));
                     unset($pers);
                 }
 

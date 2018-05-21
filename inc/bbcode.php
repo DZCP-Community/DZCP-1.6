@@ -814,6 +814,7 @@ function eMailAddr($email) {
 
 //-> Leerzeichen mit + ersetzen (w3c)
 function convSpace($string) {
+    $string = spChars($string);
     return str_replace(" ","+",$string);
 }
 

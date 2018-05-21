@@ -1643,6 +1643,8 @@ function update_mysql_1_6_1_0()
       PRIMARY KEY (`id`));");
 
     db("ALTER TABLE `".$db['dsgvo_log']."` ADD INDEX(`uid`);");
+    db("ALTER TABLE `".$db['f_threads']."` ADD `dsgvo` INT(1) NOT NULL DEFAULT '0' AFTER `vote`;");
+    db("TRUNCATE `".$db['f_abo']."`;");
 
     if($updater) {
         db("UPDATE `".$db['settings']."` SET `db_optimize` = '".(time()+auto_db_optimize_interval)."' WHERE `id` = 1;");

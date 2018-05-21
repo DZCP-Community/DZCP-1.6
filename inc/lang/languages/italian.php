@@ -29,6 +29,19 @@ $language_text['_pvisibility_profile'] = 'Profilsichtbarkeit';
 $language_text['_pedit_perm_profile'] = '<option value="0">Public</option><option value="1">User only</option><option value="2">Member only</option><option value="4">Admin only</option>';
 $language_text['_admin_dsgvo_log'] = 'Datenschutz Infos';
 $language_text['_admin_dsgvo_lock'] = 'Account ist aufgrund der EU-DSGVO gesperrt!';
+$language_text['_admin_dsgvo_indent_lock'] = 'Account ist aufgrund der EU-DSGVO gesperrt, du kannst die Identität des Users nicht annehmen!';
+$language_text['_dsgvo_deleted_text'] = '<span style="color:#999999;">-- Der Autor dieses Posts hat den Text gelöscht --</span>';
+
+$language_text['_organisation'] = 'Unternehmen';
+$language_text['_first_name'] = 'Vorname';
+$language_text['_last_name'] = 'Nachname';
+$language_text['_address'] = 'Adresse';
+$language_text['_zip_code'] = 'Postleitzahl';
+$language_text['_place'] = 'Ort';
+$language_text['_country'] = 'Land';
+$language_text['_e-mail'] = 'E-Mail-Addresse';
+$language_text['_phone'] = 'Telefonnummer';
+$language_text['_website'] = 'Webseite';
 
 ## ADDED / REDEFINED FOR 1.6 Final
 $language_text['_txt_navi_main'] = 'Navigazione Principale';

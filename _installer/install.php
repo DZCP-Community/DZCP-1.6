@@ -31,10 +31,10 @@ if(debug_dzcp_handler)
 include(basePath.'/_installer/html/header.php');
 
 switch ($action):
-default:
-  if(!isset($_GET['agb']) || $_GET['agb'])
-  {
-    echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
+    default:
+        if((!isset($_GET['agb']) || $_GET['agb']) && isset($_GET['action']))
+        {
+            echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
             <tr>
               <td class="error_text"><b>Fehler:</b></td>
              </tr>
@@ -43,24 +43,24 @@ default:
               </td>
              </tr>
            </table>';
-  }
+        }
 
-  include(basePath.'/_installer/html/welcome.php');
-break;
-case 'prepare';
-  if($do == "set_chmods" && $_POST['check'] != "dont")
-  {
-    if(function_exists('ftp_connect') && function_exists('ftp_login') && function_exists('ftp_site'))
-    {
-      $host = $_POST['host'];
-      $user = $_POST['user'];
-      $pwd = $_POST['pwd'];
-      $pfad = $_POST['pfad'];
+        include(basePath.'/_installer/html/welcome.php');
+        break;
+    case 'prepare';
+        if($do == "set_chmods" && $_POST['check'] != "dont")
+        {
+            if(function_exists('ftp_connect') && function_exists('ftp_login') && function_exists('ftp_site'))
+            {
+                $host = $_POST['host'];
+                $user = $_POST['user'];
+                $pwd = $_POST['pwd'];
+                $pfad = $_POST['pfad'];
 
-      $conn = @ftp_connect($host);
-      if(!$conn)
-      {
-        echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
+                $conn = @ftp_connect($host);
+                if(!$conn)
+                {
+                    echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
                 <tr>
                   <td class="error_text"><b>Fehler:</b></td>
                 </tr>
@@ -70,9 +70,9 @@ case 'prepare';
                 </tr>
               </table>';
 
-      } elseif(!@ftp_login($conn, $user, $pwd))
-      {
-        echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
+                } elseif(!@ftp_login($conn, $user, $pwd))
+                {
+                    echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
                 <tr>
                   <td class="error_text"><b>Fehler:</b></td>
                 </tr>
@@ -81,44 +81,46 @@ case 'prepare';
                   </td>
                 </tr>
               </table>';
-      } else {
-        set_ftp_chmod('_installer',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('_installer/update.php',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('_installer/install.php',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('rss.xml',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('admin',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('banner',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('banner/partners',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('banner/sponsors',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('downloads',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('gallery',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('gallery/images',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('server',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('upload',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('upload/index.php',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/_cache_',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/tsicons/',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/tsicons/server/',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/clanwars',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/gameicons',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/maps',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/newskat',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/smileys',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/squads',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/uploads',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/uploads/taktiken',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/uploads/useravatare',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/uploads/usergallery',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/images/uploads/userpics',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/tinymce_files',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/tinymce/plugins/ajaxfilemanager/session',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/tinymce/plugins/ajaxfilemanager/session/gc_counter.ajax.php',$pfad,$host,$user,$pwd);
-        set_ftp_chmod('inc/config.php',$pfad,$host,$user,$pwd);
-      }
-    } else {
-      echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
+                } else {
+                    set_ftp_chmod('_installer',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('_installer/update.php',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('_installer/install.php',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('rss.xml',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('admin',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('banner',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('banner/partners',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('banner/sponsors',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('downloads',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('gallery',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('gallery/images',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('server',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('upload',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('upload/index.php',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/_cache_',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/api.php',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/lang/languages/dsgvo/',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/tsicons/',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/tsicons/server/',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/clanwars',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/gameicons',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/maps',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/newskat',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/smileys',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/squads',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/uploads',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/uploads/taktiken',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/uploads/useravatare',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/uploads/usergallery',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/images/uploads/userpics',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/tinymce_files',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/tinymce/plugins/ajaxfilemanager/session',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/tinymce/plugins/ajaxfilemanager/session/gc_counter.ajax.php',$pfad,$host,$user,$pwd);
+                    set_ftp_chmod('inc/config.php',$pfad,$host,$user,$pwd);
+                }
+            } else {
+                echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
               <tr>
                 <td class="error_text"><b>Fehler:</b></td>
               </tr>
@@ -129,52 +131,53 @@ case 'prepare';
                 </td>
               </tr>
             </table>';
-    }
-  }
+            }
+        }
 
 //Check Installfiles
-  $cm  = check_file_dir('../_installer',1);
-  $cm .= check_file_dir('../_installer/install.php');
-  $cm .= check_file_dir('../_installer/update.php');
+        $cm  = check_file_dir('../_installer',1);
+        $cm .= check_file_dir('../_installer/install.php');
+        $cm .= check_file_dir('../_installer/update.php');
 
 //Check Scriptfiles
-  $c  = check_file_dir('../rss.xml');
-  $c .= check_file_dir('../admin',1);
-  $c .= check_file_dir('../banner',1);
-  $c .= check_file_dir('../banner/partners',1);
-  $c .= check_file_dir('../gallery',1);
-  $c .= check_file_dir('../gallery/images',1);
-  $c .= check_file_dir('../server',1);
-  $c .= check_file_dir('../upload',1);
-  $c .= check_file_dir('../upload/index.php');
-  $c .= check_file_dir('../inc',1);
-  $c .= check_file_dir('../inc/api.php');
-  $c .= check_file_dir('../inc/_cache_',1);
-  $c .= check_file_dir('../inc/images',1);
-  $c .= check_file_dir('../inc/images/tsicons',1);
-  $c .= check_file_dir('../inc/images/tsicons/server',1);
-  $c .= check_file_dir('../inc/images/clanwars',1);
-  $c .= check_file_dir('../inc/images/gameicons',1);
-  $c .= check_file_dir('../inc/images/maps',1);
-  $c .= check_file_dir('../inc/images/newskat',1);
-  $c .= check_file_dir('../inc/images/smileys',1);
-  $c .= check_file_dir('../inc/images/squads',1);
-  $c .= check_file_dir('../inc/images/uploads',1);
-  $c .= check_file_dir('../inc/images/uploads/taktiken',1);
-  $c .= check_file_dir('../inc/images/uploads/useravatare',1);
-  $c .= check_file_dir('../inc/images/uploads/usergallery',1);
-  $c .= check_file_dir('../inc/images/uploads/userpics',1);
-  $c .= check_file_dir('../inc/tinymce_files',1);
-  $c .= check_file_dir('../inc/tinymce/plugins/ajaxfilemanager/session',1);
-  $c .= check_file_dir('../inc/tinymce/plugins/ajaxfilemanager/session/gc_counter.ajax.php',1);
-  $c .= check_file_dir('../inc/config.php',1);
+        $c  = check_file_dir('../rss.xml');
+        $c .= check_file_dir('../admin',1);
+        $c .= check_file_dir('../banner',1);
+        $c .= check_file_dir('../banner/partners',1);
+        $c .= check_file_dir('../gallery',1);
+        $c .= check_file_dir('../gallery/images',1);
+        $c .= check_file_dir('../server',1);
+        $c .= check_file_dir('../upload',1);
+        $c .= check_file_dir('../upload/index.php');
+        $c .= check_file_dir('../inc',1);
+        $c .= check_file_dir('../inc/api.php');
+        $c .= check_file_dir('../inc/_cache_',1);
+        $c .= check_file_dir('../inc/lang/languages/dsgvo',1);
+        $c .= check_file_dir('../inc/images',1);
+        $c .= check_file_dir('../inc/images/tsicons',1);
+        $c .= check_file_dir('../inc/images/tsicons/server',1);
+        $c .= check_file_dir('../inc/images/clanwars',1);
+        $c .= check_file_dir('../inc/images/gameicons',1);
+        $c .= check_file_dir('../inc/images/maps',1);
+        $c .= check_file_dir('../inc/images/newskat',1);
+        $c .= check_file_dir('../inc/images/smileys',1);
+        $c .= check_file_dir('../inc/images/squads',1);
+        $c .= check_file_dir('../inc/images/uploads',1);
+        $c .= check_file_dir('../inc/images/uploads/taktiken',1);
+        $c .= check_file_dir('../inc/images/uploads/useravatare',1);
+        $c .= check_file_dir('../inc/images/uploads/usergallery',1);
+        $c .= check_file_dir('../inc/images/uploads/userpics',1);
+        $c .= check_file_dir('../inc/tinymce_files',1);
+        $c .= check_file_dir('../inc/tinymce/plugins/ajaxfilemanager/session',1);
+        $c .= check_file_dir('../inc/tinymce/plugins/ajaxfilemanager/session/gc_counter.ajax.php');
+        $c .= check_file_dir('../inc/config.php');
 
-  $formcheck = "";
-  $check = preg_match("#false#Uis",$c);
+        $formcheck = "";
+        $check = preg_match("#false#Uis",$c);
 
-  if($check == FALSE)
-  {
-    echo '<table width="100%" cellpadding="1" cellspacing="1" class="done">
+        if($check == FALSE)
+        {
+            echo '<table width="100%" cellpadding="1" cellspacing="1" class="done">
             <tr>
               <td class="error_text"><b>Done!</b></td>
             </tr>
@@ -183,12 +186,12 @@ case 'prepare';
               </td>
             </tr>
           </table>';
-    $formcheck = "dont";
-  }
+            $formcheck = "dont";
+        }
 
-  include(basePath.'/_installer/html/prepare.php');
+        include(basePath.'/_installer/html/prepare.php');
 
-  echo '<table width="100%" cellpadding="3" cellspacing="1" class="emph">
+        echo '<table width="100%" cellpadding="3" cellspacing="1" class="emph">
           <tr>
             <td><b>Installationsdateien</b></td>
             <td><b>Scriptdateien</b></td>
@@ -198,39 +201,60 @@ case 'prepare';
             <td>'.$c.'</td>
           </tr>';
 
-  include(basePath.'/_installer/html/prepare_ftp.php');
+        include(basePath.'/_installer/html/prepare_ftp.php');
 
-  if($check == FALSE)
-  {
-    echo '<table width="100%" cellpadding="1" cellspacing="1">
+        if($check == FALSE) {
+            echo '<table width="100%" cellpadding="1" cellspacing="1">
             <tr>
-              <td align="right"><a href="install.php?action=install">&raquo; Weiter</a></td>
+              <td align="right"><a href="install.php?action=autoupdate">&raquo; Weiter</a></td>
             </tr>
             <tr>
               <td>&nbsp;</td>
             </tr>
           </table>';
-  }
-break;
-case 'require';
-if(isset($_GET['agb']) && $_GET['agb']) {
-    header("Location: install.php?agb=false");
-} else {
-    include(basePath.'/_installer/html/require.php');
-    $apc = extension_loaded('apcu') || extension_loaded('apc') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";
-    $apc.= "</b>&nbsp;&nbsp;&nbsp; Alternative PHP Cache (APC / APCu)</span><br />";
+        }
+        break;
+    case 'autoupdate';
+        if(isset($_GET['agb']) && $_GET['agb']) {
+            header("Location: install.php?agb=false");
+        } else {
+            $curl = extension_loaded('curl');
+            if(isset($_GET['use'])) {
+                $config = file_get_contents(basePath.'/inc/config.php');
+                if((int)$_GET['use']) {
+                    $config = str_replace("'api_autoupdate_dsgvo', false", "'api_autoupdate_dsgvo', true", $config);
+                    $config = str_replace("'api_autoupdate', false", "'api_autoupdate', true", $config);
+                } else {
+                    $config = str_replace("'api_autoupdate_dsgvo', true", "'api_autoupdate_dsgvo', false", $config);
+                    $config = str_replace("'api_autoupdate', true", "'api_autoupdate', false", $config);
+                }
+                file_put_contents(basePath.'/inc/config.php',$config);
+                header("Location: install.php?action=install");
+                exit();
+            }
 
-    $curl = extension_loaded('curl') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";
-    $curl.= "</b>&nbsp;&nbsp;&nbsp; Client for URLs (cURL)</span><br />";
 
-    $opt = '';
-    $opt .= $curl;
-    $opt .= $apc;
-    $check = preg_match("#false#Uis",$opt);
+            include(basePath.'/_installer/html/autoupdate.php');
+        }
+        break;
+    case 'require';
+        if(isset($_GET['agb']) && $_GET['agb']) {
+            header("Location: install.php?agb=false");
+        } else {
+            include(basePath.'/_installer/html/require.php');
+            $apc = extension_loaded('apcu') || extension_loaded('apc') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";
+            $apc.= "</b>&nbsp;&nbsp;&nbsp; Alternative PHP Cache (APC / APCu)</span><br />";
 
-    if($check === false)
-    {
-        echo '<table width="100%" cellpadding="1" cellspacing="1" class="done">
+            $curl = extension_loaded('curl') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";
+            $curl.= "</b>&nbsp;&nbsp;&nbsp; Client for URLs (cURL)</span><br />";
+
+            $opt = '';
+            $opt .= $curl;
+            $opt .= $apc;
+            $check = preg_match("#false#Uis",$opt);
+
+            if($check === false) {
+                echo '<table width="100%" cellpadding="1" cellspacing="1" class="done">
             <tr>
               <td class="error_text"><b>Optimal</b></td>
             </tr>
@@ -239,10 +263,10 @@ if(isset($_GET['agb']) && $_GET['agb']) {
               </td>
             </tr>
           </table>';
-        $formcheck = "dont";
-    }
+                $formcheck = "dont";
+            }
 
-    echo '<table width="100%" cellpadding="3" cellspacing="1" class="emph">
+            echo '<table width="100%" cellpadding="3" cellspacing="1" class="emph">
           <tr>
             <td><b>Optionale PHP-Erweiterungen</b></td>
             <td></td>
@@ -257,7 +281,7 @@ if(isset($_GET['agb']) && $_GET['agb']) {
           </tr>
           </table>';
 
-        echo '<table width="100%" cellpadding="1" cellspacing="1">
+            echo '<table width="100%" cellpadding="1" cellspacing="1">
             <tr>
               <td align="right"><a href="install.php?action=prepare">&raquo; Weiter</a></td>
             </tr>
@@ -265,23 +289,23 @@ if(isset($_GET['agb']) && $_GET['agb']) {
               <td>&nbsp;</td>
             </tr>
           </table>';
-}
-break;
-case'install';
-  if($do == "test_mysql")
-  {
-    $sql=false;
+        }
+        break;
+    case'install';
+        if($do == "test_mysql")
+        {
+            $sql=false;
 
 //-> zur Datenbank connecten
-    if(!empty($_POST['host']) && !empty($_POST['user']) && !empty($_POST['database']))
-    {
-        $con = mysqli_connect($_POST['host'], $_POST['user'], $_POST['pwd'], $_POST['database']);
-        $sql = true;
-    }
+            if(!empty($_POST['host']) && !empty($_POST['user']) && !empty($_POST['database']))
+            {
+                $con = mysqli_connect($_POST['host'], $_POST['user'], $_POST['pwd'], $_POST['database']);
+                $sql = true;
+            }
 //-> MySQL-Daten testen
-    if(!$sql)
-    {
-      echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
+            if(!$sql)
+            {
+                echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
               <tr>
                 <td class="error_text"><b>Fehler:</b></td>
               </tr>
@@ -291,10 +315,10 @@ case'install';
                 </td>
               </tr>
             </table>';
-    }
-    else if(!$con)
-    {
-      echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
+            }
+            else if(!$con)
+            {
+                echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
               <tr>
                 <td class="error_text"><b>Fehler:</b></td>
               </tr>
@@ -304,22 +328,22 @@ case'install';
                 </td>
               </tr>
             </table>';
-    }
+            }
 
-    if(!$con || !$sql)
-    {
-      include(basePath.'/_installer/html/mysql.php');
-      $prefix = $_POST['prefix'];
-      $host = $_POST['host'];
-      $user = $_POST['user'];
-      $pwd = $_POST['pwd'];
-      $database = $_POST['database'];
+            if(!$con || !$sql)
+            {
+                include(basePath.'/_installer/html/mysql.php');
+                $prefix = $_POST['prefix'];
+                $host = $_POST['host'];
+                $user = $_POST['user'];
+                $pwd = $_POST['pwd'];
+                $database = $_POST['database'];
 
-      include(basePath.'/_installer/html/mysql_data.php');
-    }
-    else
-    {
-      echo '<table width="100%" cellpadding="1" cellspacing="1" class="done">
+                include(basePath.'/_installer/html/mysql_data.php');
+            }
+            else
+            {
+                echo '<table width="100%" cellpadding="1" cellspacing="1" class="done">
               <tr>
                 <td class="error_text"><b>Done!</b></td>
               </tr>
@@ -329,9 +353,9 @@ case'install';
               </tr>
             </table>';
 
-      include(basePath.'/_installer/html/mysql.php');
+                include(basePath.'/_installer/html/mysql.php');
 
-      echo '<table width="100%" cellpadding="1" cellspacing="1">
+                echo '<table width="100%" cellpadding="1" cellspacing="1">
               <tr>
                 <td>&nbsp;</td>
               </tr>
@@ -346,16 +370,16 @@ case'install';
               </tr>
             </form>
             </table>';
-    }
-  }
-  elseif($do == "write_mysql")
-  {
+            }
+        }
+        elseif($do == "write_mysql")
+        {
 //-> MySQL-Daten in mysql.php schreiben
-    if(function_exists("fopen"))
-    {
-      _m ($_POST['prefix'], $_POST['host'], $_POST['user'], $_POST['pwd'], $_POST['database']);
+            if(function_exists("fopen"))
+            {
+                _m ($_POST['prefix'], $_POST['host'], $_POST['user'], $_POST['pwd'], $_POST['database']);
 
-      echo '<table width="100%" cellpadding="1" cellspacing="1" class="done">
+                echo '<table width="100%" cellpadding="1" cellspacing="1" class="done">
               <tr>
                 <td class="error_text"><b>Done!</b></td>
               </tr>
@@ -366,8 +390,8 @@ case'install';
             </table>';
 
 
-      include (basePath.'/_installer/html/mysql.php');
-      echo '<table width="100%" cellpadding="3" cellspacing="1">
+                include (basePath.'/_installer/html/mysql.php');
+                echo '<table width="100%" cellpadding="3" cellspacing="1">
               <tr>
                 <td height="25"></td>
               </tr>
@@ -375,8 +399,8 @@ case'install';
                 <td align="right"><a href="install.php?action=database">&raquo; Weiter</a></td>
               </tr>
             </table>';
-    } else {
-      echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
+            } else {
+                echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
               <tr>
                 <td class="error_text"><b>Fehler:</b></td>
               </tr>
@@ -387,9 +411,9 @@ case'install';
               </tr>
             </table>';
 
-      include (basePath.'/_installer/html/mysql.php');
+                include (basePath.'/_installer/html/mysql.php');
 
-      echo '<table width="100%" cellpadding="3" cellspacing="1">
+                echo '<table width="100%" cellpadding="3" cellspacing="1">
               <tr>
                 <td>&nbsp;</td>
               </tr>
@@ -402,7 +426,7 @@ case'install';
               </tr>
             </table>';
 
-      echo '<table width="100%" cellpadding="3" cellspacing="1" class="emph">
+                echo '<table width="100%" cellpadding="3" cellspacing="1" class="emph">
               <tr>
                 <td height="20"></td>
               </tr>
@@ -424,7 +448,7 @@ case'install';
               </tr>
             </table>';
 
-      echo '<table width="100%" cellpadding="3" cellspacing="1">
+                echo '<table width="100%" cellpadding="3" cellspacing="1">
               <tr>
                 <td>&nbsp;</td>
               </tr>
@@ -433,7 +457,7 @@ case'install';
               </tr>
             </table>';
 
-      echo '<table width="100%" cellpadding="3" cellspacing="1">
+                echo '<table width="100%" cellpadding="3" cellspacing="1">
               <tr>
                 <td height="25"></td>
               </tr>
@@ -441,32 +465,32 @@ case'install';
                 <td align="right"><a href="install.php?action=database">&raquo; Weiter</a></td>
               </tr>
             </table>';
-    }
-  }
-  else
-  {
-    include(basePath.'/_installer/html/mysql.php');
-    include(basePath.'/_installer/html/mysql_data.php');
-  }
-break;
-case 'database';
-  if($do == "install")
-  {
-    if($_POST['login'] && $_POST['nick'] && $_POST['pwd'] && $_POST['email'])
-    {
-        @set_time_limit(60);
-        @ignore_user_abort(true);
-        install_mysql($_POST['login'], $_POST['nick'], $_POST['pwd'], $_POST['email']);
-        update_mysql_1_4();
-        update_mysql_1_5();
-        update_mysql_1_5_1();
-        update_mysql_1_5_2();
-        update_mysql_1_6();
-        update_mysql_1_6_0_4();
-        update_mysql_1_6_1_0();
-        header("Location: install.php?action=done");
-    } else {
-      echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
+            }
+        }
+        else
+        {
+            include(basePath.'/_installer/html/mysql.php');
+            include(basePath.'/_installer/html/mysql_data.php');
+        }
+        break;
+    case 'database';
+        if($do == "install")
+        {
+            if($_POST['login'] && $_POST['nick'] && $_POST['pwd'] && $_POST['email'])
+            {
+                @set_time_limit(60);
+                @ignore_user_abort(true);
+                install_mysql($_POST['login'], $_POST['nick'], $_POST['pwd'], $_POST['email']);
+                update_mysql_1_4();
+                update_mysql_1_5();
+                update_mysql_1_5_1();
+                update_mysql_1_5_2();
+                update_mysql_1_6();
+                update_mysql_1_6_0_4();
+                update_mysql_1_6_1_0();
+                header("Location: install.php?action=done");
+            } else {
+                echo '<table width="100%" cellpadding="1" cellspacing="1" class="error">
               <tr>
                 <td class="error_text"><b>Fehler:</b></td>
               </tr>
@@ -476,17 +500,17 @@ case 'database';
               </tr>
             </table>';
 
-      include(basePath.'/_installer/html/installation.php');
-      include(basePath.'/_installer/html/installation_admin.php');
-    }
-  } else {
-    include(basePath.'/_installer/html/installation.php');
-    include(basePath.'/_installer/html/installation_admin.php');
-  }
-break;
-case 'done';
-  include(basePath.'/_installer/html/done.php');
-break;
+                include(basePath.'/_installer/html/installation.php');
+                include(basePath.'/_installer/html/installation_admin.php');
+            }
+        } else {
+            include(basePath.'/_installer/html/installation.php');
+            include(basePath.'/_installer/html/installation_admin.php');
+        }
+        break;
+    case 'done';
+        include(basePath.'/_installer/html/done.php');
+        break;
 endswitch;
 include(basePath.'/_installer/html/footer.php');
 $installer_out = ob_get_contents();

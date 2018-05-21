@@ -43,8 +43,12 @@ define('steam_api_refresh', 30); // Wann sollen die Daten der Steam API aktualis
 define('steam_infos_cache', true); //Sollen die Profil Daten zwischen gespeichert werden, * Cache Use
 define('steam_only_proxy', false); //Sollen soll nur der Steam Proxy Server verwendet werden
 
-define('api_autoupdate', true); //Soll die DZCP.de API automatisch aktualisiert werden ( Nur in der Administration )
-define('api_autoupdate_interval', (24*60*60)); //Soll die DZCP.de API automatisch aktualisiert werden ( alle 24 Std. )
+// DZCP.de API Autoupdates
+define('api_autoupdate', false); //Soll die DZCP.de API automatisch aktualisiert werden ( Nur in der Administration )
+define('api_autoupdate_interval', (24*60*60)); //Wann soll die DZCP.de API automatisch aktualisiert werden ( alle 24 Std. )
+define('api_autoupdate_dsgvo', false); //Soll die EU-DSGVO automatisch aktualisiert werden ( Nur in der Administration )
+define('api_autoupdate_dsgvo_interval', (24*60*60)); //Wann soll die EU-DSGVO automatisch aktualisiert werden ( alle 24 Std. )
+
 /*
 * Bitte vor der Aktivierung der Persistent Connections lesen:
 * http://php.net/manual/de/features.persistent-connections.php

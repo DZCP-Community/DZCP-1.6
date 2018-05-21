@@ -62,6 +62,17 @@
                           ?>
                           </td>
                         </tr>
+                          <tr>
+                              <td></td>
+                              <td>
+                                  <?php
+                                  if($action == "autoupdate")
+                                      echo _link_autoupdate;
+                                  else
+                                      echo _link_autoupdate_1;
+                                  ?>
+                              </td>
+                          </tr>
                         <tr>
                           <td></td>
                           <td>
@@ -109,7 +120,7 @@
                     <td height="255"></td>
                   </tr>
                   <tr>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy; <?php echo date("Y", time()); ?> <a href="http://www.dzcp.de" target="_blank">www.dzcp.de</a></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy; <?php echo date("Y", time()); ?> <a href="https://www.dzcp.de" target="_blank">www.dzcp.de</a></td>
                   </tr>
                 </table>
               </td>
