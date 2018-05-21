@@ -281,7 +281,7 @@ if(_adminMenu != 'true') exit;
 
           $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
 
-          $show_ .= show($dir."/votes_show", array("date" => date("d.m.Y",$get['datum']),
+          $show .= show($dir."/votes_show", array("date" => date("d.m.Y",$get['datum']),
                                                    "vote" => re($get['titel']),
                                                    "class" => $class,
                                                    "edit" => $edit,
@@ -300,5 +300,5 @@ if(_adminMenu != 'true') exit;
                                           "yesno" => _yesno,
                                           "legende" => _legende,
                                           "legendemenu" => _vote_legendemenu,
-                                          "show" => $show_));
+                                          "show" => $show));
       }

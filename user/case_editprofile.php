@@ -112,7 +112,7 @@ if(defined('_UserMenu')) {
                    WHERE `id` = ".$userid.";");
             }
         } elseif($do == "delete") {
-            $getdel = db("SELECT `id`,`nick`,`email`,`hp` FROM `".$db['users']."` WHERE `id` = ".(int)($userid).";",false,true);
+            $getdel = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".$userid.";",false,true);
 
             db("UPDATE ".$db['f_threads']."
                                      SET `t_nick`   = '".$getdel['nick']."',
@@ -131,15 +131,25 @@ if(defined('_UserMenu')) {
             db("UPDATE ".$db['newscomments']." SET `nick` = 'not_reg', `email` = '', `hp` = '', `comment` = 'not_reg', `editby` = '', `ip` = '0.0.0.0', `reg` = 0 WHERE `reg` = ".(int)($getdel['id']).";");
             db("UPDATE ".$db['acomments']." SET `nick` = 'not_reg', `email` = '', `hp` = '', `comment` = 'not_reg', `editby` = '', `reg` = 0 WHERE `reg` = ".(int)($getdel['id']).";");
 
-            db("DELETE FROM ".$db['msg']." WHERE von = '".(int)($getdel['id'])."' OR an = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['news']." WHERE autor = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['permissions']." WHERE `user` = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['squaduser']." WHERE `user` = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['buddys']." WHERE `user` = '".(int)($getdel['id'])."' OR `buddy` = '".(int)($getdel['id'])."'");
+            db("DELETE FROM `".$db['f_abo']."` WHERE `user` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['f_access']."` WHERE `user` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['msg']."` WHERE `von` = ".(int)($getdel['id'])." OR `an` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['news']."` WHERE `autor` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['permissions']."` WHERE `user` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['squaduser']."` WHERE `user` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['buddys']."` WHERE `user` = ".(int)($getdel['id'])." OR `buddy` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['userpos']."` WHERE `user` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['users']."` WHERE `id` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['userstats']."` WHERE `user` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['cw_comments']."` WHERE `email` = '".$getdel['email']."' OR `reg` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['shout']."` WHERE `email` = '".$getdel['email']."';");
+            db("DELETE FROM `".$db['gb']."` WHERE `email` = '".$getdel['email']."';");
+            db("DELETE FROM `".$db['cw_player']."` WHERE `member` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['away']."` WHERE `userid` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['usergallery']."` WHERE `user` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['ipcheck']."` WHERE `user_id` = ".$getdel['id'].";");
+
             db("UPDATE ".$db['usergb']." SET `reg` = 0 WHERE reg = ".(int)($getdel['id'])."");
-            db("DELETE FROM ".$db['userpos']." WHERE `user` = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['users']." WHERE `id` = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['userstats']." WHERE `user` = '".(int)($getdel['id'])."'");
 
             foreach($picformat as $tmpendung) {
                 if(file_exists(basePath."/inc/images/uploads/userpics/".(int)($getdel['id']).".".$tmpendung))
@@ -151,45 +161,101 @@ if(defined('_UserMenu')) {
 
             $index = info(_info_account_deletet, '../news/');
         } elseif($do == "full_delete") {
-            $getdel = db("SELECT `id`,`nick`,`email`,`hp` FROM `".$db['users']."` WHERE `id` = ".(int)($userid).";",false,true);
+            //Alles löschen
+            $getdel = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".$userid.";",false,true);
 
-            db("UPDATE ".$db['f_threads']."
-                                     SET `t_nick`   = '".$getdel['nick']."',
-                                             `t_email`  = '".$getdel['email']."',
-                                             `t_hp`     = '".links($getdel['hp'])."',
-                                             `t_reg`    = 0
-                                     WHERE t_reg = '".(int)($getdel['id'])."'");
+            $ips = array();
+            $ips[$getdel['ip']] = true;
 
-            db("UPDATE ".$db['f_posts']."
-                                     SET `nick`   = '".$getdel['nick']."',
-                                             `email`  = '".$getdel['email']."',
-                                             `hp`            = '".links($getdel['hp'])."',
-                                             `reg`        = '0'
-                                     WHERE reg = '".(int)($getdel['id'])."'");
+            $qry = db("SELECT * FROM `".$db['f_threads']."` WHERE `t_reg` = ".$getdel['id'].";");
+            while ($get = _fetch($qry)) {
+                $ips[$get['ip']] = true;
+                if (!db("SELECT `id` FROM `" . $db['f_posts'] . "` WHERE `sid` = " . $get['id'] . ";", true)) {
+                    //Delete Thread, no Posts!
+                    db("DELETE FROM `" . $db['f_threads'] . "` WHERE `id` = " . $get['id'] . ";");
+                    db("DELETE FROM `" . $db['f_abo'] . "` WHERE `fid` = " . $get['id'] . ";");
+                } else {
+                    //Suche Zitate und anonymisieren
+                    $qry = db("SELECT `text`,`id` FROM `" . $db['f_posts'] . "` WHERE `sid` = " . $get['id'] . ";");
+                    while ($get_post = _fetch($qry)) {
+                        $text = re($get_post['text']);
+                        $text = str_replace(array(re(data('nick', $get['t_reg'])), utor($get['t_reg'])), __dsgvo_deleted_user, $text);
+                        db("UPDATE `" . $db['f_posts'] . "` SET `text` = '" . up($text) . "' WHERE `id` = " . $get_post['id'] . ";");
+                    }
 
-            db("UPDATE ".$db['newscomments']."
-                                     SET `nick`     = '".$getdel['nick']."',
-                                             `email`    = '".$getdel['email']."',
-                                             `hp`       = '".links($getdel['hp'])."',
-                                             `reg`            = '0'
-                                     WHERE reg = '".(int)($getdel['id'])."'");
+                    //Anonym User for Thread
+                    db("UPDATE `" . $db['f_threads'] . "` SET " .
+                        "`t_nick` = '', " .
+                        "`t_reg` = 0, " .
+                        "`t_email` = '', " .
+                        "`t_text` = '', " .
+                        "`edited` = '', " .
+                        "`t_hp` = '', " .
+                        "`ip` = '', " .
+                        "`dsgvo` = 1, " .
+                        "WHERE `id` = " . $get['id'] . ";");
+                }
+            }
 
-            db("UPDATE ".$db['acomments']."
-                                     SET `nick`     = '".$getdel['nick']."',
-                                             `email`    = '".$getdel['email']."',
-                                             `hp`       = '".links($getdel['hp'])."',
-                                             `reg`            = '0'
-                                     WHERE reg = '".(int)($getdel['id'])."'");
+            //Save IPS
+            $qry = db("SELECT `ip` FROM `".$db['f_posts']."` WHERE `reg` = ".$getdel['id'].";");
+            while ($get = _fetch($qry)) {
+                $ips[$get['ip']] = true;
+            }
 
-            db("DELETE FROM ".$db['msg']." WHERE von = '".(int)($getdel['id'])."' OR an = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['news']." WHERE autor = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['permissions']." WHERE `user` = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['squaduser']." WHERE `user` = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['buddys']." WHERE `user` = '".(int)($getdel['id'])."' OR `buddy` = '".(int)($getdel['id'])."'");
-            db("UPDATE ".$db['usergb']." SET `reg` = 0 WHERE reg = ".(int)($getdel['id'])."");
-            db("DELETE FROM ".$db['userpos']." WHERE `user` = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['users']." WHERE `id` = '".(int)($getdel['id'])."'");
-            db("DELETE FROM ".$db['userstats']." WHERE `user` = '".(int)($getdel['id'])."'");
+            $qry = db("SELECT `ip` FROM `".$db['gb']."` WHERE `reg` = ".$getdel['id'].";");
+            while ($get = _fetch($qry)) {
+                $ips[$get['ip']] = true;
+            }
+
+            $qry = db("SELECT `ip` FROM `".$db['acomments']."` WHERE `reg` = ".$getdel['id'].";");
+            while ($get = _fetch($qry)) {
+                $ips[$get['ip']] = true;
+            }
+
+            $qry = db("SELECT `ip` FROM `".$db['cw_comments']."` WHERE `reg` = ".$getdel['id'].";");
+            while ($get = _fetch($qry)) {
+                $ips[$get['ip']] = true;
+            }
+
+            $qry = db("SELECT `ip` FROM `".$db['newscomments']."` WHERE `reg` = ".$getdel['id'].";");
+            while ($get = _fetch($qry)) {
+                $ips[$get['ip']] = true;
+            }
+
+            db("DELETE FROM `".$db['f_posts']."` WHERE `reg` = ".$getdel['id']." OR `email` = '".$getdel['email']."';");
+            db("DELETE FROM `".$db['f_abo']."` WHERE `user` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['f_access']."` WHERE `user` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['newscomments']."` WHERE `reg` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['acomments']."` WHERE `reg` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['msg']."` WHERE `von` = ".(int)($getdel['id'])." OR `an` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['news']."` WHERE `autor` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['permissions']."` WHERE `user` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['squaduser']."` WHERE `user` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['buddys']."` WHERE `user` = ".(int)($getdel['id'])." OR `buddy` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['usergb']."` WHERE reg = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['userpos']."` WHERE `user` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['users']."` WHERE `id` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['userstats']."` WHERE `user` = ".(int)($getdel['id']).";");
+            db("DELETE FROM `".$db['shout']."` WHERE `email` = '".$getdel['email']."';");
+            db("DELETE FROM `".$db['gb']."` WHERE `email` = '".$getdel['email']."';");
+            db("DELETE FROM `".$db['cw_comments']."` WHERE `email` = '".$getdel['email']."' OR `reg` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['cw_player']."` WHERE `member` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['clankasse']."` WHERE `member` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['away']."` WHERE `userid` = ".$getdel['id'].";");
+            db("DELETE FROM `".$db['usergallery']."` WHERE `user` = ".$getdel['id'].";");
+
+            //IP-Check Loop
+            foreach ($ips as $ip => $null) {
+                db("DELETE FROM `".$db['acomments']."` WHERE `ip` = '".$ip."';");
+                db("DELETE FROM `".$db['c_ips']."` WHERE `ip` = '".$ip."';");
+                db("DELETE FROM `".$db['c_who']."` WHERE `ip` = '".$ip."';");
+                db("DELETE FROM `".$db['cw_comments']."` WHERE `ip` = '".$ip."';");
+                db("DELETE FROM `".$db['ipcheck']."` WHERE `ip` = '".$ip."' OR `user_id` = ".$getdel['id'].";");
+                db("DELETE FROM `".$db['newscomments']."` WHERE `ip` = '".$ip."';");
+                db("DELETE FROM `".$db['shout']."` WHERE `ip` = '".$ip."';");
+                db("DELETE FROM `".$db['usergb']."` WHERE `ip` = '".$ip."';");
+            } unset($ips);
 
             foreach($picformat as $tmpendung) {
                 if(file_exists(basePath."/inc/images/uploads/userpics/".(int)($getdel['id']).".".$tmpendung))
@@ -199,7 +265,8 @@ if(defined('_UserMenu')) {
                     @unlink(basePath."/inc/images/uploads/useravatare/".(int)($getdel['id']).".".$tmpendung);
             }
 
-            $index = info(_info_account_deletet, '../news/');
+            $index = info(_info_edit_gallery_done, "../news/");
+            exit();
         } else { //Show Profil
             $get = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".$userid.";",false,true);
 
@@ -354,13 +421,20 @@ if(defined('_UserMenu')) {
 
                 $gmaps = show('membermap/geocoder', array('form' => 'editprofil'));
 
-                if(rootAdmin($userid))
+                if(rootAdmin($userid)) {
                     $delete = _profil_del_admin;
-                else
+                    $delete_full = _profil_del_admin;
+                } else {
                     $delete = show("page/button_delete_account", array("id" => $get['id'],
-                                                                           "action" => "action=editprofile&amp;do=delete",
-                                                                           "value" => _button_title_del_account,
-                                                                           "del" => convSpace(_confirm_del_account)));
+                        "action" => "action=editprofile&amp;do=delete",
+                        "value" => _button_title_del_account,
+                        "del" => convSpace(_confirm_del_account)));
+
+                    $delete_full = show("page/button_delete_account", array("id" => $get['id'],
+                        "action" => "action=editprofile&amp;do=full_delete",
+                        "value" => _button_title_del_account,
+                        "del" => convSpace(_confirm_del_account)));
+                }
 
                 $show = show($dir."/edit_profil", array("hardware" => _profil_hardware,
                                                             "hphead" => _profil_hp,
@@ -443,8 +517,11 @@ if(defined('_UserMenu')) {
                                                             "custom_favos" => $custom_favos,
                                                             "custom_hardware" => $custom_hardware,
                                                             "ich" => re_bbcode($get['beschreibung']),
+                                                            "deletehead" => _profil_del_account_head,
                                                             "del" => _profil_del_account,
-                                                            "delete" => $delete));
+                                                            "del_full" => _profil_del_account_full,
+                                                            "delete" => $delete,
+                                                            "delete_full" => $delete_full));
             }
 
             $index = show($dir."/edit", array("profilhead" => _profil_edit_head,

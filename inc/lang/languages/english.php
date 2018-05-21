@@ -30,6 +30,8 @@ $language_text['_admin_dsgvo_log'] = 'Datenschutz Infos';
 $language_text['_admin_dsgvo_lock'] = 'Account ist aufgrund der EU-DSGVO gesperrt!';
 $language_text['_admin_dsgvo_indent_lock'] = 'Account ist aufgrund der EU-DSGVO gesperrt, du kannst die Identität des Users nicht annehmen!';
 $language_text['_dsgvo_deleted_text'] = '<span style="color:#999999;">-- Der Autor dieses Posts hat den Text gelöscht --</span>';
+$language_text['_profil_del_account_full'] = 'Account vollständig löschen';
+$language_text['_profil_del_account_head'] = 'Account löschen';
 
 $language_text['_organisation'] = 'Unternehmen';
 $language_text['_first_name'] = 'Vorname';
@@ -153,7 +155,7 @@ $language_text['_perm_editts'] = 'manage teamspeak server';
 ## ADDED / REDEFINED FOR 1.5.2
 $language_text['_button_title_del_account'] = 'User-Account delete';
 $language_text['_confirm_del_account'] = 'You really want to delete your Account on dzcp.de';
-$language_text['_profil_del_account'] = 'Account delete';
+$language_text['_profil_del_account'] = 'Partially delete account';
 $language_text['_info_account_deletet'] = 'Your Account has been successfully deleted!';
 $language_text['_profil_del_admin'] = '<b>Deleting not possible!</b>';
 $language_text['_news_get_timeshift'] = 'Timeshift News?';

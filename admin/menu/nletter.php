@@ -72,14 +72,14 @@ if($do == 'preview')
                 sendMail(re($get['email']),$subject,$message);
             }
 
-            db("UPDATE ".$db['userstats']." SET `writtenmsg` = (writtenmsg+1) WHERE user = ".(int)($userid));
+            db("UPDATE ".$db['userstats']." SET `writtenmsg` = (writtenmsg+1) WHERE `user` = ".(int)($userid));
             $show = info(_msg_reg_answer_done, "?admin=nletter");
 
         } elseif($_POST['to'] == "member") {
             $message = show(bbcode_email(settings('eml_nletter')), array("text" => bbcode_nletter($_POST['eintrag'])));
             $subject = re(settings('eml_nletter_subj'));
 
-            $qry = db("SELECT email FROM ".$db['users']." WHERE level >= 2 AND `dsgv_lock` = 0;");
+            $qry = db("SELECT `email` FROM `".$db['users']."` WHERE `level` >= 2 AND `dsgv_lock` = 0;");
             while($get = _fetch($qry))
             {
                 sendMail(re($get['email']),$subject,$message);
@@ -93,20 +93,16 @@ if($do == 'preview')
 
             $qry = db("SELECT s2.`email` FROM `".$db['squaduser']."` AS `s1` LEFT JOIN ".$db['users']." AS `s2`".
                 " ON s1.`user` = s2.`id` WHERE s1.`squad` = '".$_POST['to']."' AND s2.`dsgv_lock` = 0;");
-            while($get = _fetch($qry))
-            {
+            while($get = _fetch($qry)) {
                 sendMail(re($get['email']),$subject,$message);
             }
 
-            $qry = db("UPDATE ".$db['userstats']."
-                          SET `writtenmsg` = writtenmsg+1
-                          WHERE user = ".(int)($userid));
-
+            db("UPDATE ".$db['userstats']." SET `writtenmsg` = writtenmsg+1 WHERE user = ".(int)($userid));
             $show = info(_msg_squad_answer_done, "?admin=nletter");
         }
     }
 } else {
-    $qry = db("SELECT `id`,`name` FROM `".$db['squads']."` WHERE `dsgv_lock` = 0 ORDER BY `name`;"); $squads = '';
+    $qry = db("SELECT `id`,`name` FROM `".$db['squads']."` ORDER BY `name`;"); $squads = '';
     while($get = _fetch($qry))
     {
         $squads .= show(_to_squads, array("id" => $get['id'],
