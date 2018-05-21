@@ -139,7 +139,7 @@ switch ($action):
         $cm .= check_file_dir('../_installer/update.php');
 
 //Check Scriptfiles
-        $c .= check_file_dir('../admin',1);
+        $c  = check_file_dir('../admin',1);
         $c .= check_file_dir('../banner',1);
         $c .= check_file_dir('../banner/partners',1);
         $c .= check_file_dir('../downloads',1);
