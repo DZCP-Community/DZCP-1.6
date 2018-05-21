@@ -1314,6 +1314,7 @@ function update_mysql_1_6_1_0() {
     db("ALTER TABLE `".$db['users']."` ADD `pwd_md5` INT(1) NOT NULL DEFAULT '1' AFTER `pwd`;");
     db("ALTER TABLE `".$db['users']."` ADD `show` INT(1) NOT NULL DEFAULT '4' AFTER `perm_gb`;");
 
+    db("DROP TABLE IF EXISTS `".$db['dsgvo']."`;");
     db("CREATE TABLE `".$db['dsgvo']."` (
           `id` int(11) NOT NULL,
           `title` varchar(255) NOT NULL DEFAULT '',
@@ -1367,6 +1368,7 @@ function update_mysql_1_6_1_0() {
         (37, '_dsgvo_base_title_037', '_dsgvo_base_037', '_dsgvo_base_text_037', 0, 1, 0, 1, 1, 37),
         (38, '_dsgvo_base_title_201', '_dsgvo_base_201', '_dsgvo_base_text_201', 0, 0, 1, 0, 1, 1);");
 
+    db("DROP TABLE IF EXISTS `".$db['dsgvo_pers']."`;");
     db("CREATE TABLE `".$db['dsgvo_pers']."` (
         `id` int(5) NOT NULL auto_increment,
         `organisation` text,
@@ -1388,6 +1390,7 @@ function update_mysql_1_6_1_0() {
 
     db("ALTER TABLE `".$db['permissions']."` ADD `datenschutz` INT(1) NOT NULL DEFAULT '0' AFTER `dlintern`;");
 
+    db("DROP TABLE IF EXISTS `".$db['dsgvo_log']."`;");
     db("CREATE TABLE `".$db['dsgvo_log']."` (
       `id` int(11) NOT NULL auto_increment,
       `uid` int(11) NOT NULL DEFAULT '0',

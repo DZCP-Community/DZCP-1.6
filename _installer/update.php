@@ -215,7 +215,7 @@ switch ($action):
         break;
     case 'autoupdate';
         if(isset($_GET['agb']) && $_GET['agb']) {
-            header("Location: install.php?agb=false");
+            header("Location: update.php?agb=false");
         } else {
             $curl = extension_loaded('curl');
             if(isset($_GET['use'])) {
@@ -228,7 +228,7 @@ switch ($action):
                     $config = str_replace("'api_autoupdate', true", "'api_autoupdate', false", $config);
                 }
                 file_put_contents(basePath.'/inc/config.php',$config);
-                header("Location: install.php?action=install");
+                header("Location: update.php?action=database");
                 exit();
             }
 
@@ -237,7 +237,7 @@ switch ($action):
         break;
     case 'require';
         if(isset($_GET['agb']) && $_GET['agb']) {
-            header("Location: install.php?agb=false");
+            header("Location: update.php?agb=false");
         } else {
             include(basePath.'/_installer/html/require.php');
             $apc = extension_loaded('apcu') || extension_loaded('apc') ? _true."<span style='color:green'><b>" : _false."<span style='color:red'><b>";

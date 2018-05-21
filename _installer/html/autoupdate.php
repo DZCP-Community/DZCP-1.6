@@ -16,12 +16,12 @@
     </tr>
     <tr>
         <td align="justify">
-            <form action="install.php?action=autoupdate&use=0" method="post" />
+            <form action="?action=autoupdate&use=0" method="post" />
                 <br><br />
                 <b><u>** Es handelt sich hier um eine experimentelle Funktion **</b></u><br><br />
                 <script>
                     <?php echo (!$curl ? '/*' : '') ?> document.writeln('<input type="button" value="Aktivieren" class="button" ' +
-                        'onclick="document.forms[0].action=\'install.php?action=autoupdate&use=1\';document.forms[0].submit()" tabindex="6">');<?php echo (!$curl ? '*/' : '') ?>
+                        'onclick="document.forms[0].action=\'?action=autoupdate&use=1\';document.forms[0].submit()" tabindex="6">');<?php echo (!$curl ? '*/' : '') ?>
                 </script>
                 <input type="submit" value="Deaktivieren"></td>
             </form>
