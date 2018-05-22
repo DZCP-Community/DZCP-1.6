@@ -98,8 +98,10 @@ if(!dbc_index::issetIndex('config')) {
     unset($get_config);
 }
 
+if(HasDSGVO()) {
 //-> Cookie initialisierung
-cookie::init('dzcp_'.settings('prev'));
+    cookie::init('dzcp_' . settings('prev'));
+}
 
 //-> SteamAPI
 SteamAPI::set('apikey',re(settings('steam_api_key')));
@@ -379,11 +381,12 @@ function userid() {
 
 //-> Templateswitch
 $files = get_files(basePath.'/inc/_templates_/',true);
-if(isset($_GET['tmpl_set'])) {
+if(isset($_GET['tmpl_set']) ) {
     foreach ($files as $templ) {
         if($templ == $_GET['tmpl_set']) {
+            $_SESSION['tmpdir'] = $_GET['tmpl_set'];
             if(HasDSGVO()) {
-                cookie::put('tmpdir', $templ);
+                cookie::put('tmpdir', $_GET['tmpl_set']);
                 cookie::save();
             }
             header("Location: ".$_SERVER['HTTP_REFERER']);
@@ -391,18 +394,35 @@ if(isset($_GET['tmpl_set'])) {
     }
 }
 
-if(cookie::get('tmpdir') != false && cookie::get('tmpdir') != NULL) {
-    if(file_exists(basePath."/inc/_templates_/".cookie::get('tmpdir')))
-        $tmpdir = cookie::get('tmpdir');
-    else
-        $tmpdir = $files[0];
+if(cookie::get('tmpdir') != false && cookie::get('tmpdir') != NULL || !empty($_SESSION['tmpdir'])) {
+    if(HasDSGVO()) {
+        if (file_exists(basePath . "/inc/_templates_/" . cookie::get('tmpdir'))) {
+            $tmpdir = cookie::get('tmpdir');
+            if(empty($tmpdir)) {
+                if(!empty($_SESSION['tmpdir'])) {
+                    if(file_exists(basePath."/inc/_templates_/".$_SESSION['tmpdir']))
+                        $tmpdir = $_SESSION['tmpdir'];
+                } else {
+                    $tmpdir = $files[0];
+                }
+            }
+        }
+    } else {
+        if(!empty($_SESSION['tmpdir'])) {
+            if(file_exists(basePath."/inc/_templates_/".$_SESSION['tmpdir']))
+                $tmpdir = $_SESSION['tmpdir'];
+            else
+                $tmpdir = $files[0];
+        } else {
+            $tmpdir = $files[0];
+        }
+    }
 } else {
     if(file_exists(basePath."/inc/_templates_/".$sdir))
         $tmpdir = $sdir;
     else
         $tmpdir = $files[0];
-}
-unset($files);
+} unset($files);
 
 $designpath = '../inc/_templates_/'.$tmpdir;
 
