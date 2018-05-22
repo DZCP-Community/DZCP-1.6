@@ -107,7 +107,7 @@ if(defined('_UserMenu')) {
                     }
                 }
 
-                $newpwd = !empty($_POST['passwd']) ? "`pwd` = '".md5($_POST['passwd'])."'," : "";
+                $newpwd = !empty($_POST['passwd']) ? "`pwd` = '".hash('sha256',$_POST['passwd'])."', `pwd_md5` = 0," : "";
                 $update_level = $_POST['level'] == 'banned' ? 0 : $_POST['level'];
                 $update_banned = $_POST['level'] == 'banned' ? 1 : 0;
                 db("UPDATE ".$db['users']."
