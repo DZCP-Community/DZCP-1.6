@@ -4,7 +4,7 @@
  * http://www.dzcp.de
  */
 $language_text['_dsgvo_base_title'] = 'General Data Protection Regulation (EU-GDPR)';
-$language_text['_dsgvo_base_lock_title'] = 'Datenschutz-Grundverordnung (EU-DSGVO) - Account-Aktivierung';
+$language_text['_dsgvo_base_lock_title'] = 'General Data Protection Regulation (EU-GDPR) - Account activation';
 
 //Title
 $language_text['_dsgvo_base_title_001'] = '<strong>General Data Protection Regulation</strong>';
@@ -340,7 +340,7 @@ EOD;
  ***************************************************************************/
 
 //Title
-$language_text['_dsgvo_base_title_201'] = '<strong>Datenschutzerkl&auml;rung zur Account-Aktivierung</strong>';
+$language_text['_dsgvo_base_title_201'] = '<strong>Privacy Policy for Account Activation</strong>';
 //Administrations Info
 $language_text['_dsgvo_base_201'] = <<<EOD
 EOD;
