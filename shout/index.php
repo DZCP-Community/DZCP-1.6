@@ -18,7 +18,7 @@ $dir = "shout";
 ## SECTIONS ##
 switch ($action):
 default:
-  if(!ipcheck("shout", config('f_shout')))
+  if(!ipcheck("shout", config('f_shout')) && HasDSGVO())
   {
     if(($_POST['protect'] != 'nospam' || empty($_SESSION['sec_shout']) || $_POST['spam'] != $_SESSION['sec_shout'] || empty($_POST['spam'])) && !$userid)
         $index = error(html_entity_decode(_error_invalid_regcode, ENT_COMPAT | ENT_HTML401,'ISO-8859-1'),1);
