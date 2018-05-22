@@ -218,8 +218,7 @@ if(defined('_Forum')) {
                         "addglobal" => _forum_admin_addglobal,
                         "global" => $global));
                 }
-                $qryv = db("SELECT * FROM ".$db['votes']."
-                    WHERE id = '".$get['vote']."'");
+                $qryv = db("SELECT * FROM ".$db['votes']." WHERE id = '".$get['vote']."'");
                 $getv = _fetch($qryv);
 
                 $fget = _fetch(db("SELECT s1.intern,s2.id FROM ".$db['f_kats']." AS s1
@@ -568,7 +567,7 @@ if(defined('_Forum')) {
         if(_rows(db("SELECT id FROM ".$db['f_skats']." WHERE id = '".(int)($_GET['kid'])."'")) == 0) {
             $index = error(_id_dont_exist, 1);
         } else {
-            if(settings("reg_forum") && !$chkMe)
+            if((settings("reg_forum") && !$chkMe) || !HasDSGVO())
             {
                 $index = error(_error_have_to_be_logged, 1);
             } else {
