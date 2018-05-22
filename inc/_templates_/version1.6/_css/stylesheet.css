@@ -14,7 +14,7 @@ html,body,table,td,div,form,button,select,input,textarea,h1,h2,h3,h4,h5,h6,a,p,c
 /* Set body attributes color and background */
 html,body {
   color: #000;
-  background: #dfdfdf url(../images/background.jpg) repeat-x;
+  background-image: linear-gradient(to top, #dfdfdf 80%, #000)
 }
 /* Set as blockelements */
 h1,h2,h3,h4,h5,h6,hr,p,div,form {
@@ -114,7 +114,7 @@ div#header {
     position:relative
 }
 div#footer     {
-    background:#d3d3d3;
+    background-image: linear-gradient(to top, #d3d3d3 10%, #fff);
     border-top:1px solid #c4c4c4;
     border-bottom:1px solid #c4c4c4;
     margin-top:7px
@@ -157,7 +157,7 @@ div.footNavigation h2 {
     height:48px;
     line-height:48px;
     font-size:14px;
-    font-weight:normal;
+    font-weight:bolder;
 }
 div.footNavigation ul,
 div.footNavigation ul li {
@@ -246,10 +246,13 @@ div#index {
     margin:0px
 }
 /* Display of the gallery box */
-div#galleriebox {
-    border:1px solid #e5e5e5;
-    padding:11px 12px 11px 12px;
-    margin:0 14px
+#galleriebox {
+    padding: 10px 10px 10px 10px;
+    background-color: #fff;
+    width: 768px;
+    margin: 65px 5px 5px 5px;
+    border-radius: 4px;
+    border: 1px #e6e6e6 solid;
 }
 /* Title Galleriebox */
 #galleriebox span.headline {
@@ -261,7 +264,8 @@ div#galleriebox {
 /* Single pictures */
 #galleriebox div.gallerie {
     float:left;
-    margin:0 4px
+    margin:0 4px;
+    border: 1px #efefef solid;
 }
 /* Slideshow Plugin */
 div#slideshow {
@@ -270,7 +274,8 @@ div#slideshow {
     position:relative; 
     overflow:hidden; 
     background:#000;
-    border-radius: 3px
+    background-image: linear-gradient(to top, #989898 80%, #000);
+    border-radius: 4px
 }
 div.images {
     width:777px; 
@@ -1243,7 +1248,8 @@ ul.search li {
 label.search, label.searchKat {
   display: block;
   text-align: left;
-  background-color: #FFF; color: #000;
+  background-color: #FFF; 
+  color: #000;
   margin: 0; padding: 0;
   width: 100%;
 }
