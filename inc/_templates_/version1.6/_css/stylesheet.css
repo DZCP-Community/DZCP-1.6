@@ -190,13 +190,15 @@ div#index {
 .box {
     background:#fff;
     margin-bottom:7px;
-    padding:0 7px 7px 7px
+    padding:0 7px 7px 7px;
+    border-bottom: 1px solid #f00;
 }
 /* Box tabs left and right side */
 .box_tabs {
     background:transparent;
     margin-bottom: 7px;
     padding: 26px 0 0 0;
+    border-bottom: 1px solid #f00;
 }
 /* Global heading definition */
 .headline {
@@ -531,7 +533,7 @@ td.navUserContent,td.navMemberContent,td.navTrialContent,td.navAdminContent {
 }
 td.navUotmContent,td.navPartnerContent,td.navSponsorsContent {
   text-align: center;
-  padding: 2px 0;
+  padding: 0px 10px 10px 10px;
 }
 img.uotm {
   width: 130px;
@@ -906,6 +908,7 @@ td.highlight {
 td.statsBalken {
   border: 1px solid #000;
   background-image: url('../../../images/vote_bg.gif');
+  background-image: linear-gradient(to right, #660000 90%, #F00)
 }
 /* Templateswitcher dropdown e.g. menu/tmp_switch.html */
 select.tempswitch {
@@ -1199,9 +1202,12 @@ img.tsicon {
   text-align: center;
   text-decoration: none;
   margin: 0px;
-  padding: 3px;
+  padding: 0px 3px 2px 3px;
+  border: 1px solid #000;
 }
 .adminBarInnerOver {
+      padding: 0px 3px 2px 3px;
+  border: 1px solid #000;
 }
 .adminBarOuter,.adminBarOuterOver {
   text-decoration : none;
