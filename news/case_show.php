@@ -110,9 +110,10 @@ if(defined('_News')) {
                 $i--;
             }
 
-            if((settings("reg_newscomments") && !$chkMe) || !HasDSGVO())
+            if(settings("reg_newscomments") && !$chkMe)
                 $add = _error_unregistered_nc;
-            else {
+            else
+            {
                 if($userid >= 1)
                     $form = show("page/editor_regged", array("nick" => autor($userid), "von" => _autor));
                 else

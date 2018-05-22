@@ -109,7 +109,7 @@ default:
   $seiten = nav($entrys,config('m_gb'),"?action=nav");
 
   $entry = '';
-  if(!ipcheck("gb", config('f_gb')) && HasDSGVO())
+  if(!ipcheck("gb", config('f_gb')))
   {
     if($userid >= 1)
       {

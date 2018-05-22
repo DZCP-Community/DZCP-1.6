@@ -138,7 +138,7 @@ switch ($action):
                 }
 
                 $add = "";
-                if((settings("reg_artikel") && !$chkMe) || !HasDSGVO()) {
+                if(settings("reg_artikel") && !$chkMe) {
                     $add = _error_unregistered_nc;
                 } else {
                     if($userid >= 1)

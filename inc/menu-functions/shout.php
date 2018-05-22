@@ -32,7 +32,7 @@ function shout($ajax = 0) {
     }
 
     $dis = ''; $dis1 = ''; $only4reg = ''; $sec = ''; $form = '';
-    if(settings('reg_shout') && !$chkMe && HasDSGVO()) {
+    if(settings('reg_shout') == 1 && !$chkMe) {
         $dis = ' style="text-align:center;cursor:wait" disabled="disabled"';
         $dis1 = ' style="cursor:wait;color:#888" disabled="disabled"';
         $only4reg = _shout_must_reg;

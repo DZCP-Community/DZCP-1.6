@@ -410,7 +410,7 @@ if(defined('_Forum')) {
         {
             $index = error(_id_dont_exist,1);
         } else {
-            if((settings("reg_forum") && !$chkMe) || !HasDSGVO())
+            if(settings("reg_forum") && !$chkMe)
             {
                 $index = error(_error_unregistered,1);
             } else {

@@ -70,12 +70,12 @@ define('phpmailer_smtp_secure', 'tls');//Enable TLS encryption, `ssl` also accep
  * Cache Configuration
  */
 $config_cache = array(
-    "storage" => "zendshm", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
+    "storage" => "auto", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
     "server_mem" => array(array("127.0.0.1",11211,1)), //memcache / memcached
     "server_redis" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'database' => '', 'timeout' => ''),
     "server_ssdb" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'timeout' => ''),
-    "dbc" => false,  //use database query caching * only use with memory cache
-    "tpl" => false,  //use template caching * only use with memory cache
+    "dbc" => true,  //use database query caching * only use with memory cache
+    "tpl" => true,  //use template caching * only use with memory cache
 );
 
 //-> Legt die UserID des Rootadmins fest
@@ -164,15 +164,14 @@ function show($tpl="", $array=array(), $array_lang_constant=array(), $array_bloc
         }
 
         unset($pholder);
+
         $tpl = (!defined('_Admin') || _Admin != 'true' ? preg_replace("|<is_admin>.*?</is_admin>|is", "", $tpl) : preg_replace("|<not_admin_menu>.*?</not_admin_menu>|is", "", $tpl));
         $tpl = (!$chkMe ? preg_replace("|<logged_in>.*?</logged_in>|is", "", $tpl) : preg_replace("|<logged_out>.*?</logged_out>|is", "", $tpl));
-        $tpl = (!HasDSGVO() ? preg_replace("|<dsgvo_lock>.*?</dsgvo_lock>|is", "", $tpl) : $tpl);
         $tpl = str_ireplace(array("<logged_in>","</logged_in>","<logged_out>","</logged_out>"), '', $tpl);
 
         if(count($array) >= 1) {
-            foreach($array as $value => $code) {
-                $tpl = str_replace('['.$value.']', $code, $tpl);
-            }
+            foreach($array as $value => $code)
+            { $tpl = str_replace('['.$value.']', $code, $tpl); }
         }
     }
 
