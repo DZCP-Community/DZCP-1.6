@@ -10,41 +10,41 @@
 //$charset = 'utf-8';
 
 ## ADDED FOR 1.6.1.0
-$language_text['_config_datenschutz'] = 'Datenschutz (EU-DSGVO)';
-$language_text['_perm_datenschutz'] = 'Datenschutz (EU-DSGVO) verwalten';
-$language_text['_txt_datenschutz'] = 'Datenschutz';
-$language_text['_config_title_datenschutz'] = 'Datenschutz-Grundverordnung (EU-DSGVO)';
-$language_text['_datenschutz_pers_head'] = 'Verantwortliche Personen';
-$language_text['_datenschutz_settings_head'] = 'Einstellungen der allgemeinen EU-DSGVO';
-$language_text['_datenschutz_settings_lock_head'] = 'Einstellungen der EU-DSGVO für die Account-Aktivierung';
+$language_text['_config_datenschutz'] = 'Data Protection (EU-GDPR)';
+$language_text['_perm_datenschutz'] = 'Настройки Data Protection (EU-GDPR)';
+$language_text['_txt_datenschutz'] = 'Data Protection';
+$language_text['_config_title_datenschutz'] = 'Data Protection (EU-GDPR)';
+$language_text['_datenschutz_pers_head'] = 'Ответственные лица';
+$language_text['_datenschutz_settings_head'] = 'Настройки (EU-GDPR)';
+$language_text['_datenschutz_settings_lock_head'] = 'Настройки EU-GDPR для активации учетной записи';
 
-$language_text['_datenschutz_vname'] = 'Vorname';
-$language_text['_datenschutz_nname'] = 'Familienname';
-$language_text['_datenschutz_rolle'] = 'Rolle';
-$language_text['_datenschutz_rolle_1'] = 'Hauptverantwortlicher ( <span style="color:#FF0000">*Benötigt*</span> )';
-$language_text['_datenschutz_rolle_2'] = 'Datenschutzbeauftragter ( <span style="color:#0000FF">*Optional/Extern*</span> )';
+$language_text['_datenschutz_vname'] = 'имя';
+$language_text['_datenschutz_nname'] = 'фамилия';
+$language_text['_datenschutz_rolle'] = 'роль';
+$language_text['_datenschutz_rolle_1'] = 'главный ответственный ( <span style="color:#FF0000">*необходимо*</span> )';
+$language_text['_datenschutz_rolle_2'] = 'Сотрудник по защите данных ( <span style="color:#0000FF">*Дополнительно / Внешний*</span> )';
 
-$language_text['_user_dont_dsgvo'] = 'Dieser User kann nicht eingesehen werden!';
-$language_text['_user_profile_dont_show'] = 'Dieses Profil ist privat';
-$language_text['_pvisibility_profile'] = 'Profilsichtbarkeit';
+$language_text['_user_dont_dsgvo'] = 'Этот пользователь не может быть просмотрен!';
+$language_text['_user_profile_dont_show'] = 'Этот профиль закрыт';
+$language_text['_pvisibility_profile'] = 'видимость профиля';
 $language_text['_pedit_perm_profile'] = '<option value="0">Public</option><option value="1">User only</option><option value="2">Member only</option><option value="4">Admin only</option>';
-$language_text['_admin_dsgvo_log'] = 'Datenschutz Infos';
-$language_text['_admin_dsgvo_lock'] = 'Account ist aufgrund der EU-DSGVO gesperrt!';
-$language_text['_admin_dsgvo_indent_lock'] = 'Account ist aufgrund der EU-DSGVO gesperrt, du kannst die Identität des Users nicht annehmen!';
-$language_text['_dsgvo_deleted_text'] = '<span style="color:#999999;">-- Der Autor dieses Posts hat den Text gelöscht --</span>';
-$language_text['_profil_del_account_full'] = 'Account vollständig löschen';
-$language_text['_profil_del_account_head'] = 'Account löschen';
+$language_text['_admin_dsgvo_log'] = 'Информация о защите данных';
+$language_text['_admin_dsgvo_lock'] = 'Учетная запись заблокирована из-за EU-GDPR!';
+$language_text['_admin_dsgvo_indent_lock'] = 'Учетная запись заблокирована из-за EU-GDPR, вы не можете принять личность пользователя!';
+$language_text['_dsgvo_deleted_text'] = '<span style="color:#999999;">-- Автор этого сообщения удалил текст --</span>';
+$language_text['_profil_del_account_full'] = 'Удалить аккаунт полностью';
+$language_text['_profil_del_account_head'] = 'Удалить аккаунт';
 
-$language_text['_organisation'] = 'Unternehmen';
-$language_text['_first_name'] = 'Vorname';
-$language_text['_last_name'] = 'Nachname';
-$language_text['_address'] = 'Adresse';
-$language_text['_zip_code'] = 'Postleitzahl';
-$language_text['_place'] = 'Ort';
-$language_text['_country'] = 'Land';
-$language_text['_e-mail'] = 'E-Mail-Addresse';
-$language_text['_phone'] = 'Telefonnummer';
-$language_text['_website'] = 'Webseite';
+$language_text['_organisation'] = 'компания';
+$language_text['_first_name'] = 'имя';
+$language_text['_last_name'] = 'фамилия';
+$language_text['_address'] = 'адрес';
+$language_text['_zip_code'] = 'индекс';
+$language_text['_place'] = 'местность';
+$language_text['_country'] = 'страна';
+$language_text['_e-mail'] = 'Адрес электронной почты';
+$language_text['_phone'] = 'номер телефона';
+$language_text['_website'] = 'сайт';
 
 ## ADDED / REDEFINED FOR 1.6 Final
 $language_text['_txt_navi_main'] = 'Главная Навигация';

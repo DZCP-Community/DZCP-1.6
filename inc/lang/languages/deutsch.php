@@ -40,7 +40,7 @@ $language_text['_address'] = 'Adresse';
 $language_text['_zip_code'] = 'Postleitzahl';
 $language_text['_place'] = 'Ort';
 $language_text['_country'] = 'Land';
-$language_text['_e-mail'] = 'E-Mail-Addresse';
+$language_text['_e-mail'] = 'E-Mail-Adresse';
 $language_text['_phone'] = 'Telefonnummer';
 $language_text['_website'] = 'Webseite';
 
