@@ -5,6 +5,8 @@
  */
 
 ob_start();
+session_start();
+
 $error = true;
 if(isset($_GET['secure']) && !empty($_GET['secure'])) {
     $nonajax = isset($_GET['nonajax']) && $_GET['secure'] == 'shout';
@@ -62,27 +64,32 @@ if(isset($_GET['secure']) && !empty($_GET['secure'])) {
             for($i = 1; $i <= $anz; $i++)
                 imageline($im, mt_rand(0, $x), mt_rand(0, $y), $x - mt_rand(0, 0), mt_rand(0, $y), $lineColor);
         }
+
 // Zahlencode einfuegen
         $code = '';
-        $z = array("1","2","3","4","5","6","7","8","9","0","A","C","D","E","F","G","H","J","K","M","N","P","R","S","T","U","V","W","X","Y","Z");
-        for($f=0; $f<$num; $f++) {
-            $spamcode = $z[rand(0,30)];
-            $w = (16 * $f) + $space;
+        $passwordComponents = array("ABCDEFGHIJKLMNOPQRSTUVWXYZ","0123456789", "#$@!?&%+");
+        $componentsCount = count($passwordComponents);
+        for ($pos = 0; $pos < (int)$_GET['num']; $pos++) {
+            $componentIndex = ($pos % $componentsCount);
+            $componentLength = strlen($passwordComponents[$componentIndex]);
+            $random = rand(0, $componentLength-1);
+            $w = (16 * $pos) + $space;
 
             if(function_exists('imagettftext'))
                 imagettftext($im, rand($sizeMin,$sizeMax), rand($rectMin,$rectMax), $w, 20,
                     imagecolorallocate ($im,
                         hex2rgb($textColor,'r'),
                         hex2rgb($textColor,'g'),
-                        hex2rgb($textColor,'b')), "./inc/images/fonts/verdana.ttf", $spamcode);
-            $code .= $spamcode;
-        }
+                        hex2rgb($textColor,'b')), "./inc/images/fonts/verdana.ttf",
+                    $passwordComponents[$componentIndex][$random]);
+
+            $code .= $passwordComponents[$componentIndex][$random];
+        } unset($passwordComponents);
 
         //Code in Session abspeichern
         $_SESSION["sec_".trim($_GET['secure'])] = $code;
 
-        if(!function_exists('imagettftext'))
-        {
+        if(!function_exists('imagettftext')) {
             for($i=0;$i<=strlen($code);$i++) $strcode .= $code[$i].' ';
             $text_color = imagecolorallocate ($im, hex2rgb($textColor,'r'), hex2rgb($textColor,'g'), hex2rgb($textColor,'b'));
             imagestring($im, 12, $x/10, $y/4, $strcode, $text_color);

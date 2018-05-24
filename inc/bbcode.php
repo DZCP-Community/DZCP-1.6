@@ -1701,12 +1701,41 @@ function links($hp) {
 }
 
 //-> Funktion um Passwoerter generieren zu lassen
-function mkpwd() {
-    $chars = '1234567890abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $len = strlen($chars) - 1; $pw = '';
-    for($i = 0; $i < 10; $i++)
-    { $pw .= $chars{rand(0, $len)}; }
-    return $pw;
+function mkpwd($length = 8, $add_dashes = false, $available_sets = 'luds') {
+    $sets = array();
+    if(strpos($available_sets, 'l') !== false)
+        $sets[] = 'abcdefghjkmnpqrstuvwxyz';
+    if(strpos($available_sets, 'u') !== false)
+        $sets[] = 'ABCDEFGHJKMNPQRSTUVWXYZ';
+    if(strpos($available_sets, 'd') !== false)
+        $sets[] = '23456789';
+    if(strpos($available_sets, 's') !== false)
+        $sets[] = '!@#$%&*?';
+
+    $all = '';
+    $password = '';
+    foreach($sets as $set) {
+        $password .= $set[array_rand(str_split($set))];
+        $all .= $set;
+    }
+    $all = str_split($all);
+    for($i = 0; $i < $length - count($sets); $i++)
+        $password .= $all[array_rand($all)];
+
+    $password = str_shuffle($password);
+
+    if(!$add_dashes)
+        return $password;
+
+    $dash_len = floor(sqrt($length));
+    $dash_str = '';
+    while(strlen($password) > $dash_len) {
+        $dash_str .= substr($password, 0, $dash_len) . '-';
+        $password = substr($password, $dash_len);
+    }
+
+    $dash_str .= $password;
+    return $dash_str;
 }
 
 //-> Passwortabfrage und rückgabe des users
