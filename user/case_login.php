@@ -20,6 +20,10 @@ if(defined('_UserMenu')) {
                         $_SESSION['user_has_dsgvo_lock'] = true;
                         $_SESSION['dsgvo_lock_permanent_login'] = isset($_POST['permanent']);
                         $_SESSION['dsgvo_lock_login_id'] = $get['id'];
+                        if(!empty($get['language'])) {
+                            $_SESSION['language'] = re($get['language']);
+                        }
+
                         header("Location: ?action=userlock");
                     } else {
                         $permanent_key = '';
@@ -37,6 +41,9 @@ if(defined('_UserMenu')) {
                         $_SESSION['pwd'] = $get['pwd'];
                         $_SESSION['lastvisit'] = $get['time'];
                         $_SESSION['ip'] = $userip;
+                        if(!empty($get['language'])) {
+                            $_SESSION['language'] = re($get['language']);
+                        }
 
                         db("UPDATE `" . $db['userstats'] . "` SET `logins` = (logins+1) WHERE `user` = " . $get['id'] . ";");
                         db("UPDATE `" . $db['users'] . "` SET `online` = 1, `sessid` = '" . session_id() . "', `ip` = '" . $userip . "', `pkey` = '" . $permanent_key . "' WHERE `id` = " . $get['id'] . ";");

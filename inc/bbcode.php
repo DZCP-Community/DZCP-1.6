@@ -144,7 +144,8 @@ $index = ''; $show = ''; $color = 0;
 //-> Auslesen der Cookies und automatisch anmelden
 if(HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && empty($_SESSION['id']) && !checkme())) {
     //-> User aus der Datenbank suchen
-    $sql = db_stmt("SELECT `id`,`user`,`nick`,`pwd`,`email`,`level`,`time`,`pkey`,`dsgvo_lock` FROM `".$db['users']."` WHERE `id` = ? AND `pkey` = ? AND `level` != 0;",
+    $sql = db_stmt("SELECT `id`,`user`,`nick`,`pwd`,`email`,`level`,`time`,`pkey`,`dsgvo_lock`,`language` FROM `".
+        $db['users']."` WHERE `id` = ? AND `pkey` = ? AND `level` != 0;",
         array('is', cookie::get('id'), cookie::get('pkey')));
     if(_rows($sql)) {
         $get = _fetch($sql);
@@ -165,6 +166,10 @@ if(HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && 
             $_SESSION['pwd'] = $get['pwd'];
             $_SESSION['lastvisit'] = $get['time'];
             $_SESSION['ip'] = $userip;
+
+            if(!empty($get['language'])) {
+                $_SESSION['language'] = re($get['language']);
+            }
 
             if (data("ip", $get['id']) != $_SESSION['ip'])
                 $_SESSION['lastvisit'] = data("time", $get['id']);
@@ -190,10 +195,18 @@ if(HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && 
     unset($sql);
 }
 
+//Check UserID & Level
+$userid = userid();
+$chkMe = checkme();
+
 //-> Sprache aendern
 if(isset($_GET['set_language'])) {
     if(file_exists(basePath."/inc/lang/languages/".$_GET['set_language'].".php")) {
         $_SESSION['language'] = $_GET['set_language'];
+    }
+
+    if($chkMe && $userid) {
+        db("UPDATE `" . $db['users'] . "` SET `language` = '".$_SESSION['language']."' WHERE `id` = " .$userid. ";");
     }
 
     header("Location: ".$_SERVER['HTTP_REFERER']);
@@ -201,8 +214,6 @@ if(isset($_GET['set_language'])) {
 
 lang($_SESSION['language']); //Lade Sprache
 
-$userid = userid();
-$chkMe = checkme();
 if(!$chkMe) {
     $_SESSION['id']        = '';
     $_SESSION['pwd']       = '';
