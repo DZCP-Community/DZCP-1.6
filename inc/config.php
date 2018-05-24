@@ -70,12 +70,12 @@ define('phpmailer_smtp_secure', 'tls');//Enable TLS encryption, `ssl` also accep
  * Cache Configuration
  */
 $config_cache = array(
-    "storage" => "zendshm", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
+    "storage" => "auto", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
     "server_mem" => array(array("127.0.0.1",11211,1)), //memcache / memcached
     "server_redis" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'database' => '', 'timeout' => ''),
     "server_ssdb" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'timeout' => ''),
-    "dbc" => false,  //use database query caching * only use with memory cache
-    "tpl" => false,  //use template caching * only use with memory cache
+    "dbc" => true,  //use database query caching * only use with memory cache
+    "tpl" => true,  //use template caching * only use with memory cache
 );
 
 //-> Legt die UserID des Rootadmins fest
