@@ -100,25 +100,19 @@ if(!dbc_index::issetIndex('config')) {
 
 if(HasDSGVO()) {
 //-> Cookie initialisierung
-    cookie::init('dzcp_' . settings('prev'));
+    cookie::init('dzcp_' . settings('prev'),false,"/",re(settings('i_domain')));
 }
 
 //-> SteamAPI
 SteamAPI::set('apikey',re(settings('steam_api_key')));
 
 //-> Language auslesen
-if(HasDSGVO()){
-    $_SESSION['language'] = (cookie::get('language') != false ?
-        (file_exists(basePath.'/inc/lang/languages/'.cookie::get('language').'.php')
-            ? cookie::get('language') : re(settings('language'))) : re(settings('language')));
-} else {
-    if(array_key_exists('language',$_SESSION) && !empty($_SESSION['language'])) {
-        if(!file_exists(basePath.'/inc/lang/languages/'.$_SESSION['language'].'.php')) {
-            $_SESSION['language'] = re(settings('language'));
-        }
-    } else {
+if(array_key_exists('language',$_SESSION) && !empty($_SESSION['language'])) {
+    if(!file_exists(basePath.'/inc/lang/languages/'.$_SESSION['language'].'.php')) {
         $_SESSION['language'] = re(settings('language'));
     }
+} else {
+    $_SESSION['language'] = re(settings('language'));
 }
 
 //-> einzelne Definitionen
@@ -199,11 +193,6 @@ if(HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && 
 //-> Sprache aendern
 if(isset($_GET['set_language'])) {
     if(file_exists(basePath."/inc/lang/languages/".$_GET['set_language'].".php")) {
-        if(HasDSGVO()) {
-            cookie::put('language', $_GET['set_language']);
-            cookie::save();
-        }
-
         $_SESSION['language'] = $_GET['set_language'];
     }
 
@@ -317,8 +306,7 @@ function validateIpV4Range ($ip, $range) {
 
                 if ($targetsegment < $rseg[0] || $targetsegment > $rseg[1]) {
                     return false;
-                }
-                $counter++;
+                } $counter++;
             }
         }
     }
@@ -328,7 +316,6 @@ function validateIpV4Range ($ip, $range) {
 
 /**
  * Funktion um notige Erweiterungen zu prufen
- *
  * @return boolean
  **/
 function fsockopen_support() {
@@ -385,38 +372,19 @@ if(isset($_GET['tmpl_set']) ) {
     foreach ($files as $templ) {
         if($templ == $_GET['tmpl_set']) {
             $_SESSION['tmpdir'] = $_GET['tmpl_set'];
-            if(HasDSGVO()) {
-                cookie::put('tmpdir', $_GET['tmpl_set']);
-                cookie::save();
-            }
             header("Location: ".$_SERVER['HTTP_REFERER']);
         }
     }
 }
 
-if(cookie::get('tmpdir') != false && cookie::get('tmpdir') != NULL || !empty($_SESSION['tmpdir'])) {
-    if(HasDSGVO()) {
-        if (file_exists(basePath . "/inc/_templates_/" . cookie::get('tmpdir'))) {
-            $tmpdir = cookie::get('tmpdir');
-            if(empty($tmpdir)) {
-                if(!empty($_SESSION['tmpdir'])) {
-                    if(file_exists(basePath."/inc/_templates_/".$_SESSION['tmpdir']))
-                        $tmpdir = $_SESSION['tmpdir'];
-                } else {
-                    $tmpdir = $files[0];
-                }
-            }
-        }
-    } else {
-        if(!empty($_SESSION['tmpdir'])) {
-            if(file_exists(basePath."/inc/_templates_/".$_SESSION['tmpdir']))
-                $tmpdir = $_SESSION['tmpdir'];
-            else
-                $tmpdir = $files[0];
-        } else {
+if(!empty($_SESSION['tmpdir'])) {
+    if(!empty($_SESSION['tmpdir'])) {
+        if(file_exists(basePath."/inc/_templates_/".$_SESSION['tmpdir']))
+            $tmpdir = $_SESSION['tmpdir'];
+        else
             $tmpdir = $files[0];
-        }
-    }
+    } else
+        $tmpdir = $files[0];
 } else {
     if(file_exists(basePath."/inc/_templates_/".$sdir))
         $tmpdir = $sdir;
@@ -461,10 +429,8 @@ function lang($lng) {
         if(!defined($key)) {
             define($key,$text);
         }
-    }
-    unset($language_text,$key,$text);
+    } unset($language_text,$key,$text);
 }
-
 
 //->Daten uber file_get_contents oder curl abrufen
 function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_contents_timeout) {
