@@ -111,6 +111,7 @@ if(defined('_UserMenu')) {
                     `level`    = 1,
                     `pwd_md5`  = 0,
                     `dsgvo_lock` = 0,
+                    `language` = '".$_SESSION['language']."',
                     `time`     = ".time().",
                     `status`   = 1;");
 
