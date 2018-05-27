@@ -43,7 +43,7 @@ if(defined('_UserMenu')) {
             }
 
             $status = ($get['status'] == 1 || data('level',(int)($_GET['id']) != 1 && isset($_GET['sq']))) ? _aktiv_icon : _inaktiv_icon; $clan = "";
-            if (data('level',(int)($_GET['id']) != 1 || isset($_GET['sq'])) {
+            if(data('level',(int)($_GET['id']) != 1 || isset($_GET['sq']))) {
                 $sq = db("SELECT * FROM `" . $db['userpos'] . "` WHERE `user` = " . (int)($_GET['id']) . ";");
                 $cnt = cnt($db['userpos'], " WHERE `user` = " . $get['id']);
                 $i = 1;
