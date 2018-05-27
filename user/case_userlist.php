@@ -6,7 +6,7 @@
 
 if(defined('_UserMenu')) {
     $where = _site_ulist;
-    $entrys = cnt($db['users']," WHERE level != 0");
+    $entrys = cnt($db['users']," WHERE `level` != 0 AND `dsgvo_lock` != 1");
     $show_sql = isset($_GET['show']) ? $_GET['show'] : '';
 
     if($show_sql == "search") {
