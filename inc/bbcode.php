@@ -2832,13 +2832,16 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
             $login = show("errors/wmodus_login", array("what" => _login_login, "secure" => $secure, "signup" => _login_signup, "permanent" => _login_permanent, "lostpwd" => _login_lostpwd));
             cookie::save(); //Save Cookie
         }
+
+        include_once(basePath.'/inc/menu-functions/dsgvo.php');
         echo show("errors/wmodus", array("wmodus" => _wartungsmodus,
-                                         "head" => _wartungsmodus_head,
-                                         "tmpdir" => $tmpdir,
-                                         "java_vars" => $java_vars,
-                                         "dir" => $designpath,
-                                         "title" => re(strip_tags($title)),
-                                         "login" => $login));
+                                              "head" => _wartungsmodus_head,
+                                              "tmpdir" => $tmpdir,
+                                              "dsgvo" => dsgvo(),
+                                              "java_vars" => $java_vars,
+                                              "dir" => $designpath,
+                                              "title" => re(strip_tags($title)),
+                                              "login" => $login));
     } else {
         if(!$isSpider && HasDSGVO()) {
             updateCounter();
