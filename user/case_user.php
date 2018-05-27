@@ -297,7 +297,7 @@ if(defined('_UserMenu')) {
                     "battlenett" => re($get['battlenetid']),
                     "buddyadd" => $buddyadd,
                     "userstats" => _profil_userstats,
-                    "pos" => _profil_os,
+                    "pos" => _profil_system,
                     "pcpu" => _profil_cpu,
                     "pram" => _profil_ram,
                     "phdd" => _profil_hdd,

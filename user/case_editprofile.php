@@ -297,15 +297,16 @@ if(defined('_UserMenu')) {
             }
 
             switch ($get['show']) {
-                case 1:
+                case 0:
                     $perm_profile = str_replace('value="0"', 'value="0" selected="selected"', _pedit_perm_profile);
                     break;
-                case 2:
+                case 1:
                     $perm_profile = str_replace('value="1"', 'value="1" selected="selected"', _pedit_perm_profile);
                     break;
-                case 3:
+                case 2:
                     $perm_profile = str_replace('value="2"', 'value="2" selected="selected"', _pedit_perm_profile);
                     break;
+                default:
                 case 4:
                     $perm_profile = str_replace('value="4"', 'value="4" selected="selected"', _pedit_perm_profile);
                     break;
@@ -320,16 +321,16 @@ if(defined('_UserMenu')) {
                 $qrycustom = db("SELECT * FROM `".$db['profile']."` WHERE `kid` = 2 AND `shown` = 1 ORDER BY `id` ASC;");
                 while($getcustom = _fetch($qrycustom)) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid.";",false,true);
-                    $custom_clan .= show(_profil_edit_custom, array("name" => pfields_name($getcustom['name']).":",
-                                                                        "feldname" => $getcustom['feldname'],
-                                                                        "value" => $getcontent[$getcustom['feldname']]));
+                    $custom_clan .= show(_profil_edit_custom, array("name" => pfields_name(re($getcustom['name'])).":",
+                                                                        "feldname" => re($getcustom['feldname']),
+                                                                        "value" => re($getcontent[$getcustom['feldname']])));
                 }
 
                 $clan = show($dir."/edit_clan", array("clan" => _profil_clan,
                                                           "pstatus" => _profil_status,
                                                           "pexclans" => _profil_exclans,
                                                           "status" => $status,
-                                                          "exclans" => $get['ex'],
+                                                          "exclans" => re($get['ex']),
                                                           "custom_clan" => $custom_clan));
             }
 
@@ -371,41 +372,41 @@ if(defined('_UserMenu')) {
                 $qrycustom = db("SELECT `name`,`feldname` FROM `".$db['profile']."` WHERE `kid` = 1 AND `shown` = 1 ORDER BY `id` ASC;");
                 while($getcustom = _fetch($qrycustom)) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
-                    $custom_about .= show(_profil_edit_custom, array("name" => pfields_name($getcustom['name']).":",
-                                                                         "feldname" => $getcustom['feldname'],
-                                                                         "value" => $getcontent[$getcustom['feldname']]));
+                    $custom_about .= show(_profil_edit_custom, array("name" => pfields_name(re($getcustom['name'])).":",
+                                                                         "feldname" => re($getcustom['feldname']),
+                                                                         "value" => re($getcontent[$getcustom['feldname']])));
                 }
 
                 $custom_contact = '';
                 $qrycustom = db("SELECT `name`,`feldname` FROM `".$db['profile']."` WHERE `kid` = 3 AND `shown` = 1 ORDER BY `id` ASC;");
                 while($getcustom = _fetch($qrycustom)) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
-                    $custom_contact .= show(_profil_edit_custom, array("name" => pfields_name($getcustom['name']).":",
-                                                                           "feldname" => $getcustom['feldname'],
-                                                                           "value" => $getcontent[$getcustom['feldname']]));
+                    $custom_contact .= show(_profil_edit_custom, array("name" => pfields_name(re($getcustom['name'])).":",
+                                                                           "feldname" => re($getcustom['feldname']),
+                                                                           "value" => re($getcontent[$getcustom['feldname']])));
                 }
 
                 $custom_favos = '';
                 $qrycustom = db("SELECT `name`,`feldname` FROM `".$db['profile']."` WHERE `kid` = 4 AND `shown` = 1 ORDER BY `id` ASC;");
                 while($getcustom = _fetch($qrycustom)) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
-                    $custom_favos .= show(_profil_edit_custom, array("name" => pfields_name($getcustom['name']).":",
-                                                                         "feldname" => $getcustom['feldname'],
-                                                                         "value" => $getcontent[$getcustom['feldname']]));
+                    $custom_favos .= show(_profil_edit_custom, array("name" => pfields_name(re($getcustom['name'])).":",
+                                                                         "feldname" => re($getcustom['feldname']),
+                                                                         "value" => re($getcontent[$getcustom['feldname']])));
                 }
 
                 $custom_hardware = '';
                 $qrycustom = db("SELECT `name`,`feldname` FROM `".$db['profile']."` WHERE `kid` = 5 AND `shown` = 1 ORDER BY `id` ASC;");
                 while($getcustom = _fetch($qrycustom)) {
                     $getcontent = db("SELECT `".$getcustom['feldname']."` FROM `".$db['users']."` WHERE `id` = ".$userid." LIMIT 1;",false,true);
-                    $custom_hardware .= show(_profil_edit_custom, array("name" => pfields_name($getcustom['name']).":",
-                                                                            "feldname" => $getcustom['feldname'],
-                                                                            "value" => $getcontent[$getcustom['feldname']]));
+                    $custom_hardware .= show(_profil_edit_custom, array("name" => pfields_name(re($getcustom['name'])).":",
+                                                                            "feldname" => re($getcustom['feldname']),
+                                                                            "value" => re($getcontent[$getcustom['feldname']])));
                 }
 
                 $icq = ''; $pnl = ''; $pnm = ''; $deleteava = ''; $deletepic = '';
                 if(!empty($get['icq']) && $get['icq'] != 0)
-                    $icq = $get['icq'];
+                    $icq = re($get['icq']);
 
                 if($get['nletter'] == 1)
                     $pnl = 'checked="checked"';
@@ -469,10 +470,10 @@ if(defined('_UserMenu')) {
                                                             "originidl" => _originid,
                                                             "battlenetidl" => _battlenetid,
                                                             "pcity" => _profil_city,
-                                                            "city" => $get['city'],
+                                                            "city" => re($get['city']),
                                                             "psteamid" => _steamid,
-                                                            "v_steamid" => $get['steamid'],
-                                                            "skypename" => $get['skypename'],
+                                                            "v_steamid" => re($get['steamid']),
+                                                            "skypename" => re($get['skypename']),
                                                             "nletter" => _profil_nletter,
                                                             "pnmail" => _profil_pnmail,
                                                             "pnl" => $pnl,
@@ -480,27 +481,27 @@ if(defined('_UserMenu')) {
                                                             "pwd" => "",
                                                             "dropdown_age" => $dropdown_age,
                                                             "ava" => $avatar,
-                                                            "hp" => $get['hp'],
+                                                            "hp" => links(re($get['hp'])),
                                                             "gmaps" => $gmaps,
-                                                            "nick" => $get['nick'],
-                                                            "name" => $get['user'],
-                                                            "gmaps_koord" => $get['gmaps_koord'],
-                                                            "rlname" => $get['rlname'],
+                                                            "nick" => re($get['nick']),
+                                                            "name" => re($get['user']),
+                                                            "gmaps_koord" => re($get['gmaps_koord']),
+                                                            "rlname" => re($get['rlname']),
                                                             "bdayday" => $bdayday,
                                                             "bdaymonth" => $bdaymonth,
                                                             "bdayyear" =>$bdayyear,
                                                             "sex" => $sex,
-                                                            "email" => $get['email'],
+                                                            "email" => re($get['email']),
                                                             "visibility_gb" => $perm_gb,
                                                             "visibility_gallery" => $perm_gallery,
                                                             "visibility_profile" => $perm_profile,
                                                             "icqnr" => $icq,
                                                             "sig" => re_bbcode($get['signatur']),
-                                                            "hlswid" => $get['hlswid'],
-                                                            "xboxid" => $get['xboxid'],
-                                                            "psnid" => $get['psnid'],
-                                                            "originid" => $get['originid'],
-                                                            "battlenetid" => $get['battlenetid'],
+                                                            "hlswid" => re($get['hlswid']),
+                                                            "xboxid" => re($get['xboxid']),
+                                                            "psnid" => re($get['psnid']),
+                                                            "originid" => re($get['originid']),
+                                                            "battlenetid" => re($get['battlenetid']),
                                                             "clan" => $clan,
                                                             "pic" => $pic,
                                                             "editpic" => _profil_edit_pic,

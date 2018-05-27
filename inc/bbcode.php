@@ -951,7 +951,7 @@ function bbcode($txt, $tinymce=false, $no_vid=false, $ts=false, $nolink=false) {
     $txt = re_bbcode($txt);
 
     if(!$ts)
-        $txt = strip_tags($txt,"<br><object><em><param><embed><strong><iframe><hr><table><tr><td><div><span><a><b><font><i><u><p><ul><ol><li><br /><img>");
+        $txt = strip_tags($txt,"<br><object><em><param><embed><strong><iframe><hr><table><tr><td><div><span><a><b><i><u><p><ul><ol><li><br /><img>");
 
     $txt = smileys($txt);
 
@@ -1012,8 +1012,8 @@ function zitat($nick,$zitat) {
 
 //-> convert string for output
 function re($txt) {
-    global $charset; 
-    return trim(stripslashes(spChars(@html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true)));
+    global $charset;
+    return trim(stripslashes(spChars(html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true)));
 }
 
 function re_entry($txt) {
@@ -1051,63 +1051,6 @@ function smileys($txt) {
 
   $txt = preg_replace($var,$repl, $txt);
   return str_replace(" ^^"," <img src=\"../inc/images/smileys/^^.gif\" alt=\"\" />", $txt);
-}
-
-//-> Flaggen ausgeben
-function flagge($txt) {
-    $var = array("/\:de:/",
-                 "/\:ch:/",
-                 "/\:at:/",
-                 "/\:au:/",
-                 "/\:be:/",
-                 "/\:br:/",
-                 "/\:ca:/",
-                 "/\:gb:/",
-                 "/\:pl:/",
-                 "/\:cz:/",
-                 "/\:dk:/",
-                 "/\:es:/",
-                 "/\:en:/",
-                 "/\:fi:/",
-                 "/\:fr:/",
-                 "/\:gr:/",
-                 "/\:hr:/",
-                 "/\:us:/",
-                 "/\:it:/",
-                 "/\:se:/",
-                 "/\:eu:/",
-                 "/\:nl:/",
-                 "/\:na:/",
-                 "/\:no:/",
-                 "/\:ru:/");
-
-    $repl = array("<img src=\"../inc/images/flaggen/de.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/ch.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/at.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/au.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/be.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/br.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/ca.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/uk.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/pl.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/cz.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/dk.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/es.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/fo.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/fi.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/fr.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/gr.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/hr.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/us.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/it.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/se.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/eu.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/nl.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/nocountry.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/no.gif\" alt=\"\" />",
-                  "<img src=\"../inc/images/flaggen/ru.gif\" alt=\"\" />" );
-
-    return preg_replace($var,$repl, $txt);
 }
 
 function cut($text,$length='',$dots = true,$html = true,$ending = '',$exact = false,$considerHtml = true) {
@@ -2312,17 +2255,13 @@ function onlinecheck($tid) {
 
 //Funktion fuer die Sprachdefinierung der Profilfelder
 function pfields_name($name) {
-    $pattern = array("=_city_=Uis","=_hobbys_=Uis","=_motto_=Uis","=_job_=Uis","=_exclans_=Uis","=_email2_=Uis","=_email3_=Uis","=_autor_=Uis","=_auto_=Uis","=_buch_=Uis",
-    "=_drink_=Uis","=_essen_=Uis","=_favoclan_=Uis","=_film_=Uis","=_game_=Uis","=_map_=Uis","=_musik_=Uis","=_person_=Uis","=_song_=Uis","=_spieler_=Uis","=_sportler_=Uis",
-    "=_sport_=Uis","=_waffe_=Uis","=_board_=Uis","=_cpu_=Uis","=_graka_=Uis","=_hdd_=Uis","=_headset_=Uis","=_inet_=Uis","=_maus_=Uis","=_mauspad_=Uis","=_monitor_=Uis",
-    "=_ram_=Uis","=_system_=Uis");
+    return preg_replace_callback("=_(.*?)_=Uis",
+        function($match) {
+        if(defined("_profil".substr(trim($match[0]), 0, -1)))
+            return constant("_profil".substr(trim($match[0]), 0, -1));
 
-    $replacement = array(_profil_city,_profil_hobbys,_profil_motto,_profil_job,_profil_exclans,_profil_email2,_profil_email3,_profil_autor,_profil_auto,
-    _profil_buch,_profil_drink,_profil_essen,_profil_favoclan,_profil_film,_profil_game,_profil_map,_profil_musik,_profil_person,_profil_song,_profil_spieler,
-    _profil_sportler,_profil_sport,_profil_waffe,_profil_board,_profil_cpu,_profil_graka,_profil_hdd,_profil_headset,_profil_inet,_profil_maus,_profil_mauspad,
-    _profil_monitor,_profil_ram,_profil_os);
-
-    return preg_replace($pattern, $replacement, $name);
+        return $match[0];
+        }, $name);
 }
 
 //-> Checkt versch. Dinge anhand der Hostmaske eines Users
