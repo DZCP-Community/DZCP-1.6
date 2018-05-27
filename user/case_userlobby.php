@@ -196,22 +196,25 @@ if(defined('_UserMenu')) {
         $qrycheckn = db("SELECT `id`,`titel` FROM `".$db['news']."` WHERE `public` = 1 AND `datum` <= ".time().";"); $newsc = '';
         if(_rows($qrycheckn) >= 1) {
             while($getcheckn = _fetch($qrycheckn)) {
-                $getnewsc = db("SELECT `id`,`news`,`datum` FROM `".$db['newscomments']."` WHERE `news` = ".$getcheckn['id']." ORDER BY `datum` DESC;",false,true);
-                if(check_new($getnewsc['datum'],1)) {
-                    $check = cnt($db['newscomments'], " WHERE `datum` > ".$lastvisit." AND `news` = ".$getnewsc['news']);
-                    if($check == "1") {
-                        $cnt = "1";
-                        $eintrag = _lobby_new_newsc_1;
-                    } else {
-                        $cnt = $check;
-                        $eintrag = _lobby_new_newsc_2;
-                    }
+                $getnewsc = db("SELECT `id`,`news`,`datum` FROM `" . $db['newscomments'] . "` WHERE `news` = " . $getcheckn['id'] . " ORDER BY `datum` DESC;");
+                if (_rows($getnewsc)) {
+                    $getnewsc = _fetch($getnewsc);
+                    if (check_new($getnewsc['datum'], 1)) {
+                        $check = cnt($db['newscomments'], " WHERE `datum` > " . $lastvisit . " AND `news` = " . $getnewsc['news']);
+                        if ($check == "1") {
+                            $cnt = "1";
+                            $eintrag = _lobby_new_newsc_1;
+                        } else {
+                            $cnt = $check;
+                            $eintrag = _lobby_new_newsc_2;
+                        }
 
-                    $can_erase = true;
-                    $newsc .= show(_user_new_newsc, array("cnt" => $cnt,
-                                                          "id" => $getnewsc['news'],
-                                                          "news" => re($getcheckn['titel']),
-                                                          "eintrag" => $eintrag));
+                        $can_erase = true;
+                        $newsc .= show(_user_new_newsc, array("cnt" => $cnt,
+                            "id" => $getnewsc['news'],
+                            "news" => re($getcheckn['titel']),
+                            "eintrag" => $eintrag));
+                    }
                 }
             }
         }
