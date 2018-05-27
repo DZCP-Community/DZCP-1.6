@@ -42,11 +42,8 @@ if(defined('_UserMenu')) {
                 $icqnr = re($get['icq']);
             }
 
-            $status = ($get['status'] == 1 || ($getl['level'] != 1 && isset($_GET['sq']))) ? _aktiv_icon : _inaktiv_icon;
-            $getl = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . (int)($_GET['id']) . ";", false, true);
-
-            $clan = "";
-            if ($getl['level'] != 1 || isset($_GET['sq'])) {
+            $status = ($get['status'] == 1 || data('level',(int)($_GET['id']) != 1 && isset($_GET['sq']))) ? _aktiv_icon : _inaktiv_icon; $clan = "";
+            if (data('level',(int)($_GET['id']) != 1 || isset($_GET['sq'])) {
                 $sq = db("SELECT * FROM `" . $db['userpos'] . "` WHERE `user` = " . (int)($_GET['id']) . ";");
                 $cnt = cnt($db['userpos'], " WHERE `user` = " . $get['id']);
                 $i = 1;
