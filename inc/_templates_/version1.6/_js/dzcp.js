@@ -94,19 +94,12 @@ var DZCP = {
 
     // init lightbox
     initLightbox: function() {
-        $('a[rel^=lightbox]').lightBox({
-            fixedNavigation:      true,
-            overlayBgColor:       '#000',
-            overlayOpacity:       0.8,
-            imageLoading:         '../inc/images/lightbox/loading.gif',
-            imageBtnClose:        '../inc/images/lightbox/close.gif',
-            imageBtnPrev:         '../inc/images/lightbox/prevlabel.gif',
-            imageBtnNext:         '../inc/images/lightbox/nextlabel.gif',
-            containerResizeSpeed: 350,
-            txtImage:             (lng == 'de' ? 'Bild' : 'Image'),
-            txtOf:                (lng == 'de' ? 'von' : 'of'),
-            maxHeight: screen.height * 0.9,
-            maxWidth: screen.width * 0.9
+        lightbox.option({
+            resizeDuration:   350,
+            positionFromTop:  20,
+            albumLabel:       (lng == 'de' ? 'Bild %1 von %2' : 'Image %1 of %2'),
+            maxHeight:        screen.height / 1.3,
+            maxWidth:         screen.width  / 1.3
         });
     },
 
