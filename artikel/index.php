@@ -257,11 +257,11 @@ switch ($action):
                                 db("INSERT INTO `".$db['acomments']."`
                                              SET `artikel`  = ".((int)$_GET['id']).",
                                                      `datum`    = ".time().",
-                                                     `nick`     = '".(isset($_POST['nick']) ? _real_escape_string(up($_POST['nick'])) : data('nick'))."',
-                                                     `email`    = '".(isset($_POST['email']) ? _real_escape_string(up($_POST['email'])) : data('email'))."',
-                                                     `hp`       = '".(isset($_POST['hp']) ? _real_escape_string(links($_POST['hp'])) : links(data('hp')))."',
+                                                     `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : data('nick'))."',
+                                                     `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : data('email'))."',
+                                                     `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : links(data('hp')))."',
                                                      `reg`      = ".((int)$userid).",
-                                                     `comment`  = '"._real_escape_string(up($_POST['comment']))."',
+                                                     `comment`  = '".up($_POST['comment'])."',
                                                      `ip`       = '".$userip."';");
 
                                 setIpcheck("artid(".$_GET['id'].")");
@@ -288,11 +288,11 @@ switch ($action):
                     $editedby = show(_edited_by, array("autor" => autor($userid),
                         "time" => date("d.m.Y H:i", time())._uhr));
                     db("UPDATE `".$db['acomments']."`
-                   SET `nick`     = '"._real_escape_string(up($_POST['nick']))."',
-                       `email`    = '"._real_escape_string(up($_POST['email']))."',
-                       `hp`       = '"._real_escape_string(links($_POST['hp']))."',
-                       `comment`  = '"._real_escape_string(up($_POST['comment']))."',
-                       `editby`   = '"._real_escape_string($editedby)."'
+                   SET `nick`     = '".up($_POST['nick'])."',
+                       `email`    = '".up($_POST['email'])."',
+                       `hp`       = '".links($_POST['hp'])."',
+                       `comment`  = '".up($_POST['comment'])."',
+                       `editby`   = '".$editedby."'
                    WHERE `id` = ".(int)($_GET['cid']).";");
 
                     $index = info(_comment_edited, "?action=show&amp;id=".$_GET['id']."");

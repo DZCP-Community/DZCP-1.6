@@ -151,8 +151,8 @@ switch ($action):
                     $time = mktime(23,59,59,$_POST['monat'],$_POST['tag'],$_POST['jahr']);
                     $qry = db("INSERT INTO `".$db['away']."` SET `userid`= ".((int)$userid).",`start`= ".
                         ((int)$abdata).",`end`= ".((int)$time).",`titel`= '".
-                        _real_escape_string(up($_POST['titel']))."',`reason`= '".
-                        _real_escape_string(up($_POST['reason']))."',`date`= ".time().";");
+                        up($_POST['titel'])."',`reason`= '".
+                        up($_POST['reason'])."',`date`= ".time().";");
 
                     $index = info(_away_successful_added, "../away/");
                 }
@@ -265,9 +265,9 @@ switch ($action):
                         "time" => date("d.m.Y H:i", time())._uhr));
 
                     db("UPDATE `".$db['away']."` SET `start`= ".(int)$abdata.", `end` = ".
-                        ((int)$time).", `titel` = '"._real_escape_string(up($_POST['titel']))."'', `reason` = '".
-                        _real_escape_string(up($_POST['reason']))."', `lastedit` = '".
-                        _real_escape_string($editedby)."' WHERE `id` = ".(int)($_GET['id']).";");
+                        ((int)$time).", `titel` = '".up($_POST['titel'])."'', `reason` = '".
+                        up($_POST['reason'])."', `lastedit` = '".
+                        $editedby."' WHERE `id` = ".(int)($_GET['id']).";");
 
                     $index = info(_away_successful_edit, "../away/");
                 }

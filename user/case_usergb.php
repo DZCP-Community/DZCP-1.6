@@ -69,11 +69,11 @@ if(defined('_UserMenu')) {
                     $qry = db("INSERT INTO ".$db['usergb']."
                                          SET `user`       = '".((int)$_GET['id'])."',
                                                  `datum`      = '".time()."',
-                                                 `nick`       = '"._real_escape_string(up($_POST['nick']))."',
-                                                 `email`      = '"._real_escape_string(up($_POST['email']))."',
-                                                 `hp`         = '"._real_escape_string(up(links($_POST['hp'])))."',
+                                                 `nick`       = '".up($_POST['nick'])."',
+                                                 `email`      = '".up($_POST['email'])."',
+                                                 `hp`         = '".up(links($_POST['hp']))."',
                                                  `reg`        = '".((int)$userid)."',
-                                                 `nachricht`  = '"._real_escape_string(up($_POST['eintrag']))."',
+                                                 `nachricht`  = '".up($_POST['eintrag'])."',
                                                  `ip`         = '".$userip."'");
 
                     setIpcheck("mgbid(".(int)($_GET['id']).")");
@@ -87,8 +87,8 @@ if(defined('_UserMenu')) {
                 if($_POST['reg'] == 0)
                 {
                     $addme = "`nick`       = '".up($_POST['nick'])."',
-                                             `email`      = '"._real_escape_string(up($_POST['email']))."',
-                                             `hp`         = '"._real_escape_string(links($_POST['hp']))."',";
+                                             `email`      = '".up($_POST['email'])."',
+                                             `hp`         = '".links($_POST['hp'])."',";
                 }
 
                 $editedby = show(_edited_by, array("autor" => autor($userid),
@@ -96,7 +96,7 @@ if(defined('_UserMenu')) {
 
                 $upd = db("UPDATE ".$db['usergb']."
                                          SET ".$addme."
-                                                 `nachricht`  = '"._real_escape_string(up($_POST['eintrag']))."',
+                                                 `nachricht`  = '".up($_POST['eintrag'])."',
                                                  `reg`        = '".((int)$_POST['reg'])."',
                                                  `editby`     = '".addslashes($editedby)."'
                                          WHERE id = '".(int)($_GET['gbid'])."'");

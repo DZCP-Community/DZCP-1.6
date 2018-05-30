@@ -136,9 +136,9 @@ $search_forum = false;
 $api = new api('api.dzcp.de');
 
 //-> Global
-$action = isset($_GET['action']) ? $_GET['action'] : '';
+$action = isset($_GET['action']) ? strtolower($_GET['action']) : '';
 $page = (isset($_GET['page']) && (int)($_GET['page']) >= 1) ? (int)($_GET['page']) : 1;
-$do = isset($_GET['do']) ? $_GET['do'] : '';
+$do = isset($_GET['do']) ? strtolower($_GET['do']) : '';
 $index = ''; $show = ''; $color = 0;
 
 //-> Auslesen der Cookies und automatisch anmelden
@@ -1424,7 +1424,7 @@ function checkme($userid_set=0) {
         if (rootAdmin($userid)) return 4;
         if (empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
         if (!dbc_index::issetIndex('user_' . $userid)) {
-            $qry = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = ".$userid." AND `pwd` = '".$_SESSION['pwd']."' AND `ip` = '"._real_escape_string(up($_SESSION['ip']))."';");
+            $qry = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = ".$userid." AND `pwd` = '".$_SESSION['pwd']."' AND `ip` = '".up($_SESSION['ip'])."';");
             if (!_rows($qry)) return 0;
             $get = _fetch($qry);
             dbc_index::setIndex('user_' . $get['id'], $get);
@@ -1684,7 +1684,7 @@ function mkpwd($length = 8, $add_dashes = false, $available_sets = 'luds') {
 //-> Passwortabfrage und rückgabe des users
 function checkpwd($user, $pwd) {
     global $db;
-    $sql = db("SELECT * FROM `".$db['users']."` WHERE `user` = '"._real_escape_string(up($user)).
+    $sql = db("SELECT * FROM `".$db['users']."` WHERE `user` = '".up($user).
         "' AND (`pwd` = '".hash('sha256',$pwd)."' OR (`pwd` = '".md5($pwd)."' AND `pwd_md5` = 1)) AND `level` != 0;");
     if(_rows($sql)) {
         $get = _fetch($sql);

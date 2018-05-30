@@ -21,6 +21,13 @@ function getmicrotime() {
 
 $time_start=getmicrotime();
 
+//Filter Sanitize
+$gump = GUMP::get_instance();
+$_POST = $gump->sanitize($_POST);
+$_GET = $gump->sanitize($_GET);
+$_REQUEST = $gump->sanitize($_REQUEST);
+$_COOKIE = $gump->sanitize($_COOKIE);
+
 function gz_output($output='') {
     $gzip_compress_level = (!defined('buffer_gzip_compress_level') ? 4 : buffer_gzip_compress_level);
     if(function_exists('ini_set'))

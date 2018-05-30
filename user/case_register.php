@@ -105,9 +105,9 @@ if(defined('_UserMenu')) {
                 }
 
                 db("INSERT INTO " . $db['users'] . "
-                SET `user`     = '" . _real_escape_string(up($_POST['user'])) . "',
-                    `nick`     = '" . _real_escape_string(up($_POST['nick'])) . "',
-                    `email`    = '" . _real_escape_string(up($_POST['email'])) . "',
+                SET `user`     = '" . up($_POST['user']) . "',
+                    `nick`     = '" . up($_POST['nick']) . "',
+                    `email`    = '" . up($_POST['email']) . "',
                     `pwd`      = '" . $pwd . "',
                     `regdatum` = " . time() . ",
                     `level`    = 1,

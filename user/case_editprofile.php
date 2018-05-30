@@ -83,7 +83,7 @@ if(defined('_UserMenu')) {
                 }
 
                 $qry = db("UPDATE `".$db['users']."` SET ".$newpwd." ".$customfields."
-                  `country`      = '"._real_escape_string($_POST['land'])."',
+                  `country`      = '".up($_POST['land'])."',
                   `user`         = '".up($_POST['user'])."',
                   `nick`         = '".up($_POST['nick'])."',
                   `rlname`       = '".up($_POST['rlname'])."',

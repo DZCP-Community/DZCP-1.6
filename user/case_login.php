@@ -55,7 +55,7 @@ if(defined('_UserMenu')) {
                 else
                     $index = error(_login_banned);
             } else {
-                $qry = db("SELECT `id` FROM `".$db['users']."` WHERE `user` = '"._real_escape_string(up($_POST['user']))."';");
+                $qry = db("SELECT `id` FROM `".$db['users']."` WHERE `user` = '".up($_POST['user'])."';");
                 if(_rows($qry)) {
                     $get = _fetch($qry);
                     setIpcheck("trylogin(".$get['id'].")");

@@ -168,10 +168,10 @@ switch ($action):
                     $datum = mktime(0,0,0,$_POST['m'],$_POST['t'],$_POST['j']);
                     db("INSERT INTO `".$db['clankasse']."`
                         SET `datum`        = ".((int)$datum).",
-                            `member`       = '"._real_escape_string($_POST['member'])."',
-                            `transaktion`  = '"._real_escape_string(up($_POST['transaktion']))."',
+                            `member`       = '".$_POST['member']."',
+                            `transaktion`  = '".up($_POST['transaktion'])."',
                             `pm`           = ".((int)$_POST['pm']).",
-                            `betrag`       = '"._real_escape_string(up($betrag))."';");
+                            `betrag`       = '".up($betrag)."';");
 
                     $index = info(_clankasse_saved, "../clankasse/");
                 }
@@ -188,9 +188,9 @@ switch ($action):
                 else {
                     db("UPDATE ".$db['clankasse']."
                         SET `datum`        = ".((int)$_POST['datum']).",
-                            `transaktion`  = '"._real_escape_string(up($_POST['transaktion']))."',
+                            `transaktion`  = '".up($_POST['transaktion'])."',
                             `pm`           = ".((int)$_POST['pm']).",
-                            `betrag`       = '"._real_escape_string(up($_POST['betrag']))."'
+                            `betrag`       = '".up($_POST['betrag'])."'
                         WHERE `id` = ".(int)($_POST['id']).";");
 
                     $index = info(_clankasse_edited, "../clankasse/");
@@ -245,10 +245,10 @@ switch ($action):
 
                     db("UPDATE `".$db['clankasse']."`
                         SET `datum`        = ".((int)$datum).",
-                            `member`       = '"._real_escape_string(up($_POST['member']))."',
-                            `transaktion`  = '"._real_escape_string(up($_POST['transaktion']))."',
+                            `member`       = '".up($_POST['member'])."',
+                            `transaktion`  = '".up($_POST['transaktion'])."',
                             `pm`           = ".((int)$_POST['pm']).",
-                            `betrag`       = '"._real_escape_string(up($betrag))."'
+                            `betrag`       = '".up($betrag)."'
                         WHERE `id` = ".(int)($_GET['id']).";");
 
                     $index = info(_clankasse_edited, "../clankasse/");
