@@ -2760,7 +2760,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
     dsgvo_lock = \''.$dsgvo_lock.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
 
     if(!strstr($_SERVER['HTTP_USER_AGENT'],'Android') && !strstr($_SERVER['HTTP_USER_AGENT'],'webOS'))
-        $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.js"></script>'."\n";
+        $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg.min.js"></script>'."\n";
 
     if(settings("wmodus") && $chkMe != 4) {
         if(HasDSGVO()) {

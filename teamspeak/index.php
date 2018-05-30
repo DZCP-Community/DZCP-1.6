@@ -18,11 +18,9 @@ $title = $pagetitle." - ".$where."";
 $dir = "teamspeak";
 
 ## SECTIONS ##
-if(fsockopen_support())
-{
-    $CachedString = $cache->getItem('teamspeak_'.$_SESSION['language']);
-    if(is_null($CachedString->get()) || isset($_GET['cID']))
-    {
+if(fsockopen_support()) {
+    $CachedString = $cache->getItem('page_teamspeak_'.$_SESSION['language']);
+    if(is_null($CachedString->get()) || isset($_GET['cID'])) {
         switch(settings('ts_version')):
             default; case '2';
             $uip   = settings('ts_ip');
@@ -296,6 +294,8 @@ if(fsockopen_support())
         endswitch;
         $CachedString->set($index)->expiresAfter(config('cache_teamspeak'));
         $cache->save($CachedString);
+    } else {
+        $CachedString->get();
     }
 } else {
     $index = error(_fopen,1);

@@ -217,6 +217,8 @@ switch ($action):
                             "image_map" => $image_map));
                         $CachedString->set($index)->expiresAfter(config('cache_server'));
                         $cache->save($CachedString);
+                    } else {
+                        $index .= $CachedString->get();
                     }
                 } else {
                     if(!empty($get['pwd'])) $pwds = show(_server_pwd, array("pwd" => re($get['pwd'])));
