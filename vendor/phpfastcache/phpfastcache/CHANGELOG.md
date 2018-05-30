@@ -1,3 +1,16 @@
+## 6.1.2
+##### 23 march 2018
+- __Core__
+    - Fixed #581 // Files driver "securityKey" option configuration not working as documented
+
+## 6.1.1
+##### 1 march 2018
+- __Global__
+    - Added discrete Patreon badge
+    - Fixed #569 // Updated wiki code sample
+- __Drivers__
+    - Fixed #576 // Devnull driver returning non-null value
+
 ## 6.1.0
 ##### 30 january 2018
 - __Global__
