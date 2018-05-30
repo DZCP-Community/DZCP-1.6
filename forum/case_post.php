@@ -156,10 +156,9 @@ if(defined('_Forum')) {
             $index = error(_error_wrong_permissions, 1);
         }
     } elseif($do == "add") {
-        if(settings("reg_forum") && !$chkMe)
-        {
+        if(settings("reg_forum") && !$chkMe) {
             $index = error(_error_unregistered,1);
-        } else {
+        } else if(HasDSGVO()) {
             if(!ipcheck("fid(".$_GET['kid'].")", config('f_forum')))
             {
                 $check = db("SELECT s2.id,s1.intern FROM ".$db['f_kats']." AS s1

@@ -6,7 +6,7 @@
 
 if(defined('_UserMenu')) {
     $where = _site_user_login;
-    if($do == "yes") {
+    if($do == "yes" && HasDSGVO()) {
         if(config('securelogin') &&
             ((!array_key_exists('sec_login_page',$_SESSION) && !array_key_exists('login_menu',$_SESSION)) ||
             (($_POST['secure'] != $_SESSION['sec_login_page'] && $_POST['secure'] != $_SESSION['login_menu']) ||

@@ -190,7 +190,7 @@ if(defined('_UserMenu')) {
                     $membergb = show(_no_entrys_yet, array("colspan" => "1"));
 
                 $add = "";
-                if (!ipcheck("mgbid(" . $_GET['id'] . ")", config('f_membergb'))) {
+                if (!ipcheck("mgbid(" . $_GET['id'] . ")", config('f_membergb')) && HasDSGVO()) {
                     if ($userid >= 1) {
                         $form = show("page/editor_regged", array("nick" => autor($userid),
                             "von" => _autor));

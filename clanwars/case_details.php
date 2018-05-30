@@ -36,45 +36,45 @@ if(defined('_Clanwars')) {
 
                     $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
                     $show_players .= show($dir."/players_show", array("nick" => autor($getp['member']),
-                                                                      "class" => $class,
-                                                                      "status" => $status));
+                        "class" => $class,
+                        "status" => $status));
                 }
 
                 $cntPlayers = cnt($db['cw_player'], " WHERE cwid = '".(int)($_GET['id'])."' AND member = '".$userid."'", "cwid");
                 $value = $cntPlayers ? _button_value_edit : _button_value_add; $form_player = "";
                 if(db("SELECT id FROM ".$db['squaduser']." WHERE squad = '".$get['squad_id']."' AND user = '".$userid."'",true)) {
                     $form_player = show($dir."/form_player",array("id" => (int)($_GET['id']),
-                                                                   "admin" => (permission('clanwars') ? '<input id="contentSubmitAdmin" type="button" value="'._cw_reset_button.'" class="submit" onclick="DZCP.submitButton(\'contentSubmitAdmin\');DZCP.goTo(\'?action=resetplayers&amp;id='.(int)($_GET['id']).'\')" />' : ''),
-                                                                   "yes" => _yes,
-                                                                   "no" => _no,
-                                                                   "sely" => (empty($sely) && empty($seln) && empty($selm) ? 'checked="checked"' : $sely),
-                                                                   "seln" => $seln,
-                                                                   "selm" => $selm,
-                                                                   "maybe" => _maybe,
-                                                                   "value" => $value,
-                                                                   "play" => _cw_players_play));
+                        "admin" => (permission('clanwars') ? '<input id="contentSubmitAdmin" type="button" value="'._cw_reset_button.'" class="submit" onclick="DZCP.submitButton(\'contentSubmitAdmin\');DZCP.goTo(\'?action=resetplayers&amp;id='.(int)($_GET['id']).'\')" />' : ''),
+                        "yes" => _yes,
+                        "no" => _no,
+                        "sely" => (empty($sely) && empty($seln) && empty($selm) ? 'checked="checked"' : $sely),
+                        "seln" => $seln,
+                        "selm" => $selm,
+                        "maybe" => _maybe,
+                        "value" => $value,
+                        "play" => _cw_players_play));
                 }
 
                 $players = show($dir."/players", array("show_players" => $show_players,
-                                                       "nick" => _nick,
-                                                       "status" => _status,
-                                                       "head" => _cw_players_head,
-                                                       "form_player" => $form_player));
+                    "nick" => _nick,
+                    "status" => _status,
+                    "head" => _cw_players_head,
+                    "form_player" => $form_player));
 
                 $serverpwd = show(_cw_serverpwd, array("cw_serverpwd" => re($get['serverpwd'])));
             }
         }
 
         $show = show(_cw_details_squad, array("game" => re($get['game']),
-                                              "name" => re($get['name']),
-                                              "id" => $get['squad_id'],
-                                              "img" => squad($get['icon'])));
+            "name" => re($get['name']),
+            "id" => $get['squad_id'],
+            "img" => squad($get['icon'])));
         $flagge = flag($get['gcountry']);
         $gegner = show(_cw_details_gegner_blank, array("gegner" => re($get['clantag']." - ".$get['gegner']),
-                                                       "url" => !empty($get['url']) ? re($get['url']) : "#"));
+            "url" => !empty($get['url']) ? re($get['url']) : "#"));
 
         $server = show(_cw_details_server, array("servername" => re($get['servername']),
-                                                 "serverip" => re($get['serverip'])));
+            "serverip" => re($get['serverip'])));
 
         if($get['punkte'] == "0" && $get['gpunkte'] == "0")
             $result = _cw_no_results;
@@ -84,8 +84,8 @@ if(defined('_Clanwars')) {
         $editcw = "";
         if(permission("clanwars")) {
             $editcw = show("page/button_edit_single", array("id" => $get['id'],
-                                                            "action" => "action=admin&amp;do=edit",
-                                                            "title" => _button_title_edit));
+                "action" => "action=admin&amp;do=edit",
+                "title" => _button_title_edit));
         }
 
         $bericht = $get['bericht'] ? bbcode($get['bericht']) : "&nbsp;";
@@ -105,38 +105,38 @@ if(defined('_Clanwars')) {
                 if(permission("clanwars"))
                 {
                     $del1 = array_key_exists($sc1, $cw_screenshots) ? show("page/button_delete_single", array("id" => $_GET['id'],
-                            "action" => "action=details&amp;do=delete_pic&amp;pic=".$cw_screenshots[$sc1],
-                            "title" => _button_title_del,
-                            "del" => convSpace(_confirm_del_galpic))) : '';
+                        "action" => "action=details&amp;do=delete_pic&amp;pic=".$cw_screenshots[$sc1],
+                        "title" => _button_title_del,
+                        "del" => convSpace(_confirm_del_galpic))) : '';
 
                     $del2 = array_key_exists($sc2, $cw_screenshots) ? show("page/button_delete_single", array("id" => $_GET['id'],
-                            "action" => "action=details&amp;do=delete_pic&amp;pic=".$cw_screenshots[$sc2],
-                            "title" => _button_title_del,
-                            "del" => convSpace(_confirm_del_galpic))) : '';
+                        "action" => "action=details&amp;do=delete_pic&amp;pic=".$cw_screenshots[$sc2],
+                        "title" => _button_title_del,
+                        "del" => convSpace(_confirm_del_galpic))) : '';
 
                     $del3 = array_key_exists($sc3, $cw_screenshots) ? show("page/button_delete_single", array("id" => $_GET['id'],
-                            "action" => "action=details&amp;do=delete_pic&amp;pic=".$cw_screenshots[$sc3],
-                            "title" => _button_title_del,
-                            "del" => convSpace(_confirm_del_galpic))) : '';
+                        "action" => "action=details&amp;do=delete_pic&amp;pic=".$cw_screenshots[$sc3],
+                        "title" => _button_title_del,
+                        "del" => convSpace(_confirm_del_galpic))) : '';
 
                     $del4 = array_key_exists($sc4, $cw_screenshots) ? show("page/button_delete_single", array("id" => $_GET['id'],
-                            "action" => "action=details&amp;do=delete_pic&amp;pic=".$cw_screenshots[$sc4],
-                            "title" => _button_title_del,
-                            "del" => convSpace(_confirm_del_galpic))) : '';
+                        "action" => "action=details&amp;do=delete_pic&amp;pic=".$cw_screenshots[$sc4],
+                        "title" => _button_title_del,
+                        "del" => convSpace(_confirm_del_galpic))) : '';
                 }
 
                 $show_sc .= show($dir."/show_screenshots", array("screen1" => (array_key_exists($sc1, $cw_screenshots) ? img_cw($libPath,$cw_screenshots[$sc1]) : ''),
-                                                                 "screen2" => (array_key_exists($sc2, $cw_screenshots) ? img_cw($libPath,$cw_screenshots[$sc2]) : ''),
-                                                                 "screen3" => (array_key_exists($sc3, $cw_screenshots) ? img_cw($libPath,$cw_screenshots[$sc3]) : ''),
-                                                                 "screen4" => (array_key_exists($sc4, $cw_screenshots) ? img_cw($libPath,$cw_screenshots[$sc4]) : ''),
-                                                                 "del_screen1" => '<p>'.$del1,
-                                                                 "del_screen2" => '<p>'.$del2,
-                                                                 "del_screen3" => '<p>'.$del3,
-                                                                 "del_screen4" => '<p>'.$del4,
-                                                                 "screenshot1" => (array_key_exists($sc1, $cw_screenshots) ? _cw_screenshot.' '.$sc1 : ''),
-                                                                 "screenshot2" => (array_key_exists($sc2, $cw_screenshots) ? _cw_screenshot.' '.$sc2 : ''),
-                                                                 "screenshot3" => (array_key_exists($sc3, $cw_screenshots) ? _cw_screenshot.' '.$sc3 : ''),
-                                                                 "screenshot4" => (array_key_exists($sc4, $cw_screenshots) ? _cw_screenshot.' '.$sc4 : '')));
+                    "screen2" => (array_key_exists($sc2, $cw_screenshots) ? img_cw($libPath,$cw_screenshots[$sc2]) : ''),
+                    "screen3" => (array_key_exists($sc3, $cw_screenshots) ? img_cw($libPath,$cw_screenshots[$sc3]) : ''),
+                    "screen4" => (array_key_exists($sc4, $cw_screenshots) ? img_cw($libPath,$cw_screenshots[$sc4]) : ''),
+                    "del_screen1" => '<p>'.$del1,
+                    "del_screen2" => '<p>'.$del2,
+                    "del_screen3" => '<p>'.$del3,
+                    "del_screen4" => '<p>'.$del4,
+                    "screenshot1" => (array_key_exists($sc1, $cw_screenshots) ? _cw_screenshot.' '.$sc1 : ''),
+                    "screenshot2" => (array_key_exists($sc2, $cw_screenshots) ? _cw_screenshot.' '.$sc2 : ''),
+                    "screenshot3" => (array_key_exists($sc3, $cw_screenshots) ? _cw_screenshot.' '.$sc3 : ''),
+                    "screenshot4" => (array_key_exists($sc4, $cw_screenshots) ? _cw_screenshot.' '.$sc4 : '')));
                 $sc1 = $sc1+4; $sc2 = $sc2+4; $sc3 = $sc3+4; $sc4 = $sc4+4;
             }
         }
@@ -153,13 +153,13 @@ if(defined('_Clanwars')) {
             $edit = ""; $delete = "";
             if(($chkMe >= 1 && $getc['reg'] == $userid) || permission("clanwars")) {
                 $edit = show("page/button_edit_single", array("id" => $get['id'],
-                                                              "action" => "action=details&amp;do=edit&amp;cid=".$getc['id'],
-                                                              "title" => _button_title_edit));
+                    "action" => "action=details&amp;do=edit&amp;cid=".$getc['id'],
+                    "title" => _button_title_edit));
 
                 $delete = show("page/button_delete_single", array("id" => $_GET['id'],
-                                                                  "action" => "action=details&amp;do=delete&amp;cid=".$getc['id'],
-                                                                  "title" => _button_title_del,
-                                                                  "del" => convSpace(_confirm_del_entry)));
+                    "action" => "action=details&amp;do=delete&amp;cid=".$getc['id'],
+                    "title" => _button_title_del,
+                    "del" => convSpace(_confirm_del_entry)));
             }
 
             $hp = ""; $email = ""; $onoff = ""; $avatar = "";
@@ -173,68 +173,68 @@ if(defined('_Clanwars')) {
             }
 
             $titel = show(_eintrag_titel, array("postid" => $i,
-                                                "datum" => date("d.m.Y", $getc['datum']),
-                                                "zeit" => date("H:i", $getc['datum'])._uhr,
-                                                "edit" => $edit,
-                                                "delete" => $delete));
+                "datum" => date("d.m.Y", $getc['datum']),
+                "zeit" => date("H:i", $getc['datum'])._uhr,
+                "edit" => $edit,
+                "delete" => $delete));
 
             $posted_ip = $chkMe == "4" ? $getc['ip'] : _logged;
-			$email =  ($chkMe >= 1 ? $email : '');
+            $email =  ($chkMe >= 1 ? $email : '');
             $comments .= show("page/comments_show", array("titel" => $titel,
-                                                          "comment" => bbcode($getc['comment']),
-                                                          "editby" => bbcode($getc['editby']),
-                                                          "nick" => $nick,
-                                                          "hp" => $hp,
-                                                          "email" => $email,
-                                                          "avatar" => useravatar($getc['reg']),
-                                                          "onoff" => $onoff,
-                                                          "rank" => getrank($getc['reg']),
-                                                          "ip" => $posted_ip));
+                "comment" => bbcode($getc['comment']),
+                "editby" => bbcode($getc['editby']),
+                "nick" => $nick,
+                "hp" => $hp,
+                "email" => $email,
+                "avatar" => useravatar($getc['reg']),
+                "onoff" => $onoff,
+                "rank" => getrank($getc['reg']),
+                "ip" => $posted_ip));
             $i--;
         }
 
+        $add = "";
         if(settings("reg_cwcomments") && !$chkMe)
             $add = _error_unregistered_nc;
-        else {
-            $add = "";
+        else if(HasDSGVO()) {
             if(!ipcheck("cwid(".$_GET['id'].")", config('f_cwcom'))) {
                 if($userid >= 1)
                     $form = show("page/editor_regged", array("nick" => autor($userid), "von" => _autor));
                 else {
                     $form = show("page/editor_notregged", array("nickhead" => _nick,
-                                                                "emailhead" => _email,
-                                                                "hphead" => _hp,
-                                                                "postemail" => '',
-                                                                "posthp" => '',
-                                                                "postnick" => ''));
+                        "emailhead" => _email,
+                        "hphead" => _hp,
+                        "postemail" => '',
+                        "posthp" => '',
+                        "postnick" => ''));
                 }
 
                 $add = show("page/comments_add", array("titel" => _cw_comments_add,
-                                                       "nickhead" => _nick,
-                                                       "bbcodehead" => _bbcode,
-                                                       "emailhead" => _email,
-                                                       "hphead" => _hp,
-                                                       "security" => _register_confirm,
-                                                       "sec" => $dir,
-                                                       "show" => "none",
-                                                       "ip" => _iplog_info,
-                                                       "preview" => _preview,
-                                                       "action" => '?action=details&amp;do=add&amp;id='.$_GET['id'],
-                                                       "prevurl" => '../clanwars/?action=compreview&amp;id='.$_GET['id'],
-                                                       "id" => $_GET['id'],
-                                                       "what" => _button_value_add,
-                                                       "form" => $form,
-                                                       "posteintrag" => "",
-                                                       "error" => "",
-                                                       "eintraghead" => _eintrag));
+                    "nickhead" => _nick,
+                    "bbcodehead" => _bbcode,
+                    "emailhead" => _email,
+                    "hphead" => _hp,
+                    "security" => _register_confirm,
+                    "sec" => $dir,
+                    "show" => "none",
+                    "ip" => _iplog_info,
+                    "preview" => _preview,
+                    "action" => '?action=details&amp;do=add&amp;id='.$_GET['id'],
+                    "prevurl" => '../clanwars/?action=compreview&amp;id='.$_GET['id'],
+                    "id" => $_GET['id'],
+                    "what" => _button_value_add,
+                    "form" => $form,
+                    "posteintrag" => "",
+                    "error" => "",
+                    "eintraghead" => _eintrag));
             }
         }
 
         $seiten = nav($entrys,config('m_cwcomments'),"?action=details&amp;id=".$_GET['id']."");
         $comments = show($dir."/comments",array("head" => _cw_comments_head,
-                                                "show" => $comments,
-                                                "seiten" => $seiten,
-                                                "add" => $add));
+            "show" => $comments,
+            "seiten" => $seiten,
+            "add" => $add));
 
         $logo_squad = '_defaultlogo.jpg'; $logo_gegner = '_defaultlogo.jpg';
         foreach($picformat AS $end) {
@@ -255,49 +255,49 @@ if(defined('_Clanwars')) {
         $pagetitle = re($get['name']).' vs. '.re($get['gegner']).' - '.$pagetitle;
 
         $index = show($dir."/details", array("head" => _cw_head_details,
-                                             "result_head" => _cw_head_results,
-                                             "lineup_head" => _cw_head_lineup,
-                                             "admin_head" => _cw_head_admin,
-                                             "gametype_head" => _cw_head_gametype,
-                                             "squad_head" => _cw_head_squad,
-                                             "flagge" => $flagge,
-                                             "br1" => ($logos ? '<!--' : ''),
-                                             "br2" => ($logos ? '-->' : ''),
-                                             "logo_squad" => $logo_squad,
-                                             "logo_gegner" => $logo_gegner,
-                                             "squad" => $show,
-                                             "squad_name" => re($get['name']),
-                                             "gametype" => empty($get['gametype']) ? '-' : re($get['gametype']),
-                                             "lineup" => preg_replace("#\,#","<br />",re($get['lineup'])),
-                                             "glineup" => preg_replace("#\,#","<br />",re($get['glineup'])),
-                                             "match_admins" => empty($get['matchadmins']) ? '-' : re($get['matchadmins']),
-                                             "datum" => _datum,
-                                             "gegner" => _cw_head_gegner,
-                                             "xonx" => _cw_head_xonx,
-                                             "liga" => _cw_head_liga,
-                                             "maps" => _cw_maps,
-                                             "server" => _server,
-                                             "result" => _cw_head_result,
-                                             "players" => $players,
-                                             "edit" => $editcw,
-                                             "comments" => $comments,
-                                             "bericht" => _cw_bericht,
-                                             "serverpwd" => $serverpwd,
-                                             "cw_datum" => date("d.m.Y H:i", $get['datum'])._uhr,
-                                             "cw_gegner" => $gegner,
-                                             "cw_xonx" => empty($get['xonx']) ? '-' : re($get['xonx']),
-                                             "cw_liga" => empty($get['liga']) ? '-' : re($get['liga']),
-                                             "cw_maps" => empty($get['maps']) ? '-' : re($get['maps']),
-                                             "cw_server" => $server,
-                                             "cw_result" => $result,
-                                             "cw_bericht" => $bericht,
-                                             "screenshots" => $screens));
+            "result_head" => _cw_head_results,
+            "lineup_head" => _cw_head_lineup,
+            "admin_head" => _cw_head_admin,
+            "gametype_head" => _cw_head_gametype,
+            "squad_head" => _cw_head_squad,
+            "flagge" => $flagge,
+            "br1" => ($logos ? '<!--' : ''),
+            "br2" => ($logos ? '-->' : ''),
+            "logo_squad" => $logo_squad,
+            "logo_gegner" => $logo_gegner,
+            "squad" => $show,
+            "squad_name" => re($get['name']),
+            "gametype" => empty($get['gametype']) ? '-' : re($get['gametype']),
+            "lineup" => preg_replace("#\,#","<br />",re($get['lineup'])),
+            "glineup" => preg_replace("#\,#","<br />",re($get['glineup'])),
+            "match_admins" => empty($get['matchadmins']) ? '-' : re($get['matchadmins']),
+            "datum" => _datum,
+            "gegner" => _cw_head_gegner,
+            "xonx" => _cw_head_xonx,
+            "liga" => _cw_head_liga,
+            "maps" => _cw_maps,
+            "server" => _server,
+            "result" => _cw_head_result,
+            "players" => $players,
+            "edit" => $editcw,
+            "comments" => $comments,
+            "bericht" => _cw_bericht,
+            "serverpwd" => $serverpwd,
+            "cw_datum" => date("d.m.Y H:i", $get['datum'])._uhr,
+            "cw_gegner" => $gegner,
+            "cw_xonx" => empty($get['xonx']) ? '-' : re($get['xonx']),
+            "cw_liga" => empty($get['liga']) ? '-' : re($get['liga']),
+            "cw_maps" => empty($get['maps']) ? '-' : re($get['maps']),
+            "cw_server" => $server,
+            "cw_result" => $result,
+            "cw_bericht" => $bericht,
+            "screenshots" => $screens));
 
         if($do == "add") {
             if(_rows(db("SELECT `id` FROM ".$db['cw']." WHERE `id` = '".(int)$_GET['id']."'")) != 0) {
                 if(settings("reg_cwcomments") && !$chkMe )
                     $index = error(_error_have_to_be_logged, 1);
-                else {
+                else if(HasDSGVO()) {
                     if(!ipcheck("cwid(".$_GET['id'].")", config('f_cwcom'))) {
                         if($userid >= 1)
                             $toCheck = empty($_POST['comment']);
@@ -327,26 +327,26 @@ if(defined('_Clanwars')) {
 
                             $error = show("errors/errortable", array("error" => $error));
                             $index = show("page/comments_add", array("titel" => _cw_comments_add,
-                                                                     "nickhead" => _nick,
-                                                                     "bbcodehead" => _bbcode,
-                                                                     "emailhead" => _email,
-                                                                     "hphead" => _hp,
-                                                                     "ip" => _iplog_info,
-                                                                     "security" => _register_confirm,
-                                                                     "what" => _button_value_add,
-                                                                     "sec" => $dir,
-                                                                     "form" => $form,
-                                                                     "preview" => _preview,
-                                                                     "action" => '?action=details&amp;do=add&amp;id='.$_GET['id'],
-                                                                     "prevurl" => '../clanwars/?action=compreview&id='.$_GET['id'],
-                                                                     "id" => $_GET['id'],
-                                                                     "show" => "",
-                                                                     "postemail" => isset($_POST['email']) ? $_POST['email'] : '',
-                                                                     "posthp" => isset($_POST['hp']) ? links($_POST['hp']) : '',
-                                                                     "postnick" => isset($_POST['nick']) ? re($_POST['nick']) : '',
-                                                                     "posteintrag" => re_bbcode($_POST['comment']),
-                                                                     "error" => $error,
-                                                                     "eintraghead" => _eintrag));
+                                "nickhead" => _nick,
+                                "bbcodehead" => _bbcode,
+                                "emailhead" => _email,
+                                "hphead" => _hp,
+                                "ip" => _iplog_info,
+                                "security" => _register_confirm,
+                                "what" => _button_value_add,
+                                "sec" => $dir,
+                                "form" => $form,
+                                "preview" => _preview,
+                                "action" => '?action=details&amp;do=add&amp;id='.$_GET['id'],
+                                "prevurl" => '../clanwars/?action=compreview&id='.$_GET['id'],
+                                "id" => $_GET['id'],
+                                "show" => "",
+                                "postemail" => isset($_POST['email']) ? $_POST['email'] : '',
+                                "posthp" => isset($_POST['hp']) ? links($_POST['hp']) : '',
+                                "postnick" => isset($_POST['nick']) ? re($_POST['nick']) : '',
+                                "posteintrag" => re_bbcode($_POST['comment']),
+                                "error" => $error,
+                                "eintraghead" => _eintrag));
                         } else {
                             db("INSERT INTO ".$db['cw_comments']."
                                 SET `cw`       = '".((int)$_GET['id'])."',
@@ -390,7 +390,7 @@ if(defined('_Clanwars')) {
 
             $index = info(_cw_screenshot_deleted, "?action=details&amp;id=".(int)($_GET['id']));
         }
-       elseif($do == "delete") {
+        elseif($do == "delete") {
             $get = db("SELECT reg FROM ".$db['cw_comments']." WHERE id = '".(int)($_GET['cid'])."'",false,true);
             if($get['reg'] == $userid || permission('clanwars'))
             {
@@ -421,31 +421,31 @@ if(defined('_Clanwars')) {
                     $form = show("page/editor_regged", array("nick" => autor($get['reg']), "von" => _autor));
                 else {
                     $form = show("page/editor_notregged", array("nickhead" => _nick,
-                                                                "emailhead" => _email,
-                                                                "hphead" => _hp,
-                                                                "postemail" => re($get['email']),
-                                                                "posthp" => links($get['hp']),
-                                                                "postnick" => re($get['nick'])));
+                        "emailhead" => _email,
+                        "hphead" => _hp,
+                        "postemail" => re($get['email']),
+                        "posthp" => links($get['hp']),
+                        "postnick" => re($get['nick'])));
                 }
 
                 $index = show("page/comments_add", array("titel" => _comments_edit,
-                                                         "nickhead" => _nick,
-                                                         "bbcodehead" => _bbcode,
-                                                         "emailhead" => _email,
-                                                         "hphead" => _hp,
-                                                         "security" => _register_confirm,
-                                                         "sec" => $dir,
-                                                         "form" => $form,
-                                                         "preview" => _preview,
-                                                         "prevurl" => '../clanwars/?action=compreview&do=edit&id='.$_GET['id'].'&amp;cid='.$_GET['cid'],
-                                                         "action" => '?action=details&amp;do=editcom&amp;id='.$_GET['id'].'&amp;cid='.$_GET['cid'],
-                                                         "ip" => _iplog_info,
-                                                         "id" => $_GET['id'],
-                                                         "what" => _button_value_edit,
-                                                         "show" => "",
-                                                         "posteintrag" => re_bbcode($get['comment']),
-                                                         "error" => "",
-                                                         "eintraghead" => _eintrag));
+                    "nickhead" => _nick,
+                    "bbcodehead" => _bbcode,
+                    "emailhead" => _email,
+                    "hphead" => _hp,
+                    "security" => _register_confirm,
+                    "sec" => $dir,
+                    "form" => $form,
+                    "preview" => _preview,
+                    "prevurl" => '../clanwars/?action=compreview&do=edit&id='.$_GET['id'].'&amp;cid='.$_GET['cid'],
+                    "action" => '?action=details&amp;do=editcom&amp;id='.$_GET['id'].'&amp;cid='.$_GET['cid'],
+                    "ip" => _iplog_info,
+                    "id" => $_GET['id'],
+                    "what" => _button_value_edit,
+                    "show" => "",
+                    "posteintrag" => re_bbcode($get['comment']),
+                    "error" => "",
+                    "eintraghead" => _eintrag));
             }
             else
                 $index = error(_error_edit_post,1);

@@ -6,11 +6,9 @@
 
 if(defined('_News')) {
         $check = db("SELECT intern FROM ".$db['news']." WHERE id = '".(int)($_GET['id'])."'",false,true);
-
         if($check['intern'] && !permission("intnews"))
             $index = error(_error_wrong_permissions, 1);
-        else
-        {
+        else {
             $qry = db("SELECT * FROM ".$db['news']." WHERE id = '".(int)($_GET['id'])."'".(permission("news") ? "" : " AND public = 1") );
             if(_rows($qry) == 0)
                 $index = error(_id_dont_exist,1);
@@ -110,9 +108,9 @@ if(defined('_News')) {
                 $i--;
             }
 
-            if((settings("reg_newscomments") && !$chkMe) || !HasDSGVO())
+            if((settings("reg_newscomments") && !$chkMe))
                 $add = _error_unregistered_nc;
-            else {
+            else if(HasDSGVO()) {
                 if($userid >= 1)
                     $form = show("page/editor_regged", array("nick" => autor($userid), "von" => _autor));
                 else
@@ -196,7 +194,7 @@ if(defined('_News')) {
                     {
                         if(settings("reg_newscomments") && !$chkMe)
                             $index = error(_error_have_to_be_logged, 1);
-                        else {
+                        else if(HasDSGVO()) {
                             if(!ipcheck("ncid(".$_GET['id'].")", config('f_newscom'))) {
                                 if($userid >= 1)
                                     $toCheck = empty($_POST['comment']);

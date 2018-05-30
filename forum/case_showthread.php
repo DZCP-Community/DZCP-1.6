@@ -154,9 +154,10 @@ if(defined('_Forum')) {
                 "action" => "action=post&amp;do=add&amp;kid=".$getw['kid']."&amp;zitatt=".$get['id'],
                 "title" => _button_title_zitat));
 
+            $add = '';
             if($get['closed']) {
                 $add = show("page/button_closed", array());
-            } else {
+            } else if(HasDSGVO()) {
                 $add = show(_forum_addpost, array("id" => $_GET['id'], "kid" => $getw['kid']));
             }
 

@@ -138,9 +138,9 @@ switch ($action):
                 }
 
                 $add = "";
-                if((settings("reg_artikel") && !$chkMe) || !HasDSGVO()) {
+                if((settings("reg_artikel") && !$chkMe)) {
                     $add = _error_unregistered_nc;
-                } else {
+                } else if(HasDSGVO()) {
                     if($userid >= 1)
                     {
                         $form = show("page/editor_regged", array("nick" => autor($userid), "von" => _autor));
@@ -205,7 +205,7 @@ switch ($action):
                 if(db("SELECT `id` FROM `".$db['artikel']."` WHERE `id` = ".(int)$_GET['id'].";",true) != 0) {
                     if(settings("reg_artikel") && !$chkMe)
                         $index = error(_error_have_to_be_logged, 1);
-                    else {
+                    else if(HasDSGVO()) {
                         if(!ipcheck("artid(".$_GET['id'].")", config('f_artikelcom'))) {
                             if($userid >= 1)
                                 $toCheck = empty($_POST['comment']);

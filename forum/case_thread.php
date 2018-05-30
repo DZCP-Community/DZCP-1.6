@@ -475,7 +475,7 @@ if(defined('_Forum')) {
         if(settings("reg_forum") && !$chkMe)
         {
             $index = error(_error_unregistered,1);
-        } else {
+        } else if(HasDSGVO()) {
             if(!ipcheck("fid(".$_GET['kid'].")", config('f_forum')))
             {
                 if(permission("forum"))

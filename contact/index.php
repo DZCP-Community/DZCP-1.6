@@ -19,19 +19,22 @@ $dir = "contact";
 ## SECTIONS ##
 switch ($action):
     default:
-        $index = show($dir."/contact", array("head" => _site_contact,
-            "nachricht" => _contact_nachricht,
-            "nick" => _nick,
-            "what" => "contact",
-            "security" => _register_confirm,
-            "joinus" => "",
-            "value" => _button_value_send,
-            "why" => "",
-            "pflicht" => _contact_pflichtfeld,
-            "email" => _email,
-            "skype" => _skypeid,
-            "steam" => _steamid,
-            "icq" => _icq));
+        if(HasDSGVO()) {
+            $index = show($dir . "/contact", array(
+                "head" => _site_contact,
+                "nachricht" => _contact_nachricht,
+                "nick" => _nick,
+                "what" => "contact",
+                "security" => _register_confirm,
+                "joinus" => "",
+                "value" => _button_value_send,
+                "why" => "",
+                "pflicht" => _contact_pflichtfeld,
+                "email" => _email,
+                "skype" => _skypeid,
+                "steam" => _steamid,
+                "icq" => _icq));
+        }
         break;
     case 'fightus';
         if(HasDSGVO()) {

@@ -6,13 +6,13 @@
 
 if(defined('_UserMenu')) {
     $where = _site_user_profil;
-    if(db("SELECT `id` FROM `".$db['users']."` WHERE `id` = '".(int)$_GET['id']."'",true) != 0)
-    {
-        if($do == "add")
-        {
-            if($userid >= 1) $toCheck = empty($_POST['eintrag']);
+    if(db("SELECT `id` FROM `".$db['users']."` WHERE `id` = '".(int)$_GET['id']."'",true) != 0) {
+        if($do == "add" && HasDSGVO()) {
+            if($userid >= 1)
+                $toCheck = empty($_POST['eintrag']);
             else
-                $toCheck = empty($_POST['nick']) || empty($_POST['email']) || empty($_POST['eintrag']) || !check_email($_POST['email']) || $_POST['secure'] != $_SESSION['sec_'.$dir] || empty($_SESSION['sec_'.$dir]);
+                $toCheck = empty($_POST['nick']) || empty($_POST['email']) || empty($_POST['eintrag']) ||
+                    !check_email($_POST['email']) || $_POST['secure'] != $_SESSION['sec_'.$dir] || empty($_SESSION['sec_'.$dir]);
 
             if($toCheck)
             {
