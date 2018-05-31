@@ -183,7 +183,9 @@ div#index {
     margin: 0 7px;
     background: #fff;
     padding:4px;
-    color:#7d7d7d
+    color:#7d7d7d;
+    -webkit-box-shadow: 0px 0px 3px #666666;
+    box-shadow: 0px 0px 3px #666666
 }
 /* Box left and right side */
 .box {
@@ -191,6 +193,8 @@ div#index {
     margin-bottom:7px;
     padding:0 7px 7px 7px;
     border-bottom: 1px solid #f00;
+    -webkit-box-shadow: 0px 0px 3px #666666;
+    box-shadow: 0px 0px 3px #666666;
 }
 /* Box tabs left and right side */
 .box_tabs {
@@ -198,6 +202,7 @@ div#index {
     margin-bottom: 7px;
     padding: 26px 0 0 0;
     border-bottom: 1px solid #f00;
+    
 }
 /* Global heading definition */
 .headline {
@@ -223,12 +228,15 @@ div#index {
     width: 102%;
     left: -2px;
     min-width: 207px;
+    border-radius: 3px;
 }
 /* Main Navigation (left side) */
 .mainNavigation {
     background:#2f2f2f;
     padding-bottom:5px;
-    margin-bottom:10px
+    margin-bottom:10px;
+    -webkit-box-shadow: 0px 2px 3px #ff0000;
+    box-shadow: 0px 0px 3px #ff0000
 }
 .mainNavigation ul li:nth-last-child(1) a {
     background:none;
@@ -414,34 +422,45 @@ input.loginName_en,input.loginPwd_en {
   color:#000;
 }
 input.loginSubmit {
-  width: 60px;
   padding: 1px;
-  background-image: url(../images/submit.jpg);
+  padding-left: 10px;
+  padding-right: 10px;
+  background-image: linear-gradient(to top, #cc0033 90%, #660000);
   border: 1px solid #5F5F5F;
   color: #fff;
   cursor: pointer;
+  width: 203px;
+  height: 30px;
+  text-transform:uppercase;
+  font-weight:  bolder;
+  cursor: pointer;
 }
 input.loginSignUp:hover {
-  background-image: url(../images/submit_hover.jpg);
+  background-image: linear-gradient(to top, #cc0033 10%, #660000);
 }
-input.loginSubmit {
+input.loginSubmit:hover {
   font-weight: bold;
+  background-image: linear-gradient(to top, #cc0033 10%, #660000);
 }
 /* Parts of the attributes of the navigations votebox e.g. menu/vote.html, menu/vote_results.html, menu/vote_vote.html */
 td.navVoteButton {
   text-align: center;
 }
 input.voteSubmit {
-  padding: 1px;
-  padding-left: 10px;
-  padding-right: 10px;
-  background-image: url(../images/submit.jpg);
-  border: 1px solid #5F5F5F;
-  color: #fff;
-  cursor: pointer;
+    padding: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-image: linear-gradient(to top, #cc0033 90%, #660000);
+    border: 1px solid #5F5F5F;
+    color: #fff;
+    cursor: pointer;
+    width: 203px;
+    height: 30px;
+    text-transform: uppercase;
+    font-weight: bolder;
 }
 input.voteSubmit:hover {
-  background-image: url(../images/submit_hover.jpg);
+  background-image: linear-gradient(to top, #cc0033 10%, #660000);
 }
 /* IE Hack */
 *+html input.voteSubmit { 
@@ -462,7 +481,7 @@ input.shoutEmail_en,input.shoutNick_en,textarea.shoutTextfield_en {
   background-color: #fcfcfc;
   color: #4e4e4e; 
   padding: 1px;
-  width: 148px;
+  width: 203px;
 }
 /* Enabled input fields (clicked) */
 input.shoutEmail_en,input.shoutNick_en,textarea.shoutTextfield_en {
@@ -473,20 +492,24 @@ input.shoutEmail_en,input.shoutNick_en,textarea.shoutTextfield_en {
 /* Shoutbox-textfield */
 textarea.shoutTextfield_dis,textarea.shoutTextfield_en {
   overflow: Auto;
-  height: 80px;
+  height: 90px;
 }
 /* Shoutbox submit button */
 input.shoutSubmit {
   padding: 1px;
   padding-left: 10px;
   padding-right: 10px;
-  background-image: url(../images/submit.jpg);
+  background-image: linear-gradient(to top, #cc0033 90%, #660000);
   border: 1px solid #5F5F5F;
   color: #fff;
   cursor: pointer;
+  width: 203px;
+  height: 30px;
+  text-transform:uppercase;
+  font-weight:  bolder;
 }
 input.shoutSubmit:hover {
-  background-image: url(../images/submit_hover.jpg);
+  background-image: linear-gradient(to top, #cc0033 10%, #660000);
 }
 /* IE Hack */
 *+html input.shoutSubmit { 
@@ -505,8 +528,11 @@ input.shoutLength {
 }
 /* Parts of the attributes of the navigations votebox e.g. menu/server.html, server/server_show.html */
 img.navServerPic,img.ServerPic {
-  width: 160px;
+  width: 162px;
   border-radius: 3px;
+  -webkit-box-shadow: 0px 0px 3px #666666;
+  box-shadow: 0px 0px 3px #666666;
+  border: 1px solid;
 }
 /* Attributes of all navigation boxes e.g. menu/nav_[box].html */
 table.tableNav {
@@ -660,7 +686,9 @@ table.news {
 /* Newsbild Positionierung */
 td.news img.newsImage {
     float:left;
-    margin:0 15px 15px 0
+    margin:0 15px 15px 0;
+    -webkit-box-shadow: 2px 2px 3px #666666;
+    box-shadow: 2px 2px 3px #666666
 }
 /* Settings Newatitel */
 td.news h1 {
@@ -911,7 +939,7 @@ td.statsBalken {
 }
 /* Templateswitcher dropdown e.g. menu/tmp_switch.html */
 select.tempswitch {
-  width: 120px;
+  width: 203px;
   color: #000;
   font-size: 97%;
   background-color: #FFF;
@@ -990,14 +1018,14 @@ input.submit {
   padding: 1px;
   padding-left: 10px;
   padding-right: 10px;
-  background-image: url(../images/submit.jpg);
+  background-image: linear-gradient(to top, #cc0033 90%, #660000);
   border: 1px solid #5F5F5F;
   color: #fff;
   cursor: pointer;
   font-weight: normal;
 }
 input.submit:hover {
-  background-image: url(../images/submit_hover.jpg);
+  background-image: linear-gradient(to top, #cc0033 10%, #660000);
 }
 /*IE Hack*/
 *+html input.submit { 

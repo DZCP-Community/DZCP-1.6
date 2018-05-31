@@ -56,8 +56,9 @@ var DZCP = {
         $(name).show();
         $(name).dialog({
             resizable: false,
+			width: 785,
+            left: 432,
             height: "auto",
-            width: 800,
             modal: true,
             buttons: {
                 "Akzeptieren": function () {
@@ -76,8 +77,9 @@ var DZCP = {
         $(name).show();
         $(name).dialog({
             resizable: false,
+			width: 785,
+            left: 432,
             height: "auto",
-            width: 800,
             modal: true,
             buttons: {
                 "Akzeptieren": function () {

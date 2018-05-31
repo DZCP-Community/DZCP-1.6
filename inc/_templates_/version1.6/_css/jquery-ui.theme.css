@@ -30,10 +30,11 @@
 }
 .ui-widget.ui-widget-content {
 	border: 1px solid #c5c5c5;
+	min-height: 50px
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
-	background: transparent;
+	background: #ffffff;
 	color: #333333;
 }
 .ui-widget-content a {
@@ -41,7 +42,7 @@
 }
 .ui-widget-header {
 	border: 1px solid #dddddd;
-	background: #e9e9e9;
+	background: transparent;
 	color: #333333;
 	font-weight: bold;
 }
@@ -111,14 +112,11 @@ a.ui-button:focus {
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-	border: 1px solid #800800;
-	background: #7c0000;
 	font-weight: normal;
 	color: #ffffff;
 }
 .ui-icon-background,
 .ui-state-active .ui-icon-background {
-	border: #7c0000;
 	background-color: #ffffff;
 }
 .ui-state-active a,
