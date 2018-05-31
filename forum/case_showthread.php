@@ -79,13 +79,13 @@ if(defined('_Forum')) {
                     "delete" => $delete));
 
                 $hp = ""; $icq = ""; $pn = ""; $email = "";
-                if($getp['reg'] != 0) {
+                if($getp['reg']) {
                     $getu = db("SELECT `nick`,`icq`,`hp`,`email` FROM `".$db['users']."` WHERE `id` = ".$getp['reg'].";",false,true);
 
                     $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
                     $pn = show(_pn_write_forum, array("id" => $getp['reg'], "nick" => $getu['nick']));
 
-                    if(!empty($getu['icq']) || $getu['icq'] == 0) {
+                    if(!empty($getu['icq']) || !$getu['icq']) {
                         $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
                         $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin='.$getu['icq'].'" target="_blank">'.$uin.'</a>';
                     }
@@ -106,6 +106,12 @@ if(defined('_Forum')) {
                 }
 
                 $email = ($chkMe >= 1 ? $email : '');
+                if($getp['reg'] && data('dsgvo_lock',$getp['reg'])) {
+                    $text = _dsgvo_locked_text;
+                    $getp['edited'] = '';
+                    $zitat = '';
+                }
+
                 $show .= show($dir."/forum_posts_show", array("nick" => $nick,
                     "postnr" => "#".($i+($page-1)*config('m_fposts')),
                     "p" => ($i+($page-1)*config('m_fposts')),
@@ -125,7 +131,7 @@ if(defined('_Forum')) {
                     "zitat" => $zitat,
                     "onoff" => $onoff,
                     "top" => _topicon,
-                    "lp" => cnt($db['f_posts'], " WHERE sid = '".(int)($_GET['id'])."'")+1));
+                    "lp" => cnt($db['f_posts'], " WHERE `sid` = ".(int)($_GET['id']))+1));
                 $i++;
             }
 
@@ -243,7 +249,7 @@ if(defined('_Forum')) {
 
             $icq = ""; $hp = ""; $pn = "";
             if($get['t_reg'] != 0) {
-                $getu = db("SELECT nick,icq,hp,email FROM ".$db['users']." WHERE id = '".$get['t_reg']."'",false,true);
+                $getu = db("SELECT `nick`,`icq`,`hp`,`email` FROM `".$db['users']."` WHERE `id` = ".$get['t_reg'].";",false,true);
                 $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
                 $pn = show(_pn_write_forum, array("id" => $get['t_reg'], "nick" => $getu['nick']));
                 if(!empty($getu['icq']) || $getu['icq'] >= 1) {
@@ -270,7 +276,7 @@ if(defined('_Forum')) {
                     $ftxt['class'] = 'class="highlightSearchTarget"';
             }
 
-            $abo = db("SELECT user FROM ".$db['f_abo']." WHERE user = '".$userid."' AND fid = '".(int)($_GET['id'])."'",true) ? 'checked="checked"' : '';
+            $abo = db("SELECT `id` FROM `".$db['f_abo']."` WHERE `user` = '".$userid."' AND fid = '".(int)($_GET['id'])."'",true) ? 'checked="checked"' : '';
             if(!$chkMe) {
                 $f_abo = '';
             } else {
@@ -278,8 +284,7 @@ if(defined('_Forum')) {
                     "abo" => $abo,
                     "abo_info" => _foum_fabo_checkbox,
                     "abo_title" => _forum_abo_title,
-                    "submit" => _button_value_save
-                ));
+                    "submit" => _button_value_save));
             }
 
             $vote = "";
@@ -288,9 +293,17 @@ if(defined('_Forum')) {
                 $vote = '<tr><td>'.fvote($get['vote']).'</td></tr>';
             }
 
+            if($get['t_reg'] && data('dsgvo_lock',$get['t_reg'])) {
+                $text = _dsgvo_locked_text;
+                $get['edited'] = '';
+                $email = '';
+                $add = '';
+            }
+
             $title = re($getw['topic']).' - '.$title;
             $email = ($chkMe >= 1 ? $email : '');
-            $index = show($dir."/forum_posts", array("head" => _forum_head,
+            $index = show($dir."/forum_posts", array(
+                "head" => _forum_head,
                 "where" => $wheres,
                 "admin" => $admin,
                 "nick" => $nick,

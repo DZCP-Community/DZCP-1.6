@@ -31,6 +31,7 @@ $language_text['_admin_dsgvo_log'] = 'Datenschutz Infos';
 $language_text['_admin_dsgvo_lock'] = 'Account ist aufgrund der EU-DSGVO gesperrt!';
 $language_text['_admin_dsgvo_indent_lock'] = 'Account ist aufgrund der EU-DSGVO gesperrt, du kannst die Identität des Users nicht annehmen!';
 $language_text['_dsgvo_deleted_text'] = '<span style="color:#999999;">-- Der Autor dieses Posts hat den Text gelöscht --</span>';
+$language_text['_dsgvo_locked_text'] = '<span style="color:#999999;">-- Der Account ist aufgrund der EU-DSGVO gesperrt --</span>';
 $language_text['_profil_del_account_full'] = 'Account vollständig löschen';
 $language_text['_profil_del_account_head'] = 'Account löschen';
 
