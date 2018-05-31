@@ -124,6 +124,12 @@ switch ($action):
 
                     $posted_ip = ($chkMe == "4" ? $getc['ip'] : _logged);
                     $email =  ($chkMe >= 1 ? $email : '');
+
+                    if($getc['reg'] && data('dsgvo_lock',$getc['reg'])) {
+                        $getc['comment'] = _dsgvo_locked_text;
+                        $getc['editby'] = '';
+                    }
+
                     $comments .= show("page/comments_show", array("titel" => $titel,
                         "comment" => bbcode($getc['comment']),
                         "editby" => bbcode($getc['editby']),

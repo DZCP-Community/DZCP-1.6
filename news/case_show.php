@@ -78,7 +78,7 @@ if(defined('_News')) {
                     }
 
                     $email = ""; $hp = ""; $onoff = onlinecheck($getc['reg']); $nick = autor($getc['reg']); $avatar = ""; $onoff = "";
-                    if($getc['reg'] == "0") {
+                    if(!$getc['reg']) {
                         if($getc['hp'])
                             $hp = show(_hpicon_forum, array("hp" => $getc['hp']));
 
@@ -93,6 +93,11 @@ if(defined('_News')) {
                                                         "zeit" => date("H:i", $getc['datum'])._uhr,
                                                         "edit" => $edit,
                                                         "delete" => $delete));
+
+                    if($getc['reg'] && data('dsgvo_lock',$getc['reg'])) {
+                        $getc['comment'] = _dsgvo_locked_text;
+                        $getc['editby'] = '';
+                    }
 
                     $posted_ip = $chkMe == 4 ? $getc['ip'] : _logged;
                     $comments .= show("page/comments_show", array("titel" => $titel,

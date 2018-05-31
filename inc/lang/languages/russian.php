@@ -32,6 +32,7 @@ $language_text['_admin_dsgvo_log'] = 'Информация о защите да�
 $language_text['_admin_dsgvo_lock'] = 'Учетная запись заблокирована из-за EU-GDPR!';
 $language_text['_admin_dsgvo_indent_lock'] = 'Учетная запись заблокирована из-за EU-GDPR, вы не можете принять личность пользователя!';
 $language_text['_dsgvo_deleted_text'] = '<span style="color:#999999;">-- Автор этого сообщения удалил текст --</span>';
+$language_text['_dsgvo_locked_text'] = '<span style="color:#999999;">-- Der Account ist aufgrund der EU-DSGVO gesperrt --</span>';
 $language_text['_profil_del_account_full'] = 'Удалить аккаунт полностью';
 $language_text['_profil_del_account_head'] = 'Удалить аккаунт';
 

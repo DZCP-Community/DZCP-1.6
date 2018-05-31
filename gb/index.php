@@ -81,6 +81,10 @@ switch ($action):
                         "zeit" => date("H:i", $get['datum']),
                         "hp" => $gbhp));
                 } else {
+                    if($get['reg'] && data('dsgvo_lock',$get['reg'])) {
+                        $comment = _dsgvo_locked_text;
+                    }
+
                     $gbtitel = show(_gb_titel, array("postid" => $i,
                         "nick" => autor($get['reg']),
                         "edit" => $edit,
