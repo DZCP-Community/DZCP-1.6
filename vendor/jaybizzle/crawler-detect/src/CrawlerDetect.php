@@ -22,7 +22,7 @@ class CrawlerDetect
      *
      * @var null
      */
-    protected $userAgent = null;
+    public $userAgent = null;
 
     /**
      * Headers that contain a user agent.

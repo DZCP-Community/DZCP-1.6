@@ -1364,9 +1364,9 @@ function updateCounter() {
                 db("INSERT INTO `".$db['counter']."` SET `visitors` = '1', `today` = '".$today."'");
 
             if(db("SELECT `id` FROM `".$db['c_ips']."` WHERE `ip` = '".$userip."';",true)) {
-                db("UPDATE ".$db['c_ips']." SET `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."' WHERE `ip` = '".$userip."';");
+                db("UPDATE ".$db['c_ips']." SET `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->userAgent."' WHERE `ip` = '".$userip."';");
             } else {
-                db("INSERT INTO `".$db['c_ips']."` SET `ip` = '".$userip."', `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."';");
+                db("INSERT INTO `".$db['c_ips']."` SET `ip` = '".$userip."', `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->userAgent."';");
             }
         }
     } else {
@@ -1376,9 +1376,9 @@ function updateCounter() {
             db("INSERT INTO `".$db['counter']."` SET `visitors` = '1', `today` = '".$today."'");
 
         if(db("SELECT `id` FROM `".$db['c_ips']."` WHERE `ip` = '".$userip."';",true)) {
-            db("UPDATE `".$db['c_ips']."` SET `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."' WHERE `ip` = '".$userip."';");
+            db("UPDATE `".$db['c_ips']."` SET `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->userAgent."' WHERE `ip` = '".$userip."';");
         } else {
-            db("INSERT INTO `".$db['c_ips']."` SET `ip` = '".$userip."', `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->getUserAgent()."';");
+            db("INSERT INTO `".$db['c_ips']."` SET `ip` = '".$userip."', `datum` = '".((int)$datum)."', `agent` = '".$CrawlerDetect->userAgent."';");
         }
     }
 }
