@@ -1,0 +1,46 @@
+<table class="navContent" cellspacing="0">
+	<tr>
+		<td class="loginLeft"></td>
+		<td>
+			<form name="login" action="../user/?action=login&amp;do=yes" method="post" onsubmit="return DZCP.submitButton('navLogin')">
+				<input type="hidden" name="permanent" id="permanent" value="1" />
+				<table class="navContent" cellspacing="2">
+					<tr>
+						<td>
+							<table class="hperc" cellspacing="0">
+								<tr>
+									<td style="width:130px;">
+										<table class="hperc" cellspacing="4">
+											<tr>
+												<td>
+													<input type="text" name="user" class="loginName_dis"
+														   onblur="this.className='loginName_dis';if(this.value=='')this.value='Loginname'"
+														   onfocus="this.className='loginName_en';if(this.value=='Loginname') this.value='';" value="Loginname" [dis] />
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="password" name="pwd" class="loginPwd_dis"
+														   onblur="this.className='loginPwd_dis';if(this.value=='')this.value='Password'"
+														   onfocus="this.className='loginPwd_en';if(this.value=='Password') this.value='';" value="Password" [dis] />
+												</td>
+											</tr>
+										</table>
+									</td>
+									<td style="vertical-align:middle;padding-left:4px;"><input id="navLogin" type="submit" value="" class="loginSubmit" name="send" /></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td style="color:#CCC;padding-top:6px;padding-left:2px;">
+							<a class="navLostPwd" href="../user/?action=register" title="[lang_login_signup]">[lang_login_signup]</a> |
+							<a class="navLostPwd" href="../user/?action=lostpwd" title="[lang_login_lostpwd]">[lang_login_lostpwd]</a>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</td>
+		<td class="loginRight"></td>
+	</tr>
+</table>
