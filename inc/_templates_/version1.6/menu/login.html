@@ -4,22 +4,23 @@
     <td>
       <form name="login" action="../user/?action=login&amp;do=yes" method="post" onsubmit="return DZCP.submitButton('navLogin')">
         <table class="navContent">
-          <tr>
+          <tr style="height:25px">
             <td>
               <input type="text" name="user" class="loginName_dis"
                onblur="this.className='loginName_dis';if(this.value=='')this.value='Loginname'" 
                onfocus="this.className='loginName_en';if(this.value=='Loginname') this.value='';" value="Loginname"/>
             </td>
           </tr>
-          <tr>
+          <tr style="height:25px">
             <td>
               <input type="password" name="pwd" class="loginPwd_dis"
               onblur="this.className='loginPwd_dis';if(this.value=='')this.value='Password'" 
               onfocus="this.className='loginPwd_en';if(this.value=='Password') this.value='';" value="Password"/>
             </td>
           </tr>
-          <tr>
-            <td><input class="checkbox" type="checkbox" id="permanent" name="permanent" value="1" /><label for="permanent"> [permanent]</label></td>
+          <tr style="height:25px">
+            <td style="width:25px" class="leftFloat"><input class="checkbox" type="checkbox" id="permanent" name="permanent" value="1" /></td>
+            <td class="leftFloat"><label for="permanent" style="margin: 3px 0px 0px 0px"> [permanent]</label></td>
           </tr>
           [secure]
           <tr>
