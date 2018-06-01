@@ -10,7 +10,7 @@ $language_text['_dsgvo_base_lock_title'] = 'Datenschutz-Grundverordnung (EU-DSGV
 $language_text['_dsgvo_base_title_001'] = '<strong>Datenschutzerkl&auml;rung</strong>';
 //Administrations Info
 $language_text['_dsgvo_base_001'] = <<<EOD
-Titel der Datenschutzerkl&auml;rung
+
 EOD;
 //Text
 $language_text['_dsgvo_base_text_001'] = <<<EOD
@@ -19,7 +19,7 @@ EOD;
 
 $language_text['_dsgvo_base_title_002'] = '';
 $language_text['_dsgvo_base_002'] = <<<EOD
-Einleitung der allgemeinen Datenschutzerkl&auml;rung
+
 EOD;
 $language_text['_dsgvo_base_text_002'] = <<<EOD
 
