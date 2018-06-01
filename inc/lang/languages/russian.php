@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * DZCP - deV!L`z ClanPortal 1.6 Final /// Translation Version 0.61ru
  * http://www.dzcp.de
@@ -311,7 +311,6 @@ $language_text['_away_today'] = 'а тагже <b>Сегодня</b>';
 $language_text['_public'] = 'Oпубликовать';
 $language_text['_non_public'] = 'не oпубликовать';
 $language_text['_no_public'] = '<b>Неопубликованный</b>';
-$language_text['_no_events'] = 'нет событий';
 $language_text['_config_c_events'] = 'Меню: События';
 $language_text['_news_send'] = 'Добавить новость';
 $language_text['_news_send_source'] = 'Источник';

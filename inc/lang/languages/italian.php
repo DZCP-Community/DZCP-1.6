@@ -325,7 +325,6 @@ $language_text['_away_today'] = 'includi <b>oggi</ b>';
 $language_text['_public'] = '- NON PUBBLICATO - clicca per cambiare lo stato';
 $language_text['_non_public'] = '- PUBBLICATO - clicca per cambiare lo stato';
 $language_text['_no_public'] = '<b>non pubblicata</b>';
-$language_text['_no_events'] = '<div style="text-align:center;">Non ci sono eventi disponibili</div>';
 $language_text['_config_c_events'] = 'Menu: Eventi';
 $language_text['_news_send'] = 'Invia News';
 $language_text['_news_send_source'] = 'Fonte';

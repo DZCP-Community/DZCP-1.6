@@ -29,5 +29,9 @@ function l_artikel() {
         }
     }
 
-    return empty($l_articles) ? '' : '<table class="navContent" cellspacing="0">'.$l_articles.'</table>';
+    if(empty($l_articles)) {
+        $l_articles = show(_no_entrys_yet, array("colspan" => "0"));
+    }
+
+    return '<table class="navContent" cellspacing="0">'.$l_articles.'</table>';
 }

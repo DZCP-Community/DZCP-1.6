@@ -1016,10 +1016,6 @@ function re($txt) {
     return trim(stripslashes(spChars(html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true)));
 }
 
-function re_entry($txt) {
-    return stripslashes($txt);
-}
-
 //-> Smileys ausgeben
 function smileys($txt) {
     $files = get_files('../inc/images/smileys',false,true);
@@ -1935,11 +1931,16 @@ function data($what,$tid=0) {
     global $db,$userid;
     if(!$tid) $tid = $userid;
     if(!dbc_index::issetIndex('user_'.$tid)) {
-        $get = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($tid).";",false,true);
-        dbc_index::setIndex('user_'.$tid, $get);
+        $sql = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($tid).";");
+        if(_rows($sql)) {
+            $get = _fetch($sql);
+            dbc_index::setIndex('user_' . $tid, $get);
+        } else {
+            return null;
+        }
     }
 
-    return re_entry(dbc_index::getIndexKey('user_'.$tid, $what));
+    return dbc_index::getIndexKey('user_'.$tid, $what);
 }
 
 //-> Einzelne Userstatistiken ermitteln
@@ -1947,11 +1948,16 @@ function userstats($what,$tid=0) {
     global $db,$userid;
     if(!$tid) $tid = $userid;
     if(!dbc_index::issetIndex('userstats_'.$tid)) {
-        $get = db("SELECT * FROM `".$db['userstats']."` WHERE `user` = ".(int)($tid).";",false,true);
-        dbc_index::setIndex('userstats_'.$tid, $get);
+        $sql = db("SELECT * FROM `".$db['userstats']."` WHERE `user` = ".(int)($tid).";");
+        if(_rows($sql)) {
+            $get = _fetch($sql);
+            dbc_index::setIndex('userstats_' . $tid, $get);
+        } else {
+            return null;
+        }
     }
 
-    return re_entry(dbc_index::getIndexKey('userstats_'.$tid, $what));
+    return dbc_index::getIndexKey('userstats_'.$tid, $what);
 }
 
 //- Funktion zum versenden von Emails

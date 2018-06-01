@@ -307,7 +307,6 @@ $language_text['_away_today'] = 'including <b>today</b>';
 $language_text['_public'] = 'Public';
 $language_text['_non_public'] = 'non Public';
 $language_text['_no_public'] = '<b>unpublished</b>';
-$language_text['_no_events'] = '<div style="text-align:center;">no events available</div>';
 $language_text['_config_c_events'] = 'Menu: Events';
 $language_text['_news_send'] = 'Send News';
 $language_text['_news_send_source'] = 'Source';

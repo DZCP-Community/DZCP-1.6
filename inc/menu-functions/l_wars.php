@@ -27,5 +27,9 @@ function l_wars() {
         }
     }
 
-    return empty($lwars) ? '' : '<table class="navContent" cellspacing="0">'.$lwars.'</table>';
+    if(empty($lwars)) {
+        $lwars = show(_no_entrys_yet, array("colspan" => "0"));
+    }
+
+    return '<table class="navContent" cellspacing="0">'.$lwars.'</table>';
 }

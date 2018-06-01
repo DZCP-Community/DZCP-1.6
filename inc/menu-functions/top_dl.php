@@ -23,5 +23,9 @@ function top_dl() {
         }
     }
 
-    return empty($top_dl) ? '' : '<table class="navContent" cellspacing="0">'.$top_dl.'</table>';
+    if(empty($top_dl)) {
+        $top_dl = show(_no_entrys_yet, array("colspan" => "0"));
+    }
+
+    return '<table class="navContent" cellspacing="0">'.$top_dl.'</table>';
 }

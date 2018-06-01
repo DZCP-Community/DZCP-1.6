@@ -29,5 +29,9 @@ function l_news() {
         }
     }
 
-    return empty($l_news) ? '' : '<table class="navContent" cellspacing="0">'.$l_news.'</table>';
+    if(empty($l_news)) {
+        $l_news = show(_no_entrys_yet, array("colspan" => "0"));
+    }
+
+    return '<table class="navContent" cellspacing="0">'.$l_news.'</table>';
 }
