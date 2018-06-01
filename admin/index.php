@@ -22,7 +22,6 @@ $settingsmenu = null;
 $contentmenu = null;
 $amenu = array();
 $wysiwyg = false;
-$use_glossar = false;
 
 ## SECTIONS ##
 $check = db("SELECT s1.user FROM ".$db['permissions']." s1, ".$db['users']." s2
@@ -34,7 +33,7 @@ if(!admin_perms($userid))
     $index = error(_error_wrong_permissions, 1);
 else {
     if(isset($_GET['admin']) && file_exists(basePath.'/admin/menu/'.strtolower($_GET['admin']).'.php') &&
-                                file_exists(basePath.'/admin/menu/'.strtolower($_GET['admin']).'.xml')) {
+        file_exists(basePath.'/admin/menu/'.strtolower($_GET['admin']).'.xml')) {
         $permission = false; define('_adminMenu', true);
         $xml = simplexml_load_file(basePath.'/admin/menu/'.strtolower($_GET['admin']).'.xml');
         $rights = (string)$xml->Rights; $oa = (int)$xml->Only_Admin; $ora = (int)$xml->Only_Root;
@@ -93,43 +92,24 @@ else {
         $cdminc1 = '/*'; $cdminc2 = '*/';
     }
 
-    $dzcp_news = '';
-    if(allow_url_fopen_support()) {
-        if(admin_view_dzcp_news) {
-            $CachedString = $cache->getItem('admin_news');
-            if(is_null($CachedString->get())) {
-                if($dzcp_news = get_external_contents("http://www.dzcp.de/dzcp_news.php",false,true)) {
-                    $CachedString->set(base64_encode($dzcp_news))->expiresAfter(1200);
-                    $cache->save($CachedString);
-                }
-            } else
-                $dzcp_news = base64_decode($CachedString->get());
-        }
-    }
-
-    if(@file_exists(basePath."/_installer") && $chkMe == 4 && !view_error_reporting)
-        $index = _installdir;
-    else {
-        $dzcp_version = show_dzcp_version();
-        $index = show($dir."/admin", array("head" => _config_head,
-                                           "version" => $dzcp_version['version'],
-                                           "version_img" => $dzcp_version['version_img'],
-                                           "dbase" => _stats_mysql,
-                                           "einst" => _config_einst,
-                                           "content" => _content,
-                                           "newsticker" => '<div style="padding:3px">'.(empty($dzcp_news) ? '' : '<b>DZCP News:</b><br />').'<div id="dzcpticker">'.$dzcp_news.'</div></div>',
-                                           "rootadmin" => _rootadmin,
-                                           "rootmenu" => $rootmenu,
-                                           "settingsmenu" => $settingsmenu,
-                                           "contentmenu" => $contentmenu,
-                                           "radmin1" => $radmin1,
-                                           "radmin2" => $radmin2,
-                                           "adminc1" => $adminc1,
-                                           "adminc2" => $adminc2,
-                                           "cdminc1" => $cdminc1,
-                                           "cdminc2" => $cdminc2,
-                                           "show" => $show));
-    }
+    $dzcp_version = show_dzcp_version();
+    $index = show($dir."/admin", array(
+        "head" => _config_head,
+        "version" => $dzcp_version['version'],
+        "dbase" => _stats_mysql,
+        "einst" => _config_einst,
+        "content" => _content,
+        "rootadmin" => _rootadmin,
+        "rootmenu" => $rootmenu,
+        "settingsmenu" => $settingsmenu,
+        "contentmenu" => $contentmenu,
+        "radmin1" => $radmin1,
+        "radmin2" => $radmin2,
+        "adminc1" => $adminc1,
+        "adminc2" => $adminc2,
+        "cdminc1" => $cdminc1,
+        "cdminc2" => $cdminc2,
+        "show" => $show));
 }
 
 ## INDEX OUTPUT ##

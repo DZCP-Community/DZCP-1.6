@@ -1,5 +1,5 @@
 /*
-  © 2003 by www.softcomplex.com
+  ï¿½ 2003 by www.softcomplex.com
   
   modified by CodeKing for DZCP 11-14-2006 (mm-dd-yyyy)
 */
@@ -85,13 +85,11 @@ function menu_collapse (n_id)
 	for (n_id = 0; n_id < this.a_index.length; n_id++) {
 		var o_curritem = this.a_index[n_id];
 		if (o_curritem.n_depth > n_tolevel && o_curritem.b_visible) {
-      if(ie4 && !opera && isEditor) $('#admContent').css('display', '');
+      if(isEditor) $('#admContent').css('display', '');
 			o_curritem.e_oelement.style.visibility = 'hidden';
 			o_curritem.b_visible = false;   
 		}
 	}
-  
-	if (!n_id) this.o_current = null;
 }
 
 function menu_expand (n_id) 
@@ -103,6 +101,7 @@ function menu_expand (n_id)
 
 	if (this.o_current && this.o_current.n_depth >= o_item.n_depth)
 		this.collapse(o_item.n_id);
+
 	this.o_current = o_item;
 
 	if (!o_item.a_children)
@@ -110,7 +109,7 @@ function menu_expand (n_id)
 
 	for (var n_order = 0; n_order < o_item.a_children.length; n_order++) {
 		var o_curritem = o_item.a_children[n_order];
-    if(ie4 && !opera && isEditor) $('#admContent').css('display', 'none'); 
+    if(isEditor) $('#admContent').css('display', 'none');
 		o_curritem.e_oelement.style.visibility = 'visible';
 		o_curritem.b_visible = true;
 	}
@@ -171,13 +170,11 @@ function menu_item (o_parent, n_order)
 
 	this.o_root    = o_parent.o_root;
 	this.o_parent  = o_parent;
-	this.n_order   = n_order;
 	this.n_id = this.o_root.a_index.length;
 	this.o_root.a_index[this.n_id] = this;
 	o_parent.a_children[n_order] = this;
 
-	var o_root = this.o_root,
-		a_tpl  = this.o_root.a_tpl;
+	var o_root = this.o_root;
 
 	this.getprop  = mitem_getprop;
 	this.getstyle = mitem_getstyle;
@@ -211,8 +208,6 @@ function menu_item (o_parent, n_order)
 		);
 	this.e_ielement = $('#e' + o_root.n_id + '_' + this.n_id + 'i')[0];
 	this.e_oelement = $('#e' + o_root.n_id + '_' + this.n_id + 'o')[0];
-
-	this.b_visible = !this.n_depth;
 
 	if (this.a_config.length < 4)
 		return;

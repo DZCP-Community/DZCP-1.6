@@ -13,17 +13,37 @@ $dropdown_age = show(_dropdown_date, array("day" => dropdown("day",0,1),
 
 $gmaps = show('membermap/geocoder', array('form' => 'adduser'));
 
-$qrysq = db("SELECT id,name FROM ".$db['squads']." ORDER BY pos");
-$esquads = '';
-while($getsq = _fetch($qrysq)) {
-    $qrypos = db("SELECT id,position FROM ".$db['pos']." ORDER BY pid");
+
+$qrysq = db("SELECT id,name FROM ".$db['squads']."
+                     ORDER BY pos");
+while($getsq = _fetch($qrysq))
+{
+    $qrypos = db("SELECT id,position FROM ".$db['pos']."
+                        ORDER BY pid");
     $posi = "";
-    while($getpos = _fetch($qrypos)) {
-        $posi .= show(_select_field_posis, array("value" => $getpos['id'], "sel" => '', "what" => re($getpos['position'])));
+    while($getpos = _fetch($qrypos))
+    {
+        $check = db("SELECT * FROM ".$db['userpos']."
+                         WHERE posi = '".$getpos['id']."'
+                         AND squad = '".$getsq['id']."'
+                         AND user = '".(int)($_GET['edit'])."'");
+        if(_rows($check)) $sel = 'selected="selected"';
+        else $sel = "";
+
+        $posi .= show(_select_field_posis, array("value" => $getpos['id'],
+            "sel" => $sel,
+            "what" => re($getpos['position'])));
     }
 
+    $qrysquser = db("SELECT squad FROM ".$db['squaduser']."
+                           WHERE user = '".(int)($_GET['edit'])."'
+                           AND squad = '".$getsq['id']."'");
+
+    if(_rows($qrysquser))$check = 'checked="checked"';
+    else $check = "";
+
     $esquads .= show(_checkfield_squads, array("id" => $getsq['id'],
-        "check" => '',
+        "check" => $check,
         "eposi" => $posi,
         "noposi" => _user_noposi,
         "squad" => re($getsq['name'])));
@@ -53,7 +73,7 @@ $show = show($dir."/register", array("registerhead" => _useradd_head,
     "dropdown_age" => $dropdown_age,
     "pcity" => _profil_city,
     "pcountry" => _profil_country,
-    "country" => show_countrys('de'),
+    "country" => show_countrys($get['country']),
     "gmaps" => $gmaps,
     "level" => _admin_user_level,
     "ruser" => _status_user,
@@ -63,17 +83,16 @@ $show = show($dir."/register", array("registerhead" => _useradd_head,
     "admin" => _status_admin,
     "banned" => _admin_level_banned,
     "value" => _button_value_reg));
-
 if($do == "add")
 {
     $check_user = db_stmt("SELECT `id` FROM ".$db['users']." WHERE `user`= ?;",
-        array('s', up($_POST['user'])),true,false);
+        array('s', _real_escape_string(up($_POST['user']))),true,false);
 
     $check_nick = db_stmt("SELECT `id` FROM ".$db['users']." WHERE `nick`= ?;",
-        array('s', up($_POST['nick'])),true,false);
+        array('s', _real_escape_string(up($_POST['nick']))),true,false);
 
     $check_email = db_stmt("SELECT `id` FROM ".$db['users']." WHERE `email`= ?;",
-        array('s', up($_POST['email'])),true,false);
+        array('s', _real_escape_string(up($_POST['email']))),true,false);
 
     if(empty($_POST['user']))
     {
@@ -101,21 +120,21 @@ if($do == "add")
 
         $bday = ($_POST['t'] && $_POST['m'] && $_POST['j'] ? cal($_POST['t']).".".cal($_POST['m']).".".$_POST['j'] : 0);
         $qry = db("INSERT INTO `".$db['users']."`
-                             SET `user`     = '".up($_POST['user'])."',
-                                 `nick`     = '".up($_POST['nick'])."',
-                                 `email`    = '".up($_POST['email'])."',
+                             SET `user`     = '"._real_escape_string(up($_POST['user']))."',
+                                 `nick`     = '"._real_escape_string(up($_POST['nick']))."',
+                                 `email`    = '"._real_escape_string(up($_POST['email']))."',
                                  `pwd`      = '".$pwd."',
-                                 `rlname`   = '".up($_POST['rlname'])."',
+                                 `rlname`   = '"._real_escape_string(up($_POST['rlname']))."',
                                  `sex`      = ".((int)$_POST['sex']).",
                                  `bday`     = '".(!$bday ? 0 : strtotime($bday))."',
-                                 `city`     = '".up($_POST['city'])."',
-                                 `country`  = '".up($_POST['land'])."',
+                                 `city`     = '"._real_escape_string(up($_POST['city']))."',
+                                 `country`  = '"._real_escape_string(up($_POST['land']))."',
                                  `regdatum` = ".time().",
                                  `level`    = ".((int)$_POST['level']).",
                                  `time`     = ".time().",
                                  `pwd_md5`  = 0,
                                  `dsgvo_lock`  = 0,
-                                 `gmaps_koord`  = '".up($_POST['gmaps_koord'])."',
+                                 `gmaps_koord`  = '"._real_escape_string(up($_POST['gmaps_koord']))."',
                                  `status`   = 1;");
 
         $insert_id = mysqli_insert_id($mysql);

@@ -107,6 +107,7 @@ switch ($do) {
                                                `eml_fabo_pedit`     = '".up($_POST['eml_fabo_pedit'])."',
                                                `mailfrom`           = '".up($_POST['mailfrom'])."',
                                                `tmpdir`             = '".up($_POST['tmpdir'])."',
+                                               `persinfo`           = '".((int)$_POST['persinfo'])."',
                                                `wmodus`             = '".((int)$_POST['wmodus'])."',
                                                `urls_linked`        = '".up($_POST['urls_linked'])."',
                                                `steam_api_key`      = '".up($_POST['steam_apikey'])."'
@@ -149,6 +150,7 @@ switch ($do) {
         $selr_cwc = $gets['reg_cwcomments'] ? 'selected="selected"' : '';
         $selr_shout = $gets['reg_shout'] ? 'selected="selected"' : '';
         $selwm = $gets['wmodus'] ? 'selected="selected"' : '';
+        $selr_pi = !$gets['persinfo'] ? 'selected="selected"' : '';
         $sel_sl = $get['securelogin'] ? 'selected="selected"' : '';
         $selh_all = $get['allowhover'] == 1 ? 'selected="selected"' : '';
         $selh_cw = $get['allowhover'] == 2 ? 'selected="selected"' : '';
@@ -244,6 +246,7 @@ switch ($do) {
             "c_mailfrom" => _config_mailfrom,
             "mailfrom_info" => _config_mailfrom_info,
             "mailfrom" => re($gets['mailfrom']),
+            "selpi" => $selr_pi,
             "on" => _on,
             "off" => _off,
             "c_l_reguser" => _config_lreg,
@@ -253,6 +256,8 @@ switch ($do) {
             "steam_apikey" => re($gets['steam_api_key']),
             "selr_shout" => $selr_shout,
             "reg_shout" => _config_c_shout,
+            "persinfo" => _pers_info,
+            "persinfo_info" => _pers_info_info,
             "show_no_regcode" => _dont_show,
             "c_m_awards" => _config_c_awards,
             "c_l_shoutnick" => _c_l_shoutnick,
