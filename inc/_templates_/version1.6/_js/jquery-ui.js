@@ -12352,7 +12352,7 @@ $.widget( "ui.dialog", {
 			} )
 			.appendTo( this.uiDialogTitlebar );
 
-		this._addClass( this.uiDialogTitlebarClose, "ui-dialog-titlebar-close" );
+		this._addClass( this.uiDialogTitlebarClose, "ui-icon ui-icon-closethick ui-dialog-titlebar-close" );
 		this._on( this.uiDialogTitlebarClose, {
 			click: function( event ) {
 				event.preventDefault();
