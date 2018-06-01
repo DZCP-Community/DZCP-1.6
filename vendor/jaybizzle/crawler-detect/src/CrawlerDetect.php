@@ -22,7 +22,7 @@ class CrawlerDetect
      *
      * @var null
      */
-    public $userAgent = null;
+    protected $userAgent = null;
 
     /**
      * Headers that contain a user agent.
@@ -86,14 +86,14 @@ class CrawlerDetect
         $this->compiledExclusions = $this->compileRegex($this->exclusions->getAll());
 
         $this->setHttpHeaders($headers);
-        $this->userAgent = $this->setUserAgent($userAgent);
+        $this->setUserAgent($userAgent);
     }
 
     /**
      * Compile the regex patterns into one regex string.
      *
      * @param array
-     * 
+     *
      * @return string
      */
     public function compileRegex($patterns)
@@ -106,7 +106,7 @@ class CrawlerDetect
      *
      * @param array|null $httpHeaders
      */
-    public function setHttpHeaders($httpHeaders)
+    public function setHttpHeaders($httpHeaders = null)
     {
         // Use global _SERVER if $httpHeaders aren't defined.
         if (! is_array($httpHeaders) || ! count($httpHeaders)) {
@@ -138,19 +138,32 @@ class CrawlerDetect
     /**
      * Set the user agent.
      *
-     * @param string $userAgent
+     * @param string|null $userAgent
      */
-    public function setUserAgent($userAgent)
+    public function setUserAgent($userAgent = null)
     {
-        if (is_null($userAgent)) {
+        if (false === empty($userAgent)) {
+            $this->userAgent = $userAgent;
+        } else {
+            $this->userAgent = null;
             foreach ($this->getUaHttpHeaders() as $altHeader) {
-                if (isset($this->httpHeaders[$altHeader])) {
-                    $userAgent .= $this->httpHeaders[$altHeader].' ';
+                if (false === empty($this->httpHeaders[$altHeader])) { // @todo: should use getHttpHeader(), but it would be slow.
+                    $this->userAgent .= $this->httpHeaders[$altHeader].' ';
                 }
             }
-        }
 
-        return $userAgent;
+            $this->userAgent = (! empty($this->userAgent) ? trim($this->userAgent) : null);
+        }
+    }
+
+    /**
+     * Set the user agent.
+     *
+     * @param string|null $userAgent
+     */
+    public function getUserAgent()
+    {
+        return $this->userAgent;
     }
 
     /**

@@ -71,11 +71,11 @@ class Driver implements ExtendedCacheItemPoolInterface
 
     /**
      * @param \Psr\Cache\CacheItemInterface $item
-     * @return null
+     * @return null|array
      */
     protected function driverRead(CacheItemInterface $item)
     {
-        return null;
+        return $this->driverPreWrap($item);
     }
 
     /**
