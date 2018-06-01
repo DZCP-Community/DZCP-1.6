@@ -518,6 +518,16 @@ button.ui-button::-moz-focus-inner {
 	margin: -10px 0 0 0;
 	padding: 1px;
 	height: 20px;
+        background-image: linear-gradient(to top, #cc0033 90%, #660000);
+        border: 1px solid #5F5F5F;
+        color: #fff;
+        cursor: pointer;
+        text-transform:uppercase;
+        font-weight:  bolder;
+        border-radius: 3px;
+}
+.ui-dialog .ui-dialog-titlebar-close:hover {
+  background-image: linear-gradient(to top, #cc0033 10%, #660000);
 }
 .ui-dialog .ui-dialog-content {
 	position: relative;
@@ -537,8 +547,20 @@ button.ui-button::-moz-focus-inner {
 	float: right;
 }
 .ui-dialog .ui-dialog-buttonpane button {
-	margin: .5em .4em .5em 0;
-	cursor: pointer;
+  padding: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-image: linear-gradient(to top, #cc0033 90%, #660000);
+  border: 1px solid #5F5F5F;
+  color: #fff;
+  cursor: pointer;
+  height: 30px;
+  text-transform:uppercase;
+  font-weight:  bolder;
+  border-radius: 3px;
+}
+.ui-dialog .ui-dialog-buttonpane button:hover {
+  background-image: linear-gradient(to top, #cc0033 10%, #660000);
 }
 .ui-dialog .ui-resizable-n {
 	height: 2px;

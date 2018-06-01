@@ -29,8 +29,11 @@
 	font-size: 1em;
 }
 .ui-widget.ui-widget-content {
-	border: 1px solid #c5c5c5;
-	min-height: 50px
+	border: 3px solid #660000;
+	min-height: 50px;
+        border-radius: 3px;
+        -webkit-box-shadow: 0px 0px 3px #666666;
+        box-shadow: 0px 0px 3px #666666;
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
