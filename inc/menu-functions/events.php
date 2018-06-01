@@ -26,5 +26,9 @@ function events() {
         }
     }
 
-    return empty($eventbox) ? '<div style="margin:2px 0">'._no_events.'</div>' : '<table class="navContent" cellspacing="0">'.$eventbox.'</table>';
+    if(empty($eventbox)) {
+        $eventbox = show(_no_entrys_yet, array("colspan" => "0"));
+    }
+
+    return '<table class="navContent" cellspacing="0">'.$eventbox.'</table>';
 }

@@ -20,5 +20,9 @@ function sponsors() {
         }
     }
 
-    return empty($sponsors) ? '' : '<table class="navContent" cellspacing="0">'.$sponsors.'</table>';
+    if(empty($sponsors)) {
+        $sponsors = show(_no_entrys_yet, array("colspan" => "0"));
+    }
+
+    return '<table class="navContent" cellspacing="0">'.$sponsors.'</table>';
 }

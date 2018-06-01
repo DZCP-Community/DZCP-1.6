@@ -339,6 +339,10 @@ if(defined('_UserMenu')) {
                     "id" => $get['id']));
             }
 
+            if(empty($posteingang)) {
+                $posteingang = show(_no_entrys_yet, array("colspan" => "5"));
+            }
+
             $qry = db("SELECT * FROM ".$db['msg']."
                                WHERE von = ".$userid."
                                AND see = 1
@@ -364,8 +368,11 @@ if(defined('_UserMenu')) {
                     "id" => $get['id']));
             }
 
-            $msghead = show(_msghead, array("nick" => autor($userid)));
+            if(empty($postausgang)) {
+                $postausgang = show(_no_entrys_yet, array("colspan" => "5"));
+            }
 
+            $msghead = show(_msghead, array("nick" => autor($userid)));
             $index = show($dir."/msg", array("msghead" => $msghead,
                 "posteingang" => _posteingang,
                 "postausgang" => _postausgang,

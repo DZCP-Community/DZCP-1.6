@@ -28,5 +28,9 @@ function n_wars() {
         }
     }
 
-    return empty($nwars) ? '' : '<table class="navContent" cellspacing="0">'.$nwars.'</table>';
+    if(empty($nwars)) {
+        $nwars = show(_no_entrys_yet, array("colspan" => "0"));
+    }
+
+    return '<table class="navContent" cellspacing="0">'.$nwars.'</table>';
 }

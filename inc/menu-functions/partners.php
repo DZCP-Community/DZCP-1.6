@@ -8,7 +8,7 @@ function partners() {
     global $db;
 
     $qry = db("SELECT `textlink`,`link`,`banner` FROM ".$db['partners']." ORDER BY `textlink` ASC");
-    $partners = '';
+    $partners = ''; $table = true;
     if(_rows($qry)) {
         while($get = _fetch($qry)) {
             if($get['textlink']) {
@@ -24,5 +24,9 @@ function partners() {
         }
     }
 
-    return empty($partners) ? '' : ($table ? '<table class="navContent" cellspacing="0">'.$partners.'</table>' : $partners);
+    if(empty($partners)) {
+        $partners = show(_no_entrys_yet, array("colspan" => "0"));
+    }
+
+    return $table ? '<table class="navContent" cellspacing="0">'.$partners.'</table>' : $partners;
 }
