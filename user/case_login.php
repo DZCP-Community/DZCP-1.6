@@ -6,7 +6,7 @@
 
 if(defined('_UserMenu')) {
     $where = _site_user_login;
-    if($do == "yes" && HasDSGVO()) {
+    if($do == "yes") {
         if(config('securelogin') &&
             ((!array_key_exists('sec_login_page',$_SESSION) && !array_key_exists('login_menu',$_SESSION)) ||
             (($_POST['secure'] != $_SESSION['sec_login_page'] && $_POST['secure'] != $_SESSION['login_menu']) ||
@@ -55,7 +55,7 @@ if(defined('_UserMenu')) {
                 else
                     $index = error(_login_banned);
             } else {
-                $qry = db("SELECT `id` FROM `".$db['users']."` WHERE `user` = '".up($_POST['user'])."';");
+                $qry = db("SELECT `id` FROM `".$db['users']."` WHERE `user` = '"._real_escape_string(up($_POST['user']))."';");
                 if(_rows($qry)) {
                     $get = _fetch($qry);
                     setIpcheck("trylogin(".$get['id'].")");

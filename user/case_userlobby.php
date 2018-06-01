@@ -78,90 +78,6 @@ if(defined('_UserMenu')) {
             }
         }
 
-        /** Neue Clanwars anzeigen */
-        $qrycw = db("SELECT s1.*,s2.`icon` FROM `".$db['cw']."` AS `s1` LEFT JOIN `".$db['squads']."` AS `s2` ON s1.`squad_id` = s2.`id` ORDER BY s1.`datum`;"); $cws = '';
-        if(_rows($qrycw) >= 1) {
-            while($getcw = _fetch($qrycw)) {
-                if(!empty($getcw) && check_new($getcw['datum'],1)) {
-                    $check = cnt($db['cw'], " WHERE `datum` > ".$lastvisit);
-
-                    if($check == 1) {
-                        $cnt = 1;
-                        $eintrag = _new_eintrag_1;
-                    } else {
-                        $cnt = $check;
-                        $eintrag = _new_eintrag_2;
-                    }
-
-                    $can_erase = true;
-                    $cws .= show(_user_new_cw, array("datum" => date("d.m. H:i", $getcw['datum'])._uhr,
-                                                     "id" => $getcw['id'],
-                                                     "icon" => $getcw['icon'],
-                                                     "gegner" => re($getcw['clantag'])));
-                }
-            }
-        }
-
-        /** Neue Registrierte User anzeigen */
-        $getu = db("SELECT `id`,`regdatum` FROM `".$db['users']."` ORDER BY `id` DESC",false,true); $user = '';
-        if(!empty($getu) && check_new($getu['regdatum'],1)) {
-            $check = cnt($db['users'], " WHERE `regdatum` > ".$lastvisit);
-
-            if($check == 1) {
-                $cnt = 1;
-                $eintrag = _new_users_1;
-            } else {
-                $cnt = $check;
-                $eintrag = _new_users_2;
-            }
-
-            $can_erase = true;
-            $user = show(_user_new_users, array("cnt" => $cnt, "eintrag" => $eintrag));
-        }
-
-        /** Neue Eintruage im Guastebuch anzeigen */
-        $permission_gb = permission("gb"); $activ = "";
-        if(!$permission_gb && settings('gb_activ'))
-            $activ = "WHERE `public` = 1";
-
-        $gb = '';
-        $getgb = db("SELECT `id`,`datum` FROM `".$db['gb']."` ".$activ." ORDER BY `id` DESC;",false,true);
-        if(!empty($getgb) && check_new($getgb['datum'],1)) {
-            $cntgb = "";
-            if(!$permission_gb && settings('gb_activ'))
-                $cntgb = "AND `public` = 1";
-
-            $check = cnt($db['gb'], " WHERE `datum` > ".$lastvisit." ".$cntgb);
-
-            if($check == 1) {
-                $cnt = "1";
-                $eintrag = _new_eintrag_1;
-            } else {
-                $cnt = $check;
-                $eintrag = _new_eintrag_2;
-            }
-
-            $can_erase = true;
-            $gb = show(_user_new_gb, array("cnt" => $cnt, "eintrag" => $eintrag));
-        }
-
-        /** Neue Eintruage im User Guastebuch anzeigen */
-        $getmember = db("SELECT `id`,`datum` FROM `".$db['usergb']."` WHERE `user` = ".$userid." ORDER BY `datum` DESC;",false,true);
-        $membergb = '';
-        if(!empty($getmember) && check_new($getmember['datum'],1)) {
-            $check = cnt($db['usergb'], " WHERE `datum` > ".$lastvisit." AND `user` = ".$userid);
-            if($check == "1") {
-                $cnt = "1";
-                $eintrag = _new_eintrag_1;
-            } else {
-                $cnt = $check;
-                $eintrag = _new_eintrag_2;
-            }
-
-            $can_erase = true;
-            $membergb = show(_user_new_membergb, array("cnt" => $cnt, "id" => $userid, "eintrag" => $eintrag));
-        }
-
         /** Neue Private Nachrichten anzeigen */
         $getmsg = db("SELECT `id`,`an`,`datum` FROM `".$db['msg']."` WHERE `an` = ".$userid." AND `readed` = 0 AND `see_u` = 0 ORDER BY `datum` DESC;",false,true);
 
@@ -219,196 +135,6 @@ if(defined('_UserMenu')) {
             }
         }
 
-        /** Neue Clanwars comments anzeigen */
-        $qrycheckcw = db("SELECT `id` FROM `".$db['cw']."`;"); $cwcom = '';
-        if(_rows($qrycheckcw) >= 1) {
-            while($getcheckcw = _fetch($qrycheckcw)) {
-                $getcwc = db("SELECT `id`,`cw`,`datum` FROM `".$db['cw_comments']."` WHERE `cw` = ".$getcheckcw['id']." ORDER BY `datum` DESC;",false,true);
-                if(!empty($getcwc) && check_new($getcwc['datum'],1)) {
-                    $check = cnt($db['cw_comments'], " WHERE `datum` > ".$lastvisit." AND `cw` = '".$getcwc['cw']."'");
-                    if($check == 1) {
-                      $cnt = 1;
-                      $eintrag = _lobby_new_cwc_1;
-                    } else {
-                      $cnt = $check;
-                      $eintrag = _lobby_new_cwc_2;
-                    }
-
-                    $can_erase = true;
-                    $cwcom .= show(_user_new_clanwar, array("cnt" => $cnt,
-                                                            "id" => $getcwc['cw'],
-                                                            "eintrag" => $eintrag));
-                }
-            }
-        }
-
-        /** Neue Votes anzeigen */
-        if(permission("votes")) {
-            $getnewv = db("SELECT `datum` FROM `".$db['votes']."` WHERE `forum` = 0 ORDER BY `datum` DESC;",false,true);
-        } else {
-            $getnewv = db("SELECT `datum` FROM `".$db['votes']."` WHERE `intern` = 0 AND `forum` = 0 ORDER BY `datum` DESC;",false,true);
-        }
-
-        $newv = '';
-        if(!empty($getnewv) && check_new($getnewv['datum'],1)) {
-            $check = cnt($db['votes'], " WHERE `datum` > ".$lastvisit." AND `forum` = 0");
-            if($check == "1") {
-                $cnt = "1";
-                $eintrag = _new_vote_1;
-            } else {
-                $cnt = $check;
-                $eintrag = _new_vote_2;
-            }
-
-            $can_erase = true;
-            $newv = show(_user_new_votes, array("cnt" => $cnt, "eintrag" => $eintrag));
-        }
-
-        /** Kalender Events anzeigen */
-        $getkal = db("SELECT * FROM `".$db['events']."` WHERE `datum` > ".time()." ORDER BY `datum`;",false,true);
-        $nextkal = '';
-        if(!empty($getkal) && check_new($getkal['datum'],1)) {
-            if(date("d.m.Y",$getkal['datum']) == date("d.m.Y", time())) {
-              $nextkal = show(_userlobby_kal_today, array("time" => mktime(0,0,0,date("m",$getkal['datum']), date("d",$getkal['datum']),date("Y",$getkal['datum'])),
-                                                          "event" => $getkal['title']));
-            } else {
-              $nextkal = show(_userlobby_kal_not_today, array("time" => mktime(0,0,0,date("m",$getkal['datum']), date("d",$getkal['datum']),date("Y",$getkal['datum'])),
-                                                              "date" => date("d.m.Y", $getkal['datum']),
-                                                              "event" => $getkal['title']));
-            }
-        }
-
-        /** Neue Awards anzeigen */
-        $getaw = db("SELECT `id`,`postdate` FROM `".$db['awards']."` ORDER BY `id` DESC;",false,true); $awards = '';
-        if(!empty($getaw) && check_new($getaw['postdate'],1)) {
-            $check = cnt($db['awards'], " WHERE `postdate` > ".$lastvisit);
-            if($check == "1") {
-                $cnt = "1";
-                $eintrag = _new_awards_1;
-            } else {
-                $cnt = $check;
-                $eintrag = _new_awards_2;
-            }
-
-            $can_erase = true;
-            $awards = show(_user_new_awards, array("cnt" => $cnt, "eintrag" => $eintrag));
-        }
-
-        /** Neue Rankings anzeigen */
-        $getra = db("SELECT `id`,`postdate` FROM `".$db['rankings']."` ORDER BY `id` DESC;",false,true);
-        $rankings = '';
-        if(!empty($getra) && check_new($getra['postdate'],1)) {
-            $check = cnt($db['rankings'], " WHERE `postdate` > ".$lastvisit);
-            if($check == "1") {
-                $cnt = "1";
-                $eintrag = _new_rankings_1;
-            } else {
-                $cnt = $check;
-                $eintrag = _new_rankings_2;
-            }
-
-            $can_erase = true;
-            $rankings = show(_user_new_rankings, array("cnt" => $cnt, "eintrag" => $eintrag));
-        }
-
-        /** Neue Artikel anzeigen */
-        $qryart = db("SELECT `id`,`datum` FROM `".$db['artikel']."` WHERE `public` = 1 ORDER BY `id` DESC;"); $artikel = '';
-        if(_rows($qryart) >= 1) {
-            while($getart  = _fetch($qryart)) {
-                if(check_new($getart['datum'],1)) {
-                    $check = cnt($db['artikel'], " WHERE `datum` > ".$lastvisit." AND `public` = 1");
-                    if($check == "1") {
-                          $cnt = "1";
-                          $eintrag = _lobby_new_art_1;
-                    } else {
-                          $cnt = $check;
-                          $eintrag = _lobby_new_art_2;
-                    }
-
-                    $can_erase = true;
-                    $artikel = show(_user_new_art, array("cnt" => $cnt, "eintrag" => $eintrag));
-                }
-            }
-        }
-
-        /** Neue Artikel Comments anzeigen */
-        $qrychecka = db("SELECT `id` FROM `".$db['artikel']."` WHERE `public` = 1;"); $artc = '';
-        if(_rows($qrychecka) >= 1) {
-            while($getchecka = _fetch($qrychecka)) {
-                $getartc = db("SELECT `id`,`artikel`,`datum` FROM `".$db['acomments']."` WHERE `artikel` = ".$getchecka['id']." ORDER BY `datum` DESC;",false,true);
-                if(!empty($getartc) && check_new($getartc['datum'],1)) {
-                    $check = cnt($db['acomments'], " WHERE `datum` > ".$lastvisit." AND `artikel` = ".$getartc['artikel']);
-                    if($check == "1") {
-                        $cnt = "1";
-                        $eintrag = _lobby_new_artc_1;
-                    } else {
-                        $cnt = $check;
-                        $eintrag = _lobby_new_artc_2;
-                    }
-
-                    $can_erase = true;
-                    $artc .= show(_user_new_artc, array("cnt" => $cnt, "id" => $getartc['artikel'], "eintrag" => $eintrag));
-                }
-            }
-        }
-
-        /** Neue Bilder in der Gallery anzeigen */
-        $getgal = db("SELECT `id`,`datum` FROM `".$db['gallery']."` ORDER BY `id` DESC;",false,true); $gal = '';
-        if(!empty($getgal) && check_new($getgal['datum'],1)) {
-            $check = cnt($db['gallery'], " WHERE `datum` > ".$lastvisit);
-            if($check == "1") {
-                $cnt = "1";
-                $eintrag = _new_gal_1;
-            } else {
-                $cnt = $check;
-                $eintrag = _new_gal_2;
-            }
-
-            $can_erase = true;
-            $gal = show(_user_new_gallery, array("cnt" => $cnt, "eintrag" => $eintrag));
-        }
-
-        /** Neue Aways anzeigen */
-        $qryawayn = db("SELECT * FROM `".$db['away']."` ORDER BY `id`;"); $away_new = '';
-        if(_rows($qryawayn) >= 1) {
-            $awayn = '';
-            while($getawayn = _fetch($qryawayn)) {
-                if(check_new($getawayn['date'],1) && data('level') >= 2) {
-                    $awayn .= show(_user_away_new, array("id" => $getawayn['id'],
-                                                         "user" => autor($getawayn['userid']),
-                                                         "ab" => date("d.m.y",$getawayn['start']),
-                                                         "wieder" => date("d.m.y",$getawayn['end']),
-                                                         "what" => $getawayn['titel']));
-                }
-            }
-
-            $can_erase = true;
-            $away_new = show(_user_away, array("naway" => _lobby_away_new, "away" => $awayn));
-        }
-
-        /** Alle Aways anzeigen */
-        $qryawaya = db("SELECT * FROM `".$db['away']."` WHERE `start` <= ".time()." AND `end` >= ".time()." ORDER BY `start`;"); $away_now = "";
-        if(_rows($qryawaya) >= 1) {
-            $awaya = "";
-            while($getawaya = _fetch($qryawaya)) {
-                if(_rows($qryawaya) && data('level') >= 2) {
-                    $wieder = '';
-                    if($getawaya['end'] > time())
-                        $wieder = _away_to2.' <b>'.date("d.m.y",$getawaya['end']).'</b>';
-
-                    if(date("d.m.Y",$getawaya['end']) == date("d.m.Y",time()))
-                        $wieder = _away_today;
-
-                    $awaya .= show(_user_away_now, array("id" => $getawaya['id'],
-                                                         "user" => autor($getawaya['userid']),
-                                                         "wieder" => $wieder,
-                                                         "what" => $getawaya['titel']));
-                }
-            }
-
-            $away_now = show(_user_away_currently, array("ncaway" => _lobby_away, "caway" => $awaya));
-        }
-
         /** Neue Forum Topics anzeigen */
         $qryft = db("SELECT s1.`t_text`,s1.`id`,s1.`topic`,s1.`kid`,s2.`kattopic`,s3.`intern`,s1.`sticky` FROM `".
             $db['f_threads']."` AS `s1`, `".$db['f_skats']."` AS `s2`, `".$db['f_kats'].
@@ -440,6 +166,7 @@ if(defined('_UserMenu')) {
         }
 
         // Userlevel
+        $mylevel = '';
         switch (data("level")) {
             case 1: $mylevel = _status_user; break;
             case 2: $mylevel = _status_trial; break;
@@ -464,43 +191,17 @@ if(defined('_UserMenu')) {
                                                "phits" => _profil_pagehits,
                                                "prank" => _profil_position,
                                                "pposts" => _profil_forenposts,
-                                               "nkal" => _kalender,
-                                               "kal" => $nextkal,
-                                               "nart" => _artikel,
-                                               "art" => $artikel,
-                                               "nartc" => _lobby_artikelc,
-                                               "artc" => $artc,
                                                "board" => _forum,
                                                "threads" => _forum_thread,
-                                               "rankings" => $rankings,
-                                               "nrankings" => _lobby_rankings,
-                                               "awards" => $awards,
-                                               "nawards" => _lobby_awards,
                                                "nforum" => _lobby_forum,
                                                "ftopics" => $ftopics,
                                                "lastforum" => _last_forum,
                                                "forum" => $forumposts,
-                                               "nvotes" => _lobby_votes,
-                                               "ncwcom" => _cw_comments_head,
-                                               "cwcom" => $cwcom,
-                                               "ngal" => _lobby_gallery,
-                                               "gal" => $gal,
-                                               "votes" => $newv,
-                                               "cws" => $cws,
-                                               "ncws" => _lobby_cw,
                                                "nnewsc" => _lobby_newsc,
                                                "newsc" => $newsc,
-                                               "ngb" => _lobby_gb,
-                                               "gb" => $gb,
-                                               "nuser" => _lobby_user,
-                                               "user" => $user,
-                                               "nmgb" => _lobby_membergb,
-                                               "mgb" => $membergb,
                                                "nmsg" => _msg,
                                                "nnews" => _lobby_news,
                                                "news" => $news,
-                                               "away_new" => $away_new,
-                                               "away_now" => $away_now,
                                                "neuerungen" => _lobby_new));
     }
     else

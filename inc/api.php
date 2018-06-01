@@ -138,10 +138,6 @@ class api {
     }
 
     private function call() {
-        if(!allow_url_fopen_support()) {
-            return;
-        }
-
         if(!array_key_exists('type',$this->api_input))
             $this->api_input['type'] = 'json';
 

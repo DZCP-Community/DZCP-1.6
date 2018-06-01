@@ -8,6 +8,33 @@
 /* Is set to utf-8 by default */
 //$charset = 'utf-8';
 
+## ADDED FOR DZCP.dedefine(_dl_subkat_head'] = 'Download Subkategorien';
+$language_text['_dl_subkat_add'] = 'Neue Subkategorie hinzuf&uuml;gen';
+$language_text['_dl_subkat_edit'] = 'Subkategorie editieren';
+$language_text['_dl_subkat'] = 'Subkatekorien';
+$language_text['_dl_empty_subkat'] = 'Du musst eine Subkategorie angeben';
+$language_text['_dl_subkat_edited'] = 'Subkategorie erfolgreich editiert';
+$language_text['_dl_subkat_deleted'] = 'Subkategorie erfolgreich gel&ouml;scht';
+$language_text['_dl_subkat_add'] = 'Neue Subkategorie';
+$language_text['_dl_subkat_addet'] = 'Subkategorie erfolgreich hinzugef&uuml;gt';
+$language_text['_dl_subkat_mainkat'] = 'Hauptkategorie';
+$language_text['_ab_status'] = 'ab Status';
+$language_text['_dl_file_size'] = 'Gr&ouml;&szlig;e';
+$language_text['_top_unset'] = 'Als Top-Eintrag entfernen!';
+$language_text['_top_set'] = 'Als Top-Eintrag setzen!';
+$language_text['_public_unset'] = 'nicht ver&ouml;ffentlichen!';
+$language_text['_public_set'] = 'ver&ouml;ffentlichen!';
+$language_text['_config_dladmin2'] = 'Downloads New';
+$language_text['_config_dl_subkats'] = 'Downloadsubkategorien';
+$language_text['_dl_admin_intern'] = 'Interner Download';
+$language_text['_error_nodl'] = 'Zugriff nicht erlaubt';
+$language_text['_downloads_kats'] = 'Download Kategorien';
+$language_text['_downloads_new'] = 'newDOWNLOADS';
+$language_text['_downloads_most'] = 'mostDOWNLOADS';
+$language_text['_downloads_data'] = 'Data-Reader';
+$language_text['_downloads_top'] = 'Top-Downloads';
+$language_text['_downloads_search'] = 'Deine Suche nach';
+
 ## ADDED FOR 1.6.1.0
 $language_text['_config_datenschutz'] = 'Datenschutz (EU-DSGVO)';
 $language_text['_perm_datenschutz'] = 'Datenschutz (EU-DSGVO) verwalten';
@@ -31,7 +58,6 @@ $language_text['_admin_dsgvo_log'] = 'Datenschutz Infos';
 $language_text['_admin_dsgvo_lock'] = 'Account ist aufgrund der EU-DSGVO gesperrt!';
 $language_text['_admin_dsgvo_indent_lock'] = 'Account ist aufgrund der EU-DSGVO gesperrt, du kannst die Identität des Users nicht annehmen!';
 $language_text['_dsgvo_deleted_text'] = '<span style="color:#999999;">-- Der Autor dieses Posts hat den Text gelöscht --</span>';
-$language_text['_dsgvo_locked_text'] = '<span style="color:#999999;">-- Der Account ist aufgrund der EU-DSGVO gesperrt --</span>';
 $language_text['_profil_del_account_full'] = 'Account vollständig löschen';
 $language_text['_profil_del_account_head'] = 'Account löschen';
 
@@ -325,6 +351,7 @@ $language_text['_away_today'] = 'includi <b>oggi</ b>';
 $language_text['_public'] = '- NON PUBBLICATO - clicca per cambiare lo stato';
 $language_text['_non_public'] = '- PUBBLICATO - clicca per cambiare lo stato';
 $language_text['_no_public'] = '<b>non pubblicata</b>';
+$language_text['_no_events'] = '<div style="text-align:center;">Non ci sono eventi disponibili</div>';
 $language_text['_config_c_events'] = 'Menu: Eventi';
 $language_text['_news_send'] = 'Invia News';
 $language_text['_news_send_source'] = 'Fonte';
@@ -1349,7 +1376,7 @@ $language_text['_profil_maus'] = 'Mouse';
 $language_text['_profil_mauspad'] = 'Mousepad';
 $language_text['_profil_hdd'] = 'HDD';
 $language_text['_profil_headset'] = 'Headset';
-$language_text['_profil_system'] = 'Sistema';
+$language_text['_profil_os'] = 'Sistema';
 $language_text['_profil_inet'] = 'Internet';
 $language_text['_profil_job'] = 'Job';
 $language_text['_profil_position'] = 'Posizione';
@@ -2010,6 +2037,8 @@ $language_text['_reg_artikel'] = 'Commenti Articolo';
 $language_text['_cw_comments'] = 'Commenti Clanwar';
 $language_text['_on'] = 'on';
 $language_text['_off'] = 'off';
+$language_text['_pers_info_info'] = 'Mostra un infobox nell\'intestazione con informazioni personali come IP, browser, sistema, ecc';
+$language_text['_pers_info'] = 'Infobox';
 $language_text['_config_lreg'] = 'Menu: Ultima reg. utente';
 $language_text['_config_mailfrom'] = 'Email da';
 $language_text['_config_mailfrom_info'] = 'Questo indirizzo email verra\' utilizzato per le email inviate come newsletter, registrazione, ecc!';

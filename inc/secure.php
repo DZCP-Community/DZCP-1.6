@@ -4,10 +4,6 @@
  * http://www.dzcp.de
  */
 
-//TODO: Remove File???
-//TODO: checks validation of uploaded files to upload-codes
-
-/* //OLD CODE --- REMOVE ----
 function mtime() {
     list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);
@@ -82,4 +78,3 @@ function add_stripslashes(&$value, $depth = 0) {
         }
     }
 }
-*/

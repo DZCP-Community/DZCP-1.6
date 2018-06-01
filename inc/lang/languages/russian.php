@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * DZCP - deV!L`z ClanPortal 1.6 Final /// Translation Version 0.61ru
  * http://www.dzcp.de
@@ -8,6 +8,33 @@
 
 /* Is set to utf-8 by default */
 //$charset = 'utf-8';
+
+## ADDED FOR DZCP.dedefine(_dl_subkat_head'] = 'Download Subkategorien';
+$language_text['_dl_subkat_add'] = 'Neue Subkategorie hinzuf&uuml;gen';
+$language_text['_dl_subkat_edit'] = 'Subkategorie editieren';
+$language_text['_dl_subkat'] = 'Subkatekorien';
+$language_text['_dl_empty_subkat'] = 'Du musst eine Subkategorie angeben';
+$language_text['_dl_subkat_edited'] = 'Subkategorie erfolgreich editiert';
+$language_text['_dl_subkat_deleted'] = 'Subkategorie erfolgreich gel&ouml;scht';
+$language_text['_dl_subkat_add'] = 'Neue Subkategorie';
+$language_text['_dl_subkat_addet'] = 'Subkategorie erfolgreich hinzugef&uuml;gt';
+$language_text['_dl_subkat_mainkat'] = 'Hauptkategorie';
+$language_text['_ab_status'] = 'ab Status';
+$language_text['_dl_file_size'] = 'Gr&ouml;&szlig;e';
+$language_text['_top_unset'] = 'Als Top-Eintrag entfernen!';
+$language_text['_top_set'] = 'Als Top-Eintrag setzen!';
+$language_text['_public_unset'] = 'nicht ver&ouml;ffentlichen!';
+$language_text['_public_set'] = 'ver&ouml;ffentlichen!';
+$language_text['_config_dladmin2'] = 'Downloads New';
+$language_text['_config_dl_subkats'] = 'Downloadsubkategorien';
+$language_text['_dl_admin_intern'] = 'Interner Download';
+$language_text['_error_nodl'] = 'Zugriff nicht erlaubt';
+$language_text['_downloads_kats'] = 'Download Kategorien';
+$language_text['_downloads_new'] = 'newDOWNLOADS';
+$language_text['_downloads_most'] = 'mostDOWNLOADS';
+$language_text['_downloads_data'] = 'Data-Reader';
+$language_text['_downloads_top'] = 'Top-Downloads';
+$language_text['_downloads_search'] = 'Deine Suche nach';
 
 ## ADDED FOR 1.6.1.0
 $language_text['_config_datenschutz'] = 'Data Protection (EU-GDPR)';
@@ -32,7 +59,6 @@ $language_text['_admin_dsgvo_log'] = 'Информация о защите да�
 $language_text['_admin_dsgvo_lock'] = 'Учетная запись заблокирована из-за EU-GDPR!';
 $language_text['_admin_dsgvo_indent_lock'] = 'Учетная запись заблокирована из-за EU-GDPR, вы не можете принять личность пользователя!';
 $language_text['_dsgvo_deleted_text'] = '<span style="color:#999999;">-- Автор этого сообщения удалил текст --</span>';
-$language_text['_dsgvo_locked_text'] = '<span style="color:#999999;">-- Der Account ist aufgrund der EU-DSGVO gesperrt --</span>';
 $language_text['_profil_del_account_full'] = 'Удалить аккаунт полностью';
 $language_text['_profil_del_account_head'] = 'Удалить аккаунт';
 
@@ -311,6 +337,7 @@ $language_text['_away_today'] = 'а тагже <b>Сегодня</b>';
 $language_text['_public'] = 'Oпубликовать';
 $language_text['_non_public'] = 'не oпубликовать';
 $language_text['_no_public'] = '<b>Неопубликованный</b>';
+$language_text['_no_events'] = 'нет событий';
 $language_text['_config_c_events'] = 'Меню: События';
 $language_text['_news_send'] = 'Добавить новость';
 $language_text['_news_send_source'] = 'Источник';
@@ -1338,7 +1365,7 @@ $language_text['_profil_maus'] = 'Мышка';
 $language_text['_profil_mauspad'] = 'коврик для мыши';
 $language_text['_profil_hdd'] = 'Жесткий диск';
 $language_text['_profil_headset'] = 'Наушники';
-$language_text['_profil_system'] = 'Операционная система';
+$language_text['_profil_os'] = 'Операционная система';
 $language_text['_profil_inet'] = 'Связь';
 $language_text['_profil_job'] = 'Работа';
 $language_text['_profil_position'] = 'Позиция';
@@ -1940,6 +1967,8 @@ $language_text['_reg_artikel'] = 'Комментарии продуктов';
 $language_text['_cw_comments'] = 'Комментарии КВ';
 $language_text['_on'] = 'включен';
 $language_text['_off'] = 'выключен';
+$language_text['_pers_info_info'] = 'Отображает окно сообщения в заголовке с личной информацией, например IP, браузер, разрешение и т.д.';
+$language_text['_pers_info'] = 'Факты';
 $language_text['_config_lreg'] = 'Меню: Последний рег. пользователь';
 $language_text['_config_mailfrom'] = 'Отправитель имайлa';
 $language_text['_config_mailfrom_info'] = 'Этот адрес электронной почты отображается при отправке Рассылки,Регист. и т.д кaк отправитель этого письма!';

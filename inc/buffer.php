@@ -21,24 +21,10 @@ function getmicrotime() {
 
 $time_start=getmicrotime();
 
-//Filter Sanitize
-$gump = GUMP::get_instance();
-$_POST = $gump->sanitize($_POST);
-$_GET = $gump->sanitize($_GET);
-$_REQUEST = $gump->sanitize($_REQUEST);
-$_COOKIE = $gump->sanitize($_COOKIE);
-
 function gz_output($output='') {
     $gzip_compress_level = (!defined('buffer_gzip_compress_level') ? 4 : buffer_gzip_compress_level);
     if(function_exists('ini_set'))
         ini_set('zlib.output_compression_level', $gzip_compress_level);
-
-    if(buffer_show_licence_bar) {
-        $licence_bar = '<div class="licencebar"> <table style="width:100%;margin:auto" cellspacing="0"> <tr> <td class="licencebar" nowrap="nowrap">Powered by <a class="licencebar" href="https://www.dzcp.de" target="_blank" title="deV!L`z Clanportal">DZCP - deV!L`z&nbsp;Clanportal V'._version.'</a></td></tr> </table> </div>';
-
-        if(!file_exists(basePath.'/_codeking.licence'))
-            $output = str_ireplace('</body>',$licence_bar."\r\n</body>",$output);
-    }
 
     ob_end_clean();
     ob_start('ob_gzhandler');

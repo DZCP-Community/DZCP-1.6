@@ -65,6 +65,11 @@ class DebugConsole {
         $fp = fopen(basePath."/inc/_logs/sql_error_log.log", "a+");
         fwrite($fp, $message);
         fclose($fp);
+
+        if(view_error_reporting) {
+            echo '<pre>';
+            echo $message;
+        }
     }
 
     public static final function save_log() {

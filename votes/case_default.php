@@ -28,7 +28,7 @@ if(defined('_Votes')) {
         $check = ''; $ipcheck = false; $intern = '';
         $stimmen = $get['ges_stimmen'];
         $vid = 'vid_' . (int)$get['id'];
-        if($get['intern']) {
+        if($get['intern'] == 1) {
             $showVoted = '';
             $check = db("SELECT id FROM ".$db['ipcheck']." WHERE what = '".$vid."' AND (user_id = '".$userid."' OR ip = '".$userip."')");
             $ipcheck = _rows($check) == 1;
@@ -50,22 +50,12 @@ if(defined('_Votes')) {
                                                               "class" => $class,
                                                               "stimmen" => $getv['stimmen'],
                                                               "balken" => $balken));
-            } else if(HasDSGVO()) {
+            } else {
                 $result_head = _votes_results_head_vote;
                 $votebutton = '<input id="voteSubmit_'.$get['id'].'" type="submit" value="'._button_value_vote.'" class="submit" />';
                 $results .= show($dir."/votes_vote", array("id" => $getv['id'],
                                                            "answer" => re($getv['sel']),
                                                            "class" => $class));
-            } else {
-                $result_head = _votes_results_head_vote;
-                $votebutton = '';
-                $balken = show(_votes_balken, array("width" => 0));
-                $results .= show($dir."/votes_results", array("answer" => re($getv['sel']),
-                    "percent" => '0',
-                    "lng_stimmen" => _votes_stimmen,
-                    "class" => $class,
-                    "stimmen" => '0',
-                    "balken" => $balken));
             }
         }
 

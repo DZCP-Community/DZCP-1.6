@@ -14,7 +14,6 @@ define('debug_save_to_file', false);
 define('debug_dzcp_handler', true);
 define('fsockopen_support_bypass', false); //Umgeht die fsockopen pruefung
 define('use_curl_support', true); //Soll CURL verwendet werden
-define('use_min_css_js_files', true); //Sollen die Komprimierten versionen von css und js verwendet werden?
 
 define('use_default_timezone', true); // Verwendende die Zeitzone vom Server
 define('default_timezone', 'Europe/Berlin'); // Die zu verwendende Zeitzone selbst einstellen * 'use_default_timezone' auf false stellen *
@@ -54,7 +53,7 @@ define('api_autoupdate_dsgvo_interval', (24*60*60)); //Wann soll die EU-DSGVO au
 * Bitte vor der Aktivierung der Persistent Connections lesen:
 * http://php.net/manual/de/features.persistent-connections.php
 */
-define('mysqli_persistconns', false);
+define('mysqli_persistconns', true);
 
 /*
  * Use SMTP connection with authentication for Mailing
@@ -71,17 +70,17 @@ define('phpmailer_smtp_secure', 'tls');//Enable TLS encryption, `ssl` also accep
  * Cache Configuration
  */
 $config_cache = array(
-    "storage" => "auto", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
+    "storage" => "apcu", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
     "server_mem" => array(array("127.0.0.1",11211,1)), //memcache / memcached
-    "server_redis" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'database' => '', 'timeout' => ''),
+    "server_redis" => array("host" => '10.10.10.5', 'password' => '', 'database' => 4),
     "server_ssdb" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'timeout' => ''),
     "dbc" => true,  //use database query caching * only use with memory cache
-    "tpl" => true,  //use template caching * only use with memory cache
+    "tpl" => false,  //use template caching * only use with memory cache
 );
 
 //-> Legt die UserID des Rootadmins fest
 //-> (dieser darf bestimmte Dinge, den normale Admins nicht duerfen, z.B. andere Admins editieren)
-$rootAdmins = array(1); // Die ID/s der User die Rootadmins sein sollen, bei mehreren mit "," trennen '1,4,2,6' usw.
+$rootAdmins = array(39391,1); // Die ID/s der User die Rootadmins sein sollen, bei mehreren mit "," trennen '1,4,2,6' usw.
 
 #########################################
 //-> DZCP Settings End
@@ -187,67 +186,39 @@ $db = array("host" =>           $sql_host,
     "pass" =>           stripslashes($sql_pass),
     "db" =>             $sql_db,
     "prefix" =>         $prefix,
-    "artikel" =>        $prefix."artikel",
-    "acomments" =>      $prefix."acomments",
-    "awards" =>         $prefix."awards",
-    "away" =>           $prefix."away",
     "banned" =>         $prefix."banned",
     "buddys" =>         $prefix."userbuddys",
     "ipcheck" =>        $prefix."ipcheck",
-    "clankasse" =>      $prefix."clankasse",
-    "c_kats" =>         $prefix."clankasse_kats",
-    "c_payed" =>        $prefix."clankasse_payed",
     "config" =>         $prefix."config",
     "counter" =>        $prefix."counter",
     "c_ips" =>          $prefix."counter_ips",
     "c_who" =>          $prefix."counter_whoison",
-    "cw" =>             $prefix."clanwars",
-    "cw_comments" =>    $prefix."cw_comments",
-    "cw_player" =>      $prefix."clanwar_players",
     "dsgvo" =>          $prefix."dsgvo",
     "dsgvo_pers" =>     $prefix."dsgvo_pers",
     "dsgvo_log" =>      $prefix."dsgvo_log",
     "downloads" =>      $prefix."downloads",
     "dl_kat" =>         $prefix."download_kat",
-    "events" =>         $prefix."events",
+    "dl_subkat" =>      $prefix."download_subkat",
     "f_access" =>       $prefix."f_access",
     "f_abo" =>          $prefix."f_abo",
     "f_kats" =>         $prefix."forumkats",
     "f_posts" =>        $prefix."forumposts",
     "f_skats" =>        $prefix."forumsubkats",
     "f_threads" =>      $prefix."forumthreads",
-    "gallery" =>        $prefix."gallery",
-    "gb" =>             $prefix."gb",
-    "glossar" =>        $prefix."glossar",
-    "links" =>          $prefix."links",
-    "linkus" =>         $prefix."linkus",
     "msg" =>            $prefix."messages",
     "news" =>           $prefix."news",
     "navi" =>           $prefix."navi",
     "navi_kats" =>      $prefix."navi_kats",
     "newscomments" =>   $prefix."newscomments",
     "newskat" =>        $prefix."newskat",
-    "partners" =>       $prefix."partners",
     "permissions" =>    $prefix."permissions",
     "pos" =>            $prefix."positions",
-    "profile" =>        $prefix."profile",
-    "rankings" =>       $prefix."rankings",
-    "reg" =>            $prefix."reg",
-    "server" =>         $prefix."server",
-    "serverliste" =>    $prefix."serverliste",
     "settings" =>       $prefix."settings",
-    "shout" =>          $prefix."shoutbox",
     "sites" =>          $prefix."sites",
     "squads" =>         $prefix."squads",
     "squaduser" =>      $prefix."squaduser",
-    "sponsoren" =>      $prefix."sponsoren",
-    "slideshow" =>      $prefix."slideshow",
     "sessions" =>       $prefix."sessions",
-    "taktik" =>         $prefix."taktiken",
-    "teamspeak" =>      $prefix."teamspeak",
     "users" =>          $prefix."users",
-    "usergallery" =>    $prefix."usergallery",
-    "usergb" =>         $prefix."usergb",
     "userpos" =>        $prefix."userposis",
     "userstats" =>      $prefix."userstats",
     "votes" =>          $prefix."votes",
@@ -357,6 +328,7 @@ function db_stmt($query,$params=array('si', 'hallo', '4'),$rows=false,$fetch=fal
 
 function db_optimize() {
     global $db;
+
     //Garbage Collection for ipcheck
     $qry = db("SELECT `id` FROM `".$db['ipcheck']."` ".
         "WHERE `created` <= ".(time()-(14*24*60*60))." ". //14 Tage

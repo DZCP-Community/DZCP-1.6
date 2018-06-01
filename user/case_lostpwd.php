@@ -6,7 +6,7 @@
 
 if(defined('_UserMenu')) {
     $where = _site_user_lostpwd;
-    if(!$chkMe && HasDSGVO()) {
+    if(!$chkMe) {
         $index = show($dir."/lostpwd", array("head" => _lostpwd_head,
                                              "name" => _loginname,
                                              "value" => _button_value_send,

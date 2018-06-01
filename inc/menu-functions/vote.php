@@ -48,9 +48,5 @@ function vote($ajax = false) {
                                         "stimmen" => $stimmen));
     }
 
-    if(empty($vote)) {
-        $vote = show(_no_entrys_yet, array("colspan" => "0"));
-    }
-
-    return $ajax ? $vote : '<div id="navVote">'.$vote.'</div>';
+    return empty($vote) ? '<center style="margin:2px 0">'._vote_menu_no_vote.'</div>' : ($ajax ? $vote : '<div id="navVote">'.$vote.'</div>');
 }
