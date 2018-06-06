@@ -12,14 +12,12 @@ if(_adminMenu != 'true') exit;
     } else {
       if($_GET['do'] == "new")
       {
-        $qry = db("SELECT s1.*,s2.name AS kat FROM ".$sql_prefix."dl_subkat AS s1
-                   LEFT JOIN ".$db['dl_kat']." AS s2
-                   ON s1.kid = s2.id
-                   ORDER BY s2.name,s1.name");
+        $qry = db("SELECT * FROM ".$db['dl_kat']."
+                   ORDER BY name");
         while($get = _fetch($qry))
         {
           $kats .= show(_select_field, array("value" => $get['id'],
-                                             "what" => re($get['kat']).' | '.re($get['name']),
+                                             "what" => re($get['name']),
                                              "sel" => ""));
         }
 
@@ -36,24 +34,21 @@ if(_adminMenu != 'true') exit;
                                              "oder" => _or,
                                              "lang" => $language,
                                              "file" => $dl,
-																						 "dsize" => "",
-																						 "size" => _dl_file_size,
                                              "nothing" => "",
-																						 "interna" => _dl_admin_intern,
-																						 "no" => _no,
-																						 "ruser" => _status." "._status_user,
-																						 "trial" => _status." "._status_trial,
-																						 "member" => _status." "._status_member,
-																						 "admin" => _status." "._status_admin,
-																						 "selt" => "",
-                                             "selm" => "",
-					     															 "selu" => "",
-                                             "sela" => "",
                                              "nofile" => _downloads_nofile,
                                              "lokal" => _downloads_lokal,
                                              "what" => _button_value_add,
                                              "do" => "add",
                                              "exist" => _downloads_exist,
+											 "picture" => _downloads_picture,
+											 "picturea" => _downloads_picturea,
+											 "pictureb" => _downloads_pictureb,
+											 "picturec" => _downloads_picturec,
+											 "picvorschau" => "",
+											 "picvorschaua" => "",
+										     "picvorschaub" => "",
+											 "picvorschauc" => "",
+											 "picvorschau" => "",
                                              "dbeschreibung" => "",
                                              "kat" => _downloads_kat,
                                              "kats" => $kats,
@@ -73,12 +68,78 @@ if(_adminMenu != 'true') exit;
           $qry = db("INSERT INTO ".$db['downloads']."
                      SET `download`     = '".up($_POST['download'])."',
                          `url`          = '".$dl."',
-                         `size`         = '".str_replace(',','.',up($_POST['size']))."',
-												 `date`         = '".((int)time())."',
-												 `intern`       = '".((int)$_POST['intern'])."',
+                         `date`         = '".((int)time())."',
                          `beschreibung` = '".up($_POST['beschreibung'],1)."',
                          `kat`          = '".((int)$_POST['kat'])."'");
 
+          $tmp1 = $_FILES['dlscreen']['tmp_name'];
+          $type1 = $_FILES['dlscreen']['type'];
+          $end1 = explode(".", $_FILES['dlscreen']['name']);
+          $end1 = strtolower($end1[count($end1)-1]);
+          $end1 = strtolower($end1[count($end1)-2]);
+          
+          if(!empty($tmp1))
+          {
+            $img1 = @getimagesize($tmp1);
+						if($img1[0])
+            {
+              @copy($tmp1, basePath."/inc/images/downloads/".mysql_insert_id().".png");
+              @unlink($tmp1);
+            }
+          }	
+          /* Multiimage Uploadmod by HellBZ */
+        foreach ($_FILES['image']['name'] as $i => $name) {
+       
+        if ($_FILES['image']['error'][$i] == 4) {
+            continue; 
+        }
+       
+        if ($_FILES['image']['error'][$i] == 0) {
+           
+             if ($_FILES['image']['size'][$i] > 99439443) {
+               // $message[] = "$name exceeded file limit.";
+                continue;  
+             }
+                    $end1 = explode(".", $_FILES['dlscreen']['name']);
+          $end = strtolower($end1[count($end1)-1]);
+          $start = strtolower($end1[count($end1)-2]);
+           
+           $img = $_FILES['image']['tmp_name'][$i];
+            //Get Image size info
+           #
+            $imgInfo = getimagesize($img);
+           #
+            switch ($imgInfo[2]) {
+           #
+             case 1: 
+             
+             $im = imagecreatefromgif($img); 
+             imagepng($im,basePath."/inc/images/downloads/".mysql_insert_id().'_'.$start.".png");
+             break;
+           #
+             case 2: 
+             
+             $im = imagecreatefromjpeg($img);
+             imagepng($im,basePath."/inc/images/downloads/".mysql_insert_id().'_'.$start.".png");  
+             break;
+           #
+             case 3: 
+             
+             @copy($_FILES['image']['tmp_name'][$i], basePath."/inc/images/downloads/".mysql_insert_id().'_'.strtolower($_FILES['image']['name'][$i])); 
+             break;
+           #
+             default:  trigger_error('Unsupported filetype!', E_USER_WARNING);  break;
+           #
+            }
+              
+          @unlink($_FILES['image']['tmp_name'][$i]);// copy($_FILES['image']['tmp_name'][$i],$_FILES['image']['name'][$i]);
+           //@unlink($_FILES['image']['tmp_name'][$i]);
+            
+           //  $uploaded++;
+        }
+        }
+        /* Multiimage Uploadmod by HellBZ */
+        
           $show = info(_downloads_added, "?admin=dladmin");
         }
       } elseif($_GET['do'] == "edit") {
@@ -86,46 +147,72 @@ if(_adminMenu != 'true') exit;
                     WHERE id = '".intval($_GET['id'])."'");
         $get = _fetch($qry);
 
-        $qryk = db("SELECT s1.*,s2.name AS kat FROM ".$sql_prefix."dl_subkat AS s1
-                   LEFT JOIN ".$db['dl_kat']." AS s2
-                   ON s1.kid = s2.id
-                   ORDER BY s2.name,s1.name");
+        $qryk = db("SELECT * FROM ".$db['dl_kat']."
+                    ORDER BY name");
         while($getk = _fetch($qryk))
         {
           if($getk['id'] == $get['kat']) $sel = "selected=\"selected\"";
           else $sel = "";
 
           $kats .= show(_select_field, array("value" => $getk['id'],
-                                             "what" => re($getk['kat']).' | '.re($getk['name']),
+                                             "what" => re($getk['name']),
                                              "sel" => $sel));
         }
-
-				if($get['intern'] == 0)     $sel  = "selected=\"selected\"";
-				elseif($get['intern'] == 1) $selu = "selected=\"selected\"";
-        elseif($get['intern'] == 2) $selt = "selected=\"selected\"";
-        elseif($get['intern'] == 3) $selm = "selected=\"selected\"";
-        elseif($get['intern'] == 4) $sela = "selected=\"selected\"";
-
+       foreach($picformat as $endung)
+  		{
+  			if(file_exists(basePath."/inc/images/downloads/".$get['id'].".png"))
+  			{
+  				$pic = show(_downloads_picvorschau, array ("picvorschau" => '../inc/images/downloads/'.$get['id'].'.png'));
+  				break;
+  			}	else {
+  				$pic = "Kein Bild hinterlegt";
+  			}
+  		}
+		foreach($picformat as $endung)
+  		{
+  			if(file_exists(basePath."/inc/images/downloads/".$get['id']."-1.png"))
+  			{
+  				$pica = show(_downloads_picvorschau, array ("picvorschau" => '../inc/images/downloads/'.$get['id'].'-1.png'));
+  				break;
+  			}	else {
+  				$pica = "Kein Bild hinterlegt";
+  			}
+  		}
+		foreach($picformat as $endung)
+  		{
+  			if(file_exists(basePath."/inc/images/downloads/".$get['id']."-2.png"))
+  			{
+  				$picb = show(_downloads_picvorschau, array ("picvorschau" => '../inc/images/downloads/'.$get['id'].'-2.png'));
+  				break;
+  			}	else {
+  				$picb = "Kein Bild hinterlegt";
+  			}
+  		}
+		foreach($picformat as $endung)
+  		{
+  			if(file_exists(basePath."/inc/images/downloads/".$get['id']."-3.png"))
+  			{
+  				$picc = show(_downloads_picvorschau, array ("picvorschau" => '../inc/images/downloads/'.$get['id'].'-3.png'));
+  				break;
+  			}	else {
+  				$picc = "Kein Bild hinterlegt";
+  			}
+  		}
         $show = show($dir."/form_dl", array("admin_head" => _downloads_admin_head_edit,
                                             "ddownload" => re($get['download']),
                                             "durl" => re($get['url']),
                                             "file" => $dl,
-																						"dsize" => $get['size'],
-																						"size" => _dl_file_size,
                                             "lokal" => _downloads_lokal,
                                             "exist" => _downloads_exist,
+											"picture" => _downloads_picture,
+											"picturea" => _downloads_picturea,
+											"pictureb" => _downloads_pictureb,
+											"picturec" => _downloads_picturec,
+											"picvorschau" => $pic,
+											"picvorschaua" => $pica,
+											"picvorschaub" => $picb,
+											"picvorschauc" => $picc,
                                             "nothing" => _nothing,
-																						"interna" => _dl_admin_intern,
-																						"no" => _no,
-																						"ruser" => _status." "._status_user,
-																						"trial" => _status." "._status_trial,
-																						"member" => _status." "._status_member,
-																						"admin" => _status." "._status_admin,
-																						"sel" => $sel,
-																						"selt" => $selt,
-                                            "selm" => $selm,
-					    															"selu" => $selu,
-                                            "sela" => $sela,
                                             "nofile" => _downloads_nofile,
                                             "oder" => _or,
                                             "dbeschreibung" => re_bbcode($get['beschreibung']),
@@ -149,12 +236,97 @@ if(_adminMenu != 'true') exit;
                      SET `download`     = '".up($_POST['download'])."',
                          `url`          = '".$dl."',
                          `beschreibung` = '".up($_POST['beschreibung'],1)."',
-						 						 `intern`       = '".((int)$_POST['intern'])."',
-                         `size`         = '".str_replace(',','.',up($_POST['size']))."',
-												 `date`         = '".((int)time())."',
+                         `date`         = '".((int)time())."',
                          `kat`          = '".((int)$_POST['kat'])."'
                      WHERE id = '".intval($_GET['id'])."'");
-
+          $tmp = $_FILES['dlscreen']['tmp_name'];
+          $type = $_FILES['dlscreen']['type'];
+          $end = explode(".", $_FILES['dlscreen']['name']);
+          $end = strtolower($end[count($end)-1]);
+          
+          if(!empty($tmp))
+          {
+            $img = @getimagesize($tmp);
+						foreach($picformat AS $end1)
+            {
+              if(file_exists(basePath.'/inc/images/downloads/'.intval($_GET['id']).'.png'))
+              {
+                @unlink(basePath.'/inc/images/downloads/'.intval($_GET['id']).'.png');
+                break;
+              }
+            }
+            if($img[0])
+            {
+              copy($tmp, basePath."/inc/images/downloads/".intval($_GET['id']).".png");
+              @unlink($tmp);
+            }
+          }
+		  $tmp = $_FILES['dlscreena']['tmp_name'];
+          $type = $_FILES['dlscreena']['type'];
+          $end = explode(".", $_FILES['dlscreena']['name']);
+          $end = strtolower($end[count($end)-1]);
+          
+          if(!empty($tmp))
+          {
+            $img = @getimagesize($tmp);
+						foreach($picformat AS $end1)
+            {
+              if(file_exists(basePath.'/inc/images/downloads/'.intval($_GET['id']).'-1.png'))
+              {
+                @unlink(basePath.'/inc/images/downloads/'.intval($_GET['id']).'-1.png');
+                break;
+              }
+            }
+            if($img[0])
+            {
+              copy($tmp, basePath."/inc/images/downloads/".intval($_GET['id'])."-1.png");
+              @unlink($tmp);
+            }
+          }
+		  $tmp = $_FILES['dlscreenb']['tmp_name'];
+          $type = $_FILES['dlscreenb']['type'];
+          $end = explode(".", $_FILES['dlscreenb']['name']);
+          $end = strtolower($end[count($end)-1]);
+          
+          if(!empty($tmp))
+          {
+            $img = @getimagesize($tmp);
+						foreach($picformat AS $end1)
+            {
+              if(file_exists(basePath.'/inc/images/downloads/'.intval($_GET['id']).'-2.png'))
+              {
+                @unlink(basePath.'/inc/images/downloads/'.intval($_GET['id']).'-2.png');
+                break;
+              }
+            }
+            if($img[0])
+            {
+              copy($tmp, basePath."/inc/images/downloads/".intval($_GET['id'])."-2.png");
+              @unlink($tmp);
+            }
+          }
+		  $tmp = $_FILES['dlscreenc']['tmp_name'];
+          $type = $_FILES['dlscreenc']['type'];
+          $end = explode(".", $_FILES['dlscreenc']['name']);
+          $end = strtolower($end[count($end)-1]);
+          
+          if(!empty($tmp))
+          {
+            $img = @getimagesize($tmp);
+						foreach($picformat AS $end1)
+            {
+              if(file_exists(basePath.'/inc/images/downloads/'.intval($_GET['id']).'-3.png'))
+              {
+                @unlink(basePath.'/inc/images/downloads/'.intval($_GET['id']).'-3.png');
+                break;
+              }
+            }
+            if($img[0])
+            {
+              copy($tmp, basePath."/inc/images/downloads/".intval($_GET['id'])."-3.png");
+              @unlink($tmp);
+            }
+          }
           $show = info(_downloads_edited, "?admin=dladmin");
         }
       } elseif($_GET['do'] == "delete") {
@@ -162,32 +334,6 @@ if(_adminMenu != 'true') exit;
                    WHERE id = '".intval($_GET['id'])."'");
 
         $show = info(_downloads_deleted, "?admin=dladmin");
-      } elseif($_GET['do'] == 'top') {
-        if($_GET['what'] == 'set')
-        {
-          $upd = db("UPDATE ".$db['downloads']."
-                     SET `top` = '1'
-                     WHERE id = '".intval($_GET['id'])."'");
-        } elseif($_GET['what'] == 'unset') {
-          $upd = db("UPDATE ".$db['downloads']."
-                     SET `top` = '0'
-                     WHERE id = '".intval($_GET['id'])."'");
-        }
-
-        header("Location: ?admin=dladmin");
-      } elseif($_GET['do'] == 'public') {
-        if($_GET['what'] == 'set')
-        {
-          $upd = db("UPDATE ".$db['downloads']."
-                     SET `public` = '1'
-                     WHERE id = '".intval($_GET['id'])."'");
-        } elseif($_GET['what'] == 'unset') {
-          $upd = db("UPDATE ".$db['downloads']."
-                     SET `public` = '0'
-                     WHERE id = '".intval($_GET['id'])."'");
-        }
-
-        header("Location: ?admin=dladmin");
       } else {
         $qry = db("SELECT * FROM ".$db['downloads']."
                    ORDER BY id");
@@ -201,21 +347,11 @@ if(_adminMenu != 'true') exit;
                                                             "title" => _button_title_del,
                                                             "del" => convSpace(_confirm_del_dl)));
 
-          $top = ($get['top'] == 1)
-               ? '<a href="?admin=dladmin&amp;do=top&amp;id='.$get['id'].'&amp;what=unset"><img src="../inc/images/yes.gif" alt="" title="'._top_unset.'" /></a>'
-               : '<a href="?admin=dladmin&amp;do=top&amp;id='.$get['id'].'&amp;what=set"><img src="../inc/images/no.gif" alt="" title="'._top_set.'" /></a>';
-          $public = ($get['public'] == 1)
-               ? '<a href="?admin=dladmin&amp;do=public&amp;id='.$get['id'].'&amp;what=unset"><img src="../inc/images/public.gif" alt="" title="'._public_unset.'" /></a>'
-               : '<a href="?admin=dladmin&amp;do=public&amp;id='.$get['id'].'&amp;what=set"><img src="../inc/images/nonpublic.gif" alt="" title="'._public_set.'" /></a>';
-
-
           $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
           $show_ .= show($dir."/downloads_show", array("id" => $get['id'],
                                                        "dl" => re($get['download']),
                                                        "class" => $class,
-                                                       "top" => $top,
-                                                       "public" => $public,
-																											 "edit" => $edit,
+                                                       "edit" => $edit,
                                                        "delete" => $delete
                                                        ));
         }

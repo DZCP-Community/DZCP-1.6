@@ -14,7 +14,6 @@ include(basePath."/inc/bbcode.php");
 
 ## SETTINGS ##
 $where = _site_news;
-$title = $pagetitle." - ".$where."";
 $dir = "news";
 define('_News', true);
 

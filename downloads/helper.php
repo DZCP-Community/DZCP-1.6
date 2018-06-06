@@ -1,61 +1,68 @@
 <?php
-// Download Kategorie bestimmen
-function dlkat($id)
+//--> Downloadbilder verkleinern
+function img_download($img)
 {
-    global $db;
-    $get = db("SELECT s1.name AS subkat,s2.name AS kat FROM ".$db['dl_subkat']." AS s1
-             LEFT JOIN ".$db['dl_kat']." As s2
-             ON s1.kid = s2.id
-             WHERE s1.id = '".$id."'",false,true);
-
-    return $get['kat'].' / '.$get['subkat'];
+    $pic = "<a href=\"../".$img."\" rel=\"lightbox[l_".intval($img)."]\"><img src=\"../thumbgendownloads.php?img=".$img."\" alt=\"\" /></a>";
+    return $pic;
 }
-// Filesize
-function get_filesize($file,$type='dl')
-{
-    return '';
 
-    global $db;
+function latest_download() {
+    global $db,$dir;
 
-    if(@filesize($file) == false || substr(@filesize($file),0,1) == '-')
-    {
-        if($type == 'dl') {
-            $qry = db("SELECT size FROM ".$db['downloads']."
-                 WHERE url = '".up($file)."'");
-            $get = _fetch($qry);
+    $shownewest = '';
+    $qrynew = db("SELECT `id`,`download`,`hits` FROM `".$db['downloads']."` ORDER BY `hits` DESC LIMIT 6;");
+    while($getnew = _fetch($qrynew)) {
+        $shownewest .= show($dir."/newest_show", [
+            "id" => strval($getnew['id']),
+            "titel" => cut(re($getnew['download']),25),
+            "hits" => strval($getnew['hits'])]);
+    }
 
-            $size = @round($get['size']*1048576,2);
+    return show($dir."/newest", ["id" => $getnew['id'], "shownewest" => $shownewest]);
+}
+
+function hottest_download() {
+    global $db,$dir,$picformat;
+    $get = db("SELECT `id`,`beschreibung`,`download`,`hits` FROM `".$db['downloads']."` ORDER BY `hits` DESC LIMIT 1;",false,true);
+
+    $hotpic = '../inc/images/noimg.png';
+    foreach($picformat as $endung) {
+        if(file_exists(basePath."/inc/images/downloads/".$get['id'].".".$endung)) {
+            $hotpic = '../inc/images/downloads/'.$get['id'].'.'.$endung;
+            break;
         }
-    } else  $size = @filesize($file);
+    }
 
-    $size_gb = @round($size/1073741824,2);
-    $size_mb = @round($size/1048576,2);
-    $size_kb = @round($size/1024,2);
+    $showhottest = show($dir."/hottest_show", [
+        "id" => strval($get['id']),
+        "pic" => $hotpic,
+        "besch" => cut(bbcode($get['beschreibung']),160),
+        "titel" => cut(re($get['download']),25),
+        "hits" => strval($get['hits'])]);
 
-    if(substr($size_gb,0,1) != 0)     $size = $size_gb." GB";
-    elseif(substr($size_mb,0,1) != 0) $size = $size_mb." MB";
-    else                              $size = $size_kb." KB";
-
-    return $size;
+    return show($dir."/hottest", array("id" => strval($get['id']), "showhottest" => $showhottest));
 }
-// Zeitdifferenz berechnen
-function time_difference($time)
-{
-    $time = time()-$time;
 
-    $days = floor($time/86400);
-    $rest = $time-($days*86400);
-    $std = floor($rest/3600);
-    $rest = $rest-($std*3600);
-    $min = floor($rest/60);
-    $sec = $rest-($min*60);
-
-
-    if($days != 0) $ret = $days.' T';
-    if($std != 0)  $ret .= ' '.$std.'Std' ;
-    if($min != 0)  $ret .= ' '.$min.'Min';
-    if($sec != 0 && $min == 0 && $std == 0 && $days == 0)  $ret .= ' '.$sec.'Sec';
-
-
-    return $ret;
-}
+define('_downloads_link_new' , '<img src="../inc/images/download.gif" alt="" class="icon" /> [download]');
+define('_downloads_picture' , 'Hauptscreenshot');
+define('_downloads_picturea' , 'Screenshot 1');
+define('_downloads_pictureb' , 'Screenshot 2');
+define('_downloads_picturec' , 'Screenshot 3');
+define('_download_klickinfo' , 'Auf das Bild klicken f&uuml;r vergr&ouml;sserte Ansicht');
+define('_download_hottest_name' , 'Name');
+define('_download_hottest_beschreibung' , 'Beschreibung');
+define('_download_hottest_downloads' , 'Downloads');
+define('_download_hottest_downloaded' , 'mal heruntergeladen');
+define('_download_newest_head' , 'Neueste Downloads');
+define('_downloads_hottest_head' , 'Beliebtester Download');
+define('_downloads_pictures_head' , 'Screenshots');
+define('_downloads_infos_head' , 'Downloadinfos');
+define('_downloads_picvorschau' , '<img src="[picvorschau]" alt="" style="height:140px; width:170px;" />');
+define('_downloads_pica' , '<div class="panel" title="Panel 1">[pica]</div>');
+define('_downloads_picb' , '<div class="panel" title="Panel 1">[picb]</div>');
+define('_downloads_picc' , '<div class="panel" title="Panel 1">[picc]</div>');
+define('_downloads_picd' , '<div class="panel" title="Panel 1">[picd]</div>');
+define('_downloads_pica_link' , '<div><a href="#1" class="cross-link active-thumb"><img src="[thumba]" style="width:60px; height:40px;" border="0" alt="" class="nav-thumb" alt="temp-thumb" /></a></div>');
+define('_downloads_picb_link' , '<div><a href="#2" class="cross-link"><img src="[thumbb]" style="width:60px; height:40px;" border="0" alt=""  class="nav-thumb" alt="temp-thumb" /></a></div>');
+define('_downloads_picc_link' , '<div><a href="#3" class="cross-link"><img src="[thumbc]" style="width:60px; height:40px;" border="0" alt=""  class="nav-thumb" alt="temp-thumb" /></a></div>');
+define('_downloads_picd_link' , '<div><a href="#4" class="cross-link"><img src="[thumbd]" style="width:60px; height:40px;" border="0" alt="" class="nav-thumb" alt="temp-thumb" /></a></div>');

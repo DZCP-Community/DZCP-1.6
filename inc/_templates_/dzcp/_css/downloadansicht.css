@@ -1,0 +1,60 @@
+.h_downloads_box {
+	height:28px;
+	color:#8f8f8f;
+}
+.h_downloads_box:hover {
+	color:#666;
+}
+.h_downloads_box_name, .h_downloads_box_hits {
+	float:left;
+	height:28px;
+	line-height:26px;
+	text-transform:uppercase;
+}
+.h_downloads_box_name {
+	width:80%;
+	margin-left:4px;
+	font-weight:bold;
+}
+.h_downloads_box_name span {
+	color:#0986f1;
+}
+.h_downloads_box_hits{
+	width:18%;
+	text-align:center;
+	font-weight:bold;
+}
+
+td.dl_beschreibung h1 {
+	color:#8f8f8f;
+	text-transform:uppercase;
+	margin:5px 0px 2px 0px;
+}
+td.dl_beschreibung p{
+	font-style:italic;
+	margin-left:5px;
+	text-align:justify;
+}
+.border1 {
+	border: 3px double #09F;
+}
+.border0 {
+	border: none;
+}
+
+/*
+	SLIDER
+*/
+.stripViewer .panelContainer
+.panel ul									{ text-align: left; margin: 0 15px 0 30px;}
+.stripViewer								{ position: relative; overflow: hidden; width: 300px; height: 285px; }
+.stripViewer .panelContainer				{ position: relative; left: 0; top: 0; }
+.stripViewer .panelContainer .panel			{ float: left; height: 240px; overflow:hidden; position: relative; width: 300px; }
+.stripNavL, .stripNavR, .stripNav			{ display: none; }
+.nav-thumb 									{ border: 1px solid white; margin-right: 5px; width:60px; height:40px; }
+#movers-row									{ margin: -43px 0 0 0px; }
+#movers-row div								{ width: 60px; float: left; padding: 10px 7px; }
+#movers-row div a.cross-link 				{ float: right; }
+.cross-link									{ display: block; width: 60px; margin-top: -14px;
+	position: relative; padding-top: 11px; z-index: 20; }
+.active-thumb 								{ background: transparent url(../downloads/img/icon-uparrowsmallwhite.png) top center no-repeat; }

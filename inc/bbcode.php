@@ -1348,10 +1348,7 @@ function orderby_nav() {
 
 //-> Funktion um ein Datenbankinhalt zu highlighten
 function highlight($word) {
-    if(substr(phpversion(),0,1) == 5)
-        return str_ireplace($word,'<span class="fontRed">'.$word.'</span>',$word);
-    else
-        return str_replace($word,'<span class="fontRed">'.$word.'</span>',$word);
+    return str_ireplace($word,'<span class="fontRed">'.$word.'</span>',$word);
 }
 
 //-> Counter updaten

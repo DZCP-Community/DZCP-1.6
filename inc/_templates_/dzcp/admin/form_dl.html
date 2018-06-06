@@ -27,7 +27,7 @@ function fileBrowser()
   <td class="contentMainFirst" align="center">
     <input id="download" name="download" type="text" value="[ddownload]" class="inputField_dis"
     onfocus="this.className='inputField_en';"
-    onblur="this.className='inputField_dis';" />
+    onblur="this.className='inputField_dis';">
   </td>
 </tr>
 <tr>
@@ -48,29 +48,37 @@ function fileBrowser()
   </td>                 
 </tr>
 <tr>
-  <td class="contentMainTop"><span class="fontBold">[size]:</span></td>
+  <td class="contentMainTop"><span class="fontBold">[picture]:</span></td>
   <td class="contentMainFirst" align="center">
-    <input id="size" name="size" type="text" value="[dsize]" class="inputField_dis_mid"
-    onfocus="this.className='inputField_en_mid';"
-    onblur="this.className='inputField_dis_mid';"> MB
-  </td>
+    <input id="dlscreen" name="dlscreen" type="file" /><br />
+    [picvorschau]
+     </td>
+</tr>
+<tr>
+  <td class="contentMainTop"><span class="fontBold">[picturea]:</span></td>
+  <td class="contentMainFirst" align="center">
+    <input id="dlscreena" name="dlscreena" type="file" /><br />
+    [picvorschaua]
+     </td>
+</tr>
+<tr>
+  <td class="contentMainTop"><span class="fontBold">[pictureb]:</span></td>
+  <td class="contentMainFirst" align="center">
+    <input id="dlscreenb" name="dlscreenb" type="file" /><br />
+    [picvorschaub]
+     </td>
+</tr>
+<tr>
+  <td class="contentMainTop"><span class="fontBold">[picturec]:</span></td>
+  <td class="contentMainFirst" align="center">
+    <input id="dlscreend" name="dlscreenc" type="file" /><br />
+    [picvorschauc]
+     </td>
 </tr>
 <tr>
   <td class="contentMainTop"><span class="fontBold">[beschreibung]:</span></td>
   <td class="contentMainFirst" align="center">
     <textarea id="beschreibung" name="beschreibung" cols="0" rows="0" class="editorStyleMini">[dbeschreibung]</textarea>
-  </td>
-</tr>
-<tr>
-  <td class="contentMainTop" width="150"><span class="fontBold">[interna]:</span></td>
-  <td class="contentMainFirst" colspan="2" align="center">
-    <select name="intern" class="dropdown" onchange="hidelevels(this.value)">
-      <option value="0" [sel]>[no]</option>
-      <option value="1" [selu]>[ruser]</option>
-      <option value="2" [selt]>[trial]</option>
-      <option value="3" [selm]>[member]</option>
-      <option value="4" [sela]>[admin]</option>
-    </select>
   </td>
 </tr>
 <tr>
