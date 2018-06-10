@@ -2804,17 +2804,9 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
             db("UPDATE `".$db['users']."` SET `time` = ".time().", `whereami` = '".up($where)."' WHERE `id` = ".(int)($userid).";");
         }
 
-        //init templateswitch
-        $tmpldir=""; $tmps = get_files('../inc/_templates_/',true);
-        foreach ($tmps as $tmp) {
-            $selt = ($tmpdir == $tmp ? 'selected="selected"' : '');
-            $tmpldir .= show(_select_field, array("value" => "?tmpl_set=".$tmp,  "what" => $tmp,  "sel" => $selt));
-        }
-
         //misc vars
         $language = $_SESSION['language'];
         $lang = $language;
-        $template_switch = show("menu/tmp_switch", array("templates" => $tmpldir));
         $clanname = re(settings("clanname"));
         $time = show(_generated_time, array("time" => $time));
         $headtitle = show(_index_headtitle, array("clanname" => $clanname));
@@ -2836,7 +2828,8 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
         $pholder = file_get_contents($designpath."/index.html");
 
         //filter placeholders
-        $blArr = array("[clanname]","[title]","[copyright]","[java_vars]","[min]","[login]", "[template_switch]","[headtitle]","[index]", "[time]","[rss]","[dir]","[charset]","[where]","[lang]");
+        $blArr = array("[clanname]","[title]","[copyright]","[java_vars]","[min]","[login]",
+            "[headtitle]","[index]", "[time]","[rss]","[dir]","[charset]","[where]","[lang]");
         $pholdervars = '';
         for($i=0;$i<=count($blArr)-1;$i++) {
             if(preg_match("#".$blArr[$i]."#",$pholder))
