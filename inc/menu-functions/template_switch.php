@@ -1,14 +1,24 @@
 <?php
 function template_switch() {
-    global $tmpdir;
+    global $tmpdir,$chkMe;
 
     //init templateswitch
     $tmpldir=""; $tmps = get_files('../inc/_templates_/',true);
     foreach ($tmps as $tmp) {
-        $selt = ($tmpdir == $tmp ? 'selected="selected"' : '');
-        $tmpldir .= show(_select_field, array("value" => "?tmpl_set=".$tmp,  "what" => $tmp,  "sel" => $selt));
+        if (file_exists(basePath . '/inc/_templates_/' . $tmp . '/template.xml')) {
+            $xml = simplexml_load_file(basePath . '/inc/_templates_/' . $tmp . '/template.xml');
+            $selt = ($tmpdir == $tmp ? 'selected="selected"' : '');
+            if (!empty((string)$xml->permissions)) {
+                if (permission((string)$xml->permissions) || ((int)$xml->level >= 1 && $chkMe >= (int)$xml->level)) {
+                    $tmpldir .= show(_select_field, array("value" => "?tmpl_set=" . $tmp, "what" => (string)$xml->name, "sel" => $selt));
+                }
+            } else if ((int)$xml->level >= 1 && $chkMe >= (int)$xml->level) {
+                $tmpldir .= show(_select_field, array("value" => "?tmpl_set=" . $tmp, "what" => (string)$xml->name, "sel" => $selt));
+            } else if (!(int)$xml->level) {
+                $tmpldir .= show(_select_field, array("value" => "?tmpl_set=" . $tmp, "what" => (string)$xml->name, "sel" => $selt));
+            }
+        }
     }
 
-    $template_switch = show("menu/tmp_switch", array("templates" => $tmpldir));
-    return $template_switch;
+    return show("menu/tmp_switch", array("templates" => $tmpldir));
 }

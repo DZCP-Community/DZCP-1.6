@@ -376,15 +376,64 @@ function userid() {
     return 0;
 }
 
-//-> Templateswitch
-$files = get_files(basePath.'/inc/_templates_/',true);
-if(isset($_GET['tmpl_set']) ) {
+function sysTemplateswitch() {
+    global $chkMe;
+    $files = get_files(basePath . '/inc/_templates_/', true);
     foreach ($files as $templ) {
-        if($templ == $_GET['tmpl_set']) {
-            $_SESSION['tmpdir'] = $_GET['tmpl_set'];
-            header("Location: ".$_SERVER['HTTP_REFERER']);
+        $xml = simplexml_load_file(basePath . '/inc/_templates_/' . $templ . '/template.xml');
+        if (!empty((string)$xml->permissions) && (string)$xml->permissions != 'null') {
+            if (permission((string)$xml->permissions) || ((int)$xml->level >= 1 && $chkMe >= (int)$xml->level)) {
+                if ($templ == $_GET['tmpl_set']) {
+                    $_SESSION['tmpdir'] = $templ;
+                    if (HasDSGVO()) {
+                        cookie::put('tmpdir', $templ);
+                        cookie::save();
+                    }
+                    header("Location: " . GetServerVars('HTTP_REFERER'));
+                }
+            }
+        } else if ((int)$xml->level >= 1 && $chkMe >= (int)$xml->level) {
+            if ($templ == $_GET['tmpl_set']) {
+                $_SESSION['tmpdir'] = $templ;
+                if (HasDSGVO()) {
+                    cookie::put('tmpdir', $templ);
+                    cookie::save();
+                }
+                header("Location: " . GetServerVars('HTTP_REFERER'));
+            }
+        } else if (!(int)$xml->level) {
+            if ($templ == $_GET['tmpl_set']) {
+                $_SESSION['tmpdir'] = $templ;
+                if (HasDSGVO()) {
+                    cookie::put('tmpdir', $templ);
+                    cookie::save();
+                }
+                header("Location: " . GetServerVars('HTTP_REFERER'));
+            }
         }
+
     }
+
+    unset($xml, $templ);
+}
+
+function GetServerVars(string $var) {
+    if (array_key_exists($var, $_SERVER) && !empty($_SERVER[$var])) {
+        return utf8_encode($_SERVER[$var]);
+    } else if (array_key_exists($var, $_ENV) && !empty($_ENV[$var])) {
+        return utf8_encode($_ENV[$var]);
+    }
+
+    if($var=='HTTP_REFERER') { //Fix for empty HTTP_REFERER
+        return GetServerVars('REQUEST_SCHEME').'://'.GetServerVars('HTTP_HOST').
+            GetServerVars('DOCUMENT_URI');
+    }
+
+    return false;
+}
+
+if (isset($_GET['tmpl_set'])) {
+    sysTemplateswitch();
 }
 
 if(!empty($_SESSION['tmpdir'])) {

@@ -940,6 +940,7 @@ td.statsBalken {
 /* Templateswitcher dropdown e.g. menu/tmp_switch.html */
 select.tempswitch {
   width: 203px;
+  height: 25px;
   color: #000;
   font-size: 97%;
   background-color: #FFF;

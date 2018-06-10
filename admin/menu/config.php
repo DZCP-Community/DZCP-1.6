@@ -137,7 +137,8 @@ switch ($do) {
 
         $tmps = get_files('../inc/_templates_/',true); $tmpldir = '';
         foreach ($tmps as $tmp) {
-            $tmpldir .= show(_select_field, array("value" => $tmp, "what" => $tmp, "sel" => re($gets['tmpdir']) == $tmp ? 'selected="selected"' : ''));
+            $xml = simplexml_load_file(basePath . '/inc/_templates_/' . $tmp . '/template.xml');
+            $tmpldir .= show(_select_field, array("value" => $tmp, "what" => (string)$xml->name, "sel" => re($gets['tmpdir']) == $tmp ? 'selected="selected"' : ''));
         }
 
         $selyes = $gets['regcode'] ? 'selected="selected"' : '';
