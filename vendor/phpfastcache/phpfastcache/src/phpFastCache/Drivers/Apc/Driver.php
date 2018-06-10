@@ -81,6 +81,7 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     protected function driverRead(CacheItemInterface $item)
     {
+        $success = false;
         if(version_compare(phpversion(), '7.1', '>=')) {
             $data = apc_fetch($item->getKey(),$success);
             if ($success === false) {
