@@ -65,7 +65,7 @@ if(defined('_UserMenu')) {
                     }
                 break;
                 case "update":
-                    if(!rootAdmin($edit_userid) || rootAdmin($userid)) {
+                    if(!rootAdmin($edit_userid) || (!rootAdmin($edit_userid) && rootAdmin($userid))) {
                         if (isset($_POST) && $edit_userid) {
                             // Permissions Update
                             $sql_query = "UPDATE `" . $db['permissions'] . "` SET";
@@ -94,13 +94,13 @@ if(defined('_UserMenu')) {
                             $sq = db("SELECT `id` FROM `" . $db['squads'] . "`;");
                             while ($getsq = _fetch($sq)) {
                                 if (isset($_POST['squad' . $getsq['id']])) {
-                                    db("INSERT INTO `" . $db['squaduser'] . "` SET `user` = " . ((int)$_GET['user']) .
-                                        ", `squad` = " . ((int)$_POST['squad' . $getsq['id']]) . ";");
+                                    db("INSERT INTO `" . $db['squaduser'] . "` SET `user` = ".$edit_userid.", `squad` = ".
+                                        ((int)$_POST['squad' . $getsq['id']]).";");
                                 }
 
                                 if (isset($_POST['squad' . $getsq['id']])) {
-                                    db("INSERT INTO `" . $db['userpos'] . "` SET `user`   = " . ((int)$_GET['user']) .
-                                        ", `posi` = " . ((int)$_POST['sqpos' . $getsq['id']]) . ",`squad` = " . ((int)$getsq['id']) . ";");
+                                    db("INSERT INTO `".$db['userpos']."` SET `user` = ".$edit_userid.", `posi` = "
+                                        .((int)$_POST['sqpos' . $getsq['id']]).", `squad` = ".((int)$getsq['id']).";");
                                 }
                             }
 
