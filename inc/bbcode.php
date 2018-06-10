@@ -1167,61 +1167,77 @@ function wrap($str, $width = 75, $break = "\n", $cut = true) {
 
 //-> Funktion um Dateien aus einem Verzeichnis auszulesen
 function get_files($dir=null,$only_dir=false,$only_files=false,$file_ext=array(),$preg_match=false,$blacklist=array(),$blacklist_word=false) {
-    $files = array();
-    if(!file_exists($dir) && !is_dir($dir)) return $files;
-    if($handle = @opendir($dir)) {
-        if($only_dir) {
-            while(false !== ($file = readdir($handle))) {
-                if($file != '.' && $file != '..' && !is_file($dir.'/'.$file)) {
-                    if(!count($blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && ($preg_match ? preg_match($preg_match,$file) : true))
-                        $files[] = $file;
-                    else {
-                        if(!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && ($preg_match ? preg_match($preg_match,$file) : true))
+    $cache_hash = md5($dir.$only_dir.$only_files.print_r($file_ext,true).$preg_match.print_r($blacklist,true).$blacklist_word);
+    if(!dbc_index::issetIndex('files') || !dbc_index::getIndexKey('files',$cache_hash) || !dbc_index::MemSetIndex()) {
+        $files = array();
+        if(!file_exists($dir) && !is_dir($dir)) return $files;
+        if($handle = @opendir($dir)) {
+            if ($only_dir) {
+                while (false !== ($file = readdir($handle))) {
+                    if ($file != '.' && $file != '..' && !is_file($dir . '/' . $file)) {
+                        if (!count($blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && ($preg_match ? preg_match($preg_match, $file) : true))
+                            $files[] = $file;
+                        else {
+                            if (!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && ($preg_match ? preg_match($preg_match, $file) : true))
+                                $files[] = $file;
+                        }
+                    }
+                } //while end
+            } else if ($only_files) {
+                while (false !== ($file = readdir($handle))) {
+                    if ($file != '.' && $file != '..' && is_file($dir . '/' . $file)) {
+                        if (!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && !count($file_ext) && ($preg_match ? preg_match($preg_match, $file) : true))
+                            $files[] = $file;
+                        else {
+                            ## Extension Filter ##
+                            $exp_string = array_reverse(explode(".", $file));
+                            if (!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && in_array(strtolower($exp_string[0]), $file_ext) && ($preg_match ? preg_match($preg_match, $file) : true))
+                                $files[] = $file;
+                        }
+                    }
+                } //while end
+            } else {
+                while (false !== ($file = readdir($handle))) {
+                    if ($file != '.' && $file != '..' && is_file($dir . '/' . $file)) {
+                        if (!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && !count($file_ext) && ($preg_match ? preg_match($preg_match, $file) : true))
+                            $files[] = $file;
+                        else {
+                            ## Extension Filter ##
+                            $exp_string = array_reverse(explode(".", $file));
+                            if (!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && in_array(strtolower($exp_string[0]), $file_ext) && ($preg_match ? preg_match($preg_match, $file) : true))
+                                $files[] = $file;
+                        }
+                    } else {
+                        if (!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && $file != '.' && $file != '..' && ($preg_match ? preg_match($preg_match, $file) : true))
                             $files[] = $file;
                     }
-                }
-            } //while end
-        } else if($only_files) {
-            while(false !== ($file = readdir($handle))) {
-                if($file != '.' && $file != '..' && is_file($dir.'/'.$file)) {
-                    if(!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && !count($file_ext) && ($preg_match ? preg_match($preg_match,$file) : true))
-                        $files[] = $file;
-                    else {
-                        ## Extension Filter ##
-                        $exp_string = array_reverse(explode(".", $file));
-                        if(!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && in_array(strtolower($exp_string[0]), $file_ext) && ($preg_match ? preg_match($preg_match,$file) : true))
-                            $files[] = $file;
-                    }
-                }
-            } //while end
-        } else {
-            while(false !== ($file = readdir($handle))) {
-                if($file != '.' && $file != '..' && is_file($dir.'/'.$file)) {
-                    if(!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && !count($file_ext) && ($preg_match ? preg_match($preg_match,$file) : true))
-                        $files[] = $file;
-                    else {
-                        ## Extension Filter ##
-                        $exp_string = array_reverse(explode(".", $file));
-                        if(!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && in_array(strtolower($exp_string[0]), $file_ext) && ($preg_match ? preg_match($preg_match,$file) : true))
-                            $files[] = $file;
-                    }
-                } else {
-                    if(!in_array($file, $blacklist) && (!$blacklist_word || strpos(strtolower($file), $blacklist_word) === false) && $file != '.' && $file != '..' && ($preg_match ? preg_match($preg_match,$file) : true))
-                        $files[] = $file;
-                }
-            } //while end
+                } //while end
+            }
+
+            if (is_resource($handle))
+                closedir($handle);
+
+            if (!count($files))
+                return false;
+
+
+            $cache = array();
+            if(dbc_index::MemSetIndex() && dbc_index::issetIndex('files')) {
+                $cache = dbc_index::getIndex('files');
+            }
+
+            $cache[$cache_hash] = $files;
+
+            if(dbc_index::MemSetIndex())
+                dbc_index::setIndex('files',$cache);
+
+            return $files;
         }
-
-        if(is_resource($handle))
-            closedir($handle);
-
-        if(!count($files))
+        else
             return false;
-
-        return $files;
+    } else {
+        return dbc_index::getIndexKey('files',$cache_hash);
     }
-    else
-        return false;
 }
 
 //-> Gibt einen Teil eines nummerischen Arrays wieder
@@ -2604,7 +2620,7 @@ final class dbc_index {
                     $data_cache = $cache->getItem('dbc_' . $index_key);
                 } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
                 }
-                $data_cache->set(serialize($data))->expiresAfter(1);
+                $data_cache->set(serialize($data))->expiresAfter(1.5);
                 $cache->save($data_cache);
             }
         }
