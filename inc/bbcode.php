@@ -2849,13 +2849,14 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
 
         include_once(basePath.'/inc/menu-functions/dsgvo.php');
         echo show("errors/wmodus", array("wmodus" => _wartungsmodus,
-                                              "head" => _wartungsmodus_head,
-                                              "tmpdir" => $tmpdir,
-                                              "dsgvo" => dsgvo(),
-                                              "java_vars" => $java_vars,
-                                              "dir" => $designpath,
-                                              "title" => re(strip_tags($title)),
-                                              "login" => $login));
+            "head" => _wartungsmodus_head,
+            "tmpdir" => $tmpdir,
+            "dsgvo" => dsgvo(),
+            "java_vars" => $java_vars,
+            "dir" => $designpath,
+            "index" => '',
+            "title" => re(strip_tags($title)),
+            "login" => $login));
     } else {
         if(!$isSpider && HasDSGVO()) {
             updateCounter();

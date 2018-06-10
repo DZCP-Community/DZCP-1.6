@@ -2,75 +2,76 @@
 <!--[ DZCP © by Frank "deV!L" Herrmann - www.dzcp.de ]-->
 <html>
 <head>
-  <title>[title]</title>
-  <meta http-equiv="title" content="[title]" />
-  <meta http-equiv="classification" content="General" />
-  <meta http-equiv="pragma" content="No-Cache" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" type="text/css" href="[dir]/_css/bootstrap.css" media="screen" />
-  <link rel="stylesheet" type="text/css" href="[dir]/_css/bootstrap-theme.css" media="screen" />
-  <link rel="stylesheet" type="text/css" href="[dir]/_css/jquery-ui.min.css" media="screen" />
-  <link rel="stylesheet" type="text/css" href="[dir]/_css/jquery-ui.structure.min.css" media="screen" />
-  <link rel="stylesheet" type="text/css" href="[dir]/_css/jquery-ui.theme.min.css" media="screen" />
-  <link rel="stylesheet" type="text/css" href="[dir]/_css/stylesheet.css" />
-  <link rel="alternate" type="application/rss+xml" href="../rss.xml" title="[rss] RSS-Feed" />
-  <link rel="shortcut icon" href="../favicon.ico" type="image/ico" />
-  <link rel="home" href="/" title="Home" />
-  <link rel="top" href="#toplink" title="TOP" />
-  <script language="javascript" type="text/javascript" src="[dir]/_js/jquery.js"></script>
-  <script language="javascript" type="text/javascript" src="[dir]/_js/bootstrap.min.js"></script>
-  <script language="javascript" type="text/javascript" src="../inc/tinymce/tiny_mce_gzip.js"></script>
-  [java_vars]
-  <script language="javascript" type="text/javascript" src="[dir]/_js/jquery.tools.js"></script>
-  <script language="javascript" type="text/javascript" src="[dir]/_js/jquery-ui.js"></script>
-  <script language="javascript" type="text/javascript" src="[dir]/_js/lightbox.js"></script>
-  <script language="javascript" type="text/javascript" src="[dir]/_js/dzcp.js"></script>
+    <title>[title]</title>
+    <meta http-equiv="title" content="[title]" />
+    <meta http-equiv="classification" content="General" />
+    <meta http-equiv="pragma" content="No-Cache" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" type="text/css" href="[dir]/_css/bootstrap.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="[dir]/_css/bootstrap-theme.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="[dir]/_css/jquery-ui.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="[dir]/_css/jquery-ui.structure.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="[dir]/_css/jquery-ui.theme.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="[dir]/_css/stylesheet.css" />
+    <link rel="alternate" type="application/rss+xml" href="../rss.xml" title="[rss] RSS-Feed" />
+    <link rel="shortcut icon" href="../favicon.ico" type="image/ico" />
+    <link rel="home" href="/" title="Home" />
+    <link rel="top" href="#toplink" title="TOP" />
+    <script language="javascript" type="text/javascript" src="[dir]/_js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="[dir]/_js/bootstrap.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../inc/tinymce/tiny_mce_gzip.js"></script>
+    [java_vars]
+    <script language="javascript" type="text/javascript" src="[dir]/_js/jquery.tools.js"></script>
+    <script language="javascript" type="text/javascript" src="[dir]/_js/jquery-ui.js"></script>
+    <script language="javascript" type="text/javascript" src="[dir]/_js/lightbox.js"></script>
+    <script language="javascript" type="text/javascript" src="[dir]/_js/dzcp.js"></script>
 </head>
 <body>
-<a name="toplink"></a>
-<div id="infoDiv"></div>
-<div style="width:390px;height:100%;margin:auto">
-  <table width="100%">
-    <tr>
-      <td height="100"></td>
-    </tr>
-    <tr>
-      <td class="contentHead" align="center"><span class="fontBold">[head]</span></td>
-    </tr>
-    <tr>
-      <td class="contentMainFirst" align="center">[wmodus]</td>
-    </tr>
-    <tr>
-      <td class="contentBottom"></td>
-    </tr>
-    <tr>
-      <td height="60"></td>
-    </tr>
-    <tr>
-      <td align="center">
-        <table>
-          [login]
-        </table>
-        <table>
-          <tr>
-            <td class="loginLeft"></td>
-            <td>
-              <table class="navContent">
-                <tr>
-                  <td style="text-align:center"><a onclick="DZCP.show_dsgvo('#dialog-confirm')" class="pointer dz" style="color:#000000;" title="[lang_txt_datenschutz]">[lang_txt_datenschutz]</a></td>
-                </tr>
-              </table>
+[dsgvo]
+<div style="width:700px;height:100%;margin:auto">
+    <table width="100%">
+        <tr>
+            <td height="74"></td>
+        </tr>
+        <tr>
+            <td class="contentHead" align="center"><span class="fontBold">[head]</span></td>
+        </tr>
+        <tr>
+            <td class="contentMainFirst" align="center">[wmodus]</td>
+        </tr>
+        <tr>
+            <td class="contentBottom"></td>
+        </tr>
+        [index]
+        <tr>
+            <td class="contentBottom"></td>
+        </tr>
+        <tr>
+            <td height="20"></td>
+        </tr>
+        <tr>
+            <td align="center">
+                <table>[login]</table>
+                <table>
+                    <tr>
+                        <td class="loginLeft"></td>
+                        <td>
+                            <table class="navContent">
+                                <tr>
+                                    <td style="text-align:center"><a onclick="DZCP.show_dsgvo('#dialog-confirm')" class="pointer dz" style="color:#000000;" title="[lang_txt_datenschutz]">[lang_txt_datenschutz]</a></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td style="height:60px"></td>
-    </tr>
-  </table>
+        </tr>
+        <tr>
+            <td style="height:60px"></td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>
