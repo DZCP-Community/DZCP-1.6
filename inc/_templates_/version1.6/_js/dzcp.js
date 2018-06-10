@@ -1,13 +1,13 @@
 // GLOBAL VARS
 var doc = document, ie4 = document.all, opera = window.opera;
-var innerLayer, layer, x, y, offsetX = 15, offsetY = 5;
+var innerLayer, layer, x, y, offsetX = 15, offsetY = 5, tableObj, obj, objWidth, newWidth;
 var tickerc = 0, mTimer = new Array(), tickerTo = new Array(), tickerSpeed = new Array();
 var shoutInterval = 15000; // refresh interval of the shoutbox in ms
 var teamspeakInterval = 15000; // refresh interval of the teamspeak viewer in ms
 var isIE  = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
 var isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
 
-// DZCP JAVASCRIPT LIBARY FOR JQUERY >= V1.9
+// DZCP JAVASCRIPT LIBARY FOR JQUERY >= V3.X
 var DZCP = {
     //init
     init: function() {
@@ -147,7 +147,7 @@ var DZCP = {
     // handle popups
     popup: function(url, x, y) {
         x = parseInt(x); y = parseInt(y) + 50;
-        popup = window.open(url, 'Popup', "width=1,height=1,location=0,scrollbars=0,resizable=1,status=0");
+        var popup = window.open(url, 'Popup', "width=1,height=1,location=0,scrollbars=0,resizable=1,status=0");
         popup.resizeTo(x, y);
         popup.moveTo((screen.width - x) / 2, (screen.height-y) / 2);
         popup.focus();
@@ -456,19 +456,15 @@ var DZCP = {
 
         return confirm(txt + '?');
     },
-
-
-
+    
     // forum search
     hideForumFirst: function() {
         $('#allkat').prop('checked', false);
     },
 
     hideForumAll: function() {
-        for(var i = 0; i < doc.forms['search'].elements.length; i++)
-        {
+        for(var i = 0; i < doc.forms['search'].elements.length; i++) {
             var box = doc.forms['search'].elements[i];
-
             if(box.id.match(/k_/g))
                 box.checked = false;
         }
@@ -476,8 +472,7 @@ var DZCP = {
 
     // disable submit button
     submitButton: function(id) {
-        submitID = (id) ? id : 'contentSubmit';
-
+        var submitID = (id) ? id : 'contentSubmit';
         $('#' + submitID).prop("disabled", true);
         $('#' + submitID).css('color', '#909090');
         $('#' + submitID).css('cursor', 'default');
