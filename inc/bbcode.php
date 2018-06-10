@@ -2842,7 +2842,8 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
             if (config('securelogin'))
                 $secure = show("menu/secure", array("help" => _login_secure_help, "security" => _register_confirm));
 
-            $login = show("errors/wmodus_login", array("what" => _login_login, "secure" => $secure, "signup" => _login_signup, "permanent" => _login_permanent, "lostpwd" => _login_lostpwd));
+            $login = show("errors/wmodus_login", array("what" => _login_login, "secure" => $secure, "signup" => _login_signup,
+                "permanent" => _login_permanent, "lostpwd" => _login_lostpwd));
             cookie::save(); //Save Cookie
         }
 
@@ -2862,11 +2863,11 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
         }
 
         //check permissions
-        if(!$chkMe)
-            include_once(basePath.'/inc/menu-functions/login.php');
-        else {
-            $check_msg = check_msg(); set_lastvisit();
-            db("UPDATE `".$db['users']."` SET `time` = ".time().", `whereami` = '".up($where)."' WHERE `id` = ".(int)($userid).";");
+        $check_msg = '';
+        if($chkMe) {
+            $check_msg = check_msg();
+            set_lastvisit();
+            db("UPDATE `" . $db['users'] . "` SET `time` = " . time() . ", `whereami` = '" . up($where) . "' WHERE `id` = " . (int)($userid) . ";");
         }
 
         //misc vars
@@ -2893,7 +2894,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
         $pholder = file_get_contents($designpath."/index.html");
 
         //filter placeholders
-        $blArr = array("[clanname]","[title]","[copyright]","[java_vars]","[min]","[login]",
+        $blArr = array("[clanname]","[title]","[copyright]","[java_vars]","[min]",
             "[headtitle]","[index]", "[time]","[rss]","[dir]","[charset]","[where]","[lang]");
         $pholdervars = '';
         for($i=0;$i<=count($blArr)-1;$i++) {
