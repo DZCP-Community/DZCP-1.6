@@ -106,7 +106,7 @@ if(defined('_Forum')) {
             "hp" => $hp,
             "email" => $email,
             "posts" => $userposts,
-            "text" =>  bbcode(re($_POST['eintrag'])).$editedby,
+            "text" =>  bbcode(re($_POST['eintrag'],true),true).$editedby,
             "status" => getrank($pUId),
             "avatar" => useravatar($pUId),
             "edited" => $get['edited'],

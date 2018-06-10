@@ -385,7 +385,7 @@ switch ($action):
                                                     "ndatum" => _datum,
                                                     "showmore" => $showmore,
                                                     "icq" => "",
-                                                    "text" => bbcode(re($_POST['artikel']),true),
+                                                    "text" => bbcode(re($_POST['artikel'],true),true),
                                                     "datum" => date("j.m.y H:i")._uhr,
                                                     "links" => $links,
                                                     "autor" => autor($userid)));

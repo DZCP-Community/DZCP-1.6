@@ -60,7 +60,7 @@ if(defined('_UserMenu')) {
   else            $posted_ip = _logged;
 
     $index .= show("page/comments_show", array("titel" => $titel,
-                                                                                "comment" => bbcode(re($_POST['eintrag']),1),
+                                                                                "comment" => bbcode(re($_POST['eintrag'],true),true),
                                              "nick" => $get_nick,
                                              "hp" => $gbhp,
                                              "editby" => $editby,

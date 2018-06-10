@@ -8,8 +8,8 @@ ob_start();
 ob_implicit_flush(false);
 define('basePath', dirname(dirname(__FILE__).'../'));
 
-if (version_compare(phpversion(), '5.6', '<')) {
-    die('Bitte verwende PHP-Version 5.6 oder h&ouml;her.<p>Please use PHP-Version 5.6 or higher.');
+if (version_compare(phpversion(), '7.0', '<')) {
+    die('Bitte verwende PHP-Version 7.0 oder h&ouml;her.<p>Please use PHP-Version 7.0 or higher.');
 }
 
 include(basePath.'/vendor/autoload.php');
@@ -23,10 +23,19 @@ $time_start=getmicrotime();
 
 //Filter Sanitize
 $gump = GUMP::get_instance();
-$_POST = $gump->sanitize($_POST);
+$blacklist = array('comment','newstext','eintrag',
+    'artikel','reason','text','ich','sig');
+$filter = $gump->sanitize($_POST);
+foreach ($_POST as $key => $var) {
+    if(in_array($key,$blacklist) ||
+        defined('_Admin')) {
+        $filter[$key] = $_POST[$key];
+    }
+}
+
+$_POST = $filter;
+unset($filter,$key,$var);
 $_GET = $gump->sanitize($_GET);
-$_REQUEST = $gump->sanitize($_REQUEST);
-$_COOKIE = $gump->sanitize($_COOKIE);
 
 function gz_output($output='') {
     $gzip_compress_level = (!defined('buffer_gzip_compress_level') ? 4 : buffer_gzip_compress_level);

@@ -13,7 +13,6 @@ if (strpos($test, 'index.php/') !== false ||
 }
 
 ## INCLUDES/REQUIRES ##
-require_once(basePath.'/inc/secure.php');
 require_once(basePath.'/inc/_version.php');
 require_once(basePath."/inc/cookie.php");
 require_once(basePath.'/inc/server_query/_functions.php');
@@ -1011,8 +1010,11 @@ function zitat($nick,$zitat) {
 }
 
 //-> convert string for output
-function re($txt) {
+function re($txt,$tinymce=false) {
     global $charset;
+    if($tinymce)
+        return stripslashes($txt);
+
     return trim(stripslashes(spChars(html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true)));
 }
 

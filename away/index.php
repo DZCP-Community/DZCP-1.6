@@ -145,7 +145,7 @@ switch ($action):
                         "date2" => $date2,
                         "comment" => _news_kommentar,
                         "titel" => $_POST['titel'],
-                        "text" => $_POST['reason'],
+                        "text" => re($_POST['reason'],true),
                         "submit" => _button_value_add));
                 } else {
                     $time = mktime(23,59,59,$_POST['monat'],$_POST['tag'],$_POST['jahr']);

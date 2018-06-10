@@ -1,14 +1,14 @@
-tinyMCE_GZ.init({ plugins : 'contextmenu,dzcp,advimage,paste,table,fullscreen,inlinepopups,spellchecker,searchreplace,insertdatetime,dzcp', themes : 'advanced', languages : (lng == 'de' ? lng : 'en'), disk_cache : true, debug : false });
+tinyMCE_GZ.init({ plugins : 'contextmenu,dzcp,advimage,paste,table,fullscreen,inlinepopups,spellchecker,searchreplace,insertdatetime,autosave', themes : 'advanced', languages : (lng == 'de' ? lng : 'en'), disk_cache : true, debug : false });
 
 //default wysiwyg editor
 tinyMCE.init({
     theme                               : "advanced",
     mode                                : "specific_textareas",
     editor_selector                     : 'editorStyle',
-    plugins                             : 'contextmenu,dzcp,inlinepopups,spellchecker',
+    plugins                             : 'contextmenu,dzcp,inlinepopups,spellchecker,autosave',
     language                            : (lng == 'de' ? lng : 'en'),
     theme_advanced_buttons1: 'bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,link,unlink,|,image,youtube,forecolor,'
-    + 'backcolor,|,smileys,flags,dzcpuser,spellchecker',
+    + 'backcolor,|,smileys,flags,dzcpuser,spellchecker,|,restoredraft',
     theme_advanced_toolbar_location     : 'top',
     theme_advanced_toolbar_align        : 'center',
     theme_advanced_statusbar_location   : 'bottom',
@@ -19,6 +19,8 @@ tinyMCE.init({
     accessibility_warnings              : false,
     entity_encoding                     : 'raw',
     forced_root_block                   : '',
+    autosave_prefix                     : "tinymce-autosave-{path}{query}-{id}-",
+    autosave_interval                   : "10s",
     verify_html                         : false,
     button_tile_map                     : true
 });
@@ -28,9 +30,9 @@ tinyMCE.init({
     mode                                : 'specific_textareas',
     editor_selector                     : 'editorStyleMini',
     theme                               : 'advanced',
-    plugins                             : 'contextmenu,dzcp,inlinepopups',
+    plugins                             : 'contextmenu,dzcp,inlinepopups,autosave',
     language                            : (lng == 'de' ? lng : 'en'),
-    theme_advanced_buttons1             : 'bold,italic,underline,|,link,unlink,|,image',
+    theme_advanced_buttons1             : 'bold,italic,underline,|,link,unlink,|,image,|,restoredraft',
     theme_advanced_buttons2             : '',
     theme_advanced_buttons3             : '',
     theme_advanced_toolbar_location     : 'top',
@@ -41,6 +43,8 @@ tinyMCE.init({
     accessibility_warnings              : false,
     entity_encoding                     : 'raw',
     verify_html                         : false,
+    autosave_prefix                     : "tinymce-autosave-{path}{query}-{id}-",
+    autosave_interval                   : "10s",
     forced_root_block                   : '',
     button_tile_map                     : true
 });
@@ -50,9 +54,9 @@ tinyMCE.init({
     mode                                : 'specific_textareas',
     editor_selector                     : 'editorStyleNewsletter',
     theme                               : 'advanced',
-    plugins                             : 'contextmenu,dzcp',
+    plugins                             : 'contextmenu,dzcp,autosave',
     language                            : (lng == 'de' ? lng : 'en'),
-    theme_advanced_buttons1             : 'bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,link,unlink,|,image,forecolor,backcolor',
+    theme_advanced_buttons1             : 'bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,link,unlink,|,image,forecolor,backcolor,|,restoredraft',
     theme_advanced_buttons2             : '',
     theme_advanced_buttons3             : '',
     theme_advanced_toolbar_location     : 'top',
@@ -65,6 +69,8 @@ tinyMCE.init({
     entity_encoding                     : 'raw',
     verify_html                         : false,
     button_tile_map                     : true,
+    autosave_prefix                     : "tinymce-autosave-{path}{query}-{id}-",
+    autosave_interval                   : "10s",
     forced_root_block                   : '',
     convert_urls                        : false
 });
@@ -75,11 +81,11 @@ tinyMCE.init({
     editor_selector                   : 'editorStyleWord',
     theme                             : 'advanced',
     elements                          : "ajaxfilemanager",
-    plugins                           : 'contextmenu,dzcp,advimage,paste,table,fullscreen,inlinepopups,spellchecker,searchreplace,insertdatetime,',
+    plugins                           : 'contextmenu,dzcp,advimage,paste,table,fullscreen,inlinepopups,spellchecker,searchreplace,insertdatetime,autosave',
     language                          : (lng == 'de' ? lng : 'en'),
     theme_advanced_buttons1           : 'bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,undo,redo,|,bullist,numlist,|,link,unlink,|,pastephp,|,forecolor,'
     + 'backcolor,|,smileys,flags,',
-    theme_advanced_buttons2           : 'paste,pastetext,pasteword,|,search,replace,|,image,|,tablecontrols,|,dzcpuser',
+    theme_advanced_buttons2           : 'paste,pastetext,pasteword,|,search,replace,|,image,|,tablecontrols,|,dzcpuser,|,restoredraft',
     theme_advanced_buttons3           : 'fontselect,fontsizeselect,|,insertdate,inserttime,|,sub,sup,|,outdent,indent,|,fullscreen,spellchecker,code,youtube',
     extended_valid_elements           : 'img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|style],'
     + 'hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]',
@@ -93,7 +99,9 @@ tinyMCE.init({
     button_tile_map                   : true,
     entity_encoding                   : 'raw',
     verify_html                       : false,
-    forced_root_block                   : '',
+    autosave_prefix                   : "tinymce-autosave-{path}{query}-{id}-",
+    autosave_interval                   : "10s",
+    forced_root_block                 : '',
     file_browser_callback             : 'ajaxfilemanager'
 });
 

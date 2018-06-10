@@ -28,8 +28,10 @@ if(defined('_Clanwars')) {
 
     $editcw = "";
 
-    if($_POST['bericht']) $bericht = bbcode(re($_POST['bericht']),1);
-    else $bericht = "&nbsp;";
+    if($_POST['bericht'])
+        $bericht = bbcode(re($_POST['bericht'],true),true);
+    else
+        $bericht = "&nbsp;";
 
       $count = 0; $cw_screenshots = array();
       for ($zaehler = 1; $zaehler <= 20; $zaehler++) {

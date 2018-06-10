@@ -461,7 +461,7 @@ switch ($action):
         }
 
         $index = show($dir."/gb_show", array("gbtitel" => $gbtitel,
-            "nachricht" => bbcode(re($_POST['eintrag']),true),
+            "nachricht" => bbcode(re($_POST['eintrag'],true),true),
             "editby" => bbcode($editby,true),
             "ip" => $userip._only_for_admins));
 

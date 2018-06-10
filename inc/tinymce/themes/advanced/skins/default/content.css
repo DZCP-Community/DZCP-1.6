@@ -48,21 +48,3 @@ font[face=mceinline] {font-family:inherit !important}
 .mceItemEmbeddedAudio {background-image:url(../../img/video.gif)}
 .mceItemIframe {background-image:url(../../img/iframe.gif)}
 .mcePageBreak {display:block;border:0;width:100%;height:12px;border-top:1px dotted #ccc;margin-top:15px;background:#fff url(../../img/pagebreak.gif) no-repeat center top;}
-
-.quote {
-  width: 95%;
-  margin: auto;
-  border: 1px solid #000;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 16px;
-  padding-right: 2px;
-  background-color: #FFF;
-  background-image: url(../../../../../images/quote.gif);
-  background-repeat: no-repeat;
-  color: #000;
-}
-.quote b, .quote a {
-  font-size: 11px;
-  color: #000;
-}
