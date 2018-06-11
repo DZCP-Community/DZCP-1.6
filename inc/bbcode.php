@@ -2925,8 +2925,8 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
 
         $pholdervars = explode("^",$pholdervars);
         foreach ($pholdervars as $pholdervar) {
-			if(isset($$pholdervar)) {
-				$arr[$pholdervar] = $$pholdervar;
+			if(isset(${$pholdervar})) {
+				$arr[$pholdervar] = ${$pholdervar};
 			}
         }
 
