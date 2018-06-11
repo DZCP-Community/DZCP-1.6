@@ -283,7 +283,7 @@ function visitorIp() {
  * @param ipv4 range $range
  * @return boolean
  */
-function validateIpV4Range ($ip, $range) {
+function validateIpV4Range (string $ip, string $range) {
     if(!is_array($range)) {
         $counter = 0;
         $tip = explode ('.', $ip);
@@ -337,7 +337,7 @@ function fsockopen_support() {
     return true;
 }
 
-function disable_functions($function='') {
+function disable_functions(string $function='') {
     if(!function_exists($function)) return true;
     $disable_functions = ini_get('disable_functions');
     if(empty($disable_functions)) return false;
@@ -457,7 +457,7 @@ $designpath = '../inc/_templates_/'.$tmpdir;
 /**
  * @param $lng
  */
-function lang($lng) {
+function lang(string $lng) {
     if(!file_exists(basePath."/inc/lang/languages/".$lng.".php")) {
         $files = get_files(basePath.'/inc/lang/languages/',false,true,array('php'));
         $lng = str_replace('.php','',$files[0]);
@@ -492,7 +492,7 @@ function lang($lng) {
 }
 
 //->Daten uber file_get_contents oder curl abrufen
-function get_external_contents($url,$post=false,$nogzip=false,$timeout=file_get_contents_timeout) {
+function get_external_contents(string $url,$post=false,bool $nogzip=false,int $timeout=file_get_contents_timeout) {
     if(!allow_url_fopen_support() && (!extension_loaded('curl') || !use_curl_support))
         return false;
     
@@ -609,7 +609,7 @@ if($userid >= 1 && $ajaxJob != true && HasDSGVO()) {
 }
 
 //-> Settings auslesen
-function settings($what,$use_dbc=true) {
+function settings(string $what,bool $use_dbc=true) {
     global $db;
 
     if(is_array($what)) {
@@ -637,7 +637,7 @@ function settings($what,$use_dbc=true) {
 }
 
 //-> Config auslesen
-function config($what,$use_dbc=true) {
+function config(string $what,bool $use_dbc=true) {
     global $db;
 
     if(is_array($what)) {
@@ -670,7 +670,7 @@ function config($what,$use_dbc=true) {
 }
 
 //-> Prueft ob der User ein Rootadmin ist
-function rootAdmin($userid=0) {
+function rootAdmin(int $userid=0) {
     global $rootAdmins;
     $userid = !$userid ? userid() : $userid;
     if(!count($rootAdmins)) return false;
@@ -678,7 +678,7 @@ function rootAdmin($userid=0) {
 }
 
 //-> PHP-Code farbig anzeigen
-function highlight_text($txt) {
+function highlight_text(string $txt) {
     while(preg_match("=\[php\](.*)\[/php\]=Uis",$txt)!=FALSE) {
         preg_match("=\[php\](.*)\[/php\]=Uis",$txt,$matches);
         $src = $matches[1];
@@ -733,7 +733,7 @@ function highlight_text($txt) {
     return $txt;
 }
 
-function regexChars($txt) {
+function regexChars(string $txt) {
     $txt = strip_tags($txt);
     $txt = str_replace('"','&quot;',$txt);
     $txt = str_replace('\\','\\\\',$txt);
@@ -780,7 +780,7 @@ function glossar_load_index() {
  * @param $txt
  * @return mixed
  */
-function glossar($txt) {
+function glossar(string $txt) {
     global $gl_words,$gl_desc,$use_glossar,$ajaxJob;
 
     if(!$use_glossar || $ajaxJob)
@@ -819,12 +819,12 @@ function glossar($txt) {
     return str_replace('[','&#91;',$txt);
 }
 
-function bbcodetolow($founds) {
+function bbcodetolow(string $founds) {
     return "[".strtolower($founds[1])."]".trim($founds[2])."[/".strtolower($founds[3])."]";
 }
 
 //-> Replaces
-function replace($txt,$type=false,$no_vid_tag=false) {
+function replace(string $txt,bool $type=false,bool $no_vid_tag=false) {
     $txt = str_replace("&#34;","\"",$txt);
 
     if($type)
@@ -903,7 +903,7 @@ function hl($text, $word) {
 }
 
 //-> Emailadressen in Unicode umwandeln
-function eMailAddr($email) {
+function eMailAddr(string $email) {
     $output = "";
 
     for($i=0;$i<strlen($email);$i++)
@@ -913,13 +913,13 @@ function eMailAddr($email) {
 }
 
 //-> Leerzeichen mit + ersetzen (w3c)
-function convSpace($string) {
+function convSpace(string $string) {
     $string = spChars($string);
     return str_replace(" ","+",$string);
 }
 
 //-> BBCode
-function re_bbcode($txt) {
+function re_bbcode(string $txt) {
     $txt = spChars($txt);
     $txt = str_replace("'", "&#39;", $txt);
     $txt = str_replace("[","&#91;",$txt);
@@ -931,7 +931,7 @@ function re_bbcode($txt) {
 
 /* START # from wordpress under GBU GPL license
    URL autolink function */
-function _make_url_clickable_cb($matches)
+function _make_url_clickable_cb(array $matches)
 {
     $ret = '';
     $url = $matches[2];
@@ -947,7 +947,7 @@ function _make_url_clickable_cb($matches)
     return $matches[1] . "<a href=\"$url\" rel=\"nofollow\">$url</a>" . $ret;
 }
 
-function _make_web_ftp_clickable_cb($matches) {
+function _make_web_ftp_clickable_cb(array $matches) {
     $ret = '';
     $dest = $matches[2];
     $dest = 'http://' . $dest;
@@ -964,12 +964,12 @@ function _make_web_ftp_clickable_cb($matches) {
     return $matches[1] . "<a href=\"$dest\" rel=\"nofollow\">$dest</a>" . $ret;
 }
 
-function _make_email_clickable_cb($matches) {
+function _make_email_clickable_cb(array $matches) {
     $email = $matches[2] . '@' . $matches[3];
     return $matches[1] . "<a href=\"mailto:$email\">$email</a>";
 }
 
-function make_clickable($ret) {
+function make_clickable(string $ret) {
     $ret = ' ' . $ret;
     // in testing, using arrays here was found to be faster
     $ret = preg_replace_callback('#([\s>])([\w]+?://[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]*)#is', '_make_url_clickable_cb', $ret);
@@ -984,7 +984,7 @@ function make_clickable($ret) {
 /* END # from wordpress under GBU GPL license */
 
 //Diverse BB-Codefunktionen
-function bbcode($txt, $tinymce=false, $no_vid=false, $ts=false, $nolink=false) {
+function bbcode(string $txt,bool $tinymce=false,bool $no_vid=false,bool $ts=false,bool $nolink=false) {
     global $charset;
 
     $txt = html_entity_decode($txt,ENT_COMPAT,$charset);
@@ -1010,13 +1010,13 @@ function bbcode($txt, $tinymce=false, $no_vid=false, $ts=false, $nolink=false) {
     return str_replace('<p></p>', '<p>&nbsp;</p>', $txt);
 }
 
-function bbcode_nletter($txt) {
+function bbcode_nletter(string $txt) {
     $txt = stripslashes($txt);
     $txt = nl2br(trim($txt));
     return '<style type="text/css">p { margin: 0px; padding: 0px; }</style>'.$txt;
 }
 
-function bbcode_nletter_plain($txt) {
+function bbcode_nletter_plain(string $txt) {
     $txt = preg_replace("#\<\/p\>#Uis","\r\n",$txt);
     $txt = preg_replace("#\<br(.*?)\>#Uis","\r\n",$txt);
     $txt = str_replace("p { margin: 0px; padding: 0px; }","",$txt);
@@ -1026,7 +1026,7 @@ function bbcode_nletter_plain($txt) {
     return strip_tags($txt);
 }
 
-function bbcode_html($txt,$tinymce=0) {
+function bbcode_html(string $txt,bool $tinymce=false) {
     $txt = str_replace("&lt;","<",$txt);
     $txt = str_replace("&gt;",">",$txt);
     $txt = str_replace("&quot;","\"",$txt);
@@ -1039,14 +1039,14 @@ function bbcode_html($txt,$tinymce=0) {
     return str_replace("&#34;","\"",$txt);
 }
 
-function bbcode_email($txt) {
+function bbcode_email(string $txt) {
     $txt = bbcode($txt);
     $txt = str_replace("&#91;","[",$txt);
     return str_replace("&#93;","]",$txt);
 }
 
 //-> Textteil in Zitat-Tags setzen
-function zitat($nick,$zitat) {
+function zitat(string $nick,string $zitat) {
     $zitat = str_replace(chr(145), chr(39), $zitat);
     $zitat = str_replace(chr(146), chr(39), $zitat);
     $zitat = str_replace("'", "&#39;", $zitat);
@@ -1059,7 +1059,7 @@ function zitat($nick,$zitat) {
 }
 
 //-> convert string for output
-function re($txt,$tinymce=false) {
+function re(string $txt,bool $tinymce=false) {
     global $charset;
     if($tinymce)
         return stripslashes($txt);
@@ -1068,7 +1068,7 @@ function re($txt,$tinymce=false) {
 }
 
 //-> Smileys ausgeben
-function smileys($txt) {
+function smileys(string $txt) {
     $files = get_files('../inc/images/smileys',false,true);
     for($i=0; $i<count($files); $i++) {
         $smileys = $files[$i];
@@ -1100,12 +1100,9 @@ function smileys($txt) {
   return str_replace(" ^^"," <img src=\"../inc/images/smileys/^^.gif\" alt=\"\" />", $txt);
 }
 
-function cut($text,$length='',$dots = true,$html = true,$ending = '',$exact = false,$considerHtml = true) {
+function cut(string $text,int $length=0,bool $dots = true,bool $html = true,string $ending = '',bool $exact = false,bool $considerHtml = true) {
     if($length === 0)
         return '';
-
-    if(empty($length))
-        return $text;
 
     $ending = $dots || !empty($ending) ? (!empty($ending) ? $ending : '...') : '';
 
@@ -1210,12 +1207,12 @@ function cut($text,$length='',$dots = true,$html = true,$ending = '',$exact = fa
     return $truncate;
 }
 
-function wrap($str, $width = 75, $break = "\n", $cut = true) {
+function wrap(string $str, int $width = 75,string $break = "\n",bool $cut = true) {
     return strtr(str_replace(htmlentities($break), $break, htmlentities(wordwrap(html_entity_decode($str), $width, $break, $cut), ENT_QUOTES)), array_flip(get_html_translation_table(HTML_SPECIALCHARS, ENT_COMPAT)));
 }
 
 //-> Funktion um Dateien aus einem Verzeichnis auszulesen
-function get_files($dir=null,$only_dir=false,$only_files=false,$file_ext=array(),$preg_match=false,$blacklist=array(),$blacklist_word=false) {
+function get_files(string $dir=null,bool $only_dir=false,bool $only_files=false,array $file_ext=array(),$preg_match=false,array $blacklist=array(),$blacklist_word=false) {
     $cache_hash = md5($dir.$only_dir.$only_files.print_r($file_ext,true).$preg_match.print_r($blacklist,true).$blacklist_word);
     if(!dbc_index::issetIndex('files') || !dbc_index::getIndexKey('files',$cache_hash) || !dbc_index::MemSetIndex()) {
         $files = array();
@@ -1290,7 +1287,7 @@ function get_files($dir=null,$only_dir=false,$only_files=false,$file_ext=array()
 }
 
 //-> Gibt einen Teil eines nummerischen Arrays wieder
-function limited_array($array=array(),$begin,$max) {
+function limited_array(array $array=array(),int $begin,int $max) {
     $array_exp = array();
     $range=range($begin=($begin-1), ($begin+$max-1));
     foreach($array as $key => $wert) {
@@ -1305,7 +1302,7 @@ function array_var_exists($var,$search)
 { foreach($search as $key => $var_) { if($var_==$var) return true; } return false; }
 
 //-> Funktion um eine Datei im Web auf Existenz zu prfen
-function fileExists($url) {
+function fileExists(string $url) {
     $url_p = @parse_url($url);
     $port = isset($url_p['port']) ? $url_p['port'] : 80;
 
@@ -1328,7 +1325,7 @@ function fileExists($url) {
 }
 
 //-> Funktion um Sonderzeichen zu konvertieren
-function spChars($txt) {
+function spChars(string $txt) {
   $txt = str_replace("Ä","&Auml;",$txt);
   $txt = str_replace("ä","&auml;",$txt);
   $txt = str_replace("Ü","&Uuml;",$txt);
@@ -1340,7 +1337,7 @@ function spChars($txt) {
 }
 
 //-> Funktion um sauber in die DB einzutragen
-function up($txt,$escape=true) {
+function up(string $txt,bool $escape=true) {
     global $charset;
     $return = utf8_encode(stripcslashes(spChars(htmlentities($txt, ENT_COMPAT, $charset))));
     return $escape ? _real_escape_string($return) : $return;
@@ -1387,7 +1384,7 @@ function orderby($sort) {
     return $url."orderby=".$sort."&order=ASC";
 }
 
-function orderby_sql($sort_by=array(), $default_order='',$join='', $order_by = array('ASC','DESC')) {
+function orderby_sql(array $sort_by=array(), $default_order='',$join='',array $order_by = array('ASC','DESC')) {
     if(!isset($_GET['order']) || empty($_GET['order']) || !in_array($_GET['order'],$order_by)) return $default_order;
     if(!isset($_GET['orderby']) || empty($_GET['orderby']) || !in_array($_GET['orderby'],$sort_by)) return $default_order;
     $orderby_real = _real_escape_string($_GET['orderby']);
@@ -1404,7 +1401,7 @@ function orderby_nav() {
 }
 
 //-> Funktion um ein Datenbankinhalt zu highlighten
-function highlight($word) {
+function highlight(string $word) {
     if(substr(phpversion(),0,1) == 5)
         return str_ireplace($word,'<span class="fontRed">'.$word.'</span>',$word);
     else
@@ -1458,7 +1455,7 @@ function update_maxonline() {
 }
 
 //-> Prueft, wieviele Besucher gerade online sind
-function online_guests($where='') {
+function online_guests(string $where='') {
     global $db,$useronline,$userip,$chkMe,$isSpider;
 
     if(!$isSpider) {
@@ -1480,7 +1477,7 @@ function online_reg() {
 }
 
 //-> Prueft, ob der User eingeloggt ist und wenn ja welches Level besitzt er
-function checkme($userid_set=0) {
+function checkme(int $userid_set=0) {
     global $db;
     if(HasDSGVO() || $userid_set!=0) {
         if (!$userid = ($userid_set != 0 ? (int)($userid_set) : userid())) return 0;
@@ -1501,7 +1498,7 @@ function checkme($userid_set=0) {
 }
 
 //-> Prueft, ob der User gesperrt ist und meldet ihn ab
-function isBanned($userid_set=0,$logout=true) {
+function isBanned(int $userid_set=0,bool $logout=true) {
     global $db,$userid;
     $userid_set = $userid_set ? $userid_set : $userid;
     if(checkme($userid_set) >= 1 || $userid_set) {
@@ -1529,7 +1526,7 @@ function isBanned($userid_set=0,$logout=true) {
 }
 
 //-> Prueft, ob ein User diverse Rechte besitzt
-function permission($check,$uid=0) {
+function permission(string $check,int $uid=0) {
     global $db,$userid,$chkMe;
     if(!$uid) $uid = $userid;
     if(rootAdmin($uid)) return true;
@@ -1568,19 +1565,19 @@ function check_msg() {
 }
 
 //-> Prueft sicherheitsrelevante Gegebenheiten im Forum
-function forumcheck($tid, $what) {
+function forumcheck(int $tid,string  $what) {
     global $db;
     return db("SELECT ".$what." FROM ".$db['f_threads']." WHERE id = '".(int)($tid)."' AND ".$what." = '1'",true) ? true : false;
 }
 
 //-> Prueft ob ein User schon in der Buddyliste vorhanden ist
-function check_buddy($buddy) {
+function check_buddy(int $buddy) {
     global $db,$userid;
     return !db("SELECT buddy FROM ".$db['buddys']." WHERE user = '".(int)($userid)."' AND buddy = '".(int)($buddy)."'",true) ? true : false;
 }
 
 //-> Funktion um bei Clanwars Endergebnisse auszuwerten
-function cw_result($punkte, $gpunkte) {
+function cw_result(int $punkte,int $gpunkte) {
     if($punkte > $gpunkte)
         return '<span class="CwWon">'.$punkte.':'.$gpunkte.'</span> <img src="../inc/images/won.gif" alt="" class="icon" />';
     else if($punkte < $gpunkte)
@@ -1589,7 +1586,7 @@ function cw_result($punkte, $gpunkte) {
         return '<span class="CwDraw">'.$punkte.':'.$gpunkte.'</span> <img src="../inc/images/draw.gif" alt="" class="icon" />';
 }
 
-function cw_result_pic($punkte, $gpunkte) {
+function cw_result_pic(int $punkte, int $gpunkte) {
     if($punkte > $gpunkte)
         return '<img src="../inc/images/won.gif" alt="" class="icon" />';
     else if($punkte < $gpunkte)
@@ -1599,7 +1596,7 @@ function cw_result_pic($punkte, $gpunkte) {
 }
 
 //-> Funktion um bei Clanwars Endergebnisse auszuwerten ohne bild
-function cw_result_nopic($punkte, $gpunkte) {
+function cw_result_nopic(int $punkte, int $gpunkte) {
     if($punkte > $gpunkte)
         return '<span class="CwWon">'.$punkte.':'.$gpunkte.'</span>';
     else if($punkte < $gpunkte)
@@ -1609,7 +1606,7 @@ function cw_result_nopic($punkte, $gpunkte) {
 }
 
 //-> Funktion um bei Clanwars Endergebnisse auszuwerten ohne bild und ohne farbe
-function cw_result_nopic_nocolor($punkte, $gpunkte) {
+function cw_result_nopic_nocolor(int $punkte, int $gpunkte) {
     if($punkte > $gpunkte)
         return $punkte.':'.$gpunkte;
     else if($punkte < $gpunkte)
@@ -1619,7 +1616,7 @@ function cw_result_nopic_nocolor($punkte, $gpunkte) {
 }
 
 //-> Funktion um bei Clanwars Details Endergebnisse auszuwerten ohne bild
-function cw_result_details($punkte, $gpunkte) {
+function cw_result_details(int $punkte, int $gpunkte) {
     if($punkte > $gpunkte)
         return '<td class="contentMainFirst" align="center"><span class="CwWon">'.$punkte.'</span></td><td class="contentMainFirst" align="center"><span class="CwLost">'.$gpunkte.'</span></td>';
     else if($punkte < $gpunkte)
@@ -1687,7 +1684,7 @@ function squad($code) {
 }
 
 //-> Funktion um bei DB-Eintraegen URLs einem http:// oder https:// zuzuweisen
-function links($hp) {
+function links(string $hp) {
     if(!empty($hp)) {
         //SSL
         $count = 0;
