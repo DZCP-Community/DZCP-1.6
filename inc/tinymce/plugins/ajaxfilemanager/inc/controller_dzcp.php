@@ -4,7 +4,7 @@
  * http://www.dzcp.de
  */
 
-define('basePath', '../../../..');
+define('basePath', realpath('../../../..'));
 
 ## INCLUDES ##
 $ajaxJob = true;

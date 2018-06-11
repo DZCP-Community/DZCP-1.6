@@ -1,7 +1,7 @@
 <?php
 ob_start();
 header("Content-type: text/css");
-define('basePath', '../../../..');
+define('basePath', realpath('../../../..'));
 $thumbgen = true;
 
 include(basePath.'/vendor/autoload.php');
@@ -13,7 +13,7 @@ use phpFastCache\CacheManager;
 // Cache
 try {
     CacheManager::setDefaultConfig(array(
-        "path" => basePath . "/inc/_cache_/",
+        "path" => basePath . "/inc/_cache_",
         "defaultTtl" => 10,
         "storage" => $config_cache['storage'],
         "memcache" => $config_cache['server_mem'],
