@@ -4,6 +4,9 @@
  * http://www.dzcp.de
  * Menu: Top Match
  */
+
+include_once(basePath."/clanwars/helper.php");
+
 function top_match() {
     global $db,$picformat;
 

@@ -21,8 +21,8 @@ define('_News', true);
 function feed() {
     global $db,$pagetitle,$charset;
     if(!file_exists(basePath.'/rss.xml') || time() - filemtime(basePath.'/rss.xml') > feed_update_time) {
-        $host = $_SERVER['HTTP_HOST'];
-        $pfad = preg_replace("#^(.*?)\/(.*?)#Uis","$1",dirname($_SERVER['PHP_SELF']));
+        $host = GetServerVars('HTTP_HOST');
+        $pfad = preg_replace("#^(.*?)\/(.*?)#Uis","$1",dirname(GetServerVars('PHP_SELF')));
         $feed = '<?xml version="1.0" encoding="'.$charset.'" ?>';
         $feed .= "\r\n";
         $feed .= '<rss version="0.91">';

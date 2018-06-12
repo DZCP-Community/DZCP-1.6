@@ -11,7 +11,7 @@ if(_adminMenu != 'true') exit;
       {
         db("DELETE FROM ".$db['ipcheck']." WHERE id = '".$_GET['id']."'");
 
-        header("Location: ".$_SERVER['HTTP_REFERER']);
+        header("Location: ".GetServerVars('HTTP_REFERER'));
       } elseif($do == 'delete') {
         db("DELETE FROM ".$db['ipcheck']." WHERE time != 0");
 

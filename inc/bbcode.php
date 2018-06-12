@@ -5,7 +5,7 @@
  */
 
 //Filter 404
-$test = strtolower($_SERVER["REQUEST_URI"]);
+$test = strtolower(GetServerVars("REQUEST_URI"));
 if (strpos($test, 'index.php/') !== false ||
     strpos($test, 'ajax.php/') !== false) {
     header("HTTP/1.0 404 Not Found");
@@ -44,14 +44,14 @@ if(isset($_GET['dsgvo'])) {
         case 1:
             $_SESSION['DSGVO'] = true;
             $_SESSION['do_show_dsgvo'] = true;
-            header("Location: " . $_SERVER['HTTP_REFERER']);
+            header("Location: " . GetServerVars('HTTP_REFERER'));
             exit();
             break;
         default:
             $_SESSION['DSGVO'] = false;
             $_SESSION['do_show_dsgvo'] = true;
             $_SESSION['user_has_dsgvo_lock'] = false;
-            header("Location: " . $_SERVER['HTTP_REFERER']);
+            header("Location: " . GetServerVars('HTTP_REFERER'));
             exit();
     }
 }
@@ -117,8 +117,8 @@ if(array_key_exists('language',$_SESSION) && !empty($_SESSION['language'])) {
 //-> einzelne Definitionen
 $CrawlerDetect = new CrawlerDetect();
 $isSpider = $CrawlerDetect->isCrawler();
-$subfolder = basename(dirname(dirname($_SERVER['PHP_SELF']).'../'));
-$httphost = $_SERVER['HTTP_HOST'].(empty($subfolder) ? '' : '/'.$subfolder);
+$subfolder = basename(dirname(dirname(GetServerVars('PHP_SELF')).'../'));
+$httphost = GetServerVars('HTTP_HOST').(empty($subfolder) ? '' : '/'.$subfolder);
 $domain = str_replace('www.','',$httphost);
 $pagetitle = settings('pagetitel');
 $sdir = settings('tmpdir');
@@ -208,7 +208,7 @@ if(isset($_GET['set_language'])) {
         db("UPDATE `" . $db['users'] . "` SET `language` = '".$_SESSION['language']."' WHERE `id` = " .$userid. ";");
     }
 
-    header("Location: ".$_SERVER['HTTP_REFERER']);
+    header("Location: ".GetServerVars('HTTP_REFERER'));
 }
 
 lang($_SESSION['language']); //Lade Sprache
@@ -260,18 +260,23 @@ function visitorIp() {
             return $_SESSION['identy_ip'];
     }
 
-    $TheIp=$_SERVER['REMOTE_ADDR'];
-    if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-        $TheIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    $TheIp=GetServerVars('REMOTE_ADDR');
+    if(GetServerVars('HTTP_X_FORWARDED_FOR') &&
+        !empty(GetServerVars('HTTP_X_FORWARDED_FOR')))
+        $TheIp = GetServerVars('HTTP_X_FORWARDED_FOR');
 
-    if(isset($_SERVER['HTTP_CLIENT_IP']) && !empty($_SERVER['HTTP_CLIENT_IP']))
-        $TheIp = $_SERVER['HTTP_CLIENT_IP'];
+    if(GetServerVars('HTTP_CLIENT_IP') &&
+        !empty(GetServerVars('HTTP_CLIENT_IP')))
+        $TheIp = GetServerVars('HTTP_CLIENT_IP');
 
-    if(isset($_SERVER['HTTP_FROM']) && !empty($_SERVER['HTTP_FROM']))
-        $TheIp = $_SERVER['HTTP_FROM'];
+    if(GetServerVars('HTTP_FROM') &&
+        !empty(GetServerVars('HTTP_FROM')))
+        $TheIp = GetServerVars('HTTP_FROM');
 
     $TheIp_X = explode('.',$TheIp);
-    if(count($TheIp_X) == 4 && $TheIp_X[0]<=255 && $TheIp_X[1]<=255 && $TheIp_X[2]<=255 && $TheIp_X[3]<=255 && preg_match("!^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$!",$TheIp))
+    if(count($TheIp_X) == 4 && $TheIp_X[0]<=255 && $TheIp_X[1]<=255 &&
+        $TheIp_X[2]<=255 && $TheIp_X[3]<=255 &&
+        preg_match("!^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$!",$TheIp))
         return trim($TheIp);
 
     return '0.0.0.0';
@@ -1366,7 +1371,7 @@ function sum($db, $where = "", $what) {
 }
 
 function orderby($sort) {
-    $split = explode("&",$_SERVER['QUERY_STRING']);
+    $split = explode("&",GetServerVars('QUERY_STRING'));
     $url = "?";
 
     foreach($split as $part) {
@@ -1564,65 +1569,10 @@ function check_msg() {
     return '';
 }
 
-//-> Prueft sicherheitsrelevante Gegebenheiten im Forum
-function forumcheck(int $tid,string  $what) {
-    global $db;
-    return db("SELECT ".$what." FROM ".$db['f_threads']." WHERE id = '".(int)($tid)."' AND ".$what." = '1'",true) ? true : false;
-}
-
 //-> Prueft ob ein User schon in der Buddyliste vorhanden ist
 function check_buddy(int $buddy) {
     global $db,$userid;
     return !db("SELECT buddy FROM ".$db['buddys']." WHERE user = '".(int)($userid)."' AND buddy = '".(int)($buddy)."'",true) ? true : false;
-}
-
-//-> Funktion um bei Clanwars Endergebnisse auszuwerten
-function cw_result(int $punkte,int $gpunkte) {
-    if($punkte > $gpunkte)
-        return '<span class="CwWon">'.$punkte.':'.$gpunkte.'</span> <img src="../inc/images/won.gif" alt="" class="icon" />';
-    else if($punkte < $gpunkte)
-        return '<span class="CwLost">'.$punkte.':'.$gpunkte.'</span> <img src="../inc/images/lost.gif" alt="" class="icon" />';
-    else
-        return '<span class="CwDraw">'.$punkte.':'.$gpunkte.'</span> <img src="../inc/images/draw.gif" alt="" class="icon" />';
-}
-
-function cw_result_pic(int $punkte, int $gpunkte) {
-    if($punkte > $gpunkte)
-        return '<img src="../inc/images/won.gif" alt="" class="icon" />';
-    else if($punkte < $gpunkte)
-        return '<img src="../inc/images/lost.gif" alt="" class="icon" />';
-    else
-        return '<img src="../inc/images/draw.gif" alt="" class="icon" />';
-}
-
-//-> Funktion um bei Clanwars Endergebnisse auszuwerten ohne bild
-function cw_result_nopic(int $punkte, int $gpunkte) {
-    if($punkte > $gpunkte)
-        return '<span class="CwWon">'.$punkte.':'.$gpunkte.'</span>';
-    else if($punkte < $gpunkte)
-        return '<span class="CwLost">'.$punkte.':'.$gpunkte.'</span>';
-    else
-        return '<span class="CwDraw">'.$punkte.':'.$gpunkte.'</span>';
-}
-
-//-> Funktion um bei Clanwars Endergebnisse auszuwerten ohne bild und ohne farbe
-function cw_result_nopic_nocolor(int $punkte, int $gpunkte) {
-    if($punkte > $gpunkte)
-        return $punkte.':'.$gpunkte;
-    else if($punkte < $gpunkte)
-        return $punkte.':'.$gpunkte;
-    else
-        return $punkte.':'.$gpunkte;
-}
-
-//-> Funktion um bei Clanwars Details Endergebnisse auszuwerten ohne bild
-function cw_result_details(int $punkte, int $gpunkte) {
-    if($punkte > $gpunkte)
-        return '<td class="contentMainFirst" align="center"><span class="CwWon">'.$punkte.'</span></td><td class="contentMainFirst" align="center"><span class="CwLost">'.$gpunkte.'</span></td>';
-    else if($punkte < $gpunkte)
-        return '<td class="contentMainFirst" align="center"><span class="CwLost">'.$punkte.'</span></td><td class="contentMainFirst" align="center"><span class="CwWon">'.$gpunkte.'</span></td>';
-    else
-        return '<td class="contentMainFirst" align="center"><span class="CwDraw">'.$punkte.'</span></td><td class="contentMainFirst" align="center"><span class="CwDraw">'.$gpunkte.'</span></td>';
 }
 
 //-> Flaggen ausgeben
@@ -2530,8 +2480,8 @@ function pholderreplace(string $pholder) {
 function check_internal_url() {
     global $db,$chkMe;
     if($chkMe >= 1) return false;
-    $install_pfad = explode("/",dirname(dirname($_SERVER['SCRIPT_NAME'])."../"));
-    $now_pfad = explode("/",$_SERVER['REQUEST_URI']); $pfad = '';
+    $install_pfad = explode("/",dirname(dirname(GetServerVars('SCRIPT_NAME'))."../"));
+    $now_pfad = explode("/",GetServerVars('REQUEST_URI')); $pfad = '';
     foreach($now_pfad as $key => $value) {
         if(!empty($value)) {
             if(!isset($install_pfad[$key]) || $value != $install_pfad[$key]) {
@@ -2829,7 +2779,7 @@ function page(string $index='',string $title='',string $where='',string $wysiwyg
     dsgvo_lock = \''.$dsgvo_lock.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
     $min = (use_min_css_js_files ? '.min' : '');
 
-    if(!strstr($_SERVER['HTTP_USER_AGENT'],'Android') && !strstr($_SERVER['HTTP_USER_AGENT'],'webOS'))
+    if(!strstr(GetServerVars('HTTP_USER_AGENT'),'Android') && !strstr(GetServerVars('HTTP_USER_AGENT'),'webOS'))
         $java_vars .= '<script language="javascript" type="text/javascript" src="'.$designpath.'/_js/wysiwyg'.$min.'.js"></script>'."\n";
 
     if(settings("wmodus") && $chkMe != 4) {

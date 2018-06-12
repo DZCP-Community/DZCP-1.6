@@ -43,7 +43,7 @@ switch ($action):
                      `ip`     = '".$userip."'");
 
                 setIpcheck("shout");
-                if(!isset($_GET['ajax'])) header("Location: ".$_SERVER['HTTP_REFERER'].'#shoutbox');
+                if(!isset($_GET['ajax'])) header("Location: ".GetServerVars('HTTP_REFERER').'#shoutbox');
             }
         } else {
             $index = error(show(_error_flood_post, array("sek" => config('f_shout'))), 1);
@@ -68,7 +68,7 @@ switch ($action):
                 $qry = db("DELETE FROM ".$db['shout']."
                  WHERE id = '".(int)($_GET['id'])."'");
 
-                header("Location: ".$_SERVER['HTTP_REFERER'].'#shoutbox');
+                header("Location: ".GetServerVars('HTTP_REFERER').'#shoutbox');
             }
         }
         break;

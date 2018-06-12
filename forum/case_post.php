@@ -166,8 +166,7 @@ if(defined('_Forum')) {
                      ON s2.sid = s1.id
                      WHERE s2.id = '".(int)($_GET['kid'])."'");
                 $checks = _fetch($check);
-                if(forumcheck($_GET['id'], "closed"))
-                {
+                if(db("SELECT `id` FROM `".$db['f_threads']."` WHERE `id` = ".(int)($_GET['id'])." AND `closed` = 1;",true)) {
                     $index = error(_error_forum_closed, 1);
                 } elseif($checks['intern'] == 1 && !permission("intforum") && !fintern($checks['id'])) {
                     $index = error(_error_no_access, 1);

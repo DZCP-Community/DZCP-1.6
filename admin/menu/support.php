@@ -19,7 +19,7 @@ $support .= "DZCP Version: "._version."\r\n";
 $support .= "DZCP Release: "._release."\r\n";
 $support .= "DZCP Build: "._build."\r\n";
 $support .= "DZCP Template: ".$tmpdir."\r\n";
-$support .= "Domain: ".str_replace('/admin','',$_SERVER['HTTP_REFERER'])."\r\n";
+$support .= "Domain: ".str_replace('/admin','',GetServerVars('HTTP_REFERER'))."\r\n";
 $support .= "\r\n";
 
 $support .= "#####################\r\n";

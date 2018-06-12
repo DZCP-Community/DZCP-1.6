@@ -199,7 +199,7 @@ class TinyMCE_Compressor {
             }
             
             // Set base URL for where tinymce is loaded from
-            $buffer = "var tinyMCEPreInit={base:'" . dirname($_SERVER["SCRIPT_NAME"]) . "',suffix:'".$this->settings["suffix"]."'};";
+            $buffer = "var tinyMCEPreInit={base:'" . dirname(GetServerVars("SCRIPT_NAME")) . "',suffix:'".$this->settings["suffix"]."'};";
 
             if($this->settings["debug"]) {
                 echo '<p>########################<br>Files Loaded:<br>########################<p>';
@@ -246,11 +246,11 @@ class TinyMCE_Compressor {
         
         // Check if it supports gzip
         $zlibOn = ini_get('zlib.output_compression') || (ini_set('zlib.output_compression', 0) === false);
-        $encodings = (isset($_SERVER['HTTP_ACCEPT_ENCODING'])) ? strtolower($_SERVER['HTTP_ACCEPT_ENCODING']) : "";
+        $encodings = GetServerVars('HTTP_ACCEPT_ENCODING') ? strtolower(GetServerVars('HTTP_ACCEPT_ENCODING')) : "";
         $encoding = preg_match( '/\b(x-gzip|gzip)\b/', $encodings, $match) ? $match[1] : "";
         
         // Is northon antivirus header
-        if (isset($_SERVER['---------------'])) {
+        if (GetServerVars('---------------')) {
             $encoding = "x-gzip";
         }
         
@@ -294,7 +294,7 @@ class TinyMCE_Compressor {
         
         if($this->settings["debug"]) {
             echo '<p>########################<br>GZIP Compression:<br>########################<p>';
-            echo 'Send Northon Antivirus Header: '.(isset($_SERVER['---------------']) ? 'yes' : 'no');
+            echo 'Send Northon Antivirus Header: '.(GetServerVars('---------------') ? 'yes' : 'no');
             echo '<br>GZIP Compression Support: '.($supportsGzip ? 'yes' : 'no');
             echo '<br>GZIP Compression Support by Webbrowser: '.($encoding ? 'yes' : 'no');
         }
