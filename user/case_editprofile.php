@@ -349,7 +349,7 @@ if(defined('_UserMenu')) {
                     $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
 
                     $gal .= show($dir."/edit_gallery_show", array("picture" => img_size("inc/images/uploads/usergallery"."/".$userid."_".$getgl['pic']),
-                        "beschreibung" => bbcode($getgl['beschreibung']),
+                        "beschreibung" => bbcode(re($getgl['beschreibung'])),
                         "class" => $class,
                         "delete" => $delete,
                         "edit" => $edit));

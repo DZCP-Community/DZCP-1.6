@@ -94,9 +94,9 @@ if(defined('_News')) {
                 "ndatum" => _datum,
                 "ncomments" => _news_kommentare.":",
                 "klapp" => $klapp,
-                "more" => bbcode($get['klapptext']),
+                "more" => bbcode(re($get['klapptext'])),
                 "viewed" => $viewed,
-                "text" => bbcode($get['text']),
+                "text" => bbcode(re($get['text'])),
                 "datum" => date("d.m.y H:i", $get['datum'])._uhr,
                 "links" => $links,
                 "autor" => autor($get['autor'])));
@@ -192,9 +192,9 @@ if(defined('_News')) {
                 "edit" => $news_edit,
                 "ncomments" => _news_kommentare.":",
                 "klapp" => $klapp,
-                "more" => bbcode($get['klapptext']),
+                "more" => bbcode(re($get['klapptext'])),
                 "viewed" => $viewed,
-                "text" => bbcode($get['text']),
+                "text" => bbcode(re($get['text'])),
                 "datum" => date("d.m.y H:i", $get['datum'])._uhr,
                 "links" => $links,
                 "autor" => autor($get['autor'])));

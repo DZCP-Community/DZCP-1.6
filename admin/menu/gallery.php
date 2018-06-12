@@ -197,7 +197,7 @@ switch ($do) {
                                                      "new" => $new,
                                                      "images" => $cntpics,
                                                      "id" => $get['id'],
-                                                     "beschreibung" => bbcode($get['beschreibung']),
+                                                     "beschreibung" => bbcode(re($get['beschreibung'])),
                                                      "cnt" => $cnt));
         }
 

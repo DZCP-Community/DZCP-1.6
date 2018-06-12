@@ -101,10 +101,10 @@ if(defined('_News')) {
 
                     $posted_ip = $chkMe == 4 ? $getc['ip'] : _logged;
                     $comments .= show("page/comments_show", array("titel" => $titel,
-                                                                  "comment" => bbcode($getc['comment']),
+                                                                  "comment" => bbcode(re($getc['comment'])),
                                                                   "nick" => $nick,
                                                                   "hp" => $hp,
-                                                                  "editby" => bbcode($getc['editby']),
+                                                                  "editby" => bbcode(re($getc['editby'])),
                                                                   "email" => $email,
                                                                   "avatar" => useravatar($getc['reg']),
                                                                   "onoff" => $onoff,
@@ -185,9 +185,9 @@ if(defined('_News')) {
                                                    "edit" => $news_edit,
                                                    "showmore" => $showmore,
                                                    "klapp" => $klapp,
-                                                   "more" => bbcode($get['klapptext']),
+                                                   "more" => bbcode(re($get['klapptext'])),
                                                    "viewed" => "",
-                                                   "text" => bbcode($get['text']),
+                                                   "text" => bbcode(re($get['text'])),
                                                    "datum" => date("j.m.y H:i", (empty($get['datum']) ? time() : $get['datum']))._uhr,
                                                    "links" => $links,
                                                    "autor" => autor($get['autor'])));

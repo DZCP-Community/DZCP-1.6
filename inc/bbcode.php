@@ -824,7 +824,7 @@ function glossar(string $txt) {
     return str_replace('[','&#91;',$txt);
 }
 
-function bbcodetolow(string $founds) {
+function bbcodetolow(array $founds) {
     return "[".strtolower($founds[1])."]".trim($founds[2])."[/".strtolower($founds[3])."]";
 }
 

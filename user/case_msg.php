@@ -42,7 +42,7 @@ if(defined('_UserMenu')) {
 
                 $index = show($dir."/msg_show", array("answermsg" => $answermsg,
                     "titel" => re($get['titel']),
-                    "nachricht" => bbcode($get['nachricht']),
+                    "nachricht" => bbcode(re($get['nachricht'])),
                     "answer" => $answer,
                     "sendnews" => $sendnews,
                     "delete" => $delete));
@@ -72,7 +72,7 @@ if(defined('_UserMenu')) {
 
                 $index = show($dir."/msg_show", array("answermsg" => $answermsg,
                     "titel" => re($get['titel']),
-                    "nachricht" => bbcode($get['nachricht']),
+                    "nachricht" => bbcode(re($get['nachricht'])),
                     "answer" => $answer,
                     "sendnews" => "",
                     "delete" => ""));

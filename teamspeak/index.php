@@ -275,7 +275,7 @@ if(fsockopen_support()) {
                     "t_name" => _ts_name,
                     "t_os" => _ts_os,
                     "uchannels" => $tstree,
-                    "info" => bbcode($tsstatus->welcome((int)($_GET['cID']),$_GET['cName']),false,false,true),
+                    "info" => bbcode(re($tsstatus->welcome((int)($_GET['cID']),$_GET['cName'])),false,false,true),
                     "t_uptime" => _ts_uptime,
                     "t_channels" => _ts_channels,
                     "t_user" => _ts_user,

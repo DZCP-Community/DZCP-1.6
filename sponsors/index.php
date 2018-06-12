@@ -33,7 +33,7 @@ switch ($action):
 
             $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
             $show .= show($dir."/sponsors_show", array("class" => $class,
-                                                       "beschreibung" => bbcode($get['beschreibung']),
+                                                       "beschreibung" => bbcode(re($get['beschreibung'])),
                                                        "hits" => $get['hits'],
                                                        "hit" => _hits,
                                                        "banner" => $banner));

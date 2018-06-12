@@ -88,10 +88,10 @@ case 'spar':
     if($_GET['what'] == "ct")
     {
       $what = _taktik_tspar_ct;
-      $show = bbcode($get['sparct']);
+      $show = bbcode(re($get['sparct']));
     } elseif($_GET['what'] == "t") {
       $what = _taktik_tspar_t;
-      $show = bbcode($get['spart']);
+      $show = bbcode(re($get['spart']));
     }
 
     $posted = show(_taktik_posted, array("autor" => autor($get['autor']),
@@ -118,10 +118,10 @@ case 'standard':
     if($_GET['what'] == "ct")
     {
        $what = _taktik_tstandard_ct;
-       $show = bbcode($get['standardct']);
+       $show = bbcode(re($get['standardct']));
     } elseif($_GET['what'] == "t") {
        $what = _taktik_tstandard_t;
-       $show = bbcode($get['standardt']);
+       $show = bbcode(re($get['standardt']));
     }
 
     $posted = show(_taktik_posted, array("autor" => autor($get['autor']),

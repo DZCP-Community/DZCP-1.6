@@ -104,7 +104,7 @@ switch ($action):
 
             $show .= show($dir."/shout_part", array("nick" => $nick,
                 "datum" => date("j.m.Y H:i", $get['datum'])._uhr,
-                "text" => bbcode($get['text']),
+                "text" => bbcode(re($get['text'])),
                 "class" => $class,
                 "del" => $del,
                 "ip" => $posted_ip,

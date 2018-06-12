@@ -107,7 +107,7 @@ if(defined('_UserMenu')) {
                         $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";
                         $color++;
                         $gal .= show($dir . "/profil_gallery_show", array("picture" => img_size("inc/images/uploads/usergallery" . "/" . $qryperm['id'] . "_" . $getgl['pic']),
-                            "beschreibung" => bbcode($getgl['beschreibung']),
+                            "beschreibung" => bbcode(re($getgl['beschreibung'])),
                             "class" => $class));
                     }
 
@@ -174,10 +174,10 @@ if(defined('_UserMenu')) {
                     $posted_ip = ($chkMe == 4 ? $getgb['ip'] : _logged);
                     $email = ($chkMe >= 1 ? $email : '');
                     $membergb .= show("page/comments_show", array("titel" => $titel,
-                        "comment" => bbcode($getgb['nachricht']),
+                        "comment" => bbcode(re($getgb['nachricht'])),
                         "nick" => $nick,
                         "hp" => $hp,
-                        "editby" => bbcode($getgb['editby']),
+                        "editby" => bbcode(re($getgb['editby'])),
                         "email" => $email,
                         "avatar" => useravatar($getgb['reg']),
                         "onoff" => $onoff,

@@ -90,7 +90,7 @@ switch(strtolower($action)):
         }
 
         $index = show($dir."/squads_full", array("member" => (empty($member) ? _member_squad_no_entrys : $member),
-            "desc" => empty($get['beschreibung']) ? '' : '<tr><td class="contentMainSecond">'.bbcode($get['beschreibung']).'</td></tr>',
+            "desc" => empty($get['beschreibung']) ? '' : '<tr><td class="contentMainSecond">'.bbcode(re($get['beschreibung'])).'</td></tr>',
             "squad" => $squad,
             "style" => $style,
             "back" => _error_back,

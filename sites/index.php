@@ -35,7 +35,7 @@ default:
       if($get['html']) 
           $inhalt = bbcode_html(re($get['text']));
       else 
-          $inhalt = bbcode($get['text']);
+          $inhalt = bbcode(re($get['text']));
 
       $index = show($dir."/sites", array("titel" => re($get['titel']),
                                          "inhalt" => $inhalt));
@@ -45,9 +45,9 @@ break;
 case 'preview';
   header("Content-type: text/html; charset=utf-8");
   if($_POST['html']) 
-      $inhalt = bbcode_html($_POST['inhalt'],1);
+      $inhalt = bbcode_html($_POST['inhalt'],true);
   else
-      $inhalt = bbcode(up($_POST['inhalt']),true);
+      $inhalt = bbcode(re($_POST['inhalt'],true),true);
 
   $index = show($dir."/sites", array("titel" => re($_POST['titel']),
                                      "inhalt" => $inhalt));

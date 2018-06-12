@@ -85,7 +85,7 @@ if($do == 'add')
             "class" => $class,
             "edit" => $edit,
             "delete" => $delete,
-            "glossar" => bbcode($get['glossar'])));
+            "glossar" => bbcode(re($get['glossar']))));
     }
 
     $show = show($dir."/glossar", array("head" => _glossar_head,
