@@ -1059,12 +1059,12 @@ function zitat(string $nick,string $zitat) {
 }
 
 //-> convert string for output
-function re(string $txt,bool $tinymce=false) {
+function re($txt,bool $tinymce=false) {
     global $charset;
     if($tinymce)
-        return stripslashes($txt);
+        return strval(stripslashes($txt));
 
-    return trim(stripslashes(spChars(html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true)));
+    return strval(trim(stripslashes(spChars(html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true))));
 }
 
 //-> Smileys ausgeben
@@ -1704,7 +1704,7 @@ function links(string $hp) {
 }
 
 //-> Funktion um Passwoerter generieren zu lassen
-function mkpwd($length = 8, $add_dashes = false, $available_sets = 'luds') {
+function mkpwd(int $length = 8,bool $add_dashes = false,string $available_sets = 'luds') {
     $sets = array();
     if(strpos($available_sets, 'l') !== false)
         $sets[] = 'abcdefghjkmnpqrstuvwxyz';
@@ -1742,7 +1742,7 @@ function mkpwd($length = 8, $add_dashes = false, $available_sets = 'luds') {
 }
 
 //-> Passwortabfrage und rückgabe des users
-function checkpwd($user, $pwd) {
+function checkpwd(string $user, string $pwd) {
     global $db;
     $sql = db("SELECT * FROM `".$db['users']."` WHERE `user` = '".up($user).
         "' AND (`pwd` = '".hash('sha256',$pwd)."' OR (`pwd` = '".md5($pwd)."' AND `pwd_md5` = 1)) AND `level` != 0;");
@@ -1762,7 +1762,7 @@ function checkpwd($user, $pwd) {
 }
 
 //-> Infomeldung ausgeben
-function info($msg, $url, $timeout = 5) {
+function info(string $msg, string $url, int $timeout = 5) {
     if(config('direct_refresh')) {
         header('Location: '.str_replace('&amp;', '&', $url));
         exit();
@@ -1789,36 +1789,36 @@ function info($msg, $url, $timeout = 5) {
 }
 
 //-> Errormmeldung ausgeben
-function error($error, $back=1) {
+function error(string $error,int $back=1) {
     return show("errors/error", array("error" => $error, "back" => $back, "fehler" => _error, "backtopage" => _error_back));
 }
 
 //-> Errormmeldung ohne "zurueck" ausgeben
-function error2($error) {
+function error2(string $error) {
     return show("errors/error2", array("error" => $error, "fehler" => _error));
 }
 
 //-> Email wird auf korrekten Syntax & Erreichbarkeit ueberprueft
-function check_email($email) {
+function check_email(string $email) {
     return (!preg_match("#^([a-zA-Z0-9\.\_\-]+)@([a-zA-Z0-9\.\-]+\.[A-Za-z][A-Za-z]+)$#", $email) ? false : true);
 }
 
 //-> Bilder verkleinern
-function img_size($img) {
+function img_size(string $img) {
     return "<a href=\"../".$img."\" rel=\"lightbox[l_".(int)($img)."]\"><img src=\"../thumbgen.php?img=".$img."\" alt=\"\" /></a>";
 }
 
-function img_cw($folder="", $img="") {
+function img_cw(string $folder, string $img) {
     return "<a href=\"../".$folder.$img."\" rel=\"lightbox[cw_".(int)($folder)."]\"><img src=\"../thumbgen.php?img=".$folder.$img."\" alt=\"\" /></a>";
 }
 
-function gallery_size($img="") {
+function gallery_size(string $img="") {
     return "<a href=\"../gallery/images/".$img."\" rel=\"lightbox[gallery_".(int)($img)."]\"><img src=\"../thumbgen.php?img=gallery/images/".$img."\" alt=\"\" /></a>";
 }
 
 //-> URL wird auf Richtigkeit ueberprueft
-function check_url($url) {
-    if($url && $fp = @fopen($url, "r")) {
+function check_url(string $url) {
+    if(!empty($url) && $fp = @fopen($url, "r")) {
         return true;
         @fclose($fp);
     }
@@ -1827,7 +1827,7 @@ function check_url($url) {
 }
 
 //-> Blaetterfunktion
-function nav($entrys, $perpage, $urlpart='', $icon=true) {
+function nav(int $entrys, int $perpage,string $urlpart='',bool $icon=true) {
     global $page;
     if($perpage == 0)
         return "&#xAB; <span class=\"fontSites\">0</span> &#xBB;";
@@ -1875,7 +1875,7 @@ function nav($entrys, $perpage, $urlpart='', $icon=true) {
 }
 
 //-> Funktion um Seiten-Anzahl der Artikel zu erhalten
-function artikelSites($sites, $id) {
+function artikelSites(int $sites, int $id) {
     global $part;
     $seiten = '';
     for($i=0;$i<$sites;$i++) {
@@ -1889,7 +1889,7 @@ function artikelSites($sites, $id) {
 }
 
 //-> Nickausgabe mit Profillink oder Emaillink (reg/nicht reg)
-function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
+function autor(int $uid,string $class="",string $nick="",string $email="", $cut="",string $add="") {
     global $db;
     if(!dbc_index::issetIndex('user_'.(int)($uid))) {
         $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($uid).";");
@@ -1911,7 +1911,7 @@ function autor($uid, $class="", $nick="", $email="", $cut="",$add="") {
                                   "nick" => $nickname));
 }
 
-function cleanautor($uid, $class="", $nick="", $email="", $cut="") {
+function cleanautor(int $uid, string $class="", string $nick="", string $email="", $cut="") {
     global $db;
     if(!dbc_index::issetIndex('user_'.(int)($uid))) {
         $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($uid).";");
@@ -1927,7 +1927,7 @@ function cleanautor($uid, $class="", $nick="", $email="", $cut="") {
                                           "class" => $class, "nick" => re(cut(dbc_index::getIndexKey('user_'.(int)($uid),'nick'),$cut,false,false))));
 }
 
-function rawautor($uid) {
+function rawautor(int $uid) {
     global $db;
     if(!dbc_index::issetIndex('user_'.(int)($uid))) {
         $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($uid).";");
@@ -1944,7 +1944,7 @@ function rawautor($uid) {
 }
 
 //-> Nickausgabe ohne Profillink oder Emaillink fr das ForenAbo
-function fabo_autor($uid) {
+function fabo_autor(int $uid) {
     global $db;
     $qry = db("SELECT `nick` FROM `".$db['users']."` WHERE `id` = ".$uid.";");
     if(_rows($qry)) {
@@ -1955,7 +1955,7 @@ function fabo_autor($uid) {
     return '';
 }
 
-function blank_autor($uid) {
+function blank_autor(int $uid) {
     global $db;
     $qry = db("SELECT `nick` FROM `".$db['users']."` WHERE `id` = ".$uid.";");
     if(_rows($qry)) {
@@ -1967,12 +1967,12 @@ function blank_autor($uid) {
 }
 
 //-> Rechte abfragen
-function jsconvert($txt) {
+function jsconvert(string $txt) {
     return str_replace(array("'","&#039;","\"","\r","\n"),array("\'","\'","&quot;","",""),$txt);
 }
 
 //-> interner Forencheck
-function fintern($id) {
+function fintern(int $id) {
     global $db,$userid,$chkMe;
     $sql = db("SELECT s1.`intern`,s2.`id` FROM `".$db['f_kats']."` AS `s1` LEFT JOIN `".$db['f_skats']."` AS `s2` ON s2.`sid` = s1.`id` WHERE s2.`id` = ".(int)($id).";");
     if(_rows($sql)) {
@@ -1991,7 +1991,7 @@ function fintern($id) {
 }
 
 //-> Einzelne Userdaten ermitteln
-function data($what,$tid=0) {
+function data(string $what,int $tid=0) {
     global $db,$userid;
     if(!$tid) $tid = $userid;
     if(!dbc_index::issetIndex('user_'.$tid)) {
@@ -2008,7 +2008,7 @@ function data($what,$tid=0) {
 }
 
 //-> Einzelne Userstatistiken ermitteln
-function userstats($what,$tid=0) {
+function userstats(string $what,int $tid=0) {
     global $db,$userid;
     if(!$tid) $tid = $userid;
     if(!dbc_index::issetIndex('userstats_'.$tid)) {
@@ -2025,7 +2025,7 @@ function userstats($what,$tid=0) {
 }
 
 //- Funktion zum versenden von Emails
-function sendMail($mailto,$subject,$content) {
+function sendMail(string $mailto,string $subject,string $content) {
     $mail = new PHPMailer(false);
     if(phpmailer_use_smtp) {
         $mail->isSMTP();
@@ -2078,10 +2078,11 @@ if(!$ajaxJob && HasDSGVO())
     check_msg_emal();
 
 //-> Checkt ob ein Ereignis neu ist
-function check_new($datum,$new = "",$datum2 = "") {
+function check_new(int $datum,string $new = "",int $datum2=0) {
     global $userid;
     if($userid) {
-        if($datum >= userstats('lastvisit') || $datum2 >= userstats('lastvisit'))
+        if($datum >= userstats('lastvisit') ||
+            $datum2 >= userstats('lastvisit'))
             return (empty($new) ? _newicon : $new);
     }
 
@@ -2089,7 +2090,7 @@ function check_new($datum,$new = "",$datum2 = "") {
 }
 
 //-> DropDown Mens Date/Time
-function dropdown($what, $wert, $age = 0) {
+function dropdown(string $what,int $wert,int $age = 0) {
     $return = '';
     if($what == "day") {
         $return = ($age == 1 ? '<option value="" class="dropdownKat">'._day.'</option>'."\n" : '');
@@ -2194,7 +2195,7 @@ function getgames() {
  * @param string $icon
  * @return array
  */
-function search_game_icon($icon='') {
+function search_game_icon(string $icon='') {
     global $picformat;
     $image = '../inc/images/gameicons/unknown.gif'; $found = false;
     foreach($picformat AS $end) {
@@ -2207,7 +2208,7 @@ function search_game_icon($icon='') {
     return array('image'=> $image, 'found'=> $found);
 }
 
-function listgame($games,$game) {
+function listgame(string $games,string $game) {
     $content = '';
     foreach ($games AS $sname => $info) {
         $selected = (!empty($game) && $game != false && $game == $sname ? 'selected="selected" ' : '');
@@ -2218,10 +2219,10 @@ function listgame($games,$game) {
 }
 
 //Umfrageantworten selektieren
-function voteanswer($what, $vid) {
+function voteanswer(string $what, int $vid) {
     global $db;
     $get = db("SELECT `sel` FROM `".$db['vote_results']."` WHERE `what` = '".up($what)."' AND `vid` = ".(int)$vid.";",false,true);
-    return $get['sel'];
+    return re($get['sel']);
 }
 
 //Profilfelder konvertieren
@@ -2243,12 +2244,12 @@ function getAge($bday) {
         else
             return $iCurrentYear - ($iYear + 1);
     }
-    else
-        return '-';
+
+    return '-';
 }
 
 //-> Ausgabe der Position des einzelnen Members
-function getrank($tid, $squad="", $profil=false) {
+function getrank(int $tid,int $squad=0,bool $profil=false) {
     global $db;
     if($squad) {
         if($profil)
@@ -2317,14 +2318,14 @@ function set_lastvisit() {
 }
 
 //-> Checkt welcher User gerade noch online ist
-function onlinecheck($tid) {
+function onlinecheck(int $tid) {
     global $db,$useronline;
     $row = db("SELECT `id` FROM `".$db['users']."` WHERE `id` = ".(int)($tid)." AND (time+".$useronline.") > ".time()." AND `online` = 1;",true);
     return $row ? "<img src=\"../inc/images/online.gif\" alt=\"\" class=\"icon\" />" : "<img src=\"../inc/images/offline.gif\" alt=\"\" class=\"icon\" />";
 }
 
 //Funktion fuer die Sprachdefinierung der Profilfelder
-function pfields_name($name) {
+function pfields_name(string $name) {
     return preg_replace_callback("=_(.*?)_=Uis",
         function($match) {
         if(defined("_profil".substr(trim($match[0]), 0, -1)))
@@ -2335,7 +2336,7 @@ function pfields_name($name) {
 }
 
 //-> Checkt versch. Dinge anhand der Hostmaske eines Users
-function ipcheck($what,$time = "") {
+function ipcheck(string $what,int $time = 0) {
     global $db,$userip;
     $get = db("SELECT `time`,`what` FROM `".$db['ipcheck']."` WHERE `what` = '".$what."' AND `ip` = '".$userip."' ORDER BY `time` DESC;",false,true);
     if(count($get) >= 1) {
@@ -2354,11 +2355,11 @@ function ipcheck($what,$time = "") {
 }
 
 //-> Gibt die Tageszahl eines Monats aus
-function days_in_month($month, $year)
+function days_in_month(int $month,int $year)
 { return $month == 2 ? ($year % 4 ? 28 : ($year % 100 ? 29 : ($year % 400 ? 28 : 29))) : (($month - 1) % 7 % 2 ? 30 : 31); }
 
 //-> Setzt bei einem Tag >10 eine 0 vorran (Kalender)
-function cal($i) {
+function cal(int $i) {
     if(preg_match("=10|20|30=Uis",$i) == FALSE) $i = preg_replace("=0=", "", $i);
     if($i < 10) $tag_nr = "0".$i;
     else $tag_nr = $i;
@@ -2366,19 +2367,15 @@ function cal($i) {
 }
 
 //-> Entfernt fuehrende Nullen bei Monatsangaben
-function nonum($i) {
+function nonum(int $i) {
     if(preg_match("=10=Uis",$i) == false)
         return preg_replace("=0=", "", $i);
 
     return $i;
 }
 
-//-> maskiert Zeilenumbrueche fuer <textarea>
-function txtArea($txt)
-{ return $txt; }
-
 //-> Konvertiert Platzhalter in die jeweiligen bersetzungen
-function navi_name($name) {
+function navi_name(string $name) {
     $name = trim($name);
     if(preg_match("#^_(.*?)_$#Uis",$name)) {
         $name = preg_replace("#_(.*?)_#Uis", "$1", $name);
@@ -2391,7 +2388,7 @@ function navi_name($name) {
 }
 
 //RSS News Feed erzeugen
-function convert_feed($txt) {
+function convert_feed(string $txt) {
     global $charset;
     $txt = stripslashes($txt);
     $txt = str_replace("&Auml;","Ae",$txt);
@@ -2417,7 +2414,7 @@ function convert_feed($txt) {
 }
 
 // Userpic ausgeben
-function userpic($userid, $width=170,$height=210) {
+function userpic(int $userid,int $width=170,int $height=210) {
     global $picformat; $pic = '';
     foreach($picformat as $endung) {
         if(file_exists(basePath."/inc/images/uploads/userpics/".$userid.".".$endung)) {
@@ -2432,7 +2429,7 @@ function userpic($userid, $width=170,$height=210) {
 }
 
 // Useravatar ausgeben
-function useravatar($uid=0, $width=100,$height=100) {
+function useravatar(int $uid=0,int $width=100,int $height=100) {
     global $picformat,$userid; $pic = '';
     $uid = $uid == 0 ? $userid : $uid;
     foreach($picformat as $endung) {
@@ -2449,7 +2446,7 @@ function useravatar($uid=0, $width=100,$height=100) {
 }
 
 // Userpic fuer Hoverinformationen ausgeben
-function hoveruserpic($userid, $width=170,$height=210) {
+function hoveruserpic(int $userid,int $width=170,int $height=210) {
     global $picformat;
     $pic = "../inc/images/nopic.gif', '".$width."', '".$height;
     foreach($picformat as $endung) {
@@ -2463,7 +2460,7 @@ function hoveruserpic($userid, $width=170,$height=210) {
 }
 
 // Adminberechtigungen ueberpruefen
-function admin_perms($userid) {
+function admin_perms(int $userid) {
     global $db,$chkMe;
     if(empty($userid))
         return false;
@@ -2505,7 +2502,7 @@ function admin_perms($userid) {
 }
 
 //-> filter placeholders
-function pholderreplace($pholder) {
+function pholderreplace(string $pholder) {
     /** @noinspection CssInvalidAtRule */
     $search = array('@<script[^>]*?>.*?</script>@si',
                     '@<style[^>]*?>.*?</style>@siU',
@@ -2568,7 +2565,7 @@ function generatetime() {
 }
 
 //-> Rechte abfragen
-function getPermissions($checkID = 0, $pos = 0) {
+function getPermissions(int $checkID = 0,int $pos = 0) {
     global $db,$lang;
 
     if(!empty($checkID)) {
@@ -2597,7 +2594,7 @@ function getPermissions($checkID = 0, $pos = 0) {
 }
 
 //-> interne Foren-Rechte abfragen
-function getBoardPermissions($checkID = 0, $pos = 0) {
+function getBoardPermissions(int $checkID = 0,int $pos = 0) {
     global $db;
 
     $break = 0; $i_forum = ''; $fkats = '';
@@ -2622,17 +2619,18 @@ function getBoardPermissions($checkID = 0, $pos = 0) {
 }
 
 //-> schreibe in die IPCheck Tabelle
-function setIpcheck($what = '',$time=true) {
+function setIpcheck(string $what = '',bool $time=true) {
     global $db, $userip;
     db("INSERT INTO `".$db['ipcheck']."` SET `ip` = '".$userip."', "
             . "`user_id` = ".userid().", `what` = '".$what."', "
             . "`time` = ".($time ? time() : 0).", `created` = ".time().";");
 }
 
-function is_php($version='5.3.0')
-{ return (floatval(phpversion()) >= $version); }
+function is_php(string $version='5.3.0') {
+    return (floatval(phpversion()) >= $version);
+}
 
-function hextobin($hexstr) {
+function hextobin(string $hexstr) {
     if(is_php('5.4.0'))
         return hex2bin($hexstr);
     // < PHP 5.4
@@ -2677,7 +2675,7 @@ final class dbc_index {
         self::$index[$index_key] = $data;
     }
 
-    public static final function getIndex($index_key) {
+    public static final function getIndex(string $index_key) {
         if(!self::issetIndex($index_key))
             return false;
 
@@ -2687,7 +2685,7 @@ final class dbc_index {
         return self::$index[$index_key];
     }
 
-    public static final function getIndexKey($index_key,$key) {
+    public static final function getIndexKey(string $index_key,string $key) {
         if(!self::issetIndex($index_key))
             return false;
 
@@ -2698,7 +2696,7 @@ final class dbc_index {
         return $data[$key];
     }
 
-    public static final function issetIndex($index_key) {
+    public static final function issetIndex(string $index_key) {
         global $cache;
         if(isset(self::$index[$index_key])) return true;
         if(self::MemSetIndex()) {
@@ -2747,7 +2745,7 @@ final class dbc_index {
  * @param string $standard * falls der timestamp 0 oder ungueltig ist, gebe diesen string zurueck
  * @return string
  */
-function get_elapsed_time( $timestamp, $aktuell = null, $anzahl_einheiten = null, $zeige_leere_einheiten = null, $zeige_einheiten = null, $standard = null ) {
+function get_elapsed_time(int $timestamp,int $aktuell = 0,int $anzahl_einheiten = 0,int $zeige_leere_einheiten = 0,int $zeige_einheiten = 0, $standard = null ) {
     if ( $aktuell === null ) $aktuell = time();
     if ( $anzahl_einheiten === null ) $anzahl_einheiten = 1;
     if ( $zeige_leere_einheiten === null ) $zeige_leere_einheiten = true;
@@ -2812,7 +2810,7 @@ if($functions_files = get_files(basePath.'/inc/additional-functions/',false,true
 include_once(basePath.'/inc/menu-functions/navi.php');
 
 //-> Ausgabe des Indextemplates
-function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
+function page(string $index='',string $title='',string $where='',string $wysiwyg='',string $index_templ='index')
 {
     global $db,$userid,$userip,$tmpdir,$chkMe,$charset,$mysql,$isSpider;
     global $designpath,$cp_color,$time_start;
@@ -2822,7 +2820,7 @@ function page($index='',$title='',$where='',$wysiwyg='',$index_templ='index')
 
     // JS-Dateine einbinden
     $lng = language_short_tag(); $login = '';
-    $edr = ($wysiwyg=='_word')?'advanced':'normal';
+    $edr = ($wysiwyg=='_word') ? 'advanced' : 'normal';
     $lcolor = ($cp_color==1)?'lcolor=true;':'';
     $dsgvo = (!array_key_exists('do_show_dsgvo',$_SESSION) || !$_SESSION['do_show_dsgvo'] ? 1 : 0);
     $dsgvo_lock = (!array_key_exists('user_has_dsgvo_lock',$_SESSION) || !$_SESSION['user_has_dsgvo_lock'] ? 0 : 1);

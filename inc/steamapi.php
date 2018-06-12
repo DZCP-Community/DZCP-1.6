@@ -23,11 +23,20 @@ class SteamAPI {
      * @param string $key
      * @param string $var
     */
-    public static function set($key='',$var='') {
+    public static function set(string $key='',string $var='') {
         switch($key) {
-            case 'apikey': self::$api_key = $var; return true; break;
-            case 'apiurl': self::$api_host = $var; return true; break;
-            case 'profileurl': self::$api_com = $var; return true; break;
+            case 'apikey':
+                self::$api_key = $var;
+                return true;
+            break;
+            case 'apiurl':
+                self::$api_host = $var;
+                return true;
+                break;
+            case 'profileurl':
+                self::$api_com = $var;
+                return true;
+                break;
         }
 
         return false;
@@ -39,7 +48,7 @@ class SteamAPI {
      * @param string $custom_profile_url
      * @return boolean|array:
      */
-    public static function getUserInfos($custom_profile_url) {
+    public static function getUserInfos(string $custom_profile_url = '') {
         if(empty($custom_profile_url)) {
             DebugConsole::insert_warning('SteamAPI::getUserInfos()', 'There was no specified Steam Profile-URL');
             return false;
@@ -110,7 +119,7 @@ class SteamAPI {
      *
      * @return boolean
      */
-    private static final function get_api($interface='ISteamUser',$method='GetPlayerSummaries',$version='v0002') {
+    private static final function get_api(string $interface='ISteamUser',string $method='GetPlayerSummaries',string $version='v0002') {
         global $cache;
         if(empty(self::$api_key) || empty(self::$user_data['steamID'])) return false;
         $cache_tag = md5('steam_api_'.$interface.'_'.$method.'_'.self::$profile_url);
@@ -163,7 +172,7 @@ class SteamAPI {
      *
      * @return boolean
      */
-    private static final function get_steamcommunity($zone='',$xml='profile') {
+    private static final function get_steamcommunity(string $zone='',string $xml='profile') {
         global $cache;
         $zone_url = !empty($zone) ? '/'.$zone.'/' : ''; $zone_tag = !empty($zone) ? $zone.'_' : 'profile';
         $CachedString = $cache->getItem(md5('steam_'.self::$profile_url));
@@ -217,6 +226,7 @@ class SteamAPI {
         return false;
     }
 
-    public static final function objectToArray($d)
-    { return json_decode(json_encode($d, JSON_FORCE_OBJECT), true); }
+    public static final function objectToArray($d) {
+        return json_decode(json_encode($d, JSON_FORCE_OBJECT), true);
+    }
 }
