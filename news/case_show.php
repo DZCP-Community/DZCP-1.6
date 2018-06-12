@@ -240,7 +240,7 @@ if(defined('_News')) {
                                                                              "postemail" => $_POST['email'],
                                                                              "posthp" => links($_POST['hp']),
                                                                              "postnick" => re($_POST['nick']),
-                                                                             "posteintrag" => re_bbcode($_POST['comment']),
+                                                                             "posteintrag" => re_bbcode(re($_POST['comment'],true)),
                                                                              "error" => $error,
                                                                              "eintraghead" => _eintrag));
                                 } else {
@@ -319,7 +319,7 @@ if(defined('_News')) {
                                                                  "id" => $_GET['id'],
                                                                  "what" => _button_value_edit,
                                                                  "show" => "",
-                                                                 "posteintrag" => re_bbcode($get['comment']),
+                                                                 "posteintrag" => re_bbcode(re($get['comment'])),
                                                                  "error" => "",
                                                                  "eintraghead" => _eintrag));
                     }

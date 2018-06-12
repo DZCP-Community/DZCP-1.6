@@ -1001,7 +1001,7 @@ function bbcode(string $txt,bool $tinymce=false,bool $no_vid=false,bool $ts=fals
     $txt = BadwordFilter($txt);
     $txt = replace($txt,$tinymce,$no_vid);
     $txt = highlight_text($txt);
-    $txt = re_bbcode($txt);
+    $txt = re_bbcode(strval($txt));
 
     if(!$ts)
         $txt = strip_tags($txt,"<br><object><em><param><embed><strong><iframe><hr><table><tr><td><div><span><a><b><i><u><p><ul><ol><li><br /><img>");
@@ -1038,7 +1038,7 @@ function bbcode_html(string $txt,bool $tinymce=false) {
     $txt = BadwordFilter($txt);
     $txt = replace($txt,$tinymce);
     $txt = highlight_text($txt);
-    $txt = re_bbcode($txt);
+    $txt = re_bbcode(strval($txt));
     $txt = smileys($txt);
     $txt = glossar($txt);
     return str_replace("&#34;","\"",$txt);

@@ -256,7 +256,7 @@ switch ($action):
                                     "posthp" => links($_POST['hp']),
                                     "postnick" => re($_POST['nick']),
                                     "show" => "",
-                                    "posteintrag" => re_bbcode($_POST['comment']),
+                                    "posteintrag" => re_bbcode(re($_POST['comment'],true)),
                                     "error" => $error,
                                     "eintraghead" => _eintrag));
                             } else {
@@ -335,7 +335,7 @@ switch ($action):
                         "id" => $_GET['id'],
                         "what" => _button_value_edit,
                         "show" => "",
-                        "posteintrag" => re_bbcode($get['comment']),
+                        "posteintrag" => re_bbcode(re($get['comment'])),
                         "error" => "",
                         "eintraghead" => _eintrag));
                 } else {

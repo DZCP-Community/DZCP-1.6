@@ -16,7 +16,7 @@ if(_adminMenu != 'true') exit;
                                                   "domain" => re($get['i_domain']),
                                                   "bbcode" => bbcode("seitenautor"),
                                                   "iautor" => _config_impressum_autor,
-                                                  "postautor" => re_bbcode($get['i_autor'])));
+                                                  "postautor" => re_bbcode(re($get['i_autor']))));
 
       $show = show($dir."/imp", array("head" => _config_impressum_head,
                                       "what" => "impressum",

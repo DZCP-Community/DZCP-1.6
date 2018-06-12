@@ -388,7 +388,7 @@ if(defined('_UserMenu')) {
                         "postemail" => re($get['email']),
                         "posthp" => $get['hp'],
                         "postnick" => re($get['nick']),
-                        "posteintrag" => re_bbcode($get['nachricht']),
+                        "posteintrag" => re_bbcode(re($get['nachricht'])),
                         "error" => $error,
                         "ip" => _iplog_info,
                         "eintraghead" => _eintrag));

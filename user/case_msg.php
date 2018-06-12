@@ -273,7 +273,7 @@ if(defined('_UserMenu')) {
                     "an" => _to,
                     "or" => _or,
                     "posttitel" => re($_POST['titel']),
-                    "posteintrag" => re_bbcode($_POST['eintrag']),
+                    "posteintrag" => re_bbcode(strval($_POST['eintrag'])),
                     "postto" => $_POST['buddys']."".$_POST['users'],
                     "buddys" => $buddys,
                     "value" => _button_value_msg,

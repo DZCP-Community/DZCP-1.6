@@ -350,7 +350,7 @@ if(defined('_Clanwars')) {
                                 "postemail" => isset($_POST['email']) ? $_POST['email'] : '',
                                 "posthp" => isset($_POST['hp']) ? links($_POST['hp']) : '',
                                 "postnick" => isset($_POST['nick']) ? re($_POST['nick']) : '',
-                                "posteintrag" => re_bbcode($_POST['comment']),
+                                "posteintrag" => re_bbcode(re($_POST['comment'],true)),
                                 "error" => $error,
                                 "eintraghead" => _eintrag));
                         } else {
@@ -449,7 +449,7 @@ if(defined('_Clanwars')) {
                     "id" => $_GET['id'],
                     "what" => _button_value_edit,
                     "show" => "",
-                    "posteintrag" => re_bbcode($get['comment']),
+                    "posteintrag" => re_bbcode(re($get['comment'])),
                     "error" => "",
                     "eintraghead" => _eintrag));
             }

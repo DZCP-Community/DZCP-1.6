@@ -61,7 +61,7 @@ if(_adminMenu != 'true') exit;
                                                 "what" => _button_value_edit,
                                                 "do" => "editevent&amp;id=".$_GET['id'],
                                                 "k_event" => re($get['title']),
-                                                "k_beschreibung" => re_bbcode($get['event']),
+                                                "k_beschreibung" => re_bbcode(re($get['event'])),
                                                 "head" => _kalender_admin_head_edit));
     } elseif($do == "editevent") {
       if(empty($_POST['title']) || empty($_POST['event']))

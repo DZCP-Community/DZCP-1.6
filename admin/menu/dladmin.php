@@ -91,7 +91,7 @@ if(_adminMenu != 'true') exit;
                                             "nothing" => _nothing,
                                             "nofile" => _downloads_nofile,
                                             "oder" => _or,
-                                            "dbeschreibung" => re_bbcode($get['beschreibung']),
+                                            "dbeschreibung" => re_bbcode(re($get['beschreibung'])),
                                             "kat" => _downloads_kat,
                                             "what" => _button_value_edit,
                                             "do" => "editdl&amp;id=".$_GET['id']."",

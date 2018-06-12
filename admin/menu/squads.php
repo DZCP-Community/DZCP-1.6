@@ -387,7 +387,7 @@ switch ($do) {
                                                 "image" => $image,
                                                 "logoimage" => $logoimage,
                                                 "desc" => _dl_besch,
-                                                "beschreibung" => re_bbcode($get['beschreibung']),
+                                                "beschreibung" => re_bbcode(re($get['beschreibung'])),
                                                 "cstatus" => $status,
                                                 "first" => _admin_first,
                                                 "info" => _admin_squad_show_info,

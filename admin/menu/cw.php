@@ -153,7 +153,7 @@ ORDER BY game");
                                            "cw_serverpwd" => re($get['serverpwd']),
                                            "cw_punkte" => $get['punkte'],
                                            "cw_gpunkte" => $get['gpunkte'],
-                                           "cw_bericht" => re_bbcode($get['bericht']),
+                                           "cw_bericht" => re_bbcode(re($get['bericht'])),
                                            "day" => date("d", $get['datum']),
    "dropdown_date" => $dropdown_date,
    "dropdown_time" => $dropdown_time,

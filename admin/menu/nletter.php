@@ -55,7 +55,7 @@ if($do == 'preview')
             "leader" => _msg_leader,
             "squad" => _msg_global_squad,
             "squads" => $squads,
-            "posteintrag" => re_bbcode($_POST['eintrag']),
+            "posteintrag" => re_bbcode(re($_POST['eintrag'],true)),
             "titel" => _nletter_head,
             "nickhead" => _nick,
             "bbcodehead" => _bbcode,

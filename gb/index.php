@@ -205,7 +205,7 @@ switch ($action):
                     "postemail" => $_POST['email'],
                     "posthp" => links($_POST['hp']),
                     "postnick" => $_POST['nick'],
-                    "posteintrag" => re_bbcode($_POST["eintrag"]),
+                    "posteintrag" => re_bbcode(re($_POST["eintrag"],true)),
                     "error" => $error,
                     "eintraghead" => _eintrag));
             } else {
@@ -290,7 +290,7 @@ switch ($action):
                     "preview" => _preview,
                     "id" => $get['id'],
                     "form" => $form,
-                    "posteintrag" => re_bbcode($get['nachricht']),
+                    "posteintrag" => re_bbcode(re($get['nachricht'])),
                     "ip" => _iplog_info,
                     "error" => "",
                     "eintraghead" => _eintrag));

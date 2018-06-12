@@ -58,7 +58,7 @@ if(defined('_UserMenu')) {
                     "postemail" => $_POST['email'],
                     "posthp" => $_POST['hp'],
                     "postnick" => re($_POST['nick']),
-                    "posteintrag" => re_bbcode($_POST['eintrag']),
+                    "posteintrag" => re_bbcode(re($_POST['eintrag'],true)),
                     "error" => $error,
                     "ip" => _iplog_info,
                     "eintraghead" => _eintrag));

@@ -39,7 +39,7 @@ if($do == 'add')
         "link" => _glossar_bez,
         "beschreibung" => _glossar_erkl,
         "llink" => re($get['word']),
-        "lbeschreibung" => re_bbcode($get['glossar']),
+        "lbeschreibung" => re_bbcode(re($get['glossar'])),
         "do" => "update&amp;id=".$_GET['id'],
         "value" => _button_value_edit
     ));
