@@ -205,7 +205,7 @@ switch ($action):
                                                                             "page" => $pagenr));
 
                     $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
-                    $results .= show($dir."/forum_search_results", array("new" => check_new($get['lp']),
+                    $results .= show($dir."/forum_search_results", array("new" => (check_new((int)get['lp']) ? _newicon : ''),
                                                                              "topic" => $threadlink,
                                                                              "subtopic" => cut(re($get['subtopic']),config('l_forumsubtopic'),true,false),
                                                                              "hits" => $get['hits'],

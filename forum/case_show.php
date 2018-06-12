@@ -95,7 +95,7 @@ if(defined('_Forum')) {
             }
 
             $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
-            $threads .= show($dir."/forum_show_threads", array("new" => check_new($get['lp']),
+            $threads .= show($dir."/forum_show_threads", array("new" => (check_new((int)$get['lp']) ? _newicon : ''),
                 "topic" => $threadlink,
                 "subtopic" => re(cut($get['subtopic'],config('l_forumsubtopic'),true,false)),
                 "hits" => $get['hits'],

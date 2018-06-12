@@ -2078,15 +2078,16 @@ if(!$ajaxJob && HasDSGVO())
     check_msg_emal();
 
 //-> Checkt ob ein Ereignis neu ist
-function check_new(int $datum,string $new = "",int $datum2=0) {
+function check_new(int $datum) {
     global $userid;
     if($userid) {
         if($datum >= userstats('lastvisit') ||
-            $datum2 >= userstats('lastvisit'))
-            return (empty($new) ? _newicon : $new);
+            !userstats('lastvisit')) {
+            return true;
+        }
     }
 
-    return empty($new) ? false : '';
+    return false;
 }
 
 //-> DropDown Mens Date/Time
