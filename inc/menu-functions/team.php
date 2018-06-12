@@ -8,24 +8,25 @@ function team($tID = '') {
     global $db;
 
     if(!empty($tID))
-        $where = "WHERE `id` = '".(int)($tID)."' AND `navi` = 1";
+        $where = "WHERE `id` = ".(int)($tID)." AND `navi` = 1;";
     else
-        $where = "WHERE `navi` = '1' ORDER BY RAND()";
+        $where = "WHERE `navi` = 1 ORDER BY RAND();";
 
-    $get = db("SELECT `id`,`name` FROM ".$db['squads']." ".$where."",false,true);
+    $get = db("SELECT `id`,`name` FROM `".$db['squads']."` ".$where.";",false,true);
 
     //Members
-    $qrym = db("SELECT s1.squad,s2.id,s2.level,s2.nick,s2.status,s2.rlname,s2.bday,s4.position
-                FROM ".$db['squaduser']." AS s1
-                LEFT JOIN ".$db['users']." AS s2
-                ON s2.id=s1.user
-                LEFT JOIN ".$db['userpos']." AS s3
-                ON s3.squad=s1.squad AND s3.user=s1.user
-                LEFT JOIN ".$db['pos']." AS s4
-                ON s4.id=s3.posi
-                WHERE s1.squad='".$get['id']."'
-                AND s2.level != 0
-                ORDER BY s4.pid");
+    $qrym = db("SELECT s1.`squad`,s2.`id`,s2.`level`,s2.`nick`,s2.`status`,s2.`rlname`,s2.`bday`,s4.`position` ".
+        "FROM `".$db['squaduser']."` AS `s1` ".
+        "LEFT JOIN `".$db['users']."` AS `s2` ".
+        "ON s2.`id`=s1.`user` ".
+        "LEFT JOIN `".$db['userpos']."` AS `s3` ".
+        "ON s3.squad=s1.`squad` AND s3.user=s1.`user` ".
+        "LEFT JOIN ".$db['pos']." AS s4 ".
+        "ON s4.`id` = s3.`posi` ".
+        "WHERE s1.squad= ".$get['id']." ".
+        "AND s2.`level` != 0 ".
+        "AND s2.`dsgvo_lock` = 0 ".
+        "ORDER BY s4.`pid`;");
 
     $i=1; $cnt=0; $member = '';
     while($getm = _fetch($qrym)) {
@@ -46,8 +47,7 @@ function team($tID = '') {
                                                 "info" => $info,
                                                 "id" => $getm['id'],
                                                 "width" => round(100/config('teamrow'),0)));
-        $i++;
-        $cnt++;
+        $i++; $cnt++;
     }
 
     $end = '';
@@ -61,15 +61,15 @@ function team($tID = '') {
 
     // Next / last ID
     $all = cnt($db['squads'], "WHERE `navi` = '1'");
-    $next = db("SELECT `id` FROM ".$db['squads']." WHERE `navi` = '1' AND `id` > '".$get['id']."' ORDER BY `id` ASC LIMIT 1",false,true);
+    $next = db("SELECT `id` FROM `".$db['squads']."` WHERE `navi` = 1 AND `id` > ".$get['id']." ORDER BY `id` ASC LIMIT 1;",false,true);
 
     if(empty($next))
-        $next = db("SELECT `id` FROM ".$db['squads']." WHERE `navi` = '1' ORDER BY `id` ASC LIMIT 1",false,true);
+        $next = db("SELECT `id` FROM `".$db['squads']."` WHERE `navi` = 1 ORDER BY `id` ASC LIMIT 1;",false,true);
 
-    $last = db("SELECT `id` FROM ".$db['squads']." WHERE `navi` = '1' AND `id` < '".$get['id']."' ORDER BY `id` DESC LIMIT 1",false,true);
+    $last = db("SELECT `id` FROM `".$db['squads']."` WHERE `navi` = 1 AND `id` < ".$get['id']." ORDER BY `id` DESC LIMIT 1;",false,true);
 
     if(empty($last))
-        $last = db("SELECT `id` FROM ".$db['squads']." WHERE `navi` = '1' ORDER BY `id` DESC LIMIT 1",false,true);
+        $last = db("SELECT `id` FROM `".$db['squads']."` WHERE `navi` = 1 ORDER BY `id` DESC LIMIT 1;",false,true);
 
     //Output
     $team = show("menu/team", array("row" => config('teamrow'),

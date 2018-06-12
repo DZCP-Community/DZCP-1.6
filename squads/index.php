@@ -97,7 +97,7 @@ switch(strtolower($action)):
             "id"   => (int)($_GET['id'])));
         break;
     default;
-        $qry = db("SELECT * FROM ".$db['squads']." WHERE team_show = 1 ORDER BY pos");
+        $qry = db("SELECT `id`,`name`,`icon`,`beschreibung` FROM `".$db['squads']."` WHERE `team_show` = 1 ORDER BY `pos`;");
         while($get = _fetch($qry)) {
             $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
             $squad = show(_gameicon, array("icon" => $get['icon'])).' '.re($get['name']); $style = '';
@@ -114,13 +114,30 @@ switch(strtolower($action)):
                 "squad" => $squad,
                 "style" => $style,
                 "class" => $class,
-                "beschreibung" => bbcode($get['beschreibung']),
+                "beschreibung" => bbcode(re($get['beschreibung'])),
                 "squadname" => re($get['name'])));
         }
 
-        $cntm = db("SELECT * FROM ".$db['squaduser']." GROUP BY user");
-        $weare = show(_member_squad_weare, array("cm" => _rows($cntm), "cs" => cnt($db['squads'], "WHERE team_show = 1")));
-        $index = show($dir."/squads", array("squadhead" => _member_squad_head, "weare" => $weare, "show" => $show));
+        $cnt = array('num' => 0);
+        $cnt_sql = db("SELECT COUNT(s1.`user`) AS `num` ".
+            "FROM `".$db['squaduser']."` AS `s1` ".
+            "LEFT JOIN `".$db['users']."` AS `s2` ".
+            "ON s2.`id` = s1.`user` ".
+            "WHERE s2.`level` != 0 ".
+            "AND s2.`dsgvo_lock` = 0 ".
+            "ORDER BY s1.`user`;");
+        if(_rows($cnt_sql)) {
+            $cnt = _fetch($cnt_sql);
+        } unset($cnt_sql);
+
+        $weare = show(_member_squad_weare, array(
+            "cm" => $cnt['num'],
+            "cs" => cnt($db['squads'], "WHERE team_show = 1")));
+
+        $index = show($dir."/squads", array(
+            "squadhead" => _member_squad_head,
+            "weare" => $weare,
+            "show" => $show));
         break;
 endswitch;
 
