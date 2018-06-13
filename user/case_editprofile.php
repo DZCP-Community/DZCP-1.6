@@ -77,7 +77,7 @@ if(defined('_UserMenu')) {
                 while($getcustom = _fetch($qrycustom))
                 {
                     if($getcustom['type'] == 2)
-                        $customfields .= " ".$getcustom['feldname']." = '".up(links($_POST[$getcustom['feldname']]))."', ";
+                        $customfields .= " ".$getcustom['feldname']." = '".up(links(re($_POST[$getcustom['feldname']],true)))."', ";
                     else
                         $customfields .= " ".$getcustom['feldname']." = '".up($_POST[$getcustom['feldname']])."', ";
                 }
@@ -95,7 +95,7 @@ if(defined('_UserMenu')) {
                   `pnmail`       = ".((int)$_POST['pnmail']).",
                   `city`         = '".up($_POST['city'])."',
                   `gmaps_koord`  = '".up($_POST['gmaps_koord'])."',
-                  `hp`           = '".up(links($_POST['hp']))."',
+                  `hp`           = '".up(links(re($_POST['hp'],true)))."',
                   `icq`          = ".((int)$icq).",
                   `hlswid`       = '".up(trim($_POST['hlswid']))."',
                   `xboxid`       = '".up(trim($_POST['xboxid']))."',
@@ -117,14 +117,14 @@ if(defined('_UserMenu')) {
             db("UPDATE ".$db['f_threads']."
                                      SET `t_nick`   = '".$getdel['nick']."',
                                              `t_email`  = '".$getdel['email']."',
-                                             `t_hp`     = '".links($getdel['hp'])."',
+                                             `t_hp`     = '".up(links(re($getdel['hp'])))."',
                                              `t_reg`    = 0
                                      WHERE t_reg = '".(int)($getdel['id'])."'");
 
             db("UPDATE ".$db['f_posts']."
                                      SET `nick`   = '".$getdel['nick']."',
                                              `email`  = '".$getdel['email']."',
-                                             `hp`            = '".links($getdel['hp'])."',
+                                             `hp`            = '".up(links(re($getdel['hp'])))."',
                                              `reg`        = '0'
                                      WHERE reg = '".(int)($getdel['id'])."'");
 
@@ -247,8 +247,8 @@ if(defined('_UserMenu')) {
 
             //IP-Check Loop
             foreach ($ips as $ip => $null) {
-                if(!validateIpV4Range($ip, array('[192].[168].[0-255].[0-255]','[127].[0].[0-255].[0-255]',
-                    '[10].[0-255].[0-255].[0-255]','[172].[16-31].[0-255].[0-255]'))) {
+                if(!validateIpV4Range($ip, ['[192].[168].[0-255].[0-255]','[127].[0].[0-255].[0-255]',
+                    '[10].[0-255].[0-255].[0-255]','[172].[16-31].[0-255].[0-255]'])) {
                     db("DELETE FROM `" . $db['acomments'] . "` WHERE `ip` = '" . $ip . "';");
                     db("DELETE FROM `" . $db['c_ips'] . "` WHERE `ip` = '" . $ip . "';");
                     db("DELETE FROM `" . $db['c_who'] . "` WHERE `ip` = '" . $ip . "';");

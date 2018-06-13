@@ -107,7 +107,7 @@ if(defined('_Forum')) {
                     " `nick` = '".up($_POST['nick']).
                     "',`email` = '".up($_POST['email']).
                     "',`text` = '".up($_POST['eintrag']).
-                    "',`hp` = '".up(links($_POST['hp'])).
+                    "',`hp` = '".up(links(re($_POST['hp'],true))).
                     "',`edited` = '".addslashes($editedby).
                     "' WHERE `id` = ".(int)($_GET['id']).";");
 
@@ -677,7 +677,7 @@ if(defined('_Forum')) {
                         ", `date` = ".time().
                         ", `nick`  = '".(isset($_POST['nick']) && !empty($_POST['nick']) ? up($_POST['nick']) : '')."'".
                         ", `email` = '".(isset($_POST['email']) && !empty($_POST['email']) ? up($_POST['email']) : '')."'".
-                        ", `hp` = '".(isset($_POST['hp']) && !empty($_POST['hp']) ? up(links($_POST['hp'])) : '')."'".
+                        ", `hp` = '".(isset($_POST['hp']) && !empty($_POST['hp']) ? up(links(re($_POST['hp'],true))) : '')."'".
                         ", `reg`   = '".up($userid)."'".
                         ", `text`  = '".up($_POST['eintrag'])."'".
                         ", `ip`    = '".$userip."';");

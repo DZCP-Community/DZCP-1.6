@@ -57,7 +57,7 @@ ob_implicit_flush(false);
         switch($steam['user']['onlineState']) {
             case 'in-game': $status_set = '2'; $text_1 = _steam_in_game; $text_2 = $steam['user']['gameextrainfo']; break;
             case 'online': $status_set = '1'; $text_1 = _steam_online; $text_2 = ''; break;
-            default: $status_set = '0'; $text_1 = $steam['user']['runnedSteamAPI'] ? show(_steam_offline,array('time' => get_elapsed_time($steam['user']['lastlogoff'],time(),1))) : _steam_offline_simple; $text_2 = ''; break;
+            default: $status_set = '0'; $text_1 = $steam['user']['runnedSteamAPI'] ? show(_steam_offline,array('time' => get_elapsed_time((int)$steam['user']['lastlogoff'],time(),1))) : _steam_offline_simple; $text_2 = ''; break;
         }
 
         return show((isset($_GET['list']) ? _steamicon_nouser : _steamicon), array('profile_url' => $steam['user']['profile_url'],'username' => $steam['user']['nickname'],'avatar_url' => $steam['user']['avatarIcon_url'],

@@ -91,7 +91,7 @@ switch ($action):
                 db("INSERT INTO " . $db['serverliste'] . "
                           SET `datum`     = '" . time() . "',
                               `clanname`  = '" . up($_POST['clanname']) . "',
-                              `clanurl`   = '" . links($_POST['clanurl']) . "',
+                              `clanurl`   = '" . up(links(re($_POST['clanurl'],true))) . "',
                               `ip`        = '" . up($_POST['ip']) . "',
                               `port`      = '" . ((int)$_POST['port']) . "',
                               `pwd`       = '" . up($_POST['pwd']) . "',

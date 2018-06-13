@@ -118,7 +118,7 @@ switch ($action):
                         "head" => _news_send));
 
                 } else {
-                    $hp = show(_contact_hp, array("hp" => links($_POST['hp'])));
+                    $hp = show(_contact_hp, array("hp" => links(re($_POST['hp'],true))));
                     if (!$userid) $nick = $_POST['nick'];
                     else $nick = blank_autor($userid);
                     if (!$userid) $von_nick = "0";

@@ -48,7 +48,7 @@ switch ($do)
             "`country` = '".up($_POST['country'])."', ".
             "`e-mail` = '".up($_POST['e-mail'])."', ".
             "`phone` = '".up($_POST['phone'])."', ".
-            "`website` = '".up(links($_POST['website']))."' ".
+            "`website` = '".up(links(re($_POST['website'],true)))."' ".
             "WHERE `id` = ".(int)$_GET['id'].";");
             $show = info(_config_set, "?admin=datenschutz", 4);
         } else {

@@ -14,7 +14,6 @@ if(defined('_UserMenu')) {
         while($get = _fetch($qry)) {
             $pn = show(_pn_write, array("id" => $get['buddy'], "nick" => data("nick",$get['buddy'])));
             $delete = show(_buddys_delete, array("id" => $get['buddy']));
-            $yesnocheck = db("SELECT * FROM ".$db['buddys']." where user = '".$get['buddy']."' AND buddy = '".$userid."'");
             $too = db("SELECT * FROM ".$db['buddys']." where user = '".$get['buddy']."' AND buddy = '".$userid."'",true) ? _buddys_yesicon : _buddys_noicon;
 
             $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
@@ -26,9 +25,7 @@ if(defined('_UserMenu')) {
                                                        "delete" => $delete));
         }
 
-        $qry = db("SELECT id,nick FROM ".$db['users']."
-                   WHERE level != 0
-                   ORDER BY nick");
+        $qry = db("SELECT `id`,`nick` FROM `".$db['users']."` WHERE `level` != 0 ORDER BY `nick`;");
         $users = "";
         while($get = _fetch($qry)) {
             $users .= show(_to_users, array("id" => $get['id'],
@@ -57,24 +54,18 @@ if(defined('_UserMenu')) {
         if($do == "add") {
             if($_POST['users'] == "-") {
                 $index = error(_error_select_buddy, 1);
-            } elseif($_POST['users'] == $userid) {
+            } elseif((int)$_POST['users'] == $userid) {
                 $index = error(_error_buddy_self, 1);
-            } elseif(!check_buddy($_POST['users'])) {
+            } elseif(!check_buddy((int)$_POST['users'])) {
                 $index = error(_error_buddy_already_in, 1);
             } else {
-                $qry = db("INSERT INTO ".$db['buddys']."
-                           SET `user`   = '".((int)$userid)."',
-                               `buddy`  = '".((int)$_POST['users'])."'");
+                db("INSERT INTO `".$db['buddys']."` SET `user`   = ".((int)$userid).", `buddy`  = ".((int)$_POST['users']).";");
 
                 $msg = show(_buddy_added_msg, array("user" => autor($userid)));
                 $title = _buddy_title;
 
-                db("INSERT INTO ".$db['msg']."
-                    SET `datum`     = '".time()."',
-                        `von`       = '0',
-                        `an`        = '".((int)$_POST['users'])."',
-                        `titel`     = '".up($title)."',
-                        `nachricht` = '".up($msg)."'");
+                db("INSERT INTO `".$db['msg']."` SET `datum` = ".time().", `von` = 0, `an` = ".
+                    ((int)$_POST['users']).", `titel` = '".up($title)."', `nachricht` = '".up($msg)."';");
 
                 $index = info(_add_buddy_successful, "?action=buddys");
             }
@@ -87,36 +78,24 @@ if(defined('_UserMenu')) {
             } elseif(!check_buddy($user)) {
                 $index = error(_error_buddy_already_in, 1);
             } else {
-                db("INSERT INTO ".$db['buddys']."
-                    SET `user`   = '".((int)$userid)."',
-                        `buddy`  = '".((int)$user)."'");
+                db("INSERT INTO `".$db['buddys']."` SET `user` = ".((int)$userid).", `buddy` = ".((int)$user).";");
 
                 $msg = show(_buddy_added_msg, array("user" => addslashes(autor($userid))));
                 $title = _buddy_title;
 
-                db("INSERT INTO ".$db['msg']."
-                    SET `datum`     = '".time()."',
-                        `von`       = '0',
-                        `an`        = '".((int)$user)."',
-                        `titel`     = '".up($title)."',
-                        `nachricht` = '".up($msg)."'");
+                db("INSERT INTO `".$db['msg']."` SET `datum` = ".time().",`von` = 0, `an` = ".
+                    ((int)$user).", `titel` = '".up($title)."', `nachricht` = '".up($msg)."';");
 
                 $index = info(_add_buddy_successful, "?action=buddys");
             }
         } elseif($do == "delete") {
-            db("DELETE FROM ".$db['buddys']."
-                WHERE buddy = ".((int)$_GET['id'])."
-                AND user = '".$userid."'");
+            db("DELETE FROM `".$db['buddys']."` WHERE `buddy` = ".((int)$_GET['id'])." AND `user` = ".$userid.";");
 
             $msg = show(_buddy_del_msg, array("user" => addslashes(autor($userid))));
             $title = _buddy_title;
 
-            db("INSERT INTO ".$db['msg']."
-                SET `datum`     = '".time()."',
-                    `von`       = '0',
-                    `an`        = '".((int)$_GET['id'])."',
-                    `titel`     = '".up($title)."',
-                    `nachricht` = '".up($msg)."'");
+            db("INSERT INTO `".$db['msg']."` SET `datum` = ".time().", `von` = 0, `an` = ".
+                ((int)$_GET['id']).", `titel` = '".up($title)."', `nachricht` = '".up($msg)."';");
 
             $index = info(_buddys_delete_successful, "../user/?action=buddys");
         }

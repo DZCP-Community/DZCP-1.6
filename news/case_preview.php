@@ -19,21 +19,21 @@ if(defined('_News')) {
         if(!empty($_POST['url1'])) {
             $rel = _related_links;
             $links1 = show(_news_link, array("link" => re($_POST['link1']),
-                                             "url" => links($_POST['url1'])));
+                                             "url" => links(re($_POST['url1'],true))));
         }
 
         $links2 = "";
         if(!empty($_POST['url2'])) {
             $rel = _related_links;
             $links2 = show(_news_link, array("link" => re($_POST['link2']),
-                                             "url" => links($_POST['url2'])));
+                                             "url" => links(re($_POST['url2'],true))));
         }
 
         $links3 = "";
         if(!empty($_POST['url3'])) {
             $rel = _related_links;
             $links3 = show(_news_link, array("link" => re($_POST['link3']),
-                                             "url" => links($_POST['url3'])));
+                                             "url" => links(re($_POST['url3'],true))));
         }
 
         $links = '';

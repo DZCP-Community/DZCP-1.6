@@ -171,9 +171,9 @@ switch ($do) {
                     `link1`      = '".up($_POST['link1'])."',
                     `link2`      = '".up($_POST['link2'])."',
                     `link3`      = '".up($_POST['link3'])."',
-                    `url1`       = '".links($_POST['url1'])."',
-                    `url2`       = '".links($_POST['url2'])."',
-                    `url3`       = '".links($_POST['url3'])."',
+                    `url1`       = '".up(links(re($_POST['url1'],true)))."',
+                    `url2`       = '".up(links(re($_POST['url2'],true)))."',
+                    `url3`       = '".up(links(re($_POST['url3'],true)))."',
                     `intern`     = '".((int)$_POST['intern'])."',
                     ".$timeshift."
                     ".$public."
@@ -293,23 +293,23 @@ switch ($do) {
             }
 
             db("UPDATE ".$db['news']."
-                SET `kat`        = '".((int)$_POST['kat'])."',
+                SET `kat`        = ".((int)$_POST['kat']).",
                     `titel`      = '".up($_POST['titel'])."',
                     `text`       = '".up($_POST['newstext'])."',
                     `klapplink`  = '".up($_POST['klapptitel'])."',
                     `klapptext`  = '".up($_POST['morenews'])."',
                     `link1`      = '".up($_POST['link1'])."',
-                    `url1`       = '".links($_POST['url1'])."',
+                    `url1`       = '".up(links(re($_POST['url1'],true)))."',
                     `link2`      = '".up($_POST['link2'])."',
-                    `url2`       = '".links($_POST['url2'])."',
+                    `url2`       = '".up(links(re($_POST['url2'],true)))."',
                     `link3`      = '".up($_POST['link3'])."',
-                    `intern`     = '".((int)$_POST['intern'])."',
-                    `url3`       = '".links($_POST['url3'])."',
+                    `intern`     = ".((int)$_POST['intern']).",
+                    `url3`       = '".up(links(re($_POST['url3'],true)))."',
                     ".$timeshift."
                     ".$public."
                     ".$datum."
-                    `sticky`     = '".((int)$stickytime)."'
-                WHERE id = '".(int)($_GET['id'])."'");
+                    `sticky`     = ".((int)$stickytime)."
+                WHERE `id` = ".(int)($_GET['id']).";");
 
             if(isset($_FILES['newspic']['tmp_name']) && !empty($_FILES['newspic']['tmp_name'])) {
                 foreach($picformat as $tmpendung) {
@@ -341,15 +341,15 @@ switch ($do) {
     break;
     case 'public':
         if(isset($_GET['what']) && $_GET['what'] == 'set')
-            db("UPDATE ".$db['news']." SET `public` = '1', `datum`  = '".time()."' WHERE id = '".(int)($_GET['id'])."'");
+            db("UPDATE `".$db['news']."` SET `public` = 1, `datum` = '".time()."' WHERE `id` = ".(int)($_GET['id']).";");
         else
-            db("UPDATE ".$db['news']." SET `public` = '0' WHERE id = '".(int)($_GET['id'])."'");
+            db("UPDATE `".$db['news']."` SET `public` = 0 WHERE `id` = ".(int)($_GET['id']).";");
 
         header("Location: ?admin=newsadmin");
     break;
     case 'delete':
-        db("DELETE FROM ".$db['news']." WHERE id = '".(int)($_GET['id'])."'");
-        db("DELETE FROM ".$db['newscomments']." WHERE news = '".(int)($_GET['id'])."'");
+        db("DELETE FROM `".$db['news']."` WHERE `id` = ".(int)($_GET['id']).";");
+        db("DELETE FROM `".$db['newscomments']."` WHERE `news` = ".(int)($_GET['id']).";");
 
         //Remove Pic
         foreach($picformat as $tmpendung) {

@@ -71,7 +71,7 @@ if(defined('_UserMenu')) {
                                                  `datum`      = '".time()."',
                                                  `nick`       = '".up($_POST['nick'])."',
                                                  `email`      = '".up($_POST['email'])."',
-                                                 `hp`         = '".up(links($_POST['hp']))."',
+                                                 `hp`         = '".up(links(re($_POST['hp'],true)))."',
                                                  `reg`        = '".((int)$userid)."',
                                                  `nachricht`  = '".up($_POST['eintrag'])."',
                                                  `ip`         = '".$userip."'");
@@ -88,18 +88,17 @@ if(defined('_UserMenu')) {
                 {
                     $addme = "`nick`       = '".up($_POST['nick'])."',
                                              `email`      = '".up($_POST['email'])."',
-                                             `hp`         = '".links($_POST['hp'])."',";
+                                             `hp`         = '".up(links(re($_POST['hp'],true)))."',";
                 }
 
                 $editedby = show(_edited_by, array("autor" => autor($userid),
                     "time" => date("d.m.Y H:i", time())._uhr));
 
-                $upd = db("UPDATE ".$db['usergb']."
-                                         SET ".$addme."
+                db("UPDATE `".$db['usergb']."` SET ".$addme."
                                                  `nachricht`  = '".up($_POST['eintrag'])."',
                                                  `reg`        = '".((int)$_POST['reg'])."',
-                                                 `editby`     = '".addslashes($editedby)."'
-                                         WHERE id = '".(int)($_GET['gbid'])."'");
+                                                 `editby`     = '".re($editedby,true)."'
+                                         WHERE `id` = ".(int)($_GET['gbid']).";");
 
                 $index = info(_gb_edited, "?action=user&show=gb&id=".$_GET['id']);
             } else {

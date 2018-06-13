@@ -29,7 +29,7 @@ if(defined('_News')) {
         $get_nick = isset($_POST['nick']) ? $_POST['nick'] : '';
 
         if(!empty($get_hp))
-            $hp = show(_hpicon_forum, array("hp" => links($get_hp)));
+            $hp = show(_hpicon_forum, array("hp" => links(re($get_hp,true))));
 
         if(!empty($get_email))
             $email = '<br />'.show(_emailicon_forum, array("email" => eMailAddr($get_email)));

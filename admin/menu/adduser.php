@@ -82,7 +82,7 @@ if($do == "add")
         $show = error(_empty_nick, 1);
     } elseif(empty($_POST['email'])) {
         $show = error(_empty_email, 1);
-    } elseif(!check_email($_POST['email'])) {
+    } elseif(!check_email(re($_POST['email'],true))) {
         $show = error(_error_invalid_email, 1);
     } elseif($check_user) {
         $show = error(_error_user_exists, 1);
@@ -98,7 +98,6 @@ if($do == "add")
             $mkpwd = $_POST['pwd'];
 
         $pwd = hash('sha256', $mkpwd);
-
         $bday = ($_POST['t'] && $_POST['m'] && $_POST['j'] ? cal($_POST['t']).".".cal($_POST['m']).".".$_POST['j'] : 0);
         $qry = db("INSERT INTO `".$db['users']."`
                              SET `user`     = '".up($_POST['user'])."',
@@ -127,7 +126,7 @@ if($do == "add")
             foreach($_POST['perm'] AS $v => $k) $p .= "`".substr($v, 2)."` = '".(int)($k)."',";
             if(!empty($p)) $p = ', '.substr($p, 0, strlen($p) - 1);
 
-            db("INSERT INTO ".$db['permissions']." SET `user` = '".(int)($insert_id)."'".$p);
+            db("INSERT INTO ".$db['permissions']." SET `user` = ".(int)($insert_id).$p);
         }
         ////////////////////
 
@@ -135,11 +134,11 @@ if($do == "add")
         if(!empty($_POST['board']))
         {
             foreach($_POST['board'] AS $v)
-                db("INSERT INTO ".$db['f_access']." SET `user` = '".(int)($insert_id)."', `forum` = '".$v."'");
+                db("INSERT INTO ".$db['f_access']." SET `user` = ".(int)($insert_id).", `forum` = '".$v."'");
         }
         ////////////////////
 
-        $sq = db("SELECT * FROM ".$db['squads']."");
+        $sq = db("SELECT * FROM ".$db['squads'].";");
         while($getsq = _fetch($sq))
         {
             if(isset($_POST['squad'.$getsq['id']]))

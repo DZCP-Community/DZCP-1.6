@@ -261,7 +261,7 @@ switch ($action):
                 else {
                     $icq = preg_replace("=-=Uis", "", $_POST['icq']);
                     $email = show(_email_mailto, array("email" => $_POST['email']));
-                    $hp = show(_contact_hp, array("hp" => links($_POST['hp'])));
+                    $hp = show(_contact_hp, array("hp" => links(re($_POST['hp'],true))));
 
                     if (!empty($_POST['t']) && $_POST['j'] == date("Y", time())) {
                         $date = $_POST['t'] . "." . $_POST['m'] . "." . $_POST['j'] . "&nbsp;" . $_POST['h'] . ":" . $_POST['min'] . _uhr;

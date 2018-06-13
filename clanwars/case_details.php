@@ -348,7 +348,7 @@ if(defined('_Clanwars')) {
                                 "id" => $_GET['id'],
                                 "show" => "",
                                 "postemail" => isset($_POST['email']) ? $_POST['email'] : '',
-                                "posthp" => isset($_POST['hp']) ? links($_POST['hp']) : '',
+                                "posthp" => isset($_POST['hp']) ? links(re($_POST['hp'])) : '',
                                 "postnick" => isset($_POST['nick']) ? re($_POST['nick']) : '',
                                 "posteintrag" => re_bbcode(re($_POST['comment'],true)),
                                 "error" => $error,
@@ -359,7 +359,7 @@ if(defined('_Clanwars')) {
                                     `datum`    = '".time()."',
                                     `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : up(data('nick')))."',
                                     `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : up(data('email')))."',
-                                    `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : links(data('hp')))."',
+                                    `hp`       = '".(isset($_POST['hp']) ? up(links(re($_POST['hp'],true))) : up(links(re(data('hp')))))."',
                                     `reg`      = '".((int)$userid)."',
                                     `comment`  = '".up($_POST['comment'])."',
                                     `ip`       = '".$userip."'");
@@ -412,7 +412,7 @@ if(defined('_Clanwars')) {
                 db("UPDATE ".$db['cw_comments']."
                     SET `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : up(data('nick')))."',
                         `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : up(data('email')))."',
-                        `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : links(data('hp')))."',
+                        `hp`       = '".(isset($_POST['hp']) ? up(links(re($_POST['hp'],true))) : up(links(re(data('hp')))))."',
                         `comment`  = '".up($_POST['comment'])."',
                         `editby`   = '".addslashes($editedby)."'
                     WHERE id = '".(int)($_GET['cid'])."'");
@@ -430,7 +430,7 @@ if(defined('_Clanwars')) {
                         "emailhead" => _email,
                         "hphead" => _hp,
                         "postemail" => re($get['email']),
-                        "posthp" => links($get['hp']),
+                        "posthp" => links(re($get['hp'])),
                         "postnick" => re($get['nick'])));
                 }
 

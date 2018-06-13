@@ -51,7 +51,7 @@ switch($do) {
 
             $qryk = db("SELECT id,kategorie FROM ".$db['newskat'].""); $kat = '';
             while($getk = _fetch($qryk)) {
-                $sel = ($_POST['kat'] == $getk['id'] ? 'selected="selected"' : '');
+                $sel = ((int)$_POST['kat'] == $getk['id'] ? 'selected="selected"' : '');
                 $kat .= show(_select_field, array("value" => $getk['id'],
                                                   "sel" => $sel,
                                                   "what" => $getk['kategorie']));
@@ -71,9 +71,9 @@ switch($do) {
                                                      "link1" => re($_POST['link1']),
                                                      "link2" => re($_POST['link2']),
                                                      "link3" => re($_POST['link3']),
-                                                     "url1" => $_POST['url1'],
-                                                     "url2" => $_POST['url2'],
-                                                     "url3" => $_POST['url3'],
+                                                     "url1" => links(re($_POST['url1'],true)),
+                                                     "url2" => links(re($_POST['url2'],true)),
+                                                     "url3" => links(re($_POST['url3'],true)),
                                                      "ntext" => _eintrag,
                                                      "button" => _button_value_add,
                                                      "error" => $error,
@@ -85,17 +85,17 @@ switch($do) {
                                                      "nurl" => _url));
         } else {
             if(isset($_POST)) {
-                db("INSERT INTO ".$db['artikel']."
-                    SET `autor`  = '".((int)$userid)."',
-                        `kat`    = '".((int)$_POST['kat'])."',
+                db("INSERT INTO `".$db['artikel']."`
+                    SET `autor`  = ".((int)$userid).",
+                        `kat`    = ".((int)$_POST['kat']).",
                         `titel`  = '".up($_POST['titel'])."',
-                        `text`   = '".up($_POST['artikel'],1)."',
+                        `text`   = '".up($_POST['artikel'],true)."',
                         `link1`  = '".up($_POST['link1'])."',
                         `link2`  = '".up($_POST['link2'])."',
                         `link3`  = '".up($_POST['link3'])."',
-                        `url1`   = '".links($_POST['url1'])."',
-                        `url2`   = '".links($_POST['url2'])."',
-                        `url3`   = '".links($_POST['url3'])."'");
+                        `url1`   = '".up(links(re($_POST['url1'],true)))."',
+                        `url2`   = '".up(links(re($_POST['url2'],true)))."',
+                        `url3`   = '".up(links(re($_POST['url3'],true)))."';");
 
                 if(isset($_FILES['artikelpic']['tmp_name']) && !empty($_FILES['artikelpic']['tmp_name'])) {
                     $endung = explode(".", $_FILES['artikelpic']['name']);
@@ -153,16 +153,16 @@ switch($do) {
     case 'editartikel':
         if(isset($_POST)) {
             db("UPDATE ".$db['artikel']."
-                SET `kat`    = '".((int)$_POST['kat'])."',
+                SET `kat`    = ".((int)$_POST['kat']).",
                     `titel`  = '".up($_POST['titel'])."',
                     `text`   = '".up($_POST['artikel'])."',
                     `link1`  = '".up($_POST['link1'])."',
                     `link2`  = '".up($_POST['link2'])."',
                     `link3`  = '".up($_POST['link3'])."',
-                    `url1`   = '".links($_POST['url1'])."',
-                    `url2`   = '".links($_POST['url2'])."',
-                    `url3`   = '".links($_POST['url3'])."'
-                WHERE id = '".(int)($_GET['id'])."'");
+                    `url1`   = '".up(links(re($_POST['url1'],true)))."',
+                    `url2`   = '".up(links(re($_POST['url2'],true)))."',
+                    `url3`   = '".up(links(re($_POST['url3'],true)))."'
+                WHERE `id` = ".(int)($_GET['id']).";");
 
             if(isset($_FILES['artikelpic']['tmp_name']) && !empty($_FILES['artikelpic']['tmp_name'])) {
                 foreach($picformat as $tmpendung) {

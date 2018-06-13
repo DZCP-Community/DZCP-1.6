@@ -17,9 +17,9 @@ if(defined('_Clanwars')) {
                                                           "name" => re($get['name']),
                                         "id" => $_POST['squad'],
                                                           "img" => $img));
-  $flagge = flag($get['gcountry']);
+  $flagge = flag(re($get['gcountry']));
   $gegner = show(_cw_details_gegner_blank, array("gegner" => re($_POST['clantag']." - ".$_POST['gegner']),
-                                                 "url" => links($_POST['url'])));
+                                                 "url" => links(re($_POST['url'],true))));
   $server = show(_cw_details_server, array("servername" => re($_POST['servername']),
                                            "serverip" => re($_POST['serverip'])));
 

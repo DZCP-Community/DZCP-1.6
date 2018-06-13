@@ -33,9 +33,9 @@ if(defined('_Votes')) {
                     $index = error(_error_vote_closed,1);
                 else {
                     if($userid >= 1)
-                        db("UPDATE ".$db['userstats']." SET `votes` = votes+1 WHERE user = '".$userid."'");
+                        db("UPDATE `".$db['userstats']."` SET `votes` = (votes+1) WHERE `user` = ".$userid.";");
 
-                    db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = ".(int)($_POST['vote']));
+                    db("UPDATE `".$db['vote_results']."` SET `stimmen` = (stimmen+1) WHERE `id` = ".(int)($_POST['vote']).";");
 
                     setIpcheck("vid_".(int)($_GET['id']),false);
                     setIpcheck("vid(".(int)($_GET['id']).")");
@@ -75,15 +75,15 @@ if(defined('_Votes')) {
                 $index = error(_error_vote_closed,1);
             else {
                 if($userid >= 1)
-                    db("UPDATE ".$db['userstats']." SET `votes` = votes+1 WHERE user = '".$userid."'");
+                    db("UPDATE `".$db['userstats']."` SET `votes` = (votes+1) WHERE `user` = ".$userid.";");
 
-                db("UPDATE ".$db['vote_results']." SET `stimmen` = stimmen+1 WHERE id = '".(int)($_POST['vote'])."'");
+                db("UPDATE `".$db['vote_results']."` SET `stimmen` = (stimmen+1) WHERE `id` = ".(int)($_POST['vote']).";");
 
                 setIpcheck("vid_".(int)($_GET['id']),false);
                 setIpcheck("vid(".(int)($_GET['id']).")");
 
                 if(!isset($_GET['fajax']))
-                    $index = info(_vote_successful, "../forum/?action=showthread&amp;kid=".$_POST['kid']."&amp;id=".$_POST['fid']."");
+                    $index = info(_vote_successful, "../forum/?action=showthread&amp;kid=".$_POST['kid']."&amp;id=".$_POST['fid']);
             }
         }
 

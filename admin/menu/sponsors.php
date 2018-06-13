@@ -158,7 +158,7 @@ if(_adminMenu != 'true') exit;
 
           $qry = db("INSERT INTO ".$db['sponsoren']."
                      SET `name`         = '".up($_POST['name'])."',
-                                     `link`         = '".links($_POST['link'])."',
+                                     `link`         = '".up(links(re($_POST['link'],true)))."',
                                      `beschreibung` = '".up($_POST['beschreibung'])."',
                                      `site`         = '".((int)$_POST['site'])."',
                                      `slink`        = '".$_POST['slink']."',
@@ -478,7 +478,7 @@ if(_adminMenu != 'true') exit;
 
             $qry = db("UPDATE ".$db['sponsoren']."
                        SET      `name`         = '".up($_POST['name'])."',
-                             `link`         = '".links($_POST['link'])."',
+                             `link`         = '".up(links(re($_POST['link'],true)))."',
                              `beschreibung` = '".up($_POST['beschreibung'])."',
                              `site`         = '".((int)$_POST['site'])."',
                              `slink`        = '".$_POST['slink']."',

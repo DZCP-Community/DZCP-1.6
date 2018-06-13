@@ -184,18 +184,18 @@ ORDER BY game");
           if($_POST['land'] == "lazy") $kid = "";
    else $kid = "`gcountry` = '".$_POST['land']."',";
 
-          $qry = db("INSERT INTO ".$db['cw']."
+          $qry = db("INSERT INTO `".$db['cw']."`
             SET ".$kid."
             ".$xonx."
-            `datum` = '".((int)$datum)."',
-            `squad_id` = '".((int)$_POST['squad'])."',
+            `datum` = ".((int)$datum).",
+            `squad_id` = ".((int)$_POST['squad']).",
             `clantag` = '".up($_POST['clantag'])."',
             `gegner` = '".up($_POST['gegner'])."',
-            `url` = '".links($_POST['url'])."',
+            `url` = '".up(links(re($_POST['url'],true)))."',
             `liga` = '".up($_POST['liga'])."',
             `gametype` = '".up($_POST['gametype'])."',
-            `punkte` = '".((int)$_POST['punkte'])."',
-            `gpunkte` = '".((int)$_POST['gpunkte'])."',
+            `punkte` = ".((int)$_POST['punkte']).",
+            `gpunkte` = ".((int)$_POST['gpunkte']).",
             `maps` = '".up($_POST['maps'])."',
             `serverip` = '".up($_POST['serverip'])."',
             `servername` = '".up($_POST['servername'])."',
@@ -203,7 +203,7 @@ ORDER BY game");
             `lineup` = '".up($_POST['lineup'])."',
             `glineup` = '".up($_POST['glineup'])."',
             `matchadmins` = '".up($_POST['match_admins'])."',
-            `bericht` = '".up($_POST['bericht'],1)."'");
+            `bericht` = '".up($_POST['bericht'],true)."'");
 
           $cwid = mysqli_insert_id($mysql);
 
@@ -259,7 +259,7 @@ SET ".$xonx."
 `squad_id` = '".((int)$_POST['squad'])."',
 `clantag` = '".up($_POST['clantag'])."',
 `gegner` = '".up($_POST['gegner'])."',
-`url` = '".links($_POST['url'])."',
+`url` = '".links(up($_POST['url']))."',
 `liga` = '".up($_POST['liga'])."',
 `gametype` = '".up($_POST['gametype'])."',
 `punkte` = '".((int)$_POST['punkte'])."',

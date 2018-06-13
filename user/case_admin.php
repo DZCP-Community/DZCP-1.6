@@ -236,8 +236,8 @@ if(defined('_UserMenu')) {
 
                             //IP-Check Loop
                             foreach ($ips as $ip => $null) {
-                                if (!validateIpV4Range($ip, array('[192].[168].[0-255].[0-255]', '[127].[0].[0-255].[0-255]',
-                                    '[10].[0-255].[0-255].[0-255]', '[172].[16-31].[0-255].[0-255]'))) {
+                                if (!validateIpV4Range($ip, ['[192].[168].[0-255].[0-255]', '[127].[0].[0-255].[0-255]',
+                                    '[10].[0-255].[0-255].[0-255]', '[172].[16-31].[0-255].[0-255]'])) {
                                     db("DELETE FROM `" . $db['acomments'] . "` WHERE `ip` = '" . $ip . "';");
                                     db("DELETE FROM `" . $db['c_ips'] . "` WHERE `ip` = '" . $ip . "';");
                                     db("DELETE FROM `" . $db['c_who'] . "` WHERE `ip` = '" . $ip . "';");

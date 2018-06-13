@@ -65,7 +65,7 @@ if(defined('_Forum')) {
             $icq = "";
             $email = show(_emailicon_forum, array("email" => eMailAddr($_POST['email'])));
             if(empty($_POST['hp'])) $hp = "";
-            else $hp = show(_hpicon_forum, array("hp" => links($_POST['hp'])));
+            else $hp = show(_hpicon_forum, array("hp" => links(re($_POST['hp'],true))));
         }
 
 
@@ -189,10 +189,11 @@ if(defined('_Forum')) {
             $pn = "";
             $email = show(_emailicon_forum, array("email" => eMailAddr($_POST['email'])));
             if(empty($_POST['hp'])) $hp = "";
-            else $hp = show(_hpicon_forum, array("hp" => links($_POST['hp'])));
+            else $hp = show(_hpicon_forum, array("hp" => links(re($_POST['hp'],true))));
         }
 
-        $index = show($dir."/forum_posts_show", array("nick" => cleanautor($pUId, '', $_POST['nick'], $_POST['email']),
+        $index = show($dir."/forum_posts_show", array(
+            "nick" => cleanautor((int)$pUId, '', re($_POST['nick'],true), re($_POST['email'],true)),
             "postnr" => "#".($i+($page-1)*config('m_fposts')),
             "p" => ($i+($page-1)*config('m_fposts')),
             "class" => 'class="commentsRight"',

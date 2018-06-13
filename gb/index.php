@@ -203,7 +203,7 @@ switch ($action):
                     "ip" => _iplog_info,
                     "id" => isset($_GET['id']) ? $_GET['id'] : '0',
                     "postemail" => $_POST['email'],
-                    "posthp" => links($_POST['hp']),
+                    "posthp" => links(re($_POST['hp'],true)),
                     "postnick" => $_POST['nick'],
                     "posteintrag" => re_bbcode(re($_POST["eintrag"],true)),
                     "error" => $error,
@@ -213,7 +213,7 @@ switch ($action):
                  SET `datum`      = '".time()."',
                      `nick`       = '".up($_POST['nick'])."',
                      `email`      = '".up($_POST['email'])."',
-                     `hp`         = '".links($_POST['hp'])."',
+                     `hp`         = '".up(links(re($_POST['hp'],true)))."',
                      `reg`        = '".((int)$userid)."',
                      `nachricht`  = '".up($_POST['eintrag'])."',
                      `ip`         = '".$userip."'");
@@ -304,7 +304,7 @@ switch ($action):
                 {
                     $addme = "`nick`       = '".up($_POST['nick'])."',
                      `email`      = '".up($_POST['email'])."',
-                     `hp`         = '".links($_POST['hp'])."',";
+                     `hp`         = '".up(links(re($_POST['hp'],true)))."',";
                 }
 
                 $editedby = show(_edited_by, array("autor" => autor($userid),

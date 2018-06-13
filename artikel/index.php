@@ -253,7 +253,7 @@ switch ($action):
                                     "what" => _button_value_add,
                                     "postemail" => $_POST['email'],
                                     "ip" => _iplog_info,
-                                    "posthp" => links($_POST['hp']),
+                                    "posthp" => links(re($_POST['hp'],true)),
                                     "postnick" => re($_POST['nick']),
                                     "show" => "",
                                     "posteintrag" => re_bbcode(re($_POST['comment'],true)),
@@ -265,7 +265,7 @@ switch ($action):
                                                      `datum`    = ".time().",
                                                      `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : data('nick'))."',
                                                      `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : data('email'))."',
-                                                     `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : links(data('hp')))."',
+                                                     `hp`       = '".(isset($_POST['hp']) ? up(links(re($_POST['hp'],true))) : up(links(re(data('hp')))))."',
                                                      `reg`      = ".((int)$userid).",
                                                      `comment`  = '".up($_POST['comment'])."',
                                                      `ip`       = '".$userip."';");
@@ -291,12 +291,11 @@ switch ($action):
             } else if($do == "editcom") {
                 $get = db("SELECT * FROM `".$db['acomments']."` WHERE `id` = ".(int)($_GET['cid']).";",false,true);
                 if($get['reg'] == $userid || permission('artikel')) {
-                    $editedby = show(_edited_by, array("autor" => autor($userid),
-                        "time" => date("d.m.Y H:i", time())._uhr));
+                    $editedby = show(_edited_by, array("autor" => autor($userid), "time" => date("d.m.Y H:i", time())._uhr));
                     db("UPDATE `".$db['acomments']."`
                    SET `nick`     = '".up($_POST['nick'])."',
                        `email`    = '".up($_POST['email'])."',
-                       `hp`       = '".links($_POST['hp'])."',
+                       `hp`       = '".up(links(re($_POST['hp'],true)))."',
                        `comment`  = '".up($_POST['comment'])."',
                        `editby`   = '".$editedby."'
                    WHERE `id` = ".(int)($_GET['cid']).";");
@@ -315,7 +314,7 @@ switch ($action):
                             "emailhead" => _email,
                             "hphead" => _hp,
                             "postemail" => re($get['email']),
-                            "posthp" => links($get['hp']),
+                            "posthp" => links(re($get['hp'],true)),
                             "postnick" => re($get['nick']),
                         ));
                     }
@@ -349,17 +348,17 @@ switch ($action):
         $rel = ""; $links1 = ""; $links2 = ""; $links3 = ""; $links = "";
         if($_POST['url1']) {
             $rel = _related_links;
-            $links1 = show(_artikel_link, array("link" => re($_POST['link1']), "url" => links($_POST['url1'])));
+            $links1 = show(_artikel_link, array("link" => re($_POST['link1']), "url" => links(re($_POST['url1'],true))));
         }
 
         if($_POST['url2']) {
             $rel = _related_links;
-            $links2 = show(_artikel_link, array("link" => re($_POST['link2']), "url" => links($_POST['url2'])));
+            $links2 = show(_artikel_link, array("link" => re($_POST['link2']), "url" => links(re($_POST['url2'],true))));
         }
 
         if($_POST['url3']) {
             $rel = _related_links;
-            $links3 = show(_artikel_link, array("link" => re($_POST['link3']), "url" => links($_POST['url3'])));
+            $links3 = show(_artikel_link, array("link" => re($_POST['link3']), "url" => links(re($_POST['url3'],true))));
         }
 
         if(!empty($links1) || !empty($links2) || !empty($links3)) {
@@ -430,7 +429,7 @@ switch ($action):
             $get_email = isset($_POST['email']) ? $_POST['email'] : '';
             $get_nick = isset($_POST['nick']) ? $_POST['nick'] : '';
 
-            $hp = $get_hp ? show(_hpicon_forum, array("hp" => links($get_hp))) : "";
+            $hp = $get_hp ? show(_hpicon_forum, array("hp" => links(re($get_hp,true)))) : "";
             $email = $get_email ? '<br />'.show(_emailicon_forum, array("email" => eMailAddr($get_email))) : "";
             $onoff = "";
             $avatar = "";

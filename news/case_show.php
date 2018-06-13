@@ -170,7 +170,7 @@ if(defined('_News')) {
                                                                    "del" => convSpace(_confirm_del_news)));
             }
 
-            $title = re($get['titel']).' - '.$title;
+            $where = re($get['titel']);
             $index = show($dir."/news_show_full", array("titel" => re($get['titel']),
                                                    "kat" => $newsimage,
                                                    "id" => $get['id'],
@@ -238,7 +238,7 @@ if(defined('_News')) {
                                                                              "what" => _button_value_add,
                                                                              "show" => "",
                                                                              "postemail" => $_POST['email'],
-                                                                             "posthp" => links($_POST['hp']),
+                                                                             "posthp" => links(re($_POST['hp'],true)),
                                                                              "postnick" => re($_POST['nick']),
                                                                              "posteintrag" => re_bbcode(re($_POST['comment'],true)),
                                                                              "error" => $error,
@@ -248,7 +248,7 @@ if(defined('_News')) {
                                                                                 `datum`    = '".time()."',
                                                                                 `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : data('nick'))."',
                                                                                 `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : data('email'))."',
-                                                                                `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : links(data('hp')))."',
+                                                                                `hp`       = '".(isset($_POST['hp']) ? up(links(re($_POST['hp'],true))) : up(links(re(data('hp')))))."',
                                                                                 `reg`      = '".(int)($userid)."',
                                                                                 `comment`  = '".up($_POST['comment'],1)."',
                                                                                 `ip`       = '".$userip."'");
@@ -280,7 +280,7 @@ if(defined('_News')) {
                         $qry = db("UPDATE ".$db['newscomments']."
                                    SET `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : '')."',
                                        `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : '')."',
-                                       `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : '')."',
+                                       `hp`       = '".(isset($_POST['hp']) ? up(links(re($_POST['hp'],true))) : '')."',
                                        `comment`  = '".(isset($_POST['comment']) ? up($_POST['comment']) : '')."',
                                        `editby`   = '".addslashes($editedby)."'
                                    WHERE id = ".$cid);
@@ -300,7 +300,7 @@ if(defined('_News')) {
                                                                         "emailhead" => _email,
                                                                         "hphead" => _hp,
                                                                         "postemail" => re($get['email']),
-                                                                        "posthp" => links($get['hp']),
+                                                                        "posthp" => links(re($get['hp'])),
                                                                         "postnick" => re($get['nick'])));
                         }
 

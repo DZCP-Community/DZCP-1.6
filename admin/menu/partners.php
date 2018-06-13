@@ -32,7 +32,7 @@ if(_adminMenu != 'true') exit;
           $show = error(_empty_url, 1);
         } else {
           $qry = db("INSERT INTO ".$db['partners']."
-                     SET `link`     = '".links($_POST['link'])."',
+                     SET `link`     = '".up(links(re($_POST['link'],true)))."',
                          `banner`   = '".up(empty($_POST['textlink']) ? $_POST['banner'] : $_POST['textlink'])."',
                          `textlink` = '".(int)(empty($_POST['textlink']) ? 0 : 1)."'");
 
@@ -69,7 +69,7 @@ if(_adminMenu != 'true') exit;
           $show = error(_empty_url, 1);
         } else {
           $qry = db("UPDATE ".$db['partners']."
-                     SET `link`     = '".links($_POST['link'])."',
+                     SET `link`     = '".up(links(re($_POST['link'],true)))."',
                          `banner`   = '".up(empty($_POST['textlink']) ? $_POST['banner'] : $_POST['textlink'])."',
                          `textlink` = '".(int)(empty($_POST['textlink']) ? 0 : 1)."'
                      WHERE id = '".(int)($_GET['id'])."'");

@@ -29,17 +29,16 @@ if(defined('_UserMenu')) {
 
   if($regCheck)
     {
-    $get_hp = $_POST['hp'];
-    $get_email = $_POST['email'];
-    $get_nick = $_POST['nick'];
+    $get_hp = re($_POST['hp'],true);
+    $get_email =  re($_POST['email'],true);
+    $get_nick =  re($_POST['nick'],true);
 
     $onoff = "";
     $avatar = "";
-    $nick = show(_link_mailto, array("nick" => re($get_nick),
-                                     "email" => eMailAddr($get_email)));
+    $nick = show(_link_mailto, array("nick" => re($get_nick), "email" => eMailAddr($get_email)));
   } else {
-    $get_hp = data('hp');
-    $email = data('email');
+    $get_hp = re(data('hp'));
+    $email = re(data('email'));
     $onoff = onlinecheck($userid);
     $get_nick = autor($userid);
   }

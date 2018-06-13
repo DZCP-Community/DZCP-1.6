@@ -114,11 +114,8 @@ if($do == 'new'){
         if($_POST['position'] == "1" || "2") $sign = ">= ";
         else  $sign = "> ";
 
-        $posi = db("UPDATE ".$db['slideshow']."
-                    SET `pos` = pos+1
-                    WHERE `pos` ".$sign." '".(int)($_POST['position'])."'");
-
-        $qry = db("INSERT INTO ".$db['slideshow']."
+        db("UPDATE ".$db['slideshow']." SET `pos` = pos+1 WHERE `pos` ".$sign." '".(int)($_POST['position'])."'");
+        db("INSERT INTO ".$db['slideshow']."
                    SET `pos` = '".((int)$_POST['position'])."',
                        `bez` = '".up($_POST['bez'])."',
                        `showbez` = '".((int)($_POST['showbez']))."',
@@ -127,27 +124,45 @@ if($do == 'new'){
                        `target` = '".up($_POST['target'])."'");
 
         $tmpname = $_FILES['bild']['tmp_name'];
-        @copy($tmpname, basePath."/inc/images/slideshow/".mysqli_insert_id($mysql).".jpg");
-        @unlink($tmpname);
+        if (($info = getimagesize($tmpname)) === FALSE) {
+            $show = info("Unable to determine image type of uploaded file", "?admin=slideshow");
+        } else {
+            if (($info[2] === IMAGETYPE_GIF) && ($info[2] === IMAGETYPE_JPEG) && ($info[2] === IMAGETYPE_PNG)) {
+                switch ($info[2]) {
+                    case IMAGETYPE_GIF:
+                        $ext = '.gif';
+                        break;
+                    default:
+                    case IMAGETYPE_JPEG:
+                        $ext = '.jpg';
+                        break;
+                    case IMAGETYPE_PNG:
+                        $ext = '.png';
+                        break;
+                }
 
-        $show = info(_slider_admin_add_done, "?admin=slideshow");
+                move_uploaded_file($tmpname, basePath."/inc/images/slideshow/".mysqli_insert_id($mysql).".".$ext);
+            } else {
+                $show = info("Not a IMAGE", "?admin=slideshow");
+            }
+        }
+
+        if(empty($show))
+            $show = info(_slider_admin_add_done, "?admin=slideshow");
     }
 }elseif($do == 'edit'){
-    $qry = db("SELECT * FROM ".$db['slideshow']."
-               WHERE `id` = '".(int)($_GET['id'])."'");
-    $get = _fetch($qry);
-
-    $qrypos = db("SELECT * FROM ".$db['slideshow']."
-                  WHERE `id` != '".(int)($get['id'])."'
-                  ORDER BY `pos` ASC");
+    $qrypos = db("SELECT * FROM ".$db['slideshow']." WHERE `id` != '".(int)($_GET['id'])."' ORDER BY `pos` ASC");
+    $positions = '';
     while($getpos = _fetch($qrypos)) {
-        $positions .= show(_select_field, array("value" => $getpos['pos']+1,
-            "what" => _nach.': '.$getpos['bez'],
-            "sel" => ""));
+        $positions .= show(_select_field, array("value" => $getpos['pos']+1, "what" => _nach.': '.re($getpos['bez']), "sel" => ""));
     }
 
-    if($get['target'] == 1) $selected = 'selected="selected"';
-    if($get['showbez'] == 1) $selected_txt = 'selected="selected"';
+    $get = db("SELECT * FROM ".$db['slideshow']." WHERE `id` = '".(int)($_GET['id'])."'",false,true);
+    if($get['target'])
+        $selected = 'selected="selected"';
+
+    if($get['showbez'])
+        $selected_txt = 'selected="selected"';
 
     $show = show($dir."/slideshow_form", array("id" => re($get['id']),
         "error" => "",
@@ -180,8 +195,11 @@ if($do == 'new'){
 
         $error = show("errors/errortable", array("error" => $error));
 
-        if($_POST['target'] == 1) $selected = 'selected="selected"';
-        if($get['showbez'] == 1) $selected_txt = 'selected="selected"';
+        if($_POST['target'])
+            $selected = 'selected="selected"';
+
+        if($get['showbez'])
+            $selected_txt = 'selected="selected"';
 
         $show = show($dir."/slideshow_form", array("id" => re($_POST['id']),
             "error" => $error,
@@ -208,38 +226,63 @@ if($do == 'new'){
             "selected_txt" => $selected_txt,
             "v_pic" => img_size('inc/images/slideshow/'.$_POST['id'].'.jpg')."<br />"));
     } else {
+        $pos = "";
         if($_POST['position'] != "lazy") {
             if($_POST['position'] == "1" || "2") $sign = ">= ";
             else  $sign = "> ";
 
-            $posi = db("UPDATE ".$db['slideshow']."
-                        SET `pos` = pos+1
-                        WHERE `pos` ".$sign." '".(int)($_POST['position'])."'");
+            db("UPDATE ".$db['slideshow']." SET `pos` = (pos+1) WHERE `pos` ".$sign." '".(int)($_POST['position'])."'");
 
-            $pos = "`pos` = '".((int)$_POST['position'])."',";
-        } else $pos = "";
+            $pos = "`pos` = ".((int)$_POST['position']).",";
+        }
 
-        $qry = db("UPDATE ".$db['slideshow']."
-                  SET ".$pos."
-                      `bez` = '".up($_POST['bez'])."',
-                      `showbez` = '".((int)($_POST['showbez']))."',
-                      `url` = '".up($_POST['url'])."',
-                      `desc` = '".up($_POST['desc'])."',
-                      `target` = '".up($_POST['target'])."'
-                  WHERE `id` = '".(int)($_POST['id'])."'");
+        db("UPDATE ".$db['slideshow']." SET ".$pos." `bez` = '".up($_POST['bez'])."', `showbez` = ".((int)($_POST['showbez'])).
+            ", `url` = '".up($_POST['url'])."', `desc` = '".up($_POST['desc'])."', `target` = '".up($_POST['target']).
+            "' WHERE `id` = ".(int)($_POST['id']).";");
 
         if($_FILES['bild']['tmp_name']) {
             $tmpname = $_FILES['bild']['tmp_name'];
-            @unlink(basePath."/inc/images/slideshow/".(int)($_POST['id']).".jpg");
-            @copy($tmpname, basePath."/inc/images/slideshow/".(int)($_POST['id']).".jpg");
-            @unlink($tmpname);
+            foreach($picformat as $end) {
+                if(file_exists(basePath."/inc/images/slideshow/".(int)($_GET['id']).".".$end)) {
+                    @unlink(basePath . "/inc/images/slideshow/".(int)($_GET['id']).".".$end);
+                }
+            }
+
+            if (($info = getimagesize($tmpname)) === FALSE) {
+                $show = info("Unable to determine image type of uploaded file", "?admin=slideshow");
+            } else {
+                if (($info[2] === IMAGETYPE_GIF) && ($info[2] === IMAGETYPE_JPEG) && ($info[2] === IMAGETYPE_PNG)) {
+                    switch ($info[2]) {
+                        case IMAGETYPE_GIF:
+                            $ext = '.gif';
+                            break;
+                        default:
+                        case IMAGETYPE_JPEG:
+                            $ext = '.jpg';
+                            break;
+                        case IMAGETYPE_PNG:
+                            $ext = '.png';
+                            break;
+                    }
+
+                    move_uploaded_file($tmpname, basePath."/inc/images/slideshow/".(int)($_POST['id']).".".$ext);
+                } else {
+                    $show = info("Not a IMAGE", "?admin=slideshow");
+                }
+            }
         }
-        $show = info(_slider_admin_edit_done, "?admin=slideshow");
+
+        if(empty($show))
+            $show = info(_slider_admin_edit_done, "?admin=slideshow");
     }
 }elseif($do == 'delete'){
-    $qry = db("DELETE FROM ".$db['slideshow']."
-               WHERE `id` = '".(int)($_GET['id'])."'");
-    @unlink(basePath."/inc/images/slideshow/".(int)($_GET['id']).".jpg");
+    db("DELETE FROM `".$db['slideshow']."` WHERE `id` = ".(int)($_GET['id']).";");
+
+    foreach($picformat as $end) {
+        if(file_exists(basePath."/inc/images/slideshow/".(int)($_GET['id']).".".$end)) {
+            @unlink(basePath . "/inc/images/slideshow/".(int)($_GET['id']).".".$end);
+        }
+    }
 
     $show = info(_slider_admin_del_done, "?admin=slideshow");
 }

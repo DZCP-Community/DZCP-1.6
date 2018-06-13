@@ -211,7 +211,7 @@ if(isset($_GET['set_language'])) {
     header("Location: ".GetServerVars('HTTP_REFERER'));
 }
 
-lang($_SESSION['language']); //Lade Sprache
+lang(strval($_SESSION['language'])); //Lade Sprache
 
 if(!$chkMe) {
     $_SESSION['id']        = '';
@@ -614,7 +614,7 @@ if($userid >= 1 && $ajaxJob != true && HasDSGVO()) {
 }
 
 //-> Settings auslesen
-function settings(string $what,bool $use_dbc=true) {
+function settings($what,bool $use_dbc=true) {
     global $db;
 
     if(is_array($what)) {
@@ -642,7 +642,7 @@ function settings(string $what,bool $use_dbc=true) {
 }
 
 //-> Config auslesen
-function config(string $what,bool $use_dbc=true) {
+function config($what,bool $use_dbc=true) {
     global $db;
 
     if(is_array($what)) {
@@ -1342,10 +1342,14 @@ function spChars(string $txt) {
 }
 
 //-> Funktion um sauber in die DB einzutragen
-function up(string $txt,bool $escape=true) {
+function up($txt,bool $escape=true) {
     global $charset;
-    $return = utf8_encode(stripcslashes(spChars(htmlentities($txt, ENT_COMPAT, $charset))));
-    return $escape ? _real_escape_string($return) : $return;
+    $txt = strval($txt);
+    $txt = htmlentities($txt,ENT_COMPAT, $charset);
+    $txt = spChars($txt);
+    $txt = stripcslashes($txt);
+    $txt = utf8_encode($txt);
+    return $escape ? _real_escape_string($txt) : $txt;
 }
 
 //-> Funktion um diverse Dinge aus Tabellen auszaehlen zu lassen
@@ -1572,7 +1576,7 @@ function check_msg() {
 //-> Prueft ob ein User schon in der Buddyliste vorhanden ist
 function check_buddy(int $buddy) {
     global $db,$userid;
-    return !db("SELECT buddy FROM ".$db['buddys']." WHERE user = '".(int)($userid)."' AND buddy = '".(int)($buddy)."'",true) ? true : false;
+    return db("SELECT `id` FROM `".$db['buddys']."` WHERE `user` = ".(int)($userid)." AND `buddy` = ".(int)($buddy).";",true) >= 1;
 }
 
 //-> Flaggen ausgeben
@@ -1607,7 +1611,7 @@ function rawflag($code) {
 }
 
 //-> Liste der Laender ausgeben
-function show_countrys($i="") {
+function show_countrys(string $i="") {
     if($i != "")
         $options = preg_replace('#<option value="'.$i.'">(.*?)</option>#', '<option value="'.$i.'" selected="selected"> \\1</option>', _country_list);
     else
@@ -1617,7 +1621,7 @@ function show_countrys($i="") {
 }
 
 //-> Gameicon ausgeben
-function squad($code) {
+function squad(string $code) {
     global $picformat;
     if(empty($code))
         return '<img src="../inc/images/gameicons/nogame.gif" alt="" class="icon" />';
@@ -2753,8 +2757,7 @@ function get_elapsed_time(int $timestamp,int $aktuell = 0,int $anzahl_einheiten 
 if($functions_files = get_files(basePath.'/inc/additional-functions/',false,true,array('php'))) {
     foreach($functions_files AS $func) {
         include_once(basePath.'/inc/additional-functions/'.$func);
-    }
-    unset($functions_files,$func);
+    } unset($functions_files,$func);
 }
 
 //-> Navigation einbinden

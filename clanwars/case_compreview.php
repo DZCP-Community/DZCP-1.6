@@ -43,7 +43,7 @@ if(defined('_Clanwars')) {
 
   if(!$regCheck)
     {
-    if($get_hp) $hp = show(_hpicon_forum, array("hp" => links($get_hp)));
+    if($get_hp) $hp = show(_hpicon_forum, array("hp" => links(re($get_hp,true))));
     if($get_email) $email = '<br />'.show(_emailicon_forum, array("email" => eMailAddr($get_email)));
     $onoff = "";
     $avatar = "";

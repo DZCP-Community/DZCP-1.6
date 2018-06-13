@@ -40,7 +40,7 @@ if(_adminMenu != 'true') exit;
           $qry = db("INSERT INTO ".$db['rankings']."
                      SET `league`   = '".up($_POST['league'])."',
                          `squad`    = '".up($_POST['squad'])."',
-                         `url`      = '".links($_POST['url'])."',
+                         `url`      = '".up(links(re($_POST['url'],true)))."',
                          `rank`     = '".((int)$_POST['rank'])."',
                          `postdate` = '".time()."'");
 
@@ -88,7 +88,7 @@ if(_adminMenu != 'true') exit;
           $qry = db("UPDATE ".$db['rankings']."
                      SET `league`       = '".up($_POST['league'])."',
                          `squad`        = '".up($_POST['squad'])."',
-                         `url`          = '".links($_POST['url'])."',
+                         `url`          = '".up(links(re($_POST['url'],true)))."',
                          `rank`         = '".((int)$_POST['rank'])."',
                          `lastranking`  = '".((int)$get['rank'])."',
                          `postdate`     = '".time()."'
