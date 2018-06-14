@@ -127,10 +127,15 @@ switch ($action):
                     else $titel = show(_news_send_titel, array("nick" => blank_autor($userid)));
                     if (!$userid) $email = show(_email_mailto, array("email" => $_POST['email']));
                     else $email = '--';
-                    if (!$userid) $sendnews = '1';
-                    else $sendnews = '2';
-                    if (!$userid) $user = $_POST['nick'];
-                    else $user = $userid;
+                    if (!$userid)
+                        $sendnews = 1;
+                    else
+                        $sendnews = 2;
+
+                    if (!$userid)
+                        $user = $_POST['nick'];
+                    else
+                        $user = $userid;
 
                     $text = show(_contact_text_sendnews, array("hp" => $hp,
                         "email" => $email,
@@ -144,12 +149,12 @@ switch ($action):
                         if (permission('news', $get['id']) or $get['level'] == 4) {
                             $update = db("INSERT INTO " . $db['msg'] . "
                                                   SET `datum`     = '" . time() . "',
-                                                          `von`       = '" . $von_nick . "',
-                                                          `an`        = '" . ((int)$get['id']) . "',
+                                                          `von`       = " . $von_nick . ",
+                                                          `an`        = " . ((int)$get['id']) . ",
                                                           `titel`     = '" . $titel . "',
                                                           `nachricht` = '" . up($text) . "',
-                                                          `sendnews`  = '" . $sendnews . "',
-                                                          `senduser`  = '" . up($user) . "'");
+                                                          `sendnews`  = " . $sendnews . ",
+                                                          `senduser`  = '" . up($user) . "';");
                         }
                     }
                     $index = info(_news_send_done, "../news/");

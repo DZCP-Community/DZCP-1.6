@@ -69,7 +69,7 @@ if(defined('_Forum')) {
                         $error = _empty_nick;
                     elseif(empty($_POST['email']))
                         $error = _empty_email;
-                    elseif(!check_email($_POST['email']))
+                    elseif(!check_email(re($_POST['email'],true)))
                         $error = _error_invalid_email;
                     elseif(empty($_POST['eintrag']))
                         $error = _empty_eintrag;
@@ -136,7 +136,7 @@ if(defined('_Forum')) {
                             "id" => $getp['sid'],
                             "entrys" => $entrys+1,
                             "page" => $pagenr,
-                            "text" => bbcode($_POST['eintrag']),
+                            "text" => bbcode(re($_POST['eintrag'],true)),
                             "clan" => settings('clanname')));
 
                         sendMail(re($getabo['email']),$subj,$message);
@@ -326,7 +326,7 @@ if(defined('_Forum')) {
                         } else {
                             $icq = "";
                             $pn = "";
-                            $email = show(_emailicon_forum, array("email" => eMailAddr($gett['t_email'])));
+                            $email = show(_emailicon_forum, array("email" => eMailAddr(re($gett['t_email']))));
                             if(empty($gett['t_hp'])) $hp = "";
                             else $hp = show(_hpicon_forum, array("hp" => $gett['t_hp']));
                         }
@@ -428,7 +428,7 @@ if(defined('_Forum')) {
                         if(($_POST['secure'] != $_SESSION['sec_'.$dir]) || empty($_SESSION['sec_'.$dir])) $error = _error_invalid_regcode;
                         elseif(empty($_POST['nick'])) $error = _empty_nick;
                         elseif(empty($_POST['email'])) $error = _empty_email;
-                        elseif(!check_email($_POST['email'])) $error = _error_invalid_email;
+                        elseif(!check_email(re($_POST['email'],true))) $error = _error_invalid_email;
                         elseif(empty($_POST['eintrag'])) $error = _empty_eintrag;
                         $form = show("page/editor_notregged", array("nickhead" => _nick,
                             "emailhead" => _email,
@@ -436,8 +436,7 @@ if(defined('_Forum')) {
                     }
 
                     $error = show("errors/errortable", array("error" => $error));
-                    $dowhat = show(_forum_dowhat_add_post, array("id" => $_GET['id'],
-                        "kid" => $get_threadkid['kid']));
+                    $dowhat = show(_forum_dowhat_add_post, array("id" => $_GET['id'], "kid" => $get_threadkid['kid']));
                     $qryl = db("SELECT * FROM ".$db['f_posts']."
                                             WHERE kid = '".(int)($get_threadkid['kid'])."'
                                             AND sid = '".(int)($_GET['id'])."'
@@ -475,7 +474,7 @@ if(defined('_Forum')) {
                                                     WHERE id = '".$getl['reg']."'");
                             $getu = _fetch($qryu);
 
-                            $email = show(_emailicon_forum, array("email" => eMailAddr($getu['email'])));
+                            $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
                             $pn = show(_pn_write_forum, array("id" => $getl['reg'],
                                 "nick" => $getu['nick']));
                             if(empty($getu['icq']) || $getu['icq'] == 0) $icq = "";
@@ -489,7 +488,7 @@ if(defined('_Forum')) {
                         } else {
                             $icq = "";
                             $pn = "";
-                            $email = show(_emailicon_forum, array("email" => eMailAddr($getl['email'])));
+                            $email = show(_emailicon_forum, array("email" => eMailAddr(re($getl['email']))));
                             if(empty($getl['hp'])) $hp = "";
                             else $hp = show(_hpicon_forum, array("hp" => $getl['hp']));
                         }
@@ -615,8 +614,8 @@ if(defined('_Forum')) {
                         "id" => $_GET['id'],
                         "ip" => _iplog_info,
                         "kid" => $_GET['kid'],
-                        "postemail" => $_POST['email'],
-                        "posthp" => $_POST['hp'],
+                        "postemail" => re($_POST['email']),
+                        "posthp" => re($_POST['hp']),
                         "postnick" => re($_POST['nick']),
                         "posteintrag" => re_bbcode(re($_POST['eintrag'],true)),
                         "error" => $error,
@@ -657,7 +656,7 @@ if(defined('_Forum')) {
                         if($userid >= 1)
                             $fautor = autor($userid);
                         else
-                            $fautor = autor('', '', $_POST['nick'], $_POST['email']);
+                            $fautor = autor('', '', re($_POST['nick'],true), re($_POST['email'],true));
 
                         $text = show(_forum_spam_text, array("autor" => $fautor, "ltext" => addslashes($getdp['text']), "ntext" => up($_POST['eintrag'])));
 
@@ -667,7 +666,7 @@ if(defined('_Forum')) {
                         if($userid >= 1)
                             $fautor = autor($userid);
                         else
-                            $fautor = autor('', '', $_POST['nick'], $_POST['email']);
+                            $fautor = autor('', '', re($_POST['nick'],true), re($_POST['email'],true));
 
                         $text = show(_forum_spam_text, array("autor" => $fautor, "ltext" => addslashes($gettdp['t_text']), "ntext" => up($_POST['eintrag'])));
                         db("UPDATE `".$db['f_threads']."` SET `lp` = ".time().", `t_text` = '".$text."' WHERE `id` = ".$gettdp['id'].";");
@@ -704,7 +703,8 @@ if(defined('_Forum')) {
 
                             $subj = show(settings('eml_fabo_npost_subj'), array("titel" => $title));
 
-                            $message = show(bbcode_email(settings('eml_fabo_npost')), array("nick" => re($getabo['nick']),
+                            $message = show(bbcode_email(settings('eml_fabo_npost')), array(
+                                "nick" => re($getabo['nick']),
                                 "postuser" => fabo_autor($userid),
                                 "topic" => $gettopic['topic'],
                                 "titel" => $title,
@@ -712,7 +712,7 @@ if(defined('_Forum')) {
                                 "id" => (int)($_GET['id']),
                                 "entrys" => $entrys+1,
                                 "page" => $pagenr,
-                                "text" => bbcode($_POST['eintrag']),
+                                "text" => bbcode(re($_POST['eintrag'],true)),
                                 "clan" => settings('clanname')));
 
                             sendMail(re($getabo['email']),$subj,$message);

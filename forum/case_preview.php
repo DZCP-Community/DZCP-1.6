@@ -63,7 +63,7 @@ if(defined('_Forum')) {
         } else {
             $pn = "";
             $icq = "";
-            $email = show(_emailicon_forum, array("email" => eMailAddr($_POST['email'])));
+            $email = show(_emailicon_forum, array("email" => eMailAddr(re($_POST['email'],true))));
             if(empty($_POST['hp'])) $hp = "";
             else $hp = show(_hpicon_forum, array("hp" => links(re($_POST['hp'],true))));
         }
@@ -97,7 +97,7 @@ if(defined('_Forum')) {
             "where" => $wheres,
             "admin" => "",
             "class" => 'class="commentsRight"',
-            "nick" => cleanautor($pUId, '', $_POST['nick'], $_POST['email']),
+            "nick" => cleanautor($pUId, '', re($_POST['nick'],true), re($_POST['email'],true)),
             "threadhead" => re($_POST['topic']),
             "titel" => $titel,
             "postnr" => "1",
@@ -187,7 +187,7 @@ if(defined('_Forum')) {
         } else {
             $icq = "";
             $pn = "";
-            $email = show(_emailicon_forum, array("email" => eMailAddr($_POST['email'])));
+            $email = show(_emailicon_forum, array("email" => eMailAddr(re($_POST['email'],true))));
             if(empty($_POST['hp'])) $hp = "";
             else $hp = show(_hpicon_forum, array("hp" => links(re($_POST['hp'],true))));
         }

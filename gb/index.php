@@ -422,9 +422,9 @@ switch ($action):
             if(!$chkMe) $regCheck = true;
         }
 
-        $get_hp = $_POST['hp'];
-        $get_email = $_POST['email'];
-        $get_nick = $_POST['nick'];
+        $get_hp = re($_POST['hp'],true);
+        $get_email = re($_POST['email'],true);
+        $get_nick = re($_POST['nick'],true);
 
         if($get_hp) $gbhp = show(_hpicon, array("hp" => links($get_hp)));
         else $gbhp = "";

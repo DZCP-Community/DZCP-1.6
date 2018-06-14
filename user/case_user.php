@@ -68,11 +68,11 @@ if(defined('_UserMenu')) {
                     $getcontent = db("SELECT `" . $getcustom['feldname'] . "` FROM `" . $db['users'] . "` WHERE `id` = " . (int)($_GET['id']) . " LIMIT 1;", false, true);
                     if (!empty($getcontent[$getcustom['feldname']])) {
                         if ($getcustom['type'] == 2)
-                            $custom_clan .= show(_profil_custom_url, array("name" => pfields_name($getcustom['name']), "value" => re($getcontent[$getcustom['feldname']])));
+                            $custom_clan .= show(_profil_custom_url, array("name" => pfields_name(re($getcustom['name'])), "value" => re($getcontent[$getcustom['feldname']])));
                         else if ($getcustom['type'] == 3)
-                            $custom_clan .= show(_profil_custom_mail, array("name" => pfields_name($getcustom['name']), "value" => eMailAddr(re($getcontent[$getcustom['feldname']]))));
+                            $custom_clan .= show(_profil_custom_mail, array("name" => pfields_name(re($getcustom['name'])), "value" => eMailAddr(re($getcontent[$getcustom['feldname']]))));
                         else
-                            $custom_clan .= show(_profil_custom, array("name" => pfields_name($getcustom['name']), "value" => re($getcontent[$getcustom['feldname']])));
+                            $custom_clan .= show(_profil_custom, array("name" => pfields_name(re($getcustom['name'])), "value" => re($getcontent[$getcustom['feldname']])));
                     }
                 }
 
@@ -134,7 +134,7 @@ if(defined('_UserMenu')) {
                 $membergb = '';
                 while ($getgb = _fetch($qrygb)) {
                     $gbhp = $getgb['hp'] ? show(_hpicon, array("hp" => $getgb['hp'])) : "";
-                    $gbemail = $getgb['email'] ? show(_emailicon, array("email" => eMailAddr($getgb['email']))) : "";
+                    $gbemail = $getgb['email'] ? show(_emailicon, array("email" => eMailAddr(re($getgb['email'])))) : "";
 
                     $edit = "";
                     $delete = "";
@@ -152,15 +152,15 @@ if(defined('_UserMenu')) {
                     if (!$getgb['reg']) {
                         $www = "";
                         $hp = $getgb['hp'] ? show(_hpicon_forum, array("hp" => $getgb['hp'])) : "";
-                        $email = $getgb['email'] ? '<br />' . show(_emailicon_forum, array("email" => eMailAddr($getgb['email']))) : "";
+                        $email = $getgb['email'] ? '<br />' . show(_emailicon_forum, array("email" => eMailAddr(re($getgb['email'])))) : "";
                         $onoff = "";
                         $avatar = "";
                         $nick = show(_link_mailto, array("nick" => re($getgb['nick']),
-                            "email" => eMailAddr($getgb['email'])));
+                            "email" => eMailAddr(re($getgb['email']))));
                     } else {
                         $www = data("hp", $getgb['reg']);
                         $hp = empty($www) ? '' : show(_hpicon_forum, array("hp" => $www));
-                        $email = '<br />' . show(_emailicon_forum, array("email" => eMailAddr(data("email", $getgb['reg']))));
+                        $email = '<br />' . show(_emailicon_forum, array("email" => eMailAddr(re(data("email", $getgb['reg'])))));
                         $onoff = onlinecheck($getgb['reg']);
                         $nick = autor($getgb['reg']);
                     }

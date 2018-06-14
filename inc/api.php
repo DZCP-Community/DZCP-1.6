@@ -89,7 +89,7 @@ class api {
                 (int)str_replace('.','',$this->api_version)) {
                 ignore_user_abort(true);
                 set_time_limit(600);
-                $api_file = get_external_contents('https://raw.githubusercontent.com/DZCP-Community/DZCP-1.6/final/inc/api.php',false,true);
+                $api_file = get_external_contents(re('https://raw.githubusercontent.com/DZCP-Community/DZCP-1.6/final/inc/api.php',true),false,true);
                 if(!empty($api_file) && $api_file != false && strpos($api_file,'class api') !== false) {
                     if(file_exists(basePath.'/inc/api.php.old')) {
                         @unlink(basePath.'/inc/api.php.old'); //Remove old Backups
@@ -150,7 +150,7 @@ class api {
         if(show_api_debug)
             DebugConsole::insert_info('api.php','api_input = <pre>'.print_r($this->api_input).'</pre>');
 
-        $this->api_callback = get_external_contents('https://'.$this->api_server,$this->api_input);
+        $this->api_callback = get_external_contents(re('https://'.$this->api_server,true),$this->api_input);
 
         if(show_api_debug)
             DebugConsole::insert_info('api.php','api_callback = <pre>'.print_r($this->api_callback).'</pre>');

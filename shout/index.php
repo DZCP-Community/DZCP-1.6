@@ -26,7 +26,7 @@ switch ($action):
                 $index = error(_empty_nick, 1);
             elseif(!$userid && empty($_POST['email']) || $_POST['email'] == "E-Mail")
                 $index = error(_empty_email, 1);
-            elseif(!$userid && !check_email($_POST['email']))
+            elseif(!$userid && !check_email(re($_POST['email'],true)))
                 $index = error(_error_invalid_email, 1);
             elseif(empty($_POST['eintrag']))
                 $index = error(_error_empty_shout, 1);

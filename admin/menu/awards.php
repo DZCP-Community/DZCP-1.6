@@ -86,13 +86,18 @@ if($do == "new")
             $show = error(_awards_empty_url, 1);
         }
     } else {
-        if(empty($_POST['place'])) $place = "-";
-        else $place = $_POST['place'];
+        if(empty($_POST['place']))
+            $place = "-";
+        else
+            $place = $_POST['place'];
 
-        if(empty($_POST['prize'])) $prize = "-";
-        else $prize = $_POST['prize'];
+        if(empty($_POST['prize']))
+            $prize = "-";
+        else
+            $prize = $_POST['prize'];
 
-        $datum = mktime(0,0,0,$_POST['m'],$_POST['t'],$_POST['j']);
+        $datum = mktime(0,0,0,
+            $_POST['m'],$_POST['t'],$_POST['j']);
 
         db("INSERT INTO ".$db['awards']."
                      SET `date`     = ".((int)$datum).",
@@ -135,9 +140,7 @@ if($do == "new")
 
     $show = info(_awards_admin_edited, "?admin=awards");
 } elseif($do == "delete") {
-    $qry = db("DELETE FROM ".$db['awards']."
-                   WHERE id = '".(int)($_GET['id'])."'");
-
+    $qry = db("DELETE FROM ".$db['awards']." WHERE id = '".(int)($_GET['id'])."'");
     $show = info(_awards_admin_deleted, "?admin=awards");
 } else {
     $qry = db("SELECT * FROM ".$db['awards']." ".orderby_sql(array("event","date"), 'ORDER BY date DESC')); $show_ = '';

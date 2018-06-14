@@ -23,8 +23,10 @@ if(defined('_Clanwars')) {
   $server = show(_cw_details_server, array("servername" => re($_POST['servername']),
                                            "serverip" => re($_POST['serverip'])));
 
-  if($_POST['punkte'] == "0" && $_POST['gpunkte'] == "0") $result = _cw_no_results;
-  else $result = cw_result_details($_POST['punkte'], $_POST['gpunkte']);
+  if(!$_POST['punkte'] && !$_POST['gpunkte'])
+      $result = _cw_no_results;
+  else
+      $result = cw_result_details((int)$_POST['punkte'], (int)$_POST['gpunkte']);
 
     $editcw = "";
 

@@ -867,8 +867,7 @@ function replace(string $txt,bool $type=false,bool $no_vid_tag=false) {
                     return '<object width="425" height="344"><param name="movie" value="//www.youtube.com/v/'.trim($match[1]).'?hl=de_DE&amp;version=3&amp;rel=0"></param>
             <param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param>
             <embed src="//www.youtube.com/v/'.trim($match[1]).'?hl=de_DE&amp;version=3&amp;rel=0" type="application/x-shockwave-flash" width="425" height="344" allowscriptaccess="always" allowfullscreen="true">
-            </embed></object>';
-                }, $txt);
+            </embed></object>';}, $txt);
     }
 
     $txt = str_replace("\"","&#34;",$txt);
@@ -878,8 +877,9 @@ function replace(string $txt,bool $type=false,bool $no_vid_tag=false) {
 //-> Badword Filter
 function BadwordFilter($txt) {
     $words = explode(",",trim(settings('badwords')));
-    foreach($words as $word)
-    { $txt = preg_replace("#".$word."#i", str_repeat("*", strlen($word)), $txt); }
+    foreach($words as $word) {
+        $txt = preg_replace("#".$word."#i", str_repeat("*", strlen($word)), $txt);
+    }
     return $txt;
 }
 
@@ -1064,9 +1064,9 @@ function zitat(string $nick,string $zitat) {
 }
 
 //-> convert string for output
-function re($txt,bool $tinymce=false) {
+function re($txt,bool $only_stripslashes=false) {
     global $charset;
-    if($tinymce)
+    if($only_stripslashes)
         return strval(stripslashes($txt));
 
     return strval(trim(stripslashes(spChars(html_entity_decode(utf8_decode($txt), ENT_COMPAT, $charset),true))));

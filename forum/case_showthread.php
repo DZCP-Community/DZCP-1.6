@@ -261,7 +261,7 @@ if(defined('_Forum')) {
                     $hp = show(_hpicon_forum, array("hp" => links(re($getu['hp']))));
             } else {
                 if(!$get['dsgvo']) {
-                    $email = show(_emailicon_forum, array("email" => eMailAddr($get['t_email'])));
+                    $email = show(_emailicon_forum, array("email" => eMailAddr(re($get['t_email']))));
                     if(!empty($get['t_hp']))
                         $hp = show(_hpicon_forum, array("hp" => links(re($get['t_hp']))));
                 } else {

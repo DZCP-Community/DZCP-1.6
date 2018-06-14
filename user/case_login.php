@@ -13,7 +13,9 @@ if(defined('_UserMenu')) {
                 (empty($_SESSION['sec_login_page']) && empty($_SESSION['login_menu'])))))
             $index = error(_error_invalid_regcode, 1);
         else {
-            if(($get = checkpwd($_POST['user'],$_POST['pwd'])) != false) {
+            $user = re($_POST['user'],true);
+            $pwd = re($_POST['pwd'],true);
+            if(($get = checkpwd($user,$pwd)) != false) {
                 if(!isBanned($get['id'])) {
                     if($get['dsgvo_lock']) {
                         //User Locked

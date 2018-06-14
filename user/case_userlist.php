@@ -60,7 +60,7 @@ if(defined('_UserMenu')) {
 
     $userliste = '';
     while($get = _fetch($qry)) {
-        $email = show(_emailicon, array("email" => eMailAddr($get['email'])));
+        $email = show(_emailicon, array("email" => eMailAddr(re($get['email']))));
         $hlsw = empty($get['hlswid']) ? "-" : show(_hlswicon, array("id" => re($get['hlswid']), "img" => "1", "css" => ""));
         $xboxu = empty($get['xboxid']) ? "-" : show(_xboxicon, array("id" => re($get['xboxid']), "img" => "1", "css" => ""));
         $psnu = empty($get['psnid']) ? "-" : show(_psnicon, array("id" => re($get['psnid']), "img" => "1", "css" => ""));

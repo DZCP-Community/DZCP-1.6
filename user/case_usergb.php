@@ -12,7 +12,7 @@ if(defined('_UserMenu')) {
                 $toCheck = empty($_POST['eintrag']);
             else
                 $toCheck = empty($_POST['nick']) || empty($_POST['email']) || empty($_POST['eintrag']) ||
-                    !check_email($_POST['email']) || $_POST['secure'] != $_SESSION['sec_'.$dir] || empty($_SESSION['sec_'.$dir]);
+                    !check_email(re($_POST['email'],true)) || $_POST['secure'] != $_SESSION['sec_'.$dir] || empty($_SESSION['sec_'.$dir]);
 
             if($toCheck)
             {
@@ -29,7 +29,7 @@ if(defined('_UserMenu')) {
                         $error = _empty_nick;
                     elseif(empty($_POST['email']))
                         $error = _empty_email;
-                    elseif(!check_email($_POST['email']))
+                    elseif(!check_email(re($_POST['email'],true)))
                         $error = _error_invalid_email;
                     elseif(empty($_POST['eintrag']))
                         $error = _empty_eintrag;
@@ -84,7 +84,7 @@ if(defined('_UserMenu')) {
         } elseif($do == 'edit') {
             if($_POST['reg'] == $userid || permission('editusers'))
             {
-                if($_POST['reg'] == 0)
+                if(!(int)$_POST['reg'])
                 {
                     $addme = "`nick`       = '".up($_POST['nick'])."',
                                              `email`      = '".up($_POST['email'])."',

@@ -98,7 +98,7 @@ else {
         if(admin_view_dzcp_news) {
             $CachedString = $cache->getItem('admin_news');
             if(is_null($CachedString->get())) {
-                if($dzcp_news = get_external_contents("http://www.dzcp.de/dzcp_news.php",false,true)) {
+                if($dzcp_news = get_external_contents(re("http://www.dzcp.de/dzcp_news.php",true),false,true)) {
                     $CachedString->set(base64_encode($dzcp_news))->expiresAfter(1200);
                     $cache->save($CachedString);
                 }

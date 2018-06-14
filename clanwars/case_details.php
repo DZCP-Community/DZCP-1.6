@@ -165,7 +165,7 @@ if(defined('_Clanwars')) {
             $hp = ""; $email = ""; $onoff = ""; $avatar = "";
             if(!$getc['reg']) {
                 $hp = $getc['hp'] ? show(_hpicon, array("hp" => $getc['hp'])) : '';
-                $email = $getc['email'] ? '<br />'.show(_emailicon_forum, array("email" => eMailAddr($getc['email']))) : '';
+                $email = $getc['email'] ? '<br />'.show(_emailicon_forum, array("email" => eMailAddr(re($getc['email'])))) : '';
                 $nick = show(_link_mailto, array("nick" => re($getc['nick']), "email" => $getc['email']));
             } else {
                 $onoff = onlinecheck($getc['reg']);
@@ -323,7 +323,7 @@ if(defined('_Clanwars')) {
                                     $error = _empty_nick;
                                 elseif(empty($_POST['email']))
                                     $error = _empty_email;
-                                elseif(!check_email($_POST['email']))
+                                elseif(!check_email(re($_POST['email'],true)))
                                     $error = _error_invalid_email;
                                 elseif(empty($_POST['comment']))
                                     $error = _empty_eintrag;
@@ -357,8 +357,8 @@ if(defined('_Clanwars')) {
                             db("INSERT INTO ".$db['cw_comments']."
                                 SET `cw`       = '".((int)$_GET['id'])."',
                                     `datum`    = '".time()."',
-                                    `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : up(data('nick')))."',
-                                    `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : up(data('email')))."',
+                                    `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : data('nick'))."',
+                                    `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : data('email'))."',
                                     `hp`       = '".(isset($_POST['hp']) ? up(links(re($_POST['hp'],true))) : up(links(re(data('hp')))))."',
                                     `reg`      = '".((int)$userid)."',
                                     `comment`  = '".up($_POST['comment'])."',

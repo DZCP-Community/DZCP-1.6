@@ -14,7 +14,7 @@ define('debug_save_to_file', false);
 define('debug_dzcp_handler', true);
 define('fsockopen_support_bypass', false); //Umgeht die fsockopen pruefung
 define('use_curl_support', true); //Soll CURL verwendet werden
-define('use_min_css_js_files', true); //Sollen die Komprimierten versionen von css und js verwendet werden?
+define('use_min_css_js_files', false); //Sollen die Komprimierten versionen von css und js verwendet werden?
 
 define('use_default_timezone', true); // Verwendende die Zeitzone vom Server
 define('default_timezone', 'Europe/Berlin'); // Die zu verwendende Zeitzone selbst einstellen * 'use_default_timezone' auf false stellen *
@@ -71,7 +71,7 @@ define('phpmailer_smtp_secure', 'tls');//Enable TLS encryption, `ssl` also accep
  * Cache Configuration
  */
 $config_cache = array(
-    "storage" => "auto", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
+    "storage" => "apc", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
     "server_mem" => array(array("127.0.0.1",11211,1)), //memcache / memcached
     "server_redis" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'database' => '', 'timeout' => ''),
     "server_ssdb" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'timeout' => ''),

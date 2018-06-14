@@ -127,13 +127,13 @@ switch ($action):
                     if($abdata > $bisdata)
                         $error = show("errors/errortable", array("error" => _away_error_2));
 
-                    $date1 = show(_dropdown_date, array("day" => dropdown("day",$_POST['t']),
-                        "month" => dropdown("month",$_POST['m']),
-                        "year" => dropdown("year",$_POST['j'])));
+                    $date1 = show(_dropdown_date, array("day" => dropdown("day",(int)$_POST['t']),
+                        "month" => dropdown("month",(int)$_POST['m']),
+                        "year" => dropdown("year",(int)$_POST['j'])));
 
-                    $date2 = show(_dropdown_date2, array("tag" => dropdown("day",$_POST['tag']),
-                        "monat" => dropdown("month",$_POST['monat']),
-                        "jahr" => dropdown("year",$_POST['jahr'])));
+                    $date2 = show(_dropdown_date2, array("tag" => dropdown("day",(int)$_POST['tag']),
+                        "monat" => dropdown("month",(int)$_POST['monat']),
+                        "jahr" => dropdown("year",(int)$_POST['jahr'])));
 
                     $index = show($dir."/form_away", array("head" => _away_new_head,
                         "action" => "new&amp;do=set",
@@ -238,13 +238,13 @@ switch ($action):
                     if($bisdata == $abdata) $error = show("errors/errortable", array("error" => _away_error_1));
                     if($abdata > $bisdata) $error = show("errors/errortable", array("error" => _away_error_2));
 
-                    $date1 = show(_dropdown_date, array("day" => dropdown("day",$_POST['t']),
-                                                            "month" => dropdown("month",$_POST['m']),
-                                                            "year" => dropdown("year",$_POST['j'])));
+                    $date1 = show(_dropdown_date, array("day" => dropdown("day",(int)$_POST['t']),
+                                                            "month" => dropdown("month",(int)$_POST['m']),
+                                                            "year" => dropdown("year",(int)$_POST['j'])));
 
-                    $date2 = show(_dropdown_date2, array("tag" => dropdown("day",$_POST['tag']),
-                                                             "monat" => dropdown("month",$_POST['monat']),
-                                                             "jahr" => dropdown("year",$_POST['jahr'])));
+                    $date2 = show(_dropdown_date2, array("tag" => dropdown("day",(int)$_POST['tag']),
+                                                             "monat" => dropdown("month",(int)$_POST['monat']),
+                                                             "jahr" => dropdown("year",(int)$_POST['jahr'])));
 
                     $index = show($dir."/form_away", array("head" => _away_new_head,
                                                                "action" => "edit&amp;do=set&amp;id=".$get['id'],

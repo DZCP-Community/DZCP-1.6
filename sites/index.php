@@ -45,7 +45,7 @@ break;
 case 'preview';
   header("Content-type: text/html; charset=utf-8");
   if($_POST['html']) 
-      $inhalt = bbcode_html($_POST['inhalt'],true);
+      $inhalt = bbcode_html(re($_POST['inhalt'],true),true);
   else
       $inhalt = bbcode(re($_POST['inhalt'],true),true);
 

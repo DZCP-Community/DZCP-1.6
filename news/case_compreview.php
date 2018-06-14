@@ -24,9 +24,9 @@ if(defined('_News')) {
 
     $email = ""; $hp = "";
     if(!$regCheck) {
-        $get_hp = isset($_POST['hp']) ? $_POST['hp'] : '';
-        $get_email = isset($_POST['email']) ? $_POST['email'] : '';
-        $get_nick = isset($_POST['nick']) ? $_POST['nick'] : '';
+        $get_hp = isset($_POST['hp']) ? re($_POST['hp'],true) : '';
+        $get_email = isset($_POST['email']) ? re($_POST['email'],true) : '';
+        $get_nick = isset($_POST['nick']) ? re($_POST['nick'],true) : '';
 
         if(!empty($get_hp))
             $hp = show(_hpicon_forum, array("hp" => links(re($get_hp,true))));

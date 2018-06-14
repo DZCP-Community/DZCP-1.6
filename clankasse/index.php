@@ -157,7 +157,7 @@ switch ($action):
                                                  "post" => time()));
 
             } elseif($do == "add") {
-                if(!$_POST['t'] OR !$_POST['m'])
+                if(!$_POST['t'] || !$_POST['m'])
                     $index = error(_error_clankasse_empty_datum, 1);
                 elseif($_POST['transaktion'] == "lazy")
                     $index = error(_error_clankasse_empty_transaktion, 1);
@@ -168,7 +168,7 @@ switch ($action):
                     $datum = mktime(0,0,0,$_POST['m'],$_POST['t'],$_POST['j']);
                     db("INSERT INTO `".$db['clankasse']."`
                         SET `datum`        = ".((int)$datum).",
-                            `member`       = '".$_POST['member']."',
+                            `member`       = '".up($_POST['member'])."',
                             `transaktion`  = '".up($_POST['transaktion'])."',
                             `pm`           = ".((int)$_POST['pm']).",
                             `betrag`       = '".up($betrag)."';");

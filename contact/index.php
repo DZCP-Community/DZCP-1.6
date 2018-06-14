@@ -137,7 +137,7 @@ switch ($action):
                     $index = error(_error_empty_nachricht, 1);
                 elseif (empty($_POST['email']))
                     $index = error(_empty_email, 1);
-                elseif (!check_email($_POST['email']))
+                elseif (!check_email(re($_POST['email'],true)))
                     $index = error(_error_invalid_email, 1);
                 elseif (empty($_POST['nick']))
                     $index = error(_empty_nick, 1);
@@ -193,15 +193,15 @@ switch ($action):
                     $index = error(_error_empty_age, 1);
                 elseif (empty($_POST['email']))
                     $index = error(_empty_email, 1);
-                elseif (!check_email($_POST['email']))
+                elseif (!check_email(re($_POST['email'],true)))
                     $index = error(_error_invalid_email, 1);
                 elseif (empty($_POST['nick']))
                     $index = error(_empty_nick, 1);
                 else {
                     if ($_POST['squad'] != 0) {
-                        $qrysquads = _fetch(db("SELECT name FROM " . $db['squads'] . "
-                    WHERE id = " . $_POST['squad']));
-                    } else $qrysquads['name'] = _contact_joinus_no_squad_aviable;
+                        $qrysquads = db("SELECT `name` FROM `" . $db['squads'] . "` WHERE `id` = " . (int)$_POST['squad'].";",false,true);
+                    } else
+                        $qrysquads['name'] = _contact_joinus_no_squad_aviable;
 
                     $icq = preg_replace("=-=Uis", "", $_POST['icq']);
                     $email = show(_email_mailto, array("email" => $_POST['email']));

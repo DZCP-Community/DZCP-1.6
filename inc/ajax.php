@@ -43,7 +43,7 @@ ob_implicit_flush(false);
 
         $CachedString = $cache->getItem('steam_avatar_'.$steamID);
         if(is_null($CachedString->get())) {
-            if(($img_stream = get_external_contents($steam['user']['avatarIcon_url'],false,true)) && !empty($img_stream)) {
+            if(($img_stream = re(get_external_contents($steam['user']['avatarIcon_url'],true),false,true)) && !empty($img_stream)) {
                 $steam['user']['avatarIcon_url'] = 'data:image/png;base64,'.base64_encode($img_stream);
                 if(steam_avatar_cache) {
                     $CachedString->set(bin2hex($img_stream))->expiresAfter(steam_avatar_refresh);

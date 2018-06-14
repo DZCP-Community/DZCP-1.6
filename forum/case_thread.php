@@ -197,7 +197,7 @@ if(defined('_Forum')) {
                     elseif(empty($_POST['topic'])) $error = _empty_topic;
                     elseif(empty($_POST['nick'])) $error = _empty_nick;
                     elseif(empty($_POST['email'])) $error = _empty_email;
-                    elseif(!check_email($_POST['email'])) $error = _error_invalid_email;
+                    elseif(!check_email(re($_POST['email'],true))) $error = _error_invalid_email;
                     elseif(empty($_POST['eintrag'])) $error = _empty_eintrag;
 
                     $form = show("page/editor_notregged", array("nickhead" => _nick,
@@ -275,8 +275,8 @@ if(defined('_Forum')) {
                     "security" => _register_confirm,
                     "what" => _button_value_edit,
                     "dowhat" => $dowhat,
-                    "posthp" => $_POST['hp'],
-                    "postemail" => $_POST['email'],
+                    "posthp" => re($_POST['hp']),
+                    "postemail" => re($_POST['email']),
                     "postnick" => re($_POST['nick']),
                     "posteintrag" => re_bbcode(re($_POST['eintrag'],true)),
                     "posttopic" => re($_POST['topic']),

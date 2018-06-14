@@ -39,7 +39,7 @@ if(defined('_UserMenu')) {
                 $index = error(_empty_nick, 1);
             } elseif(empty($_POST['email'])) {
                 $index = error(_empty_email, 1);
-            } elseif(!check_email($_POST['email'])) {
+            } elseif(!check_email(re($_POST['email'],true))) {
                 $index = error(_error_invalid_email, 1);
             } elseif($check_user) {
                 $index = error(_error_user_exists, 1);
@@ -48,8 +48,7 @@ if(defined('_UserMenu')) {
             } elseif($check_email) {
                 $index = error(_error_email_exists, 1);
             } else {
-                if ($_POST['pwd'])
-                {
+                if (isset($_POST['pwd']) && !empty($_POST['pwd']) && !empty($_POST['cpwd'])) {
                     if ($_POST['pwd'] == $_POST['cpwd'])
                     {
                         $newpwd = "pwd = '".hash('sha256',$_POST['pwd'])."',";
