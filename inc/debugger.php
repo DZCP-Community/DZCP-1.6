@@ -43,6 +43,9 @@ class DebugConsole {
     public static final function insert_info($file,$info)
     { if(show_info) self::$log_array[$file][] = '<font color="#9900CC">'.$info.'</font>'; }
 
+    public static final function insert_var_debug($info)
+    { self::$log_array['vardebug'][] = '<pre>'.$info.'</pre>'; }
+
     public static final function insert_warning($file,$func)
     { if(show_warning) self::$log_array[$file][] = '<font color="#FFFF00">'.$func.'</font>'; }
 
@@ -72,10 +75,19 @@ class DebugConsole {
     public static final function show_logs() {
         $data = ''; $color = 0; $i=0;
         foreach(self::$log_array as $file => $msg_array) {
-            foreach($msg_array as $msg) {
-                $set_color = ($color % 2) ? "#CCCCCC" : "#E6E6E6"; $color++;
-                $data .= '<tr><td width="40%" bgcolor="'.$set_color.'"><b><div align="center"><font color="#000000" style="font-size:11px">"'.$file.'"</font></div></b></td>
-                <td width="60%" bgcolor="'.$set_color.'"><b><div align="center"><font color="#000000" style="font-size:11px">"'.$msg.'"</font></div></b></td></tr>'; $i++;
+            if($file == 'vardebug') {
+                foreach($msg_array as $msg) {
+                    $set_color = ($color % 2) ? "#CCCCCC" : "#E6E6E6"; $color++;
+                    $data .= '<tr><td colspan="2" width="60%" bgcolor="'.$set_color.'"><b><div align="center">'.$msg.'</div></b></td></tr>'; $i++;
+                }
+            } else {
+                foreach ($msg_array as $msg) {
+                    $set_color = ($color % 2) ? "#CCCCCC" : "#E6E6E6";
+                    $color++;
+                    $data .= '<tr><td width="40%" bgcolor="' . $set_color . '"><b><div align="center"><font color="#000000" style="font-size:11px">"' . $file . '"</font></div></b></td>
+                <td width="60%" bgcolor="' . $set_color . '"><b><div align="center"><font color="#000000" style="font-size:11px">"' . $msg . '"</font></div></b></td></tr>';
+                    $i++;
+                }
             }
         }
 

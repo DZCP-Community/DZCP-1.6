@@ -117,7 +117,8 @@ else {
                                            "dbase" => _stats_mysql,
                                            "einst" => _config_einst,
                                            "content" => _content,
-                                           "newsticker" => '<div style="padding:3px">'.(empty($dzcp_news) ? '' : '<b>DZCP News:</b><br />').'<div id="dzcpticker">'.$dzcp_news.'</div></div>',
+                                           "newsticker" => '<div style="padding:3px">'.(empty($dzcp_news) ? '' :
+                                                   '<b>DZCP News:</b><br />').'<div id="dzcpticker">'.utf8_encode($dzcp_news).'</div></div>',
                                            "rootadmin" => _rootadmin,
                                            "rootmenu" => $rootmenu,
                                            "settingsmenu" => $settingsmenu,

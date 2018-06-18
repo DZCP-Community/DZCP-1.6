@@ -195,7 +195,8 @@ var DZCP = {
     // Templateswitch
     tempswitch: function() {
         var url = doc.form.tempswitch.options[doc.form.tempswitch.selectedIndex].value;
-        if(url != 'lazy') DZCP.goTo(url);
+        if(url != 'lazy' && url != tempdir)
+            DZCP.goTo(url);
     },
 
     // go to defined url

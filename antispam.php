@@ -87,7 +87,7 @@ if(isset($_GET['secure']) && !empty($_GET['secure'])) {
         } unset($passwordComponents);
 
         //Code in Session abspeichern
-        $_SESSION["sec_".trim($_GET['secure'])] = $code;
+        $_SESSION["sec_".strval($_GET['secure'])] = $code;
 
         if(!function_exists('imagettftext')) {
             for($i=0;$i<=strlen($code);$i++) $strcode .= $code[$i].' ';

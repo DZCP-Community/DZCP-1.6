@@ -1845,7 +1845,7 @@ function artikelSites(int $sites, int $id) {
 }
 
 //-> Nickausgabe mit Profillink oder Emaillink (reg/nicht reg)
-function autor(int $uid,string $class="",string $nick="",string $email="", $cut="",string $add="") {
+function autor(int $uid,string $class="",string $nick="",string $email="",int $cut=20,string $add="") {
     global $db;
     if(!dbc_index::issetIndex('user_'.(int)($uid))) {
         $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($uid).";");
@@ -1867,7 +1867,7 @@ function autor(int $uid,string $class="",string $nick="",string $email="", $cut=
                                   "nick" => $nickname));
 }
 
-function cleanautor(int $uid, string $class="", string $nick="", string $email="", $cut="") {
+function cleanautor(int $uid, string $class="", string $nick="", string $email="", int $cut=20) {
     global $db;
     if(!dbc_index::issetIndex('user_'.(int)($uid))) {
         $qry = db("SELECT * FROM `".$db['users']."` WHERE `id` = ".(int)($uid).";");
@@ -2782,7 +2782,7 @@ function page(string $index='',string $title='',string $where='',string $wysiwyg
     $dsgvo = (!array_key_exists('do_show_dsgvo',$_SESSION) || !$_SESSION['do_show_dsgvo'] ? 1 : 0);
     $dsgvo_lock = (!array_key_exists('user_has_dsgvo_lock',$_SESSION) || !$_SESSION['user_has_dsgvo_lock'] ? 0 : 1);
     $java_vars = '<script language="javascript" type="text/javascript">var maxW = '.config('maxwidth').',lng = \''.$lng.'\',dsgvo = \''.$dsgvo.'\',
-    dsgvo_lock = \''.$dsgvo_lock.'\',dzcp_editor = \''.$edr.'\';'.$lcolor.'</script>'."\n";
+    dsgvo_lock = \''.$dsgvo_lock.'\',dzcp_editor = \''.$edr.'\',tempdir = \''.$_SESSION['tmpdir'].'\';'.$lcolor.'</script>'."\n";
     $min = (use_min_css_js_files ? '.min' : '');
 
     if(!strstr(GetServerVars('HTTP_USER_AGENT'),'Android') && !strstr(GetServerVars('HTTP_USER_AGENT'),'webOS'))

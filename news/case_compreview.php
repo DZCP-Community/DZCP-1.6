@@ -7,15 +7,14 @@
 if(defined('_News')) {
     header("Content-type: text/html; charset=utf-8");
     if($do == 'edit') {
-        $get = db("SELECT * FROM ".$db['newscomments']." WHERE `id` = '".(int)($_GET['cid'])."'",false,true);
+        $get = db("SELECT * FROM `".$db['newscomments']."` WHERE `id` = ".(int)($_GET['cid']).";",false,true);
         $get_id = '?';
         $get_userid = $get['reg'];
         $get_date = $get['datum'];
         $regCheck = !$get['reg'] ? false : true;
-        $editedby = show(_edited_by, array("autor" => cleanautor($userid),
-                                           "time" => date("d.m.Y H:i", time())._uhr));
+        $editedby = show(_edited_by, array("autor" => cleanautor($userid), "time" => date("d.m.Y H:i", time())._uhr));
     } else {
-        $get_id = cnt($db['newscomments'], " WHERE news = ".(int)($_GET['id']))+1;
+        $get_id = cnt($db['newscomments'], " WHERE `news` = ".(int)($_GET['id']))+1;
         $get_userid = $userid;
         $get_date = time();
         $regCheck = $chkMe >= 1 ? true : false;
@@ -34,13 +33,11 @@ if(defined('_News')) {
         if(!empty($get_email))
             $email = '<br />'.show(_emailicon_forum, array("email" => eMailAddr($get_email)));
 
-        $onoff = "";
-        $avatar = "";
-        $nick = show(_link_mailto, array("nick" => re($get_nick),
-                                         "email" => $get_email));
+        $onoff = ""; $avatar = "";
+        $nick = show(_link_mailto, array("nick" => re($get_nick), "email" => $get_email));
     } else {
-        $onoff = onlinecheck($get_userid);
-        $nick = cleanautor($get_userid);
+        $onoff = onlinecheck((int)$get_userid);
+        $nick = cleanautor((int)$get_userid);
     }
 
     $titel = show(_eintrag_titel, array("postid" => $get_id,

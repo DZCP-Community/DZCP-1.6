@@ -70,9 +70,10 @@ switch ($action):
                 if (!array_key_exists('sec_sendnews',$_SESSION) || (!$userid && (empty($_POST['nick']))) || (!$userid && empty($_POST['email']) || $_POST['email'] == "E-Mail") ||
                     empty($_POST['titel']) || empty($_POST['text']) || (($_POST['secure'] != $_SESSION['sec_sendnews']
                             || $_SESSION['sec_sendnews'] == NULL) && !$userid)) {
+
                     if (!array_key_exists('sec_sendnews',$_SESSION) || ($_POST['secure'] != $_SESSION['sec_sendnews'] || $_SESSION['sec_sendnews'] == NULL) && !$userid)
                         $error = show("errors/errortable", array("error" => _error_invalid_regcode));
-                    
+
                     if (empty($_POST['text']))
                         $error = show("errors/errortable", array("error" => _error_empty_nachricht));
 
@@ -132,42 +133,34 @@ switch ($action):
 
                 } else {
                     $hp = show(_contact_hp, array("hp" => links(re($_POST['hp'],true))));
-                    if (!$userid) $nick = $_POST['nick'];
-                    else $nick = blank_autor($userid);
-                    if (!$userid) $von_nick = "0";
-                    else $von_nick = $userid;
-                    if (!$userid) $titel = show(_news_send_titel, array("nick" => $_POST['nick']));
-                    else $titel = show(_news_send_titel, array("nick" => blank_autor($userid)));
-                    if (!$userid) $email = show(_email_mailto, array("email" => $_POST['email']));
-                    else $email = '--';
-                    if (!$userid)
-                        $sendnews = 1;
-                    else
+                    $nick = re($_POST['nick'],true); $von_nick = 0;
+                    $titel = show(_news_send_titel, array("nick" => $_POST['nick']));
+                    $email = show(_email_mailto, array("email" => $_POST['email']));
+                    $sendnews = 1; $user = isset($_POST['nick']) ? $_POST['nick'] : '';
+                    if ($userid) {
+                        $von_nick = $userid;
+                        $nick = blank_autor($userid);
+                        $titel = show(_news_send_titel, array("nick" => blank_autor($userid)));
+                        $email = '--';
                         $sendnews = 2;
-
-                    if (!$userid)
-                        $user = $_POST['nick'];
-                    else
                         $user = $userid;
+                    }
 
-                    $text = show(_contact_text_sendnews, array("hp" => $hp,
+                    $text = show(_contact_text_sendnews, array(
+                        "hp" => $hp,
                         "email" => $email,
-                        "titel" => up($_POST['titel']),
-                        "text" => up($_POST['text']),
-                        "info" => up($_POST['info']),
+                        "titel" => re($_POST['titel'],true),
+                        "text" => re($_POST['text'],true),
+                        "info" => re($_POST['info'],true),
                         "nick" => $nick));
 
-                    $qry = db("SELECT id,level FROM " . $db['users'] . "");
+                    $qry = db("SELECT `id`,`level` FROM `" . $db['users'] . "`;");
                     while ($get = _fetch($qry)) {
-                        if (permission('news', $get['id']) or $get['level'] == 4) {
-                            $update = db("INSERT INTO " . $db['msg'] . "
-                                                  SET `datum`     = '" . time() . "',
-                                                          `von`       = " . $von_nick . ",
-                                                          `an`        = " . ((int)$get['id']) . ",
-                                                          `titel`     = '" . $titel . "',
-                                                          `nachricht` = '" . up($text) . "',
-                                                          `sendnews`  = " . $sendnews . ",
-                                                          `senduser`  = '" . up($user) . "';");
+                        if (permission('news', $get['id']) || $get['level'] == 4) {
+                            db("INSERT INTO `" . $db['msg'] . "` SET `datum`     = ".time().
+                                ", `von` = ".$von_nick.", `an` = ".((int)$get['id']).
+                                ", `titel` = '".$titel."', `nachricht` = '".up($text) .
+                                "',`sendnews`  = ".$sendnews . ",`senduser` = '".up($user)."';");
                         }
                     }
                     $index = info(_news_send_done, "../news/");
