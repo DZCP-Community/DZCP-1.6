@@ -67,13 +67,26 @@ switch ($action):
     case 'do';
         if($_GET['what'] == "sendnews") {
             if (HasDSGVO()) {
-                if ((!$userid && (empty($_POST['nick']))) || (!$userid && empty($_POST['email']) || $_POST['email'] == "E-Mail") || empty($_POST['titel']) || empty($_POST['text']) || (($_POST['secure'] != $_SESSION['sec_sendnews'] || $_SESSION['sec_sendnews'] == NULL) && !$userid)) {
-                    if (($_POST['secure'] != $_SESSION['sec_sendnews'] || $_SESSION['sec_sendnews'] == NULL) && !$userid) $error = show("errors/errortable", array("error" => _error_invalid_regcode));
-                    if (empty($_POST['text'])) $error = show("errors/errortable", array("error" => _error_empty_nachricht));
-                    if (empty($_POST['titel'])) $error = show("errors/errortable", array("error" => _empty_titel));
-                    if (!$userid && !check_email($_POST['email'])) $error = show("errors/errortable", array("error" => _error_invalid_email));
-                    if (!$userid && empty($_POST['email']) || $_POST['email'] == "E-Mail") $error = show("errors/errortable", array("error" => _empty_email));
-                    if (!$userid && (empty($_POST['nick']))) $error = show("errors/errortable", array("error" => _empty_nick));
+                if (!array_key_exists('sec_sendnews',$_SESSION) || (!$userid && (empty($_POST['nick']))) || (!$userid && empty($_POST['email']) || $_POST['email'] == "E-Mail") ||
+                    empty($_POST['titel']) || empty($_POST['text']) || (($_POST['secure'] != $_SESSION['sec_sendnews']
+                            || $_SESSION['sec_sendnews'] == NULL) && !$userid)) {
+                    if (!array_key_exists('sec_sendnews',$_SESSION) || ($_POST['secure'] != $_SESSION['sec_sendnews'] || $_SESSION['sec_sendnews'] == NULL) && !$userid)
+                        $error = show("errors/errortable", array("error" => _error_invalid_regcode));
+                    
+                    if (empty($_POST['text']))
+                        $error = show("errors/errortable", array("error" => _error_empty_nachricht));
+
+                    if (empty($_POST['titel']))
+                        $error = show("errors/errortable", array("error" => _empty_titel));
+
+                    if (!$userid && !check_email($_POST['email']))
+                        $error = show("errors/errortable", array("error" => _error_invalid_email));
+
+                    if (!$userid && empty($_POST['email']) || $_POST['email'] == "E-Mail")
+                        $error = show("errors/errortable", array("error" => _empty_email));
+
+                    if (!$userid && (empty($_POST['nick'])))
+                        $error = show("errors/errortable", array("error" => _empty_nick));
 
                     if (!$chkMe) {
                         $form = show($dir . "/send_form1", array("nachricht" => _site_news,

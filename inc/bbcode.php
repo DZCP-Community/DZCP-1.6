@@ -1754,7 +1754,9 @@ function error2(string $error) {
 
 //-> Email wird auf korrekten Syntax & Erreichbarkeit ueberprueft
 function check_email(string $email) {
-    return (!preg_match("#^([a-zA-Z0-9\.\_\-]+)@([a-zA-Z0-9\.\-]+\.[A-Za-z][A-Za-z]+)$#", $email) ? false : true);
+    global $gump;
+    $email = $gump->filter(array('email' => $email), array('email' => 'trim|sanitize_email'));
+    return ($gump->validate($email, array('email' => 'valid_email')) === true);
 }
 
 //-> Bilder verkleinern
@@ -2299,7 +2301,8 @@ function ipcheck(string $what,int $time = 0) {
             return true;
         else {
             if ($get['time'] + (int)($time) < time())
-                db("DELETE FROM `" . $db['ipcheck'] . "` WHERE `what` = '" . $what . "' AND `ip` = '" . $userip . "' AND (`time`+" . $time . ") < " . time() . ";");
+                db("DELETE FROM `" . $db['ipcheck'] . "` WHERE `what` = '" .
+                    $what . "' AND `ip` = '" . $userip . "' AND (`time`+" . $time . ") < " . time() . ";");
 
             if (($get['time'] + $time) > time())
                 return true;
