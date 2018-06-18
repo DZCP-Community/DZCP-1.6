@@ -10,12 +10,12 @@ function template_switch() {
             $selt = ($tmpdir == $tmp ? 'selected="selected"' : '');
             if (!empty((string)$xml->permissions)) {
                 if (permission((string)$xml->permissions) || ((int)$xml->level >= 1 && $chkMe >= (int)$xml->level)) {
-                    $tmpldir .= show(_select_field, array("value" => "?tmpl_set=" . $tmp, "what" => (string)$xml->name, "sel" => $selt));
+                    $tmpldir .= show(_select_field, array("value" => $tmp, "what" => (string)$xml->name, "sel" => $selt));
                 }
             } else if ((int)$xml->level >= 1 && $chkMe >= (int)$xml->level) {
-                $tmpldir .= show(_select_field, array("value" => "?tmpl_set=" . $tmp, "what" => (string)$xml->name, "sel" => $selt));
+                $tmpldir .= show(_select_field, array("value" => $tmp, "what" => (string)$xml->name, "sel" => $selt));
             } else if (!(int)$xml->level) {
-                $tmpldir .= show(_select_field, array("value" => "?tmpl_set=" . $tmp, "what" => (string)$xml->name, "sel" => $selt));
+                $tmpldir .= show(_select_field, array("value" => $tmp, "what" => (string)$xml->name, "sel" => $selt));
             }
         }
     }

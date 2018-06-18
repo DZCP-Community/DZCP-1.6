@@ -51,25 +51,9 @@ $support .= "\r\n";
 $support .= "#####################\r\n";
 $support .= "Servereinstellungen\r\n";
 $support .= "#####################\r\n";
-//Removed in PHP 5.4.x +
-if(!is_php('5.4.0')) {
-    $support .= "register_globals: ".$PhpInfo['Core']['register_globals'][0]."\r\n";
-    $support .= "Save Mode: ".$PhpInfo['Core']['safe_mode'][0]."\r\n";
-    if($PhpInfo['Core']['safe_mode'][0] == 'on') {
-        $support .= "safe_mode_exec_dir: ".$PhpInfo['Core']['safe_mode_exec_dir'][0]."\r\n";
-        $support .= "safe_mode_gid: ".$PhpInfo['Core']['safe_mode_gid'][0]."\r\n";
-        $support .= "safe_mode_include_dir: ".$PhpInfo['Core']['safe_mode_include_dir'][0]."\r\n";
-    }
-}
-
 $support .= "open_basedir: ".$PhpInfo['Core']['open_basedir'][0]."\r\n";
 $support .= "PHP-Memory Limit: ".$PhpInfo['Core']['memory_limit'][0]."\r\n";
 $support .= "imagettftext(): ".(function_exists('imagettftext')==true? 'existiert' : 'existiert nicht')."\r\n";
-
-//Removed in PHP 5.4.x +
-if(!is_php('5.4.0'))
-    $support .= "magic_quotes_gpc: ".$PhpInfo['Core']['magic_quotes_gpc'][0]."\r\n";
-
 $support .= "file_uploads: ".$PhpInfo['Core']['file_uploads'][0]."\r\n";
 $support .= "upload_max_filesize: ".$PhpInfo['Core']['upload_max_filesize'][0]."\r\n";
 $support .= "sendmail_from: ".$PhpInfo['Core']['sendmail_from'][0]."\r\n";

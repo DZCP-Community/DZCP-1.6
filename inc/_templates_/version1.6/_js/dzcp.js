@@ -196,25 +196,28 @@ var DZCP = {
     tempswitch: function() {
         var url = doc.form.tempswitch.options[doc.form.tempswitch.selectedIndex].value;
         if(url != 'lazy' && url != tempdir)
-            DZCP.goTo(url);
+            DZCP.goTo("?tmpl_set="+url);
     },
 
     // go to defined url
     goTo: function(url, n) {
-        if(n == 1) window.open(url);
-        else window.location.href = url
+        if(n == 1)
+            window.open(url);
+        else
+            window.location.href = url
     },
 
     // limit text lenthn
     maxlength: function(field, countfield, max) {
-        if(field.value.length > max) field.value = field.value.substring(0, max);
-        else                         countfield.value = max - field.value.length;
+        if(field.value.length > max)
+            field.value = field.value.substring(0, max);
+        else
+            countfield.value = max - field.value.length;
     },
 
     // handle info layer
     showInfo: function(info, kats, text, img, width, height) {
-        if(typeof(layer) == 'object')
-        {
+        if(typeof(layer) == 'object') {
             var output = '';
             if(kats && text){
                 var kat=kats.split(";");
@@ -233,23 +236,21 @@ var DZCP = {
             var userimg = "";
             if(img){
                 userimg = '<tr><td colspan=2 align=center><img src="'+img+'" width="'+width+'" height="'+height+'" alt="" /></td></tr>';
-            }else{
-                userimg = '';
             }
             layer.innerHTML =
                 '<div id="hDiv">' +
-                '  <table class="hperc" cellspacing="0" style="height:100%">' +
-                '    <tr>' +
-                '      <td style="vertical-align:middle">' +
-                '        <div id="infoInnerLayer">' +
-                '          <table class="hperc" cellspacing="0">' +
-                '              '+output+'' +
-                '              '+userimg+'' +
-                '          </table>' +
-                '        </div>' +
-                '      </td>' +
-                '    </tr>' +
-                '  </table>' +
+                '<table class="hperc" cellspacing="0" style="height:100%">' +
+                '<tr>' +
+                '<td style="vertical-align:middle">' +
+                '<div id="infoInnerLayer">' +
+                '<table class="hperc" cellspacing="0">' +
+                ''+output+'' +
+                ''+userimg+'' +
+                '</table>' +
+                '</div>' +
+                '</td>' +
+                '</tr>' +
+                '</table>' +
                 '</div>';
 
             //IE Fix
@@ -275,25 +276,25 @@ var DZCP = {
         {
             layer.innerHTML =
                 '<div id="hDiv">' +
-                '  <table class="hperc" cellspacing="0" style="height:100%">' +
-                '    <tr>' +
-                '      <td style="vertical-align:middle">' +
-                '        <div id="infoInnerLayer">' +
-                '             <table class="steam_box_bg" border="0" cellspacing="0" cellpadding="0">' +
-                '              <tr>' +
-                '                <td>' +
-                '                   <div class="steam_box steam_box_user '+class_state+'">' +
-                '                     <div class="steam_box_avatar '+class_state+'"> <img src="'+img+'" /></div>' +
-                '                     <div class="steam_box_content">'+user+'<br />' +
-                '                     <span class="friendSmallText">'+text+'<br>'+text2+'</span></div>' +
-                '                   </div>' +
-                '                </td>' +
-                '              </tr>' +
-                '            </table>' +
-                '        </div>' +
-                '      </td>' +
-                '    </tr>' +
-                '  </table>' +
+                '<table class="hperc" cellspacing="0" style="height:100%">' +
+                '<tr>' +
+                '<td style="vertical-align:middle">' +
+                '<div id="infoInnerLayer">' +
+                '<table class="steam_box_bg" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td>' +
+                '<div class="steam_box steam_box_user '+class_state+'">' +
+                '<div class="steam_box_avatar '+class_state+'"> <img src="'+img+'" /></div>' +
+                '<div class="steam_box_content">'+user+'<br />' +
+                '<span class="friendSmallText">'+text+'<br>'+text2+'</span></div>' +
+                '</div>' +
+                '</td>' +
+                '</tr>' +
+                '</table>' +
+                '</div>' +
+                '</td>' +
+                '</tr>' +
+                '</table>' +
                 '</div>';
 
             //IE Fix
@@ -342,22 +343,18 @@ var DZCP = {
     },
     // resize images
     resizeImages: function() {
-        for(var i=0;i<doc.images.length;i++)
-        {
+        for(var i=0;i<doc.images.length;i++) {
             var d = doc.images[i];
 
-            if(d.className == 'content')
-            {
+            if(d.className == 'content') {
                 var imgW = d.width;
                 var imgH = d.height;
 
-                if(maxW != 0 && imgW > maxW)
-                {
+                if(maxW != 0 && imgW > maxW) {
                     d.width = maxW;
                     d.height = Math.round(imgH * (maxW / imgW));
 
-                    if(!DZCP.linkedImage(d))
-                    {
+                    if(!DZCP.linkedImage(d)) {
                         var textLink = doc.createElement("span");
                         var popupLink = doc.createElement("a");
 
@@ -378,7 +375,6 @@ var DZCP = {
             }
         }
     },
-
     linkedImage: function(node) {
         do {
             node = node.parentNode;
@@ -388,18 +384,15 @@ var DZCP = {
 
         return false;
     },
-
     // ajax calendar switch
     calSwitch: function(m, y) {
         $('#navKalender').load('../inc/ajax.php?i=kalender&month=' + m + '&year=' + y);
     },
-
     // ajax team switch
     teamSwitch: function(obj) {
         clearTimeout(mTimer[1]);
         $('#navTeam').load('../inc/ajax.php?i=teams&tID=' + obj, DZCP.initTicker('teams', 'h', 60));
     },
-
     // ajax vote
     ajaxVote: function(id) {
         DZCP.submitButton('contentSubmitVote');
@@ -409,7 +402,6 @@ var DZCP = {
 
         return false;
     },
-
     // ajax forum vote
     ajaxFVote: function(id) {
         DZCP.submitButton('contentSubmitFVote');
@@ -419,7 +411,6 @@ var DZCP = {
 
         return false;
     },
-
     // ajax preview
     ajaxPreview: function(form) {
         var tag=doc.getElementsByTagName("textarea");
@@ -449,20 +440,16 @@ var DZCP = {
             $('#previewDIV').html(req);
         });
     },
-
     // confirm delete
     del: function(txt) {
         txt = txt.replace(/\+/g, ' ');
-        txt = txt.replace(/oe/g, '�');
-
+        txt = txt.replace(/oe/g, 'ö');
         return confirm(txt + '?');
     },
-    
     // forum search
     hideForumFirst: function() {
         $('#allkat').prop('checked', false);
     },
-
     hideForumAll: function() {
         for(var i = 0; i < doc.forms['search'].elements.length; i++) {
             var box = doc.forms['search'].elements[i];
@@ -470,7 +457,6 @@ var DZCP = {
                 box.checked = false;
         }
     },
-
     // disable submit button
     submitButton: function(id) {
         var submitID = (id) ? id : 'contentSubmit';
@@ -480,7 +466,6 @@ var DZCP = {
 
         return true;
     },
-
     // Newticker
     initTicker: function(objID, to, ms) {
         // set settings
@@ -489,45 +474,33 @@ var DZCP = {
 
         // prepare  object
         var orgData = $('#' + objID).html();
-        var newData  = '  <div id="scrollDiv' + tickerc +'" class="scrollDiv" style="position:relative;left:0;z-index:1">';
-        newData += '    <table id="scrollTable' + tickerc +'" class="scrolltable"  cellpadding="0" cellspacing="0">';
-        newData += '      <tr>';
-        newData += '        <td onmouseover="clearTimeout(mTimer[' + tickerc +'])" onmouseout="DZCP.startTickerDiv(' + tickerc +')">';
+        var newData  = '<div id="scrollDiv' + tickerc +'" class="scrollDiv" style="position:relative;left:0;z-index:1">';
+        newData += '<table id="scrollTable' + tickerc +'" class="scrolltable"  cellpadding="0" cellspacing="0">';
+        newData += '<tr>';
+        newData += '<td onmouseover="clearTimeout(mTimer[' + tickerc +'])" onmouseout="DZCP.startTickerDiv(' + tickerc +')">';
         for(var i=0;i<10;i++) newData += orgData;
-        newData += '        </td>';
-        newData += '      </tr>';
-        newData += '    </table>';
-        newData += '  </div>';
+        newData += '</td>';
+        newData += '</tr>';
+        newData += '</table>';
+        newData += '</div>';
 
         $('#' + objID).html(newData);
         // start ticker
         window.setTimeout("DZCP.startTickerDiv("+tickerc+");",1500);
         tickerc++;
     },
-
     startTickerDiv: function(subID) {
         tableObj        = $('#scrollTable' + subID)[0];
         obj             = tableObj.parentNode;
         objWidth        = (tickerTo[subID] == 'h') ? tableObj.offsetWidth : tableObj.offsetHeight;
         newWidth        = (Math.floor(objWidth/2)*2)+2;
         obj.style.width = newWidth;
-
         mTimer[subID] = setInterval("DZCP.moveDiv('"+obj.id+"', " + newWidth + ", " + subID + ");", tickerSpeed[subID]);
     },
-
     moveDiv: function(obj, width, subID) {
         var thisObj = $('#' + obj)[0];
         if(tickerTo[subID] == 'h') thisObj.style.left = (parseInt(thisObj.style.left) <= (0-(width/2)+2)) ? 0 : parseInt(thisObj.style.left)-1 + 'px';
         else thisObj.style.top = (thisObj.style.top == '' || (parseInt(thisObj.style.top)<(0-(width/2)+6))) ? 0 : parseInt(thisObj.style.top)-1 + 'px';
-    },
-
-    //TS3 Settings
-    TS3Settings: function(id) {
-        if(id == 3) {
-            $('#ts3settings').css('display', '');
-        } else {
-            $('#ts3settings').css('display', 'none');
-        }
     }
 }
 

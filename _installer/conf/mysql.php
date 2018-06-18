@@ -1406,6 +1406,7 @@ function update_mysql_1_6_1_0() {
     db("DROP TABLE IF EXISTS `".$db['prefix']."banned`;"); //Remove old table
     db("ALTER TABLE `".$db['users']."` ADD `language` varchar(249) NOT NULL default '' AFTER `show`;");
     db("ALTER TABLE `".$db['settings']."` DROP `persinfo`;");
+    db("ALTER TABLE `".$db['settings']."` DROP `ts_version`;");
 
     $gets = db("SELECT * FROM `".$db['settings']."`;",false,true);
     if(array_key_exists('last_backup',$gets)) {

@@ -31,7 +31,7 @@ function teamspeak($js = 0) {
         if(!empty($ts_ip) && !empty($ts_sport) && !empty($ts_port)) {
             $CachedString = $cache->getItem('teamspeak_'.$_SESSION['language']);
             if(is_null($CachedString->get()) || isset($_GET['cID'])) {
-                $teamspeak = teamspeakViewer();
+                $teamspeak = teamspeak3();
                 $CachedString->set($teamspeak)->expiresAfter(config('cache_teamspeak'));
                 $cache->save($CachedString);
             } else {

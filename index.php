@@ -8,8 +8,8 @@ ob_start();
     define('basePath', dirname(__FILE__));
     $sql_prefix = ''; $sql_host = ''; $sql_user =  ''; $sql_pass = ''; $sql_db = '';
 
-    if (version_compare(phpversion(), '5.6', '<')) {
-        die('Bitte verwende PHP-Version 5.6 oder h&ouml;her.<p>Please use PHP-Version 5.6 or higher.');
+    if (version_compare(phpversion(), '7.0', '<')) {
+        die('Bitte verwende PHP-Version 7.0 oder h&ouml;her.<p>Please use PHP-Version 7.0 or higher.');
     }
 
     if(file_exists(basePath."/inc/mysql.php"))

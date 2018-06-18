@@ -5,6 +5,6 @@
  */
 
 define('_version', '1.6.1.0');
-define('_release', '10.06.2018');
+define('_release', '18.06.2018');
 define('_build', '1610.00.0');
 define('_edition', 'dev');

@@ -2584,28 +2584,6 @@ function setIpcheck(string $what = '',bool $time=true) {
             . "`time` = ".($time ? time() : 0).", `created` = ".time().";");
 }
 
-function is_php(string $version='5.3.0') {
-    return (floatval(phpversion()) >= $version);
-}
-
-function hextobin(string $hexstr) {
-    if(is_php('5.4.0'))
-        return hex2bin($hexstr);
-    // < PHP 5.4
-    $n = strlen($hexstr);
-    $sbin="";
-    $i=0;
-    while($i<$n) {
-        $a =substr($hexstr,$i,2);
-        $c = pack("H*",$a);
-        if ($i==0){$sbin=$c;}
-        else {$sbin.=$c;}
-        $i+=2;
-    }
-
-    return $sbin;
-}
-
 //-> Speichert Rückgaben der MySQL Datenbank zwischen um SQL-Queries einzusparen
 final class dbc_index {
     private static $index = array();

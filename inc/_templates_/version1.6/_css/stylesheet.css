@@ -346,23 +346,6 @@ table.content {
   width: 100%;
   max-width: 100%;
 }
-/* persInfobox above the Header e.g. menu/pers.infos.html */
-table.persInfo {
-  background-color: #FFF;
-  border-bottom: 1px solid #000;
-  margin: 0px;
-  width: 100%;
-  text-align: center;
-}
-table.subPersInfos {
-  text-align: center;
-}
-span.fontBoldPersInfos {
-  font-weight: bold;
-}
-table.persInfo td, table.persInfo span {
-  color: #000;
-}
 /* Header attributes e.g. index.html */
 td.pagetitle {
   height: 149px;

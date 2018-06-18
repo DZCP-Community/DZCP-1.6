@@ -52,7 +52,7 @@ ob_implicit_flush(false);
             } else
                 return '-';
         } else
-            $steam['user']['avatarIcon_url'] = 'data:image/png;base64,'.base64_encode(hextobin($CachedString->get()));
+            $steam['user']['avatarIcon_url'] = 'data:image/png;base64,'.base64_encode(hex2bin($CachedString->get()));
 
         switch($steam['user']['onlineState']) {
             case 'in-game': $status_set = '2'; $text_1 = _steam_in_game; $text_2 = $steam['user']['gameextrainfo']; break;
