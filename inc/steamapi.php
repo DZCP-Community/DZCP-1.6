@@ -92,7 +92,7 @@ class SteamAPI {
                 //API Offline
                 self::$user_data['onlineState'] = self::$community_data['profile']['onlineState'];
                 self::$user_data['lastlogoff'] = '';
-                self::$user_data['profile_url'] = 'http://steamcommunity.com/id/'.$custom_profile_url.'/';
+                self::$user_data['profile_url'] = 'http://steamcommunity.com/profiles/'.$custom_profile_url.'/';
                 self::$user_data['communityvisibilitystate'] = false;
                 self::$user_data['personastate'] = self::$user_data['onlineState'] == 'online' || self::$user_data['onlineState'] == 'in-game' ? '1' : '0';
                 self::$user_data['timecreated'] =  '';
