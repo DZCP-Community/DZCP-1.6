@@ -118,6 +118,18 @@ div#footer     {
     border-bottom:1px solid #c4c4c4;
     margin-top:7px
 }
+/* ClanLogo banner in header */
+div#clanlogo {
+    position:absolute;
+    left:10px;
+    top:-1px;
+}
+/* ClanName banner in header */
+div#clanname {
+    position:absolute;
+    left:430px;
+    top:0px;
+}
 /* Rotation banner in header */
 div#rotationsbanner {
     position:absolute;
@@ -1633,4 +1645,6 @@ img.border {
 #dialog-confirm, #dialog-confirm-lock {
     display: none;
 }
-
+.deselect ::selection { background: transparent; color: inherit;}
+.deselect ::-moz-selection {background: transparent;color: inherit;}
+.deselect {-ms-user-select: none; -webkit-user-select: none; -moz-user-select: none;}
