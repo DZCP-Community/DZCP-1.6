@@ -859,8 +859,9 @@ button.ui-button::-moz-focus-inner {
 .ui-tabs {
 	position: relative;/* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
 	padding: .2em;
-        -webkit-box-shadow: 0px 0px 3px #666666;
-        box-shadow: 0px 0px 3px #666666
+        box-shadow: 0 0 3px #666666; /* CSS3 Standard */
+        -moz-box-shadow: 0 0 3px #666666; /* Firefox */
+        -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
 }
 .ui-tabs .ui-tabs-nav {
 	margin: 0;

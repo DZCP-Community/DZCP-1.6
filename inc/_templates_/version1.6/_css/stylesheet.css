@@ -184,8 +184,9 @@ div#index {
     background: #fff;
     padding:4px;
     color:#7d7d7d;
-    -webkit-box-shadow: 0px 0px 3px #666666;
-    box-shadow: 0px 0px 3px #666666
+    box-shadow: 0px 0 3px #666666; /* CSS3 Standard */
+    -moz-box-shadow: 0 0 3px #666666; /* Firefox */
+    -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
 }
 /* Box left and right side */
 .box {
@@ -193,8 +194,9 @@ div#index {
     margin-bottom:7px;
     padding:0 7px 7px 7px;
     border-bottom: 1px solid #f00;
-    -webkit-box-shadow: 0px 0px 3px #666666;
-    box-shadow: 0px 0px 3px #666666;
+    box-shadow: 0px 0 3px #666666; /* CSS3 Standard */
+    -moz-box-shadow: 0 0 3px #666666; /* Firefox */
+    -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
 }
 /* Box tabs left and right side */
 .box_tabs {
@@ -236,8 +238,9 @@ div#index {
     background-image: linear-gradient(to top, #2f2f2f 80%, #000);
     padding-bottom:5px;
     margin-bottom:10px;
-    -webkit-box-shadow: 0px 2px 3px #ff0000;
-    box-shadow: 0px 0px 3px #ff0000
+    box-shadow: 0px 0 3px #ff0000; /* CSS3 Standard */
+    -moz-box-shadow: 0 0 3px #ff0000; /* Firefox */
+    -webkit-box-shadow: 0 0 3px #ff0000; /* Safari, Chrome, etc. */
 }
 .mainNavigation ul li:nth-last-child(1) a {
     background:none;
@@ -514,8 +517,9 @@ input.shoutLength {
 img.navServerPic,img.ServerPic {
   width: 162px;
   border-radius: 3px;
-  -webkit-box-shadow: 0px 0px 3px #666666;
-  box-shadow: 0px 0px 3px #666666;
+  box-shadow: 0 0 3px #666666; /* CSS3 Standard */
+  -moz-box-shadow: 0 0 3px #666666; /* Firefox */
+  -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
   border: 1px solid;
 }
 /* Attributes of all navigation boxes e.g. menu/nav_[box].html */
@@ -674,15 +678,17 @@ table.news {
     border-left: 0px;
     border-right: 0px;
     border-bottom: 1px solid #f00;
-    -webkit-box-shadow: 0px 0px 3px #666666;
-    box-shadow: 0px 0px 3px #666666;
+    box-shadow: 0 0 3px #666666; /* CSS3 Standard */
+    -moz-box-shadow: 0 0 3px #666666; /* Firefox */
+    -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
 }
 /* Newsbild Positionierung */
 td.news img.newsImage {
     float:left;
     margin:0 15px 15px 0;
-    -webkit-box-shadow: 2px 2px 3px #666666;
-    box-shadow: 2px 2px 3px #666666;
+    box-shadow: 0 0 3px #666666; /* CSS3 Standard */
+    -moz-box-shadow: 0 0 3px #666666; /* Firefox */
+    -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
     border-top-left-radius: 3px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 3px;
@@ -736,7 +742,8 @@ td.commentsLeft {
 }
 td.commentsRight {
   vertical-align: top;
-  padding:4px;
+  padding:10px;
+  background: #f4f4f4;
 }
 /* Attributes of the calendar e.g. kalender/day.html */
 td.calDay,td.calToday {
@@ -1564,12 +1571,12 @@ img.border {
 }
 .steam_box_avatar
 {
-    width: 34px;
-    height: 34px;
+    width: 37px;
+    height: 37px;
     padding-bottom: 0px;
-    padding-left: 4px;
-    padding-right: 2px;
-    padding-top: 4px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
     border-radius: 3px;
     background-color: #545454;
 }

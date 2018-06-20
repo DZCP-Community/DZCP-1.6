@@ -32,8 +32,9 @@
 	border: 3px solid #660000;
 	min-height: 50px;
         border-radius: 3px;
-        -webkit-box-shadow: 0px 0px 3px #666666;
-        box-shadow: 0px 0px 3px #666666;
+        box-shadow: 0 0 3px #666666; /* CSS3 Standard */
+        -moz-box-shadow: 0 0 3px #666666; /* Firefox */
+        -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
@@ -107,7 +108,10 @@ a.ui-button:focus {
 }
 
 .ui-visual-focus {
-	box-shadow: 0 0 3px 1px #ff9e9f;
+
+   box-shadow: 0 0 3px 1px #ff9e9f; /* CSS3 Standard */
+  -moz-box-shadow: 0 0 3px #ff9e9f; /* Firefox */
+  -webkit-box-shadow: 0 0 3px #ff9e9f; /* Safari, Chrome, etc. */
 }
 .ui-state-active,
 .ui-widget-content .ui-state-active,
@@ -453,6 +457,7 @@ a.ui-button:active,
 	filter: Alpha(Opacity=.3); /* support: IE8 */
 }
 .ui-widget-shadow {
-	-webkit-box-shadow: 0px 0px 5px #666666;
-	box-shadow: 0px 0px 5px #666666;
+        box-shadow: 0px 0 3px #666666; /* CSS3 Standard */
+        -moz-box-shadow: 0 0 3px #666666; /* Firefox */
+        -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
 }
