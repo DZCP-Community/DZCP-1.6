@@ -491,9 +491,10 @@ input.shoutSubmit {
   color: #fff;
   cursor: pointer;
   width: 203px;
-  height: 30px;
+  height: 20px;
   text-transform:uppercase;
   font-weight:  bolder;
+  margin-bottom: 20px;
 }
 input.shoutSubmit:hover {
   background-image: linear-gradient(to top, #cc0033 10%, #660000);
@@ -1027,7 +1028,8 @@ input.submit {
   border: 1px solid #5F5F5F;
   color: #fff;
   cursor: pointer;
-  font-weight: normal;
+  font-weight: bold;
+  min-height: 20px; 
 }
 input.submit:hover {
   background-image: linear-gradient(to top, #cc0033 10%, #660000);
