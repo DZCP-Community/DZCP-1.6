@@ -24,7 +24,7 @@ function n_wars() {
                                                    "clantag" => re(cut($get['clantag'],config('l_nwars'),true,false)),
                                                    "icon" => re($get['icon']),
                                                    "info" => $info,
-                                                   "datum" => date("d.m.:", $get['datum'])));
+                                                   "datum" => date("d.m.Y", $get['datum'])));
         }
     }
 
