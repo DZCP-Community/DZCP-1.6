@@ -118,24 +118,29 @@ div#footer     {
     border-bottom:1px solid #c4c4c4;
     margin-top:7px
 }
-/* ClanLogo banner in header */
-div#clanlogo {
+/* ClanLogoLeft banner in header */
+div#clanlogo_left {
     position:absolute;
-    left:10px;
+    left:6px;
     top:-1px;
+}
+/* ClanLogoRight banner in header */
+div#clanlogo_right {
+    position:absolute;
+    left:1165px;
+    top:43px;
 }
 /* ClanName banner in header */
 div#clanname {
     position:absolute;
-    left:430px;
-    top:0px;
+    left:395px;
+    top:80px;
 }
 /* Rotation banner in header */
 div#rotationsbanner {
-    position:absolute;
-    right:0px;top:40px;
-    background:#fff;
-    padding:5px
+    position:relative;
+    right:0px;
+    top:4px;
 }
 /* Where am I and search box */
 div#brackets {
@@ -156,8 +161,7 @@ div#brackets div#search {
 /* Footer */
 div#footwrapper {
     margin:0 auto;
-    width:785px;
-    padding-bottom:10px
+    padding:0 0 10px 440px;
 }
 /* Footer navigation */
 div.footNavigation {
@@ -274,8 +278,8 @@ div#index {
 #galleriebox {
     padding: 10px 10px 10px 10px;
     background-color: #fff;
-    width: 768px;
-    margin: 65px 5px 5px 5px;
+    width: 755px;
+    margin: 50px 10px 10px 10px;
     border-radius: 4px;
     border: 1px #e6e6e6 solid;
 }
@@ -1645,6 +1649,17 @@ img.border {
 #dialog-confirm, #dialog-confirm-lock {
     display: none;
 }
-.deselect ::selection { background: transparent; color: inherit;}
-.deselect ::-moz-selection {background: transparent;color: inherit;}
-.deselect {-ms-user-select: none; -webkit-user-select: none; -moz-user-select: none;}
+/* Deselect option */
+.deselect ::selection { 
+    background: transparent; 
+    color: inherit;
+}
+.deselect ::-moz-selection {
+    background: transparent;
+    color: inherit;
+}
+.deselect {
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
