@@ -454,6 +454,10 @@ if(!empty($_SESSION['tmpdir'])) {
         $tmpdir = $sdir;
     else
         $tmpdir = $files[0];
+
+    if(!array_key_exists('tmpdir',$_SESSION)) {
+        $_SESSION['tmpdir'] = $tmpdir;
+    }
 } unset($files);
 
 $designpath = '../inc/_templates_/'.$tmpdir;
