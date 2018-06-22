@@ -26,7 +26,7 @@ class extendedPhpFastCache extends FilesDriver
 {
     public function __construct(array $config = [])
     {
-        $config[ 'path' ] = 'your/custom/path/where/files/will/be/written';
+        $config['path'] = 'your/custom/path/where/files/will/be/written';
         parent::__construct($config);
         /**
          * That's all !! Your cache class is ready to use
@@ -44,7 +44,7 @@ class myCustomCacheClass extends phpFastCacheAbstractProxy
 {
     public function __construct($driver = '', array $config = [])
     {
-        $config[ 'path' ] = 'your/custom/path/where/files/will/be/written';
+        $config['path'] = 'your/custom/path/where/files/will/be/written';
         $driver = 'files';
         parent::__construct($driver, $config);
         /**

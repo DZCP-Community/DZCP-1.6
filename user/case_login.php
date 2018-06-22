@@ -4,25 +4,25 @@
  * http://www.dzcp.de
  */
 
-if(defined('_UserMenu')) {
+if (defined('_UserMenu')) {
     $where = _site_user_login;
-    if($do == "yes" && HasDSGVO()) {
-        if(config('securelogin') &&
-            ((!array_key_exists('sec_login_page',$_SESSION) && !array_key_exists('login_menu',$_SESSION)) ||
-            (($_POST['secure'] != $_SESSION['sec_login_page'] && $_POST['secure'] != $_SESSION['login_menu']) ||
-                (empty($_SESSION['sec_login_page']) && empty($_SESSION['login_menu'])))))
+    if ($do == "yes" && HasDSGVO()) {
+        if (config('securelogin') &&
+            ((!array_key_exists('sec_login_page', $_SESSION) && !array_key_exists('login_menu', $_SESSION)) ||
+                (($_POST['secure'] != $_SESSION['sec_login_page'] && $_POST['secure'] != $_SESSION['login_menu']) ||
+                    (empty($_SESSION['sec_login_page']) && empty($_SESSION['login_menu'])))))
             $index = error(_error_invalid_regcode, 1);
         else {
-            $user = re($_POST['user'],true);
-            $pwd = re($_POST['pwd'],true);
-            if(($get = checkpwd($user,$pwd)) != false) {
-                if(!isBanned($get['id'])) {
-                    if($get['dsgvo_lock']) {
+            $user = re($_POST['user'], true);
+            $pwd = re($_POST['pwd'], true);
+            if (($get = checkpwd($user, $pwd)) != false) {
+                if (!isBanned($get['id'])) {
+                    if ($get['dsgvo_lock']) {
                         //User Locked
                         $_SESSION['user_has_dsgvo_lock'] = true;
                         $_SESSION['dsgvo_lock_permanent_login'] = isset($_POST['permanent']);
                         $_SESSION['dsgvo_lock_login_id'] = $get['id'];
-                        if(!empty($get['language'])) {
+                        if (!empty($get['language'])) {
                             $_SESSION['language'] = re($get['language']);
                         }
 
@@ -43,7 +43,7 @@ if(defined('_UserMenu')) {
                         $_SESSION['pwd'] = $get['pwd'];
                         $_SESSION['lastvisit'] = $get['time'];
                         $_SESSION['ip'] = $userip;
-                        if(!empty($get['language'])) {
+                        if (!empty($get['language'])) {
                             $_SESSION['language'] = re($get['language']);
                         }
 
@@ -53,14 +53,13 @@ if(defined('_UserMenu')) {
 
                         header("Location: ?action=userlobby");
                     }
-                }
-                else
+                } else
                     $index = error(_login_banned);
             } else {
-                $qry = db("SELECT `id` FROM `".$db['users']."` WHERE `user` = '".up($_POST['user'])."';");
-                if(_rows($qry)) {
+                $qry = db("SELECT `id` FROM `" . $db['users'] . "` WHERE `user` = '" . up($_POST['user']) . "';");
+                if (_rows($qry)) {
                     $get = _fetch($qry);
-                    setIpcheck("trylogin(".$get['id'].")");
+                    setIpcheck("trylogin(" . $get['id'] . ")");
                 }
 
                 cookie::put('id', '');
@@ -69,14 +68,14 @@ if(defined('_UserMenu')) {
             }
         }
     } else {
-        if(!$chkMe) {
-            $secure = config('securelogin') ? show($dir."/secure", array("help" => _login_secure_help, "security" => _register_confirm)) : '';
-            $index = show($dir."/login", array("loginhead" => _login_head,
-                                                   "loginname" => _loginname,
-                                                   "secure" => $secure,
-                                                   "lostpwd" => _login_lostpwd,
-                                                   "permanent" => _login_permanent,
-                                                   "pwd" => _pwd));
+        if (!$chkMe) {
+            $secure = config('securelogin') ? show($dir . "/secure", array("help" => _login_secure_help, "security" => _register_confirm)) : '';
+            $index = show($dir . "/login", array("loginhead" => _login_head,
+                "loginname" => _loginname,
+                "secure" => $secure,
+                "lostpwd" => _login_lostpwd,
+                "permanent" => _login_permanent,
+                "pwd" => _pwd));
         } else {
             $index = error(_error_user_already_in, 1);
             cookie::put('id', '');

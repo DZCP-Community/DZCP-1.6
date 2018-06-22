@@ -21,4 +21,6 @@ namespace Cassandra\Exception;
 /**
  * InvalidSyntaxException is raised when CQL in the request is syntactically incorrect.
  */
-class InvalidSyntaxException extends ValidationException {}
+class InvalidSyntaxException extends ValidationException
+{
+}

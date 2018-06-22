@@ -33,5 +33,7 @@ final class FutureValue implements Future
      *
      * @return mixed a value that the future has been resolved with
      */
-    public function get($timeout = null) {}
+    public function get($timeout = null)
+    {
+    }
 }

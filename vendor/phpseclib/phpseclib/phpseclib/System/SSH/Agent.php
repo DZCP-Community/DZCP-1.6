@@ -171,7 +171,7 @@ class Agent
             $key_str = 'ssh-rsa ' . base64_encode($key_blob);
             $length = current(unpack('N', fread($this->fsock, 4)));
             if ($length) {
-                $key_str.= ' ' . fread($this->fsock, $length);
+                $key_str .= ' ' . fread($this->fsock, $length);
             }
             $length = current(unpack('N', substr($key_blob, 0, 4)));
             $key_type = substr($key_blob, 4, $length);
@@ -279,7 +279,7 @@ class Agent
     function _forward_data($data)
     {
         if ($this->expected_bytes > 0) {
-            $this->socket_buffer.= $data;
+            $this->socket_buffer .= $data;
             $this->expected_bytes -= strlen($data);
         } else {
             $agent_data_bytes = current(unpack('N', $data));

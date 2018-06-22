@@ -4,12 +4,14 @@
  * http://www.dzcp.de
  */
 
-if(_adminMenu != 'true') exit;
+if (_adminMenu != 'true') exit;
 
-$where = $where.': '._slider; $entry = '';
-$qry = db("SELECT * FROM ".$db['slideshow']." ORDER BY `pos` ASC");
-while($get = _fetch($qry)) {
-    $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
+$where = $where . ': ' . _slider;
+$entry = '';
+$qry = db("SELECT * FROM " . $db['slideshow'] . " ORDER BY `pos` ASC");
+while ($get = _fetch($qry)) {
+    $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";
+    $color++;
     $edit = show("page/button_edit_single", array("id" => $get['id'],
         "action" => "admin=slideshow&amp;do=edit",
         "title" => _button_title_edit));
@@ -19,29 +21,30 @@ while($get = _fetch($qry)) {
         "title" => _button_title_del,
         "del" => convSpace(_slider_admin_del)));
 
-    $entry .= show($dir."/slideshow_show", array("id" => $get['id'],
+    $entry .= show($dir . "/slideshow_show", array("id" => $get['id'],
         "class" => $class,
         "bez" => $get['bez'],
         "edit" => $edit,
         "del" => $delete));
 }
 
-if(empty($entry)) {
+if (empty($entry)) {
     $entry = show(_no_entrys_yet, array("colspan" => "0"));
 }
 
-$show = show($dir."/slideshow", array("head" => _slider,
+$show = show($dir . "/slideshow", array("head" => _slider,
     "bezeichnung" => _slider_bezeichnung,
     "add" => _slider_admin_add,
     "show" => $entry));
 
-if($do == 'new'){
-    $qry = db("SELECT * FROM ".$db['slideshow']." ORDER BY `pos` ASC;"); $positions = '';
-    while($get = _fetch($qry)) {
-        $positions .= show(_select_field, array("value" => (int)$get['pos']+1, "what" => _nach.': '.re($get['bez']), "sel" => ""));
+if ($do == 'new') {
+    $qry = db("SELECT * FROM " . $db['slideshow'] . " ORDER BY `pos` ASC;");
+    $positions = '';
+    while ($get = _fetch($qry)) {
+        $positions .= show(_select_field, array("value" => (int)$get['pos'] + 1, "what" => _nach . ': ' . re($get['bez']), "sel" => ""));
     }
 
-    $show = show($dir."/slideshow_form", array(
+    $show = show($dir . "/slideshow_form", array(
         "id" => "",
         "error" => "",
         "do" => "add",
@@ -67,26 +70,26 @@ if($do == 'new'){
         "selected1" => "",
         "selected_txt" => 'selected="selected"',
         "v_pic" => ""));
-}elseif($do == 'add'){
-    if(empty($_FILES['bild']['tmp_name']) || empty($_POST['bez']) || empty($_POST['url']) || $_POST['url'] == "http://") {
-        if(!$_FILES['bild']['tmp_name']) $error = _slider_admin_error_nopic;
-        elseif(empty($_POST['bez'])) $error = _slider_admin_error_empty_bezeichnung;
-        elseif(empty($_POST['url']) OR $_POST['url'] == "http://") $error = _slider_admin_error_empty_url;
+} elseif ($do == 'add') {
+    if (empty($_FILES['bild']['tmp_name']) || empty($_POST['bez']) || empty($_POST['url']) || $_POST['url'] == "http://") {
+        if (!$_FILES['bild']['tmp_name']) $error = _slider_admin_error_nopic;
+        elseif (empty($_POST['bez'])) $error = _slider_admin_error_empty_bezeichnung;
+        elseif (empty($_POST['url']) OR $_POST['url'] == "http://") $error = _slider_admin_error_empty_url;
 
         $error = show("errors/errortable", array("error" => $error));
 
-        if($_POST['target'] == 1) $selected = 'selected="selected"';
-        if($get['showbez'] == 1) $selected_txt = 'selected="selected"';
+        if ($_POST['target'] == 1) $selected = 'selected="selected"';
+        if ($get['showbez'] == 1) $selected_txt = 'selected="selected"';
 
-        $qry = db("SELECT * FROM ".$db['slideshow']."
+        $qry = db("SELECT * FROM " . $db['slideshow'] . "
                   ORDER BY `pos` ASC;");
-        while($get = _fetch($qry)) {
-            $positions .= show(_select_field, array("value" => $get['pos']+1,
-                "what" => _nach.': '.$get['bez'],
+        while ($get = _fetch($qry)) {
+            $positions .= show(_select_field, array("value" => $get['pos'] + 1,
+                "what" => _nach . ': ' . $get['bez'],
                 "sel" => ""));
         }
 
-        $show = show($dir."/slideshow_form", array("id" => "",
+        $show = show($dir . "/slideshow_form", array("id" => "",
             "error" => $error,
             "do" => "add",
             "head" => _slider_admin_add,
@@ -103,7 +106,7 @@ if($do == 'new'){
             "pic" => _slider_pic,
             "position" => _slider_position,
             "first" => _slider_position_first,
-            "v_bezeichnung" => re($_POST['bez'],true),
+            "v_bezeichnung" => re($_POST['bez'], true),
             "v_pos_none" => "",
             "v_position" => $positions,
             "v_url" => re($_POST['url']),
@@ -111,17 +114,17 @@ if($do == 'new'){
             "selected_txt" => $selected_txt,
             "v_pic" => ""));
     } else {
-        if($_POST['position'] == "1" || "2") $sign = ">= ";
+        if ($_POST['position'] == "1" || "2") $sign = ">= ";
         else  $sign = "> ";
 
-        db("UPDATE ".$db['slideshow']." SET `pos` = pos+1 WHERE `pos` ".$sign." '".(int)($_POST['position'])."'");
-        db("INSERT INTO ".$db['slideshow']."
-                   SET `pos` = '".((int)$_POST['position'])."',
-                       `bez` = '".up($_POST['bez'])."',
-                       `showbez` = '".((int)($_POST['showbez']))."',
-                       `desc` = '".up($_POST['desc'])."',
-                       `url` = '".up($_POST['url'])."',
-                       `target` = '".up($_POST['target'])."'");
+        db("UPDATE " . $db['slideshow'] . " SET `pos` = pos+1 WHERE `pos` " . $sign . " '" . (int)($_POST['position']) . "'");
+        db("INSERT INTO " . $db['slideshow'] . "
+                   SET `pos` = '" . ((int)$_POST['position']) . "',
+                       `bez` = '" . up($_POST['bez']) . "',
+                       `showbez` = '" . ((int)($_POST['showbez'])) . "',
+                       `desc` = '" . up($_POST['desc']) . "',
+                       `url` = '" . up($_POST['url']) . "',
+                       `target` = '" . up($_POST['target']) . "'");
 
         $tmpname = $_FILES['bild']['tmp_name'];
         if (($info = getimagesize($tmpname)) === FALSE) {
@@ -141,30 +144,30 @@ if($do == 'new'){
                         break;
                 }
 
-                move_uploaded_file($tmpname, basePath."/inc/images/slideshow/".mysqli_insert_id($mysql).".".$ext);
+                move_uploaded_file($tmpname, basePath . "/inc/images/slideshow/" . mysqli_insert_id($mysql) . "." . $ext);
             } else {
                 $show = info("Not a IMAGE", "?admin=slideshow");
             }
         }
 
-        if(empty($show))
+        if (empty($show))
             $show = info(_slider_admin_add_done, "?admin=slideshow");
     }
-}elseif($do == 'edit'){
-    $qrypos = db("SELECT * FROM ".$db['slideshow']." WHERE `id` != '".(int)($_GET['id'])."' ORDER BY `pos` ASC");
+} elseif ($do == 'edit') {
+    $qrypos = db("SELECT * FROM " . $db['slideshow'] . " WHERE `id` != '" . (int)($_GET['id']) . "' ORDER BY `pos` ASC");
     $positions = '';
-    while($getpos = _fetch($qrypos)) {
-        $positions .= show(_select_field, array("value" => $getpos['pos']+1, "what" => _nach.': '.re($getpos['bez']), "sel" => ""));
+    while ($getpos = _fetch($qrypos)) {
+        $positions .= show(_select_field, array("value" => $getpos['pos'] + 1, "what" => _nach . ': ' . re($getpos['bez']), "sel" => ""));
     }
 
-    $get = db("SELECT * FROM ".$db['slideshow']." WHERE `id` = '".(int)($_GET['id'])."'",false,true);
-    if($get['target'])
+    $get = db("SELECT * FROM " . $db['slideshow'] . " WHERE `id` = '" . (int)($_GET['id']) . "'", false, true);
+    if ($get['target'])
         $selected = 'selected="selected"';
 
-    if($get['showbez'])
+    if ($get['showbez'])
         $selected_txt = 'selected="selected"';
 
-    $show = show($dir."/slideshow_form", array("id" => re($get['id']),
+    $show = show($dir . "/slideshow_form", array("id" => re($get['id']),
         "error" => "",
         "do" => "editdo",
         "head" => _slider_admin_edit,
@@ -187,21 +190,21 @@ if($do == 'new'){
         "v_url" => re($get['url']),
         "selected" => $selected,
         "selected_txt" => $selected_txt,
-        "v_pic" => img_size('inc/images/slideshow/'.$get['id'].'.jpg')."<br />"));
-}elseif($do == 'editdo'){
-    if(empty($_POST['bez']) || empty($_POST['url']) || $_POST['url'] == "http://") {
-        if(empty($_POST['bez'])) $error = _slider_admin_error_empty_bezeichnung;
-        elseif(empty($_POST['url']) OR $_POST['url'] == "http://") $error = _slider_admin_error_empty_url;
+        "v_pic" => img_size('inc/images/slideshow/' . $get['id'] . '.jpg') . "<br />"));
+} elseif ($do == 'editdo') {
+    if (empty($_POST['bez']) || empty($_POST['url']) || $_POST['url'] == "http://") {
+        if (empty($_POST['bez'])) $error = _slider_admin_error_empty_bezeichnung;
+        elseif (empty($_POST['url']) OR $_POST['url'] == "http://") $error = _slider_admin_error_empty_url;
 
         $error = show("errors/errortable", array("error" => $error));
 
-        if($_POST['target'])
+        if ($_POST['target'])
             $selected = 'selected="selected"';
 
-        if($get['showbez'])
+        if ($get['showbez'])
             $selected_txt = 'selected="selected"';
 
-        $show = show($dir."/slideshow_form", array("id" => re($_POST['id']),
+        $show = show($dir . "/slideshow_form", array("id" => re($_POST['id']),
             "error" => $error,
             "do" => "editdo",
             "head" => _slider_admin_edit,
@@ -210,7 +213,7 @@ if($do == 'new'){
             "nein" => _no,
             "bezeichnung" => _slider_bezeichnung,
             "desc" => _slider_desc,
-            "tdesc" => re($_POST['desc'],true),
+            "tdesc" => re($_POST['desc'], true),
             "t_zeichen" => _zeichen,
             "noch" => _noch,
             "url" => _slider_url,
@@ -218,33 +221,33 @@ if($do == 'new'){
             "pic" => _slider_pic,
             "position" => _slider_position,
             "first" => _slider_position_first,
-            "v_bezeichnung" => re($_POST['bez'],true),
+            "v_bezeichnung" => re($_POST['bez'], true),
             "v_pos_none" => _slider_position_lazy,
             "v_position" => $positions,
             "v_url" => re($_POST['url']),
             "selected" => $selected,
             "selected_txt" => $selected_txt,
-            "v_pic" => img_size('inc/images/slideshow/'.$_POST['id'].'.jpg')."<br />"));
+            "v_pic" => img_size('inc/images/slideshow/' . $_POST['id'] . '.jpg') . "<br />"));
     } else {
         $pos = "";
-        if($_POST['position'] != "lazy") {
-            if($_POST['position'] == "1" || "2") $sign = ">= ";
+        if ($_POST['position'] != "lazy") {
+            if ($_POST['position'] == "1" || "2") $sign = ">= ";
             else  $sign = "> ";
 
-            db("UPDATE ".$db['slideshow']." SET `pos` = (pos+1) WHERE `pos` ".$sign." '".(int)($_POST['position'])."'");
+            db("UPDATE " . $db['slideshow'] . " SET `pos` = (pos+1) WHERE `pos` " . $sign . " '" . (int)($_POST['position']) . "'");
 
-            $pos = "`pos` = ".((int)$_POST['position']).",";
+            $pos = "`pos` = " . ((int)$_POST['position']) . ",";
         }
 
-        db("UPDATE ".$db['slideshow']." SET ".$pos." `bez` = '".up($_POST['bez'])."', `showbez` = ".((int)($_POST['showbez'])).
-            ", `url` = '".up($_POST['url'])."', `desc` = '".up($_POST['desc'])."', `target` = '".up($_POST['target']).
-            "' WHERE `id` = ".(int)($_POST['id']).";");
+        db("UPDATE " . $db['slideshow'] . " SET " . $pos . " `bez` = '" . up($_POST['bez']) . "', `showbez` = " . ((int)($_POST['showbez'])) .
+            ", `url` = '" . up($_POST['url']) . "', `desc` = '" . up($_POST['desc']) . "', `target` = '" . up($_POST['target']) .
+            "' WHERE `id` = " . (int)($_POST['id']) . ";");
 
-        if($_FILES['bild']['tmp_name']) {
+        if ($_FILES['bild']['tmp_name']) {
             $tmpname = $_FILES['bild']['tmp_name'];
-            foreach($picformat as $end) {
-                if(file_exists(basePath."/inc/images/slideshow/".(int)($_GET['id']).".".$end)) {
-                    @unlink(basePath . "/inc/images/slideshow/".(int)($_GET['id']).".".$end);
+            foreach ($picformat as $end) {
+                if (file_exists(basePath . "/inc/images/slideshow/" . (int)($_GET['id']) . "." . $end)) {
+                    @unlink(basePath . "/inc/images/slideshow/" . (int)($_GET['id']) . "." . $end);
                 }
             }
 
@@ -265,22 +268,22 @@ if($do == 'new'){
                             break;
                     }
 
-                    move_uploaded_file($tmpname, basePath."/inc/images/slideshow/".(int)($_POST['id']).".".$ext);
+                    move_uploaded_file($tmpname, basePath . "/inc/images/slideshow/" . (int)($_POST['id']) . "." . $ext);
                 } else {
                     $show = info("Not a IMAGE", "?admin=slideshow");
                 }
             }
         }
 
-        if(empty($show))
+        if (empty($show))
             $show = info(_slider_admin_edit_done, "?admin=slideshow");
     }
-}elseif($do == 'delete'){
-    db("DELETE FROM `".$db['slideshow']."` WHERE `id` = ".(int)($_GET['id']).";");
+} elseif ($do == 'delete') {
+    db("DELETE FROM `" . $db['slideshow'] . "` WHERE `id` = " . (int)($_GET['id']) . ";");
 
-    foreach($picformat as $end) {
-        if(file_exists(basePath."/inc/images/slideshow/".(int)($_GET['id']).".".$end)) {
-            @unlink(basePath . "/inc/images/slideshow/".(int)($_GET['id']).".".$end);
+    foreach ($picformat as $end) {
+        if (file_exists(basePath . "/inc/images/slideshow/" . (int)($_GET['id']) . "." . $end)) {
+            @unlink(basePath . "/inc/images/slideshow/" . (int)($_GET['id']) . "." . $end);
         }
     }
 

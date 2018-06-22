@@ -4,10 +4,10 @@
  * http://www.dzcp.de
  */
 
-if(defined('_UserMenu')) {
-    if($userid) {
+if (defined('_UserMenu')) {
+    if ($userid) {
         $_SESSION['lastvisit'] = time();
-        db("UPDATE `".$db['userstats']."` SET `lastvisit` = ".((int)$_SESSION['lastvisit'])." WHERE `user` = ".$userid.";");
+        db("UPDATE `" . $db['userstats'] . "` SET `lastvisit` = " . ((int)$_SESSION['lastvisit']) . " WHERE `user` = " . $userid . ";");
     }
 
     header("Location: ?action=userlobby");

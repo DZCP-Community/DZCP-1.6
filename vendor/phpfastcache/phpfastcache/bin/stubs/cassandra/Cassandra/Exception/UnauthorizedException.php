@@ -22,4 +22,6 @@ namespace Cassandra\Exception;
  * UnauthorizedException is raised when the current user doesn't have
  * sufficient permissions to access data.
  */
-class UnauthorizedException extends ValidationException {}
+class UnauthorizedException extends ValidationException
+{
+}

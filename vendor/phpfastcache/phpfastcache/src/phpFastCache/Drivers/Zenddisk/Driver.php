@@ -147,9 +147,9 @@ HELP;
     {
         $stat = new DriverStatistic();
         $stat->setInfo('[ZendDisk] A void info string')
-          ->setSize(0)
-          ->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setRawData(false);
+            ->setSize(0)
+            ->setData(implode(', ', array_keys($this->itemInstances)))
+            ->setRawData(false);
 
         return $stat;
     }

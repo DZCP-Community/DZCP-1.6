@@ -26,19 +26,25 @@ final class Set extends Type
      * Returns "set"
      * @return string "set"
      */
-    public function name() {}
+    public function name()
+    {
+    }
 
     /**
      * Returns type representation in CQL, e.g. `set<varchar>`
      * @return string Type representation in CQL
      */
-    public function __toString() {}
+    public function __toString()
+    {
+    }
 
     /**
      * Returns type of values
      * @return Type Type of values
      */
-    public function valueType() {}
+    public function valueType()
+    {
+    }
 
     /**
      * Creates a new Cassandra\Set from the given values.
@@ -51,5 +57,7 @@ final class Set extends Type
      *                          no values are given, creates an empty set.
      * @return Cassandra\Set    A set with given values.
      */
-    public function create($value = null) {}
+    public function create($value = null)
+    {
+    }
 }

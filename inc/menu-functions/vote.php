@@ -4,37 +4,40 @@
  * http://www.dzcp.de
  * Menu: Votes
  */
-function vote($ajax = false) {
+function vote($ajax = false)
+{
     global $db;
 
-    $qry = db("SELECT `id`,`closed`,`titel` FROM ".$db['votes']." WHERE `menu` = '1' AND `forum` = 0"); $vote = '';
-    if(_rows($qry)) {
+    $qry = db("SELECT `id`,`closed`,`titel` FROM " . $db['votes'] . " WHERE `menu` = '1' AND `forum` = 0");
+    $vote = '';
+    if (_rows($qry)) {
         $get = _fetch($qry);
 
-        $votebutton = ''; $stimmen = '';
-        $qryv = db("SELECT `id`,`stimmen`,`sel` FROM ".$db['vote_results']." WHERE `vid` = '".$get['id']."' ORDER BY what");
+        $votebutton = '';
+        $stimmen = '';
+        $qryv = db("SELECT `id`,`stimmen`,`sel` FROM " . $db['vote_results'] . " WHERE `vid` = '" . $get['id'] . "' ORDER BY what");
         $results = '';
         while ($getv = _fetch($qryv)) {
-            $stimmen = sum($db['vote_results'], " WHERE `vid` = '".$get['id']."'", "stimmen");
-            if($stimmen != 0) {
-                if(ipcheck("vid_".$get['id']) || cookie::get('vid_'.$get['id']) != false || $get['closed'] == 1) {
-                    $percent = round($getv['stimmen']/$stimmen*100,1);
-                    $rawpercent = round($getv['stimmen']/$stimmen*100,0);
+            $stimmen = sum($db['vote_results'], " WHERE `vid` = '" . $get['id'] . "'", "stimmen");
+            if ($stimmen != 0) {
+                if (ipcheck("vid_" . $get['id']) || cookie::get('vid_' . $get['id']) != false || $get['closed'] == 1) {
+                    $percent = round($getv['stimmen'] / $stimmen * 100, 1);
+                    $rawpercent = round($getv['stimmen'] / $stimmen * 100, 0);
 
                     $balken = show(_votes_balken, array("width" => $rawpercent));
 
                     $results .= show("menu/vote_results", array("answer" => re($getv['sel']),
-                                                                "percent" => $percent,
-                                                                "stimmen" => $getv['stimmen'],
-                                                                "balken" => $balken));
+                        "percent" => $percent,
+                        "stimmen" => $getv['stimmen'],
+                        "balken" => $balken));
                 } else {
-                    if(HasDSGVO()) {
+                    if (HasDSGVO()) {
                         $votebutton = '<input id="contentSubmitVote" type="submit" value="' . _button_value_vote . '" class="voteSubmit" />';
                         $results .= show("menu/vote_vote", array("id" => $getv['id'], "answer" => re($getv['sel'])));
                     }
                 }
             } else {
-                if(HasDSGVO()) {
+                if (HasDSGVO()) {
                     $votebutton = '<input id="contentSubmitVote" type="submit" value="' . _button_value_vote . '" class="voteSubmit" />';
                     $results .= show("menu/vote_vote", array("id" => $getv['id'], "answer" => re($getv['sel'])));
                 }
@@ -42,15 +45,15 @@ function vote($ajax = false) {
         }
 
         $vote = show("menu/vote", array("titel" => re($get['titel']),
-                                        "vid" => $get['id'],
-                                        "results" => $results,
-                                        "votebutton" => $votebutton,
-                                        "stimmen" => $stimmen));
+            "vid" => $get['id'],
+            "results" => $results,
+            "votebutton" => $votebutton,
+            "stimmen" => $stimmen));
     }
 
-    if(empty($vote)) {
+    if (empty($vote)) {
         $vote = show(_no_entrys_yet, array("colspan" => "0"));
     }
 
-    return $ajax ? $vote : '<div id="navVote">'.$vote.'</div>';
+    return $ajax ? $vote : '<div id="navVote">' . $vote . '</div>';
 }

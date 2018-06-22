@@ -4,9 +4,9 @@ header("Content-type: text/css");
 define('basePath', realpath('../../../..'));
 $thumbgen = true;
 
-include(basePath.'/vendor/autoload.php');
-include(basePath."/inc/debugger.php");
-include(basePath."/inc/config.php");
+include(basePath . '/vendor/autoload.php');
+include(basePath . "/inc/debugger.php");
+include(basePath . "/inc/config.php");
 
 use phpFastCache\CacheManager;
 
@@ -29,8 +29,9 @@ try {
 
 $cache = CacheManager::getInstance($config_cache['storage']); // return your setup storage
 $CachedString = $cache->getItem('css_icons');
-if(is_null($CachedString->get())) {
-    function getIcons($dir) {
+if (is_null($CachedString->get())) {
+    function getIcons($dir)
+    {
         $dp = @opendir($dir);
         $allicons = array();
         while ($icons = @readdir($dp)) {
@@ -42,7 +43,8 @@ if(is_null($CachedString->get())) {
         return ($allicons);
     }
 
-    $flags = getIcons('../../../images/flaggen/'); $icons = '';
+    $flags = getIcons('../../../images/flaggen/');
+    $icons = '';
     for ($i = 0; $i < count($flags); $i++) {
         $icons .= " option[value=" . preg_replace("#\.gif|.jpg#Uis", "", $flags[$i]) . "]:before {";
         $icons .= " content: url(\"../../../images/flaggen/" . $flags[$i] . "\");";

@@ -1,9 +1,11 @@
 <?php
-function template_switch() {
-    global $tmpdir,$chkMe;
+function template_switch()
+{
+    global $tmpdir, $chkMe;
 
     //init templateswitch
-    $tmpldir=""; $tmps = get_files('../inc/_templates_/',true);
+    $tmpldir = "";
+    $tmps = get_files('../inc/_templates_/', true);
     foreach ($tmps as $tmp) {
         if (file_exists(basePath . '/inc/_templates_/' . $tmp . '/template.xml')) {
             $xml = simplexml_load_file(basePath . '/inc/_templates_/' . $tmp . '/template.xml');

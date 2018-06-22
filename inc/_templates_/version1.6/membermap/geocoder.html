@@ -1,18 +1,16 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script language="javascript" type="text/javascript">
-<!--
-    function getCord()
-    {
+    <!--
+    function getCord() {
         $('#gmaps_koord').attr('value', '');
-        if($('#city').attr('value') != '') {
+        if ($('#city').attr('value') != '') {
             DZCP.submitButton();
             var city = $('#city').val();
             var country = $('#land').val();
             var geocoder = new google.maps.Geocoder();
-            geocoder.geocode( { 'address': city, 'region': country}, function(results, status)
-                { 
+            geocoder.geocode({'address': city, 'region': country}, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
-                        if(jQuery.isNumeric(city)) {
+                        if (jQuery.isNumeric(city)) {
                             $('#city').prop('value', results[0].formatted_address);
                         }
                         $('#gmaps_koord').prop('value', results[0].geometry.location);
@@ -25,5 +23,6 @@
             $('form#[form]').submit();
         }
     }
-//-->
+
+    //-->
 </script>

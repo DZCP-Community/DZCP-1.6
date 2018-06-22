@@ -8,57 +8,56 @@
 include("../inc/buffer.php");
 
 ## INCLUDES ##
-include(basePath."/inc/debugger.php");
-include(basePath."/inc/config.php");
-include(basePath."/inc/bbcode.php");
+include(basePath . "/inc/debugger.php");
+include(basePath . "/inc/config.php");
+include(basePath . "/inc/bbcode.php");
 
 ## SETTINGS ##
 $dir = "sites";
 
 ## SECTIONS ##
 switch ($action):
-default:
-  $qry = db("SELECT s1.*,s2.internal FROM ".$db['sites']." AS s1
-             LEFT JOIN ".$db['navi']." AS s2
+    default:
+        $qry = db("SELECT s1.*,s2.internal FROM " . $db['sites'] . " AS s1
+             LEFT JOIN " . $db['navi'] . " AS s2
              ON s1.id = s2.editor
-             WHERE s1.id = '".(int)($_GET['show'])."'");
-  $get = _fetch($qry);
+             WHERE s1.id = '" . (int)($_GET['show']) . "'");
+        $get = _fetch($qry);
 
-  if(_rows($qry))
-  {
-    if($get['internal'] == 1 && ($chkMe == 1 || !$chkMe))
-      $index = error(_error_wrong_permissions, 1);
-    else {
-      $where = re($get['titel']);
-      $title = $pagetitle." - ".$where."";
+        if (_rows($qry)) {
+            if ($get['internal'] == 1 && ($chkMe == 1 || !$chkMe))
+                $index = error(_error_wrong_permissions, 1);
+            else {
+                $where = re($get['titel']);
+                $title = $pagetitle . " - " . $where . "";
 
-      if($get['html']) 
-          $inhalt = bbcode_html(re($get['text']));
-      else 
-          $inhalt = bbcode(re($get['text']));
+                if ($get['html'])
+                    $inhalt = bbcode_html(re($get['text']));
+                else
+                    $inhalt = bbcode(re($get['text']));
 
-      $index = show($dir."/sites", array("titel" => re($get['titel']),
-                                         "inhalt" => $inhalt));
-    }
-  } else $index = error(_sites_not_available,1);
-break;
-case 'preview';
-  header("Content-type: text/html; charset=utf-8");
-  if($_POST['html']) 
-      $inhalt = bbcode_html(re($_POST['inhalt'],true),true);
-  else
-      $inhalt = bbcode(re($_POST['inhalt'],true),true);
+                $index = show($dir . "/sites", array("titel" => re($get['titel']),
+                    "inhalt" => $inhalt));
+            }
+        } else $index = error(_sites_not_available, 1);
+        break;
+    case 'preview';
+        header("Content-type: text/html; charset=utf-8");
+        if ($_POST['html'])
+            $inhalt = bbcode_html(re($_POST['inhalt'], true), true);
+        else
+            $inhalt = bbcode(re($_POST['inhalt'], true), true);
 
-  $index = show($dir."/sites", array("titel" => re($_POST['titel']),
-                                     "inhalt" => $inhalt));
+        $index = show($dir . "/sites", array("titel" => re($_POST['titel']),
+            "inhalt" => $inhalt));
 
-  echo '<table class="mainContent" cellspacing="1"'.$index.'</table>';
+        echo '<table class="mainContent" cellspacing="1"' . $index . '</table>';
 
-  if(!mysqli_persistconns)
-      $mysql->close(); //MySQL
+        if (!mysqli_persistconns)
+            $mysql->close(); //MySQL
 
-  exit();
-break;
+        exit();
+        break;
 endswitch;
 ## INDEX OUTPUT ##
 page($index, $title, $where);

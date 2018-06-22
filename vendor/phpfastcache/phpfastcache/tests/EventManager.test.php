@@ -17,8 +17,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $testHelper = new TestHelper('EventManager');
 $defaultDriver = (!empty($argv[1]) ? ucfirst($argv[1]) : 'Files');
 
-EventManager::getInstance()->onCacheSaveItem(function(ExtendedCacheItemPoolInterface $itemPool, ExtendedCacheItemInterface $item){
-    if($item->get() === 1000){
+EventManager::getInstance()->onCacheSaveItem(function (ExtendedCacheItemPoolInterface $itemPool, ExtendedCacheItemInterface $item) {
+    if ($item->get() === 1000) {
         $item->increment(337);
     }
 });
@@ -31,10 +31,10 @@ $item->set(1000)->expiresAfter(60);
 $cacheInstance->save($item);
 
 
-if($cacheInstance->getItem($cacheKey)->get() === 1337){
+if ($cacheInstance->getItem($cacheKey)->get() === 1337) {
     $testHelper->printPassText('The dispatched event executed the custom callback to alter the item');
-}else{
-    $testHelper->printFailText("The dispatched event is not working properly, the expected value '1337', got '" . (int) $cacheInstance->getItem($cacheKey)->get() . "'");
+} else {
+    $testHelper->printFailText("The dispatched event is not working properly, the expected value '1337', got '" . (int)$cacheInstance->getItem($cacheKey)->get() . "'");
 }
 
 $testHelper->terminateTest();

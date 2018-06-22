@@ -76,9 +76,9 @@ class Driver implements ExtendedCacheItemPoolInterface
     protected function driverRead(CacheItemInterface $item)
     {
         return [
-          self::DRIVER_DATA_WRAPPER_INDEX => true,
-          self::DRIVER_TAGS_WRAPPER_INDEX => [],
-          self::DRIVER_EDATE_WRAPPER_INDEX => new \DateTime(),
+            self::DRIVER_DATA_WRAPPER_INDEX => true,
+            self::DRIVER_TAGS_WRAPPER_INDEX => [],
+            self::DRIVER_EDATE_WRAPPER_INDEX => new \DateTime(),
         ];
     }
 
@@ -128,9 +128,9 @@ class Driver implements ExtendedCacheItemPoolInterface
     {
         $stat = new DriverStatistic();
         $stat->setInfo('[Devtrue] A void info string')
-          ->setSize(0)
-          ->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setRawData(true);
+            ->setSize(0)
+            ->setData(implode(', ', array_keys($this->itemInstances)))
+            ->setRawData(true);
 
         return $stat;
     }

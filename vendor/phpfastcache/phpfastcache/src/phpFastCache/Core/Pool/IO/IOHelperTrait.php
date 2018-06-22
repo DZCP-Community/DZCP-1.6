@@ -51,10 +51,10 @@ trait IOHelperTrait
          * Calculate the security key
          */
         {
-            $securityKey = array_key_exists('securityKey', $this->config) ? $this->config[ 'securityKey' ] : '';
+            $securityKey = array_key_exists('securityKey', $this->config) ? $this->config['securityKey'] : '';
             if (!$securityKey || mb_strtolower($securityKey) === 'auto') {
-                if (isset($_SERVER[ 'HTTP_HOST' ])) {
-                    $securityKey = preg_replace('/^www./', '', strtolower(str_replace(':', '_', $_SERVER[ 'HTTP_HOST' ])));
+                if (isset($_SERVER['HTTP_HOST'])) {
+                    $securityKey = preg_replace('/^www./', '', strtolower(str_replace(':', '_', $_SERVER['HTTP_HOST'])));
                 } else {
                     $securityKey = ($this->isPHPModule() ? 'web' : 'cli');
                 }
@@ -73,10 +73,10 @@ trait IOHelperTrait
          */
         $tmp_dir = rtrim($tmp_dir, '/') . DIRECTORY_SEPARATOR;
 
-        if (empty($this->config[ 'path' ]) || !is_string($this->config[ 'path' ])) {
+        if (empty($this->config['path']) || !is_string($this->config['path'])) {
             $path = $tmp_dir;
         } else {
-            $path = rtrim($this->config[ 'path' ], '/') . DIRECTORY_SEPARATOR;
+            $path = rtrim($this->config['path'], '/') . DIRECTORY_SEPARATOR;
         }
 
         $path_suffix = $securityKey . DIRECTORY_SEPARATOR . $this->getDriverName();
@@ -91,16 +91,16 @@ trait IOHelperTrait
          * return the temp dir
          */
         if ($readonly === true) {
-            if ($this->config[ 'autoTmpFallback' ] && (!@file_exists($full_path) || !@is_writable($full_path))) {
+            if ($this->config['autoTmpFallback'] && (!@file_exists($full_path) || !@is_writable($full_path))) {
                 return $full_path_tmp;
             }
             return $full_path;
         } else {
-            if (!isset($this->tmp[ $full_path_hash ]) || (!@file_exists($full_path) || !@is_writable($full_path))) {
+            if (!isset($this->tmp[$full_path_hash]) || (!@file_exists($full_path) || !@is_writable($full_path))) {
                 if (!@file_exists($full_path)) {
                     @mkdir($full_path, $this->getDefaultChmod(), true);
                 } else if (!@is_writable($full_path)) {
-                    if (!@chmod($full_path, $this->getDefaultChmod()) && $this->config[ 'autoTmpFallback' ]) {
+                    if (!@chmod($full_path, $this->getDefaultChmod()) && $this->config['autoTmpFallback']) {
                         /**
                          * Switch back to tmp dir
                          * again if the path is not writable
@@ -121,8 +121,8 @@ trait IOHelperTrait
                     throw new phpFastCacheIOException('Path "' . $full_path . '" is not writable, please set a chmod 0777 or any writable permission and make sure to make use of an absolute path !');
                 }
 
-                $this->tmp[ $full_path_hash ] = $full_path;
-                $this->htaccessGen($full_path, array_key_exists('htaccess', $this->config) ? $this->config[ 'htaccess' ] : false);
+                $this->tmp[$full_path_hash] = $full_path;
+                $this->htaccessGen($full_path, array_key_exists('htaccess', $this->config) ? $this->config['htaccess'] : false);
             }
         }
 
@@ -159,7 +159,7 @@ trait IOHelperTrait
             }
         }
 
-        return $path . '/' . $filename . '.' . $this->config[ 'cacheFileExtension' ];
+        return $path . '/' . $filename . '.' . $this->config['cacheFileExtension'];
     }
 
 
@@ -177,10 +177,10 @@ trait IOHelperTrait
      */
     protected function getDefaultChmod()
     {
-        if (!isset($this->config[ 'default_chmod' ]) || $this->config[ 'default_chmod' ] == '' || is_null($this->config[ 'default_chmod' ])) {
+        if (!isset($this->config['default_chmod']) || $this->config['default_chmod'] == '' || is_null($this->config['default_chmod'])) {
             return 0777;
         } else {
-            return $this->config[ 'default_chmod' ];
+            return $this->config['default_chmod'];
         }
     }
 
@@ -191,9 +191,9 @@ trait IOHelperTrait
     protected static function cleanFileName($filename)
     {
         $regex = [
-          '/[\?\[\]\/\\\=\<\>\:\;\,\'\"\&\$\#\*\(\)\|\~\`\!\{\}]/',
-          '/\.$/',
-          '/^\./',
+            '/[\?\[\]\/\\\=\<\>\:\;\,\'\"\&\$\#\*\(\)\|\~\`\!\{\}]/',
+            '/\.$/',
+            '/^\./',
         ];
         $replace = ['-', '', ''];
 
@@ -287,9 +287,9 @@ HTACCESS;
 
         if ($secureFileManipulation) {
             $tmpFilename = Directory::getAbsolutePath(dirname($file) . '/tmp_' . md5(
-                str_shuffle(uniqid($this->getDriverName(), false))
-                . str_shuffle(uniqid($this->getDriverName(), false))
-              ));
+                    str_shuffle(uniqid($this->getDriverName(), false))
+                    . str_shuffle(uniqid($this->getDriverName(), false))
+                ));
 
             $f = fopen($tmpFilename, 'w+');
             flock($f, LOCK_EX);
@@ -331,11 +331,11 @@ HTACCESS;
         }
 
         $stat->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setRawData([
-            'tmp' => $this->tmp,
-          ])
-          ->setSize(Directory::dirSize($path))
-          ->setInfo('Number of files used to build the cache: ' . Directory::getFileCount($path));
+            ->setRawData([
+                'tmp' => $this->tmp,
+            ])
+            ->setSize(Directory::dirSize($path))
+            ->setInfo('Number of files used to build the cache: ' . Directory::getFileCount($path));
 
         return $stat;
     }

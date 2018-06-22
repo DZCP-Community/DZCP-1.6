@@ -26,19 +26,25 @@ final class Collection extends Type
      * Returns "list"
      * @return string "list"
      */
-    public function name() {}
+    public function name()
+    {
+    }
 
     /**
      * Returns type representation in CQL, e.g. `list<varchar>`
      * @return string Type representation in CQL
      */
-    public function __toString() {}
+    public function __toString()
+    {
+    }
 
     /**
      * Returns type of values
      * @return Type Type of values
      */
-    public function valueType() {}
+    public function valueType()
+    {
+    }
 
     /**
      * Creates a new Cassandra\Collection from the given values.
@@ -47,9 +53,11 @@ final class Collection extends Type
      *                                            different type than what this
      *                                            list type expects.
      *
-     * @param  mixed $value,...      One or more values to be added to the list.
+     * @param  mixed $value,... One or more values to be added to the list.
      *                               When no values given, creates an empty list.
      * @return Cassandra\Collection  A list with given values.
      */
-    public function create($value = null) {}
+    public function create($value = null)
+    {
+    }
 }

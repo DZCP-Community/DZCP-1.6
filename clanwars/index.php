@@ -8,10 +8,10 @@
 include("../inc/buffer.php");
 
 ## INCLUDES ##
-include(basePath."/inc/debugger.php");
-include(basePath."/inc/config.php");
-include(basePath."/inc/bbcode.php");
-include(basePath."/clanwars/helper.php");
+include(basePath . "/inc/debugger.php");
+include(basePath . "/inc/config.php");
+include(basePath . "/inc/bbcode.php");
+include(basePath . "/clanwars/helper.php");
 
 ## SETTINGS ##
 $dir = "clanwars";
@@ -20,9 +20,9 @@ define('_Clanwars', true);
 
 ## SECTIONS ##
 $action = empty($action) ? 'default' : $action;
-if(file_exists(basePath."/clanwars/case_".$action.".php"))
-    require_once(basePath."/clanwars/case_".$action.".php");
+if (file_exists(basePath . "/clanwars/case_" . $action . ".php"))
+    require_once(basePath . "/clanwars/case_" . $action . ".php");
 
 ## INDEX OUTPUT ##
-$title = $pagetitle." - ".$where."";
+$title = $pagetitle . " - " . $where . "";
 page($index, $title, $where);

@@ -151,7 +151,7 @@ class Driver implements ExtendedCacheItemPoolInterface
 
             $PDO = new PDO("sqlite:" . $this->SqliteDir . '/' . self::INDEXING_FILE);
             $PDO->setAttribute(PDO::ATTR_ERRMODE,
-              PDO::ERRMODE_EXCEPTION);
+                PDO::ERRMODE_EXCEPTION);
 
             if ($createTable == true) {
                 $this->initIndexing($PDO);
@@ -162,12 +162,12 @@ class Driver implements ExtendedCacheItemPoolInterface
             $stm = $this->indexing->prepare("SELECT MAX(`db`) as `db` FROM `balancing`");
             $stm->execute();
             $row = $stm->fetch(PDO::FETCH_ASSOC);
-            if (!isset($row[ 'db' ])) {
+            if (!isset($row['db'])) {
                 $db = 1;
-            } elseif ($row[ 'db' ] <= 1) {
+            } elseif ($row['db'] <= 1) {
                 $db = 1;
             } else {
-                $db = $row[ 'db' ];
+                $db = $row['db'];
             }
 
             // check file size
@@ -186,11 +186,11 @@ class Driver implements ExtendedCacheItemPoolInterface
         // look for keyword
         $stm = $this->indexing->prepare("SELECT * FROM `balancing` WHERE `keyword`=:keyword LIMIT 1");
         $stm->execute([
-          ':keyword' => $keyword,
+            ':keyword' => $keyword,
         ]);
         $row = $stm->fetch(PDO::FETCH_ASSOC);
-        if (isset($row[ 'db' ]) && $row[ 'db' ] != '') {
-            $db = $row[ 'db' ];
+        if (isset($row['db']) && $row['db'] != '') {
+            $db = $row['db'];
         } else {
             /*
              * Insert new to Indexing
@@ -198,8 +198,8 @@ class Driver implements ExtendedCacheItemPoolInterface
             $db = $this->currentDB;
             $stm = $this->indexing->prepare("INSERT INTO `balancing` (`keyword`,`db`) VALUES(:keyword, :db)");
             $stm->execute([
-              ':keyword' => $keyword,
-              ':db' => $db,
+                ':keyword' => $keyword,
+                ':db' => $db,
             ]);
         }
 
@@ -221,7 +221,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         /**
          * init instant
          */
-        if (!isset($this->instance[ $instant ])) {
+        if (!isset($this->instance[$instant])) {
             // check DB Files ready or not
             $createTable = false;
             if (!file_exists($this->SqliteDir . '/db' . $instant) || $reset == true) {
@@ -234,12 +234,12 @@ class Driver implements ExtendedCacheItemPoolInterface
                 $this->initDB($PDO);
             }
 
-            $this->instance[ $instant ] = $PDO;
+            $this->instance[$instant] = $PDO;
             unset($PDO);
 
         }
 
-        return $this->instance[ $instant ];
+        return $this->instance[$instant];
     }
 
     /**
@@ -253,7 +253,7 @@ class Driver implements ExtendedCacheItemPoolInterface
          * Check for Cross-Driver type confusion
          */
         if ($item instanceof Item) {
-            $skipExisting = isset($this->config[ 'skipExisting' ]) ? $this->config[ 'skipExisting' ] : false;
+            $skipExisting = isset($this->config['skipExisting']) ? $this->config['skipExisting'] : false;
             $toWrite = true;
 
             // check in cache first
@@ -271,22 +271,22 @@ class Driver implements ExtendedCacheItemPoolInterface
                 $sql = "INSERT OR REPLACE INTO `caching` (`keyword`,`object`,`exp`) values(:keyword,:object,:exp)";
                 try {
                     $stm = $this->getDb($item->getKey())
-                      ->prepare($sql);
+                        ->prepare($sql);
                     $stm->execute([
-                      ':keyword' => $item->getKey(),
-                      ':object' => $this->encode($this->driverPreWrap($item)),
-                      ':exp' => $item->getExpirationDate()->getTimestamp(),
+                        ':keyword' => $item->getKey(),
+                        ':object' => $this->encode($this->driverPreWrap($item)),
+                        ':exp' => $item->getExpirationDate()->getTimestamp(),
                     ]);
 
                     return true;
                 } catch (\PDOException $e) {
                     try {
                         $stm = $this->getDb($item->getKey(), true)
-                          ->prepare($sql);
+                            ->prepare($sql);
                         $stm->execute([
-                          ':keyword' => $item->getKey(),
-                          ':object' => $this->encode($this->driverPreWrap($item)),
-                          ':exp' => $item->getExpirationDate()->getTimestamp(),
+                            ':keyword' => $item->getKey(),
+                            ':object' => $this->encode($this->driverPreWrap($item)),
+                            ':exp' => $item->getExpirationDate()->getTimestamp(),
                         ]);
                     } catch (PDOException $e) {
                         return false;
@@ -309,17 +309,17 @@ class Driver implements ExtendedCacheItemPoolInterface
         $sql = "SELECT * FROM `caching` WHERE `keyword`=:keyword LIMIT 1";
         try {
             $stm = $this->getDb($item->getKey())
-              ->prepare($sql);
+                ->prepare($sql);
             $stm->execute([
-              ':keyword' => $item->getKey(),
+                ':keyword' => $item->getKey(),
             ]);
             $row = $stm->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             try {
                 $stm = $this->getDb($item->getKey(), true)
-                  ->prepare($sql);
+                    ->prepare($sql);
                 $stm->execute([
-                  ':keyword' => $item->getKey(),
+                    ':keyword' => $item->getKey(),
                 ]);
                 $row = $stm->fetch(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
@@ -327,8 +327,8 @@ class Driver implements ExtendedCacheItemPoolInterface
             }
         }
 
-        if (isset($row[ 'object' ])) {
-            return $this->decode($row[ 'object' ]);
+        if (isset($row['object'])) {
+            return $this->decode($row['object']);
         }
 
         return null;
@@ -347,11 +347,11 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($item instanceof Item) {
             try {
                 $stm = $this->getDb($item->getKey())
-                  ->prepare("DELETE FROM `caching` WHERE (`exp` <= :U) OR (`keyword`=:keyword) ");
+                    ->prepare("DELETE FROM `caching` WHERE (`exp` <= :U) OR (`keyword`=:keyword) ");
 
                 return $stm->execute([
-                  ':keyword' => $item->getKey(),
-                  ':U' => time(),
+                    ':keyword' => $item->getKey(),
+                    ':U' => time(),
                 ]);
             } catch (PDOException $e) {
                 return false;

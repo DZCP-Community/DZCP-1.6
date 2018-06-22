@@ -23,4 +23,6 @@ use Cassandra\Exception;
 /**
  * Cassandra-specific domain exception.
  */
-class DomainException extends \DomainException implements Exception {}
+class DomainException extends \DomainException implements Exception
+{
+}

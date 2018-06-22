@@ -28,35 +28,45 @@ final class Timeuuid implements Value, UuidInterface
      *
      * @param int $timestamp Unix timestamp
      */
-    public function __construct($timestamp = null) {}
+    public function __construct($timestamp = null)
+    {
+    }
 
     /**
      * The type of this timeuuid.
      *
      * @return Type
      */
-    public function type() {}
+    public function type()
+    {
+    }
 
     /**
      * Returns this timeuuid as string.
      *
      * @return string timeuuid
      */
-    public function __toString() {}
+    public function __toString()
+    {
+    }
 
     /**
      * Returns this timeuuid as string.
      *
      * @return string timeuuid
      */
-    public function uuid() {}
+    public function uuid()
+    {
+    }
 
     /**
      * Returns the version of this timeuuid.
      *
      * @return int version of this timeuuid
      */
-    public function version() {}
+    public function version()
+    {
+    }
 
     /**
      * Unix timestamp.
@@ -64,12 +74,16 @@ final class Timeuuid implements Value, UuidInterface
      * @return int seconds
      * @see time
      */
-    public function time() {}
+    public function time()
+    {
+    }
 
     /**
      * Converts current timeuuid to PHP DateTime.
      *
      * @return \DateTime PHP representation
      */
-    public function toDateTime() {}
+    public function toDateTime()
+    {
+    }
 }

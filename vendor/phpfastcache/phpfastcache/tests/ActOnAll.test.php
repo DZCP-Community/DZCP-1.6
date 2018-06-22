@@ -20,11 +20,11 @@ $defaultDriver = (!empty($argv[1]) ? ucfirst($argv[1]) : 'Files');
 /**
  * Testing memcached as it is declared in .travis.yml
  */
-try{
+try {
     $filesInstance = CacheManager::getInstance('Files');
     $RedisInstance = CacheManager::getInstance('Redis');
     $MemcacheInstance = CacheManager::getInstance('Memcached');
-}catch(phpFastCacheDriverCheckException $e){
+} catch (phpFastCacheDriverCheckException $e) {
     $testHelper->printSkipText($e->getMessage())->terminateTest();
 }
 
@@ -32,20 +32,20 @@ try{
 $actOnAll = new ActOnAll();
 $statsAry = $actOnAll->getStats();
 
-if(is_array($statsAry)){
-    if(count($statsAry) !== 3){
+if (is_array($statsAry)) {
+    if (count($statsAry) !== 3) {
         $testHelper->printFailText('Wrong count of driverStatistics objects: Got ' . count($statsAry) . " element(s), expected 3");
         goto endOfTest;
     }
 
     foreach ($statsAry as $stat) {
-        if(!is_object($stat) || !($stat instanceof driverStatistic)){
+        if (!is_object($stat) || !($stat instanceof driverStatistic)) {
             $testHelper->printFailText('$statsAry contains one element that is not a driverStatistic object');
             goto endOfTest;
         }
     }
     $testHelper->printPassText('ActOnAll helper passed all tests');
-}else{
+} else {
     $testHelper->printFailText('$statsAry is not an array');
 }
 

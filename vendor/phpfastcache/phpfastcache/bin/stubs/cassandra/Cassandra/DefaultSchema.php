@@ -26,22 +26,28 @@ final class DefaultSchema implements Schema
     /**
      * {@inheritDoc}
      *
-     * @param  string             $name Name of the keyspace to get
+     * @param  string $name Name of the keyspace to get
      * @return Cassandra\Keyspace       Keyspace instance or null
      */
-    public function keyspace($name) {}
+    public function keyspace($name)
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return array An array of `Cassandra\Keyspace` instances.
      */
-    public function keyspaces() {}
+    public function keyspaces()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return int Version of the schema.
      */
-    public function version() {}
+    public function version()
+    {
+    }
 }

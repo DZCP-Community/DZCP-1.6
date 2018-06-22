@@ -72,7 +72,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($item instanceof Item) {
             try {
                 $this->instance->putDocument(['data' => $this->encode($this->driverPreWrap($item))], $item->getEncodedKey(),
-                  $this->getLatestDocumentRevision($item->getEncodedKey()));
+                    $this->getLatestDocumentRevision($item->getEncodedKey()));
             } catch (CouchDBException $e) {
                 throw new phpFastCacheDriverException('Got error while trying to upsert a document: ' . $e->getMessage(), null, $e);
             }
@@ -95,10 +95,10 @@ class Driver implements ExtendedCacheItemPoolInterface
             throw new phpFastCacheDriverException('Got error while trying to get a document: ' . $e->getMessage(), null, $e);
         }
 
-        if ($response->status === 404 || empty($response->body[ 'data' ])) {
+        if ($response->status === 404 || empty($response->body['data'])) {
             return null;
         } else if ($response->status === 200) {
-            return $this->decode($response->body[ 'data' ]);
+            return $this->decode($response->body['data']);
         } else {
             throw new phpFastCacheDriverException('Got unexpected HTTP status: ' . $response->status);
         }
@@ -153,13 +153,13 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($this->instance instanceof CouchdbClient) {
             throw new phpFastCacheLogicException('Already connected to Couchdb server');
         } else {
-            $host = isset($this->config[ 'host' ]) ? $this->config[ 'host' ] : '127.0.0.1';
-            $ssl = isset($this->config[ 'ssl' ]) ? $this->config[ 'ssl' ] : false;
-            $port = isset($this->config[ 'port' ]) ? $this->config[ 'port' ] : 5984;
-            $path = isset($this->config[ 'path' ]) ? $this->config[ 'path' ] : '/';
-            $username = isset($this->config[ 'username' ]) ? $this->config[ 'username' ] : '';
-            $password = isset($this->config[ 'password' ]) ? $this->config[ 'password' ] : '';
-            $timeout = isset($this->config[ 'timeout' ]) ? $this->config[ 'timeout' ] : 10;
+            $host = isset($this->config['host']) ? $this->config['host'] : '127.0.0.1';
+            $ssl = isset($this->config['ssl']) ? $this->config['ssl'] : false;
+            $port = isset($this->config['port']) ? $this->config['port'] : 5984;
+            $path = isset($this->config['path']) ? $this->config['path'] : '/';
+            $username = isset($this->config['username']) ? $this->config['username'] : '';
+            $password = isset($this->config['password']) ? $this->config['password'] : '';
+            $timeout = isset($this->config['timeout']) ? $this->config['timeout'] : 10;
 
             $url = ($ssl ? 'https://' : 'http://');
             if ($username) {
@@ -174,9 +174,9 @@ class Driver implements ExtendedCacheItemPoolInterface
             $url .= $path;
 
             $this->instance = CouchDBClient::create([
-              'dbname' => $this->getDatabaseName(),
-              'url' => $url,
-              'timeout' => $timeout,
+                'dbname' => $this->getDatabaseName(),
+                'url' => $url,
+                'timeout' => $timeout,
             ]);
 
             $this->createDatabase();
@@ -193,13 +193,13 @@ class Driver implements ExtendedCacheItemPoolInterface
         $path = '/' . $this->getDatabaseName() . '/' . urlencode($docId);
 
         $response = $this->instance->getHttpClient()->request(
-          'HEAD',
-          $path,
-          null,
-          false
+            'HEAD',
+            $path,
+            null,
+            false
         );
-        if (!empty($response->headers[ 'etag' ])) {
-            return trim($response->headers[ 'etag' ], " '\"\t\n\r\0\x0B");
+        if (!empty($response->headers['etag'])) {
+            return trim($response->headers['etag'], " '\"\t\n\r\0\x0B");
         }
 
         return null;
@@ -210,7 +210,7 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     protected function getDatabaseName()
     {
-        return isset($this->config[ 'database' ]) ? $this->config[ 'database' ] : 'phpfastcache';
+        return isset($this->config['database']) ? $this->config['database'] : 'phpfastcache';
     }
 
     /**
@@ -250,9 +250,9 @@ HELP;
         $info = $this->instance->getDatabaseInfo();
 
         return (new DriverStatistic())
-          ->setSize($info[ 'sizes' ][ 'active' ])
-          ->setRawData($info)
-          ->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setInfo('Couchdb version ' . $this->instance->getVersion() . "\n For more information see RawData.");
+            ->setSize($info['sizes']['active'])
+            ->setRawData($info)
+            ->setData(implode(', ', array_keys($this->itemInstances)))
+            ->setInfo('Couchdb version ' . $this->instance->getVersion() . "\n For more information see RawData.");
     }
 }

@@ -16,7 +16,7 @@ $testHelper = new TestHelper('Autoload');
  */
 if (!class_exists('phpFastCache\CacheManager')) {
     $testHelper->printFailText('Autoload failed to find the CacheManager');
-}else{
+} else {
     $testHelper->printPassText('Autoload successfully found the CacheManager');
 }
 
@@ -25,7 +25,7 @@ if (!class_exists('phpFastCache\CacheManager')) {
  */
 if (!interface_exists('Psr\Cache\CacheItemInterface')) {
     $testHelper->printFailText('Autoload failed to find the Psr CacheItemInterface');
-}else{
+} else {
     $testHelper->printPassText('Autoload successfully found the Psr CacheItemInterface');
 }
 

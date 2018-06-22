@@ -28,28 +28,36 @@ final class DefaultIndex implements Index
      *
      * @return string Name of the index
      */
-    public function name() {}
+    public function name()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return string Kind of the index
      */
-    public function kind() {}
+    public function kind()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return string Target column name of the index
      */
-    public function target() {}
+    public function target()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return Cassandra\Value Value of an option by name
      */
-    public function option($name) {}
+    public function option($name)
+    {
+    }
 
     /**
      * {@inheritDoc}
@@ -57,19 +65,25 @@ final class DefaultIndex implements Index
      * @return array A dictionary of `string` and `Cassandra\Value pairs of the
      *               index's options.
      */
-    public function options() {}
+    public function options()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return string Class name of a custom index
      */
-    public function className() {}
+    public function className()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return boolean
      */
-    public function isCustom() {}
+    public function isCustom()
+    {
+    }
 }

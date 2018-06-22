@@ -4,9 +4,9 @@
  * http://www.dzcp.de
  */
 
-if(defined('_UserMenu')) {
+if (defined('_UserMenu')) {
     $where = _site_reg;
-    if(HasDSGVO()) {
+    if (HasDSGVO()) {
         if (!$chkMe) {
             $check_regcode = settings("regcode");
             $regcode = "";
@@ -53,7 +53,7 @@ if(defined('_UserMenu')) {
                 if ($_POST['pwd2'] != $_POST['pwd'])
                     $error = show("errors/errortable", array("error" => _wrong_pwd));
 
-                if (!check_email(re($_POST['email'],true)))
+                if (!check_email(re($_POST['email'], true)))
                     $error = show("errors/errortable", array("error" => _error_invalid_email));
 
                 if (empty($_POST['email']))

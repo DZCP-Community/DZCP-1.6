@@ -49,7 +49,7 @@ interface Keyspace
 
     /**
      * Returns a table by name
-     * @param  string               $name Table name
+     * @param  string $name Table name
      * @return Cassandra\Table|null       Table instance or null
      */
     function table($name);

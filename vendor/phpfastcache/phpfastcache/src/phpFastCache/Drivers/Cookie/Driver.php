@@ -81,7 +81,7 @@ class Driver implements ExtendedCacheItemPoolInterface
             $keyword = self::PREFIX . $item->getKey();
             $v = json_encode($this->driverPreWrap($item));
 
-            if (isset($this->config[ 'limited_memory_each_object' ]) && strlen($v) > $this->config[ 'limited_memory_each_object' ]) {
+            if (isset($this->config['limited_memory_each_object']) && strlen($v) > $this->config['limited_memory_each_object']) {
                 return false;
             }
 
@@ -100,7 +100,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     {
         $this->driverConnect();
         $keyword = self::PREFIX . $item->getKey();
-        $x = isset($_COOKIE[ $keyword ]) ? json_decode($_COOKIE[ $keyword ], true) : false;
+        $x = isset($_COOKIE[$keyword]) ? json_decode($_COOKIE[$keyword], true) : false;
 
         if ($x == false) {
             return null;
@@ -121,7 +121,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     {
         $this->driverConnect();
         $keyword = self::PREFIX . $key;
-        $x = isset($_COOKIE[ $keyword ]) ? $this->decode(json_decode($_COOKIE[ $keyword ])->t) : false;
+        $x = isset($_COOKIE[$keyword]) ? $this->decode(json_decode($_COOKIE[$keyword])->t) : false;
 
         return $x ? $x - time() : $x;
     }
@@ -139,7 +139,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($item instanceof Item) {
             $this->driverConnect();
             $keyword = self::PREFIX . $item->getKey();
-            $_COOKIE[ $keyword ] = null;
+            $_COOKIE[$keyword] = null;
 
             return @setcookie($keyword, null, -10);
         } else {
@@ -156,7 +156,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         $this->driverConnect();
         foreach ($_COOKIE as $keyword => $value) {
             if (strpos($keyword, self::PREFIX) !== false) {
-                $_COOKIE[ $keyword ] = null;
+                $_COOKIE[$keyword] = null;
                 $result = @setcookie($keyword, null, -10);
                 if ($return !== false) {
                     $return = $result;

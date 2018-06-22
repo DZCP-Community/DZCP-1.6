@@ -7,14 +7,16 @@
 //-> Informationen ueber die mySQL-Datenbank
 function dbinfo()
 {
-    $info = array(); $entrys = 0;
-    $sum = 0; $rows = 0;
+    $info = array();
+    $entrys = 0;
+    $sum = 0;
+    $rows = 0;
     $qry = db("Show table status");
-    while($data = _fetch($qry)) {
+    while ($data = _fetch($qry)) {
         $allRows = $data["Rows"];
-        $dataLength  = $data["Data_length"];
+        $dataLength = $data["Data_length"];
         $indexLength = $data["Index_length"];
-        $tableSum    = $dataLength + $indexLength;
+        $tableSum = $dataLength + $indexLength;
 
         $sum += $tableSum;
         $rows += $allRows;
@@ -23,6 +25,6 @@ function dbinfo()
 
     $info["entrys"] = $entrys;
     $info["rows"] = $rows;
-    $info["size"] = @round($sum/1048576,2);
+    $info["size"] = @round($sum / 1048576, 2);
     return $info;
 }

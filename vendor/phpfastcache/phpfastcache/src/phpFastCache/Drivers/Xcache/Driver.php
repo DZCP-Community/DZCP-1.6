@@ -137,10 +137,10 @@ class Driver implements ExtendedCacheItemPoolInterface
             $info = xcache_info(XC_TYPE_VAR, 0);
 
             return (new DriverStatistic())
-              ->setSize(abs($info[ 'size' ] - $info[ 'avail' ]))
-              ->setData(implode(', ', array_keys($this->itemInstances)))
-              ->setInfo(sprintf("Xcache v%s with following modules loaded:\n %s", XCACHE_VERSION, str_replace(' ', ', ', XCACHE_MODULES)))
-              ->setRawData($info);
+                ->setSize(abs($info['size'] - $info['avail']))
+                ->setData(implode(', ', array_keys($this->itemInstances)))
+                ->setInfo(sprintf("Xcache v%s with following modules loaded:\n %s", XCACHE_VERSION, str_replace(' ', ', ', XCACHE_MODULES)))
+                ->setRawData($info);
         } else {
             throw new \RuntimeException("PhpFastCache is not able to read Xcache configuration. Please put this to your php.ini:\n
             [xcache.admin]

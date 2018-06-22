@@ -26,13 +26,17 @@ final class UserType extends Type
      * Returns type name for the user type
      * @return string
      */
-    public function name() {}
+    public function name()
+    {
+    }
 
     /**
      * Returns keyspace for the user type
      * @return string
      */
-    public function keyspace() {}
+    public function keyspace()
+    {
+    }
 
     /**
      * Returns type representation in CQL, e.g. 1keyspace.type_name1 or
@@ -40,13 +44,17 @@ final class UserType extends Type
      *
      * @return string Type representation in CQL
      */
-    public function __toString() {}
+    public function __toString()
+    {
+    }
 
     /**
      * Returns types of values
      * @return array An array of types
      */
-    public function types() {}
+    public function types()
+    {
+    }
 
     /**
      * Creates a new Cassandra\UserTypeValue from the given name/value pairs.
@@ -55,9 +63,11 @@ final class UserType extends Type
      *                                            different types than what the
      *                                            user type expects.
      *
-     * @param  mixed $value,...      One or more name/value pairs to be added to the user type.
+     * @param  mixed $value,... One or more name/value pairs to be added to the user type.
      *                               When no values given, creates an empty user type.
      * @return Cassandra\UserTypeValue  A user type value with given name/value pairs.
      */
-    public function create($value = null) {}
+    public function create($value = null)
+    {
+    }
 }

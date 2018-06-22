@@ -30,14 +30,18 @@ final class Timestamp implements Value
      * @param int $time Unix timestamp
      * @param int $usec Microseconds
      */
-    public function __construct($time = null, $usec = null) {}
+    public function __construct($time = null, $usec = null)
+    {
+    }
 
     /**
      * The type of this timestamp.
      *
      * @return Type
      */
-    public function type() {}
+    public function type()
+    {
+    }
 
     /**
      * Unix timestamp.
@@ -45,7 +49,9 @@ final class Timestamp implements Value
      * @return int seconds
      * @see time
      */
-    public function time() {}
+    public function time()
+    {
+    }
 
     /**
      * Microtime from this timestamp
@@ -55,19 +61,25 @@ final class Timestamp implements Value
      * @return float|string Float or string representation
      * @see microtime
      */
-    public function microtime($get_as_float = false) {}
+    public function microtime($get_as_float = false)
+    {
+    }
 
     /**
      * Converts current timestamp to PHP DateTime.
      *
      * @return \DateTime PHP representation
      */
-    public function toDateTime() {}
+    public function toDateTime()
+    {
+    }
 
     /**
      * Returns a string representation of this timestamp.
      *
      * @return string timestamp
      */
-    public function __toString() {}
+    public function __toString()
+    {
+    }
 }

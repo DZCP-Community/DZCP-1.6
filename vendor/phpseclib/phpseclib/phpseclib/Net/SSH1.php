@@ -127,7 +127,7 @@ class SSH1
      *
      * @see \phpseclib\Net\SSH1::getSupportedAuthentications()
      * @access public
-    */
+     */
     /**
      * .rhosts or /etc/hosts.equiv
      */
@@ -153,7 +153,7 @@ class SSH1
      *
      * @link http://3sp.com/content/developer/maverick-net/docs/Maverick.SSH.PseudoTerminalModesMembers.html
      * @access private
-    */
+     */
     const TTY_OP_END = 0;
     /**#@-*/
 
@@ -178,17 +178,17 @@ class SSH1
      *
      * @see \phpseclib\Net\SSH1::bitmap
      * @access private
-    */
+     */
     const MASK_CONSTRUCTOR = 0x00000001;
-    const MASK_CONNECTED   = 0x00000002;
-    const MASK_LOGIN       = 0x00000004;
-    const MASK_SHELL       = 0x00000008;
+    const MASK_CONNECTED = 0x00000002;
+    const MASK_LOGIN = 0x00000004;
+    const MASK_SHELL = 0x00000008;
     /**#@-*/
 
     /**#@+
      * @access public
      * @see \phpseclib\Net\SSH1::getLog()
-    */
+     */
     /**
      * Returns the message numbers
      */
@@ -210,7 +210,7 @@ class SSH1
     /**#@+
      * @access public
      * @see \phpseclib\Net\SSH1::read()
-    */
+     */
     /**
      * Returns when a string matching $expect exactly is found
      */
@@ -310,13 +310,13 @@ class SSH1
      * @access private
      */
     var $supported_ciphers = array(
-        self::CIPHER_NONE       => 'No encryption',
-        self::CIPHER_IDEA       => 'IDEA in CFB mode',
-        self::CIPHER_DES        => 'DES in CBC mode',
-        self::CIPHER_3DES       => 'Triple-DES in CBC mode',
+        self::CIPHER_NONE => 'No encryption',
+        self::CIPHER_IDEA => 'IDEA in CFB mode',
+        self::CIPHER_DES => 'DES in CBC mode',
+        self::CIPHER_3DES => 'Triple-DES in CBC mode',
         self::CIPHER_BROKEN_TSS => 'TRI\'s Simple Stream encryption CBC',
-        self::CIPHER_RC4        => 'RC4',
-        self::CIPHER_BLOWFISH   => 'Blowfish'
+        self::CIPHER_RC4 => 'RC4',
+        self::CIPHER_BLOWFISH => 'Blowfish'
     );
 
     /**
@@ -329,9 +329,9 @@ class SSH1
      * @access private
      */
     var $supported_authentications = array(
-        self::AUTH_RHOSTS     => '.rhosts or /etc/hosts.equiv',
-        self::AUTH_RSA        => 'pure RSA authentication',
-        self::AUTH_PASSWORD   => 'password authentication',
+        self::AUTH_RHOSTS => '.rhosts or /etc/hosts.equiv',
+        self::AUTH_RSA => 'pure RSA authentication',
+        self::AUTH_PASSWORD => 'password authentication',
         self::AUTH_RHOSTS_RSA => '.rhosts with RSA host authentication'
     );
 
@@ -507,11 +507,11 @@ class SSH1
     function __construct($host, $port = 22, $timeout = 10, $cipher = self::CIPHER_3DES)
     {
         $this->protocol_flags = array(
-            1  => 'NET_SSH1_MSG_DISCONNECT',
-            2  => 'NET_SSH1_SMSG_PUBLIC_KEY',
-            3  => 'NET_SSH1_CMSG_SESSION_KEY',
-            4  => 'NET_SSH1_CMSG_USER',
-            9  => 'NET_SSH1_CMSG_AUTH_PASSWORD',
+            1 => 'NET_SSH1_MSG_DISCONNECT',
+            2 => 'NET_SSH1_SMSG_PUBLIC_KEY',
+            3 => 'NET_SSH1_CMSG_SESSION_KEY',
+            4 => 'NET_SSH1_CMSG_USER',
+            9 => 'NET_SSH1_CMSG_AUTH_PASSWORD',
             10 => 'NET_SSH1_CMSG_REQUEST_PTY',
             12 => 'NET_SSH1_CMSG_EXEC_SHELL',
             13 => 'NET_SSH1_CMSG_EXEC_CMD',
@@ -563,7 +563,7 @@ class SSH1
             return false;
         }
 
-        fputs($this->fsock, $this->identifier."\r\n");
+        fputs($this->fsock, $this->identifier . "\r\n");
 
         $response = $this->_get_binary_packet();
         if ($response[self::RESPONSE_TYPE] != NET_SSH1_SMSG_PUBLIC_KEY) {
@@ -685,7 +685,7 @@ class SSH1
                 $this->crypto = new DES();
                 $this->crypto->disablePadding();
                 $this->crypto->enableContinuousBuffer();
-                $this->crypto->setKey(substr($session_key, 0,  8));
+                $this->crypto->setKey(substr($session_key, 0, 8));
                 break;
             case self::CIPHER_3DES:
                 $this->crypto = new TripleDES(TripleDES::MODE_3CBC);
@@ -838,7 +838,7 @@ class SSH1
 
         if ($response !== false) {
             do {
-                $output.= substr($response[self::RESPONSE_DATA], 4);
+                $output .= substr($response[self::RESPONSE_DATA], 4);
                 $response = $this->_get_binary_packet();
             } while (is_array($response) && $response[self::RESPONSE_TYPE] != NET_SSH1_SMSG_EXITSTATUS);
         }
@@ -952,7 +952,7 @@ class SSH1
             if ($response === true) {
                 return $this->_string_shift($this->interactiveBuffer, strlen($this->interactiveBuffer));
             }
-            $this->interactiveBuffer.= substr($response[self::RESPONSE_DATA], 4);
+            $this->interactiveBuffer .= substr($response[self::RESPONSE_DATA], 4);
         }
     }
 
@@ -1108,7 +1108,7 @@ class SSH1
                 return true;
             }
             $elapsed = strtok(microtime(), ' ') + strtok('') - $start;
-            $this->curTimeout-= $elapsed;
+            $this->curTimeout -= $elapsed;
         }
 
         $start = strtok(microtime(), ' ') + strtok(''); // http://php.net/microtime#61838
@@ -1124,8 +1124,8 @@ class SSH1
 
         while ($length > 0) {
             $temp = fread($this->fsock, $length);
-            $raw.= $temp;
-            $length-= strlen($temp);
+            $raw .= $temp;
+            $length -= strlen($temp);
         }
         $stop = strtok(microtime(), ' ') + strtok('');
 
@@ -1152,7 +1152,7 @@ class SSH1
         if (defined('NET_SSH1_LOGGING')) {
             $temp = isset($this->protocol_flags[$type]) ? $this->protocol_flags[$type] : 'UNKNOWN';
             $temp = '<- ' . $temp .
-                    ' (' . round($stop - $start, 4) . 's)';
+                ' (' . round($stop - $start, 4) . 's)';
             $this->_append_log($temp, $data);
         }
 
@@ -1185,7 +1185,7 @@ class SSH1
 
         $orig = $data;
         $data = $padding . $data;
-        $data.= pack('N', $this->_crc($data));
+        $data .= pack('N', $this->_crc($data));
 
         if ($this->crypto !== false) {
             $data = $this->crypto->encrypt($data);
@@ -1200,7 +1200,7 @@ class SSH1
         if (defined('NET_SSH1_LOGGING')) {
             $temp = isset($this->protocol_flags[ord($orig[0])]) ? $this->protocol_flags[ord($orig[0])] : 'UNKNOWN';
             $temp = '-> ' . $temp .
-                    ' (' . round($stop - $start, 4) . 's)';
+                ' (' . round($stop - $start, 4) . 's)';
             $this->_append_log($temp, $orig);
         }
 
@@ -1294,7 +1294,7 @@ class SSH1
         $crc = 0x00000000;
         $length = strlen($data);
 
-        for ($i=0; $i<$length; $i++) {
+        for ($i = 0; $i < $length; $i++) {
             // We AND $crc >> 8 with 0x00FFFFFF because we want the eight newly added bits to all
             // be zero.  PHP, unfortunately, doesn't always do this.  0x80000000 >> 8, as an example,
             // yields 0xFF800000 - not 0x00800000.  The following link elaborates:
@@ -1365,7 +1365,7 @@ class SSH1
         while (strlen($random) != $length) {
             $block = Random::string($length - strlen($random));
             $block = str_replace("\x00", '', $block);
-            $random.= $block;
+            $random .= $block;
         }
         $temp = chr(0) . chr(2) . $random . chr(0) . $m;
 
@@ -1437,12 +1437,12 @@ class SSH1
     {
         $output = '';
         for ($i = 0; $i < count($message_log); $i++) {
-            $output.= $message_number_log[$i] . "\r\n";
+            $output .= $message_number_log[$i] . "\r\n";
             $current_log = $message_log[$i];
             $j = 0;
             do {
                 if (strlen($current_log)) {
-                    $output.= str_pad(dechex($j), 7, '0', STR_PAD_LEFT) . '0  ';
+                    $output .= str_pad(dechex($j), 7, '0', STR_PAD_LEFT) . '0  ';
                 }
                 $fragment = $this->_string_shift($current_log, $this->log_short_width);
                 $hex = substr(preg_replace_callback('#.#s', array($this, '_format_log_helper'), $fragment), strlen($this->log_boundary));
@@ -1450,10 +1450,10 @@ class SSH1
                 // http://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters
                 // also replace < with a . since < messes up the output on web browsers
                 $raw = preg_replace('#[^\x20-\x7E]|<#', '.', $fragment);
-                $output.= str_pad($hex, $this->log_long_width - $this->log_short_width, ' ') . $raw . "\r\n";
+                $output .= str_pad($hex, $this->log_long_width - $this->log_short_width, ' ') . $raw . "\r\n";
                 $j++;
             } while (strlen($current_log));
-            $output.= "\r\n";
+            $output .= "\r\n";
         }
 
         return $output;
@@ -1595,10 +1595,10 @@ class SSH1
             case self::LOG_COMPLEX:
                 $this->protocol_flags_log[] = $protocol_flags;
                 $this->_string_shift($message);
-                $this->log_size+= strlen($message);
+                $this->log_size += strlen($message);
                 $this->message_log[] = $message;
                 while ($this->log_size > self::LOG_MAX_SIZE) {
-                    $this->log_size-= strlen(array_shift($this->message_log));
+                    $this->log_size -= strlen(array_shift($this->message_log));
                     array_shift($this->protocol_flags_log);
                 }
                 break;
@@ -1627,10 +1627,10 @@ class SSH1
                 $entry = $this->_format_log(array($message), array($protocol_flags));
                 if ($this->realtime_log_wrap) {
                     $temp = "<<< START >>>\r\n";
-                    $entry.= $temp;
+                    $entry .= $temp;
                     fseek($this->realtime_log_file, ftell($this->realtime_log_file) - strlen($temp));
                 }
-                $this->realtime_log_size+= strlen($entry);
+                $this->realtime_log_size += strlen($entry);
                 if ($this->realtime_log_size > self::LOG_MAX_SIZE) {
                     fseek($this->realtime_log_file, 0);
                     $this->realtime_log_size = strlen($entry);

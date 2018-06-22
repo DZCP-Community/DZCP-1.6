@@ -22,4 +22,6 @@ namespace Cassandra\Exception;
  * InvalidQueryException is raised when query is syntactically correct but invalid.
  * For example when attempting to create a table without specifying a keyspace.
  */
-class InvalidQueryException extends ValidationException {}
+class InvalidQueryException extends ValidationException
+{
+}

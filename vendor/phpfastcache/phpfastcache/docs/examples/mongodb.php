@@ -18,17 +18,17 @@ use phpFastCache\CacheManager;
 require __DIR__ . '/../../vendor/autoload.php';
 
 $InstanceCache = CacheManager::getInstance('mongodb', [
-  'host' => '127.0.0.1',
-  'port' => '27017',
-  'username' => '',
-  'password' => '',
-  'timeout' => '1',
+    'host' => '127.0.0.1',
+    'port' => '27017',
+    'username' => '',
+    'password' => '',
+    'timeout' => '1',
     /**
      * These ones are
      * totally optional
      */
-  // 'collectionName' => 'Cache',
-  // 'databaseName' => 'phpFastCache'
+    // 'collectionName' => 'Cache',
+    // 'databaseName' => 'phpFastCache'
 
 ]);
 

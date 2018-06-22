@@ -34,5 +34,7 @@ final class SimpleStatement implements Statement
      *
      * @param string $cql CQL string for this simple statement
      */
-    public function __construct($cql) {}
+    public function __construct($cql)
+    {
+    }
 }

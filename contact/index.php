@@ -8,18 +8,18 @@
 include("../inc/buffer.php");
 
 ## INCLUDES ##
-include(basePath."/inc/debugger.php");
-include(basePath."/inc/config.php");
-include(basePath."/inc/bbcode.php");
+include(basePath . "/inc/debugger.php");
+include(basePath . "/inc/config.php");
+include(basePath . "/inc/bbcode.php");
 
 ## SETTINGS ##
 $where = _site_contact;
-$title = $pagetitle." - ".$where."";
+$title = $pagetitle . " - " . $where . "";
 $dir = "contact";
 ## SECTIONS ##
 switch ($action):
     default:
-        if(HasDSGVO()) {
+        if (HasDSGVO()) {
             $index = show($dir . "/contact", array(
                 "head" => _site_contact,
                 "nachricht" => _contact_nachricht,
@@ -37,7 +37,7 @@ switch ($action):
         }
         break;
     case 'fightus';
-        if(HasDSGVO()) {
+        if (HasDSGVO()) {
             $qry = db("SELECT id,name,game FROM " . $db['squads'] . "
                    WHERE status = 1
                    AND team_fightus = 1
@@ -90,7 +90,7 @@ switch ($action):
         }
         break;
     case 'joinus';
-        if(HasDSGVO()) {
+        if (HasDSGVO()) {
             $qrysquads = db("SELECT id,name,game FROM " . $db['squads'] . "
                         WHERE status = 1 AND team_joinus = 1
                         ORDER BY name");
@@ -129,15 +129,15 @@ switch ($action):
         }
         break;
     case 'do';
-        if(HasDSGVO()) {
-            if($_GET['what'] == "contact") {
+        if (HasDSGVO()) {
+            if ($_GET['what'] == "contact") {
                 if ($_POST['secure'] != $_SESSION['sec_contact'] || empty($_SESSION['sec_contact']))
                     $index = error(_error_invalid_regcode, 1);
                 elseif (empty($_POST['text']))
                     $index = error(_error_empty_nachricht, 1);
                 elseif (empty($_POST['email']))
                     $index = error(_empty_email, 1);
-                elseif (!check_email(re($_POST['email'],true)))
+                elseif (!check_email(re($_POST['email'], true)))
                     $index = error(_error_invalid_email, 1);
                 elseif (empty($_POST['nick']))
                     $index = error(_empty_nick, 1);
@@ -183,8 +183,8 @@ switch ($action):
                     $index = info(_contact_sended, "../news/");
                 }
             }
-        } elseif($_GET['what'] == "joinus") {
-            if(HasDSGVO()) {
+        } elseif ($_GET['what'] == "joinus") {
+            if (HasDSGVO()) {
                 if ($_POST['secure'] != $_SESSION['sec_joinus'] || empty($_SESSION['sec_joinus']))
                     $index = error(_error_invalid_regcode, 1);
                 elseif (empty($_POST['text']))
@@ -193,13 +193,13 @@ switch ($action):
                     $index = error(_error_empty_age, 1);
                 elseif (empty($_POST['email']))
                     $index = error(_empty_email, 1);
-                elseif (!check_email(re($_POST['email'],true)))
+                elseif (!check_email(re($_POST['email'], true)))
                     $index = error(_error_invalid_email, 1);
                 elseif (empty($_POST['nick']))
                     $index = error(_empty_nick, 1);
                 else {
                     if ($_POST['squad'] != 0) {
-                        $qrysquads = db("SELECT `name` FROM `" . $db['squads'] . "` WHERE `id` = " . (int)$_POST['squad'].";",false,true);
+                        $qrysquads = db("SELECT `name` FROM `" . $db['squads'] . "` WHERE `id` = " . (int)$_POST['squad'] . ";", false, true);
                     } else
                         $qrysquads['name'] = _contact_joinus_no_squad_aviable;
 
@@ -244,8 +244,8 @@ switch ($action):
                     $index = info(_contact_joinus_sended, "../news/");
                 }
             }
-        } elseif($_GET['what'] == "fightus") {
-            if(HasDSGVO()) {
+        } elseif ($_GET['what'] == "fightus") {
+            if (HasDSGVO()) {
                 if ($_POST['secure'] != $_SESSION['sec_fightus'] || empty($_SESSION['sec_fightus']))
                     $index = error(_error_invalid_regcode, 1);
                 elseif (empty($_POST['clan']))
@@ -261,7 +261,7 @@ switch ($action):
                 else {
                     $icq = preg_replace("=-=Uis", "", $_POST['icq']);
                     $email = show(_email_mailto, array("email" => $_POST['email']));
-                    $hp = show(_contact_hp, array("hp" => links(re($_POST['hp'],true))));
+                    $hp = show(_contact_hp, array("hp" => links(re($_POST['hp'], true))));
 
                     if (!empty($_POST['t']) && $_POST['j'] == date("Y", time())) {
                         $date = $_POST['t'] . "." . $_POST['m'] . "." . $_POST['j'] . "&nbsp;" . $_POST['h'] . ":" . $_POST['min'] . _uhr;

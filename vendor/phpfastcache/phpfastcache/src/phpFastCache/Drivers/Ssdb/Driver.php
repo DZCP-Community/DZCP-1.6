@@ -125,17 +125,17 @@ class Driver implements ExtendedCacheItemPoolInterface
     protected function driverConnect()
     {
         try {
-            $server = isset($this->config[ 'ssdb' ]) ? $this->config[ 'ssdb' ] : [
-              'host' => "127.0.0.1",
-              'port' => 8888,
-              'password' => '',
-              'timeout' => 2000,
+            $server = isset($this->config['ssdb']) ? $this->config['ssdb'] : [
+                'host' => "127.0.0.1",
+                'port' => 8888,
+                'password' => '',
+                'timeout' => 2000,
             ];
 
-            $host = $server[ 'host' ];
-            $port = isset($server[ 'port' ]) ? (int)$server[ 'port' ] : 8888;
-            $password = isset($server[ 'password' ]) ? $server[ 'password' ] : '';
-            $timeout = !empty($server[ 'timeout' ]) ? (int)$server[ 'timeout' ] : 2000;
+            $host = $server['host'];
+            $port = isset($server['port']) ? (int)$server['port'] : 8888;
+            $password = isset($server['password']) ? $server['password'] : '';
+            $timeout = !empty($server['timeout']) ? (int)$server['timeout'] : 2000;
             $this->instance = new SimpleSSDB($host, $port, $timeout);
             if (!empty($password)) {
                 $this->instance->auth($password);
@@ -169,10 +169,10 @@ class Driver implements ExtendedCacheItemPoolInterface
          * Data returned by Ssdb are very poorly formatted
          * using hardcoded offset of pair key-value :-(
          */
-        $stat->setInfo(sprintf("Ssdb-server v%s with a total of %s call(s).\n For more information see RawData.", $info[ 2 ], $info[ 6 ]))
-          ->setRawData($info)
-          ->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setSize($this->instance->dbsize());
+        $stat->setInfo(sprintf("Ssdb-server v%s with a total of %s call(s).\n For more information see RawData.", $info[2], $info[6]))
+            ->setRawData($info)
+            ->setData(implode(', ', array_keys($this->itemInstances)))
+            ->setSize($this->instance->dbsize());
 
         return $stat;
     }

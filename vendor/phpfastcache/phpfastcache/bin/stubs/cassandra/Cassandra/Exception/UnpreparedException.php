@@ -23,4 +23,6 @@ namespace Cassandra\Exception;
  * exist on the server. The driver should be automatically re-preparing the
  * statement in this case. Seeing this error could be considered a bug.
  */
-class UnpreparedException extends ValidationException {}
+class UnpreparedException extends ValidationException
+{
+}

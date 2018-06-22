@@ -59,7 +59,7 @@ class SCP
      * @access private
      * @see \phpseclib\Net\SCP::_send()
      * @see \phpseclib\Net\SCP::_receive()
-    */
+     */
     /**
      * SSH1 is being used.
      */
@@ -67,7 +67,7 @@ class SCP
     /**
      * SSH2 is being used.
      */
-    const MODE_SSH2 =  2;
+    const MODE_SSH2 = 2;
     /**#@-*/
 
     /**
@@ -185,7 +185,7 @@ class SCP
         while ($sent < $size) {
             $temp = $mode & self::SOURCE_STRING ? substr($data, $sent, $this->packet_size) : fread($fp, $this->packet_size);
             $this->_send($temp);
-            $sent+= strlen($temp);
+            $sent += strlen($temp);
 
             if (is_callable($callback)) {
                 call_user_func($callback, $sent);
@@ -243,10 +243,10 @@ class SCP
         while ($size < $info['size']) {
             $data = $this->_receive();
             // SCP usually seems to split stuff out into 16k chunks
-            $size+= strlen($data);
+            $size += strlen($data);
 
             if ($local_file === false) {
-                $content.= $data;
+                $content .= $data;
             } else {
                 fputs($fp, $data);
             }

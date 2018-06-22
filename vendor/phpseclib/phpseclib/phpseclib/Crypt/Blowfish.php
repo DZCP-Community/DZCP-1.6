@@ -346,7 +346,7 @@ class Blowfish extends Base
 
         /* key-expanding p[] and S-Box building sb[] */
         $this->bctx = array(
-            'p'  => array(),
+            'p' => array(),
             'sb' => array(
                 $this->sbox0,
                 $this->sbox1,
@@ -356,7 +356,7 @@ class Blowfish extends Base
         );
 
         // unpack binary string in unsigned chars
-        $key  = array_values(unpack('C*', $this->key));
+        $key = array_values(unpack('C*', $this->key));
         $keyl = count($key);
         for ($j = 0, $i = 0; $i < 18; ++$i) {
             // xor P1 with the first 32-bits of the key, xor P2 with the second 32-bits ...
@@ -374,13 +374,13 @@ class Blowfish extends Base
         $data = "\0\0\0\0\0\0\0\0";
         for ($i = 0; $i < 18; $i += 2) {
             list($l, $r) = array_values(unpack('N*', $data = $this->_encryptBlock($data)));
-            $this->bctx['p'][$i    ] = $l;
+            $this->bctx['p'][$i] = $l;
             $this->bctx['p'][$i + 1] = $r;
         }
         for ($i = 0; $i < 4; ++$i) {
             for ($j = 0; $j < 256; $j += 2) {
                 list($l, $r) = array_values(unpack('N*', $data = $this->_encryptBlock($data)));
-                $this->bctx['sb'][$i][$j    ] = $l;
+                $this->bctx['sb'][$i][$j] = $l;
                 $this->bctx['sb'][$i][$j + 1] = $r;
             }
         }
@@ -406,16 +406,16 @@ class Blowfish extends Base
         $l = $in[1];
         $r = $in[2];
 
-        for ($i = 0; $i < 16; $i+= 2) {
-            $l^= $p[$i];
-            $r^= $this->safe_intval(($this->safe_intval($sb_0[$l >> 24 & 0xff]  + $sb_1[$l >> 16 & 0xff]) ^
-                  $sb_2[$l >>  8 & 0xff]) +
-                  $sb_3[$l       & 0xff]);
+        for ($i = 0; $i < 16; $i += 2) {
+            $l ^= $p[$i];
+            $r ^= $this->safe_intval(($this->safe_intval($sb_0[$l >> 24 & 0xff] + $sb_1[$l >> 16 & 0xff]) ^
+                    $sb_2[$l >> 8 & 0xff]) +
+                $sb_3[$l & 0xff]);
 
-            $r^= $p[$i + 1];
-            $l^= $this->safe_intval(($this->safe_intval($sb_0[$r >> 24 & 0xff]  + $sb_1[$r >> 16 & 0xff]) ^
-                  $sb_2[$r >>  8 & 0xff]) +
-                  $sb_3[$r       & 0xff]);
+            $r ^= $p[$i + 1];
+            $l ^= $this->safe_intval(($this->safe_intval($sb_0[$r >> 24 & 0xff] + $sb_1[$r >> 16 & 0xff]) ^
+                    $sb_2[$r >> 8 & 0xff]) +
+                $sb_3[$r & 0xff]);
         }
         return pack("N*", $r ^ $p[17], $l ^ $p[16]);
     }
@@ -439,16 +439,16 @@ class Blowfish extends Base
         $l = $in[1];
         $r = $in[2];
 
-        for ($i = 17; $i > 2; $i-= 2) {
-            $l^= $p[$i];
-            $r^= $this->safe_intval(($this->safe_intval($sb_0[$l >> 24 & 0xff] + $sb_1[$l >> 16 & 0xff]) ^
-                  $sb_2[$l >>  8 & 0xff]) +
-                  $sb_3[$l       & 0xff]);
+        for ($i = 17; $i > 2; $i -= 2) {
+            $l ^= $p[$i];
+            $r ^= $this->safe_intval(($this->safe_intval($sb_0[$l >> 24 & 0xff] + $sb_1[$l >> 16 & 0xff]) ^
+                    $sb_2[$l >> 8 & 0xff]) +
+                $sb_3[$l & 0xff]);
 
-            $r^= $p[$i - 1];
-            $l^= $this->safe_intval(($this->safe_intval($sb_0[$r >> 24 & 0xff] + $sb_1[$r >> 16 & 0xff]) ^
-                  $sb_2[$r >>  8 & 0xff]) +
-                  $sb_3[$r       & 0xff]);
+            $r ^= $p[$i - 1];
+            $l ^= $this->safe_intval(($this->safe_intval($sb_0[$r >> 24 & 0xff] + $sb_1[$r >> 16 & 0xff]) ^
+                    $sb_2[$r >> 8 & 0xff]) +
+                $sb_3[$r & 0xff]);
         }
         return pack("N*", $r ^ $p[0], $l ^ $p[1]);
     }
@@ -491,7 +491,7 @@ class Blowfish extends Base
                     ';
                     break;
                 default:
-                    $p   = array();
+                    $p = array();
                     for ($i = 0; $i < 18; ++$i) {
                         $p[] = '$p_' . $i;
                     }
@@ -508,8 +508,8 @@ class Blowfish extends Base
                 $l = $in[1];
                 $r = $in[2];
             ';
-            for ($i = 0; $i < 16; $i+= 2) {
-                $encrypt_block.= '
+            for ($i = 0; $i < 16; $i += 2) {
+                $encrypt_block .= '
                     $l^= ' . $p[$i] . ';
                     $r^= ' . sprintf($safeint, '(' . sprintf($safeint, '$sb_0[$l >> 24 & 0xff] + $sb_1[$l >> 16 & 0xff]') . ' ^
                           $sb_2[$l >>  8 & 0xff]) +
@@ -521,7 +521,7 @@ class Blowfish extends Base
                           $sb_3[$r       & 0xff]') . ';
                 ';
             }
-            $encrypt_block.= '
+            $encrypt_block .= '
                 $in = pack("N*",
                     $r ^ ' . $p[17] . ',
                     $l ^ ' . $p[16] . '
@@ -535,8 +535,8 @@ class Blowfish extends Base
                 $r = $in[2];
             ';
 
-            for ($i = 17; $i > 2; $i-= 2) {
-                $decrypt_block.= '
+            for ($i = 17; $i > 2; $i -= 2) {
+                $decrypt_block .= '
                     $l^= ' . $p[$i] . ';
                     $r^= ' . sprintf($safeint, '(' . sprintf($safeint, '$sb_0[$l >> 24 & 0xff] + $sb_1[$l >> 16 & 0xff]') . ' ^
                           $sb_2[$l >>  8 & 0xff]) +
@@ -549,7 +549,7 @@ class Blowfish extends Base
                 ';
             }
 
-            $decrypt_block.= '
+            $decrypt_block .= '
                 $in = pack("N*",
                     $r ^ ' . $p[0] . ',
                     $l ^ ' . $p[1] . '
@@ -558,11 +558,11 @@ class Blowfish extends Base
 
             $lambda_functions[$code_hash] = $this->_createInlineCryptFunction(
                 array(
-                   'init_crypt'    => $init_crypt,
-                   'init_encrypt'  => '',
-                   'init_decrypt'  => '',
-                   'encrypt_block' => $encrypt_block,
-                   'decrypt_block' => $decrypt_block
+                    'init_crypt' => $init_crypt,
+                    'init_encrypt' => '',
+                    'init_decrypt' => '',
+                    'encrypt_block' => $encrypt_block,
+                    'decrypt_block' => $decrypt_block
                 )
             );
         }

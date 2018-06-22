@@ -144,22 +144,22 @@ class Driver implements ExtendedCacheItemPoolInterface
         } else {
 
 
-            $host = isset($this->config[ 'host' ]) ? $this->config[ 'host' ] : '127.0.0.1';
-            $port = isset($this->config[ 'port' ]) ? $this->config[ 'port' ] : 8091;
-            $password = isset($this->config[ 'password' ]) ? $this->config[ 'password' ] : '';
-            $username = isset($this->config[ 'username' ]) ? $this->config[ 'username' ] : '';
-            $buckets = isset($this->config[ 'buckets' ]) ? $this->config[ 'buckets' ] : [
-              [
-                'bucket' => 'default',
-                'password' => '',
-              ],
+            $host = isset($this->config['host']) ? $this->config['host'] : '127.0.0.1';
+            $port = isset($this->config['port']) ? $this->config['port'] : 8091;
+            $password = isset($this->config['password']) ? $this->config['password'] : '';
+            $username = isset($this->config['username']) ? $this->config['username'] : '';
+            $buckets = isset($this->config['buckets']) ? $this->config['buckets'] : [
+                [
+                    'bucket' => 'default',
+                    'password' => '',
+                ],
             ];
 
             $this->instance = new CouchbaseClient("couchbase://{$host}:{$port}", $username, $password);
 
             foreach ($buckets as $bucket) {
-                $this->bucketCurrent = $this->bucketCurrent ?: $bucket[ 'bucket' ];
-                $this->setBucket($bucket[ 'bucket' ], $this->instance->openBucket($bucket[ 'bucket' ], $bucket[ 'password' ]));
+                $this->bucketCurrent = $this->bucketCurrent ?: $bucket['bucket'];
+                $this->setBucket($bucket['bucket'], $this->instance->openBucket($bucket['bucket'], $bucket['password']));
             }
         }
 
@@ -171,7 +171,7 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     protected function getBucket()
     {
-        return $this->bucketInstances[ $this->bucketCurrent ];
+        return $this->bucketInstances[$this->bucketCurrent];
     }
 
     /**
@@ -182,7 +182,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     protected function setBucket($bucketName, \CouchbaseBucket $CouchbaseBucket)
     {
         if (!array_key_exists($bucketName, $this->bucketInstances)) {
-            $this->bucketInstances[ $bucketName ] = $CouchbaseBucket;
+            $this->bucketInstances[$bucketName] = $CouchbaseBucket;
         } else {
             throw new phpFastCacheLogicException('A bucket instance with this name already exists.');
         }
@@ -202,10 +202,10 @@ class Driver implements ExtendedCacheItemPoolInterface
         $info = $this->getBucket()->manager()->info();
 
         return (new DriverStatistic())
-          ->setSize($info[ 'basicStats' ][ 'diskUsed' ])
-          ->setRawData($info)
-          ->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setInfo('CouchBase version ' . $info[ 'nodes' ][ 0 ][ 'version' ] . ', Uptime (in days): ' . round($info[ 'nodes' ][ 0 ][ 'uptime' ] / 86400,
-              1) . "\n For more information see RawData.");
+            ->setSize($info['basicStats']['diskUsed'])
+            ->setRawData($info)
+            ->setData(implode(', ', array_keys($this->itemInstances)))
+            ->setInfo('CouchBase version ' . $info['nodes'][0]['version'] . ', Uptime (in days): ' . round($info['nodes'][0]['uptime'] / 86400,
+                    1) . "\n For more information see RawData.");
     }
 }

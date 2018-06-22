@@ -68,7 +68,7 @@ class Driver implements ExtendedCacheItemPoolInterface
          * Check for Cross-Driver type confusion
          */
         if ($item instanceof Item) {
-            return $this->staticStack[ md5($item->getKey()) ] = $this->driverPreWrap($item);
+            return $this->staticStack[md5($item->getKey())] = $this->driverPreWrap($item);
         } else {
             throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
         }
@@ -81,8 +81,8 @@ class Driver implements ExtendedCacheItemPoolInterface
     protected function driverRead(CacheItemInterface $item)
     {
         $key = md5($item->getKey());
-        if (isset($this->staticStack[ $key ])) {
-            return $this->staticStack[ $key ];
+        if (isset($this->staticStack[$key])) {
+            return $this->staticStack[$key];
         }
         return null;
     }
@@ -99,8 +99,8 @@ class Driver implements ExtendedCacheItemPoolInterface
          */
         if ($item instanceof Item) {
             $key = md5($item->getKey());
-            if (isset($this->staticStack[ $key ])) {
-                unset($this->staticStack[ $key ]);
+            if (isset($this->staticStack[$key])) {
+                unset($this->staticStack[$key]);
                 return true;
             }
             return false;
@@ -140,9 +140,9 @@ class Driver implements ExtendedCacheItemPoolInterface
     {
         $stat = new DriverStatistic();
         $stat->setInfo('[Memstatic] A memory static driver')
-          ->setSize(mb_strlen(serialize($this->staticStack)))
-          ->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setRawData($this->staticStack);
+            ->setSize(mb_strlen(serialize($this->staticStack)))
+            ->setData(implode(', ', array_keys($this->itemInstances)))
+            ->setRawData($this->staticStack);
 
         return $stat;
     }

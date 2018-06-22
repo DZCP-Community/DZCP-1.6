@@ -8,20 +8,20 @@
 include("../inc/buffer.php");
 
 ## INCLUDES ##
-include(basePath."/inc/debugger.php");
-include(basePath."/inc/config.php");
-include(basePath."/inc/bbcode.php");
+include(basePath . "/inc/debugger.php");
+include(basePath . "/inc/config.php");
+include(basePath . "/inc/bbcode.php");
 
 ## SETTINGS ##
 $where = _site_forum;
-$title = $pagetitle." - ".$where."";
+$title = $pagetitle . " - " . $where . "";
 $dir = "forum";
 define('_Forum', true);
 
 ## SECTIONS
 $action = empty($action) ? 'default' : $action;
-if(file_exists(basePath."/forum/case_".$action.".php"))
-    require_once(basePath."/forum/case_".$action.".php");
+if (file_exists(basePath . "/forum/case_" . $action . ".php"))
+    require_once(basePath . "/forum/case_" . $action . ".php");
 
 ## INDEX OUTPUT ##
 page($index, $title, $where);

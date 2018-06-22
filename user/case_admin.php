@@ -4,68 +4,70 @@
  * http://www.dzcp.de
  */
 
-if(defined('_UserMenu')) {
-    if(!permission("editusers")) {
+if (defined('_UserMenu')) {
+    if (!permission("editusers")) {
         $index = error(_error_wrong_permissions, 1);
     } else {
         $edit_userid = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
         $identy_userid = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
         //Self
-        if($edit_userid && $edit_userid == $userid) {
-            $qrysq = db("SELECT `id`,`name` FROM `".$db['squads']."` ORDER BY `pos`;"); $esquads = '';
-            while($getsq = _fetch($qrysq)) {
-                $qrypos = db("SELECT `id`,`position` FROM `".$db['pos']."` ORDER BY `pid`;"); $posi = "";
-                while($getpos = _fetch($qrypos)) {
-                    $check = db("SELECT `id` FROM `".$db['userpos']."` WHERE `posi` = ".$getpos['id']." AND `squad` = ".$getsq['id']." AND `user` = ".$userid.";",true);
+        if ($edit_userid && $edit_userid == $userid) {
+            $qrysq = db("SELECT `id`,`name` FROM `" . $db['squads'] . "` ORDER BY `pos`;");
+            $esquads = '';
+            while ($getsq = _fetch($qrysq)) {
+                $qrypos = db("SELECT `id`,`position` FROM `" . $db['pos'] . "` ORDER BY `pid`;");
+                $posi = "";
+                while ($getpos = _fetch($qrypos)) {
+                    $check = db("SELECT `id` FROM `" . $db['userpos'] . "` WHERE `posi` = " . $getpos['id'] . " AND `squad` = " . $getsq['id'] . " AND `user` = " . $userid . ";", true);
                     $sel = $check ? 'selected="selected"' : '';
                     $posi .= show(_select_field_posis, array("value" => $getpos['id'], "sel" => $sel, "what" => re($getpos['position'])));
                 }
 
-                $check = db("SELECT `id` FROM `".$db['squaduser']."` WHERE `user` = ".$userid." AND `squad` = ".$getsq['id'].";",true) ? 'checked="checked"' : '';
+                $check = db("SELECT `id` FROM `" . $db['squaduser'] . "` WHERE `user` = " . $userid . " AND `squad` = " . $getsq['id'] . ";", true) ? 'checked="checked"' : '';
                 $esquads .= show(_checkfield_squads, array("id" => $getsq['id'], "check" => $check, "eposi" => $posi, "noposi" => _user_noposi, "squad" => re($getsq['name'])));
             }
 
-            $index = show($dir."/admin_self", array("squadhead" => _admin_user_squadhead,
-                                                        "showpos" => getrank($userid),
-                                                        "esquad" => $esquads,
-                                                        "nothing" => _nothing,
-                                                        "value" => _button_value_edit,
-                                                        "eposi" => $posi,
-                                                        "squad" => _member_admin_squad,
-                                                        "posi" => _profil_position));
-        } else if(($edit_userid || $identy_userid) && data("level",$userid) == 4) {
-            switch($do) {
+            $index = show($dir . "/admin_self", array("squadhead" => _admin_user_squadhead,
+                "showpos" => getrank($userid),
+                "esquad" => $esquads,
+                "nothing" => _nothing,
+                "value" => _button_value_edit,
+                "eposi" => $posi,
+                "squad" => _member_admin_squad,
+                "posi" => _profil_position));
+        } else if (($edit_userid || $identy_userid) && data("level", $userid) == 4) {
+            switch ($do) {
                 case "identy":
-                    $sql = db("SELECT `id` FROM `".$db['users']."` WHERE `id` = ".$identy_userid.";");
-                    if($identy_userid >= 1 && _rows($sql)) {
-                        if((rootAdmin($identy_userid) && !rootAdmin($userid))
-                            || (data("level",$identy_userid) == 4 && !rootAdmin($userid)) ||
-                            !data("level",$userid) == 4) {
+                    $sql = db("SELECT `id` FROM `" . $db['users'] . "` WHERE `id` = " . $identy_userid . ";");
+                    if ($identy_userid >= 1 && _rows($sql)) {
+                        if ((rootAdmin($identy_userid) && !rootAdmin($userid))
+                            || (data("level", $identy_userid) == 4 && !rootAdmin($userid)) ||
+                            !data("level", $userid) == 4) {
                             $index = error(_identy_admin, 1);
-                        } else if(data("dsgvo_lock",$identy_userid)) {
+                        } else if (data("dsgvo_lock", $identy_userid)) {
                             $index = error(_admin_dsgvo_indent_lock, 1);
                         } else {
                             $msg = show(_admin_user_get_identy, array("nick" => autor($identy_userid)));
                             $_SESSION['identy_id'] = $userid; //Save Last ID
 
-                            db("UPDATE ".$db['users']." SET `online` = 0, `sessid` = '' WHERE `id` = ".$userid.";"); //Logout
+                            db("UPDATE " . $db['users'] . " SET `online` = 0, `sessid` = '' WHERE `id` = " . $userid . ";"); //Logout
                             session_regenerate_id();
 
                             $_SESSION['id'] = $_GET['id'];
-                            $_SESSION['pwd'] = data("pwd",$identy_userid);
-                            $_SESSION['ip'] = data("ip",$identy_userid);
+                            $_SESSION['pwd'] = data("pwd", $identy_userid);
+                            $_SESSION['ip'] = data("ip", $identy_userid);
                             $_SESSION['identy_ip'] = $_SESSION['ip'];
 
-                            db("UPDATE ".$db['users']." SET `online` = 1, `sessid` = '".session_id()."' WHERE `id` = ".$identy_userid.";");
-                            setIpcheck("ident(".$userid."_".$identy_userid.")");
+                            db("UPDATE " . $db['users'] . " SET `online` = 1, `sessid` = '" . session_id() . "' WHERE `id` = " . $identy_userid . ";");
+                            setIpcheck("ident(" . $userid . "_" . $identy_userid . ")");
 
                             $index = info($msg, "?action=userlobby");
                         }
                     }
-                break;
+                    break;
                 case "update":
-                    if(!rootAdmin($edit_userid) || (!rootAdmin($edit_userid) && rootAdmin($userid))) {
+                    if (!rootAdmin($edit_userid) || (!rootAdmin($edit_userid) && rootAdmin($userid))) {
                         if (isset($_POST) && $edit_userid) {
                             // Permissions Update
                             $sql_query = "UPDATE `" . $db['permissions'] . "` SET";
@@ -94,13 +96,13 @@ if(defined('_UserMenu')) {
                             $sq = db("SELECT `id` FROM `" . $db['squads'] . "`;");
                             while ($getsq = _fetch($sq)) {
                                 if (isset($_POST['squad' . $getsq['id']])) {
-                                    db("INSERT INTO `" . $db['squaduser'] . "` SET `user` = ".$edit_userid.", `squad` = ".
-                                        ((int)$_POST['squad' . $getsq['id']]).";");
+                                    db("INSERT INTO `" . $db['squaduser'] . "` SET `user` = " . $edit_userid . ", `squad` = " .
+                                        ((int)$_POST['squad' . $getsq['id']]) . ";");
                                 }
 
                                 if (isset($_POST['squad' . $getsq['id']])) {
-                                    db("INSERT INTO `".$db['userpos']."` SET `user` = ".$edit_userid.", `posi` = "
-                                        .((int)$_POST['sqpos' . $getsq['id']]).", `squad` = ".((int)$getsq['id']).";");
+                                    db("INSERT INTO `" . $db['userpos'] . "` SET `user` = " . $edit_userid . ", `posi` = "
+                                        . ((int)$_POST['sqpos' . $getsq['id']]) . ", `squad` = " . ((int)$getsq['id']) . ";");
                                 }
                             }
 
@@ -123,31 +125,31 @@ if(defined('_UserMenu')) {
                     } else {
                         $index = error(_error_edit_admin, 1);
                     }
-                break;
+                    break;
                 case 'updateme':
-                    db("DELETE FROM `".$db['squaduser']."` WHERE `user` = ".$userid.";");
-                    db("DELETE FROM `".$db['userpos']."` WHERE `user` = ".$userid.";");
+                    db("DELETE FROM `" . $db['squaduser'] . "` WHERE `user` = " . $userid . ";");
+                    db("DELETE FROM `" . $db['userpos'] . "` WHERE `user` = " . $userid . ";");
 
-                    $squads = db("SELECT id FROM ".$db['squads']);
-                    while($getsq = _fetch($squads)) {
-                        if(isset($_POST['squad'.$getsq['id']])) {
-                            db("INSERT INTO `".$db['squaduser']."` SET `user`  = ".((int)$userid).
-                                ",`squad` = ".((int)$_POST['squad'.$getsq['id']]).";");
+                    $squads = db("SELECT id FROM " . $db['squads']);
+                    while ($getsq = _fetch($squads)) {
+                        if (isset($_POST['squad' . $getsq['id']])) {
+                            db("INSERT INTO `" . $db['squaduser'] . "` SET `user`  = " . ((int)$userid) .
+                                ",`squad` = " . ((int)$_POST['squad' . $getsq['id']]) . ";");
                         }
 
-                        if(isset($_POST['squad'.$getsq['id']])) {
-                            db("INSERT INTO `".$db['userpos']."` SET `user` = ".((int)$userid).
-                                ", `posi`  = ".((int)$_POST['sqpos'.$getsq['id']]).
-                                ", `squad` = ".((int)$getsq['id']).";");
+                        if (isset($_POST['squad' . $getsq['id']])) {
+                            db("INSERT INTO `" . $db['userpos'] . "` SET `user` = " . ((int)$userid) .
+                                ", `posi`  = " . ((int)$_POST['sqpos' . $getsq['id']]) .
+                                ", `squad` = " . ((int)$getsq['id']) . ";");
                         }
                     }
 
-                    $index = info(_admin_user_edited, "?action=user&amp;id=".$userid."");
-                break;
+                    $index = info(_admin_user_edited, "?action=user&amp;id=" . $userid . "");
+                    break;
                 case 'delete':
                     $index = show(_user_delete_verify, array("user" => autor($identy_userid), "id" => $identy_userid));
-                    if(isset($_GET['verify']) && $_GET['verify'] == "yes") {
-                        if((data("level",$identy_userid) == 4 || rootAdmin($identy_userid) || data("level",$identy_userid) == 3) && !rootAdmin($userid))
+                    if (isset($_GET['verify']) && $_GET['verify'] == "yes") {
+                        if ((data("level", $identy_userid) == 4 || rootAdmin($identy_userid) || data("level", $identy_userid) == 3) && !rootAdmin($userid))
                             $index = error(_user_cant_delete_admin, 2);
                         else {
                             $getdel = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . $identy_userid . ";", false, true);
@@ -261,9 +263,9 @@ if(defined('_UserMenu')) {
                             $index = info(_user_deleted, "?action=userlist");
                         }
                     }
-                break;
+                    break;
                 default:
-                    if(!rootAdmin($edit_userid) || rootAdmin($userid)) {
+                    if (!rootAdmin($edit_userid) || rootAdmin($userid)) {
                         $qry = db("SELECT `id`,`user`,`nick`,`pwd`,`email`,`level`,`position`,`listck` FROM `" . $db['users'] . "` WHERE `id` = " . $edit_userid . ";");
                         if (_rows($qry)) {
                             $where = _user_profile_of . 'autor_' . $edit_userid;
@@ -392,9 +394,9 @@ if(defined('_UserMenu')) {
                     } else {
                         $index = error(_error_edit_admin, 1);
                     }
-                break;
+                    break;
             }
-        } else if($edit_userid && data("level",$userid) == 4 && rootAdmin($edit_userid)) {
+        } else if ($edit_userid && data("level", $userid) == 4 && rootAdmin($edit_userid)) {
             $index = error(_error_edit_admin, 1);
         }
     }

@@ -4,25 +4,25 @@
  * http://www.dzcp.de
  * Menu: Sponsors
  */
-function sponsors() {
+function sponsors()
+{
     global $db;
 
-    $qry = db("SELECT `id`,`xlink`,`xend`,`link` FROM ".$db['sponsoren']." WHERE `box` = 1 ORDER BY pos");
+    $qry = db("SELECT `id`,`xlink`,`xend`,`link` FROM " . $db['sponsoren'] . " WHERE `box` = 1 ORDER BY pos");
     $sponsors = '';
-    if(_rows($qry)) {
-        while($get = _fetch($qry))
-        {
+    if (_rows($qry)) {
+        while ($get = _fetch($qry)) {
             $banner = show(_sponsors_bannerlink, array("id" => $get['id'],
-                                                     "title" => htmlspecialchars(str_replace('http://', '', re($get['link']))),
-                                                     "banner" => (empty($get['xlink']) ? "../banner/sponsors/box_".$get['id'].".".$get['xend'] : re($get['xlink']))));
+                "title" => htmlspecialchars(str_replace('http://', '', re($get['link']))),
+                "banner" => (empty($get['xlink']) ? "../banner/sponsors/box_" . $get['id'] . "." . $get['xend'] : re($get['xlink']))));
 
             $sponsors .= show("menu/sponsors", array("banner" => $banner));
         }
     }
 
-    if(empty($sponsors)) {
+    if (empty($sponsors)) {
         $sponsors = show(_no_entrys_yet, array("colspan" => "0"));
     }
 
-    return '<table class="navContent" cellspacing="0">'.$sponsors.'</table>';
+    return '<table class="navContent" cellspacing="0">' . $sponsors . '</table>';
 }

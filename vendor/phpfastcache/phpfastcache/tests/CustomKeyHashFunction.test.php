@@ -13,7 +13,8 @@ chdir(__DIR__);
 require_once __DIR__ . '/../src/autoload.php';
 $testHelper = new TestHelper('Custom key hash function');
 
-function myAwesomeHashFunction($string){
+function myAwesomeHashFunction($string)
+{
     return 'customHash.' . sha1($string);
 }
 
@@ -23,9 +24,9 @@ $item = $cacheInstance->getItem(str_shuffle(uniqid('pfc', true)));
 $item->set(true)->expiresAfter(300);
 $cacheInstance->save($item);
 
-if($item->getEncodedKey() === 'customHash.' . sha1($item->getKey())){
+if ($item->getEncodedKey() === 'customHash.' . sha1($item->getKey())) {
     $testHelper->printPassText('The custom key hash function returned expected hash string: ' . $item->getEncodedKey());
-}else{
+} else {
     $testHelper->printFailText('The custom key hash function returned unexpected hash string: ' . $item->getEncodedKey());
 }
 

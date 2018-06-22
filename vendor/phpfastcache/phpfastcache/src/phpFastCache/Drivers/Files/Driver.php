@@ -51,7 +51,7 @@ class Driver implements ExtendedCacheItemPoolInterface
             throw new phpFastCacheDriverCheckException(sprintf(self::DRIVER_CHECK_FAILURE, $this->getDriverName()));
         }
 
-        if (array_key_exists('compress_data', $config) && $config[ 'compress_data' ] === true) {
+        if (array_key_exists('compress_data', $config) && $config['compress_data'] === true) {
             $this->compress = true;
         }
     }
@@ -78,7 +78,7 @@ class Driver implements ExtendedCacheItemPoolInterface
             $file_path = $this->getFilePath($item->getKey());
             $data = $this->encode($this->driverPreWrap($item));
 
-            if($this->compress) {
+            if ($this->compress) {
                 $data = gzencode($data);
             }
 
@@ -86,7 +86,7 @@ class Driver implements ExtendedCacheItemPoolInterface
              * Force write
              */
             try {
-                return $this->writefile($file_path, $data, $this->config[ 'secureFileManipulation' ]);
+                return $this->writefile($file_path, $data, $this->config['secureFileManipulation']);
             } catch (\Exception $e) {
                 return false;
             }
@@ -110,7 +110,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         }
 
         $content = $this->readfile($file_path);
-        if($this->compress) {
+        if ($this->compress) {
             $content = gzdecode($content);
         }
 

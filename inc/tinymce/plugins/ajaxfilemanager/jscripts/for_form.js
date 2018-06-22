@@ -1,7 +1,7 @@
 function selectFile(url) {
     var fileName = '';
     if (url.length == 0) {
-        fileName =  ''; 
+        fileName = '';
     } else {
         var pos = url.lastIndexOf("/inc/tinymce_files");
         if (pos >= 0) {

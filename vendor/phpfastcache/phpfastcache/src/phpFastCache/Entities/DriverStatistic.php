@@ -123,10 +123,10 @@ class DriverStatistic
     public function getPublicDesc()
     {
         return [
-          'Info' => 'Cache Information',
-          'Size' => 'Cache Size',
-          'Data' => 'Cache items keys',
-          'RawData' => 'Cache raw data',
+            'Info' => 'Cache Information',
+            'Size' => 'Cache Size',
+            'Data' => 'Cache items keys',
+            'RawData' => 'Cache raw data',
         ];
     }
 }

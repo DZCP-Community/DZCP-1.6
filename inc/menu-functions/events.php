@@ -4,31 +4,32 @@
  * http://www.dzcp.de
  * Menu: Events
  */
-function events() {
+function events()
+{
     global $db;
 
-    $qry = db("SELECT `id`,`datum`,`title`,`event` FROM ".$db['events']."
-               WHERE `datum` > ".time()."
+    $qry = db("SELECT `id`,`datum`,`title`,`event` FROM " . $db['events'] . "
+               WHERE `datum` > " . time() . "
                ORDER BY datum
-               LIMIT ".config('m_events')."");
+               LIMIT " . config('m_events') . "");
 
     $eventbox = '';
-    if(_rows($qry)) {
-        while($get = _fetch($qry)) {
-            $info = 'onmouseover="DZCP.showInfo(\''.jsconvert(re($get['title'])).'\', \''._kalender_uhrzeit.';'._datum.'\', \''.date("H:i", $get['datum'])._uhr.';'.date("d.m.Y", $get['datum']).'\')" onmouseout="DZCP.hideInfo()"';
-            $events = show(_next_event_link, array("datum" => date("d.m.",$get['datum']),
-                                                   "timestamp" => $get['datum'],
-                                                   "event" => $get['title'],
-                                                   "info" => $info));
+    if (_rows($qry)) {
+        while ($get = _fetch($qry)) {
+            $info = 'onmouseover="DZCP.showInfo(\'' . jsconvert(re($get['title'])) . '\', \'' . _kalender_uhrzeit . ';' . _datum . '\', \'' . date("H:i", $get['datum']) . _uhr . ';' . date("d.m.Y", $get['datum']) . '\')" onmouseout="DZCP.hideInfo()"';
+            $events = show(_next_event_link, array("datum" => date("d.m.", $get['datum']),
+                "timestamp" => $get['datum'],
+                "event" => $get['title'],
+                "info" => $info));
 
             $eventbox .= show("menu/event", array("events" => $events,
-                                                  "info" => $info));
+                "info" => $info));
         }
     }
 
-    if(empty($eventbox)) {
+    if (empty($eventbox)) {
         $eventbox = show(_no_entrys_yet, array("colspan" => "0"));
     }
 
-    return '<table class="navContent" cellspacing="0">'.$eventbox.'</table>';
+    return '<table class="navContent" cellspacing="0">' . $eventbox . '</table>';
 }

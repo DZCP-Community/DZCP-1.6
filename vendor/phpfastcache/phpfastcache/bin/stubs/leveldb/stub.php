@@ -22,27 +22,28 @@ class LevelDB
      * @param array $write_options
      */
     public function __construct(
-      $name, array $options = [
-      'create_if_missing' => true, // if the specified database does not exist will create a new one
-      'error_if_exists' => false, // if the opened database exists will throw exception
-      'paranoid_checks' => false,
-      'block_cache_size' => 8 * (2 << 20),
-      'write_buffer_size' => 4 << 20,
-      'block_size' => 4096,
-      'max_open_files' => 1000,
-      'block_restart_interval' => 16,
-      'compression' => LEVELDB_SNAPPY_COMPRESSION,
-      'comparator' => null, // any callable parameter return 0, -1, 1
+        $name, array $options = [
+        'create_if_missing' => true, // if the specified database does not exist will create a new one
+        'error_if_exists' => false, // if the opened database exists will throw exception
+        'paranoid_checks' => false,
+        'block_cache_size' => 8 * (2 << 20),
+        'write_buffer_size' => 4 << 20,
+        'block_size' => 4096,
+        'max_open_files' => 1000,
+        'block_restart_interval' => 16,
+        'compression' => LEVELDB_SNAPPY_COMPRESSION,
+        'comparator' => null, // any callable parameter return 0, -1, 1
     ], array $read_options = [
-      'verify_check_sum' => false,
+        'verify_check_sum' => false,
         //may be set to true to force checksum verification of all data that is read from the file system on behalf of a particular read. By default, no such verification is done.
-      'fill_cache' => true,
+        'fill_cache' => true,
         //When performing a bulk read, the application may set this to false to disable the caching so that the data processed by the bulk read does not end up displacing most of the cached contents.
     ], array $write_options = [
         //Only one element named sync in the write option array. By default, each write to leveldb is asynchronous.
-      'sync' => false,
+        'sync' => false,
     ]
-    ) {
+    )
+    {
     }
 
     /**

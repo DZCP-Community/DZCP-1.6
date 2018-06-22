@@ -31,5 +31,7 @@ final class Logging implements RetryPolicy
      * @param Cassandra\RetryPolicy $childPolicy Any retry policy other than
      *                                           Cassandra\Logging
      */
-    public function __construct(RetryPolicy $childPolicy) {}
+    public function __construct(RetryPolicy $childPolicy)
+    {
+    }
 }

@@ -22,7 +22,15 @@ use Cassandra\Type;
 
 final class Scalar extends Type
 {
-    public function name() {}
-    public function __toString() {}
-    public function create($value = null) {}
+    public function name()
+    {
+    }
+
+    public function __toString()
+    {
+    }
+
+    public function create($value = null)
+    {
+    }
 }

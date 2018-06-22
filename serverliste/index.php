@@ -8,13 +8,13 @@
 include("../inc/buffer.php");
 
 ## INCLUDES ##
-include(basePath."/inc/debugger.php");
-include(basePath."/inc/config.php");
-include(basePath."/inc/bbcode.php");
+include(basePath . "/inc/debugger.php");
+include(basePath . "/inc/config.php");
+include(basePath . "/inc/bbcode.php");
 
 ## SETTINGS ##
 $where = _site_serverlist;
-$title = $pagetitle." - ".$where."";
+$title = $pagetitle . " - " . $where . "";
 $dir = "serverliste";
 
 ## SECTIONS ##
@@ -22,13 +22,14 @@ switch ($action):
     default:
         $serverlist = '';
         $qry = db("SELECT ip,port,clanname,clanurl,pwd,checked,slots
-                   FROM ".$db['serverliste']."
+                   FROM " . $db['serverliste'] . "
                    WHERE `checked` = 1 "
-            .orderby_sql(array("clanname","slots"), 'ORDER BY id DESC'));
-        if(_rows($qry)) {
+            . orderby_sql(array("clanname", "slots"), 'ORDER BY id DESC'));
+        if (_rows($qry)) {
             while ($get = _fetch($qry)) {
-                $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
-                $serverlist .= show($dir."/serverliste_show", array("clanurl" => re($get['clanurl']),
+                $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";
+                $color++;
+                $serverlist .= show($dir . "/serverliste_show", array("clanurl" => re($get['clanurl']),
                     "slots" => $get['slots'],
                     "class" => $class,
                     "serverip" => $get['ip'],
@@ -36,11 +37,10 @@ switch ($action):
                     "clanname" => re($get['clanname']),
                     "serverpwd" => re($get['pwd'])));
             }
-        }
-        else
-            $serverlist = show(_no_entrys_yet, array("colspan" => "4").$_GET['show']);
+        } else
+            $serverlist = show(_no_entrys_yet, array("colspan" => "4") . $_GET['show']);
 
-        $index = show($dir."/serverliste", array("serverlist" => $serverlist,
+        $index = show($dir . "/serverliste", array("serverlist" => $serverlist,
             "slist_head" => _slist_head,
             "clan" => _profil_clan,
             "serverip" => _slist_serverip,
@@ -52,7 +52,7 @@ switch ($action):
             "hlswip" => _slist_addip));
         break;
     case 'add':
-        if(HasDSGVO()) {
+        if (HasDSGVO()) {
             $index = show($dir . "/add", array("add_head" => _slist_add,
                 "clan" => _profil_clan,
                 "hp" => _profil_hp,
@@ -67,7 +67,7 @@ switch ($action):
         }
         break;
     case 'addserver':
-        if(HasDSGVO()) {
+        if (HasDSGVO()) {
             if ($_POST['secure'] != $_SESSION['sec_slist'] || empty($_SESSION['sec_slist']))
                 $index = error(_error_invalid_regcode, 1);
             elseif (empty($_POST['clanname']))
@@ -91,7 +91,7 @@ switch ($action):
                 db("INSERT INTO " . $db['serverliste'] . "
                           SET `datum`     = '" . time() . "',
                               `clanname`  = '" . up($_POST['clanname']) . "',
-                              `clanurl`   = '" . up(links(re($_POST['clanurl'],true))) . "',
+                              `clanurl`   = '" . up(links(re($_POST['clanurl'], true))) . "',
                               `ip`        = '" . up($_POST['ip']) . "',
                               `port`      = '" . ((int)$_POST['port']) . "',
                               `pwd`       = '" . up($_POST['pwd']) . "',

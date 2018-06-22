@@ -88,8 +88,8 @@ class Directory
 
         $files = new RecursiveIteratorIterator
         (
-          new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),
-          RecursiveIteratorIterator::CHILD_FIRST
+            new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
         );
 
         foreach ($files as $fileinfo) {
@@ -138,7 +138,7 @@ class Directory
          * Allows to dereference char
          */
         $__FILE__ = preg_replace('~^(([a-z0-9\-]+)://)~', '', __FILE__);// remove file protocols such as "phar://" etc.
-        $prefix = $__FILE__[ 0 ] === DIRECTORY_SEPARATOR ? DIRECTORY_SEPARATOR : '';
+        $prefix = $__FILE__[0] === DIRECTORY_SEPARATOR ? DIRECTORY_SEPARATOR : '';
         return $prefix . implode(DIRECTORY_SEPARATOR, $absolutes);
     }
 }

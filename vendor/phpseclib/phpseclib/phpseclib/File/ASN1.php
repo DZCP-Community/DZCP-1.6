@@ -43,10 +43,10 @@ class ASN1
      * @access private
      * @link http://www.itu.int/ITU-T/studygroups/com17/languages/X.690-0207.pdf#page=12
      */
-    const CLASS_UNIVERSAL        = 0;
-    const CLASS_APPLICATION      = 1;
+    const CLASS_UNIVERSAL = 0;
+    const CLASS_APPLICATION = 1;
     const CLASS_CONTEXT_SPECIFIC = 2;
-    const CLASS_PRIVATE          = 3;
+    const CLASS_PRIVATE = 3;
     /**#@-*/
 
     /**#@+
@@ -54,42 +54,42 @@ class ASN1
      *
      * @access private
      * @link http://www.obj-sys.com/asn1tutorial/node124.html
-    */
-    const TYPE_BOOLEAN           = 1;
-    const TYPE_INTEGER           = 2;
-    const TYPE_BIT_STRING        = 3;
-    const TYPE_OCTET_STRING      = 4;
-    const TYPE_NULL              = 5;
+     */
+    const TYPE_BOOLEAN = 1;
+    const TYPE_INTEGER = 2;
+    const TYPE_BIT_STRING = 3;
+    const TYPE_OCTET_STRING = 4;
+    const TYPE_NULL = 5;
     const TYPE_OBJECT_IDENTIFIER = 6;
     //const TYPE_OBJECT_DESCRIPTOR = 7;
     //const TYPE_INSTANCE_OF       = 8; // EXTERNAL
-    const TYPE_REAL              = 9;
-    const TYPE_ENUMERATED        = 10;
+    const TYPE_REAL = 9;
+    const TYPE_ENUMERATED = 10;
     //const TYPE_EMBEDDED          = 11;
-    const TYPE_UTF8_STRING       = 12;
+    const TYPE_UTF8_STRING = 12;
     //const TYPE_RELATIVE_OID      = 13;
-    const TYPE_SEQUENCE          = 16; // SEQUENCE OF
-    const TYPE_SET               = 17; // SET OF
+    const TYPE_SEQUENCE = 16; // SEQUENCE OF
+    const TYPE_SET = 17; // SET OF
     /**#@-*/
     /**#@+
      * More Tag Classes
      *
      * @access private
      * @link http://www.obj-sys.com/asn1tutorial/node10.html
-    */
-    const TYPE_NUMERIC_STRING   = 18;
+     */
+    const TYPE_NUMERIC_STRING = 18;
     const TYPE_PRINTABLE_STRING = 19;
-    const TYPE_TELETEX_STRING   = 20; // T61String
-    const TYPE_VIDEOTEX_STRING  = 21;
-    const TYPE_IA5_STRING       = 22;
-    const TYPE_UTC_TIME         = 23;
+    const TYPE_TELETEX_STRING = 20; // T61String
+    const TYPE_VIDEOTEX_STRING = 21;
+    const TYPE_IA5_STRING = 22;
+    const TYPE_UTC_TIME = 23;
     const TYPE_GENERALIZED_TIME = 24;
-    const TYPE_GRAPHIC_STRING   = 25;
-    const TYPE_VISIBLE_STRING   = 26; // ISO646String
-    const TYPE_GENERAL_STRING   = 27;
+    const TYPE_GRAPHIC_STRING = 25;
+    const TYPE_VISIBLE_STRING = 26; // ISO646String
+    const TYPE_GENERAL_STRING = 27;
     const TYPE_UNIVERSAL_STRING = 28;
     //const TYPE_CHARACTER_STRING = 29;
-    const TYPE_BMP_STRING       = 30;
+    const TYPE_BMP_STRING = 30;
     /**#@-*/
 
     /**#@+
@@ -98,9 +98,9 @@ class ASN1
      * These tags are kinda place holders for other tags.
      *
      * @access private
-    */
+     */
     const TYPE_CHOICE = -1;
-    const TYPE_ANY    = -2;
+    const TYPE_ANY = -2;
     /**#@-*/
 
     /**
@@ -154,28 +154,28 @@ class ASN1
      * @access public
      */
     var $ANYmap = array(
-        self::TYPE_BOOLEAN              => true,
-        self::TYPE_INTEGER              => true,
-        self::TYPE_BIT_STRING           => 'bitString',
-        self::TYPE_OCTET_STRING         => 'octetString',
-        self::TYPE_NULL                 => 'null',
-        self::TYPE_OBJECT_IDENTIFIER    => 'objectIdentifier',
-        self::TYPE_REAL                 => true,
-        self::TYPE_ENUMERATED           => 'enumerated',
-        self::TYPE_UTF8_STRING          => 'utf8String',
-        self::TYPE_NUMERIC_STRING       => 'numericString',
-        self::TYPE_PRINTABLE_STRING     => 'printableString',
-        self::TYPE_TELETEX_STRING       => 'teletexString',
-        self::TYPE_VIDEOTEX_STRING      => 'videotexString',
-        self::TYPE_IA5_STRING           => 'ia5String',
-        self::TYPE_UTC_TIME             => 'utcTime',
-        self::TYPE_GENERALIZED_TIME     => 'generalTime',
-        self::TYPE_GRAPHIC_STRING       => 'graphicString',
-        self::TYPE_VISIBLE_STRING       => 'visibleString',
-        self::TYPE_GENERAL_STRING       => 'generalString',
-        self::TYPE_UNIVERSAL_STRING     => 'universalString',
+        self::TYPE_BOOLEAN => true,
+        self::TYPE_INTEGER => true,
+        self::TYPE_BIT_STRING => 'bitString',
+        self::TYPE_OCTET_STRING => 'octetString',
+        self::TYPE_NULL => 'null',
+        self::TYPE_OBJECT_IDENTIFIER => 'objectIdentifier',
+        self::TYPE_REAL => true,
+        self::TYPE_ENUMERATED => 'enumerated',
+        self::TYPE_UTF8_STRING => 'utf8String',
+        self::TYPE_NUMERIC_STRING => 'numericString',
+        self::TYPE_PRINTABLE_STRING => 'printableString',
+        self::TYPE_TELETEX_STRING => 'teletexString',
+        self::TYPE_VIDEOTEX_STRING => 'videotexString',
+        self::TYPE_IA5_STRING => 'ia5String',
+        self::TYPE_UTC_TIME => 'utcTime',
+        self::TYPE_GENERALIZED_TIME => 'generalTime',
+        self::TYPE_GRAPHIC_STRING => 'graphicString',
+        self::TYPE_VISIBLE_STRING => 'visibleString',
+        self::TYPE_GENERAL_STRING => 'generalString',
+        self::TYPE_UNIVERSAL_STRING => 'universalString',
         //self::TYPE_CHARACTER_STRING     => 'characterString',
-        self::TYPE_BMP_STRING           => 'bmpString'
+        self::TYPE_BMP_STRING => 'bmpString'
     );
 
     /**
@@ -188,13 +188,13 @@ class ASN1
      * @access public
      */
     var $stringTypeSize = array(
-        self::TYPE_UTF8_STRING      => 0,
-        self::TYPE_BMP_STRING       => 2,
+        self::TYPE_UTF8_STRING => 0,
+        self::TYPE_BMP_STRING => 2,
         self::TYPE_UNIVERSAL_STRING => 4,
         self::TYPE_PRINTABLE_STRING => 1,
-        self::TYPE_TELETEX_STRING   => 1,
-        self::TYPE_IA5_STRING       => 1,
-        self::TYPE_VISIBLE_STRING   => 1,
+        self::TYPE_TELETEX_STRING => 1,
+        self::TYPE_IA5_STRING => 1,
+        self::TYPE_VISIBLE_STRING => 1,
     );
 
     /**
@@ -261,15 +261,15 @@ class ASN1
         } elseif ($length & 0x80) { // definite length, long form
             // technically, the long form of the length can be represented by up to 126 octets (bytes), but we'll only
             // support it up to four.
-            $length&= 0x7F;
+            $length &= 0x7F;
             $temp = substr($encoded, $encoded_pos, $length);
             $encoded_pos += $length;
             // tags of indefinte length don't really have a header length; this length includes the tag
-            $current+= array('headerlength' => $length + 2);
-            $start+= $length;
+            $current += array('headerlength' => $length + 2);
+            $start += $length;
             extract(unpack('Nlength', substr(str_pad($temp, 4, chr(0), STR_PAD_LEFT), -4)));
         } else {
-            $current+= array('headerlength' => 2);
+            $current += array('headerlength' => 2);
         }
 
         if ($length > (strlen($encoded) - $encoded_pos)) {
@@ -297,10 +297,10 @@ class ASN1
             case self::CLASS_CONTEXT_SPECIFIC:
                 if (!$constructed) {
                     return array(
-                        'type'     => $class,
+                        'type' => $class,
                         'constant' => $tag,
-                        'content'  => $content,
-                        'length'   => $length + $start - $current['start']
+                        'content' => $content,
+                        'length' => $length + $start - $current['start']
                     );
                 }
 
@@ -311,30 +311,30 @@ class ASN1
                     $length = $temp['length'];
                     // end-of-content octets - see paragraph 8.1.5
                     if (substr($content, $content_pos + $length, 2) == "\0\0") {
-                        $length+= 2;
-                        $start+= $length;
+                        $length += 2;
+                        $start += $length;
                         $newcontent[] = $temp;
                         break;
                     }
-                    $start+= $length;
-                    $remainingLength-= $length;
+                    $start += $length;
+                    $remainingLength -= $length;
                     $newcontent[] = $temp;
                     $content_pos += $length;
                 }
 
                 return array(
-                    'type'     => $class,
-                    'constant' => $tag,
-                    // the array encapsulation is for BC with the old format
-                    'content'  => $newcontent,
-                    // the only time when $content['headerlength'] isn't defined is when the length is indefinite.
-                    // the absence of $content['headerlength'] is how we know if something is indefinite or not.
-                    // technically, it could be defined to be 2 and then another indicator could be used but whatever.
-                    'length'   => $start - $current['start']
-                ) + $current;
+                        'type' => $class,
+                        'constant' => $tag,
+                        // the array encapsulation is for BC with the old format
+                        'content' => $newcontent,
+                        // the only time when $content['headerlength'] isn't defined is when the length is indefinite.
+                        // the absence of $content['headerlength'] is how we know if something is indefinite or not.
+                        // technically, it could be defined to be 2 and then another indicator could be used but whatever.
+                        'length' => $start - $current['start']
+                    ) + $current;
         }
 
-        $current+= array('type' => $tag);
+        $current += array('type' => $tag);
 
         // decode UNIVERSAL tags
         switch ($tag) {
@@ -343,7 +343,7 @@ class ASN1
                 //if (strlen($content) != 1) {
                 //    return false;
                 //}
-                $current['content'] = (bool) ord($content[$content_pos]);
+                $current['content'] = (bool)ord($content[$content_pos]);
                 break;
             case self::TYPE_INTEGER:
             case self::TYPE_ENUMERATED:
@@ -359,14 +359,14 @@ class ASN1
                     $current['content'] = substr($content, $content_pos);
                 } else {
                     $temp = $this->_decode_ber($content, $start, $content_pos);
-                    $length-= (strlen($content) - $content_pos);
+                    $length -= (strlen($content) - $content_pos);
                     $last = count($temp) - 1;
                     for ($i = 0; $i < $last; $i++) {
                         // all subtags should be bit strings
                         //if ($temp[$i]['type'] != self::TYPE_BIT_STRING) {
                         //    return false;
                         //}
-                        $current['content'].= substr($temp[$i]['content'], 1);
+                        $current['content'] .= substr($temp[$i]['content'], 1);
                     }
                     // all subtags should be bit strings
                     //if ($temp[$last]['type'] != self::TYPE_BIT_STRING) {
@@ -388,11 +388,11 @@ class ASN1
                         //if ($temp['type'] != self::TYPE_OCTET_STRING) {
                         //    return false;
                         //}
-                        $current['content'].= $temp['content'];
-                        $length+= $temp['length'];
+                        $current['content'] .= $temp['content'];
+                        $length += $temp['length'];
                     }
                     if (substr($content, $content_pos, 2) == "\0\0") {
-                        $length+= 2; // +2 for the EOC
+                        $length += 2; // +2 for the EOC
                     }
                 }
                 break;
@@ -417,7 +417,7 @@ class ASN1
                     $temp = $this->_decode_ber($content, $start + $offset, $content_pos);
                     $content_pos += $temp['length'];
                     $current['content'][] = $temp;
-                    $offset+= $temp['length'];
+                    $offset += $temp['length'];
                 }
                 break;
             case self::TYPE_OBJECT_IDENTIFIER:
@@ -431,7 +431,7 @@ class ASN1
                     $valuen <<= 7;
                     $valuen |= $temp & 0x7F;
                     if (~$temp & 0x80) {
-                        $current['content'].= ".$valuen";
+                        $current['content'] .= ".$valuen";
                         $valuen = 0;
                     }
                 }
@@ -476,7 +476,7 @@ class ASN1
             default:
         }
 
-        $start+= $length;
+        $start += $length;
 
         // ie. length is the length of the full TLV encoding - it's not just the length of the value
         return $current + array('length' => $start - $current['start']);
@@ -623,7 +623,7 @@ class ASN1
                 }
 
                 // Fail mapping if all input items have not been consumed.
-                return $i < $n ? null: $map;
+                return $i < $n ? null : $map;
 
             // the main diff between sets and sequences is the encapsulation of the foreach in another for loop
             case self::TYPE_SET:
@@ -726,7 +726,7 @@ class ASN1
                     for ($i = strlen($decoded['content']) - 1; $i > 0; $i--) {
                         $current = ord($decoded['content'][$i]);
                         for ($j = $offset; $j < 8; $j++) {
-                            $bits[] = (bool) ($current & (1 << $j));
+                            $bits[] = (bool)($current & (1 << $j));
                         }
                         $offset = 0;
                     }
@@ -764,7 +764,7 @@ class ASN1
                     $temp = new BigInteger($decoded['content'], -256);
                 }
                 if (isset($mapping['mapping'])) {
-                    $temp = (int) $temp->toString();
+                    $temp = (int)$temp->toString();
                     return isset($mapping['mapping'][$temp]) ?
                         $mapping['mapping'][$temp] :
                         false;
@@ -825,7 +825,7 @@ class ASN1
         switch ($tag) {
             case self::TYPE_SET:    // Children order is not important, thus process in sequence.
             case self::TYPE_SEQUENCE:
-                $tag|= 0x20; // set the constructed bit
+                $tag |= 0x20; // set the constructed bit
 
                 // ignore the min and max
                 if (isset($mapping['min']) && isset($mapping['max'])) {
@@ -837,7 +837,7 @@ class ASN1
                         if ($temp === false) {
                             return false;
                         }
-                        $value[]= $temp;
+                        $value[] = $temp;
                     }
                     /* "The encodings of the component values of a set-of value shall appear in ascending order, the encodings being compared
                         as octet strings with the shorter components being padded at their trailing end with 0-octets.
@@ -890,7 +890,7 @@ class ASN1
                             $temp = $subtag . substr($temp, 1);
                         }
                     }
-                    $value.= $temp;
+                    $value .= $temp;
                 }
                 break;
             case self::TYPE_CHOICE:
@@ -957,7 +957,7 @@ class ASN1
             case self::TYPE_UTC_TIME:
             case self::TYPE_GENERALIZED_TIME:
                 $format = $mapping['type'] == self::TYPE_UTC_TIME ? 'y' : 'Y';
-                $format.= 'mdHis';
+                $format .= 'mdHis';
                 $date = new DateTime($source, new DateTimeZone('GMT'));
                 $value = $date->format($format) . 'Z';
                 break;
@@ -988,7 +988,7 @@ class ASN1
                     $bits = implode('', array_pad($bits, $size + $offset + 1, 0));
                     $bytes = explode(' ', rtrim(chunk_split($bits, 8, ' ')));
                     foreach ($bytes as $byte) {
-                        $value.= chr(bindec($byte));
+                        $value .= chr(bindec($byte));
                     }
 
                     break;
@@ -1020,7 +1020,7 @@ class ASN1
                         }
                         $temp[strlen($temp) - 1] = $temp[strlen($temp) - 1] & chr(0x7F);
                     }
-                    $value.= $temp;
+                    $value .= $temp;
                 }
                 break;
             case self::TYPE_ANY:
@@ -1152,7 +1152,7 @@ class ASN1
             $prefix = substr($content, 0, 2) >= 50 ? '19' : '20';
             $content = $prefix . $content;
         } elseif (strpos($content, '.') !== false) {
-            $format.= '.u';
+            $format .= '.u';
         }
 
         if ($content[strlen($content) - 1] == 'Z') {
@@ -1160,7 +1160,7 @@ class ASN1
         }
 
         if (strpos($content, '-') !== false || strpos($content, '+') !== false) {
-            $format.= 'O';
+            $format .= 'O';
         }
 
         // error supression isn't necessary as of PHP 7.0:

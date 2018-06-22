@@ -23,4 +23,6 @@ namespace Cassandra\Exception;
  * invalid because of some configuration issue.
  * For example when attempting to drop a non-existent keyspace.
  */
-class ConfigurationException extends ValidationException {}
+class ConfigurationException extends ValidationException
+{
+}

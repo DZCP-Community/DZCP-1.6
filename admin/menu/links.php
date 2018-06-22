@@ -4,28 +4,27 @@
  * http://www.dzcp.de
  */
 
-if(_adminMenu != 'true') exit;
+if (_adminMenu != 'true') exit;
 
-$where = $where.': '._config_links;
-if($do == "new")
-{
+$where = $where . ': ' . _config_links;
+if ($do == "new") {
     $linktyp = '
 <tr>
-  <td class="contentMainTop" width="25%"><span class="fontBold">'._link_type.':</span></td>
+  <td class="contentMainTop" width="25%"><span class="fontBold">' . _link_type . ':</span></td>
   <td class="contentMainFirst" align="center">
     <table class="hperc" cellspacing="2">
       <tr>
         <td style="width:20px"><input type="radio" name="type" class="checkbox" value="links" checked=\"checked\" /></td>
-        <td>'._link.'</td>
+        <td>' . _link . '</td>
       </tr>
       <tr>
         <td><input type="radio" name="type" class="checkbox" value="sponsoren" /></td>
-        <td>'._sponsor.'</td>
+        <td>' . _sponsor . '</td>
       </tr>
     </table>
   </td>
 </tr>';
-    $show = show($dir."/form_links", array("head" => _links_admin_head,
+    $show = show($dir . "/form_links", array("head" => _links_admin_head,
         "link" => _links_link,
         "beschreibung" => _links_beschreibung,
         "art" => _links_art,
@@ -41,35 +40,34 @@ if($do == "new")
         "ltext" => "",
         "what" => _button_value_add,
         "do" => "add"));
-} elseif($do == "add") {
-    if(empty($_POST['link']) || empty($_POST['beschreibung']) || (isset($_POST['banner']) && empty($_POST['text'])))
-    {
-        if(empty($_POST['link']))             $show = error(_links_empty_link, 1);
-        elseif(empty($_POST['beschreibung'])) $show = error(_links_empty_beschreibung, 1);
-        elseif(empty($_POST['text']))         $show = error(_links_empty_text, 1);
+} elseif ($do == "add") {
+    if (empty($_POST['link']) || empty($_POST['beschreibung']) || (isset($_POST['banner']) && empty($_POST['text']))) {
+        if (empty($_POST['link'])) $show = error(_links_empty_link, 1);
+        elseif (empty($_POST['beschreibung'])) $show = error(_links_empty_beschreibung, 1);
+        elseif (empty($_POST['text'])) $show = error(_links_empty_text, 1);
     } else {
-        $qry = db("INSERT INTO ".$db['links']."
-                     SET `url`          = '".up(links(re($_POST['link'],true)))."',
-                         `text`         = '".up($_POST['text'])."',
-                         `banner`       = '".up($_POST['banner'])."',
-                         `beschreibung` = '".up($_POST['beschreibung'])."'");
+        $qry = db("INSERT INTO " . $db['links'] . "
+                     SET `url`          = '" . up(links(re($_POST['link'], true))) . "',
+                         `text`         = '" . up($_POST['text']) . "',
+                         `banner`       = '" . up($_POST['banner']) . "',
+                         `beschreibung` = '" . up($_POST['beschreibung']) . "'");
 
         $show = info(_link_added, "?admin=links");
     }
-} elseif($do == "edit") {
-    $get = db("SELECT * FROM ".$db[$_GET['type']]." WHERE id = '".(int)($_GET['id'])."'",false,true);
+} elseif ($do == "edit") {
+    $get = db("SELECT * FROM " . $db[$_GET['type']] . " WHERE id = '" . (int)($_GET['id']) . "'", false, true);
 
-    if($get['banner'] == 1){
+    if ($get['banner'] == 1) {
         $bchecked = 'checked="checked"';
         $bnone = "";
-    }else{
+    } else {
         $tchecked = 'checked="checked"';
         $bnone = "display:none";
     }
 
-    $linktyp = '<input type="hidden" name="type" value="'.$_GET['type'].'" />';
+    $linktyp = '<input type="hidden" name="type" value="' . $_GET['type'] . '" />';
 
-    $show = show($dir."/form_links", array("head" => _links_admin_head_edit,
+    $show = show($dir . "/form_links", array("head" => _links_admin_head_edit,
         "link" => _links_link,
         "linktyp" => $linktyp,
         "beschreibung" => _links_beschreibung,
@@ -84,32 +82,31 @@ if($do == "new")
         "btext" => _links_text,
         "ltext" => re($get['text']),
         "what" => _button_value_edit,
-        "do" => "editlink&amp;id=".$_GET['id'].""));
-} elseif($do == "editlink") {
-    if(empty($_POST['link']) || empty($_POST['beschreibung']) || (isset($_POST['banner']) && empty($_POST['text'])))
-    {
-        if(empty($_POST['link']))
+        "do" => "editlink&amp;id=" . $_GET['id'] . ""));
+} elseif ($do == "editlink") {
+    if (empty($_POST['link']) || empty($_POST['beschreibung']) || (isset($_POST['banner']) && empty($_POST['text']))) {
+        if (empty($_POST['link']))
             $show = error(_links_empty_link, 1);
-        elseif(empty($_POST['beschreibung']))
+        elseif (empty($_POST['beschreibung']))
             $show = error(_links_empty_beschreibung, 1);
-        elseif(empty($_POST['text']))
+        elseif (empty($_POST['text']))
             $show = error(_links_empty_text, 1);
     } else {
-        $qry = db("UPDATE `".$db['links']."`
-                       SET `url`          = '".up(links(re($_POST['link'],true)))."',
-                           `text`         = '".up($_POST['text'])."',
-                           `banner`       = '".up($_POST['banner'])."',
-                           `beschreibung` = '".up($_POST['beschreibung'])."'
-                       WHERE `id` = ".(int)($_GET['id']).";");
+        $qry = db("UPDATE `" . $db['links'] . "`
+                       SET `url`          = '" . up(links(re($_POST['link'], true))) . "',
+                           `text`         = '" . up($_POST['text']) . "',
+                           `banner`       = '" . up($_POST['banner']) . "',
+                           `beschreibung` = '" . up($_POST['beschreibung']) . "'
+                       WHERE `id` = " . (int)($_GET['id']) . ";");
 
         $show = info(_link_edited, "?admin=links");
     }
-} elseif($do == "delete") {
-    db("DELETE FROM `".$db['links']."` WHERE `id` = ".(int)($_GET['id']).";");
+} elseif ($do == "delete") {
+    db("DELETE FROM `" . $db['links'] . "` WHERE `id` = " . (int)($_GET['id']) . ";");
     $show = info(_link_deleted, "?admin=links");
 } else {
-    $qry = db("SELECT * FROM `".$db['links']."` ORDER BY `banner` DESC;");
-    while($get = _fetch($qry)) {
+    $qry = db("SELECT * FROM `" . $db['links'] . "` ORDER BY `banner` DESC;");
+    while ($get = _fetch($qry)) {
         $edit = show("page/button_edit_single", array("id" => $get['id'],
             "action" => "admin=links&amp;do=edit&amp;type=links",
             "title" => _button_title_edit));
@@ -118,15 +115,16 @@ if($do == "new")
             "title" => _button_title_del,
             "del" => convSpace(_confirm_del_link)));
 
-        $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
+        $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";
+        $color++;
 
-        $show .= show($dir."/links_show", array(
-            "link" => cut(re($get['url']),40,true,false),
+        $show .= show($dir . "/links_show", array(
+            "link" => cut(re($get['url']), 40, true, false),
             "class" => $class,
             "type" => "links",
             "edit" => $edit,
             "delete" => $delete));
     }
 
-    $show = show($dir."/links", array("head1" => _links_head, "head2" => _sponsor_head, "titel" => _link, "show1" => $show, "add" => _links_admin_head));
+    $show = show($dir . "/links", array("head1" => _links_head, "head2" => _sponsor_head, "titel" => _link, "show1" => $show, "add" => _links_admin_head));
 }

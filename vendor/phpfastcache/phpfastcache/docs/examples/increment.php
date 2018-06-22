@@ -22,7 +22,7 @@ use phpFastCache\Core\phpFastCache;
 
 // Setup File Path on your config files
 CacheManager::setDefaultConfig([
-  "path" => '/var/www/phpfastcache.dev.geolim4.com/geolim4/tmp', // or in windows "C:/tmp/"
+    "path" => '/var/www/phpfastcache.dev.geolim4.com/geolim4/tmp', // or in windows "C:/tmp/"
 ]);
 
 // In your class, function, you can call the Cache

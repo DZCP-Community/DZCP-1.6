@@ -4,9 +4,9 @@
  * http://www.dzcp.de
  */
 
-if(defined('_UserMenu')) {
+if (defined('_UserMenu')) {
     $where = _site_user_logout;
-    if(HasDSGVO()) {
+    if (HasDSGVO()) {
         if (array_key_exists('identy_id', $_SESSION)) {
             if (!empty($_SESSION['identy_id'])) {
                 db("UPDATE " . $db['users'] . " SET `online` = 0, `sessid` = '' WHERE `id` = " . $userid . ";"); //Logout

@@ -35,86 +35,93 @@ define('_link_update_done_1', '<span class="disabled">6. Done</span>');
 ################
 ## Funktionen ##
 ################
-function check_file_dir($file, $is_dir=false) {
-    if($is_dir == 1)
+function check_file_dir($file, $is_dir = false)
+{
+    if ($is_dir == 1)
         $what = "Dir:&nbsp;";
     else
         $what = "File:";
 
     $_file = preg_replace("#\.\.#Uis", "", $file);
-    if(is_writable($file))
-        return _true."<span style='color:green'><b>".$what."</b>&nbsp;&nbsp;&nbsp; ".$_file."</span><br />";
+    if (is_writable($file))
+        return _true . "<span style='color:green'><b>" . $what . "</b>&nbsp;&nbsp;&nbsp; " . $_file . "</span><br />";
     else
-        return _false."<span style='color:red'><b>".$what."</b>&nbsp;&nbsp;&nbsp; ".$_file."</span><br />";
+        return _false . "<span style='color:red'><b>" . $what . "</b>&nbsp;&nbsp;&nbsp; " . $_file . "</span><br />";
 }
 
-function set_ftp_chmod($file,$pfad,$host,$user,$pwd) {
+function set_ftp_chmod($file, $pfad, $host, $user, $pwd)
+{
     $conn = @ftp_connect($host);
     @ftp_login($conn, $user, $pwd);
-    ftp_site($conn, 'CHMOD 0777 '.$pfad.'/'.$file);
+    ftp_site($conn, 'CHMOD 0777 ' . $pfad . '/' . $file);
 }
 
-function _m ($prefix, $host, $user, $pwd, $db) {
-    $fp = @fopen("../inc/mysql.php","w");
-    @fwrite($fp,"<?php
-    \$sql_prefix = '".$prefix."';
-    \$sql_host = '".$host."';
-    \$sql_user =  '".addslashes($user)."';
-    \$sql_pass = '".addslashes($pwd)."';
-    \$sql_db = '".$db."';");
+function _m($prefix, $host, $user, $pwd, $db)
+{
+    $fp = @fopen("../inc/mysql.php", "w");
+    @fwrite($fp, "<?php
+    \$sql_prefix = '" . $prefix . "';
+    \$sql_host = '" . $host . "';
+    \$sql_user =  '" . addslashes($user) . "';
+    \$sql_pass = '" . addslashes($pwd) . "';
+    \$sql_db = '" . $db . "';");
     @fclose($fp);
 }
 
-function get_files($dir) {
+function get_files($dir)
+{
     $dp = @opendir($dir);
     $files = array();
-    while($file = @readdir($dp))
-      {
-        if($file != '.' && $file != '..')
-              array_push($files, $file);
+    while ($file = @readdir($dp)) {
+        if ($file != '.' && $file != '..')
+            array_push($files, $file);
     }
-      @closedir($dp);
-      sort($files);
-      return($files);
+    @closedir($dp);
+    sort($files);
+    return ($files);
 }
 
-function makePrev() {
-    $arr = array(0,1,2,3,4,5,6,7,8,9);
-    return $arr[rand(0,9)].$arr[rand(0,9)].$arr[rand(0,9)];
+function makePrev()
+{
+    $arr = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+    return $arr[rand(0, 9)] . $arr[rand(0, 9)] . $arr[rand(0, 9)];
 }
 
-function up($txt,$bbcode=0) {
-    $txt = str_replace("& ","&amp; ",$txt);
-    $txt = str_replace("\"","&#34;",$txt);
+function up($txt, $bbcode = 0)
+{
+    $txt = str_replace("& ", "&amp; ", $txt);
+    $txt = str_replace("\"", "&#34;", $txt);
     $txt = trim($txt);
-    if(empty($bbcode)) $txt = nl2br($txt);
+    if (empty($bbcode)) $txt = nl2br($txt);
     return spChars($txt);
 }
 
-function spChars($txt) {
-    $txt = str_replace("Ä","&Auml;",$txt);
-    $txt = str_replace("ä","&auml;",$txt);
-    $txt = str_replace("Ü","&Uuml;",$txt);
-    $txt = str_replace("ü","&uuml;",$txt);
-    $txt = str_replace("Ö","&Ouml;",$txt);
-    $txt = str_replace("ö","&ouml;",$txt);
-    $txt = str_replace("ß","&szlig;",$txt);
-    return str_replace("?","&euro;",$txt);
+function spChars($txt)
+{
+    $txt = str_replace("Ä", "&Auml;", $txt);
+    $txt = str_replace("ä", "&auml;", $txt);
+    $txt = str_replace("Ü", "&Uuml;", $txt);
+    $txt = str_replace("ü", "&uuml;", $txt);
+    $txt = str_replace("Ö", "&Ouml;", $txt);
+    $txt = str_replace("ö", "&ouml;", $txt);
+    $txt = str_replace("ß", "&szlig;", $txt);
+    return str_replace("?", "&euro;", $txt);
 }
 
-function visitorIp() {
-    $TheIp=$_SERVER['REMOTE_ADDR'];
-    if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+function visitorIp()
+{
+    $TheIp = $_SERVER['REMOTE_ADDR'];
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR']))
         $TheIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
-    if(isset($_SERVER['HTTP_CLIENT_IP']) && !empty($_SERVER['HTTP_CLIENT_IP']))
+    if (isset($_SERVER['HTTP_CLIENT_IP']) && !empty($_SERVER['HTTP_CLIENT_IP']))
         $TheIp = $_SERVER['HTTP_CLIENT_IP'];
 
-    if(isset($_SERVER['HTTP_FROM']) && !empty($_SERVER['HTTP_FROM']))
+    if (isset($_SERVER['HTTP_FROM']) && !empty($_SERVER['HTTP_FROM']))
         $TheIp = $_SERVER['HTTP_FROM'];
 
-    $TheIp_X = explode('.',$TheIp);
-    if(count($TheIp_X) == 4 && $TheIp_X[0]<=255 && $TheIp_X[1]<=255 && $TheIp_X[2]<=255 && $TheIp_X[3]<=255 && preg_match("!^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$!",$TheIp))
+    $TheIp_X = explode('.', $TheIp);
+    if (count($TheIp_X) == 4 && $TheIp_X[0] <= 255 && $TheIp_X[1] <= 255 && $TheIp_X[2] <= 255 && $TheIp_X[3] <= 255 && preg_match("!^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$!", $TheIp))
         return trim($TheIp);
 
     return '0.0.0.0';

@@ -28,41 +28,53 @@ final class DefaultKeyspace implements Keyspace
      *
      * @return string Name
      */
-    public function name() {}
+    public function name()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return string Replication class
      */
-    public function replicationClassName() {}
+    public function replicationClassName()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return Cassandra\Map Replication options
      */
-    public function replicationOptions() {}
+    public function replicationOptions()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return string Whether durable writes are enabled
      */
-    public function hasDurableWrites() {}
+    public function hasDurableWrites()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
-     * @param  string          $name  Table name
+     * @param  string $name Table name
      * @return Cassandra\Table        Table instance or null
      */
-    public function table($name) {}
+    public function table($name)
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return array An array of `Cassandra\Table` instances
      */
-    public function tables() {}
+    public function tables()
+    {
+    }
 }

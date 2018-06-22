@@ -30,7 +30,9 @@ final class Builder
      *
      * @return \Cassandra\Cluster Cluster instance
      */
-    public function build() {}
+    public function build()
+    {
+    }
 
     /**
      * Configures default consistency for all requests.
@@ -39,7 +41,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withDefaultConsistency($consistency) {}
+    public function withDefaultConsistency($consistency)
+    {
+    }
 
     /**
      * Configures default page size for all results.
@@ -49,7 +53,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withDefaultPageSize($pageSize) {}
+    public function withDefaultPageSize($pageSize)
+    {
+    }
 
     /**
      * Configures default timeout for future resolution in blocking operations
@@ -59,7 +65,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withDefaultTimeout($timeout) {}
+    public function withDefaultTimeout($timeout)
+    {
+    }
 
     /**
      * Configures the initial endpoints. Note that the driver will
@@ -69,7 +77,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withContactPoints($host) {}
+    public function withContactPoints($host)
+    {
+    }
 
     /**
      * Specify a different port to be used when connecting to the cluster.
@@ -80,25 +90,31 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withPort($port) {}
+    public function withPort($port)
+    {
+    }
 
     /**
      * Configures this cluster to use a round robin load balancing policy.
      *
      * @return Builder self
      */
-    public function withRoundRobinLoadBalancingPolicy() {}
+    public function withRoundRobinLoadBalancingPolicy()
+    {
+    }
 
     /**
      * Configures this cluster to use a datacenter aware round robin load balancing policy.
      *
-     * @param string $localDatacenter                          Name of the local datacenter
-     * @param int    $hostPerRemoteDatacenter                  Maximum number of hosts to try in remote datacenters
-     * @param bool   $useRemoteDatacenterForLocalConsistencies Allow using hosts from remote datacenters to execute statements with local consistencies
+     * @param string $localDatacenter Name of the local datacenter
+     * @param int $hostPerRemoteDatacenter Maximum number of hosts to try in remote datacenters
+     * @param bool $useRemoteDatacenterForLocalConsistencies Allow using hosts from remote datacenters to execute statements with local consistencies
      *
      * @return Builder self
      */
-    public function withDatacenterAwareRoundRobinLoadBalancingPolicy($localDatacenter, $hostPerRemoteDatacenter, $useRemoteDatacenterForLocalConsistencies) {}
+    public function withDatacenterAwareRoundRobinLoadBalancingPolicy($localDatacenter, $hostPerRemoteDatacenter, $useRemoteDatacenterForLocalConsistencies)
+    {
+    }
 
     /**
      * Enable token aware routing.
@@ -107,7 +123,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withTokenAwareRouting($enabled = true) {}
+    public function withTokenAwareRouting($enabled = true)
+    {
+    }
 
     /**
      * Configures cassandra authentication.
@@ -117,7 +135,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withCredentials($username, $password) {}
+    public function withCredentials($username, $password)
+    {
+    }
 
     /**
      * Timeout used for establishing TCP connections.
@@ -126,7 +146,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withConnectTimeout($timeout) {}
+    public function withConnectTimeout($timeout)
+    {
+    }
 
     /**
      * Timeout used for waiting for a response from a node.
@@ -135,7 +157,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withRequestTimeout($timeout) {}
+    public function withRequestTimeout($timeout)
+    {
+    }
 
     /**
      * Set up ssl context.
@@ -144,7 +168,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withSSL(\Cassandra\SSLOptions $options) {}
+    public function withSSL(\Cassandra\SSLOptions $options)
+    {
+    }
 
     /**
      * Enable persistent sessions and clusters.
@@ -154,7 +180,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withPersistentSessions($enabled = true) {}
+    public function withPersistentSessions($enabled = true)
+    {
+    }
 
     /**
      * Force the driver to use a specific binary protocol version.
@@ -171,7 +199,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withProtocolVersion($version) {}
+    public function withProtocolVersion($version)
+    {
+    }
 
     /**
      * Total number of IO threads to use for handling the requests.
@@ -183,7 +213,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withIOThreads($count) {}
+    public function withIOThreads($count)
+    {
+    }
 
     /**
      * Set the size of connection pools used by the driver. Pools are fixed
@@ -194,11 +226,13 @@ final class Builder
      * until only the core number of connections is left.
      *
      * @param int $core minimum connections to keep open to any given host
-     * @param int $max  maximum connections to keep open to any given host
+     * @param int $max maximum connections to keep open to any given host
      *
      * @return Builder self
      */
-    public function withConnectionsPerHost($core = 1, $max = 2) {}
+    public function withConnectionsPerHost($core = 1, $max = 2)
+    {
+    }
 
     /**
      * Specify interval in seconds that the driver should wait before attempting
@@ -208,7 +242,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withReconnectInterval($interval) {}
+    public function withReconnectInterval($interval)
+    {
+    }
 
     /**
      * Enables/disables latency-aware routing.
@@ -217,7 +253,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withLatencyAwareRouting($enabled = true) {}
+    public function withLatencyAwareRouting($enabled = true)
+    {
+    }
 
     /**
      * Disables nagle algorithm for lower latency.
@@ -226,7 +264,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withTCPNodelay($enabled = true) {}
+    public function withTCPNodelay($enabled = true)
+    {
+    }
 
     /**
      * Enables/disables TCP keepalive.
@@ -238,7 +278,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withTCPKeepalive($delay) {}
+    public function withTCPKeepalive($delay)
+    {
+    }
 
     /**
      * Configures the retry policy.
@@ -247,7 +289,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withRetryPolicy(RetryPolicy $policy) {}
+    public function withRetryPolicy(RetryPolicy $policy)
+    {
+    }
 
     /**
      * Sets the timestamp generator.
@@ -257,7 +301,9 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withTimestampGenerator($generator) {}
+    public function withTimestampGenerator($generator)
+    {
+    }
 
     /**
      * Enables/disables Schema Metadata.
@@ -271,6 +317,8 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withSchemaMetadata($enable = true) {}
+    public function withSchemaMetadata($enable = true)
+    {
+    }
 
 }

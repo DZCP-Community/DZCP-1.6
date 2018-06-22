@@ -235,7 +235,7 @@ class ANSI
         $this->tokenization = array('');
         for ($i = 0; $i < strlen($source); $i++) {
             if (strlen($this->ansi)) {
-                $this->ansi.= $source[$i];
+                $this->ansi .= $source[$i];
                 $chr = ord($source[$i]);
                 // http://en.wikipedia.org/wiki/ANSI_escape_code#Sequence_elements
                 // single character CSI's not currently supported
@@ -290,7 +290,7 @@ class ANSI
                         switch (true) {
                             case preg_match('#\x1B\[(\d+)B#', $this->ansi, $match): // Move cursor down n lines
                                 $this->old_y = $this->y;
-                                $this->y+= $match[1];
+                                $this->y += $match[1];
                                 break;
                             case preg_match('#\x1B\[(\d+);(\d+)H#', $this->ansi, $match): // Move cursor to screen location v,h
                                 $this->old_x = $this->x;
@@ -300,11 +300,11 @@ class ANSI
                                 break;
                             case preg_match('#\x1B\[(\d+)C#', $this->ansi, $match): // Move cursor right n lines
                                 $this->old_x = $this->x;
-                                $this->x+= $match[1];
+                                $this->x += $match[1];
                                 break;
                             case preg_match('#\x1B\[(\d+)D#', $this->ansi, $match): // Move cursor left n lines
                                 $this->old_x = $this->x;
-                                $this->x-= $match[1];
+                                $this->x -= $match[1];
                                 if ($this->x < 0) {
                                     $this->x = 0;
                                 }
@@ -336,28 +336,60 @@ class ANSI
                                             break;
                                         default: // set colors
                                             //$front = $attr_cell->reverse ? &$attr_cell->background : &$attr_cell->foreground;
-                                            $front = &$attr_cell->{ $attr_cell->reverse ? 'background' : 'foreground' };
+                                            $front = &$attr_cell->{$attr_cell->reverse ? 'background' : 'foreground'};
                                             //$back = $attr_cell->reverse ? &$attr_cell->foreground : &$attr_cell->background;
-                                            $back = &$attr_cell->{ $attr_cell->reverse ? 'foreground' : 'background' };
+                                            $back = &$attr_cell->{$attr_cell->reverse ? 'foreground' : 'background'};
                                             switch ($mod) {
                                                 // @codingStandardsIgnoreStart
-                                                case 30: $front = 'black'; break;
-                                                case 31: $front = 'red'; break;
-                                                case 32: $front = 'green'; break;
-                                                case 33: $front = 'yellow'; break;
-                                                case 34: $front = 'blue'; break;
-                                                case 35: $front = 'magenta'; break;
-                                                case 36: $front = 'cyan'; break;
-                                                case 37: $front = 'white'; break;
+                                                case 30:
+                                                    $front = 'black';
+                                                    break;
+                                                case 31:
+                                                    $front = 'red';
+                                                    break;
+                                                case 32:
+                                                    $front = 'green';
+                                                    break;
+                                                case 33:
+                                                    $front = 'yellow';
+                                                    break;
+                                                case 34:
+                                                    $front = 'blue';
+                                                    break;
+                                                case 35:
+                                                    $front = 'magenta';
+                                                    break;
+                                                case 36:
+                                                    $front = 'cyan';
+                                                    break;
+                                                case 37:
+                                                    $front = 'white';
+                                                    break;
 
-                                                case 40: $back = 'black'; break;
-                                                case 41: $back = 'red'; break;
-                                                case 42: $back = 'green'; break;
-                                                case 43: $back = 'yellow'; break;
-                                                case 44: $back = 'blue'; break;
-                                                case 45: $back = 'magenta'; break;
-                                                case 46: $back = 'cyan'; break;
-                                                case 47: $back = 'white'; break;
+                                                case 40:
+                                                    $back = 'black';
+                                                    break;
+                                                case 41:
+                                                    $back = 'red';
+                                                    break;
+                                                case 42:
+                                                    $back = 'green';
+                                                    break;
+                                                case 43:
+                                                    $back = 'yellow';
+                                                    break;
+                                                case 44:
+                                                    $back = 'blue';
+                                                    break;
+                                                case 45:
+                                                    $back = 'magenta';
+                                                    break;
+                                                case 46:
+                                                    $back = 'cyan';
+                                                    break;
+                                                case 47:
+                                                    $back = 'white';
+                                                    break;
                                                 // @codingStandardsIgnoreEnd
 
                                                 default:
@@ -376,7 +408,7 @@ class ANSI
                 continue;
             }
 
-            $this->tokenization[count($this->tokenization) - 1].= $source[$i];
+            $this->tokenization[count($this->tokenization) - 1] .= $source[$i];
             switch ($source[$i]) {
                 case "\r":
                     $this->x = 0;
@@ -403,7 +435,7 @@ class ANSI
                     //if (!strlen($this->tokenization[count($this->tokenization) - 1])) {
                     //    array_pop($this->tokenization);
                     //}
-                    $this->ansi.= "\x1B";
+                    $this->ansi .= "\x1B";
                     break;
                 default:
                     $this->attrs[$this->y][$this->x] = clone $this->attr_cell;
@@ -471,7 +503,7 @@ class ANSI
             $close = $open = '';
             if ($last_attr->foreground != $cur_attr->foreground) {
                 if ($cur_attr->foreground != 'white') {
-                    $open.= '<span style="color: ' . $cur_attr->foreground . '">';
+                    $open .= '<span style="color: ' . $cur_attr->foreground . '">';
                 }
                 if ($last_attr->foreground != 'white') {
                     $close = '</span>' . $close;
@@ -479,7 +511,7 @@ class ANSI
             }
             if ($last_attr->background != $cur_attr->background) {
                 if ($cur_attr->background != 'black') {
-                    $open.= '<span style="background: ' . $cur_attr->background . '">';
+                    $open .= '<span style="background: ' . $cur_attr->background . '">';
                 }
                 if ($last_attr->background != 'black') {
                     $close = '</span>' . $close;
@@ -487,29 +519,29 @@ class ANSI
             }
             if ($last_attr->bold != $cur_attr->bold) {
                 if ($cur_attr->bold) {
-                    $open.= '<b>';
+                    $open .= '<b>';
                 } else {
                     $close = '</b>' . $close;
                 }
             }
             if ($last_attr->underline != $cur_attr->underline) {
                 if ($cur_attr->underline) {
-                    $open.= '<u>';
+                    $open .= '<u>';
                 } else {
                     $close = '</u>' . $close;
                 }
             }
             if ($last_attr->blink != $cur_attr->blink) {
                 if ($cur_attr->blink) {
-                    $open.= '<blink>';
+                    $open .= '<blink>';
                 } else {
                     $close = '</blink>' . $close;
                 }
             }
-            $output.= $close . $open;
+            $output .= $close . $open;
         }
 
-        $output.= htmlspecialchars($char);
+        $output .= htmlspecialchars($char);
 
         return $output;
     }
@@ -527,14 +559,14 @@ class ANSI
         for ($i = 0; $i <= $this->max_y; $i++) {
             for ($j = 0; $j <= $this->max_x; $j++) {
                 $cur_attr = $this->attrs[$i][$j];
-                $output.= $this->_processCoordinate($last_attr, $cur_attr, isset($this->screen[$i][$j]) ? $this->screen[$i][$j] : '');
+                $output .= $this->_processCoordinate($last_attr, $cur_attr, isset($this->screen[$i][$j]) ? $this->screen[$i][$j] : '');
                 $last_attr = $this->attrs[$i][$j];
             }
-            $output.= "\r\n";
+            $output .= "\r\n";
         }
         $output = substr($output, 0, -2);
         // close any remaining open tags
-        $output.= $this->_processCoordinate($last_attr, $this->base_attr_cell, '');
+        $output .= $this->_processCoordinate($last_attr, $this->base_attr_cell, '');
         return rtrim($output);
     }
 
@@ -562,14 +594,14 @@ class ANSI
         for ($i = 0; $i < count($this->history); $i++) {
             for ($j = 0; $j <= $this->max_x + 1; $j++) {
                 $cur_attr = $this->history_attrs[$i][$j];
-                $scrollback.= $this->_processCoordinate($last_attr, $cur_attr, isset($this->history[$i][$j]) ? $this->history[$i][$j] : '');
+                $scrollback .= $this->_processCoordinate($last_attr, $cur_attr, isset($this->history[$i][$j]) ? $this->history[$i][$j] : '');
                 $last_attr = $this->history_attrs[$i][$j];
             }
-            $scrollback.= "\r\n";
+            $scrollback .= "\r\n";
         }
         $base_attr_cell = $this->base_attr_cell;
         $this->base_attr_cell = $last_attr;
-        $scrollback.= $this->_getScreen();
+        $scrollback .= $this->_getScreen();
         $this->base_attr_cell = $base_attr_cell;
 
         return '<pre width="' . ($this->max_x + 1) . '" style="color: white; background: black">' . $scrollback . '</span></pre>';

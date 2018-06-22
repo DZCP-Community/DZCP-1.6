@@ -16,7 +16,8 @@
  * limitations under the License.
  */
 
-namespace Cassandra {}
+namespace Cassandra {
+}
 
 /**
  * A PHP representation of a public function
@@ -28,54 +29,78 @@ final class DefaultFunction implements Function
      *
      * @return string Full name of the function including name and types
      */
-    public public function name() {}
+    public public
+    function name()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return string Simple name of the function
      */
-    public function simpleName() {}
+    public
+    function simpleName()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return array Arguments of the function
      */
-    public function arguments() {}
+    public
+    function arguments()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return Cassandra\Type Return type of the function
      */
-    public function returnType() {}
+    public
+    function returnType()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return string Signature of the function (same as name())
      */
-    public function signature() {}
+    public
+    function signature()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return string Language used by the function
      */
-    public function language() {}
+    public
+    function language()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return string Body of the function
      */
-    public function body() {}
+    public
+    function body()
+    {
+    }
 
     /**
      * {@inheritDoc}
      *
      * @return boolean
      */
-    public function isCalledOnNullInput() {}
+    public
+    function isCalledOnNullInput()
+    {
+    }
 }

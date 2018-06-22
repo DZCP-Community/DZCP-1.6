@@ -8,9 +8,8 @@ function glob_recursive($pattern, $flags = 0)
 {
     $files = glob($pattern, $flags);
 
-    foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir)
-    {
-        $files = array_merge($files, glob_recursive($dir.'/'.basename($pattern), $flags));
+    foreach (glob(dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir) {
+        $files = array_merge($files, glob_recursive($dir . '/' . basename($pattern), $flags));
     }
 
     return $files;
@@ -24,13 +23,13 @@ foreach (glob_recursive($testDir . DIRECTORY_SEPARATOR . '*.test.php') as $filen
     echo "\e[97m--\n";
     $command = "php -f {$filename} {$driver}";
     echo "\e[33mphpfastcache@test \e[34m~ \e[92m# \e[91m" . $command . "\n";
-    exec ($command, $output, $return_var);
+    exec($command, $output, $return_var);
     echo "=====================================\n";
     echo "\e[95m" . implode("\n", $output) . "\n";
     echo "=====================================\n";
-    if($return_var === 0){
+    if ($return_var === 0) {
         echo "\e[32mProcess finished with exit code $return_var";
-    }else{
+    } else {
         echo "\e[31mProcess finished with exit code $return_var";
         $status = 255;
     }

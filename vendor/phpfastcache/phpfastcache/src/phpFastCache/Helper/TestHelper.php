@@ -154,7 +154,8 @@ class TestHelper
      * @return mixed
      * @throws \ReflectionException
      */
-    public function accessInaccessibleMember($obj, $prop) {
+    public function accessInaccessibleMember($obj, $prop)
+    {
         $reflection = new \ReflectionClass($obj);
         $property = $reflection->getProperty($prop);
         $property->setAccessible(true);

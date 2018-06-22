@@ -27,97 +27,129 @@ abstract class Type
      * Get representation of cassandra varchar type
      * @return Cassandra\Type varchar type
      */
-    final static function varchar() {}
+    final static function varchar()
+    {
+    }
 
     /**
      * Get representation of cassandra text type
      * @return Cassandra\Type text type
      */
-    final static function text() {}
+    final static function text()
+    {
+    }
 
     /**
      * Get representation of cassandra blob type
      * @return Cassandra\Type blob type
      */
-    final static function blob() {}
+    final static function blob()
+    {
+    }
 
-      /**
-       * Get representation of cassandra ascii type
-       * @return Cassandra\Type ascii type
-       */
-    final static function ascii() {}
+    /**
+     * Get representation of cassandra ascii type
+     * @return Cassandra\Type ascii type
+     */
+    final static function ascii()
+    {
+    }
 
-      /**
-       * Get representation of cassandra bigint type
-       * @return Cassandra\Type bigint type
-       */
-    final static function bigint() {}
+    /**
+     * Get representation of cassandra bigint type
+     * @return Cassandra\Type bigint type
+     */
+    final static function bigint()
+    {
+    }
 
-      /**
-       * Get representation of cassandra counter type
-       * @return Cassandra\Type counter type
-       */
-    final static function counter() {}
+    /**
+     * Get representation of cassandra counter type
+     * @return Cassandra\Type counter type
+     */
+    final static function counter()
+    {
+    }
 
-      /**
-       * Get representation of cassandra int type
-       * @return Cassandra\Type int type
-       */
-    final static function int() {}
+    /**
+     * Get representation of cassandra int type
+     * @return Cassandra\Type int type
+     */
+    final static function int()
+    {
+    }
 
-      /**
-       * Get representation of cassandra varint type
-       * @return Cassandra\Type varint type
-       */
-    final static function varint() {}
+    /**
+     * Get representation of cassandra varint type
+     * @return Cassandra\Type varint type
+     */
+    final static function varint()
+    {
+    }
 
-      /**
-       * Get representation of cassandra boolean type
-       * @return Cassandra\Type boolean type
-       */
-    final static function boolean() {}
+    /**
+     * Get representation of cassandra boolean type
+     * @return Cassandra\Type boolean type
+     */
+    final static function boolean()
+    {
+    }
 
-      /**
-       * Get representation of cassandra decimal type
-       * @return Cassandra\Type decimal type
-       */
-    final static function decimal() {}
+    /**
+     * Get representation of cassandra decimal type
+     * @return Cassandra\Type decimal type
+     */
+    final static function decimal()
+    {
+    }
 
-      /**
-       * Get representation of cassandra double type
-       * @return Cassandra\Type double type
-       */
-    final static function double() {}
+    /**
+     * Get representation of cassandra double type
+     * @return Cassandra\Type double type
+     */
+    final static function double()
+    {
+    }
 
-      /**
-       * Get representation of cassandra float type
-       * @return Cassandra\Type float type
-       */
-    final static function float() {}
+    /**
+     * Get representation of cassandra float type
+     * @return Cassandra\Type float type
+     */
+    final static function float()
+    {
+    }
 
-      /**
-       * Get representation of cassandra inet type
-       * @return Cassandra\Type inet type
-       */
-    final static function inet() {}
+    /**
+     * Get representation of cassandra inet type
+     * @return Cassandra\Type inet type
+     */
+    final static function inet()
+    {
+    }
 
-      /**
-       * Get representation of cassandra timestamp type
-       * @return Cassandra\Type timestamp type
-       */
-    final static function timestamp() {}
+    /**
+     * Get representation of cassandra timestamp type
+     * @return Cassandra\Type timestamp type
+     */
+    final static function timestamp()
+    {
+    }
 
-      /**
-       * Get representation of cassandra uuid type
-       * @return Cassandra\Type uuid type
-       */
-    final static function uuid() {}
+    /**
+     * Get representation of cassandra uuid type
+     * @return Cassandra\Type uuid type
+     */
+    final static function uuid()
+    {
+    }
 
-      /**
-       * Get representation of cassandra timeuuid type
-       * @return Cassandra\Type timeuuid type
-       */
-    final static function timeuuid() {}
+    /**
+     * Get representation of cassandra timeuuid type
+     * @return Cassandra\Type timeuuid type
+     */
+    final static function timeuuid()
+    {
+    }
 
     /**
      * Initialize a Collection type
@@ -133,7 +165,9 @@ abstract class Type
      * @param  Type $type The type of values
      * @return Type       The collection type
      */
-    final static function collection(Type $type) {}
+    final static function collection(Type $type)
+    {
+    }
 
     /**
      * Initialize a map type
@@ -146,11 +180,13 @@ abstract class Type
      *
      * var_dump($map);
      * @endcode
-     * @param  Type $key_type   The type of keys
+     * @param  Type $key_type The type of keys
      * @param  Type $value_type The type of values
      * @return Type             The map type
      */
-    final static function map(Type $key_type, Type $value_type) {}
+    final static function map(Type $key_type, Type $value_type)
+    {
+    }
 
     /**
      * Initialize a set type
@@ -165,19 +201,25 @@ abstract class Type
      * @endcode
      * @param Type $type [description]
      */
-    final static function set(Type $type) {}
+    final static function set(Type $type)
+    {
+    }
 
     /**
      * Returns the name of this type as string.
      * @return string Name of this type
      */
-    function name() {}
+    function name()
+    {
+    }
 
     /**
      * Returns string representation of this type.
      * @return string String representation of this type
      */
-    function __toString() {}
+    function __toString()
+    {
+    }
 
     /**
      * Instantiate a value of this type from provided value(s).
@@ -188,5 +230,7 @@ abstract class Type
      * @param  mixed $value,... one or more values to coerce into this type
      * @return mixed            a value of this type
      */
-    function create($value = null) {}
+    function create($value = null)
+    {
+    }
 }

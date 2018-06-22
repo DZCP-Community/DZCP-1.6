@@ -15,13 +15,13 @@ use phpFastCache\Helper\TestHelper;
 chdir(__DIR__);
 require_once __DIR__ . '/../src/autoload.php';
 $testHelper = new TestHelper('Cache Slams Protection');
-$defaultDriver = (!empty($argv[ 1 ]) ? ucfirst($argv[ 1 ]) : 'Files');
+$defaultDriver = (!empty($argv[1]) ? ucfirst($argv[1]) : 'Files');
 $driverInstance = CacheManager::getInstance($defaultDriver, [
-  'preventCacheSlams' => true,
-  'cacheSlamsTimeout' => 20
+    'preventCacheSlams' => true,
+    'cacheSlamsTimeout' => 20
 ]);
 
-EventManager::getInstance()->onCacheGetItemInSlamBatch(function(ExtendedCacheItemPoolInterface $itemPool, ItemBatch $driverData, $cacheSlamsSpendSeconds) use ($testHelper){
+EventManager::getInstance()->onCacheGetItemInSlamBatch(function (ExtendedCacheItemPoolInterface $itemPool, ItemBatch $driverData, $cacheSlamsSpendSeconds) use ($testHelper) {
     $testHelper->printText("Looping in batch for {$cacheSlamsSpendSeconds} second(s) with a batch from " . $driverData->getItemDate()->format(\DateTime::W3C));
 });
 
@@ -39,9 +39,9 @@ $item = $driverInstance->getItem('TestCacheSlamsProtection');
 /**
  * @see CacheSlamsProtection.subprocess.php:28
  */
-if($item->isHit() && $item->get() === 1337){
+if ($item->isHit() && $item->get() === 1337) {
     $testHelper->printPassText('The batch has expired and returned a non-empty item with expected value: ' . $item->get());
-}else{
+} else {
     $testHelper->printFailText('The batch has expired and returned an empty item with expected value: ' . print_r($item->get(), true));
 }
 

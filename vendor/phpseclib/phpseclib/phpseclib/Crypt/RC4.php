@@ -56,7 +56,7 @@ class RC4 extends Base
     /**#@+
      * @access private
      * @see \phpseclib\Crypt\RC4::_crypt()
-    */
+     */
     const ENCRYPT = 0;
     const DECRYPT = 1;
     /**#@-*/

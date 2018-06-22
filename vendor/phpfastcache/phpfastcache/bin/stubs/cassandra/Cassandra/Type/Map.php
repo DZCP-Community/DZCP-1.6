@@ -26,25 +26,33 @@ final class Map extends Type
      * Returns "map"
      * @return string "map"
      */
-    public function name() {}
+    public function name()
+    {
+    }
 
     /**
      * Returns type representation in CQL, e.g. `map<varchar, int>`
      * @return string Type representation in CQL
      */
-    public function __toString() {}
+    public function __toString()
+    {
+    }
 
     /**
      * Returns type of keys
      * @return Type Type of keys
      */
-    public function keyType() {}
+    public function keyType()
+    {
+    }
 
     /**
      * Returns type of values
      * @return Type Type of values
      */
-    public function valueType() {}
+    public function valueType()
+    {
+    }
 
     /**
      * Creates a new Cassandra\Map from the given values.
@@ -72,5 +80,7 @@ final class Map extends Type
      *                          When no values given, creates an empty map.
      * @return Cassandra\Map    A set with given values.
      */
-    public function create($value = null) {}
+    public function create($value = null)
+    {
+    }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <template>
-	<name>Standard V1.6</name>
-	<version>1.1</version>
-	<permissions></permissions>
-	<level>0</level>
+    <name>Standard V1.6</name>
+    <version>1.1</version>
+    <permissions></permissions>
+    <level>0</level>
 </template>

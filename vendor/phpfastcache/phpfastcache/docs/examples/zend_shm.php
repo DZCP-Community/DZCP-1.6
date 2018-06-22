@@ -10,6 +10,7 @@
  * @author Lucas Brucksch <support@hammermaps.de>
  *
  */
+
 use phpFastCache\CacheManager;
 
 // Include composer autoloader

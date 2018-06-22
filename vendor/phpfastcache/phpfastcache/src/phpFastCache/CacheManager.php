@@ -70,101 +70,101 @@ class CacheManager
         /**
          * Specify if the item must provide detailed creation/modification dates
          */
-      'itemDetailedDate' => false,
+        'itemDetailedDate' => false,
 
         /**
          * Automatically attempt to fallback to temporary directory
          * if the cache fails to write on the specified directory
          */
-      'autoTmpFallback' => false,
+        'autoTmpFallback' => false,
 
         /**
          * Provide a secure file manipulation mechanism,
          * on intensive usage the performance can be affected.
          */
-      'secureFileManipulation' => false,
+        'secureFileManipulation' => false,
 
         /**
          * Ignore Symfony notice for Symfony project which
          * do not makes use of PhpFastCache's Symfony Bundle
          */
-      'ignoreSymfonyNotice' => false,
+        'ignoreSymfonyNotice' => false,
 
         /**
          * Default time-to-live in second
          */
-      'defaultTtl' => 900,
+        'defaultTtl' => 900,
 
         /**
          * Default key hash function
          * (md5 by default)
          */
-      'defaultKeyHashFunction' => '',
+        'defaultKeyHashFunction' => '',
 
         /**
          * The securityKey that will be used
          * to create sub-directory
          * (Files-based drivers only)
          */
-      'securityKey' => 'Auto',
+        'securityKey' => 'Auto',
 
         /**
          * Auto-generate .htaccess if it's missing
          * (Files-based drivers only)
          */
-      'htaccess' => true,
+        'htaccess' => true,
 
         /**
          * Default files chmod
          * 0777 recommended
          * (Files-based drivers only)
          */
-      'default_chmod' => 0777,
+        'default_chmod' => 0777,
 
         /**
          * The path where we will writecache files
          * default value if empty: sys_get_temp_dir()
          * (Files-based drivers only)
          */
-      'path' => '',
+        'path' => '',
 
         /**
          * Driver fallback in case of failure.
          * Caution, in case of failure an E_WARNING
          * error will always be raised
          */
-      'fallback' => false,
+        'fallback' => false,
 
         /**
          * Maximum size (bytes) of object store in memory
          * (Memcache(d) drivers only)
          */
-      'limited_memory_each_object' => 4096,
+        'limited_memory_each_object' => 4096,
 
         /**
          * Compress stored data, if the backend supports it
          * (Memcache(d) drivers only)
          */
-      'compress_data' => false,
+        'compress_data' => false,
 
         /**
          * Prevent cache slams when
          * making use of heavy cache
          * items
          */
-      'preventCacheSlams' => false,
+        'preventCacheSlams' => false,
 
         /**
          * Cache slams timeout
          * in seconds
          */
-      'cacheSlamsTimeout' => 15,
+        'cacheSlamsTimeout' => 15,
 
         /**
          * Cache slams timeout
          * in seconds
          */
-      'cacheFileExtension' => 'txt',
+        'cacheFileExtension' => 'txt',
 
     ];
 
@@ -174,10 +174,10 @@ class CacheManager
      * @var array
      */
     protected static $safeFileExtensions = [
-      'txt',
-      'cache',
-      'db',
-      'pfc',
+        'txt',
+        'cache',
+        'db',
+        'pfc',
     ];
 
     /**
@@ -212,28 +212,28 @@ class CacheManager
         }
 
         $instance = crc32($driver . serialize($config));
-        if (!isset(self::$instances[ $instance ])) {
-            $badPracticeOmeter[ $driver ] = 1;
-            if (!$config[ 'ignoreSymfonyNotice' ] && interface_exists('Symfony\Component\HttpKernel\KernelInterface') && !class_exists('phpFastCache\Bundle\phpFastCacheBundle')) {
+        if (!isset(self::$instances[$instance])) {
+            $badPracticeOmeter[$driver] = 1;
+            if (!$config['ignoreSymfonyNotice'] && interface_exists('Symfony\Component\HttpKernel\KernelInterface') && !class_exists('phpFastCache\Bundle\phpFastCacheBundle')) {
                 trigger_error('A Symfony Bundle to make the PhpFastCache integration more easier is now available here: https://github.com/PHPSocialNetwork/phpfastcache-bundle',
-                  E_USER_NOTICE);
+                    E_USER_NOTICE);
             }
             $class = self::getNamespacePath() . $driver . '\Driver';
             try {
-                self::$instances[ $instance ] = new $class($config);
-                self::$instances[ $instance ]->setEventManager(EventManager::getInstance());
+                self::$instances[$instance] = new $class($config);
+                self::$instances[$instance]->setEventManager(EventManager::getInstance());
                 self::$fallback = false;
             } catch (phpFastCacheDriverCheckException $e) {
-                if ($config[ 'fallback' ]) {
+                if ($config['fallback']) {
                     try {
-                        $fallback = self::standardizeDriverName($config[ 'fallback' ]);
+                        $fallback = self::standardizeDriverName($config['fallback']);
                         if ($fallback !== $driver) {
                             $class = self::getNamespacePath() . $fallback . '\Driver';
-                            self::$instances[ $instance ] = new $class($config);
-                            self::$instances[ $instance ]->setEventManager(EventManager::getInstance());
+                            self::$instances[$instance] = new $class($config);
+                            self::$instances[$instance]->setEventManager(EventManager::getInstance());
                             self::$fallback = true;
                             trigger_error(sprintf('The "%s" driver is unavailable at the moment, the fallback driver "%s" has been used instead.', $driver,
-                              $fallback), E_USER_WARNING);
+                                $fallback), E_USER_WARNING);
                         } else {
                             throw new phpFastCacheInvalidConfigurationException('The fallback driver cannot be the same than the default driver', 0, $e);
                         }
@@ -244,14 +244,14 @@ class CacheManager
                     throw new phpFastCacheDriverCheckException($e->getMessage(), $e->getCode(), $e);
                 }
             }
-        } else if ($badPracticeOmeter[ $driver ] >= 5) {
+        } else if ($badPracticeOmeter[$driver] >= 5) {
             trigger_error('[' . $driver . '] Calling many times CacheManager::getInstance() for already instanced drivers is a bad practice and have a significant impact on performances.
            See https://github.com/PHPSocialNetwork/phpfastcache/wiki/[V5]-Why-calling-getInstance%28%29-each-time-is-a-bad-practice-%3F');
         }
 
-        $badPracticeOmeter[ $driver ]++;
+        $badPracticeOmeter[$driver]++;
 
-        return self::$instances[ $instance ];
+        return self::$instances[$instance];
     }
 
     /**
@@ -313,7 +313,7 @@ class CacheManager
      */
     public static function __callStatic($name, $arguments)
     {
-        $options = (array_key_exists(0, $arguments) && is_array($arguments) ? $arguments[ 0 ] : []);
+        $options = (array_key_exists(0, $arguments) && is_array($arguments) ? $arguments[0] : []);
 
         return self::getInstance($name, $options);
     }
@@ -355,7 +355,7 @@ class CacheManager
         if (is_array($name)) {
             self::$config = array_merge(self::$config, $name);
         } else if (is_string($name)) {
-            self::$config[ $name ] = $value;
+            self::$config[$name] = $value;
         } else {
             throw new phpFastCacheInvalidArgumentException('Invalid variable type: $name');
         }
@@ -387,26 +387,26 @@ class CacheManager
     public static function getStaticSystemDrivers()
     {
         return [
-          'Apc',
-          'Apcu',
-          'Cassandra',
-          'Couchbase',
-          'Couchdb',
-          'Devnull',
-          'Files',
-          'Leveldb',
-          'Memcache',
-          'Memcached',
-          'Memstatic',
-          'Mongodb',
-          'Predis',
-          'Redis',
-          'Ssdb',
-          'Sqlite',
-          'Wincache',
-          'Xcache',
-          'Zenddisk',
-          'Zendshm',
+            'Apc',
+            'Apcu',
+            'Cassandra',
+            'Couchbase',
+            'Couchdb',
+            'Devnull',
+            'Files',
+            'Leveldb',
+            'Memcache',
+            'Memcached',
+            'Memstatic',
+            'Mongodb',
+            'Predis',
+            'Redis',
+            'Ssdb',
+            'Sqlite',
+            'Wincache',
+            'Xcache',
+            'Zenddisk',
+            'Zendshm',
         ];
     }
 
@@ -416,9 +416,9 @@ class CacheManager
     public static function getStaticAllDrivers()
     {
         return array_merge(self::getStaticSystemDrivers(), [
-          'Devtrue',
-          'Devfalse',
-          'Cookie',
+            'Devtrue',
+            'Devfalse',
+            'Cookie',
         ]);
     }
 

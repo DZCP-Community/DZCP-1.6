@@ -88,28 +88,28 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($item instanceof Item) {
             try {
                 $set = [
-                  self::DRIVER_DATA_WRAPPER_INDEX => new Binary($this->encode($item->get()), Binary::TYPE_GENERIC),
-                  self::DRIVER_TAGS_WRAPPER_INDEX => new Binary($this->encode($item->getTags()), Binary::TYPE_GENERIC),
-                  self::DRIVER_EDATE_WRAPPER_INDEX => ($item->getTtl() > 0 ? new UTCDateTime((time() + $item->getTtl()) * 1000) : new UTCDateTime(time() * 1000)),
+                    self::DRIVER_DATA_WRAPPER_INDEX => new Binary($this->encode($item->get()), Binary::TYPE_GENERIC),
+                    self::DRIVER_TAGS_WRAPPER_INDEX => new Binary($this->encode($item->getTags()), Binary::TYPE_GENERIC),
+                    self::DRIVER_EDATE_WRAPPER_INDEX => ($item->getTtl() > 0 ? new UTCDateTime((time() + $item->getTtl()) * 1000) : new UTCDateTime(time() * 1000)),
                 ];
 
-                if(!empty($this->config[ 'itemDetailedDate' ])){
+                if (!empty($this->config['itemDetailedDate'])) {
                     $set += [
-                      self::DRIVER_MDATE_WRAPPER_INDEX => ($item->getModificationDate() ? new UTCDateTime(($item->getModificationDate()->getTimestamp()) * 1000) : new UTCDateTime(time() * 1000)),
-                      self::DRIVER_CDATE_WRAPPER_INDEX => ($item->getCreationDate() ? new UTCDateTime(($item->getCreationDate()->getTimestamp()) * 1000) : new UTCDateTime(time() * 1000)),
+                        self::DRIVER_MDATE_WRAPPER_INDEX => ($item->getModificationDate() ? new UTCDateTime(($item->getModificationDate()->getTimestamp()) * 1000) : new UTCDateTime(time() * 1000)),
+                        self::DRIVER_CDATE_WRAPPER_INDEX => ($item->getCreationDate() ? new UTCDateTime(($item->getCreationDate()->getTimestamp()) * 1000) : new UTCDateTime(time() * 1000)),
                     ];
                 }
 
                 $result = (array)$this->getCollection()->updateOne(
-                  ['_id' => $item->getEncodedKey()],
-                  ['$set' => $set],
-                  ['upsert' => true, 'multiple' => false]
+                    ['_id' => $item->getEncodedKey()],
+                    ['$set' => $set],
+                    ['upsert' => true, 'multiple' => false]
                 );
             } catch (MongoDBException $e) {
                 throw new phpFastCacheDriverException('Got an exception while trying to write data to MongoDB server', null, $e);
             }
 
-            return isset($result[ 'ok' ]) ? $result[ 'ok' ] == 1 : true;
+            return isset($result['ok']) ? $result['ok'] == 1 : true;
         } else {
             throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
         }
@@ -125,15 +125,15 @@ class Driver implements ExtendedCacheItemPoolInterface
 
         if ($document) {
             $return = [
-              self::DRIVER_DATA_WRAPPER_INDEX => $this->decode($document[ self::DRIVER_DATA_WRAPPER_INDEX ]->getData()),
-              self::DRIVER_TAGS_WRAPPER_INDEX => $this->decode($document[ self::DRIVER_TAGS_WRAPPER_INDEX ]->getData()),
-              self::DRIVER_EDATE_WRAPPER_INDEX => (new \DateTime())->setTimestamp($document[ self::DRIVER_EDATE_WRAPPER_INDEX ]->toDateTime()->getTimestamp()),
+                self::DRIVER_DATA_WRAPPER_INDEX => $this->decode($document[self::DRIVER_DATA_WRAPPER_INDEX]->getData()),
+                self::DRIVER_TAGS_WRAPPER_INDEX => $this->decode($document[self::DRIVER_TAGS_WRAPPER_INDEX]->getData()),
+                self::DRIVER_EDATE_WRAPPER_INDEX => (new \DateTime())->setTimestamp($document[self::DRIVER_EDATE_WRAPPER_INDEX]->toDateTime()->getTimestamp()),
             ];
 
-            if(!empty($this->config[ 'itemDetailedDate' ])){
+            if (!empty($this->config['itemDetailedDate'])) {
                 $return += [
-                  self::DRIVER_MDATE_WRAPPER_INDEX => (new \DateTime())->setTimestamp($document[ self::DRIVER_MDATE_WRAPPER_INDEX ]->toDateTime()->getTimestamp()),
-                  self::DRIVER_CDATE_WRAPPER_INDEX => (new \DateTime())->setTimestamp($document[ self::DRIVER_CDATE_WRAPPER_INDEX ]->toDateTime()->getTimestamp()),
+                    self::DRIVER_MDATE_WRAPPER_INDEX => (new \DateTime())->setTimestamp($document[self::DRIVER_MDATE_WRAPPER_INDEX]->toDateTime()->getTimestamp()),
+                    self::DRIVER_CDATE_WRAPPER_INDEX => (new \DateTime())->setTimestamp($document[self::DRIVER_CDATE_WRAPPER_INDEX]->toDateTime()->getTimestamp()),
                 ];
             }
 
@@ -181,7 +181,7 @@ class Driver implements ExtendedCacheItemPoolInterface
          */
         $this->save($this->getItem('__PFC_CACHE_CLEARED__')->set(true));
 
-        return !empty($result[ 'ok' ]);
+        return !empty($result['ok']);
     }
 
     /**
@@ -194,23 +194,23 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($this->instance instanceof \MongoDB\Driver\Manager) {
             throw new LogicException('Already connected to Mongodb server');
         } else {
-            $host = isset($this->config[ 'host' ]) ? $this->config[ 'host' ] : '127.0.0.1';
-            $port = isset($this->config[ 'port' ]) ? $this->config[ 'port' ] : '27017';
-            $timeout = isset($this->config[ 'timeout' ]) ? $this->config[ 'timeout' ] : 3;
-            $password = isset($this->config[ 'password' ]) ? $this->config[ 'password' ] : '';
-            $username = isset($this->config[ 'username' ]) ? $this->config[ 'username' ] : '';
-            $collectionName = isset($this->config[ 'collectionName' ]) ? $this->config[ 'collectionName' ] : 'Cache';
-            $databaseName = isset($this->config[ 'databaseName' ]) ? $this->config[ 'databaseName' ] : 'phpFastCache';
+            $host = isset($this->config['host']) ? $this->config['host'] : '127.0.0.1';
+            $port = isset($this->config['port']) ? $this->config['port'] : '27017';
+            $timeout = isset($this->config['timeout']) ? $this->config['timeout'] : 3;
+            $password = isset($this->config['password']) ? $this->config['password'] : '';
+            $username = isset($this->config['username']) ? $this->config['username'] : '';
+            $collectionName = isset($this->config['collectionName']) ? $this->config['collectionName'] : 'Cache';
+            $databaseName = isset($this->config['databaseName']) ? $this->config['databaseName'] : 'phpFastCache';
 
 
             /**
              * @todo make an url builder
              */
             $this->instance = $this->instance ?: (new MongodbManager('mongodb://' .
-              ($username ?: '') .
-              ($password ? ":{$password}" : '') .
-              ($username ? '@' : '') . "{$host}" .
-              ($port != '27017' ? ":{$port}" : ''), ['connectTimeoutMS' => $timeout * 1000]));
+                ($username ?: '') .
+                ($password ? ":{$password}" : '') .
+                ($username ? '@' : '') . "{$host}" .
+                ($port != '27017' ? ":{$port}" : ''), ['connectTimeoutMS' => $timeout * 1000]));
             $this->collection = $this->collection ?: new Collection($this->instance, $databaseName, $collectionName);
 
             return true;
@@ -238,16 +238,16 @@ class Driver implements ExtendedCacheItemPoolInterface
     public function getStats()
     {
         $serverStats = $this->instance->executeCommand('phpFastCache', new Command([
-          'serverStatus' => 1,
-          'recordStats' => 0,
-          'repl' => 0,
-          'metrics' => 0,
-        ]))->toArray()[ 0 ];
+            'serverStatus' => 1,
+            'recordStats' => 0,
+            'repl' => 0,
+            'metrics' => 0,
+        ]))->toArray()[0];
 
         $collectionStats = $this->instance->executeCommand('phpFastCache', new Command([
-          'collStats' => (isset($this->config[ 'collectionName' ]) ? $this->config[ 'collectionName' ] : 'Cache'),
-          'verbose' => true,
-        ]))->toArray()[ 0 ];
+            'collStats' => (isset($this->config['collectionName']) ? $this->config['collectionName'] : 'Cache'),
+            'verbose' => true,
+        ]))->toArray()[0];
 
         $array_filter_recursive = function ($array, callable $callback = null) use (&$array_filter_recursive) {
             $array = $callback($array);
@@ -275,14 +275,14 @@ class Driver implements ExtendedCacheItemPoolInterface
         $collectionStats = $array_filter_recursive($collectionStats, $callback);
 
         $stats = (new DriverStatistic())
-          ->setInfo('MongoDB version ' . $serverStats->version . ', Uptime (in days): ' . round($serverStats->uptime / 86400,
-              1) . "\n For more information see RawData.")
-          ->setSize($collectionStats->size)
-          ->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setRawData([
-            'serverStatus' => $serverStats,
-            'collStats' => $collectionStats,
-          ]);
+            ->setInfo('MongoDB version ' . $serverStats->version . ', Uptime (in days): ' . round($serverStats->uptime / 86400,
+                    1) . "\n For more information see RawData.")
+            ->setSize($collectionStats->size)
+            ->setData(implode(', ', array_keys($this->itemInstances)))
+            ->setRawData([
+                'serverStatus' => $serverStats,
+                'collStats' => $collectionStats,
+            ]);
 
         return $stats;
     }

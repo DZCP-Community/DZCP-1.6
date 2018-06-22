@@ -4,7 +4,7 @@
  * http://www.dzcp.de
  */
 
-if(defined('_Clanwars')) {
-    if($do == 'edit')
-        header("Location: ../admin/?admin=cw&do=edit&id=".$_GET['id']);
+if (defined('_Clanwars')) {
+    if ($do == 'edit')
+        header("Location: ../admin/?admin=cw&do=edit&id=" . $_GET['id']);
 }

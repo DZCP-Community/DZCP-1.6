@@ -78,9 +78,9 @@ class Driver implements ExtendedCacheItemPoolInterface
              * @see https://redis.io/commands/setex
              * @see https://redis.io/commands/expire
              */
-            if($ttl <= 0){
+            if ($ttl <= 0) {
                 return $this->instance->expire($item->getKey(), 0);
-            }else{
+            } else {
                 return $this->instance->setex($item->getKey(), $ttl, $this->encode($this->driverPreWrap($item)));
             }
         } else {
@@ -134,26 +134,26 @@ class Driver implements ExtendedCacheItemPoolInterface
     protected function driverConnect()
     {
         /** Backward compatibility */
-        $config = isset($this->config[ 'predis' ]) ? $this->config[ 'predis' ] : $this->config;
-        $path = isset($config[ 'path' ]) ? (string) $config[ 'path' ] : false;
+        $config = isset($this->config['predis']) ? $this->config['predis'] : $this->config;
+        $path = isset($config['path']) ? (string)$config['path'] : false;
 
         $defaultConfig = [
-          'host' => '127.0.0.1',
-          'port' => 6379,
-          'password' => null,
-          'database' => null,
+            'host' => '127.0.0.1',
+            'port' => 6379,
+            'password' => null,
+            'database' => null,
         ];
         $config = array_merge($defaultConfig, $config);
 
         /**
          * If path is provided we consider it as an UNIX Socket
          */
-        if($path){
+        if ($path) {
             $this->instance = new PredisClient([
-              'scheme' => 'unix',
-              'path' =>  $path
+                'scheme' => 'unix',
+                'path' => $path
             ]);
-        }else{
+        } else {
             $this->instance = new PredisClient($config);
         }
 
@@ -192,15 +192,15 @@ HELP;
     public function getStats()
     {
         $info = $this->instance->info();
-        $size = (isset($info[ 'Memory' ][ 'used_memory' ]) ? $info[ 'Memory' ][ 'used_memory' ] : 0);
-        $version = (isset($info[ 'Server' ][ 'redis_version' ]) ? $info[ 'Server' ][ 'redis_version' ] : 0);
-        $date = (isset($info[ 'Server' ][ 'uptime_in_seconds' ]) ? (new \DateTime())->setTimestamp(time() - $info[ 'Server' ][ 'uptime_in_seconds' ]) : 'unknown date');
+        $size = (isset($info['Memory']['used_memory']) ? $info['Memory']['used_memory'] : 0);
+        $version = (isset($info['Server']['redis_version']) ? $info['Server']['redis_version'] : 0);
+        $date = (isset($info['Server']['uptime_in_seconds']) ? (new \DateTime())->setTimestamp(time() - $info['Server']['uptime_in_seconds']) : 'unknown date');
 
         return (new DriverStatistic())
-          ->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setRawData($info)
-          ->setSize($size)
-          ->setInfo(sprintf("The Redis daemon v%s is up since %s.\n For more information see RawData. \n Driver size includes the memory allocation size.",
-            $version, $date->format(DATE_RFC2822)));
+            ->setData(implode(', ', array_keys($this->itemInstances)))
+            ->setRawData($info)
+            ->setSize($size)
+            ->setInfo(sprintf("The Redis daemon v%s is up since %s.\n For more information see RawData. \n Driver size includes the memory allocation size.",
+                $version, $date->format(DATE_RFC2822)));
     }
 }

@@ -4,9 +4,10 @@
  * http://www.dzcp.de
  * Menu: Globale Suche & Forum Suche
  */
-function search() {
-    global $dir,$search_forum;
-    if($dir == 'forum' || $search_forum) {
+function search()
+{
+    global $dir, $search_forum;
+    if ($dir == 'forum' || $search_forum) {
         return show("menu/search_forum", array("submit" => _button_value_search, "search" => _search_word));
     }
 

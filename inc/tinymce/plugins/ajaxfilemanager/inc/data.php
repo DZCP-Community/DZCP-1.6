@@ -1,6 +1,7 @@
 <?php
-	die();
-?><pre>Array
+die();
+?>
+<pre>Array
 (
     [currentFolderPath] => ../../../../uploaded/
     [new_folder] => Add

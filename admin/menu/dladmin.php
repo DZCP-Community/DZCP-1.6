@@ -4,28 +4,25 @@
  * http://www.dzcp.de
  */
 
-if(_adminMenu != 'true') exit;
+if (_adminMenu != 'true') exit;
 
-$where = $where.': '._dl;
-if($do == "new")
-{
-    $qry = db("SELECT * FROM ".$db['dl_kat']."
+$where = $where . ': ' . _dl;
+if ($do == "new") {
+    $qry = db("SELECT * FROM " . $db['dl_kat'] . "
                    ORDER BY name");
-    while($get = _fetch($qry))
-    {
+    while ($get = _fetch($qry)) {
         $kats .= show(_select_field, array("value" => $get['id'],
             "what" => re($get['name']),
             "sel" => ""));
     }
 
-    $files = get_files('../downloads/files/',false,true);
-    for($i=0; $i<count($files); $i++)
-    {
+    $files = get_files('../downloads/files/', false, true);
+    for ($i = 0; $i < count($files); $i++) {
         $dl .= show(_downloads_files_exists, array("dl" => $files[$i],
             "sel" => ""));
     }
 
-    $show = show($dir."/form_dl", array("admin_head" => _downloads_admin_head,
+    $show = show($dir . "/form_dl", array("admin_head" => _downloads_admin_head,
         "ddownload" => "",
         "dintern" => "",
         "durl" => "",
@@ -44,40 +41,38 @@ if($do == "new")
         "beschreibung" => _beschreibung,
         "download" => _downloads_name,
         "intern" => _internal));
-} elseif($do == "add") {
-    if(empty($_POST['download']) || empty($_POST['url']))
-    {
-        if(empty($_POST['download']))
+} elseif ($do == "add") {
+    if (empty($_POST['download']) || empty($_POST['url'])) {
+        if (empty($_POST['download']))
             $show = error(_downloads_empty_download, 1);
-        elseif(empty($_POST['url']))
+        elseif (empty($_POST['url']))
             $show = error(_downloads_empty_url, 1);
     } else {
 
-        if(preg_match("#^www#i",$_POST['url']))
-            $dl = up(links(re($_POST['url'],true)));
+        if (preg_match("#^www#i", $_POST['url']))
+            $dl = up(links(re($_POST['url'], true)));
         else
-            $dl = up(re($_POST['url'],true));
+            $dl = up(re($_POST['url'], true));
 
-        $qry = db("INSERT INTO ".$db['downloads']."
-                     SET `download`     = '".up($_POST['download'])."',
-                         `url`          = '".$dl."',
-                         `date`         = '".time()."',
-                         `beschreibung` = '".up($_POST['beschreibung'])."',
-                         `kat`          = '".((int)$_POST['kat'])."',
-                         `intern`          = '".((int)$_POST['intern'])."'");
+        $qry = db("INSERT INTO " . $db['downloads'] . "
+                     SET `download`     = '" . up($_POST['download']) . "',
+                         `url`          = '" . $dl . "',
+                         `date`         = '" . time() . "',
+                         `beschreibung` = '" . up($_POST['beschreibung']) . "',
+                         `kat`          = '" . ((int)$_POST['kat']) . "',
+                         `intern`          = '" . ((int)$_POST['intern']) . "'");
 
         $show = info(_downloads_added, "?admin=dladmin");
     }
-} elseif($do == "edit") {
-    $qry  = db("SELECT * FROM ".$db['downloads']."
-                    WHERE id = '".(int)($_GET['id'])."'");
+} elseif ($do == "edit") {
+    $qry = db("SELECT * FROM " . $db['downloads'] . "
+                    WHERE id = '" . (int)($_GET['id']) . "'");
     $get = _fetch($qry);
 
-    $qryk = db("SELECT * FROM ".$db['dl_kat']."
+    $qryk = db("SELECT * FROM " . $db['dl_kat'] . "
                     ORDER BY name");
-    while($getk = _fetch($qryk))
-    {
-        if($getk['id'] == $get['kat']) $sel = 'selected="selected"';
+    while ($getk = _fetch($qryk)) {
+        if ($getk['id'] == $get['kat']) $sel = 'selected="selected"';
         else $sel = "";
 
         $kats .= show(_select_field, array("value" => $getk['id'],
@@ -85,7 +80,7 @@ if($do == "new")
             "sel" => $sel));
     }
 
-    $show = show($dir."/form_dl", array("admin_head" => _downloads_admin_head_edit,
+    $show = show($dir . "/form_dl", array("admin_head" => _downloads_admin_head_edit,
         "ddownload" => re($get['download']),
         "dintern" => $get['intern'] ? 'checked="checked"' : '',
         "durl" => re($get['url']),
@@ -98,43 +93,41 @@ if($do == "new")
         "dbeschreibung" => re_bbcode(re($get['beschreibung'])),
         "kat" => _downloads_kat,
         "what" => _button_value_edit,
-        "do" => "editdl&amp;id=".$_GET['id']."",
+        "do" => "editdl&amp;id=" . $_GET['id'] . "",
         "kats" => $kats,
         "url" => _downloads_url,
         "beschreibung" => _beschreibung,
         "download" => _downloads_name,
         "intern" => _internal));
-} elseif($do == "editdl") {
-    if(empty($_POST['download']) || empty($_POST['url']))
-    {
-        if(empty($_POST['download'])) $show = error(_downloads_empty_download, 1);
-        elseif(empty($_POST['url']))  $show = error(_downloads_empty_url, 1);
+} elseif ($do == "editdl") {
+    if (empty($_POST['download']) || empty($_POST['url'])) {
+        if (empty($_POST['download'])) $show = error(_downloads_empty_download, 1);
+        elseif (empty($_POST['url'])) $show = error(_downloads_empty_url, 1);
     } else {
-        if(preg_match("#^www#i",$_POST['url']))
-            $dl = up(links(re($_POST['url'],true)));
+        if (preg_match("#^www#i", $_POST['url']))
+            $dl = up(links(re($_POST['url'], true)));
         else
-            $dl = up(re($_POST['url'],true));
+            $dl = up(re($_POST['url'], true));
 
-        db("UPDATE ".$db['downloads']."
-                     SET `download`     = '".up($_POST['download'])."',
-                         `url`          = '".$dl."',
-                         `beschreibung` = '".up($_POST['beschreibung'])."',
-                         `kat`          = '".((int)$_POST['kat'])."',
-                         `intern`          = '".((int)$_POST['intern'])."'
-                     WHERE id = '".(int)($_GET['id'])."'");
+        db("UPDATE " . $db['downloads'] . "
+                     SET `download`     = '" . up($_POST['download']) . "',
+                         `url`          = '" . $dl . "',
+                         `beschreibung` = '" . up($_POST['beschreibung']) . "',
+                         `kat`          = '" . ((int)$_POST['kat']) . "',
+                         `intern`          = '" . ((int)$_POST['intern']) . "'
+                     WHERE id = '" . (int)($_GET['id']) . "'");
 
         $show = info(_downloads_edited, "?admin=dladmin");
     }
-} elseif($do == "delete") {
-    $qry = db("DELETE FROM ".$db['downloads']."
-                   WHERE id = '".(int)($_GET['id'])."'");
+} elseif ($do == "delete") {
+    $qry = db("DELETE FROM " . $db['downloads'] . "
+                   WHERE id = '" . (int)($_GET['id']) . "'");
 
     $show = info(_downloads_deleted, "?admin=dladmin");
 } else {
-    $qry = db("SELECT * FROM ".$db['downloads']."
+    $qry = db("SELECT * FROM " . $db['downloads'] . "
                    ORDER BY id");
-    while($get = _fetch($qry))
-    {
+    while ($get = _fetch($qry)) {
         $edit = show("page/button_edit_single", array("id" => $get['id'],
             "action" => "admin=dladmin&amp;do=edit",
             "title" => _button_title_edit));
@@ -143,8 +136,9 @@ if($do == "new")
             "title" => _button_title_del,
             "del" => convSpace(_confirm_del_dl)));
 
-        $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
-        $show_ .= show($dir."/downloads_show", array("id" => $get['id'],
+        $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";
+        $color++;
+        $show_ .= show($dir . "/downloads_show", array("id" => $get['id'],
             "dl" => re($get['download']),
             "class" => $class,
             "edit" => $edit,
@@ -152,7 +146,7 @@ if($do == "new")
         ));
     }
 
-    $show = show($dir."/downloads", array("head" => _dl,
+    $show = show($dir . "/downloads", array("head" => _dl,
         "date" => _datum,
         "titel" => _dl_file,
         "add" => _downloads_admin_head,

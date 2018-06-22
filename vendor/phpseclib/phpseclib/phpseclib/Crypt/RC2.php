@@ -440,7 +440,7 @@ class RC2 extends Base
         $actions = array($limit => 44, 44 => 64);
         $j = 0;
 
-        for (;;) {
+        for (; ;) {
             // Mixing round.
             $r0 = (($r0 + $keys[$j++] + ((($r1 ^ $r2) & $r3) ^ $r1)) & 0xFFFF) << 1;
             $r0 |= $r0 >> 16;
@@ -485,7 +485,7 @@ class RC2 extends Base
         $actions = array($limit => 20, 20 => 0);
         $j = 64;
 
-        for (;;) {
+        for (; ;) {
             // R-mixing round.
             $r3 = ($r3 | ($r3 << 16)) >> 5;
             $r3 = ($r3 - $keys[--$j] - ((($r0 ^ $r1) & $r2) ^ $r0)) & 0xFFFF;
@@ -601,7 +601,7 @@ class RC2 extends Base
             $actions = array($limit => 44, 44 => 64);
             $j = 0;
 
-            for (;;) {
+            for (; ;) {
                 // Mixing round.
                 $encrypt_block .= '
                     $r0 = (($r0 + ' . $keys[$j++] . ' +
@@ -639,7 +639,7 @@ class RC2 extends Base
             $actions = array($limit => 20, 20 => 0);
             $j = 64;
 
-            for (;;) {
+            for (; ;) {
                 // R-mixing round.
                 $decrypt_block .= '
                     $r3 = ($r3 | ($r3 << 16)) >> 5;
@@ -675,9 +675,9 @@ class RC2 extends Base
             // Creates the inline-crypt function
             $lambda_functions[$code_hash] = $this->_createInlineCryptFunction(
                 array(
-                   'init_crypt'    => $init_crypt,
-                   'encrypt_block' => $encrypt_block,
-                   'decrypt_block' => $decrypt_block
+                    'init_crypt' => $init_crypt,
+                    'encrypt_block' => $encrypt_block,
+                    'decrypt_block' => $decrypt_block
                 )
             );
         }

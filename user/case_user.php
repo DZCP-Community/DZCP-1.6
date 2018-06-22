@@ -4,9 +4,9 @@
  * http://www.dzcp.de
  */
 
-if(defined('_UserMenu')) {
-    $where = _user_profile_of.'autor_'.$_GET['id'];
-    if(!db("SELECT id FROM `".$db['users']."` WHERE `id` = ".(int)($_GET['id']).";",true) ? true : false)
+if (defined('_UserMenu')) {
+    $where = _user_profile_of . 'autor_' . $_GET['id'];
+    if (!db("SELECT id FROM `" . $db['users'] . "` WHERE `id` = " . (int)($_GET['id']) . ";", true) ? true : false)
         $index = error(_user_dont_exist, 1);
     else {
         $get = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . (int)($_GET['id']) . ";", false, true);
@@ -36,14 +36,16 @@ if(defined('_UserMenu')) {
             $battlenetu = empty($get['battlenetid']) ? '-' : show(_battleneticon, array("id" => str_replace(" ", "%20", re($get['battlenetid'])), "img" => "1", "css" => ""));
             $bday = (!$get['bday'] || empty($get['bday'])) ? "-" : date('d.m.Y', $get['bday']);
 
-            $icq = "-"; $icqnr = '';
+            $icq = "-";
+            $icqnr = '';
             if (!empty($get['icq'])) {
                 $icq = show(_icqstatus, array("uin" => $get['icq']));
                 $icqnr = re($get['icq']);
             }
 
-            $status = ($get['status'] == 1 || data('level',(int)($_GET['id']) != 1 && isset($_GET['sq']))) ? _aktiv_icon : _inaktiv_icon; $clan = "";
-            if(data('level',(int)($_GET['id']) != 1 || isset($_GET['sq']))) {
+            $status = ($get['status'] == 1 || data('level', (int)($_GET['id']) != 1 && isset($_GET['sq']))) ? _aktiv_icon : _inaktiv_icon;
+            $clan = "";
+            if (data('level', (int)($_GET['id']) != 1 || isset($_GET['sq']))) {
                 $sq = db("SELECT * FROM `" . $db['userpos'] . "` WHERE `user` = " . (int)($_GET['id']) . ";");
                 $cnt = cnt($db['userpos'], " WHERE `user` = " . $get['id']);
                 $i = 1;

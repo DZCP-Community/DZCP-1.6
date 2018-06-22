@@ -16,8 +16,7 @@ $testHelper = new TestHelper('Custom namespaces');
 
 $testDir = __DIR__ . '/../src/phpFastCache/CustomDriversPath/Files2/';
 
-if (@!mkdir($testDir, 0777, true) && !is_dir($testDir))
-{
+if (@!mkdir($testDir, 0777, true) && !is_dir($testDir)) {
     $testHelper->printFailText('Cannot create CustomDriversPath directory');
     $testHelper->terminateTest();
 }
@@ -90,12 +89,12 @@ ITEM_CLASS_STRING;
  */
 
 
-if(!file_put_contents("{$testDir}Driver.php", $driverClassString)
-  || !file_put_contents("{$testDir}Item.php", $itemClassString)
-){
+if (!file_put_contents("{$testDir}Driver.php", $driverClassString)
+    || !file_put_contents("{$testDir}Item.php", $itemClassString)
+) {
     $testHelper->printFailText('The php files of driver "Files2" were not written');
     $testHelper->terminateTest();
-}else{
+} else {
     $testHelper->printPassText('The php files of driver "Files2" were written');
 }
 
@@ -105,12 +104,12 @@ if(!file_put_contents("{$testDir}Driver.php", $driverClassString)
 chmod("{$testDir}Driver.php", 0644);
 chmod("{$testDir}Item.php", 0644);
 
-if(!class_exists(phpFastCache\CustomDriversPath\Files2\Item::class)
-  || !class_exists(phpFastCache\CustomDriversPath\Files2\Driver::class)
-){
+if (!class_exists(phpFastCache\CustomDriversPath\Files2\Item::class)
+    || !class_exists(phpFastCache\CustomDriversPath\Files2\Driver::class)
+) {
     $testHelper->printFailText('The php classes of driver "Files2" does not exists');
     $testHelper->terminateTest();
-}else{
+} else {
     $testHelper->printPassText('The php classes of driver "Files2" were found');
 }
 
@@ -133,7 +132,7 @@ $cacheInstance->save($cacheItem);
 $cacheInstance->detachAllItems();
 unset($cacheItem);
 
-$cacheValue = (new CacheConditional($cacheInstance))->get($cacheKey, function() use ($cacheKey, $testHelper, $RandomCacheValue){
+$cacheValue = (new CacheConditional($cacheInstance))->get($cacheKey, function () use ($cacheKey, $testHelper, $RandomCacheValue) {
     /**
      * No parameter are passed
      * to this closure
@@ -142,9 +141,9 @@ $cacheValue = (new CacheConditional($cacheInstance))->get($cacheKey, function() 
     return $RandomCacheValue . '-1337';
 });
 
-if($cacheValue === $RandomCacheValue){
+if ($cacheValue === $RandomCacheValue) {
     $testHelper->printPassText(sprintf('The cache promise successfully returned expected value "%s".', $cacheValue));
-}else{
+} else {
     $testHelper->printFailText(sprintf('The cache promise returned an unexpected value "%s".', $cacheValue));
 }
 

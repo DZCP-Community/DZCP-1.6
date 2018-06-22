@@ -9,12 +9,12 @@ define('basePath', realpath('../../../..'));
 ## INCLUDES ##
 $ajaxJob = true;
 
-include_once(basePath.'/vendor/autoload.php');
-include_once(basePath."/inc/debugger.php");
-include_once(basePath."/inc/config.php");
-include_once(basePath."/inc/bbcode.php");
+include_once(basePath . '/vendor/autoload.php');
+include_once(basePath . "/inc/debugger.php");
+include_once(basePath . "/inc/config.php");
+include_once(basePath . "/inc/bbcode.php");
 
 ## SETTINGS ##
-if(!permission("downloads") && !permission("news") && !permission('artikel')) {
+if (!permission("downloads") && !permission("news") && !permission('artikel')) {
     die('Permission denied');
 }
