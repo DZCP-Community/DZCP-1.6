@@ -16,6 +16,11 @@ $ajaxJob = true;
 
 ## INCLUDES ##
 include(basePath . '/vendor/autoload.php');
+
+$gump = GUMP::get_instance();
+$_GET = $gump->sanitize($_GET);
+$_POST = $gump->sanitize($_POST);
+
 include(basePath . "/inc/debugger.php");
 include(basePath . "/inc/config.php");
 include(basePath . "/inc/bbcode.php");
@@ -38,9 +43,6 @@ function steamIMG($steamID = '')
     if (!allow_url_fopen_support() && !fsockopen_support_bypass) return _fopen;
     if (!$steam = SteamAPI::getUserInfos($steamID)) return '-'; //UserInfos
     if (!$steam || empty($steam) || !is_array($steam) || count($steam) <= 1) return '-';
-
-    //Avatar
-    //$user_avatar = $cache->get('steam_avatar_'.$steamID);
 
     $CachedString = $cache->getItem('steam_avatar_' . $steamID);
     if (is_null($CachedString->get())) {
@@ -89,10 +91,10 @@ switch (isset($_GET['i']) ? $_GET['i'] : ''):
         echo '<table class="hperc" cellspacing="0">' . server($_GET['serverID']) . '</table>';
         break;
     case 'shoutbox';
-        echo '<table class="hperc" cellspacing="1">' . shout(1) . '</table>';
+        echo '<table class="hperc" cellspacing="1">' . shout(true) . '</table>';
         break;
     case 'teamspeak';
-        echo '<table class="hperc" cellspacing="0">' . teamspeak(1) . '</table>';
+        echo '<table class="hperc" cellspacing="0">' . teamspeak(true) . '</table>';
         break;
     case 'steam';
         echo steamIMG(trim($_GET['steamid']));
