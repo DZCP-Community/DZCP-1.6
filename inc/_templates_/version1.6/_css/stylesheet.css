@@ -1878,83 +1878,78 @@ img.border {
     padding-top: 5px;
     padding-left: 5px;
     padding-right: 5px;
-    width: 274px;
+    width: 100%;
     height: 45px;
 }
 
 .steam_box {
-    height: 40px;
-    padding: 4px 0 4px 4px;
+    height: 50px;
+    padding: 2px 0 2px 2px;
     margin-bottom: 0px;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 13px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     border-radius: 3px;
     position: relative;
-    height: 40px;
     background-color: #3a3a3a;
-    opacity: .8;
-    filter: alpha(opacity=80);
-    -moz-opacity: .8;
+    opacity: .7;
+    filter: alpha(opacity=70);
+    -moz-opacity: .7;
 }
 
 .steam_box_avatar {
-    width: 37px;
-    height: 37px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-top: 0px;
+    width: 45px;
+    height: 45px;
+    padding: 6px 0 0 6px;
     border-radius: 3px;
     background-color: #545454;
 }
 
 .steam_box .steam_box_avatar {
     float: left;
-    margin-right: 7px;
+    margin-right: 0px;
 }
 
 .steam_box_content {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    width: 185px;
+    height: 45px;
+    padding: 0 0 0 10px;
+    background-color: #706c6b; /* fallback color if gradients are not supported */
+    background-image: -webkit-linear-gradient(top, #333333 20%, 80%, #000000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+    background-image:    -moz-linear-gradient(top, #333333 20%, 80%, #000000); /* For Firefox (3.6 to 15) */
+    background-image:      -o-linear-gradient(top, #333333 20%, 80%, #000000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:         linear-gradient(to bottom, #333333 20%, #000000 80%); /* Standard syntax; must be last */
+    border-radius: 3px;
+    text-align: center;
 }
 
 .steam_box_avatar.in-game {
-    background-color: #9bc861;
-    background: -moz-linear-gradient(top, #9bc861 5%, #789e4c 95%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #9bc861), color-stop(95%, #789e4c));
-    background: -webkit-linear-gradient(top, #9bc861 5%, #789e4c 95%);
-    background: -o-linear-gradient(top, #9bc861 5%, #789e4c 95%);
-    background: -ms-linear-gradient(top, #9bc861 5%, #789e4c 95%);
-    background: linear-gradient(to bottom, #9bc861 5%, #789e4c 95%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9bc861', endColorstr='#789e4c', GradientType=0);
-    filter: none;
+    background-color: #9bc861; /* fallback color if gradients are not supported */
+    background-image: -webkit-linear-gradient(top, #9bc861 20%, 80%, #789e4c); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+    background-image:    -moz-linear-gradient(top, #9bc861 20%, 80%, #789e4c); /* For Firefox (3.6 to 15) */
+    background-image:      -o-linear-gradient(top, #9bc861 20%, 80%, #789e4c); /* For old Opera (11.1 to 12.0) */ 
+    background-image:         linear-gradient(to bottom, #9bc861 20%, #789e4c 80%); /* Standard syntax; must be last */
 }
 
 .steam_box_avatar.online {
-    background-color: #7bafd6;
-    background: -moz-linear-gradient(top, #7bafd6 5%, #506d92 95%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #7bafd6), color-stop(95%, #506d92));
-    background: -webkit-linear-gradient(top, #7bafd6 5%, #506d92 95%);
-    background: -o-linear-gradient(top, #7bafd6 5%, #506d92 95%);
-    background: -ms-linear-gradient(top, #7bafd6 5%, #506d92 95%);
-    background: linear-gradient(to bottom, #7bafd6 5%, #506d92 95%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7bafd6', endColorstr='#506d92', GradientType=0);
-    filter: none;
+    background-color: #7bafd6; /* fallback color if gradients are not supported */
+    background-image: -webkit-linear-gradient(top, #7bafd6 20%, 80%, #506d92); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+    background-image:    -moz-linear-gradient(top, #7bafd6 20%, 80%, #506d92); /* For Firefox (3.6 to 15) */
+    background-image:      -o-linear-gradient(top, #7bafd6 20%, 80%, #506d92); /* For old Opera (11.1 to 12.0) */ 
+    background-image:         linear-gradient(to bottom, #7bafd6 20%, #506d92 80%); /* Standard syntax; must be last */
 }
 
 .steam_box_avatar.offline {
-    background: -moz-linear-gradient(top, #706c6b 5%, #4e4d4d 95%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #706c6b), color-stop(95%, #4e4d4d));
-    background: -webkit-linear-gradient(top, #706c6b 5%, #4e4d4d 95%);
-    background: -o-linear-gradient(top, #706c6b 5%, #4e4d4d 95%);
-    background: -ms-linear-gradient(top, #706c6b 5%, #4e4d4d 95%);
-    background: linear-gradient(to bottom, #706c6b 5%, #4e4d4d 95%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#706c6b', endColorstr='#4e4d4d', GradientType=0);
-    filter: none;
+    background-color: #706c6b; /* fallback color if gradients are not supported */
+    background-image: -webkit-linear-gradient(top, #706c6b 20%, 80%, #4e4d4d); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+    background-image:    -moz-linear-gradient(top, #706c6b 20%, 80%, #4e4d4d); /* For Firefox (3.6 to 15) */
+    background-image:      -o-linear-gradient(top, #706c6b 20%, 80%, #4e4d4d); /* For old Opera (11.1 to 12.0) */ 
+    background-image:         linear-gradient(to bottom, #706c6b 20%, #4e4d4d 80%); /* Standard syntax; must be last */
 }
 
 #skypedetectionswf {
