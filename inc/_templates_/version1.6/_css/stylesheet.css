@@ -153,14 +153,14 @@ div#clanlogo_left {
 div#clanlogo_right {
     position: absolute;
     left: 1165px;
-    top: 43px;
+    top: 35px;
 }
 
 /* ClanName banner in header */
 div#clanname {
     position: absolute;
     left: 395px;
-    top: 80px;
+    top: 81px;
 }
 
 /* Rotation banner in header */
@@ -899,6 +899,7 @@ td.commentsLeft {
     width: 25%;
     height: 128px;
     padding: 2px;
+    background-color: #777777;
 }
 
 td.commentsRight {
@@ -1025,7 +1026,7 @@ div.licencebar {
     z-index: 9999;
 }
 
-td.licencebar {
+td.licenciebar {
     color: #b52b2b;
     text-align: center;
     vertical-align: middle;
@@ -1885,7 +1886,6 @@ img.border {
 .steam_box {
     height: 50px;
     padding: 2px 0 2px 2px;
-    margin-bottom: 0px;
     font-size: 12px;
     line-height: 13px;
     overflow: hidden;
@@ -1918,7 +1918,6 @@ img.border {
     text-overflow: ellipsis;
     width: 185px;
     height: 45px;
-    padding: 0 0 0 10px;
     background-color: #706c6b; /* fallback color if gradients are not supported */
     background-image: -webkit-linear-gradient(top, #333333 20%, 80%, #000000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
     background-image:    -moz-linear-gradient(top, #333333 20%, 80%, #000000); /* For Firefox (3.6 to 15) */
@@ -1952,12 +1951,6 @@ img.border {
     background-image:         linear-gradient(to bottom, #706c6b 20%, #4e4d4d 80%); /* Standard syntax; must be last */
 }
 
-#skypedetectionswf {
-    width: 0px !important;
-    height: 0px !important;
-    display: none
-}
-
 #dialog-confirm, #dialog-confirm-lock {
     display: none;
 }
@@ -1978,3 +1971,23 @@ img.border {
     -webkit-user-select: none;
     -moz-user-select: none;
 }
+
+/* zoom bg and ui-icons */
+.zoom-150 {
+zoom: 150%; 
+    -moz-transform: scale(1.50); 
+    -webkit-zoom: 1.50; 
+    -ms-zoom: 1.50;
+ }
+ .zoom-200 {
+zoom: 200%; 
+    -moz-transform: scale(2.0); 
+    -webkit-zoom: 2.0; 
+    -ms-zoom: 2.0;
+ }
+.zoom-400 {
+zoom: 400%; 
+    -moz-transform: scale(4.0); 
+    -webkit-zoom: 4.0; 
+    -ms-zoom: 4.0;
+ }
