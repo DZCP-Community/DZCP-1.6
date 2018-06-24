@@ -46,7 +46,7 @@ function gz_output($output = '')
 
     if (buffer_show_licence_bar) {
         $licence_bar = '<div class="licencebar"> <table style="width:100%;margin:auto" cellspacing="0"><tr><td class="licencebar" nowrap="nowrap">Powered by <a class="licencebar" href="https://www.dzcp.de" target="_blank" title="deV!L`z Clanportal">DZCP - deV!L`z&nbsp;Clanportal V' . _version .
-            (_edition == 'dev' ? ' - Development Editon' : '') . '</a></td></tr> </table> </div>';
+            (_edition == 'dev' ? ' - Development Editon' : (_edition == 'cb' ?  ' - Custom Build' : '')) . '</a></td></tr> </table> </div>';
 
         if (!file_exists(basePath . '/_codeking.licence'))
             $output = str_ireplace('</body>', $licence_bar . "\r\n</body>", $output);
