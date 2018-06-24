@@ -1506,8 +1506,6 @@ $language_text['_user_delete_verify'] = '
     <a href="?action=admin&amp;do=delete&verify=yes&amp;id=[id]">Ja, l&ouml;schen!</a>
   </td>
 </tr>';
-$language_text['_hlswid'] = 'XFire Name';
-$language_text['_hlswstatus'] = 'XFire';
 $language_text['_user_deleted'] = 'Der User wurde erfolgreich gel&ouml;scht!';
 $language_text['_admin_user_shoutbox'] = 'Admin: Shoutbox';
 $language_text['_admin_user_awards'] = 'Admin: Awards';

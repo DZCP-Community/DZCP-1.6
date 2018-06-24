@@ -13,13 +13,10 @@ $language_text['_teamspeak_menu_icon_no'] = '<a href="?admin=teamspeak&amp;do=me
 $language_text['_gameicon_blank'] = '<img alt="" src="[icon]" class="icon" />';
 $language_text['_steamicon'] = '<a target="_blank" onmouseover="DZCP.showSteamBox(\'[username]\',\'[avatar_url]\',\'[text1]\',\'[text2]\',[status])" onmouseout="DZCP.hideInfo()" href="[profile_url]"><img height="16" width="16" src="../inc/images/steam.gif" alt="" class="icon" /> [username]</a>';
 $language_text['_steamicon_nouser'] = '<a target="_blank" href="[profile_url]"><img height="16" width="16" src="../inc/images/steam.gif" alt="" class="icon" onmouseover="DZCP.showSteamBox(\'[username]\',\'[avatar_url]\',\'[text1]\',\'[text2]\',[status])" onmouseout="DZCP.hideInfo()" /></a>';
-
-## ADDED / REDEFINED FOR 1.5.2
 $language_text['_dropdown_date_ts'] = '<select id="t_[nr]" name="t_[nr]" class="dropdown">[day]</select> <select id="m_[nr]" name="m_[nr]" class="dropdown">[month]</select> <select id="j_[nr]" name="j_[nr]" class="dropdown">[year]</select>';
 $language_text['_dropdown_time_ts'] = '<select id="h_[nr]" name="h_[nr]" class="dropdown">[hour]</select> <select id="min_[nr]" name="min_[nr]" class="dropdown">[minute]</select>[uhr]';
 $language_text['_cw_details_gegner'] = '<a href="[url]" title="[gegner]">[gegner]</a>';
 $language_text['_cw_details_gegner_blank'] = '<a href="[url]" title="[gegner]" target="_blank">[gegner]</a>';
-## ADDED / REDEFINED FOR 1.5.1
 $language_text['_elevel_admin_select'] = '
 <option value="banned">[banned]</option>
 <option value="1" [selu]>[ruser]</option>
@@ -31,7 +28,6 @@ $language_text['_elevel_perm_select'] = '
 <option value="1" [selu]>[ruser]</option>
 <option value="2" [selt]>[trial]</option>
 <option value="3" [selm]>[member]</option>';
-## ADDED / REDEFINED FOR 1.5
 $language_text['_profil_edit_custom'] = '
 <tr>
   <td class="contentMainTop" width="30%"><span class="fontBold">[name]</span></td>
@@ -52,7 +48,6 @@ $language_text['_sponsors_bannerlink'] = '<a href="../sponsors/?action=link&amp;
 $language_text['_next_event_link'] = '[datum] - <a class="navLastReg" href="../kalender/?action=show&amp;time=[timestamp]">[event]</a>';
 $language_text['_user_link_blank'] = '[nick]';
 $language_text['_dropdown_date2'] = '<select id="tag" name="tag" class="dropdown">[tag]</select> <select id="monat" name="monat" class="dropdown">[monat]</select> <select id="jahr" name="jahr" class="dropdown">[jahr]</select>';
-//Added for DZCP 1.4
 $language_text['_buddys_yesicon'] = '<img src="../inc/images/buddys_yes.gif" alt="" class="icon" />';
 $language_text['_buddys_noicon'] = '<img src="../inc/images/buddys_no.gif" alt="" class="icon" />';
 $language_text['_closedicon_votes'] = '<img src="../inc/images/closed_votes.gif" alt="" class="icon" />';
@@ -65,8 +60,6 @@ $language_text['_forum_zitat_preview'] = '<img src="../inc/images/zitat.gif" alt
 $language_text['_user_link_preview'] = '[country] <a class="[class]" href="javascript:void(0)">[nick]</a>';
 $language_text['_userpic_link_raw'] = '<img src=../inc/images/uploads/userpics/[id].[endung] width=[width] height=[height] alt= />';
 $language_text['_no_userpic_raw'] = '<img src=../inc/images/nopic.gif width=[width] height=[height] alt= />';
-$language_text['_hlswicon'] = '<img src="../inc/images/xfire.gif" alt="" class="icon" onmouseover="DZCP.showInfo(\'<tr><td><img src=http://de.miniprofile.xfire.com/bg/bg/type/0/[id].png /></td></tr>\')" onmouseout="DZCP.hideInfo()" />';
-//Edited for DZCP 1.4
 $language_text['_gal_newicon'] = '<a href="?admin=gallery&amp;do=new&amp;id=[id]"><img src="../inc/images/new.gif" alt="" title="[titel]" class="icon" /></a>';
 $language_text['_downloads_link'] = '<a href="?action=download&amp;id=[id]" style="display:block" title="[titel]"><img src="../inc/images/download.gif" alt="" class="icon" /> [download]</a>';
 $language_text['_forum_thread_search_link'] = '[sticky] <a href="../forum/?action=showthread&amp;id=[id]&amp;hl=[hl]">[topic]</a> [closed]';
@@ -74,7 +67,6 @@ $language_text['_dropdown_time'] = '<select id="h" name="h" class="dropdown">[ho
 $language_text['_server_menu_icon_yes'] = '<a href="?admin=server&amp;do=menu&amp;id=[id]"><img src="../inc/images/server_no.gif" alt="" class="icon" /></a>';
 $language_text['_server_menu_icon_no'] = '<a href="?admin=server&amp;do=menu&amp;id=[id]"><img src="../inc/images/server_yes.gif" alt="" class="icon" /></a>';
 $language_text['_no_userpic_small_link'] = '<a href="../user/?action=user&amp;id=[id]"><img src="../inc/images/nopic.gif" width="60" height="80" alt="" /></a>';
-////////////////////
 ## Allgemein ##
 $language_text['_user_link'] = '[country] <a class="[class]" href="../user/?action=user&amp;id=[id][get]">[nick]</a>';
 $language_text['_user_link_noreg'] = '<a class="[class]" href="mailto:[email]">[nick]</a>';
@@ -92,7 +84,6 @@ $language_text['_email_mailto'] = '<a href="mailto:[email]">[email]</a>';
 $language_text['_emailicon'] = '<a href="mailto:[email]"><img src="../inc/images/email.gif" alt="" title="[email]" class="icon" /></a>';
 $language_text['_steamicon_blank'] = '<img src="../inc/images/steam.gif" alt="" class="icon" />';
 $language_text['_emailicon_blank'] = '<img src="../inc/images/email.gif" alt="" class="icon" />';
-$language_text['_hlswicon_blank'] = '<img src="../inc/images/xfire.gif" alt="" class="icon" />';
 $language_text['_zitaticon'] = '<img src="../inc/images/zitat.gif" alt="" class="icon" />';
 $language_text['_hpicon_blank'] = '<img src="../inc/images/hp.gif" alt="" class="icon" />';
 $language_text['_topicon'] = '<img src="../inc/images/top.gif" alt="" class="icon" />';

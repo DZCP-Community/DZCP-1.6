@@ -1508,8 +1508,6 @@ $language_text['_user_delete_verify'] = '
     <a href="?action=admin&amp;do=delete&verify=yes&amp;id=[id]">Да, удалить!</a>
   </td>
 </tr>';
-$language_text['_hlswid'] = 'Имя Xfire';
-$language_text['_hlswstatus'] = 'XFire';
 $language_text['_user_deleted'] = 'Пользователь был успешно удален!';
 $language_text['_admin_user_shoutbox'] = 'Админ: Мини-чатa';
 $language_text['_admin_user_awards'] = 'Админ: Награды';

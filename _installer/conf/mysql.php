@@ -926,7 +926,6 @@ function install_mysql($login, $nick, $pwd, $email)
       `regdatum` int(20) NOT NULL DEFAULT '0',
       `email` varchar(200) NOT NULL DEFAULT '',
       `icq` varchar(20) NOT NULL DEFAULT '',
-      `hlswid` varchar(100) NOT NULL DEFAULT '',
       `steamid` varchar(20) NOT NULL DEFAULT '',
       `level` varchar(15) NOT NULL DEFAULT '',
       `rlname` varchar(200) NOT NULL DEFAULT '',

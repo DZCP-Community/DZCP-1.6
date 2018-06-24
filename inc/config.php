@@ -17,7 +17,7 @@ define('use_curl_support', true); //Soll CURL verwendet werden
 define('use_min_css_js_files', false); //Sollen die Komprimierten versionen von css und js verwendet werden?
 
 define('use_default_timezone', true); // Verwendende die Zeitzone vom Server
-define('default_timezone', 'Europe/Berlin'); // Die zu verwendende Zeitzone selbst einstellen * 'use_default_timezone' auf false stellen *
+define('default_timezone', 'Europe/Berlin'); // Die zu verwendende Zeitzone selbst einstellen * 'use_default_timezone' auf false stellen. List of Supported Timezones: http://php.net/manual/en/timezones.php *
 define('admin_view_dzcp_news', true); // Entscheidet ob der Newstricker in der Administration angezeigt wird
 
 define('thumbgen_cache', true); // Sollen die verkleinerten Bilder der Thumbgen gespeichert werden
