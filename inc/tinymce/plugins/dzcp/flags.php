@@ -5,7 +5,7 @@
  */
 
 ob_start();
-define('basePath', '../../../../');
+define('basePath', realpath('../../../..'));
 
 ## INCLUDES ##
 $ajaxJob = true;
