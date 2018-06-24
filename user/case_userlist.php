@@ -66,7 +66,7 @@ if (defined('_UserMenu')) {
         $originu = empty($get['originid']) ? "-" : show(_originicon, array("id" => re($get['originid']), "img" => "1", "css" => ""));
         $battlenetu = empty($get['battlenetid']) ? "-" : show(_battleneticon, array("id" => re($get['battlenetid']), "img" => "1", "css" => ""));
 
-        $skypename = empty($get['skypename']) ? "-" : "<a href=\"skype:" . re($get['skypename']) . "?chat\"><img src=\"http://mystatus.skype.com/smallicon/" . re($get['skypename']) . "\" style=\"border: none;\" width=\"16\" height=\"16\" alt=\"" . re($get['skypename']) . "\"/></a>";
+        $skypename = empty($get['skypename']) ? "-" : "<a href=\"skype:" . re($get['skypename']) . "?chat\"><img src=\"http://mystatus.skype.com/smallicon/" . re($get['skypename']) . "\" style=\"border: none;\" width=\"\" height=\"22\" alt=\"" . re($get['skypename']) . "\"/></a>";
         $hp = empty($get['hp']) ? "-" : show(_hpicon, array("hp" => re($get['hp'])));
 
         $icq = "-";
