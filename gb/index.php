@@ -369,6 +369,7 @@ switch ($action):
         break;
     case 'preview';
         header("Content-type: text/html; charset=utf-8");
+        $editby = "";
         if (isset($_GET['edit']) && !empty($_GET['edit'])) {
             $qry = db("SELECT * FROM " . $db['gb'] . "
                WHERE id = '" . (int)($_GET['edit']) . "'");
