@@ -737,7 +737,9 @@ function highlight_text(string $txt)
             ini_set('highlight.' . $key, $color);
 
         // Farben ersetzen & highlighten
-        $src = preg_replace('!style="color: (#\d{6})"!e', '"class=\"".$prefix.$colors["\1"]."\""', highlight_string($src, TRUE));
+        $src = preg_replace('!style="color: (#\d{6})"!',
+            '"class=\"".$prefix.$colors["\1"]."\""',
+            highlight_string($src, TRUE));
 
         // PHP-Tags komplett entfernen
         $src = str_replace('&lt;?php', '', $src);
