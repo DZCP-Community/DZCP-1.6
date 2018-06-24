@@ -13,7 +13,7 @@ function l_reg()
         while ($get = _fetch($qry)) {
             $lreg .= show("menu/last_reg", array("nick" => re(cut($get['nick'], config('l_lreg'), true, false)),
                 "country" => flag($get['country']),
-                "reg" => date("d.m.", $get['regdatum']),
+                "reg" => date("d.m.Y", $get['regdatum']),
                 "id" => $get['id']));
         }
     }

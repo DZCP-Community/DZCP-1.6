@@ -1571,7 +1571,7 @@ $language_text['_error_no_teamspeak'] = 'The teamspeak server is not reachable a
 $language_text['_user_cant_delete_admin'] = 'You can`t delete members or admins!';
 $language_text['_no_entrys_yet'] = '
 <tr>
-  <td class="contentMainFirst" colspan="[colspan]" align="center">No entry yetn!</td>
+  <td class="contentMainFirst" colspan="[colspan]" align="center">No entry yet!</td>
 </tr>';
 $language_text['_nav_no_nextwars'] = 'No next wars yet!';
 $language_text['_nav_no_lastwars'] = 'No last wars yet!';
