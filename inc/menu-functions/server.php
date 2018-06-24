@@ -112,5 +112,5 @@ function server($serverID = 0)
             "maxplayers" => $server['maxplayers']));
     }
 
-    return empty($servernavi) ? '<div style="text-align:center;margin:2px 0;">' . _no_server_navi . '</div>' : (empty($st) ? '<table class="navContent" cellspacing="0">' . $servernavi . '</table>' : $servernavi);
+    return empty($servernavi) ? '<div style="text-align:center;margin:15px 5px 0px 15px">' . _no_server_navi . '</div>' : (empty($st) ? '<table class="navContent" cellspacing="0">' . $servernavi . '</table>' : $servernavi);
 }
