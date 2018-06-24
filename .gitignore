@@ -5,3 +5,4 @@ rss.xml
 *.prefs
 /nbproject/private/
 nbproject/project.properties
+inc/_templates_/DBMFC/
