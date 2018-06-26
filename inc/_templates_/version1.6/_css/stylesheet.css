@@ -459,10 +459,13 @@ span.welcomebar {
 table.mainContent {
     width: 100%;
     background: #fff;
-    padding: 0px;
-    margin: 0px;
     margin-top: 15px;
     text-align: left;
+    padding: 0 7px 7px 7px;
+    border-bottom: 1px solid #f00;
+    box-shadow: 0px 0 3px #666666; /* CSS3 Standard */
+    -moz-box-shadow: 0 0 3px #666666; /* Firefox */
+    -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
 }
 
 table.navContent {
@@ -542,7 +545,11 @@ input.voteSubmit {
 }
 
 input.voteSubmit:hover {
-    background-image: linear-gradient(to top, #cc0033 10%, #660000);
+    background-color: #cc0033; /* fallback color if gradients are not supported */
+    background-image: -webkit-linear-gradient(to top, #cc0033 10%, #660000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+    background-image:    -moz-linear-gradient(to top, #cc0033 10%, #660000); /* For Firefox (3.6 to 15) */
+    background-image:      -o-linear-gradient(to top, #cc0033 10%, #660000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      linear-gradient(to top, #cc0033 10%, #660000); /* Standard syntax; must be last */
 }
 
 /* IE Hack */
@@ -589,7 +596,11 @@ input.shoutSubmit {
     padding: 1px;
     padding-left: 10px;
     padding-right: 10px;
-    background-image: linear-gradient(to top, #cc0033 90%, #660000);
+    background-color: #cc0033; /* fallback color if gradients are not supported */
+    background-image: -webkit-linear-gradient(to top, #cc0033 70%, #660000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+    background-image:    -moz-linear-gradient(to top, #cc0033 70%, #660000); /* For Firefox (3.6 to 15) */
+    background-image:      -o-linear-gradient(to top, #cc0033 70%, #660000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      linear-gradient(to top, #cc0033 70%, #660000); /* Standard syntax; must be last */
     border: 1px solid #5F5F5F;
     color: #fff;
     cursor: pointer;
@@ -778,16 +789,18 @@ td.counterSpace {
 
 /* Global styles of the content */
 td.contentHead, td.contentMainTop, td.contentMainFirst, td.contentMainSecond, td.contentBottom, td.contentBottomLeft {
-    height: 16px;
+    height: 24px;
     padding: 3px;
     vertical-align: middle;
 }
 
 td.contentHead, td.infoTop {
-    background-color: #303030;
+    background-color: #fff;
     text-align: center;
-    color: #ccc;
+    color: #000;
     border-bottom: 1px solid red;
+    text-transform: uppercase;
+    text-shadow: 0px 0px 1px #666666;   
 }
 
 td.contentMainTop, tr.contentMainTop {
@@ -821,12 +834,9 @@ td.gray {
 
 /* Attributes of the Newsarea e.g. news/news_show.html, news/comments_show.html, news/archiv.html, news/archiv_show.html */
 table.news {
-    margin-bottom: 30px;
+    margin: 23px;
     background-color: #f5f5f5;
     padding: 0 7px 7px 7px;
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
     border-bottom: 1px solid #f00;
     box-shadow: 0 0 3px #666666; /* CSS3 Standard */
     -moz-box-shadow: 0 0 3px #666666; /* Firefox */
@@ -1147,7 +1157,10 @@ td.highlight {
 td.statsBalken {
     border: 1px solid #000;
     background-image: url('../../../images/vote_bg.gif');
-    background-image: linear-gradient(to right, #660000 90%, #F00)
+    background-image: -webkit-linear-gradient(to right, #660000 70%, #FF0000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+    background-image:    -moz-linear-gradient(to right, #660000 70%, #FF0000); /* For Firefox (3.6 to 15) */
+    background-image:      -o-linear-gradient(to right, #660000 70%, #FF0000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      linear-gradient(to right, #660000 70%, #FF0000); /* Standard syntax; must be last */
 }
 
 /* Templateswitcher dropdown e.g. menu/tmp_switch.html */
@@ -1245,16 +1258,24 @@ input.submit {
     padding: 1px;
     padding-left: 10px;
     padding-right: 10px;
-    background-image: linear-gradient(to top, #cc0033 90%, #660000);
     border: 1px solid #5F5F5F;
     color: #fff;
     cursor: pointer;
     font-weight: bold;
     min-height: 20px;
+    background-color: #cc0033; /* fallback color if gradients are not supported */
+    background-image: -webkit-linear-gradient(top, #cc0033 70%, #660000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+    background-image:    -moz-linear-gradient(top, #cc0033 70%, #660000); /* For Firefox (3.6 to 15) */
+    background-image:      -o-linear-gradient(top, #cc0033 70%, #660000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      linear-gradient(to top, #cc0033 70%, #660000); /* Standard syntax; must be last */
 }
 
 input.submit:hover {
-    background-image: linear-gradient(to top, #cc0033 10%, #660000);
+    background-color: #660000; /* fallback color if gradients are not supported */
+    background-image: -webkit-linear-gradient(top, #cc0033 10%, #660000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+    background-image:    -moz-linear-gradient(top, #cc0033 10%, #660000); /* For Firefox (3.6 to 15) */
+    background-image:      -o-linear-gradient(top, #cc0033 10%, #660000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      linear-gradient(to top, #cc0033 10%, #660000); /* Standard syntax; must be last */
 }
 
 /*IE Hack*/
@@ -1779,9 +1800,9 @@ div#ticker {
 }
 
 div#dzcpticker {
-    width: 664px;
+    width: 740px;
     overflow: hidden;
-    padding: 0;
+    padding: 5px;
     text-align: center;
 }
 

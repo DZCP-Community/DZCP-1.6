@@ -8,7 +8,7 @@
     <td class="contentHead" colspan="13" align="center">
         <table class="hperc" cellspacing="0">
             <tr>
-                <td style="text-align:center">
+                <td style="text-align:center; width:150px">
                     <form name="formChange" action="">
                         <select name="changeme" onchange="DZCP.switchuser()" class="dropdown">
                             <option selected="selected" value="" class="dropdownKat">[sort]</option>
@@ -26,7 +26,7 @@
                     <form id="userlist" action="" method="get" onsubmit="return(DZCP.submitButton())">
                         <input type="hidden" name="action" value="userlist"/>
                         <input type="hidden" name="show" value="search"/>
-                        <input class="inputField_dis_mid" type="text" name="search" value="[search]"
+                        <input style="text-align:center; width:150px" class="inputField_dis_mid" type="text" name="search" value="[search]"
                                onfocus="this.className='inputField_en_mid';if(this.value=='[search]')this.value=''"
                                onblur="this.className='inputField_dis_mid';if(this.value=='')this.value='[search]'"/>
                         &nbsp;&nbsp;
@@ -47,7 +47,7 @@
         <span class="fontBold">[hpicon]</span></td>
     <td width="20" class="contentMainTop">
         <span class="fontBold">[steamicon]</span></td>
-    <td width="150" align="center" class="contentMainTop"><span class="fontBold"><img src="../inc/images/skype.png" border="0"/></span></td>
+    <td width="20" align="center" class="contentMainTop"><span class="fontBold"><img src="../inc/images/skype.png" border="0"/></span></td>
     <td width="20" class="contentMainTop">
         <span class="fontBold">[mficon]</span></td>
     <td width="80" class="contentMainTop"><span class="fontBold">[agehead]&nbsp;<a href="[order_age]"><img src="../inc/images/order.gif" alt="" class="icon"/></a></span></td>
