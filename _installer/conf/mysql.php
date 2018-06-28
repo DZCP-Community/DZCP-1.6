@@ -926,6 +926,7 @@ function install_mysql($login, $nick, $pwd, $email)
       `regdatum` int(20) NOT NULL DEFAULT '0',
       `email` varchar(200) NOT NULL DEFAULT '',
       `icq` varchar(20) NOT NULL DEFAULT '',
+      `hlswid` varchar(100) NOT NULL DEFAULT '',
       `steamid` varchar(20) NOT NULL DEFAULT '',
       `level` varchar(15) NOT NULL DEFAULT '',
       `rlname` varchar(200) NOT NULL DEFAULT '',
@@ -1413,6 +1414,7 @@ function update_mysql_1_6_1_0()
     db("ALTER TABLE `" . $db['users'] . "` ADD `language` varchar(249) NOT NULL default '' AFTER `show`;");
     db("ALTER TABLE `" . $db['settings'] . "` DROP `persinfo`;");
     db("ALTER TABLE `" . $db['settings'] . "` DROP `ts_version`;");
+    db("ALTER TABLE `" . $db['users'] . "` DROP `hlswid`;");
 
     $gets = db("SELECT * FROM `" . $db['settings'] . "`;", false, true);
     if (array_key_exists('last_backup', $gets)) {
