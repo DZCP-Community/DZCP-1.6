@@ -63,9 +63,9 @@ if (defined('_Forum')) {
 
                 $ftxt = hl($getp['text'], isset($_GET['hl']) ? $_GET['hl'] : '');
                 if (isset($_GET['hl']))
-                    $text = bbcode($ftxt['text']);
+                    $text = bbcode(re($ftxt['text']));
                 else
-                    $text = bbcode($getp['text']);
+                    $text = bbcode(re($getp['text']));
 
                 if ($chkMe == 4)
                     $posted_ip = $getp['ip'];
@@ -237,9 +237,9 @@ if (defined('_Forum')) {
             $ftxt = hl($get['t_text'], $hl);
 
             if (isset($_GET['hl']))
-                $text = bbcode($ftxt['text']);
+                $text = bbcode(re($ftxt['text']));
             else
-                $text = bbcode($get['t_text']);
+                $text = bbcode(re($get['t_text']));
 
             if ($chkMe == "4")
                 $posted_ip = $get['ip'];

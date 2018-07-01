@@ -37,7 +37,7 @@ switch ($action):
                     "ndatum" => _datum,
                     "class" => $class,
                     "ncomments" => _news_kommentare . ":",
-                    "text" => bbcode($get['text']),
+                    "text" => bbcode(re($get['text'])),
                     "datum" => date("d.m.Y", $get['datum']),
                     "autor" => autor($get['autor'])));
             }
@@ -140,8 +140,8 @@ switch ($action):
                     }
 
                     $comments .= show("page/comments_show", array("titel" => $titel,
-                        "comment" => bbcode($getc['comment']),
-                        "editby" => bbcode($getc['editby']),
+                        "comment" => bbcode(re($getc['comment'])),
+                        "editby" => bbcode(re($getc['editby'])),
                         "nick" => $nick,
                         "email" => $email,
                         "hp" => $hp,

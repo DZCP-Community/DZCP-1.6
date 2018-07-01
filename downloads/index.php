@@ -54,7 +54,7 @@ switch ($action):
                         "link" => $link,
                         "kid" => $get['id'],
                         "display" => $display,
-                        "beschreibung" => bbcode($getdl['beschreibung']),
+                        "beschreibung" => bbcode(re($getdl['beschreibung'])),
                         "hits" => $getdl['hits']));
                 }
 
@@ -182,7 +182,7 @@ switch ($action):
                     "speed_dsl6016" => $speed_dsl6016,
                     "speed_dsl16128" => $speed_dsl16128,
                     "size" => $dlsize,
-                    "besch" => bbcode($get['beschreibung']),
+                    "besch" => bbcode(re($get['beschreibung'])),
                     "file" => $rawfile));
             } else
                 $index = error(_id_dont_exist, 1);

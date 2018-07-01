@@ -176,7 +176,7 @@ switch ($action):
 
             $edit = "&nbsp;";
             if (!empty($get['lastedit']))
-                $edit = bbcode($get['lastedit']);
+                $edit = bbcode(re($get['lastedit']));
 
             $index = show($dir . "/info", array("head" => _away_info_head,
                 "i_reason" => _away_reason,
@@ -188,7 +188,7 @@ switch ($action):
                 "nick" => autor($get['userid']),
                 "von" => date("d.m.Y", $get['start']),
                 "bis" => date("d.m.Y", $get['end']),
-                "text" => bbcode($get['reason']),
+                "text" => bbcode(re($get['reason'])),
                 "titel" => re($get['titel']),
                 "edit" => $edit,
                 "status" => $status,

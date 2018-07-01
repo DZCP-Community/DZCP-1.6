@@ -98,8 +98,8 @@ switch ($action):
                 else $posted_ip = _logged;
 
                 $show .= show($dir . "/gb_show", array("gbtitel" => $gbtitel,
-                    "nachricht" => bbcode($get['nachricht']),
-                    "editby" => bbcode($get['editby']),
+                    "nachricht" => bbcode(re($get['nachricht'])),
+                    "editby" => bbcode(re($get['editby'])),
                     "ip" => $posted_ip));
                 $i--;
             }
@@ -340,8 +340,8 @@ switch ($action):
                 }
 
                 $entry = show($dir . "/gb_show", array("gbtitel" => $gbtitel,
-                    "nachricht" => bbcode($get['nachricht']),
-                    "editby" => bbcode($get['editby']),
+                    "nachricht" => bbcode(re($get['nachricht'])),
+                    "editby" => bbcode(re($get['editby'])),
                     "ip" => $get['ip']));
 
                 $index = show($dir . "/gb_addcomment", array("head" => _gb_addcomment_head,

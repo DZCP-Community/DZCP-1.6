@@ -94,7 +94,7 @@ if (defined('_Clanwars')) {
                 "title" => _button_title_edit));
         }
 
-        $bericht = $get['bericht'] ? bbcode($get['bericht']) : "&nbsp;";
+        $bericht = $get['bericht'] ? bbcode(re($get['bericht'])) : "&nbsp;";
         $libPath = "inc/images/clanwars/";
         $cw_sc_loops = 0;
         $files = get_files(basePath . "/inc/images/clanwars/", false, true, $picformat, false, array(), 'minimize');
@@ -211,8 +211,8 @@ if (defined('_Clanwars')) {
             }
 
             $comments .= show("page/comments_show", array("titel" => $titel,
-                "comment" => bbcode($getc['comment']),
-                "editby" => bbcode($getc['editby']),
+                "comment" => bbcode(re($getc['comment'])),
+                "editby" => bbcode(re($getc['editby'])),
                 "nick" => $nick,
                 "hp" => $hp,
                 "email" => $email,

@@ -169,7 +169,7 @@ switch ($action):
                 "time" => _kalender_uhrzeit,
                 "edit" => $edit,
                 "show_time" => date("H:i", $get['datum']) . _uhr,
-                "show_event" => bbcode($get['event']),
+                "show_event" => bbcode(re($get['event'])),
                 "show_title" => re($get['title'])));
         }
 

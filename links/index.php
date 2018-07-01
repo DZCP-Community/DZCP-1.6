@@ -30,7 +30,7 @@ switch ($action):
                         "text" => str_replace('http://', '', re($get['url']))));
                 }
 
-                $show .= show($dir . "/links_show", array("beschreibung" => bbcode($get['beschreibung']),
+                $show .= show($dir . "/links_show", array("beschreibung" => bbcode(re($get['beschreibung'])),
                     "hits" => $get['hits'],
                     "hit" => _hits,
                     "banner" => $banner));

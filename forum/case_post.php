@@ -218,7 +218,7 @@ if (defined('_Forum')) {
                         if ($getl['reg'] == "0") $onoff = "";
                         else                    $onoff = onlinecheck($getl['reg']);
 
-                        $text = bbcode($getl['text']);
+                        $text = bbcode(re(getl['text']));
 
                         if ($chkMe == "4") $posted_ip = $getl['ip'];
                         else              $posted_ip = _logged;
@@ -288,8 +288,8 @@ if (defined('_Forum')) {
                         else                      $onoff = onlinecheck($gett['t_reg']);
 
                         $ftxt = hl($gett['t_text'], (isset($_GET['hl']) ? $_GET['hl'] : ''));
-                        if (isset($_GET['hl'])) $text = bbcode($ftxt['text']);
-                        else $text = bbcode($gett['t_text']);
+                        if (isset($_GET['hl'])) $text = bbcode(re($ftxt['text']));
+                        else $text = bbcode(re($gett['t_text']));
 
                         if ($chkMe == "4") $posted_ip = $gett['ip'];
                         else                 $posted_ip = _logged;
@@ -441,8 +441,8 @@ if (defined('_Forum')) {
                         else $onoff = onlinecheck($getl['reg']);
 
                         $ftxt = hl($getl['text'], $_GET['hl']);
-                        if ($_GET['hl']) $text = bbcode($ftxt['text']);
-                        else $text = bbcode($getl['text']);
+                        if ($_GET['hl']) $text = bbcode(re($ftxt['text']));
+                        else $text = bbcode(re($getl['text']));
 
                         if ($chkMe == "4") $posted_ip = $getl['ip'];
                         else $posted_ip = _logged;
@@ -520,11 +520,11 @@ if (defined('_Forum')) {
                         if ($gett['t_reg'])
                             $onoff = onlinecheck($gett['t_reg']);
 
-                        $text = bbcode($gett['t_text']);
+                        $text = bbcode(re($gett['t_text']));
                         if (isset($_GET['hl'])) {
                             $ftxt = hl($gett['t_text'], $_GET['hl']);
                             if ($_GET['hl'])
-                                $text = bbcode($ftxt['text']);
+                                $text = bbcode(re($ftxt['text']));
                         }
 
                         $posted_ip = ($chkMe == 4 ? re($gett['ip']) : _logged);
