@@ -321,31 +321,25 @@ WHERE id = '" . (int)($_GET['id']) . "'");
 
     $show = info(_cw_admin_deleted, "?admin=cw");
 } elseif ($do == "top") {
-    db("UPDATE " . $db['cw'] . " SET `top` = '" . (int)($_GET['set']) . "' WHERE id = '" . (int)($_GET['id']) . "'");
+    db("UPDATE " . $db['cw'] . " SET `top` = '" . (int)($_GET['set']) . "' WHERE id = " . (int)($_GET['id']) . ";");
     $show = info((empty($_GET['set']) ? _cw_admin_top_unsetted : _cw_admin_top_setted), "?admin=cw");
 } else {
-
-    if (is_numeric($_GET['squad'])) {
-        $whereqry = ' WHERE squad_id = ' . $_GET['squad'] . ' ';
+    $whereqry = '';
+    if (isset($_GET['squad']) && is_numeric($_GET['squad'])) {
+        $whereqry = ' WHERE squad_id = ' . ((int)$_GET['squad']) . ' ';
     }
 
-    $qry = db("SELECT * FROM " . $db['cw'] . " " . $whereqry . "
-ORDER BY datum DESC
-LIMIT " . ($page - 1) * $maxadmincw . "," . $maxadmincw . "");
+    $qry = db("SELECT * FROM " . $db['cw'] . " " . $whereqry . " ORDER BY datum DESC LIMIT " . ($page - 1) * $maxadmincw . "," . $maxadmincw . "");
     $entrys = cnt($db['cw']);
-    $squads .= show(_cw_edit_select_field_squads, array("name" => _all,
+    $squads = show(_cw_edit_select_field_squads, array("name" => _all,
         "sel" => "",
         "id" => "?admin=cw"));
 
-    $qrys = db("SELECT * FROM " . $db['squads'] . "
-WHERE status = '1'
-ORDER BY game ASC");
-
+    $qrys = db("SELECT * FROM " . $db['squads'] . " WHERE status = 1 ORDER BY game ASC");
     while ($gets = _fetch($qrys)) {
-        if ($gets['id'] == $_GET['squad']) {
+        $sel = "";
+        if (isset($_GET['squad']) && $gets['id'] == ((int)$_GET['squad'])) {
             $sel = ' class="dropdownKat"';
-        } else {
-            $sel = "";
         }
 
         $squads .= show(_cw_edit_select_field_squads, array("name" => re($gets['name']),
@@ -360,6 +354,7 @@ ORDER BY game ASC");
         $edit = show("page/button_edit_single", array("id" => $get['id'],
             "action" => "admin=cw&amp;do=edit",
             "title" => _button_title_edit));
+
         $delete = show("page/button_delete_single", array("id" => $get['id'],
             "action" => "admin=cw&amp;do=delete",
             "title" => _button_title_del,
@@ -367,7 +362,7 @@ ORDER BY game ASC");
 
         $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";
         $color++;
-        $show_ .= show($dir . "/clanwars_show", array("class" => $class,
+        $show .= show($dir . "/clanwars_show", array("class" => $class,
             "cw" => re($get['clantag']) . " - " . re($get['gegner']),
             "datum" => date("d.m.Y H:i", $get['datum']) . _uhr,
             "top" => $top,
@@ -377,14 +372,15 @@ ORDER BY game ASC");
         ));
     }
 
-    $show = show($dir . "/clanwars", array("head" => _clanwars,
+    $squad_ID = isset($_GET['squad']) ? ((int)$_GET['squad']) : 0;
+    $show = show($dir . "/clanwars", array(
+        "head" => _clanwars,
         "add" => _cw_admin_head,
         "date" => _datum,
         "titel" => _opponent,
         "squads" => $squads,
-        "what" => _filter,
         "sort" => _ulist_sort,
-        "show" => $show_,
-        "navi" => nav($entrys, $maxadmincw, "?admin=cw&amp;squad=" . $_GET['squad'] . "")
+        "show" => $show,
+        "navi" => nav($entrys, $maxadmincw, "?admin=cw&amp;squad=" . $squad_ID . "")
     ));
 }
