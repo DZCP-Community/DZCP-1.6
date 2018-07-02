@@ -55,5 +55,5 @@ function vote($ajax = false)
         $vote = show(_no_entrys_yet, array("colspan" => "0"));
     }
 
-    return $ajax ? $vote : '<div id="navVote">' . $vote . '</div>';
+    return $ajax ? $vote : '<div class="navVote">' . $vote . '</div>';
 }
