@@ -44,5 +44,5 @@ function top_match()
         }
     }
 
-    return empty($topmatch) ? '<center style="margin:3px 0">' . _no_top_match . '</div>' : '<table class="navContent" cellspacing="0">' . $topmatch . '</table>';
+    return empty($topmatch) ? '<div style="text-align: center; padding:10px; width:210px">' . _no_top_match . '</div>' : '<table class="navContent" cellspacing="0">' . $topmatch . '</table>';
 }
