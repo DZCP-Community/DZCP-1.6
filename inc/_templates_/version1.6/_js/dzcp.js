@@ -305,7 +305,7 @@ var DZCP = {
                 '<tr>' +
                 '<td>' +
                 '<div class="steam_box steam_box_user ' + class_state + '">' +
-                '<div class="steam_box_avatar ' + class_state + '"> <img src="' + img + '" /></div>' +
+                '<div class="steam_box_avatar ' + class_state + '"> <img style="height:39px" src="' + img + '" /></div>' +
                 '<div class="steam_box_content">' + user + '<br />' +
                 '<span class="friendSmallText">' + text + '<br>' + text2 + '</span></div>' +
                 '</div>' +
