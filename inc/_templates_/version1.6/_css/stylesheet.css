@@ -330,7 +330,7 @@ div#index {
     padding: 10px 10px 10px 10px;
     background-color: #fff;
     width: 755px;
-    margin: 50px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
     border-radius: 4px;
     border: 1px #e6e6e6 solid;
 }
@@ -840,26 +840,30 @@ td.gray {
 
 /* Attributes of the Newsarea e.g. news/news_show.html, news/comments_show.html, news/archiv.html, news/archiv_show.html */
 table.news {
-    margin: 23px;
     background-color: #f5f5f5;
     padding: 0 7px 7px 7px;
-    border-bottom: 1px solid #f00;
     box-shadow: 0 0 3px #666666; /* CSS3 Standard */
     -moz-box-shadow: 0 0 3px #666666; /* Firefox */
     -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 730px;
 }
 
 /* Newsbild Positionierung */
 td.news img.newsImage {
     float: left;
-    margin: 0 15px 15px 0;
     box-shadow: 0 0 3px #666666; /* CSS3 Standard */
     -moz-box-shadow: 0 0 3px #666666; /* Firefox */
     -webkit-box-shadow: 0 0 3px #666666; /* Safari, Chrome, etc. */
+    max-width: 400px;
+    padding: 10px;
     border-top-left-radius: 3px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 0px;
+    margin: 0px 15px 15px 0;
 }
 
 /* Settings Newatitel */
