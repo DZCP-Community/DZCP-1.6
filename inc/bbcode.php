@@ -5,12 +5,12 @@
  */
 
 //Filter 404
-$test = strtolower(GetServerVars("REQUEST_URI"));
-if (strpos($test, 'index.php/') !== false ||
-    strpos($test, 'ajax.php/') !== false) {
+$filter404 = strtolower(GetServerVars("REQUEST_URI"));
+if (strpos($filter404, 'index.php/') !== false ||
+    strpos($filter404, 'ajax.php/') !== false) {
     header("HTTP/1.0 404 Not Found");
     exit();
-}
+} unset($filter404);
 
 ## INCLUDES/REQUIRES ##
 require_once(basePath . '/inc/_version.php');
@@ -138,9 +138,7 @@ $api = new api('api.dzcp.de');
 $action = isset($_GET['action']) ? strtolower($_GET['action']) : '';
 $page = (isset($_GET['page']) && (int)($_GET['page']) >= 1) ? (int)($_GET['page']) : 1;
 $do = isset($_GET['do']) ? strtolower($_GET['do']) : '';
-$index = '';
-$show = '';
-$color = 0;
+$index = ''; $show = ''; $color = 0;
 
 //-> Auslesen der Cookies und automatisch anmelden
 if (HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && empty($_SESSION['id']) && !checkme())) {
@@ -245,12 +243,33 @@ if ($chkMe && $userid && !empty($_SESSION['ip'])) {
  * Prüft ob die DSGVO akzeptiert wurde
  * @return bool
  */
-function HasDSGVO()
-{
+function HasDSGVO() {
     if (array_key_exists('DSGVO', $_SESSION) && $_SESSION['DSGVO'])
         return true;
 
     return false;
+}
+
+function isSecure() {
+    $isSecure = false;
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+        $isSecure = true;
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+        $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' ||
+        !empty($_SERVER['HTTP_X_FORWARDED_SSL']) &&
+        $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+        $isSecure = true;
+    }
+
+    return $isSecure;
+}
+
+if(!isSecure()) {
+    if(ping_port(GetServerVars('HTTP_HOST'),443,1)) {
+        header("Location: https://" . GetServerVars('HTTP_HOST') .
+            GetServerVars('REQUEST_URI'));
+        exit();
+    }
 }
 
 /**
