@@ -20,6 +20,7 @@ if (defined('_Clanwars')) {
         $players = "";
         if ($chkMe != 1 && $chkMe >= 2 && $get['punkte'] == "0" && $get['gpunkte'] == "0") {
             if ($get['datum'] > time()) {
+                $show_players = '';
                 $qryp = db("SELECT status,member FROM " . $db['cw_player'] . " WHERE cwid = '" . (int)($_GET['id']) . "' ORDER BY status");
                 while ($getp = _fetch($qryp)) {
                     if ($getp['status'] == "0")
@@ -33,9 +34,9 @@ if (defined('_Clanwars')) {
                     $seln = "";
                     $selm = "";
                     if ($getp['member'] == $userid) {
-                        $sely = $getp['status'] == "0" ? 'checked="checked"' : '';
-                        $seln = $getp['status'] == "1" ? 'checked="checked"' : '';
-                        $selm = $getp['status'] == "2" ? 'checked="checked"' : '';
+                        $sely = $getp['status'] == 0 ? 'checked="checked"' : '';
+                        $seln = $getp['status'] == 1 ? 'checked="checked"' : '';
+                        $selm = $getp['status'] == 2 ? 'checked="checked"' : '';
                     }
 
                     $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";

@@ -50,6 +50,8 @@ define('api_autoupdate_interval', (24 * 60 * 60)); //Wann soll die DZCP.de API a
 define('api_autoupdate_dsgvo', false); //Soll die EU-DSGVO automatisch aktualisiert werden ( Nur in der Administration )
 define('api_autoupdate_dsgvo_interval', (24 * 60 * 60)); //Wann soll die EU-DSGVO automatisch aktualisiert werden ( alle 24 Std. )
 
+define('use_ssl_auto_redirect', true); //Wenn eine SSL-Verbindung möglich ist, dann wird der Besucher automatisch umgeleitet
+
 /*
 * Bitte vor der Aktivierung der Persistent Connections lesen:
 * http://php.net/manual/de/features.persistent-connections.php

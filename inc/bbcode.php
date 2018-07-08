@@ -252,20 +252,19 @@ function HasDSGVO() {
 
 function isSecure() {
     $isSecure = false;
-    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+    if (GetServerVars('HTTPS') && GetServerVars('HTTPS') == 'on') {
         $isSecure = true;
-    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
-        $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' ||
-        !empty($_SERVER['HTTP_X_FORWARDED_SSL']) &&
-        $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+    } elseif ((GetServerVars('HTTP_X_FORWARDED_PROTO') && GetServerVars('HTTP_X_FORWARDED_PROTO') == 'https') ||
+        (GetServerVars('HTTP_X_FORWARDED_SSL') && GetServerVars('HTTP_X_FORWARDED_SSL') == 'on')) {
         $isSecure = true;
     }
 
     return $isSecure;
 }
 
-if(!isSecure()) {
-    if(ping_port(GetServerVars('HTTP_HOST'),443,1)) {
+//Weiterleitung zu einer SSL Verbindung
+if(!isSecure() && use_ssl_auto_redirect) {
+    if(ping_port(GetServerVars('HTTP_HOST'),443,0.2)) {
         header("Location: https://" . GetServerVars('HTTP_HOST') .
             GetServerVars('REQUEST_URI'));
         exit();
@@ -276,8 +275,7 @@ if(!isSecure()) {
  * Gibt die IP des Besuchers / Users zurück
  * Forwarded IP Support
  */
-function visitorIp()
-{
+function visitorIp() {
     if (array_key_exists('identy_ip', $_SESSION)) {
         if (!empty($_SESSION['identy_ip']))
             return $_SESSION['identy_ip'];
@@ -307,12 +305,11 @@ function visitorIp()
 
 /**
  * Pruft eine IP gegen eine IP-Range
- * @param ipv4 $ip
- * @param ipv4 range $range
+ * @param string $ip
+ * @param string $range
  * @return boolean
  */
-function validateIpV4Range(string $ip, string $range)
-{
+function validateIpV4Range(string $ip, string $range) {
     if (!is_array($range)) {
         $counter = 0;
         $tip = explode('.', $ip);
@@ -358,8 +355,7 @@ function validateIpV4Range(string $ip, string $range)
  * Funktion um notige Erweiterungen zu prufen
  * @return boolean
  **/
-function fsockopen_support()
-{
+function fsockopen_support() {
     if (fsockopen_support_bypass) return true;
 
     if (disable_functions('fsockopen') || disable_functions('fopen'))
@@ -382,8 +378,7 @@ function disable_functions(string $function = '')
     return false;
 }
 
-function allow_url_fopen_support()
-{
+function allow_url_fopen_support() {
     if (ini_get('allow_url_fopen') == 1)
         return true;
 
@@ -391,8 +386,7 @@ function allow_url_fopen_support()
 }
 
 //-> Auslesen der UserID
-function userid()
-{
+function userid() {
     global $db;
     if (HasDSGVO()) {
         if (empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
@@ -410,8 +404,7 @@ function userid()
     return 0;
 }
 
-function sysTemplateswitch()
-{
+function sysTemplateswitch() {
     global $chkMe;
     $files = get_files(basePath . '/inc/_templates_/', true);
     foreach ($files as $templ) {
@@ -452,8 +445,7 @@ function sysTemplateswitch()
     unset($xml, $templ);
 }
 
-function GetServerVars(string $var)
-{
+function GetServerVars(string $var) {
     if (array_key_exists($var, $_SERVER) && !empty($_SERVER[$var])) {
         return utf8_encode($_SERVER[$var]);
     } else if (array_key_exists($var, $_ENV) && !empty($_ENV[$var])) {
@@ -498,8 +490,7 @@ $designpath = '../inc/_templates_/' . $tmpdir;
 /**
  * @param $lng
  */
-function lang(string $lng)
-{
+function lang(string $lng) {
     if (!file_exists(basePath . "/inc/lang/languages/" . $lng . ".php")) {
         $files = get_files(basePath . '/inc/lang/languages/', false, true, array('php'));
         $lng = str_replace('.php', '', $files[0]);
@@ -536,8 +527,7 @@ function lang(string $lng)
 }
 
 //->Daten uber file_get_contents oder curl abrufen
-function get_external_contents(string $url, $post = false, bool $nogzip = false, int $timeout = file_get_contents_timeout)
-{
+function get_external_contents(string $url, $post = false, bool $nogzip = false, int $timeout = file_get_contents_timeout) {
     if (!allow_url_fopen_support() && (!extension_loaded('curl') || !use_curl_support))
         return false;
 
@@ -635,8 +625,7 @@ function get_external_contents(string $url, $post = false, bool $nogzip = false,
 }
 
 //-> Sprachdateien auflisten
-function languages()
-{
+function languages() {
     $lang = "";
     $files = get_files('../inc/lang/languages/', false, true, array('php'));
     for ($i = 0; $i <= count($files) - 1; $i++) {
@@ -655,8 +644,7 @@ if ($userid >= 1 && $ajaxJob != true && HasDSGVO()) {
 }
 
 //-> Settings auslesen
-function settings($what, bool $use_dbc = true)
-{
+function settings($what, bool $use_dbc = true) {
     global $db;
 
     if (is_array($what)) {
@@ -684,8 +672,7 @@ function settings($what, bool $use_dbc = true)
 }
 
 //-> Config auslesen
-function config($what, bool $use_dbc = true)
-{
+function config($what, bool $use_dbc = true) {
     global $db;
 
     if (is_array($what)) {
@@ -718,8 +705,7 @@ function config($what, bool $use_dbc = true)
 }
 
 //-> Prueft ob der User ein Rootadmin ist
-function rootAdmin(int $userid = 0)
-{
+function rootAdmin(int $userid = 0) {
     global $rootAdmins;
     $userid = !$userid ? userid() : $userid;
     if (!count($rootAdmins)) return false;
@@ -727,8 +713,7 @@ function rootAdmin(int $userid = 0)
 }
 
 //-> PHP-Code farbig anzeigen
-function highlight_text(string $txt)
-{
+function highlight_text(string $txt) {
     while (preg_match("=\[php\](.*)\[/php\]=Uis", $txt) != FALSE) {
         preg_match("=\[php\](.*)\[/php\]=Uis", $txt, $matches);
         $src = $matches[1];
@@ -785,8 +770,7 @@ function highlight_text(string $txt)
     return $txt;
 }
 
-function regexChars(string $txt)
-{
+function regexChars(string $txt) {
     $txt = strip_tags($txt);
     $txt = str_replace('"', '&quot;', $txt);
     $txt = str_replace('\\', '\\\\', $txt);
@@ -814,8 +798,7 @@ function regexChars(string $txt)
 
 //-> Glossarfunktion
 $use_glossar = true; //Global
-function glossar_load_index()
-{
+function glossar_load_index() {
     global $db, $use_glossar;
     if (!$use_glossar) return false;
 
@@ -835,8 +818,7 @@ function glossar_load_index()
  * @param $txt
  * @return mixed
  */
-function glossar(string $txt)
-{
+function glossar(string $txt) {
     global $gl_words, $gl_desc, $use_glossar, $ajaxJob;
 
     if (!$use_glossar || $ajaxJob)
@@ -875,14 +857,12 @@ function glossar(string $txt)
     return str_replace('[', '&#91;', $txt);
 }
 
-function bbcodetolow(array $founds)
-{
+function bbcodetolow(array $founds) {
     return "[" . strtolower($founds[1]) . "]" . trim($founds[2]) . "[/" . strtolower($founds[3]) . "]";
 }
 
 //-> Replaces
-function replace(string $txt, bool $type = false, bool $no_vid_tag = false)
-{
+function replace(string $txt, bool $type = false, bool $no_vid_tag = false) {
     $txt = str_replace("&#34;", "\"", $txt);
 
     if ($type)
@@ -929,8 +909,7 @@ function replace(string $txt, bool $type = false, bool $no_vid_tag = false)
 }
 
 //-> Badword Filter
-function BadwordFilter($txt)
-{
+function BadwordFilter($txt) {
     $words = explode(",", trim(settings('badwords')));
     foreach ($words as $word) {
         $txt = preg_replace("#" . $word . "#i", str_repeat("*", strlen($word)), $txt);
@@ -939,8 +918,7 @@ function BadwordFilter($txt)
 }
 
 //-> Funktion um Bestimmte Textstellen zu markieren
-function hl($text, $word)
-{
+function hl($text, $word) {
     $ret = array();
     if (!empty($_GET['hl']) && $_SESSION['search_type'] == 'text') {
         if ($_SESSION['search_con'] == 'or') {
@@ -1541,8 +1519,7 @@ function updateCounter()
 }
 
 //-> Updatet die Maximalen User die gleichzeitig online sind
-function update_maxonline()
-{
+function update_maxonline() {
     global $db, $today;
 
     $get = db("SELECT `maxonline` FROM `" . $db['counter'] . "` WHERE `today` = '" . $today . "';", false, true);
@@ -1571,15 +1548,17 @@ function online_guests(string $where = '')
 }
 
 //-> Prueft, wieviele registrierte User gerade online sind
-function online_reg()
-{
+function online_reg() {
     global $db, $useronline;
     return cnt($db['users'], " WHERE (time+" . $useronline . ") > " . time() . " AND `online` = 1;");
 }
 
-//-> Prueft, ob der User eingeloggt ist und wenn ja welches Level besitzt er
-function checkme(int $userid_set = 0)
-{
+/**
+ * Prueft, ob der User eingeloggt ist und wenn ja welches Level besitzt er
+ * @param int $userid_set
+ * @return bool|int
+ */
+function checkme(int $userid_set = 0) {
     global $db;
     if (HasDSGVO() || $userid_set != 0) {
         if (!$userid = ($userid_set != 0 ? (int)($userid_set) : userid())) return 0;
@@ -1599,9 +1578,13 @@ function checkme(int $userid_set = 0)
     return 0;
 }
 
-//-> Prueft, ob der User gesperrt ist und meldet ihn ab
-function isBanned(int $userid_set = 0, bool $logout = true)
-{
+/**
+ * Prueft, ob der User gesperrt ist und meldet ihn ab
+ * @param int $userid_set
+ * @param bool $logout
+ * @return bool
+ */
+function isBanned(int $userid_set = 0, bool $logout = true) {
     global $db, $userid;
     $userid_set = $userid_set ? $userid_set : $userid;
     if (checkme($userid_set) >= 1 || $userid_set) {
@@ -1628,9 +1611,13 @@ function isBanned(int $userid_set = 0, bool $logout = true)
     return false;
 }
 
-//-> Prueft, ob ein User diverse Rechte besitzt
-function permission(string $check, int $uid = 0)
-{
+/**
+ * Prueft, ob ein User diverse Rechte besitzt
+ * @param string $check
+ * @param int $uid
+ * @return bool
+ */
+function permission(string $check, int $uid = 0) {
     global $db, $userid, $chkMe;
     if (!$uid) $uid = $userid;
     if (rootAdmin($uid)) return true;
@@ -1656,9 +1643,11 @@ function permission(string $check, int $uid = 0)
     }
 }
 
-//-> Checkt, ob neue Nachrichten vorhanden sind
-function check_msg()
-{
+/**
+ * Checkt, ob neue Nachrichten vorhanden sind
+ * @return string
+ */
+function check_msg() {
     global $db;
     if (db("SELECT page FROM " . $db['msg'] . " WHERE an = '" . $_SESSION['id'] . "' AND page = 0", true)) {
         db("UPDATE " . $db['msg'] . " SET `page` = '1' WHERE an = '" . $_SESSION['id'] . "'");
@@ -1668,16 +1657,22 @@ function check_msg()
     return '';
 }
 
-//-> Prueft ob ein User schon in der Buddyliste vorhanden ist
-function check_buddy(int $buddy)
-{
+/**
+ * Prueft ob ein User schon in der Buddyliste vorhanden ist
+ * @param int $buddy
+ * @return bool
+ */
+function check_buddy(int $buddy) {
     global $db, $userid;
     return db("SELECT `id` FROM `" . $db['buddys'] . "` WHERE `user` = " . (int)($userid) . " AND `buddy` = " . (int)($buddy) . ";", true) >= 1;
 }
 
-//-> Flaggen ausgeben
-function flag($code)
-{
+/**
+ * Flaggen ausgeben
+ * @param $code
+ * @return string
+ */
+function flag($code) {
     global $picformat;
     if (empty($code))
         return '<img src="../inc/images/flaggen/nocountry.gif" alt="" class="icon" />';
@@ -1692,8 +1687,12 @@ function flag($code)
     return '<img src="../inc/images/flaggen/nocountry.gif" alt="" class="icon" />';
 }
 
-function rawflag($code)
-{
+/**
+ * Flaggen ausgeben
+ * @param $code
+ * @return string
+ */
+function rawflag($code) {
     global $picformat;
     if (empty($code))
         return '<img src=../inc/images/flaggen/nocountry.gif alt= class=icon />';
@@ -1708,9 +1707,12 @@ function rawflag($code)
     return '<img src=../inc/images/flaggen/nocountry.gif alt= class=icon />';
 }
 
-//-> Liste der Laender ausgeben
-function show_countrys(string $i = "")
-{
+/**
+ * Liste der Laender ausgeben
+ * @param string $i
+ * @return string
+ */
+function show_countrys(string $i = "") {
     if ($i != "")
         $options = preg_replace('#<option value="' . $i . '">(.*?)</option>#', '<option value="' . $i . '" selected="selected"> \\1</option>', _country_list);
     else
@@ -1719,9 +1721,12 @@ function show_countrys(string $i = "")
     return '<select id="land" name="land" class="dropdown">' . $options . '</select>';
 }
 
-//-> Gameicon ausgeben
-function squad(string $code)
-{
+/**
+ * Gameicon ausgeben
+ * @param string $code
+ * @return string
+ */
+function squad(string $code) {
     global $picformat;
     if (empty($code))
         return '<img src="../inc/images/gameicons/nogame.gif" alt="" class="icon" />';
@@ -1737,9 +1742,12 @@ function squad(string $code)
     return '<img src="../inc/images/gameicons/nogame.gif" alt="" class="icon" />';
 }
 
-//-> Funktion um bei DB-Eintraegen URLs einem http:// oder https:// zuzuweisen
-function links(string $hp)
-{
+/**
+ * Funktion um bei DB-Eintraegen URLs einem http:// oder https:// zuzuweisen
+ * @param string $hp
+ * @return mixed|string
+ */
+function links(string $hp) {
     if (!empty($hp)) {
         //SSL
         $count = 0;
@@ -1758,9 +1766,14 @@ function links(string $hp)
     return $hp;
 }
 
-//-> Funktion um Passwoerter generieren zu lassen
-function mkpwd(int $length = 8, bool $add_dashes = false, string $available_sets = 'luds')
-{
+/**
+ * Funktion um Passwoerter generieren zu lassen
+ * @param int $length
+ * @param bool $add_dashes
+ * @param string $available_sets
+ * @return bool|string
+ */
+function mkpwd(int $length = 8, bool $add_dashes = false, string $available_sets = 'luds') {
     $sets = array();
     if (strpos($available_sets, 'l') !== false)
         $sets[] = 'abcdefghjkmnpqrstuvwxyz';
@@ -1797,9 +1810,13 @@ function mkpwd(int $length = 8, bool $add_dashes = false, string $available_sets
     return $dash_str;
 }
 
-//-> Passwortabfrage und rückgabe des users
-function checkpwd(string $user, string $pwd)
-{
+/**
+ * Passwortabfrage und rückgabe des users
+ * @param string $user
+ * @param string $pwd
+ * @return bool|mixed
+ */
+function checkpwd(string $user, string $pwd) {
     global $db;
     $sql = db("SELECT * FROM `" . $db['users'] . "` WHERE `user` = '" . up($user) .
         "' AND (`pwd` = '" . hash('sha256', $pwd) . "' OR (`pwd` = '" . md5($pwd) . "' AND `pwd_md5` = 1)) AND `level` != 0;");
@@ -1818,9 +1835,14 @@ function checkpwd(string $user, string $pwd)
     return false;
 }
 
-//-> Infomeldung ausgeben
-function info(string $msg, string $url, int $timeout = 5)
-{
+/**
+ * Infomeldung ausgeben
+ * @param string $msg
+ * @param string $url
+ * @param int $timeout
+ * @return bool|mixed|null|string|string[]
+ */
+function info(string $msg, string $url, int $timeout = 5) {
     if (config('direct_refresh')) {
         header('Location: ' . str_replace('&amp;', '&', $url));
         exit();
@@ -1847,56 +1869,74 @@ function info(string $msg, string $url, int $timeout = 5)
         "backtopage" => _error_fwd));
 }
 
-//-> Errormmeldung ausgeben
-function error(string $error, int $back = 1)
-{
+/**
+ * Errormmeldung ausgeben
+ * @param string $error
+ * @param int $back
+ * @return bool|mixed|null|string|string[]
+ */
+function error(string $error, int $back = 1) {
     return show("errors/error", array("error" => $error, "back" => $back, "fehler" => _error, "backtopage" => _error_back));
 }
 
-//-> Errormmeldung ohne "zurueck" ausgeben
-function error2(string $error)
-{
+/**
+ * Errormmeldung ohne "zurueck" ausgeben
+ * @param string $error
+ * @return bool|mixed|null|string|string[]
+ */
+function error2(string $error) {
     return show("errors/error2", array("error" => $error, "fehler" => _error));
 }
 
-//-> Email wird auf korrekten Syntax & Erreichbarkeit ueberprueft
-function check_email(string $email)
-{
+/**
+ * Email wird auf korrekten Syntax & Erreichbarkeit ueberprueft
+ * @param string $email
+ * @return bool
+ * @throws Exception
+ */
+function check_email(string $email) {
     global $gump;
     $email = $gump->filter(array('email' => $email), array('email' => 'trim|sanitize_email'));
     return ($gump->validate($email, array('email' => 'valid_email')) === true);
 }
 
-//-> Bilder verkleinern
-function img_size(string $img)
-{
+/**
+ * Bilder verkleinern
+ * @param string $img
+ * @return string
+ */
+function img_size(string $img) {
     return "<a href=\"../" . $img . "\" rel=\"lightbox[l_" . (int)($img) . "]\"><img src=\"../thumbgen.php?img=" . $img . "\" alt=\"\" /></a>";
 }
 
-function img_cw(string $folder, string $img)
-{
+/**
+ * Bilder verkleinern
+ * @param string $folder
+ * @param string $img
+ * @return string
+ */
+function img_cw(string $folder, string $img) {
     return "<a href=\"../" . $folder . $img . "\" rel=\"lightbox[cw_" . (int)($folder) . "]\"><img src=\"../thumbgen.php?img=" . $folder . $img . "\" alt=\"\" /></a>";
 }
 
-function gallery_size(string $img = "")
-{
+/**
+ * Bilder verkleinern
+ * @param string $img
+ * @return string
+ */
+function gallery_size(string $img = "") {
     return "<a href=\"../gallery/images/" . $img . "\" rel=\"lightbox[gallery_" . (int)($img) . "]\"><img src=\"../thumbgen.php?img=gallery/images/" . $img . "\" alt=\"\" /></a>";
 }
 
-//-> URL wird auf Richtigkeit ueberprueft
-function check_url(string $url)
-{
-    if (!empty($url) && $fp = @fopen($url, "r")) {
-        return true;
-        @fclose($fp);
-    }
-
-    return false;
-}
-
-//-> Blaetterfunktion
-function nav(int $entrys, int $perpage, string $urlpart = '', bool $icon = true)
-{
+/**
+ * Blaetterfunktion
+ * @param int $entrys
+ * @param int $perpage
+ * @param string $urlpart
+ * @param bool $icon
+ * @return string
+ */
+function nav(int $entrys, int $perpage, string $urlpart = '', bool $icon = true) {
     global $page;
     if ($perpage == 0)
         return "&#xAB; <span class=\"fontSites\">0</span> &#xBB;";
@@ -1944,24 +1984,17 @@ function nav(int $entrys, int $perpage, string $urlpart = '', bool $icon = true)
     return $icon . ' ' . $first . $resultm . $result . $last;
 }
 
-//-> Funktion um Seiten-Anzahl der Artikel zu erhalten
-function artikelSites(int $sites, int $id)
-{
-    global $part;
-    $seiten = '';
-    for ($i = 0; $i < $sites; $i++) {
-        if ($i == $part)
-            $seiten .= show(_page, array("num" => ($i + 1)));
-        else
-            $seiten .= show(_artike_sites, array("part" => $i, "id" => $id, "num" => ($i + 1)));
-    }
-
-    return $seiten;
-}
-
-//-> Nickausgabe mit Profillink oder Emaillink (reg/nicht reg)
-function autor(int $uid, string $class = "", string $nick = "", string $email = "", int $cut = 20, string $add = "")
-{
+/**
+ * Nickausgabe mit Profillink oder Emaillink (reg/nicht reg)
+ * @param int $uid
+ * @param string $class
+ * @param string $nick
+ * @param string $email
+ * @param int $cut
+ * @param string $add
+ * @return bool|mixed|null|string|string[]
+ */
+function autor(int $uid, string $class = "", string $nick = "", string $email = "", int $cut = 20, string $add = "") {
     global $db;
     if (!dbc_index::issetIndex('user_' . (int)($uid))) {
         $qry = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . (int)($uid) . ";");
@@ -1983,8 +2016,15 @@ function autor(int $uid, string $class = "", string $nick = "", string $email = 
         "nick" => $nickname));
 }
 
-function cleanautor(int $uid, string $class = "", string $nick = "", string $email = "", int $cut = 20)
-{
+/**
+ * @param int $uid
+ * @param string $class
+ * @param string $nick
+ * @param string $email
+ * @param int $cut
+ * @return bool|mixed|null|string|string[]
+ */
+function cleanautor(int $uid, string $class = "", string $nick = "", string $email = "", int $cut = 20) {
     global $db;
     if (!dbc_index::issetIndex('user_' . (int)($uid))) {
         $qry = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . (int)($uid) . ";");
@@ -1999,8 +2039,7 @@ function cleanautor(int $uid, string $class = "", string $nick = "", string $ema
         "class" => $class, "nick" => re(cut(dbc_index::getIndexKey('user_' . (int)($uid), 'nick'), $cut, false, false))));
 }
 
-function rawautor(int $uid)
-{
+function rawautor(int $uid) {
     global $db;
     if (!dbc_index::issetIndex('user_' . (int)($uid))) {
         $qry = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . (int)($uid) . ";");
@@ -2015,9 +2054,12 @@ function rawautor(int $uid)
         jsconvert(re(dbc_index::getIndexKey('user_' . (int)($uid), 'nick')));
 }
 
-//-> Nickausgabe ohne Profillink oder Emaillink fr das ForenAbo
-function fabo_autor(int $uid)
-{
+/**
+ * Nickausgabe ohne Profillink oder Emaillink fr das ForenAbo
+ * @param int $uid
+ * @return bool|mixed|null|string|string[]
+ */
+function fabo_autor(int $uid) {
     global $db;
     $qry = db("SELECT `nick` FROM `" . $db['users'] . "` WHERE `id` = " . $uid . ";");
     if (_rows($qry)) {
@@ -2028,8 +2070,11 @@ function fabo_autor(int $uid)
     return '';
 }
 
-function blank_autor(int $uid)
-{
+/**
+ * @param int $uid
+ * @return bool|mixed|null|string|string[]
+ */
+function blank_autor(int $uid) {
     global $db;
     $qry = db("SELECT `nick` FROM `" . $db['users'] . "` WHERE `id` = " . $uid . ";");
     if (_rows($qry)) {
@@ -2040,15 +2085,20 @@ function blank_autor(int $uid)
     return '';
 }
 
-//-> Rechte abfragen
-function jsconvert(string $txt)
-{
+/**
+ * @param string $txt
+ * @return mixed
+ */
+function jsconvert(string $txt) {
     return str_replace(array("'", "&#039;", "\"", "\r", "\n"), array("\'", "\'", "&quot;", "", ""), $txt);
 }
 
-//-> interner Forencheck
-function fintern(int $id)
-{
+/**
+ * interner Forencheck
+ * @param int $id
+ * @return bool
+ */
+function fintern(int $id) {
     global $db, $userid, $chkMe;
     $sql = db("SELECT s1.`intern`,s2.`id` FROM `" . $db['f_kats'] . "` AS `s1` LEFT JOIN `" . $db['f_skats'] . "` AS `s2` ON s2.`sid` = s1.`id` WHERE s2.`id` = " . (int)($id) . ";");
     if (_rows($sql)) {
@@ -2066,9 +2116,13 @@ function fintern(int $id)
     return false;
 }
 
-//-> Einzelne Userdaten ermitteln
-function data(string $what, int $tid = 0)
-{
+/**
+ * Einzelne Userdaten ermitteln
+ * @param string $what
+ * @param int $tid
+ * @return bool|null
+ */
+function data(string $what, int $tid = 0) {
     global $db, $userid;
     if (!$tid) $tid = $userid;
     if (!dbc_index::issetIndex('user_' . $tid)) {
@@ -2084,7 +2138,12 @@ function data(string $what, int $tid = 0)
     return dbc_index::getIndexKey('user_' . $tid, $what);
 }
 
-//-> Einzelne Userstatistiken ermitteln
+/**
+ * Einzelne Userstatistiken ermitteln
+ * @param string $what
+ * @param int $tid
+ * @return bool|null
+ */
 function userstats(string $what, int $tid = 0)
 {
     global $db, $userid;
@@ -2102,9 +2161,15 @@ function userstats(string $what, int $tid = 0)
     return dbc_index::getIndexKey('userstats_' . $tid, $what);
 }
 
-//- Funktion zum versenden von Emails
-function sendMail(string $mailto, string $subject, string $content)
-{
+/**
+ * Funktion zum versenden von Emails
+ * @param string $mailto
+ * @param string $subject
+ * @param string $content
+ * @return bool
+ * @throws \PHPMailer\PHPMailer\Exception
+ */
+function sendMail(string $mailto, string $subject, string $content) {
     $mail = new PHPMailer(false);
     if (phpmailer_use_smtp) {
         $mail->isSMTP();
@@ -2127,8 +2192,7 @@ function sendMail(string $mailto, string $subject, string $content)
     return $mail->send();
 }
 
-function language_short_tag()
-{
+function language_short_tag() {
     switch ($_SESSION['language']) {
         case "spanish":
             return 'es';
@@ -2141,8 +2205,7 @@ function language_short_tag()
     }
 }
 
-function check_msg_emal()
-{
+function check_msg_emal() {
     global $db, $httphost;
     $qry = db("SELECT s1.`an`,s1.`page`,s1.`titel`,s1.`sendmail`,s1.`id` AS `mid`,s2.`id`,s2.`nick`,s2.`email`,s2.`pnmail` FROM `"
         . $db['msg'] . "` AS `s1` LEFT JOIN `" . $db['users'] .
@@ -2162,9 +2225,12 @@ function check_msg_emal()
 if (!$ajaxJob && HasDSGVO())
     check_msg_emal();
 
-//-> Checkt ob ein Ereignis neu ist
-function check_new(int $datum)
-{
+/**
+ * Checkt ob ein Ereignis neu ist
+ * @param int $datum
+ * @return bool
+ */
+function check_new(int $datum) {
     global $userid;
     if ($userid) {
         if ($datum >= userstats('lastvisit') ||
@@ -2176,9 +2242,14 @@ function check_new(int $datum)
     return false;
 }
 
-//-> DropDown Mens Date/Time
-function dropdown(string $what, int $wert, int $age = 0)
-{
+/**
+ * DropDown Mens Date/Time
+ * @param string $what
+ * @param int $wert
+ * @param int $age
+ * @return string
+ */
+function dropdown(string $what, int $wert, int $age = 0) {
     $return = '';
     if ($what == "day") {
         $return = ($age == 1 ? '<option value="" class="dropdownKat">' . _day . '</option>' . "\n" : '');
@@ -2237,49 +2308,59 @@ function dropdown(string $what, int $wert, int $age = 0)
     return $return;
 }
 
-function getgames()
-{
-    $protocols_path = basePath . "/vendor/austinb/gameq/src/GameQ/Protocols/";
-    $protocols = [];
+/**
+ * Games fuer den Livestatus
+ * @param string $game
+ * @return mixed|string
+ */
+function sgames($game = '') {
+    $protocols = get_files(basePath.'/inc/server_query/');
+    $games = '';
+    foreach($protocols AS $protocol)
+    {
+        unset($gamemods, $server_name_config);
+        $protocol = str_replace('.php', '', $protocol);
+        if(substr($protocol, 0, 1) != '_')
+        {
+            $explode = '##############################################################################################################################';
+            $protocol_config = explode($explode, file_get_contents(basePath.'/inc/server_query/'.$protocol.'.php'));
+            eval(str_replace('<?php', '', $protocol_config[0]));
+            if(!empty($server_name_config) && count($server_name_config) > 2) {
+                $gamemods = '';
+                foreach($server_name_config AS $slabel => $sconfig) {
+                    $gamemods .= $sconfig[1].', ';
+                }
+            }
+            $gamemods = empty($gamemods) ? '' : ' ('.substr($gamemods, 0, strlen($gamemods) - 2).')';
 
-    $files = get_files($protocols_path);
-    foreach ($files as $entry) {
-        if (!is_file($protocols_path . $entry)) {
-            continue;
+            $games .= '<option value="'.$protocol.'">';
+            switch($protocol):
+                case 'bf1942'; case 'bf2142'; case 'bf2'; case 'bfvietnam'; case 'bfbc2';
+                $protocol = strtr($protocol, array('bfbc2' => 'Battlefield Bad Company 2', 'bfv' => 'Battlefield V', 'bf' => 'Battlefield '));
+                break;
+                case 'swat4'; $protocol = strtoupper($protocol); break;
+                case 'aarmy'; $protocol = 'Americas Army'; break;
+                case 'arma'; $protocol = 'Armed Assault'; break;
+                case 'wet'; $protocol = 'Wolfenstein: Enemy Territory'; break;
+                case 'mta'; $protocol = 'Multi-Theft-Auto'; break;
+                case 'cnc'; $protocol = 'Command &amp; Conquer'; break;
+                case 'sof2'; $protocol = 'Soldiers of Fortune 2'; break;
+                case 'ut'; $protocol = 'Unreal Tournament'; break;
+                default;
+                    $protocol = ucfirst(str_replace('_', ' ', $protocol));
+                    $protocol = (strlen($protocol) < 4) ? strtoupper($protocol) : $protocol;
+                    break;
+            endswitch;
+            $games .= $protocol.$gamemods;
+            $games .= '</option>';
         }
-
-        // Lets get some info on the class
-        $reflection = new ReflectionClass('\\GameQ\\Protocols\\' . pathinfo($entry, PATHINFO_FILENAME));
-
-        // Check to make sure we can actually load the class
-        if (!$reflection->IsInstantiable()) {
-            continue;
-        }
-
-        // Load up the class so we can get info
-        $class = $reflection->newInstance();
-
-        if (in_array($class->name(), ['ventrilo', 'teamspeak2', 'teamspeak3',
-            'gamespy', 'gamespy3', 'won']))
-            continue;
-
-        // Add it to the list
-        $protocols[$class->name()] = [
-            'name' => $class->nameLong(),
-            'state' => $class->state(),
-        ];
-
-        unset($class);
     }
-
-    unset($files, $protocols_path);
-    ksort($protocols);
-    return $protocols;
+    $games = str_replace("value=\"".$game."\"","value=\"".$game."\" selected=\"selected\"",$games);
+    return $games;
 }
 
 /**
  * Sucht nach Game Icons
- *
  * @param string $icon
  * @return array
  */
@@ -2298,8 +2379,12 @@ function search_game_icon(string $icon = '')
     return array('image' => $image, 'found' => $found);
 }
 
-function listgame(string $games, string $game)
-{
+/**
+ * @param string $games
+ * @param string $game
+ * @return string
+ */
+function listgame(string $games, string $game) {
     $content = '';
     foreach ($games AS $sname => $info) {
         $selected = (!empty($game) && $game != false && $game == $sname ? 'selected="selected" ' : '');
@@ -2309,23 +2394,33 @@ function listgame(string $games, string $game)
     return $content;
 }
 
-//Umfrageantworten selektieren
-function voteanswer(string $what, int $vid)
-{
+/**
+ * Umfrageantworten selektieren
+ * @param string $what
+ * @param int $vid
+ * @return string
+ */
+function voteanswer(string $what, int $vid) {
     global $db;
     $get = db("SELECT `sel` FROM `" . $db['vote_results'] . "` WHERE `what` = '" . up($what) . "' AND `vid` = " . (int)$vid . ";", false, true);
     return re($get['sel']);
 }
 
-//Profilfelder konvertieren
-function conv($txt)
-{
+/**
+ * Profilfelder konvertieren
+ * @param $txt
+ * @return mixed
+ */
+function conv($txt) {
     return str_replace(array("ä", "ü", "ö", "", "Ä", "Ö", ""), array("ae", "ue", "oe", "Ae", "Ue", "Oe", "ss"), $txt);
 }
 
-//-> Geburtstag errechnen
-function getAge($bday)
-{
+/**
+ * Geburtstag errechnen
+ * @param $bday
+ * @return false|int|string
+ */
+function getAge($bday) {
     if (!empty($bday) && $bday) {
         $bday = date('d.m.Y', $bday);
         list($tiday, $iMonth, $iYear) = explode(".", $bday);
@@ -2342,9 +2437,14 @@ function getAge($bday)
     return '-';
 }
 
-//-> Ausgabe der Position des einzelnen Members
-function getrank(int $tid, int $squad = 0, bool $profil = false)
-{
+/**
+ * Ausgabe der Position des einzelnen Members
+ * @param int $tid
+ * @param int $squad
+ * @param bool $profil
+ * @return string
+ */
+function getrank(int $tid, int $squad = 0, bool $profil = false) {
     global $db;
     if ($squad) {
         if ($profil)
@@ -2402,9 +2502,10 @@ function getrank(int $tid, int $squad = 0, bool $profil = false)
     return '';
 }
 
-//-> Session fuer den letzten Besuch setzen
-function set_lastvisit()
-{
+/**
+ * Session fuer den letzten Besuch setzen
+ */
+function set_lastvisit() {
     global $db, $useronline, $userid;
     if ($userid) {
         if (!db("SELECT `id` FROM `" . $db['users'] . "` WHERE `id` = " . (int)($userid) . " AND (time+" . $useronline . ") > " . time() . ";", true)) {
@@ -2413,17 +2514,23 @@ function set_lastvisit()
     }
 }
 
-//-> Checkt welcher User gerade noch online ist
-function onlinecheck(int $tid)
-{
+/**
+ * Checkt welcher User gerade noch online ist
+ * @param int $tid
+ * @return string
+ */
+function onlinecheck(int $tid) {
     global $db, $useronline;
     $row = db("SELECT `id` FROM `" . $db['users'] . "` WHERE `id` = " . (int)($tid) . " AND (time+" . $useronline . ") > " . time() . " AND `online` = 1;", true);
     return $row ? "<img src=\"../inc/images/online.gif\" alt=\"\" class=\"icon\" />" : "<img src=\"../inc/images/offline.gif\" alt=\"\" class=\"icon\" />";
 }
 
-//Funktion fuer die Sprachdefinierung der Profilfelder
-function pfields_name(string $name)
-{
+/**
+ * Funktion fuer die Sprachdefinierung der Profilfelder
+ * @param string $name
+ * @return null|string|string[]
+ */
+function pfields_name(string $name) {
     return preg_replace_callback("=_(.*?)_=Uis",
         function ($match) {
             if (defined("_profil" . substr(trim($match[0]), 0, -1)))
@@ -2433,9 +2540,13 @@ function pfields_name(string $name)
         }, $name);
 }
 
-//-> Checkt versch. Dinge anhand der Hostmaske eines Users
-function ipcheck(string $what, int $time = 0)
-{
+/**
+ * Checkt versch. Dinge anhand der Hostmaske eines Users
+ * @param string $what
+ * @param int $time
+ * @return bool
+ */
+function ipcheck(string $what, int $time = 0) {
     global $db, $userip;
     $get = db("SELECT `time`,`what` FROM `" . $db['ipcheck'] . "` WHERE `what` = '" . $what . "' AND `ip` = '" . $userip . "' ORDER BY `time` DESC;", false, true);
     if (count($get) >= 1) {
@@ -2454,15 +2565,22 @@ function ipcheck(string $what, int $time = 0)
     return false;
 }
 
-//-> Gibt die Tageszahl eines Monats aus
-function days_in_month(int $month, int $year)
-{
+/**
+ * Gibt die Tageszahl eines Monats aus
+ * @param int $month
+ * @param int $year
+ * @return int
+ */
+function days_in_month(int $month, int $year) {
     return $month == 2 ? ($year % 4 ? 28 : ($year % 100 ? 29 : ($year % 400 ? 28 : 29))) : (($month - 1) % 7 % 2 ? 30 : 31);
 }
 
-//-> Setzt bei einem Tag >10 eine 0 vorran (Kalender)
-function cal(int $i)
-{
+/**
+ * Setzt bei einem Tag >10 eine 0 vorran (Kalender)
+ * @param int $i
+ * @return int|null|string|string[]
+ */
+function cal(int $i) {
     if (preg_match("=10|20|30=Uis", $i) == FALSE) $i = preg_replace("=0=", "", $i);
     if ($i < 10) $tag_nr = "0" . $i;
     else $tag_nr = $i;
@@ -2470,17 +2588,19 @@ function cal(int $i)
 }
 
 //-> Entfernt fuehrende Nullen bei Monatsangaben
-function nonum(int $i)
-{
+function nonum(int $i) {
     if (preg_match("=10=Uis", $i) == false)
         return preg_replace("=0=", "", $i);
 
     return $i;
 }
 
-//-> Konvertiert Platzhalter in die jeweiligen bersetzungen
-function navi_name(string $name)
-{
+/**
+ * Konvertiert Platzhalter in die jeweiligen bersetzungen
+ * @param string $name
+ * @return mixed|null|string|string[]
+ */
+function navi_name(string $name) {
     $name = trim($name);
     if (preg_match("#^_(.*?)_$#Uis", $name)) {
         $name = preg_replace("#_(.*?)_#Uis", "$1", $name);
@@ -2492,9 +2612,12 @@ function navi_name(string $name)
     return $name;
 }
 
-//RSS News Feed erzeugen
-function convert_feed(string $txt)
-{
+/**
+ * RSS News Feed erzeugen
+ * @param string $txt
+ * @return string
+ */
+function convert_feed(string $txt) {
     global $charset;
     $txt = stripslashes($txt);
     $txt = str_replace("&Auml;", "Ae", $txt);
@@ -2519,9 +2642,14 @@ function convert_feed(string $txt)
     return strip_tags($txt);
 }
 
-// Userpic ausgeben
-function userpic(int $userid, int $width = 170, int $height = 210)
-{
+/**
+ * Userpic ausgeben
+ * @param int $userid
+ * @param int $width
+ * @param int $height
+ * @return bool|mixed|null|string|string[]
+ */
+function userpic(int $userid, int $width = 170, int $height = 210) {
     global $picformat;
     $pic = '';
     foreach ($picformat as $endung) {
@@ -2535,9 +2663,14 @@ function userpic(int $userid, int $width = 170, int $height = 210)
     return $pic;
 }
 
-// Useravatar ausgeben
-function useravatar(int $uid = 0, int $width = 100, int $height = 100)
-{
+/**
+ * Useravatar ausgeben
+ * @param int $uid
+ * @param int $width
+ * @param int $height
+ * @return bool|mixed|null|string|string[]
+ */
+function useravatar(int $uid = 0, int $width = 100, int $height = 100) {
     global $picformat, $userid;
     $pic = '';
     $uid = $uid == 0 ? $userid : $uid;
@@ -2552,9 +2685,14 @@ function useravatar(int $uid = 0, int $width = 100, int $height = 100)
     return $pic;
 }
 
-// Userpic fuer Hoverinformationen ausgeben
-function hoveruserpic(int $userid, int $width = 170, int $height = 210)
-{
+/**
+ * Userpic fuer Hoverinformationen ausgeben
+ * @param int $userid
+ * @param int $width
+ * @param int $height
+ * @return string
+ */
+function hoveruserpic(int $userid, int $width = 170, int $height = 210) {
     global $picformat;
     $pic = "../inc/images/nopic.gif', '" . $width . "', '" . $height;
     foreach ($picformat as $endung) {
@@ -2567,9 +2705,12 @@ function hoveruserpic(int $userid, int $width = 170, int $height = 210)
     return $pic;
 }
 
-// Adminberechtigungen ueberpruefen
-function admin_perms(int $userid)
-{
+/**
+ * Adminberechtigungen ueberpruefen
+ * @param int $userid
+ * @return bool
+ */
+function admin_perms(int $userid) {
     global $db, $chkMe;
     if (empty($userid))
         return false;
@@ -2610,9 +2751,12 @@ function admin_perms(int $userid)
     return ($chkMe == 4) ? true : false;
 }
 
-//-> filter placeholders
-function pholderreplace(string $pholder)
-{
+/**
+ * filter placeholders
+ * @param string $pholder
+ * @return mixed
+ */
+function pholderreplace(string $pholder) {
     /** @noinspection CssInvalidAtRule */
     $search = array('@<script[^>]*?>.*?</script>@si',
         '@<style[^>]*?>.*?</style>@siU',
@@ -2635,9 +2779,11 @@ function pholderreplace(string $pholder)
     return str_replace("]", "", $pholder);
 }
 
-//-> Zugriffsberechtigung auf die Seite
-function check_internal_url()
-{
+/**
+ * Zugriffsberechtigung auf die Seite
+ * @return bool
+ */
+function check_internal_url() {
     global $db, $chkMe;
     if ($chkMe >= 1) return false;
     $install_pfad = explode("/", dirname(dirname(GetServerVars('SCRIPT_NAME')) . "../"));
@@ -2670,16 +2816,22 @@ function check_internal_url()
     return false;
 }
 
-//-> Ladezeit
-function generatetime()
-{
+/**
+ * Ladezeit
+ * @return float
+ */
+function generatetime() {
     list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);
 }
 
-//-> Rechte abfragen
-function getPermissions(int $checkID = 0, int $pos = 0)
-{
+/**
+ * Rechte abfragen
+ * @param int $checkID
+ * @param int $pos
+ * @return string
+ */
+function getPermissions(int $checkID = 0, int $pos = 0) {
     global $db, $lang;
 
     if (!empty($checkID)) {
@@ -2711,9 +2863,13 @@ function getPermissions(int $checkID = 0, int $pos = 0)
     return $p;
 }
 
-//-> interne Foren-Rechte abfragen
-function getBoardPermissions(int $checkID = 0, int $pos = 0)
-{
+/**
+ * interne Foren-Rechte abfragen
+ * @param int $checkID
+ * @param int $pos
+ * @return string
+ */
+function getBoardPermissions(int $checkID = 0, int $pos = 0) {
     global $db;
 
     $break = 0;
@@ -2742,9 +2898,12 @@ function getBoardPermissions(int $checkID = 0, int $pos = 0)
     return $i_forum;
 }
 
-//-> schreibe in die IPCheck Tabelle
-function setIpcheck(string $what = '', bool $time = true)
-{
+/**
+ * schreibe in die IPCheck Tabelle
+ * @param string $what
+ * @param bool $time
+ */
+function setIpcheck(string $what = '', bool $time = true) {
     global $db, $userip;
     db("INSERT INTO `" . $db['ipcheck'] . "` SET `ip` = '" . $userip . "', "
         . "`user_id` = " . userid() . ", `what` = '" . $what . "', "
@@ -2752,14 +2911,15 @@ function setIpcheck(string $what = '', bool $time = true)
 }
 
 //-> Speichert Rückgaben der MySQL Datenbank zwischen um SQL-Queries einzusparen
-final class dbc_index
-{
+final class dbc_index {
     private static $index = array();
 
-    public static final function setIndex($index_key, $data)
-    {
+    /**
+     * @param $index_key
+     * @param $data
+     */
+    public static final function setIndex($index_key, $data) {
         global $cache, $config_cache;
-
         if (self::MemSetIndex()) {
             if (show_dbc_debug)
                 DebugConsole::insert_info('dbc_index::setIndex()', 'Set index: "' . $index_key . '" to cache');
@@ -2781,8 +2941,11 @@ final class dbc_index
         self::$index[$index_key] = $data;
     }
 
-    public static final function getIndex(string $index_key)
-    {
+    /**
+     * @param string $index_key
+     * @return bool|mixed
+     */
+    public static final function getIndex(string $index_key){
         if (!self::issetIndex($index_key))
             return false;
 
@@ -2792,8 +2955,12 @@ final class dbc_index
         return self::$index[$index_key];
     }
 
-    public static final function getIndexKey(string $index_key, string $key)
-    {
+    /**
+     * @param string $index_key
+     * @param string $key
+     * @return bool
+     */
+    public static final function getIndexKey(string $index_key, string $key){
         if (!self::issetIndex($index_key))
             return false;
 
@@ -2804,16 +2971,19 @@ final class dbc_index
         return $data[$key];
     }
 
-    public static final function issetIndex(string $index_key)
-    {
+    /**
+     * @param string $index_key
+     * @return bool
+     */
+    public static final function issetIndex(string $index_key){
         global $cache;
         if (isset(self::$index[$index_key])) return true;
         if (self::MemSetIndex()) {
             $data = null;
             try {
                 $data = $cache->getItem('dbc_' . $index_key);
-            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
-            }
+            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
+
             if (!is_null($data->get())) {
                 if (show_dbc_debug)
                     DebugConsole::insert_loaded('dbc_index::issetIndex()', 'Load index: "' . $index_key . '" from cache');
@@ -2826,8 +2996,10 @@ final class dbc_index
         return false;
     }
 
-    public static final function MemSetIndex()
-    {
+    /**
+     * @return bool
+     */
+    public static final function MemSetIndex() {
         global $config_cache, $cache;
         if (!$config_cache['dbc'] || CacheManager::$fallback) {
             return false;
@@ -2855,8 +3027,7 @@ final class dbc_index
  * @param string $standard * falls der timestamp 0 oder ungueltig ist, gebe diesen string zurueck
  * @return string
  */
-function get_elapsed_time(int $timestamp, int $aktuell = 0, int $anzahl_einheiten = 0, int $zeige_leere_einheiten = 0, int $zeige_einheiten = 0, $standard = null)
-{
+function get_elapsed_time(int $timestamp, int $aktuell = 0, int $anzahl_einheiten = 0, int $zeige_leere_einheiten = 0, int $zeige_einheiten = 0, $standard = null) {
     if ($aktuell === null) $aktuell = time();
     if ($anzahl_einheiten === null) $anzahl_einheiten = 1;
     if ($zeige_leere_einheiten === null) $zeige_leere_einheiten = true;
@@ -2923,9 +3094,15 @@ if ($functions_files = get_files(basePath . '/inc/additional-functions/', false,
 //-> Navigation einbinden
 include_once(basePath . '/inc/menu-functions/navi.php');
 
-//-> Ausgabe des Indextemplates
-function page(string $index = '', string $title = '', string $where = '', string $wysiwyg = '', string $index_templ = 'index')
-{
+/**
+ * Ausgabe des Indextemplates
+ * @param string $index
+ * @param string $title
+ * @param string $where
+ * @param string $wysiwyg
+ * @param string $index_templ
+ */
+function page(string $index = '', string $title = '', string $where = '', string $wysiwyg = '', string $index_templ = 'index') {
     global $db, $userid, $userip, $tmpdir, $chkMe, $charset, $mysql, $isSpider;
     global $designpath, $cp_color, $time_start;
 
