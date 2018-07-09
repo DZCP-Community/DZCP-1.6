@@ -44,7 +44,8 @@ if (defined('_UserMenu')) {
             } elseif ($check_email) {
                 $index = error(_error_email_exists, 1);
             } else {
-                if (isset($_POST['pwd']) && !empty($_POST['pwd']) && !empty($_POST['cpwd'])) {
+                if (isset($_POST['pwd']) && isset($_POST['cpwd']) &&
+                    !empty($_POST['pwd']) && !empty($_POST['cpwd'])) {
                     if ($_POST['pwd'] == $_POST['cpwd']) {
                         $newpwd = "pwd = '" . hash('sha256', $_POST['pwd']) . "',";
                         $index = info(_info_edit_profile_done, "?action=user&amp;id=" . $userid . "");
@@ -56,9 +57,6 @@ if (defined('_UserMenu')) {
                     } else {
                         $index = error(_error_passwords_dont_match, 1);
                     }
-                } else {
-                    $newpwd = "";
-                    $index = info(_info_edit_profile_done, "?action=user&amp;id=" . $userid . "");
                 }
 
                 $icq = preg_replace("=-=Uis", "", $_POST['icq']);
@@ -73,7 +71,7 @@ if (defined('_UserMenu')) {
                         $customfields .= " " . $getcustom['feldname'] . " = '" . up($_POST[$getcustom['feldname']]) . "', ";
                 }
 
-                $qry = db("UPDATE `" . $db['users'] . "` SET " . $newpwd . " " . $customfields . "
+                db("UPDATE `" . $db['users'] . "` SET " . $newpwd . " " . $customfields . "
                   `country`      = '" . up($_POST['land']) . "',
                   `user`         = '" . up($_POST['user']) . "',
                   `nick`         = '" . up($_POST['nick']) . "',
@@ -91,15 +89,17 @@ if (defined('_UserMenu')) {
                   `xboxid`       = '" . up($_POST['xboxid']) . "',
                   `psnid`        = '" . up($_POST['psnid']) . "',
                   `originid`     = '" . up($_POST['originid']) . "',
-                  `battlenetid`  = '" . up($_POST['battlenetid'])) . "',
-                  `steamid`      = '" . up($_POST['steamid'])) . "',
-                  `skypename`    = '" . up($_POST['skypename'])) . "',
+                  `battlenetid`  = '" . up($_POST['battlenetid']) . "',
+                  `steamid`      = '" . up($_POST['steamid']) . "',
+				  `skypename`    = '" . up($_POST['skypename']) . "',
                   `signatur`     = '" . up($_POST['sig']) . "',
                   `beschreibung` = '" . up($_POST['ich']) . "',
                   `perm_gb`      = " . ((int)($_POST['visibility_gb'])) . ",
                   `perm_gallery` = " . ((int)($_POST['visibility_gallery'])) . ",
                   `show`         = " . ((int)($_POST['visibility_profile'])) . " 
                    WHERE `id` = " . $userid . ";");
+
+                $index = info(_info_edit_profile_done, "?action=user&amp;id=" . $userid . "");
             }
         } elseif ($do == "delete") {
             $getdel = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . $userid . ";", false, true);
