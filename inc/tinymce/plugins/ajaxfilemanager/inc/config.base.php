@@ -131,4 +131,3 @@ define('CONFIG_LOAD_DOC_LATTER', false); //all documents will be loaded up after
 
 define('CONFIG_LANG_INDEX', 'language'); //the index in the session
 define('CONFIG_LANG_DEFAULT', (CONFIG_QUERY_STRING_ENABLE && !empty($_GET['language']) && file_exists(DIR_LANG . secureFileName($_GET['language']) . '.php') ? secureFileName($_GET['language']) : 'de')); //change it to be your language file base name, such en
-?>

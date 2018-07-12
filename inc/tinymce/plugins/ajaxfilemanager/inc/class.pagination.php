@@ -36,7 +36,7 @@ class pagination
      * @param boolean $friendlyUrl set the returned url
      * as search engine friendly or Normal Url
      */
-    function pagination($friendlyUrl = false)
+    function __construct($friendlyUrl = false)
     {
         $this->friendlyUrl = $friendlyUrl;
         $this->__resetCurrentPage();

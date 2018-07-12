@@ -6,8 +6,7 @@
  * Hinweis: Diese Datei bitte nicht bearbeiten!
  */
 
-class api
-{
+class api {
     private $api_server = null;
     private $call_varying = null;
     private $api_callback = null;
@@ -15,8 +14,11 @@ class api
     private $api_output = array();
     private $api_version = '0.0.1';
 
-    function __construct($address = 'api.dzcp.de')
-    {
+    /**
+     * api constructor.
+     * @param string $address
+     */
+    function __construct(string $address = 'api.dzcp.de') {
         $this->api_server = $address;
 
         //Autoupdate only in administration
@@ -24,12 +26,60 @@ class api
             $this->check_api_version();
     }
 
-    public function get_dzcp_version($use_cache = true, $ttl = 30)
-    {
+    /**
+     * @param array $addons
+     * @param bool $use_cache
+     * @param int $ttl
+     * @return array|mixed
+     * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
+     */
+    public function get_addon_versions(array $addons, bool $use_cache = true, int $ttl = 30) {
+        global $cache;
+        if (show_api_debug)
+            DebugConsole::insert_info('api.php', 'Call get_addon_versions()');
+
+        $this->api_output = [];
+        $this->api_output['data'] = json_encode($addons);
+        $this->api_output['error'] = true;
+        $this->api_output['error_msg'] = 'no content from server';
+
+        //CALL
+        $this->api_input = [];
+        $this->api_input['event'] = 'addons';
+        $this->api_input['data'] = $this->api_output['data'];
+
+        if ($use_cache) {
+            $CachedString = $cache->getItem('api_dzcp_addons');
+            if (is_null($CachedString->get())) {
+                $this->call();
+                $this->varying();
+                if (!$this->api_output['error']) {
+                    $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
+                    $cache->save($CachedString);
+                }
+            } else {
+                $this->api_output = unserialize($CachedString->get());
+            }
+        } else { // No Cache
+            $this->call();
+            $this->varying();
+        }
+
+        return $this->api_output;
+    }
+
+    /**
+     * @param bool $use_cache
+     * @param int $ttl
+     * @return array|mixed
+     * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
+     */
+    public function get_dzcp_version(bool $use_cache = true, int $ttl = 30) {
         global $cache;
         if (show_api_debug)
             DebugConsole::insert_info('api.php', 'Call get_dzcp_version()');
 
+        $this->api_output = [];
         $this->api_output['version'] = _version;
         $this->api_output['release'] = _release;
         $this->api_output['build'] = _build;
@@ -37,6 +87,7 @@ class api
         $this->api_output['error_msg'] = 'no content from server';
 
         //CALL
+        $this->api_input = [];
         $this->api_input['event'] = 'version';
         $this->api_input['version'] = _version;
         $this->api_input['edition'] = _edition;
@@ -63,16 +114,32 @@ class api
         return $this->api_output;
     }
 
-    private function check_api_version()
-    {
+    public static function versionCompare(string $version1,string $operator,string $version2) {
+        $_fv = (int)(trim(str_replace('.', '', $version1)));
+        $_sv = (int)(trim(str_replace('.', '', $version2)));
+
+        if (strlen($_fv) > strlen($_sv)) {
+            $_sv = str_pad ($_sv,strlen($_fv),0);
+        }
+
+        if (strlen($_fv) < strlen($_sv)) {
+            $_fv = str_pad($_fv,strlen($_sv),0);
+        }
+
+        return version_compare((string)$_fv,(string)$_sv,$operator);
+    }
+
+    private function check_api_version() {
         global $cache;
 
+        $this->api_output = [];
         $this->api_output['version'] = $this->api_version;
         $this->api_output['url'] = '';
         $this->api_output['error'] = true;
         $this->api_output['error_msg'] = 'no content from server';
 
         //CALL
+        $this->api_input = [];
         $this->api_input['event'] = 'api_version';
         $this->api_input['version'] = $this->api_version;
 
@@ -113,11 +180,7 @@ class api
         }
     }
 
-    /**
-     *
-     */
-    private function varying()
-    {
+    private function varying() {
         if (show_api_debug)
             DebugConsole::insert_info('api.php', 'Call varying');
 
@@ -143,8 +206,7 @@ class api
         }
     }
 
-    private function call()
-    {
+    private function call() {
         if (!allow_url_fopen_support()) {
             return;
         }

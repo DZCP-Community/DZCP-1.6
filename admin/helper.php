@@ -4,8 +4,7 @@
  *
  * @return array
  */
-function show_dzcp_version()
-{
+function show_dzcp_version() {
     global $api;
     $dzcp_version_info = 'onmouseover="DZCP.showInfo(\'<tr><td colspan=2 align=center padding=3 class=infoTop>DZCP Versions Checker</td></tr><tr><td>' . _dzcp_vcheck . '</td></tr>\')" onmouseout="DZCP.hideInfo()"';
     $return = array();
