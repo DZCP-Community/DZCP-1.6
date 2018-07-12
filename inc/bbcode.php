@@ -1362,30 +1362,6 @@ function array_var_exists($var, $search)
     return false;
 }
 
-//-> Funktion um eine Datei im Web auf Existenz zu prfen
-function fileExists(string $url)
-{
-    $url_p = @parse_url($url);
-    $port = isset($url_p['port']) ? $url_p['port'] : 80;
-
-    if (!allow_url_fopen_support()) return false;
-    $fp = @fsockopen($url_p['host'], $port, $errno, $errstr, 5);
-    if (!$fp) return false;
-
-    @fputs($fp, 'GET ' . $url_p['path'] . ' HTTP/1.1' . chr(10));
-    @fputs($fp, 'HOST: ' . $url_p['host'] . chr(10));
-    @fputs($fp, 'Connection: close' . chr(10) . chr(10));
-
-    $response = @fgets($fp, 1024);
-    $content = @fread($fp, 1024);
-    $ex = explode("\n", $content);
-    $content = $ex[count($ex) - 1];
-    @fclose($fp);
-
-    if (preg_match("#404#", $response)) return false;
-    else return trim($content);
-}
-
 //-> Funktion um Sonderzeichen zu konvertieren
 function spChars(string $txt)
 {
