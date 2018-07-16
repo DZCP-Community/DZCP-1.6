@@ -10,7 +10,9 @@ if (defined('_Forum')) {
         " s1 WHERE s1.kid = s2.id AND s2.sid = s3.id AND s1.id = '" .
         (int)($_GET['id']) . "'", false, true);
 
-    $f_check = db("SELECT * FROM `" . $db['f_threads'] . "`  WHERE `id` = " . (int)($_GET['id']) . " AND `kid` = " . $checks['kid'] . ";");
+    $f_check = db("SELECT * FROM `" . $db['f_threads'] .
+        "`  WHERE `id` = " . (int)($_GET['id']) . " AND `kid` = " . (empty($checks['kid']) ?
+            (isset($_GET['kid']) ? (int)$_GET['kid'] : 0) : $checks['kid']) . ";");
     if (_rows($f_check)) {
         if ($checks['intern'] == 1 && !permission("intforum") && !fintern($checks['id'])) {
             $index = error(_error_wrong_permissions, 1);
