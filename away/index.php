@@ -67,7 +67,8 @@ switch ($action):
             if (empty($show))
                 $show = _away_no_entry;
 
-            $nav = nav(cnt($db['away']), config('m_away'), "?" . (isset($_GET['show']) ? $_GET['show'] : '') . orderby_nav());
+            $nav = nav(cnt($db['away']), config('m_away'), "?" .
+                (isset($_GET['show']) ? $_GET['show'] : '') . orderby_nav());
 
             $index = show($dir . "/away", array("head" => _away_head,
                 "show" => $show,
@@ -230,8 +231,14 @@ switch ($action):
                 "text" => $get['reason'],
                 "submit" => _button_value_edit));
 
-            $abdata = mktime(0, 0, 0, $_POST['m'], $_POST['t'], $_POST['j']);
-            $bisdata = mktime(0, 0, 0, $_POST['monat'], $_POST['tag'], $_POST['jahr']);
+            $abdata = mktime(0, 0, 0,
+                (isset($_POST['m']) ? (int)$_POST['m'] : 0),
+                (isset($_POST['t']) ? (int)$_POST['t'] : 0),
+                (isset($_POST['j']) ? (int)$_POST['j'] : 0));
+            $bisdata = mktime(0, 0, 0,
+                (isset($_POST['monat']) ? (int)$_POST['monat'] : 0),
+                (isset($_POST['tag']) ? (int)$_POST['tag'] : 0),
+                (isset($_POST['jahr']) ? (int)$_POST['jahr'] : 0));
             if ($do == "set") {
                 if (empty($_POST['titel']) || empty($_POST['reason']) || $bisdata == $abdata || $abdata > $bisdata) {
                     if (empty($_POST['titel'])) $error = show("errors/errortable", array("error" => _away_empty_titel));
@@ -266,9 +273,9 @@ switch ($action):
                         "time" => date("d.m.Y H:i", time()) . _uhr));
 
                     db("UPDATE `" . $db['away'] . "` SET `start`= " . (int)$abdata . ", `end` = " .
-                        ((int)$time) . ", `titel` = '" . up($_POST['titel']) . "'', `reason` = '" .
+                        ((int)$time) . ", `titel` = '" . up($_POST['titel']) . "', `reason` = '" .
                         up($_POST['reason']) . "', `lastedit` = '" .
-                        $editedby . "' WHERE `id` = " . (int)($_GET['id']) . ";");
+                        up($editedby) . "' WHERE `id` = " . (int)($_GET['id']) . ";");
 
                     $index = info(_away_successful_edit, "../away/");
                 }
