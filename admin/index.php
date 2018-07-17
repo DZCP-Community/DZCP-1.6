@@ -119,8 +119,10 @@ else {
             "dbase" => _stats_mysql,
             "einst" => _config_einst,
             "content" => _content,
-            "newsticker" => admin_view_dzcp_news ? ('<div style="padding:3px">' . (empty($dzcp_news['news']) ? '' :
-                    '<b>DZCP News:</b><br />') . '<div id="dzcpticker">' . utf8_encode($dzcp_news['news']) . '</div></div>') : '',
+            "newsticker" => admin_view_dzcp_news && !empty($dzcp_news['news'])
+                ? ('<div style="padding:3px"><b>DZCP News:</b><br />' .
+                '<div id="dzcpticker">' . utf8_encode($dzcp_news['news']) .
+                '</div></div>') : '',
             "rootadmin" => _rootadmin,
             "rootmenu" => $rootmenu,
             "settingsmenu" => $settingsmenu,
