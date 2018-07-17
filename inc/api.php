@@ -27,6 +27,14 @@ class api {
     }
 
     /**
+     * @return string
+     */
+    public function getApiVersion()
+    {
+        return $this->api_version;
+    }
+
+    /**
      * @param bool $use_cache
      * @param int $ttl
      * @return array|mixed

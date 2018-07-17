@@ -19,6 +19,7 @@ $support .= "DZCP Version: " . _version . "\r\n";
 $support .= "DZCP Release: " . _release . "\r\n";
 $support .= "DZCP Build: " . _build . "\r\n";
 $support .= "DZCP Template: " . $tmpdir . "\r\n";
+$support .= "DZCP API-Version: " . $api->getApiVersion() . "\r\n";
 $support .= "Domain: " . str_replace('/admin', '', GetServerVars('HTTP_REFERER')) . "\r\n";
 $support .= "\r\n";
 
@@ -35,6 +36,7 @@ $support .= "\r\n";
 $support .= "#####################\r\n";
 $support .= "Server Cache\r\n";
 $support .= "#####################\r\n";
+$support .= "PhpFastCache Version: " . phpFastCache\Api::getVersion() . "\r\n";
 $support .= "Cache Storage: " . str_replace('\\phpFastCache\\Drivers\\', '', $cache->getDriverName()) . "\r\n";
 $support .= "Cache Fallback Storage: " . $cache->getConfig()['fallback'] . "\r\n";
 $support .= "Cache Fallback Enabled: " . (\phpFastCache\CacheManager::$fallback ? 'On' : 'Off') . "\r\n";
@@ -57,7 +59,13 @@ $support .= "imagettftext(): " . (function_exists('imagettftext') == true ? 'exi
 $support .= "file_uploads: " . $PhpInfo['Core']['file_uploads'][0] . "\r\n";
 $support .= "upload_max_filesize: " . $PhpInfo['Core']['upload_max_filesize'][0] . "\r\n";
 $support .= "sendmail_from: " . $PhpInfo['Core']['sendmail_from'][0] . "\r\n";
-$support .= "sendmail_path: " . $PhpInfo['Core']['sendmail_path'][0];
+$support .= "sendmail_path: " . $PhpInfo['Core']['sendmail_path'][0] . "\r\n";
+$support .= "\r\n";
+
+$support .= "#####################\r\n";
+$support .= "Debug\r\n";
+$support .= "#####################\r\n";
+$support .= "SQL-Error Datei: " . (file_exists(basePath . "/inc/_logs/sql_error_log.log") ? 'vorhanden' : 'keine') . "\r\n";
 $support .= "\r\n";
 
 $show = show($dir . "/support", array("info" => _admin_support_info, "head" => _admin_support_head, "support" => $support));
