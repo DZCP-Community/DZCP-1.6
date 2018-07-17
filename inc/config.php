@@ -18,7 +18,6 @@ define('use_min_css_js_files', false); //Sollen die Komprimierten versionen von 
 
 define('use_default_timezone', true); // Verwendende die Zeitzone vom Server
 define('default_timezone', 'Europe/Berlin'); // Die zu verwendende Zeitzone selbst einstellen * 'use_default_timezone' auf false stellen. List of Supported Timezones: http://php.net/manual/en/timezones.php *
-define('admin_view_dzcp_news', true); // Entscheidet ob der Newstricker in der Administration angezeigt wird
 
 define('thumbgen_cache', true); // Sollen die verkleinerten Bilder der Thumbgen gespeichert werden
 define('thumbgen_cache_time', 60 * 60); // Wie lange soll das Bild aus dem Cache verwendet werden
@@ -32,6 +31,8 @@ define('auto_db_optimize_interval', (3 * 24 * 60 * 60)); // Wann soll der OPTIMI
 
 define('dzcp_version_checker', true); // Version auf DZCP.de abgleichen und benachrichtigen ob eine neue Version zur Verfuegung steht
 define('dzcp_version_checker_refresh', (30 * 60)); // Wie lange soll gewartet werden um einen Versionsabgleich auszufuehren
+
+define('admin_view_dzcp_news', true); // Entscheidet ob der Newstricker in der Administration angezeigt wird
 
 define('buffer_gzip_compress_level', 4); // Level der GZIP Kompression 1 - 9
 define('buffer_show_licence_bar', true); // Schaltet die "Powered by DZCP - deV!L`z Clanportal V1.6" am ende der Seite an oder aus
@@ -73,7 +74,7 @@ define('phpmailer_smtp_secure', 'tls');//Enable TLS encryption, `ssl` also accep
  * Cache Configuration
  */
 $config_cache = array(
-    "storage" => "apc", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
+    "storage" => "auto", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
     "server_mem" => array(array("127.0.0.1", 11211, 1)), //memcache / memcached
     "server_redis" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'database' => '', 'timeout' => ''),
     "server_ssdb" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'timeout' => ''),
@@ -433,73 +434,4 @@ if (file_exists(basePath . "/_installer/index.php") &&
         $global_index ? header('Location: _installer/update.php') :
             header('Location: ../_installer/update.php');
     unset($user_check);
-}
-
-function sql_backup()
-{
-    global $mysql, $db;
-    $backup_table_data = array();
-
-    //Table Drop
-    $sqlqry = db('SHOW TABLE STATUS');
-    while ($table = _fetch($sqlqry)) {
-        $backup_table_data[$table['Name']]['drop'] = 'DROP TABLE IF EXISTS `' . $table['Name'] . '`;';
-    }
-    unset($table);
-
-    //Table Create
-    foreach ($backup_table_data as $table => $null) {
-        unset($null);
-        $sqlqry = db('SHOW CREATE TABLE ' . $table . ';');
-        while ($table = _fetch($sqlqry)) {
-            $backup_table_data[$table['Table']]['create'] = $table['Create Table'] . ';';
-        }
-    }
-    unset($table);
-
-    //Insert Create
-    foreach ($backup_table_data as $table => $null) {
-        unset($null);
-        $backup = '';
-        $sqlqry = db('SELECT * FROM ' . $table . ' ;');
-        while ($dt = _fetch($sqlqry)) {
-            if (!empty($dt)) {
-                $backup_data = '';
-                foreach ($dt as $key => $var) {
-                    $backup_data .= "`" . $key . "` = '" . ((string)(str_replace("'", "`", $var))) . "',";
-                }
-
-                $backup .= "INSERT INTO `" . $table . "` SET " . substr($backup_data, 0, -1) . ";\r\n";
-                unset($backup_data);
-            }
-        }
-
-        $backup_table_data[$table]['insert'] = $backup;
-        unset($backup);
-    }
-    unset($table);
-
-    $sql_backup = "-- -------------------------------------------------------------------\r\n";
-    $sql_backup .= "-- Datenbank Backup von deV!L`z Clanportal v." . _version . "\r\n";
-    $sql_backup .= "-- Build: " . _release . " * " . _build . "\r\n";
-    $sql_backup .= "-- Host: " . $db['host'] . "\r\n";
-    $sql_backup .= "-- Erstellt am: " . date("d.m.Y") . " um " . date("H:i") . "\r\n";
-    $sql_backup .= "-- MySQL-Version: " . mysqli_get_server_info($mysql) . "\r\n";
-    $sql_backup .= "-- PHP Version: " . phpversion() . "\r\n";
-    $sql_backup .= "-- -------------------------------------------------------------------\r\n\r\n";
-    $sql_backup .= "--\r\n-- Datenbank: `" . $db['db'] . "`\r\n--\n\n";
-    $sql_backup .= "-- -------------------------------------------------------------------\r\n";
-    foreach ($backup_table_data as $table => $data) {
-        $sql_backup .= "\r\n--\r\n-- Tabellenstruktur: `" . $table . "`\r\n--\r\n\r\n";
-        $sql_backup .= $data['drop'] . "\r\n";
-        $sql_backup .= $data['create'] . "\r\n";
-
-        if (!empty($data['insert'])) {
-            $sql_backup .= "\r\n--\r\n-- Datenstruktur: `" . $table . "`\r\n--\r\n\r\n";
-            $sql_backup .= $data['insert'] . "\r\n";
-        }
-    }
-
-    unset($data);
-    return $sql_backup;
 }
