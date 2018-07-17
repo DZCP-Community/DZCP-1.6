@@ -263,7 +263,7 @@ function isSecure() {
 }
 
 //Weiterleitung zu einer SSL Verbindung
-if(!isSecure() && use_ssl_auto_redirect && !$ajaxJob && !$thumbgen && !$installation && !$updater ) {
+if(!isSecure() && use_ssl_auto_redirect && !$ajaxJob && !$installation && !$updater ) {
     if(ping_port(GetServerVars('HTTP_HOST'),443,0.2)) {
         header("Location: https://" . GetServerVars('HTTP_HOST') .
             GetServerVars('REQUEST_URI'));
