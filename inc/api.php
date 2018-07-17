@@ -30,7 +30,6 @@ class api {
      * @param bool $use_cache
      * @param int $ttl
      * @return array|mixed
-     * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
      */
     public function get_news(bool $use_cache = true, int $ttl = 120) {
         global $cache;
@@ -48,17 +47,19 @@ class api {
         $this->api_input['old_news'] = true; //Use Old News Style
 
         if ($use_cache) {
-            $CachedString = $cache->getItem('api_dzcp_news');
-            if (is_null($CachedString->get())) {
-                $this->call();
-                $this->varying();
-                if (!$this->api_output['error']) {
-                    $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
-                    $cache->save($CachedString);
+            try {
+                $CachedString = $cache->getItem('api_dzcp_news');
+                if (is_null($CachedString->get())) {
+                    $this->call();
+                    $this->varying();
+                    if (!$this->api_output['error']) {
+                        $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
+                        $cache->save($CachedString);
+                    }
+                } else {
+                    $this->api_output = unserialize($CachedString->get());
                 }
-            } else {
-                $this->api_output = unserialize($CachedString->get());
-            }
+            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
         } else { // No Cache
             $this->call();
             $this->varying();
@@ -73,7 +74,6 @@ class api {
      * @param bool $use_cache
      * @param int $ttl
      * @return array|mixed
-     * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
      */
     public function get_addon_versions(array $addons, bool $use_cache = true, int $ttl = 30) {
         global $cache;
@@ -91,17 +91,19 @@ class api {
         $this->api_input['data'] = $this->api_output['data'];
 
         if ($use_cache) {
-            $CachedString = $cache->getItem('api_dzcp_addons');
-            if (is_null($CachedString->get())) {
-                $this->call();
-                $this->varying();
-                if (!$this->api_output['error']) {
-                    $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
-                    $cache->save($CachedString);
+            try {
+                $CachedString = $cache->getItem('api_dzcp_addons');
+                if (is_null($CachedString->get())) {
+                    $this->call();
+                    $this->varying();
+                    if (!$this->api_output['error']) {
+                        $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
+                        $cache->save($CachedString);
+                    }
+                } else {
+                    $this->api_output = unserialize($CachedString->get());
                 }
-            } else {
-                $this->api_output = unserialize($CachedString->get());
-            }
+            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
         } else { // No Cache
             $this->call();
             $this->varying();
@@ -114,7 +116,6 @@ class api {
      * @param bool $use_cache
      * @param int $ttl
      * @return array|mixed
-     * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
      */
     public function get_dzcp_version(bool $use_cache = true, int $ttl = 30) {
         global $cache;
@@ -137,17 +138,19 @@ class api {
         $this->api_input['release'] = _release;
 
         if ($use_cache) {
-            $CachedString = $cache->getItem('api_dzcp_version');
-            if (is_null($CachedString->get())) {
-                $this->call();
-                $this->varying();
-                if (!$this->api_output['error']) {
-                    $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
-                    $cache->save($CachedString);
+            try {
+                $CachedString = $cache->getItem('api_dzcp_version');
+                if (is_null($CachedString->get())) {
+                    $this->call();
+                    $this->varying();
+                    if (!$this->api_output['error']) {
+                        $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
+                        $cache->save($CachedString);
+                    }
+                } else {
+                    $this->api_output = unserialize($CachedString->get());
                 }
-            } else {
-                $this->api_output = unserialize($CachedString->get());
-            }
+            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
         } else { // No Cache
             $this->call();
             $this->varying();
@@ -185,16 +188,19 @@ class api {
         $this->api_input['event'] = 'api_version';
         $this->api_input['version'] = $this->api_version;
 
-        $CachedString = $cache->getItem('api_version');
-        if (is_null($CachedString->get())) {
-            $this->call();
-            $this->varying();
-            if (!$this->api_output['error']) {
-                $CachedString->set(serialize($this->api_output))->expiresAfter(api_autoupdate_interval);
-                $cache->save($CachedString);
+        try {
+            $CachedString = $cache->getItem('api_version');
+            if (is_null($CachedString->get())) {
+                $this->call();
+                $this->varying();
+                if (!$this->api_output['error']) {
+                    $CachedString->set(serialize($this->api_output))->expiresAfter(api_autoupdate_interval);
+                    $cache->save($CachedString);
+                }
+            } else {
+                $this->api_output = unserialize($CachedString->get());
             }
-        } else {
-            $this->api_output = unserialize($CachedString->get());
+        } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
         }
 
         if (!$this->api_output['error'] && array_key_exists('version', $this->api_output)) {
