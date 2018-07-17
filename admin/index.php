@@ -105,32 +105,22 @@ else {
         $cdminc2 = '*/';
     }
 
-    $dzcp_news = '';
-    if (allow_url_fopen_support()) {
-        if (admin_view_dzcp_news) {
-            $CachedString = $cache->getItem('admin_news');
-            if (is_null($CachedString->get())) {
-                if ($dzcp_news = get_external_contents(re("http://www.dzcp.de/dzcp_news.php", true), false, true)) {
-                    $CachedString->set(base64_encode($dzcp_news))->expiresAfter(1200);
-                    $cache->save($CachedString);
-                }
-            } else
-                $dzcp_news = base64_decode($CachedString->get());
-        }
-    }
-
     if (@file_exists(basePath . "/_installer") && $chkMe == 4 && !view_error_reporting)
         $index = _installdir;
     else {
         $dzcp_version = show_dzcp_version();
+
+        if(admin_view_dzcp_news)
+            $dzcp_news = $api->get_news();
+
         $index = show($dir . "/admin", array("head" => _config_head,
             "version" => $dzcp_version['version'],
             "version_img" => $dzcp_version['version_img'],
             "dbase" => _stats_mysql,
             "einst" => _config_einst,
             "content" => _content,
-            "newsticker" => '<div style="padding:3px">' . (empty($dzcp_news) ? '' :
-                    '<b>DZCP News:</b><br />') . '<div id="dzcpticker">' . utf8_encode($dzcp_news) . '</div></div>',
+            "newsticker" => admin_view_dzcp_news ? ('<div style="padding:3px">' . (empty($dzcp_news['news']) ? '' :
+                    '<b>DZCP News:</b><br />') . '<div id="dzcpticker">' . utf8_encode($dzcp_news['news']) . '</div></div>') : '',
             "rootadmin" => _rootadmin,
             "rootmenu" => $rootmenu,
             "settingsmenu" => $settingsmenu,

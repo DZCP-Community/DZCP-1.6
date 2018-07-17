@@ -27,6 +27,48 @@ class api {
     }
 
     /**
+     * @param bool $use_cache
+     * @param int $ttl
+     * @return array|mixed
+     * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
+     */
+    public function get_news(bool $use_cache = true, int $ttl = 120) {
+        global $cache;
+        if (show_api_debug)
+            DebugConsole::insert_info('api.php', 'Call get_addon_versions()');
+
+        $this->api_output = [];
+        $this->api_output['news'] = '';
+        $this->api_output['error'] = true;
+        $this->api_output['error_msg'] = 'no content from server';
+
+        //CALL
+        $this->api_input = [];
+        $this->api_input['event'] = 'news';
+        $this->api_input['old_news'] = true; //Use Old News Style
+
+        if ($use_cache) {
+            $CachedString = $cache->getItem('api_dzcp_news');
+            if (is_null($CachedString->get())) {
+                $this->call();
+                $this->varying();
+                if (!$this->api_output['error']) {
+                    $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
+                    $cache->save($CachedString);
+                }
+            } else {
+                $this->api_output = unserialize($CachedString->get());
+            }
+        } else { // No Cache
+            $this->call();
+            $this->varying();
+        }
+
+        $this->api_output['news'] = hex2bin($this->api_output['news']); //Decode from HEX
+        return $this->api_output;
+    }
+
+    /**
      * @param array $addons
      * @param bool $use_cache
      * @param int $ttl
