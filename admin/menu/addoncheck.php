@@ -27,8 +27,7 @@ $addons['error'] = $addons_installed['error'];
 $addons['error_msg'] = $addons_installed['error_msg'];
 unset($addons_installed,$addons_not_installed);
 
-$show_not_installed = $show_installed =
-    '<tr><td class="contentMainSecond" colspan="4" style="text-align: center;"><span class="fontBold">'._no_entry.'</span></td></tr>';
+$show_not_installed = $show_installed = '';
 if(count($addons_xml)) {
     foreach ($addons as $addon) {
         if (!is_array($addon) || !array_key_exists('AID', $addon))
@@ -88,7 +87,13 @@ if(count($addons_xml)) {
 
         $color++;
     }
-}
+} unset($addons_xml);
+
+if(empty($show_not_installed))
+    $show_not_installed = '<tr><td class="contentMainSecond" colspan="4" style="text-align: center;"><span class="fontBold">'._no_entry.'</span></td></tr>';
+
+if(empty($show_installed))
+    $show_installed = '<tr><td class="contentMainSecond" colspan="4" style="text-align: center;"><span class="fontBold">'._no_entry.'</span></td></tr>';
 
 $show = show($dir . '/addon_check', [
     'show_installed' => $show_installed,
