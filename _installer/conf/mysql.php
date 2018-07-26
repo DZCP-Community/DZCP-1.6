@@ -1396,6 +1396,7 @@ function update_mysql_1_6_1_0()
         "(2, 'Muster Unternehmen', 'Herr', 'Max', 'Mustermann', 'Eisenweg. 1', '123456', 'Musterdorf', 'Germany', 'max.mustermann@musterdorf.de', '049 12345 67891234566', 'http://www.deineUrl.de');");
 
     db("ALTER TABLE `" . $db['permissions'] . "` ADD `datenschutz` INT(1) NOT NULL DEFAULT '0' AFTER `dlintern`;");
+    db("ALTER TABLE `" . $db['permissions'] . "` ADD `addoncheck` INT(1) NOT NULL DEFAULT '0' AFTER `datenschutz`;");
 
     db("DROP TABLE IF EXISTS `" . $db['dsgvo_log'] . "`;");
     db("CREATE TABLE `" . $db['dsgvo_log'] . "` (

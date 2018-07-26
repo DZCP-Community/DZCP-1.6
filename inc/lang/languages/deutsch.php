@@ -8,6 +8,20 @@
 //$charset = 'utf-8';
 
 ## ADDED FOR 1.6.1.0
+$language_text['_config_addoncheck'] = 'Addon Checker';
+$language_text['_site_addoncheck'] = 'Addon Checker';
+$language_text['_perm_addoncheck'] = 'Addon Checker verwalten';
+$language_text['_addoncheck_addon'] = 'Erweiterung';
+$language_text['_addoncheck_autor'] = 'Autor';
+$language_text['_addoncheck_version'] = 'Version';
+$language_text['_addoncheck_download'] = 'Download';
+$language_text['_addoncheck_yourversion'] = 'Ihre Version';
+$language_text['_addoncheck_currVersion'] = 'Neuste Version';
+$language_text['_addoncheck_VersionOK'] = 'Version ist Aktuell';
+$language_text['_addoncheck_notinstalled'] = 'Nicht installiert';
+$language_text['_addoncheck_checkDisabled'] = 'Fehler beim abrufen der aktuellen Version';
+$language_text['_addoncheck_id_error'] = 'Die Addon-ID: "[id]" existiert auf dem Server nicht';
+
 $language_text['_config_datenschutz'] = 'Datenschutz (EU-DSGVO)';
 $language_text['_perm_datenschutz'] = 'Datenschutz (EU-DSGVO) verwalten';
 $language_text['_txt_datenschutz'] = 'Datenschutz';
