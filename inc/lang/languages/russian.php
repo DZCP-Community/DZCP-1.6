@@ -60,6 +60,7 @@ $language_text['_country'] = 'страна';
 $language_text['_e-mail'] = 'Адрес электронной почты';
 $language_text['_phone'] = 'номер телефона';
 $language_text['_website'] = 'сайт';
+$language_text['_no_entry'] = 'There is no entry!';
 
 ## ADDED / REDEFINED FOR 1.6 Final
 $language_text['_txt_navi_main'] = 'Главная Навигация';

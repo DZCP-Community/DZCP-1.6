@@ -19,7 +19,7 @@ foreach ($addons_xml as $addon_xml) {
     }
 
     $addons_installed[] = $array;
-} unset($array,$addons_xml,$addon_xml);
+} unset($array,$addon_xml);
 
 $addons_installed = $api->get_addon_versions($addons_installed,true,600);
 $addons = array_merge($addons_installed['data'],$addons_not_installed);
@@ -27,64 +27,67 @@ $addons['error'] = $addons_installed['error'];
 $addons['error_msg'] = $addons_installed['error_msg'];
 unset($addons_installed,$addons_not_installed);
 
-$show_not_installed = ''; $show_installed = '';
-foreach ($addons as $addon) {
-    if(!is_array($addon) || !array_key_exists('AID',$addon))
-        continue;
+$show_not_installed = $show_installed =
+    '<tr><td class="contentMainSecond" colspan="4" style="text-align: center;"><span class="fontBold">'._no_entry.'</span></td></tr>';
+if(count($addons_xml)) {
+    foreach ($addons as $addon) {
+        if (!is_array($addon) || !array_key_exists('AID', $addon))
+            continue;
 
-    $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";
-    if (!$addon['Version']) {
-        $show_not_installed .= show($dir . '/addon_check_show', [
-            'class'=>$class,
-            'name'=>$addon['Name'],
-            'autor'=>$addon['Autor'],
-            'version'=>'<span class="fontBold" style="color:#999999">'._addoncheck_notinstalled.'</span>',
-            'url'=>$addon['Link']['URL'],
-            'title'=>$addon['Link']['Title']]);
-    } else {
-        if(array_key_exists('Server',$addon) && array_key_exists('Version',$addon['Server']) && !array_key_exists('error',$addon['Server'])) {
-            if (!$addons['error'] && array_key_exists('Server', $addon) && $addon['Server']['Version']) {
-                $version = '<span class="fontBold">' . _addoncheck_yourversion . ':</span> <span style="color:#17D427">' . $addon['Version'] . '</span><br />' .
-                    '<span class="fontBold" style="color:#17D427">' . _addoncheck_VersionOK . '</span>';
-                if (api::versionCompare($addon['Version'], '<', $addon['Server']['Version'])) {
-                    $version = '<span class="fontBold">' . _addoncheck_yourversion . ':</span> <span class="fontBold" style="color:#FF0000">' . $addon['Version'] . '</span><br />' .
-                        '<span class="fontBold" style="color:#FF0000">' . _addoncheck_currVersion . ':</span> <span class="fontBold" style="color:#FF0000">' . $addon['Server']['Version'] . '</span>';
-                }
-            } else if ($addons['error']) {
-                $version = '<span class="fontBold" style="color:#7783ff">' . _addoncheck_checkDisabled . '</span><br /><span class="fontBold">' . _addoncheck_yourversion . ': </span>' . $addon['Version'];
-            } else {
-                $version = '<span class="fontBold" style="color:#999999">' . _addoncheck_checkDisabled . '</span><br />' .
-                    '<span class="fontBold">' . _addoncheck_yourversion . ': </span><span style="color:#17D427" class="fontBold">' . $addon['Version'] . '</span>';
-            }
-
-            $show_installed .= show($dir . '/addon_check_show', [
+        $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";
+        if (!$addon['Version']) {
+            $show_not_installed .= show($dir . '/addon_check_show', [
                 'class' => $class,
                 'name' => $addon['Name'],
                 'autor' => $addon['Autor'],
-                'version' => $version,
-                'url' => (api::versionCompare($addon['Version'], '<', $addon['Server']['Version']) ?
-                    $addon['Server']['URL'] : $addon['Link']['URL']),
-                'title' => (api::versionCompare($addon['Version'], '<', $addon['Server']['Version']) ?
-                    $addon['Server']['Title'] : $addon['Link']['Title'])]);
+                'version' => '<span class="fontBold" style="color:#999999">' . _addoncheck_notinstalled . '</span>',
+                'url' => $addon['Link']['URL'],
+                'title' => $addon['Link']['Title']]);
         } else {
-            $msg = _addoncheck_checkDisabled;
-            if(array_key_exists('error',$addon['Server'])) {
-                $msg = $addon['Server']['msg'] != 'no_id' ? $msg :
-                    show(_addoncheck_id_error,['id'=>$addon['AID']]);
+            if (array_key_exists('Server', $addon) && array_key_exists('Version', $addon['Server']) && !array_key_exists('error', $addon['Server'])) {
+                if (!$addons['error'] && array_key_exists('Server', $addon) && $addon['Server']['Version']) {
+                    $version = '<span class="fontBold">' . _addoncheck_yourversion . ':</span> <span style="color:#17D427">' . $addon['Version'] . '</span><br />' .
+                        '<span class="fontBold" style="color:#17D427">' . _addoncheck_VersionOK . '</span>';
+                    if (api::versionCompare($addon['Version'], '<', $addon['Server']['Version'])) {
+                        $version = '<span class="fontBold">' . _addoncheck_yourversion . ':</span> <span class="fontBold" style="color:#FF0000">' . $addon['Version'] . '</span><br />' .
+                            '<span class="fontBold" style="color:#FF0000">' . _addoncheck_currVersion . ':</span> <span class="fontBold" style="color:#FF0000">' . $addon['Server']['Version'] . '</span>';
+                    }
+                } else if ($addons['error']) {
+                    $version = '<span class="fontBold" style="color:#7783ff">' . _addoncheck_checkDisabled . '</span><br /><span class="fontBold">' . _addoncheck_yourversion . ': </span>' . $addon['Version'];
+                } else {
+                    $version = '<span class="fontBold" style="color:#999999">' . _addoncheck_checkDisabled . '</span><br />' .
+                        '<span class="fontBold">' . _addoncheck_yourversion . ': </span><span style="color:#17D427" class="fontBold">' . $addon['Version'] . '</span>';
+                }
+
+                $show_installed .= show($dir . '/addon_check_show', [
+                    'class' => $class,
+                    'name' => $addon['Name'],
+                    'autor' => $addon['Autor'],
+                    'version' => $version,
+                    'url' => (api::versionCompare($addon['Version'], '<', $addon['Server']['Version']) ?
+                        $addon['Server']['URL'] : $addon['Link']['URL']),
+                    'title' => (api::versionCompare($addon['Version'], '<', $addon['Server']['Version']) ?
+                        $addon['Server']['Title'] : $addon['Link']['Title'])]);
+            } else {
+                $msg = _addoncheck_checkDisabled;
+                if (array_key_exists('error', $addon['Server'])) {
+                    $msg = $addon['Server']['msg'] != 'no_id' ? $msg :
+                        show(_addoncheck_id_error, ['id' => $addon['AID']]);
+                }
+
+                $show_installed .= show($dir . '/addon_check_show', [
+                    'class' => $class,
+                    'name' => $addon['Name'],
+                    'autor' => $addon['Autor'],
+                    'version' => '<span class="fontBold" style="color:#999999">'
+                        . $msg . '</span>',
+                    'url' => $addon['Link']['URL'],
+                    'title' => $addon['Link']['Title']]);
             }
-
-            $show_installed .= show($dir . '/addon_check_show', [
-                'class'=>$class,
-                'name'=>$addon['Name'],
-                'autor'=>$addon['Autor'],
-                'version'=>'<span class="fontBold" style="color:#999999">'
-                    .$msg.'</span>',
-                'url'=>$addon['Link']['URL'],
-                'title'=>$addon['Link']['Title']]);
         }
-    }
 
-    $color++;
+        $color++;
+    }
 }
 
 $show = show($dir . '/addon_check', [
@@ -97,7 +100,6 @@ $show = show($dir . '/addon_check', [
     'show_cmf_table_0' => !empty($show_installed) && !empty($show_not_installed) ? '' : '<!--',
     'show_cmf_table_1' => !empty($show_installed) && !empty($show_not_installed) ? '' : '-->'
 ]);
-
 
 if($addons['error']) {
     DebugConsole::insert_warning('index::admin::addoncheck',$addons['error_msg']);

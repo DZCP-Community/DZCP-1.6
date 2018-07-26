@@ -59,6 +59,7 @@ $language_text['_country'] = 'Land';
 $language_text['_e-mail'] = 'E-Mail-Addresse';
 $language_text['_phone'] = 'Telefonnummer';
 $language_text['_website'] = 'Webseite';
+$language_text['_no_entry'] = 'There is no entry!';
 
 ## ADDED / REDEFINED FOR 1.6 Final
 $language_text['_txt_navi_main'] = 'Navigazione Principale';
