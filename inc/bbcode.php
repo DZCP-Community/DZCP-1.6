@@ -2782,7 +2782,8 @@ function check_internal_url() {
     if (strpos($pfad, "index.php") !== false)
         $pfad = str_replace('index.php', '', $pfad);
 
-    $qry_navi = db("SELECT `internal` FROM " . $db['navi'] . " WHERE `url` = '" . $pfad . "' OR `url` = '" . $pfad . 'index.php' . "'");
+    $qry_navi = db_stmt("SELECT `internal` FROM `" . $db['navi'] . "` WHERE `url` = ? OR `url` = ?;",
+        array('ss', $pfad, $pfad.'index.php'));
     if (_rows($qry_navi)) {
         $get_navi = _fetch($qry_navi);
         if ($get_navi['internal'])
