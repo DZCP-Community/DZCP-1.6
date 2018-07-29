@@ -4,63 +4,57 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit7f32bae2ad99270bbc88900cec1943e9
+class ComposerStaticInit1b301fe0cd5df2fcb6e210dbe5c4ef47
 {
-    public static $files = array(
-        'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
-        'da253f61703e9c22a5a34f228526f05a' => __DIR__ . '/..' . '/wixel/gump/gump.class.php',
+    public static $files = array (
+        '0ecb0e93d96fec68940e29454f6b0d55' => __DIR__ . '/..' . '/dzcp/gump/gump.class.php',
     );
 
-    public static $prefixLengthsPsr4 = array(
-        'p' =>
-            array(
-                'phpseclib\\' => 10,
-                'phpFastCache\\' => 13,
-            ),
-        'P' =>
-            array(
-                'Psr\\SimpleCache\\' => 16,
-                'Psr\\Cache\\' => 10,
-                'PHPMailer\\PHPMailer\\' => 20,
-            ),
-        'J' =>
-            array(
-                'Jaybizzle\\CrawlerDetect\\' => 24,
-            ),
+    public static $prefixLengthsPsr4 = array (
+        'p' => 
+        array (
+            'phpFastCache\\' => 13,
+        ),
+        'P' => 
+        array (
+            'Psr\\SimpleCache\\' => 16,
+            'Psr\\Cache\\' => 10,
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'J' => 
+        array (
+            'Jaybizzle\\CrawlerDetect\\' => 24,
+        ),
     );
 
-    public static $prefixDirsPsr4 = array(
-        'phpseclib\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
-            ),
-        'phpFastCache\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/phpfastcache/phpfastcache/src/phpFastCache',
-            ),
-        'Psr\\SimpleCache\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/psr/simple-cache/src',
-            ),
-        'Psr\\Cache\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/psr/cache/src',
-            ),
-        'PHPMailer\\PHPMailer\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
-            ),
-        'Jaybizzle\\CrawlerDetect\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src',
-            ),
+    public static $prefixDirsPsr4 = array (
+        'phpFastCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpfastcache/phpfastcache/src/phpFastCache',
+        ),
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Jaybizzle\\CrawlerDetect\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit7f32bae2ad99270bbc88900cec1943e9::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit7f32bae2ad99270bbc88900cec1943e9::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1b301fe0cd5df2fcb6e210dbe5c4ef47::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1b301fe0cd5df2fcb6e210dbe5c4ef47::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
