@@ -12,7 +12,7 @@ class api {
     private $api_callback = null;
     private $api_input = array();
     private $api_output = array();
-    private $api_version = '0.0.1';
+    private $api_version = '1.0.0';
 
     /**
      * api constructor.
