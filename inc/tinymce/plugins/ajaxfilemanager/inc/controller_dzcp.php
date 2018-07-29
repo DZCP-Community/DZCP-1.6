@@ -10,6 +10,10 @@ define('basePath', realpath('../../../..'));
 $ajaxJob = true;
 
 include_once(basePath . '/vendor/autoload.php');
+
+use GUMP\GUMP;
+$gump = GUMP::get_instance();
+
 include_once(basePath . "/inc/debugger.php");
 include_once(basePath . "/inc/config.php");
 include_once(basePath . "/inc/bbcode.php");
