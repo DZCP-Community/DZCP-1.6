@@ -28,34 +28,26 @@ final class Inet implements Value
      *
      * @param string $address any IPv4 or IPv6 address
      */
-    public function __construct($address)
-    {
-    }
+    public function __construct($address) {}
 
     /**
      * The type of this inet.
      *
      * @return Type
      */
-    public function type()
-    {
-    }
+    public function type() {}
 
     /**
      * Returns the normalized string representation of the address.
      *
      * @return string address
      */
-    public function address()
-    {
-    }
+    public function address() {}
 
     /**
      * Returns the normalized string representation of the address.
      *
      * @return string address
      */
-    public function __toString()
-    {
-    }
+    public function __toString() {}
 }

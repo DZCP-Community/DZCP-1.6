@@ -22,7 +22,7 @@ use phpFastCache\Core\phpFastCache;
 
 // Setup File Path on your config files
 CacheManager::setDefaultConfig([
-    "path" => sys_get_temp_dir(),
+  "path" => sys_get_temp_dir(),
 ]);
 
 // In your class, function, you can call the Cache

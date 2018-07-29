@@ -18,12 +18,12 @@ use phpFastCache\CacheManager;
 require __DIR__ . '/../../vendor/autoload.php';
 
 $InstanceCache = CacheManager::getInstance('memcached', ['servers' => [
-    [
-        'host' => '127.0.0.1',
-        'port' => 11211,
-        // 'sasl_user' => false, // optional
-        // 'sasl_password' => false // optional
-    ],
+  [
+    'host' =>'127.0.0.1',
+    'port' => 11211,
+      // 'sasl_user' => false, // optional
+      // 'sasl_password' => false // optional
+  ],
 ]]);
 
 /**

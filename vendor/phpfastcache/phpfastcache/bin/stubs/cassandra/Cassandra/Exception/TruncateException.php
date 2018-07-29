@@ -22,6 +22,4 @@ namespace Cassandra\Exception;
  * TruncateException is raised when something went wrong during table
  * truncation.
  */
-class TruncateException extends ExecutionException
-{
-}
+class TruncateException extends ExecutionException {}

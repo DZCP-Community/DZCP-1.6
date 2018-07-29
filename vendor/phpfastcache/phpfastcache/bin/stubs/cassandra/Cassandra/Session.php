@@ -41,8 +41,8 @@ interface Session
      *
      * @throws Exception
      *
-     * @param Statement $statement statement to be executed
-     * @param ExecutionOptions $options execution options (optional)
+     * @param Statement        $statement statement to be executed
+     * @param ExecutionOptions $options   execution options (optional)
      *
      * @return Rows execution result
      */
@@ -54,8 +54,8 @@ interface Session
      * Note that this method ignores timeout specified in the ExecutionOptions,
      * you can provide one to Future::get() instead.
      *
-     * @param Statement $statement statement to be executed
-     * @param ExecutionOptions|null $options execution options (optional)
+     * @param Statement             $statement statement to be executed
+     * @param ExecutionOptions|null $options   execution options (optional)
      *
      * @return Future future result
      */
@@ -69,7 +69,7 @@ interface Session
      *
      * @throws Exception
      *
-     * @param string $cql CQL statement string
+     * @param string                $cql     CQL statement string
      * @param ExecutionOptions|null $options execution options (optional)
      *
      * @return PreparedStatement prepared statement
@@ -81,7 +81,7 @@ interface Session
      *
      * Note that all options passed to this method will be ignored.
      *
-     * @param string $cql CQL string to be prepared
+     * @param string                $cql     CQL string to be prepared
      * @param ExecutionOptions|null $options preparation options
      *
      * @return Future statement

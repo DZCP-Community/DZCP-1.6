@@ -21,6 +21,4 @@ namespace Cassandra\Exception;
 /**
  * OverloadedException is raised when a node is overloaded.
  */
-class OverloadedException extends ServerException
-{
-}
+class OverloadedException extends ServerException {}

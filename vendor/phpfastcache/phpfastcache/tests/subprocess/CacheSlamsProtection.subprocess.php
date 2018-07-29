@@ -12,8 +12,8 @@ chdir(__DIR__);
 require_once __DIR__ . '/../../src/autoload.php';
 
 $driverInstance = CacheManager::getInstance('Files', [
-    'preventCacheSlams' => true,
-    'cacheSlamsTimeout' => 15
+  'preventCacheSlams' => true,
+  'cacheSlamsTimeout' => 15
 ]);
 
 /**

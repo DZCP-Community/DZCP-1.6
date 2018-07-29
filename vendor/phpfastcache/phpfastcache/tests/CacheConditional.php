@@ -13,7 +13,7 @@ use Psr\Cache\CacheItemPoolInterface;
 chdir(__DIR__);
 require_once __DIR__ . '/../src/autoload.php';
 $testHelper = new TestHelper('Cache Promise');
-$defaultDriver = (!empty($argv[1]) ? ucfirst($argv[1]) : 'Files');
+$defaultDriver = (!empty($argv[ 1 ]) ? ucfirst($argv[ 1 ]) : 'Files');
 $cacheInstance = CacheManager::getInstance($defaultDriver, []);
 $cacheKey = 'cacheKey';
 $RandomCacheValue = str_shuffle(uniqid('pfc', true));
@@ -22,7 +22,7 @@ $RandomCacheValue = str_shuffle(uniqid('pfc', true));
 /**
  * Missing cache item test
  */
-$cacheValue = (new CacheConditional($cacheInstance))->get($cacheKey, function () use ($cacheKey, $testHelper, $RandomCacheValue) {
+$cacheValue = (new CacheConditional($cacheInstance))->get($cacheKey, function() use ($cacheKey, $testHelper, $RandomCacheValue){
     /**
      * No parameter are passed
      * to this closure
@@ -36,9 +36,9 @@ $cacheValue = (new CacheConditional($cacheInstance))->get($cacheKey, function ()
     return $RandomCacheValue . '-1337';
 });
 
-if ($cacheValue === $RandomCacheValue . '-1337') {
+if($cacheValue === $RandomCacheValue . '-1337'){
     $testHelper->printPassText(sprintf('The cache promise successfully returned expected value "%s".', $cacheValue));
-} else {
+}else{
     $testHelper->printFailText(sprintf('The cache promise returned an unexpected value "%s".', $cacheValue));
 }
 
@@ -56,7 +56,7 @@ $cacheInstance->save($cacheItem);
 $cacheInstance->detachAllItems();
 unset($cacheItem);
 
-$cacheValue = (new CacheConditional($cacheInstance))->get($cacheKey, function () use ($cacheKey, $testHelper, $RandomCacheValue) {
+$cacheValue = (new CacheConditional($cacheInstance))->get($cacheKey, function() use ($cacheKey, $testHelper, $RandomCacheValue){
     /**
      * No parameter are passed
      * to this closure
@@ -65,9 +65,9 @@ $cacheValue = (new CacheConditional($cacheInstance))->get($cacheKey, function ()
     return $RandomCacheValue . '-1337';
 });
 
-if ($cacheValue === $RandomCacheValue) {
+if($cacheValue === $RandomCacheValue){
     $testHelper->printPassText(sprintf('The cache promise successfully returned expected value "%s".', $cacheValue));
-} else {
+}else{
     $testHelper->printFailText(sprintf('The cache promise returned an unexpected value "%s".', $cacheValue));
 }
 

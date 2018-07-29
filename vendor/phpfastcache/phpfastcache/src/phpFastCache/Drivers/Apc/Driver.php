@@ -81,17 +81,9 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     protected function driverRead(CacheItemInterface $item)
     {
-        $success = false;
-        if (version_compare(phpversion(), '7.1', '>=')) {
-            $data = apc_fetch($item->getKey(), $success);
-            if ($success === false) {
-                return null;
-            }
-        } else {
-            $data = apc_fetch($item->getKey());
-            if ($data === false) {
-                return null;
-            }
+        $data = apc_fetch($item->getKey(), $success);
+        if ($success === false) {
+            return null;
         }
 
         return $data;
@@ -142,13 +134,13 @@ class Driver implements ExtendedCacheItemPoolInterface
     public function getStats()
     {
         $stats = (array)apc_cache_info('user');
-        $date = (new \DateTime())->setTimestamp($stats['start_time']);
+        $date = (new \DateTime())->setTimestamp($stats[ 'start_time' ]);
 
         return (new DriverStatistic())
-            ->setData(implode(', ', array_keys($this->itemInstances)))
-            ->setInfo(sprintf("The APC cache is up since %s, and have %d item(s) in cache.\n For more information see RawData.", $date->format(DATE_RFC2822),
-                $stats['num_entries']))
-            ->setRawData($stats)
-            ->setSize($stats['mem_size']);
+          ->setData(implode(', ', array_keys($this->itemInstances)))
+          ->setInfo(sprintf("The APC cache is up since %s, and have %d item(s) in cache.\n For more information see RawData.", $date->format(DATE_RFC2822),
+            $stats[ 'num_entries' ]))
+          ->setRawData($stats)
+          ->setSize($stats[ 'mem_size' ]);
     }
 }

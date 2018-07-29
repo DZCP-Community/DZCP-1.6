@@ -21,6 +21,4 @@ namespace Cassandra\Exception;
 /**
  * Cassandra-specific domain exception.
  */
-class DivideByZeroException extends RangeException
-{
-}
+class DivideByZeroException extends RangeException {}

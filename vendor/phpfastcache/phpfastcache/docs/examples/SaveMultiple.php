@@ -13,14 +13,13 @@
  */
 // Include composer autoloader
 require __DIR__ . '/../../vendor/autoload.php';
-
 // OR require_once("../src/phpFastCache/phpFastCache.php");
 
 use phpFastCache\CacheManager;
 
 // Setup File Path on your config files
 CacheManager::setDefaultConfig([
-    "path" => sys_get_temp_dir()
+  "path" => sys_get_temp_dir()
 ]);
 
 // In your class, function, you can call the Cache

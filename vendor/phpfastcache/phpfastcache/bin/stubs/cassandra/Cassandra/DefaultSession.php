@@ -30,61 +30,51 @@ final class DefaultSession implements Session
      *
      * @return Schema current schema.
      */
-    public function schema()
-    {
-    }
+    public function schema() {}
 
     /**
      * {@inheritDoc}
      *
      * @throws Exception
      *
-     * @param Statement $statement statement to be executed
-     * @param ExecutionOptions $options execution options (optional)
+     * @param Statement        $statement statement to be executed
+     * @param ExecutionOptions $options   execution options (optional)
      *
      * @return Rows execution result
      */
-    public function execute(Statement $statement, ExecutionOptions $options = null)
-    {
-    }
+    public function execute(Statement $statement, ExecutionOptions $options = null) {}
 
     /**
      * {@inheritDoc}
      *
-     * @param Statement $statement statement to be executed
-     * @param ExecutionOptions|null $options execution options (optional)
+     * @param Statement             $statement statement to be executed
+     * @param ExecutionOptions|null $options   execution options (optional)
      *
      * @return Future future result
      */
-    public function executeAsync(Statement $statement, ExecutionOptions $options = null)
-    {
-    }
+    public function executeAsync(Statement $statement, ExecutionOptions $options = null) {}
 
     /**
      * {@inheritDoc}
      *
      * @throws Exception
      *
-     * @param string $cql CQL statement string
+     * @param string                $cql     CQL statement string
      * @param ExecutionOptions|null $options execution options (optional)
      *
      * @return PreparedStatement prepared statement
      */
-    public function prepare($cql, ExecutionOptions $options = null)
-    {
-    }
+    public function prepare($cql, ExecutionOptions $options = null) {}
 
     /**
      * {@inheritDoc}
      *
-     * @param string $cql CQL string to be prepared
+     * @param string                $cql     CQL string to be prepared
      * @param ExecutionOptions|null $options preparation options
      *
      * @return Future statement
      */
-    public function prepareAsync($cql, ExecutionOptions $options = null)
-    {
-    }
+    public function prepareAsync($cql, ExecutionOptions $options = null) {}
 
     /**
      * {@inheritDoc}
@@ -92,16 +82,12 @@ final class DefaultSession implements Session
      * @param float|null $timeout Timeout to wait for closure in seconds
      * @return void
      */
-    public function close($timeout = null)
-    {
-    }
+    public function close($timeout = null) {}
 
     /**
      * {@inheritDoc}
      *
      * @return Future future
      */
-    public function closeAsync()
-    {
-    }
+    public function closeAsync() {}
 }

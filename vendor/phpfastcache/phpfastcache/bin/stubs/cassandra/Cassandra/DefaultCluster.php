@@ -33,9 +33,7 @@ final class DefaultCluster implements Cluster
      *
      * @return Session Session instance
      */
-    public function connect($keyspace = null)
-    {
-    }
+    public function connect($keyspace = null) {}
 
     /**
      * {@inheritDoc}
@@ -44,7 +42,5 @@ final class DefaultCluster implements Cluster
      *
      * @return Future A Future Session instance
      */
-    public function connectAsync($keyspace = null)
-    {
-    }
+    public function connectAsync($keyspace = null) {}
 }

@@ -23,15 +23,15 @@ $testHelper->printText(sprintf('Sleeping for %d seconds...', $ttl + 1));
 
 sleep($ttl + 1);
 
-if (!$Psr16Adapter->has('test-key')) {
+if(!$Psr16Adapter->has('test-key')){
     $testHelper->printPassText('1/2 [Testing has()] Psr16 adapter does not return an expired cache item anymore');
-} else {
+}else{
     $testHelper->printFailText('1/2 [Testing has()] Psr16 adapter returned an expired cache item');
 }
 
-if (!$Psr16Adapter->has('test-key')) {
+if(!$Psr16Adapter->has('test-key')){
     $testHelper->printPassText('2/2 [Testing get()] Psr16 adapter does not return an expired cache item anymore');
-} else {
+}else{
     $testHelper->printFailText('2/2 [Testing get()] Psr16 adapter returned an expired cache item');
 }
 

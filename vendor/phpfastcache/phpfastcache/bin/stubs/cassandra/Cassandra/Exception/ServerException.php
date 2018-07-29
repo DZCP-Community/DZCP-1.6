@@ -23,6 +23,4 @@ namespace Cassandra\Exception;
  * This exception is most likely due to an Apache Cassandra bug.
  * **NOTE** This exception and all its children are generated on the server.
  */
-class ServerException extends RuntimeException
-{
-}
+class ServerException extends RuntimeException {}

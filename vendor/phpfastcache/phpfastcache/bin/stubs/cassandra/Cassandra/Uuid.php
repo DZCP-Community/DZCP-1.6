@@ -28,43 +28,33 @@ final class Uuid implements Value, UuidInterface
      *
      * @param string $uuid A uuid string
      */
-    public function __construct($uuid = null)
-    {
-    }
+    public function __construct($uuid = null) {}
 
     /**
      * Returns this uuid as string.
      *
      * @return string uuid
      */
-    public function __toString()
-    {
-    }
+    public function __toString() {}
 
     /**
      * The type of this uuid.
      *
      * @return Type
      */
-    public function type()
-    {
-    }
+    public function type() {}
 
     /**
      * Returns this uuid as string.
      *
      * @return string uuid
      */
-    public function uuid()
-    {
-    }
+    public function uuid() {}
 
     /**
      * Returns the version of this uuid.
      *
      * @return int version of this uuid
      */
-    public function version()
-    {
-    }
+    public function version() {}
 }

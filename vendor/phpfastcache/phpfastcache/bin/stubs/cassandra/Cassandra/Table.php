@@ -146,7 +146,7 @@ interface Table
 
     /**
      * Returns column by name
-     * @param  string $name Name of the column
+     * @param  string           $name Name of the column
      * @return Cassandra\Column Column instance
      */
     function column($name);
@@ -161,23 +161,23 @@ interface Table
      * Returns the partition key columns of the table
      * @return array A list of of `Cassandra\Column` instances
      */
-    function partitionKey();
+     function partitionKey();
 
     /**
      * Returns both the partition and clustering key columns of the table
      * @return array A list of of `Cassandra\Column` instances
      */
-    function primaryKey();
+     function primaryKey();
 
     /**
      * Returns the clustering key columns of the table
      * @return array A list of of `Cassandra\Column` instances
      */
-    function clusteringKey();
+     function clusteringKey();
 
     /**
      *
      * @return array A list of cluster column orders ('asc' and 'desc')
      */
-    function clusteringOrder();
+     function clusteringOrder();
 }

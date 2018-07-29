@@ -220,8 +220,8 @@ class SMTP
     /**
      * Output debugging info via a user-selected method.
      *
-     * @param string $str Debug string to output
-     * @param int $level The debug level of this message; see DEBUG_* constants
+     * @param string $str   Debug string to output
+     * @param int    $level The debug level of this message; see DEBUG_* constants
      *
      * @see SMTP::$Debugoutput
      * @see SMTP::$do_debug
@@ -278,10 +278,10 @@ class SMTP
     /**
      * Connect to an SMTP server.
      *
-     * @param string $host SMTP server IP or host name
-     * @param int $port The port number to connect to
-     * @param int $timeout How long to wait for the connection to open
-     * @param array $options An array of options for stream_context_create()
+     * @param string $host    SMTP server IP or host name
+     * @param int    $port    The port number to connect to
+     * @param int    $timeout How long to wait for the connection to open
+     * @param array  $options An array of options for stream_context_create()
      *
      * @return bool
      */
@@ -346,8 +346,8 @@ class SMTP
             $this->setError(
                 'Failed to connect to server',
                 '',
-                (string)$errno,
-                (string)$errstr
+                (string) $errno,
+                (string) $errstr
             );
             $this->edebug(
                 'SMTP ERROR: ' . $this->error['error']
@@ -405,7 +405,7 @@ class SMTP
         );
         restore_error_handler();
 
-        return (bool)$crypto_ok;
+        return (bool) $crypto_ok;
     }
 
     /**
@@ -417,7 +417,7 @@ class SMTP
      * @param string $username The user name
      * @param string $password The password
      * @param string $authtype The auth type (CRAM-MD5, PLAIN, LOGIN, XOAUTH2)
-     * @param OAuth $OAuth An optional OAuth instance for XOAUTH2 authentication
+     * @param OAuth  $OAuth    An optional OAuth instance for XOAUTH2 authentication
      *
      * @return bool True if successfully authenticated
      */
@@ -426,8 +426,7 @@ class SMTP
         $password,
         $authtype = null,
         $OAuth = null
-    )
-    {
+    ) {
         if (!$this->server_caps) {
             $this->setError('Authentication is not allowed before HELO/EHLO');
 
@@ -549,7 +548,7 @@ class SMTP
      * in case that function is not available.
      *
      * @param string $data The data to hash
-     * @param string $key The key to hash with
+     * @param string $key  The key to hash with
      *
      * @return string
      */
@@ -733,7 +732,7 @@ class SMTP
     public function hello($host = '')
     {
         //Try extended hello first (RFC 2821)
-        return (bool)($this->sendHello('EHLO', $host) or $this->sendHello('HELO', $host));
+        return (bool) ($this->sendHello('EHLO', $host) or $this->sendHello('HELO', $host));
     }
 
     /**
@@ -741,7 +740,7 @@ class SMTP
      * Low-level implementation used by hello().
      *
      * @param string $hello The HELO string
-     * @param string $host The hostname to say we are
+     * @param string $host  The hostname to say we are
      *
      * @return bool
      *
@@ -880,9 +879,9 @@ class SMTP
     /**
      * Send a command to an SMTP server and check its return code.
      *
-     * @param string $command The command name - not sent to the server
-     * @param string $commandstring The actual command to send
-     * @param int|array $expect One or more expected integer success codes
+     * @param string    $command       The command name - not sent to the server
+     * @param string    $commandstring The actual command to send
+     * @param int|array $expect        One or more expected integer success codes
      *
      * @return bool True on success
      */
@@ -923,7 +922,7 @@ class SMTP
 
         $this->edebug('SERVER -> CLIENT: ' . $this->last_reply, self::DEBUG_SERVER);
 
-        if (!in_array($code, (array)$expect)) {
+        if (!in_array($code, (array) $expect)) {
             $this->setError(
                 "$command command failed",
                 $detail,
@@ -1005,7 +1004,7 @@ class SMTP
     /**
      * Send raw data to the server.
      *
-     * @param string $data The data to send
+     * @param string $data    The data to send
      * @param string $command Optionally, the command this is part of, used only for controlling debug output
      *
      * @return int|bool The number of bytes sent to the server or false on error
@@ -1185,9 +1184,9 @@ class SMTP
     /**
      * Set error messages and codes.
      *
-     * @param string $message The error message
-     * @param string $detail Further detail on the error
-     * @param string $smtp_code An associated SMTP error code
+     * @param string $message      The error message
+     * @param string $detail       Further detail on the error
+     * @param string $smtp_code    An associated SMTP error code
      * @param string $smtp_code_ex Extended SMTP code
      */
     protected function setError($message, $detail = '', $smtp_code = '', $smtp_code_ex = '')
@@ -1263,10 +1262,10 @@ class SMTP
     /**
      * Reports an error number and string.
      *
-     * @param int $errno The error number returned by PHP
-     * @param string $errmsg The error message returned by PHP
+     * @param int    $errno   The error number returned by PHP
+     * @param string $errmsg  The error message returned by PHP
      * @param string $errfile The file the error occurred in
-     * @param int $errline The line number the error occurred on
+     * @param int    $errline The line number the error occurred on
      */
     protected function errorHandler($errno, $errmsg, $errfile = '', $errline = 0)
     {
@@ -1274,7 +1273,7 @@ class SMTP
         $this->setError(
             $notice,
             $errmsg,
-            (string)$errno
+            (string) $errno
         );
         $this->edebug(
             "$notice Error #$errno: $errmsg [$errfile line $errline]",

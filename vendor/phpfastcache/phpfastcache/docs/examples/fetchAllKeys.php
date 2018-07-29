@@ -11,7 +11,6 @@
  * @author Georges.L (Geolim4)  <contact@geolim4.com>
  *
  */
-
 use phpFastCache\CacheManager;
 
 // Include composer autoloader
@@ -26,12 +25,13 @@ $InstanceCache->clear();
 $keyPrefix = "product_page_";
 $keys = [];
 
-for ($i = 1; $i <= 10; $i++) {
+for ($i=1;$i<=10;$i++)
+{
     $keys[$keyPrefix . $i] = $InstanceCache->getItem($keyPrefix . $i);
-    if (!$keys[$keyPrefix . $i]->isHit()) {
+    if(!$keys[$keyPrefix . $i]->isHit()){
         $keys[$keyPrefix . $i]
-            ->set(uniqid('pfc', true))
-            ->addTag('pfc');
+          ->set(uniqid('pfc', true))
+          ->addTag('pfc');
     }
 }
 

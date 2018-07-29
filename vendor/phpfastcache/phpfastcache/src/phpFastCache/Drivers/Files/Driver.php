@@ -36,8 +36,6 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     const FILE_DIR = 'files';
 
-    private $compress = false;
-
     /**
      * Driver constructor.
      * @param array $config
@@ -49,10 +47,6 @@ class Driver implements ExtendedCacheItemPoolInterface
 
         if (!$this->driverCheck()) {
             throw new phpFastCacheDriverCheckException(sprintf(self::DRIVER_CHECK_FAILURE, $this->getDriverName()));
-        }
-
-        if (array_key_exists('compress_data', $config) && $config['compress_data'] === true) {
-            $this->compress = true;
         }
     }
 
@@ -78,15 +72,11 @@ class Driver implements ExtendedCacheItemPoolInterface
             $file_path = $this->getFilePath($item->getKey());
             $data = $this->encode($this->driverPreWrap($item));
 
-            if ($this->compress) {
-                $data = gzencode($data);
-            }
-
             /**
              * Force write
              */
             try {
-                return $this->writefile($file_path, $data, $this->config['secureFileManipulation']);
+                return $this->writefile($file_path, $data, $this->config[ 'secureFileManipulation' ]);
             } catch (\Exception $e) {
                 return false;
             }
@@ -110,9 +100,6 @@ class Driver implements ExtendedCacheItemPoolInterface
         }
 
         $content = $this->readfile($file_path);
-        if ($this->compress) {
-            $content = gzdecode($content);
-        }
 
         return $this->decode($content);
 
@@ -200,7 +187,7 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     public static function getValidOptions()
     {
-        return ['path', 'default_chmod', 'securityKey', 'htaccess', 'secureFileManipulation', 'compress_data'];
+        return ['path', 'default_chmod', 'securityKey', 'htaccess', 'secureFileManipulation'];
     }
 
     /**

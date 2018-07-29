@@ -93,12 +93,12 @@ class CrawlerDetect
      * Compile the regex patterns into one regex string.
      *
      * @param array
-     *
+     * 
      * @return string
      */
     public function compileRegex($patterns)
     {
-        return '(' . implode('|', $patterns) . ')';
+        return '('.implode('|', $patterns).')';
     }
 
     /**
@@ -109,7 +109,7 @@ class CrawlerDetect
     public function setHttpHeaders($httpHeaders)
     {
         // Use global _SERVER if $httpHeaders aren't defined.
-        if (!is_array($httpHeaders) || !count($httpHeaders)) {
+        if (! is_array($httpHeaders) || ! count($httpHeaders)) {
             $httpHeaders = $_SERVER;
         }
 
@@ -145,7 +145,7 @@ class CrawlerDetect
         if (is_null($userAgent)) {
             foreach ($this->getUaHttpHeaders() as $altHeader) {
                 if (isset($this->httpHeaders[$altHeader])) {
-                    $userAgent .= $this->httpHeaders[$altHeader] . ' ';
+                    $userAgent .= $this->httpHeaders[$altHeader].' ';
                 }
             }
         }
@@ -164,19 +164,19 @@ class CrawlerDetect
     {
         $agent = $userAgent ?: $this->userAgent;
 
-        $agent = preg_replace('/' . $this->compiledExclusions . '/i', '', $agent);
+        $agent = preg_replace('/'.$this->compiledExclusions.'/i', '', $agent);
 
         if (strlen(trim($agent)) == 0) {
             return false;
         }
 
-        $result = preg_match('/' . $this->compiledRegex . '/i', trim($agent), $matches);
+        $result = preg_match('/'.$this->compiledRegex.'/i', trim($agent), $matches);
 
         if ($matches) {
             $this->matches = $matches;
         }
 
-        return (bool)$result;
+        return (bool) $result;
     }
 
     /**

@@ -76,8 +76,8 @@ class Psr16Adapter implements CacheInterface
     {
         try {
             $cacheItem = $this->internalCacheInstance
-                ->getItem($key)
-                ->set($value);
+              ->getItem($key)
+              ->set($value);
             if (is_int($ttl) && $ttl <= 0) {
                 $cacheItem->expiresAt((new \DateTime('@0')));
             } elseif (is_int($ttl) || $ttl instanceof \DateInterval) {

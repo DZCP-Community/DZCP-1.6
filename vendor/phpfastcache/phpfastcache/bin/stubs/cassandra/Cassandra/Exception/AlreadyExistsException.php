@@ -21,6 +21,4 @@ namespace Cassandra\Exception;
 /**
  * AlreadyExistsException is raised when attempting to re-create existing keyspace.
  */
-class AlreadyExistsException extends ConfigurationException
-{
-}
+class AlreadyExistsException extends ConfigurationException {}

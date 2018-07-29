@@ -15,21 +15,21 @@ $testHelper = new TestHelper('Configuration validator');
 
 
 $tests = [
-    [
-        'Files' => [
-            'path' => new \StdClass,
-        ],
+  [
+    'Files' => [
+      'path' => new \StdClass,
     ],
-    [
-        'Files' => [
-            'htaccess' => new \StdClass,
-        ],
+  ],
+  [
+    'Files' => [
+      'htaccess' => new \StdClass,
     ],
-    [
-        'Files' => [
-            'defaultTtl' => [],
-        ],
+  ],
+  [
+    'Files' => [
+      'defaultTtl' => [],
     ],
+  ],
 ];
 
 foreach ($tests as $test) {

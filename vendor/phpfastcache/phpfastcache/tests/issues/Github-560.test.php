@@ -14,7 +14,7 @@ require_once __DIR__ . '/../../src/autoload.php';
 $testHelper = new TestHelper('Github issue #560 - Expiration date bug with sqlite driver');
 $defaultTTl = 60 * 60 * 24 * 31;
 $cacheInstance = CacheManager::getInstance('Sqlite', [
-    'defaultTtl' => $defaultTTl
+  'defaultTtl' => $defaultTTl
 ]);
 /**
  * Clear the cache to avoid
@@ -43,9 +43,9 @@ unset($cacheItem);
 $cacheInstance->detachAllItems();
 $cacheItem = $cacheInstance->getItem($cacheKey);
 
-if ($cacheItem->getTtl() === $defaultTTl) {
+if($cacheItem->getTtl() === $defaultTTl){
     $testHelper->printPassText('The cache Item TTL matches the default TTL after 30 days.');
-} else {
+}else{
     $testHelper->printFailText('The cache Item TTL des not matches the default TTL after 30 days, got the following value: ' . $cacheItem->getTtl());
 }
 

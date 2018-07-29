@@ -11,7 +11,6 @@
  * @author Georges.L (Geolim4)  <contact@geolim4.com>
  *
  */
-
 use phpFastCache\CacheManager;
 
 // Include composer autoloader

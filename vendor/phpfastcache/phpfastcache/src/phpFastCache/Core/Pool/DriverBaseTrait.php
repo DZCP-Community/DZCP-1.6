@@ -59,7 +59,7 @@ trait DriverBaseTrait
         if (is_array($config_name)) {
             $this->config = array_merge($this->config, $config_name);
         } else {
-            $this->config[$config_name] = $value;
+            $this->config[ $config_name ] = $value;
         }
     }
 
@@ -77,8 +77,8 @@ trait DriverBaseTrait
      */
     public function getConfigOption($optionName)
     {
-        if (isset($this->config[$optionName])) {
-            return $this->config[$optionName];
+        if (isset($this->config[ $optionName ])) {
+            return $this->config[ $optionName ];
         } else {
             return null;
         }
@@ -144,21 +144,21 @@ trait DriverBaseTrait
     public function driverPreWrap(ExtendedCacheItemInterface $item)
     {
         $wrap = [
-            self::DRIVER_DATA_WRAPPER_INDEX => $item->get(),
-            self::DRIVER_TAGS_WRAPPER_INDEX => $item->getTags(),
-            self::DRIVER_EDATE_WRAPPER_INDEX => $item->getExpirationDate(),
+          self::DRIVER_DATA_WRAPPER_INDEX => $item->get(),
+          self::DRIVER_TAGS_WRAPPER_INDEX => $item->getTags(),
+          self::DRIVER_EDATE_WRAPPER_INDEX => $item->getExpirationDate(),
         ];
 
-        if ($this->config['itemDetailedDate']) {
-            $wrap[self::DRIVER_MDATE_WRAPPER_INDEX] = new \DateTime();
+        if ($this->config[ 'itemDetailedDate' ]) {
+            $wrap[ self::DRIVER_MDATE_WRAPPER_INDEX ] = new \DateTime();
             /**
              * If the creation date exists
              * reuse it else set a new Date
              */
-            $wrap[self::DRIVER_CDATE_WRAPPER_INDEX] = $item->getCreationDate() ?: new \DateTime();
+            $wrap[ self::DRIVER_CDATE_WRAPPER_INDEX ] = $item->getCreationDate() ?: new \DateTime();
         } else {
-            $wrap[self::DRIVER_MDATE_WRAPPER_INDEX] = null;
-            $wrap[self::DRIVER_CDATE_WRAPPER_INDEX] = null;
+            $wrap[ self::DRIVER_MDATE_WRAPPER_INDEX ] = null;
+            $wrap[ self::DRIVER_CDATE_WRAPPER_INDEX ] = null;
         }
 
         return $wrap;
@@ -170,7 +170,7 @@ trait DriverBaseTrait
      */
     public function driverUnwrapData(array $wrapper)
     {
-        return $wrapper[self::DRIVER_DATA_WRAPPER_INDEX];
+        return $wrapper[ self::DRIVER_DATA_WRAPPER_INDEX ];
     }
 
     /**
@@ -179,7 +179,7 @@ trait DriverBaseTrait
      */
     public function driverUnwrapTags(array $wrapper)
     {
-        return $wrapper[self::DRIVER_TAGS_WRAPPER_INDEX];
+        return $wrapper[ self::DRIVER_TAGS_WRAPPER_INDEX ];
     }
 
 
@@ -189,7 +189,7 @@ trait DriverBaseTrait
      */
     public function driverUnwrapEdate(array $wrapper)
     {
-        return $wrapper[self::DRIVER_EDATE_WRAPPER_INDEX];
+        return $wrapper[ self::DRIVER_EDATE_WRAPPER_INDEX ];
     }
 
     /**
@@ -198,7 +198,7 @@ trait DriverBaseTrait
      */
     public function driverUnwrapCdate(array $wrapper)
     {
-        return $wrapper[self::DRIVER_CDATE_WRAPPER_INDEX];
+        return $wrapper[ self::DRIVER_CDATE_WRAPPER_INDEX ];
     }
 
 
@@ -208,7 +208,7 @@ trait DriverBaseTrait
      */
     public function driverUnwrapMdate(array $wrapper)
     {
-        return $wrapper[self::DRIVER_MDATE_WRAPPER_INDEX];
+        return $wrapper[ self::DRIVER_MDATE_WRAPPER_INDEX ];
     }
 
     /**
@@ -216,7 +216,7 @@ trait DriverBaseTrait
      */
     public function getDriverName()
     {
-        if (!$this->driverName) {
+        if(!$this->driverName){
             $this->driverName = ucfirst(substr(strrchr((new \ReflectionObject($this))->getNamespaceName(), '\\'), 1));
         }
         return $this->driverName;
@@ -238,7 +238,8 @@ trait DriverBaseTrait
             throw new phpFastCacheLogicException('Trying to set tag(s) to an Tag item index: ' . $item->getKey());
         }
 
-        if (!$item->getTags() && !$item->getRemovedTags()) {
+        if(!$item->getTags() && !$item->getRemovedTags())
+        {
             return true;
         }
 
@@ -281,7 +282,7 @@ trait DriverBaseTrait
         foreach ($tagsItems as $tagsItem) {
             $data = (array)$tagsItem->get();
 
-            unset($data[$item->getKey()]);
+            unset($data[ $item->getKey() ]);
             $tagsItem->set($data);
 
             /**

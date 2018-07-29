@@ -28,6 +28,4 @@ namespace Cassandra\Exception;
  * @see Cassandra\Exception\AlreadyExistsException
  * @see Cassandra\Exception\UnpreparedException
  */
-class ValidationException extends RuntimeException
-{
-}
+class ValidationException extends RuntimeException {}

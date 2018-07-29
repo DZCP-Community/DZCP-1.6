@@ -41,9 +41,9 @@ $driverInstance = new CustomMemcachedCacheClass();
 
 if (!is_object($driverInstance->getItem('test'))) {
     $testHelper->printFailText('$driverInstance->getItem() returned an invalid var type:' . gettype($driverInstance));
-} else if (!($driverInstance->getItem('test') instanceof ExtendedCacheItemInterface)) {
+}else if(!($driverInstance->getItem('test') instanceof ExtendedCacheItemInterface)){
     $testHelper->printFailText('$driverInstance->getItem() returned an invalid class that does not implements ExtendedCacheItemInterface: ' . get_class($driverInstance));
-} else {
+}else{
     $testHelper->printPassText('$driverInstance->getItem() returned a valid class that implements ExtendedCacheItemInterface: ' . get_class($driverInstance));
 }
 

@@ -74,9 +74,9 @@ class Driver implements ExtendedCacheItemPoolInterface
              * @see https://redis.io/commands/setex
              * @see https://redis.io/commands/expire
              */
-            if ($ttl <= 0) {
+            if($ttl <= 0){
                 return $this->instance->expire($item->getKey(), 0);
-            } else {
+            }else{
                 return $this->instance->setex($item->getKey(), $ttl, $this->encode($this->driverPreWrap($item)));
             }
         } else {
@@ -134,25 +134,25 @@ class Driver implements ExtendedCacheItemPoolInterface
         } else {
             $this->instance = $this->instance ?: new RedisClient();
 
-            $host = isset($this->config['host']) ? (string)$this->config['host'] : '127.0.0.1';
-            $path = isset($this->config['path']) ? (string)$this->config['path'] : false;
-            $port = isset($this->config['port']) ? (int)$this->config['port'] : 6379;
-            $password = isset($this->config['password']) ? (string)$this->config['password'] : '';
-            $database = isset($this->config['database']) ? $this->config['database'] : false;
-            $timeout = isset($this->config['timeout']) ? $this->config['timeout'] : '';
+            $host = isset($this->config[ 'host' ]) ? (string) $this->config[ 'host' ] : '127.0.0.1';
+            $path = isset($this->config[ 'path' ]) ? (string) $this->config[ 'path' ] : false;
+            $port = isset($this->config[ 'port' ]) ? (int) $this->config[ 'port' ] : 6379;
+            $password = isset($this->config[ 'password' ]) ? (string) $this->config[ 'password' ] : '';
+            $database = isset($this->config[ 'database' ]) ?  $this->config[ 'database' ] : false;
+            $timeout = isset($this->config[ 'timeout' ]) ?  $this->config[ 'timeout' ] : '';
 
             /**
              * If path is provided we consider it as an UNIX Socket
              */
-            if ($path) {
+            if($path){
                 $isConnected = $this->instance->connect($path);
-            } else {
+            }else{
                 $isConnected = $this->instance->connect($host, (int)$port, (int)$timeout);
             }
 
             if (!$isConnected && $path) {
                 return false;
-            } else if (!$path) {
+            } else if(!$path) {
                 if ($password && !$this->instance->auth($password)) {
                     return false;
                 }
@@ -177,13 +177,13 @@ class Driver implements ExtendedCacheItemPoolInterface
     {
         // used_memory
         $info = $this->instance->info();
-        $date = (new \DateTime())->setTimestamp(time() - $info['uptime_in_seconds']);
+        $date = (new \DateTime())->setTimestamp(time() - $info[ 'uptime_in_seconds' ]);
 
         return (new DriverStatistic())
-            ->setData(implode(', ', array_keys($this->itemInstances)))
-            ->setRawData($info)
-            ->setSize($info['used_memory'])
-            ->setInfo(sprintf("The Redis daemon v%s is up since %s.\n For more information see RawData. \n Driver size includes the memory allocation size.",
-                $info['redis_version'], $date->format(DATE_RFC2822)));
+          ->setData(implode(', ', array_keys($this->itemInstances)))
+          ->setRawData($info)
+          ->setSize($info[ 'used_memory' ])
+          ->setInfo(sprintf("The Redis daemon v%s is up since %s.\n For more information see RawData. \n Driver size includes the memory allocation size.",
+            $info[ 'redis_version' ], $date->format(DATE_RFC2822)));
     }
 }

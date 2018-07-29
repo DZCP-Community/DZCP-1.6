@@ -21,6 +21,4 @@ namespace Cassandra\Exception;
 /**
  * IsBootstrappingException is raised when a node is bootstrapping.
  */
-class IsBootstrappingException extends ServerException
-{
-}
+class IsBootstrappingException extends ServerException {}

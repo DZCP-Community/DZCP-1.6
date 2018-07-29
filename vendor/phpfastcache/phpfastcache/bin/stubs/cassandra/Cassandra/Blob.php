@@ -28,43 +28,33 @@ final class Blob implements Value
      *
      * @param string $bytes any bytes
      */
-    public function __construct($bytes)
-    {
-    }
+    public function __construct($bytes) {}
 
     /**
      * The type of this blob.
      *
      * @return Type
      */
-    public function type()
-    {
-    }
+    public function type() {}
 
     /**
      * Returns bytes as a hex string.
      *
      * @return string bytes as hexadecimal string
      */
-    public function bytes()
-    {
-    }
+    public function bytes() {}
 
     /**
      * Returns bytes as a hex string.
      *
      * @return string bytes as hexadecimal string
      */
-    public function __toString()
-    {
-    }
+    public function __toString() {}
 
     /**
      * Returns bytes as a binary string.
      *
      * @return string bytes as binary string
      */
-    public function toBinaryString()
-    {
-    }
+    public function toBinaryString() {}
 }

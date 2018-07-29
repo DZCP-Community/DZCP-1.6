@@ -55,7 +55,7 @@ class ActOnAll implements ExtendedCacheItemPoolInterface
             foreach ($this->instances as $instance) {
                 $reflectionMethod = new \ReflectionMethod(get_class($instance), $method);
                 if ($getterMethod) {
-                    $return[$instance->getDriverName()] = $reflectionMethod->invokeArgs($instance, $args);
+                    $return[ $instance->getDriverName() ] = $reflectionMethod->invokeArgs($instance, $args);
                 } else {
                     $result = $reflectionMethod->invokeArgs($instance, $args);
                     if ($result !== false) {

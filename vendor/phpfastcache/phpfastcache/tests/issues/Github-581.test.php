@@ -18,7 +18,7 @@ $cacheInstance = CacheManager::getInstance('Files');
  * Force the HTTP_HOST in CLI to
  * simulate a Web request
  */
-$_SERVER['HTTP_HOST'] = uniqid('test.', true) . '.pfc.net';
+$_SERVER[ 'HTTP_HOST' ] = uniqid('test.', true) . '.pfc.net';
 
 /**
  * Clear the cache to avoid
@@ -39,9 +39,9 @@ $cacheInstance->save($cacheItem);
 unset($cacheItem);
 $cacheInstance->detachAllItems();
 
-if (strpos($cacheInstance->getPath(), 'phpfastcache' . DIRECTORY_SEPARATOR . $_SERVER['HTTP_HOST']) !== false) {
+if(strpos($cacheInstance->getPath(), 'phpfastcache' . DIRECTORY_SEPARATOR . $_SERVER[ 'HTTP_HOST' ]) !== false){
     $testHelper->printPassText('The "securityKey" option in automatic mode writes the HTTP_HOST directory as expected.');
-} else {
+}else{
     $testHelper->printFailText('The "securityKey" option in automatic mode leads to the following path: ' . $cacheInstance->getPath());
 }
 

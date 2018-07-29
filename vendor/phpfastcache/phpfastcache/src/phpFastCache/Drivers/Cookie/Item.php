@@ -43,7 +43,7 @@ class Item implements ExtendedCacheItemInterface
             $this->driver->setItem($this);
         } else {
             throw new phpFastCacheInvalidArgumentException(sprintf('$key must be a string, got type "%s" instead.',
-                gettype($key)));
+              gettype($key)));
         }
     }
 

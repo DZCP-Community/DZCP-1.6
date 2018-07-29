@@ -126,14 +126,14 @@ final class Cassandra
      *
      * @see Cassandra\SSLOptions\Builder::withVerifyFlags()
      */
-    const VERIFY_NONE = 0;
+    const VERIFY_NONE          = 0;
 
     /**
      * Verify presence and validity of SSL certificates of Cassandra.
      *
      * @see Cassandra\SSLOptions\Builder::withVerifyFlags()
      */
-    const VERIFY_PEER_CERT = 1;
+    const VERIFY_PEER_CERT     = 1;
 
     /**
      * Verify that the IP address matches the SSL certificate’s common name or
@@ -334,16 +334,12 @@ final class Cassandra
      *
      * @return Cassandra\Cluster\Builder a Cluster Builder instance
      */
-    public static function cluster()
-    {
-    }
+    public static function cluster() {}
 
     /**
      * Returns SSL Options Builder.
      *
      * @return Cassandra\SSLOptions\Builder an SSLOptions Builder instance
      */
-    public static function ssl()
-    {
-    }
+    public static function ssl() {}
 }

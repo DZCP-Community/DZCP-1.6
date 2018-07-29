@@ -75,8 +75,8 @@ class EventManager
          * due to performance issue on huge
          * loop dispatching operations
          */
-        if (isset($this->events[$eventName])) {
-            foreach ($this->events[$eventName] as $event) {
+        if (isset($this->events[ $eventName ])) {
+            foreach ($this->events[ $eventName ] as $event) {
                 call_user_func_array($event, $args);
             }
         }
@@ -92,14 +92,14 @@ class EventManager
     {
         if (strpos($name, 'on') === 0) {
             $name = substr($name, 2);
-            if (is_callable($arguments[0])) {
-                if (isset($arguments[1]) && is_string($arguments[0])) {
-                    $this->events[$name][$arguments[1]] = $arguments[0];
+            if (is_callable($arguments[ 0 ])) {
+                if (isset($arguments[ 1 ]) && is_string($arguments[ 0 ])) {
+                    $this->events[ $name ][ $arguments[ 1 ] ] = $arguments[ 0 ];
                 } else {
-                    $this->events[$name][] = $arguments[0];
+                    $this->events[ $name ][] = $arguments[ 0 ];
                 }
             } else {
-                throw new phpFastCacheInvalidArgumentException(sprintf('Expected Callable, got "%s"', gettype($arguments[0])));
+                throw new phpFastCacheInvalidArgumentException(sprintf('Expected Callable, got "%s"', gettype($arguments[ 0 ])));
             }
         } else {
             throw new \BadMethodCallException('An event must start with "on" such as "onCacheGetItem"');
@@ -113,8 +113,8 @@ class EventManager
      */
     public function unbindEventCallback($eventName, $callbackName)
     {
-        if (isset($this->events[$eventName][$callbackName])) {
-            unset($this->events[$eventName][$callbackName]);
+        if (isset($this->events[ $eventName ][ $callbackName ])) {
+            unset($this->events[ $eventName ][ $callbackName ]);
             return true;
         }
         return false;

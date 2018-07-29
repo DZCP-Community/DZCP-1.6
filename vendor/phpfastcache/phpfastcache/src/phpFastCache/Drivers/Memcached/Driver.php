@@ -132,16 +132,16 @@ class Driver implements ExtendedCacheItemPoolInterface
     {
         $this->instance = new MemcachedSoftware();
         $this->instance->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
-        $servers = (!empty($this->config['servers']) && is_array($this->config['servers']) ? $this->config['servers'] : []);
+        $servers = (!empty($this->config[ 'servers' ]) && is_array($this->config[ 'servers' ]) ? $this->config[ 'servers' ] : []);
         if (count($servers) < 1) {
             $servers = [
-                [
-                    'host' => !empty($this->config['host']) ? $this->config['host'] : '127.0.0.1',
-                    'path' => !empty($this->config['path']) ? $this->config['path'] : false,
-                    'port' => !empty($this->config['port']) ? $this->config['port'] : 11211,
-                    'sasl_user' => !empty($this->config['sasl_user']) ? $this->config['sasl_user'] : false,
-                    'sasl_password' => !empty($this->config['sasl_password']) ? $this->config['sasl_password'] : false,
-                ],
+              [
+                'host' => !empty($this->config[ 'host' ]) ? $this->config[ 'host' ] : '127.0.0.1',
+                'path' => !empty($this->config[ 'path' ]) ? $this->config[ 'path' ] : false,
+                'port' => !empty($this->config[ 'port' ]) ? $this->config[ 'port' ] : 11211,
+                'sasl_user' => !empty($this->config[ 'sasl_user' ]) ? $this->config[ 'sasl_user' ] : false,
+                'sasl_password' =>!empty($this->config[ 'sasl_password' ]) ? $this->config[ 'sasl_password' ]: false,
+              ],
             ];
         }
 
@@ -150,14 +150,14 @@ class Driver implements ExtendedCacheItemPoolInterface
                 /**
                  * If path is provided we consider it as an UNIX Socket
                  */
-                if (!empty($server['path']) && !$this->instance->addServer($server['path'], 0)) {
+                if(!empty($server[ 'path' ]) && !$this->instance->addServer($server[ 'path' ], 0)){
                     $this->fallback = true;
-                } else if (!empty($server['host']) && !$this->instance->addServer($server['host'], $server['port'])) {
+                }else if (!empty($server[ 'host' ]) && !$this->instance->addServer($server[ 'host' ], $server[ 'port' ])) {
                     $this->fallback = true;
                 }
 
-                if (!empty($server['sasl_user']) && !empty($server['sasl_password'])) {
-                    $this->instance->setSaslAuthData($server['sasl_user'], $server['sasl_password']);
+                if (!empty($server[ 'sasl_user' ]) && !empty($server[ 'sasl_password' ])) {
+                    $this->instance->setSaslAuthData($server[ 'sasl_user' ], $server[ 'sasl_password' ]);
                 }
 
             } catch (\Exception $e) {
@@ -170,7 +170,7 @@ class Driver implements ExtendedCacheItemPoolInterface
          * any error if not connected ...
          */
         $version = $this->instance->getVersion();
-        if (!$version || $this->instance->getResultCode() !== MemcachedSoftware::RES_SUCCESS) {
+        if(!$version || $this->instance->getResultCode() !== MemcachedSoftware::RES_SUCCESS){
             throw new phpFastCacheDriverException('Memcached seems to not be connected');
         }
         return true;
@@ -188,16 +188,16 @@ class Driver implements ExtendedCacheItemPoolInterface
     public function getStats()
     {
         $stats = current($this->instance->getStats());
-        $stats['uptime'] = (isset($stats['uptime']) ? $stats['uptime'] : 0);
-        $stats['version'] = (isset($stats['version']) ? $stats['version'] : $this->instance->getVersion());
-        $stats['bytes'] = (isset($stats['bytes']) ? $stats['version'] : 0);
+        $stats[ 'uptime' ] = (isset($stats[ 'uptime' ]) ? $stats[ 'uptime' ] : 0);
+        $stats[ 'version' ] = (isset($stats[ 'version' ]) ? $stats[ 'version' ] : $this->instance->getVersion());
+        $stats[ 'bytes' ] = (isset($stats[ 'bytes' ]) ? $stats[ 'version' ] : 0);
 
-        $date = (new \DateTime())->setTimestamp(time() - $stats['uptime']);
+        $date = (new \DateTime())->setTimestamp(time() - $stats[ 'uptime' ]);
 
         return (new DriverStatistic())
-            ->setData(implode(', ', array_keys($this->itemInstances)))
-            ->setInfo(sprintf("The memcache daemon v%s is up since %s.\n For more information see RawData.", $stats['version'], $date->format(DATE_RFC2822)))
-            ->setRawData($stats)
-            ->setSize($stats['bytes']);
+          ->setData(implode(', ', array_keys($this->itemInstances)))
+          ->setInfo(sprintf("The memcache daemon v%s is up since %s.\n For more information see RawData.", $stats[ 'version' ], $date->format(DATE_RFC2822)))
+          ->setRawData($stats)
+          ->setSize($stats[ 'bytes' ]);
     }
 }

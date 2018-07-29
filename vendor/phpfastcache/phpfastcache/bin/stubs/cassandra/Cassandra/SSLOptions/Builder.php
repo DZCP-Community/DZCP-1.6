@@ -35,9 +35,7 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withTrustedCerts($path)
-    {
-    }
+    public function withTrustedCerts($path) {}
 
     /**
      * Disable certificate verification.
@@ -48,9 +46,7 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withVerifyFlags($flags)
-    {
-    }
+    public function withVerifyFlags($flags) {}
 
     /**
      * Set client-side certificate chain.
@@ -64,9 +60,7 @@ final class Builder
      *
      * @return Builder self
      */
-    public function withClientCert($path)
-    {
-    }
+    public function withClientCert($path) {}
 
     /**
      * Set client-side private key. This is used to authenticate the client on
@@ -74,21 +68,17 @@ final class Builder
      *
      * @throws \Cassandra\Exception\InvalidArgumentException
      *
-     * @param string $path Path to the private key file
+     * @param string      $path       Path to the private key file
      * @param string|null $passphrase Passphrase for the private key, if any
      *
      * @return Builder self
      */
-    public function withPrivateKey($path, $passphrase = null)
-    {
-    }
+    public function withPrivateKey($path, $passphrase = null) {}
 
     /**
      * Builds SSL options.
      *
      * @return \Cassandra\SSLOptions ssl options configured accordingly.
      */
-    public function build()
-    {
-    }
+    public function build() {}
 }

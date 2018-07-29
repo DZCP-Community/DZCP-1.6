@@ -21,8 +21,8 @@ use phpFastCache\CacheManager;
 
 // Setup File Path on your config files
 CacheManager::setDefaultConfig([
-    "path" => sys_get_temp_dir(),
-    "itemDetailedDate" => true
+  "path" => sys_get_temp_dir(),
+  "itemDetailedDate" => true
 ]);
 
 // In your class, function, you can call the Cache

@@ -45,7 +45,5 @@ final class ExecutionOptions
      *
      * @param array $options various execution options
      */
-    public function __construct(array $options = null)
-    {
-    }
+    public function __construct(array $options = null) {}
 }

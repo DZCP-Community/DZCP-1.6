@@ -31,14 +31,14 @@ $CachedString2 = $InstanceCache->getItem($key2);
 if (is_null($CachedString->get()) || is_null($CachedString2->get())) {
     // Write products to Cache in 10 minutes with same keyword
     $CachedString->set("My beautifull Ios product")
-        ->expiresAfter(600)
-        ->addTag('Mobile')
-        ->addTag('Ios');
+      ->expiresAfter(600)
+      ->addTag('Mobile')
+      ->addTag('Ios');
 
     $CachedString2->set("My beautifull Android product")
-        ->expiresAfter(600)
-        ->addTag('Mobile')
-        ->addTag('Android');
+      ->expiresAfter(600)
+      ->addTag('Mobile')
+      ->addTag('Android');
 
     $InstanceCache->save($CachedString);
     $InstanceCache->save($CachedString2);

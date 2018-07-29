@@ -11,49 +11,50 @@ use phpFastCache\Helper\TestHelper;
 chdir(__DIR__);
 require_once __DIR__ . '/../src/autoload.php';
 $testHelper = new TestHelper('Items tags features');
-$defaultDriver = (!empty($argv[1]) ? ucfirst($argv[1]) : 'Files');
+$defaultDriver = (!empty($argv[ 1 ]) ? ucfirst($argv[ 1 ]) : 'Files');
 $driverInstance = CacheManager::getInstance($defaultDriver);
 
 /**
  * Item tag test // Init tags/items
  */
 
-$createItemsCallback = function () use ($driverInstance) {
+$createItemsCallback = function() use ($driverInstance)
+{
     $item1 = $driverInstance->getItem('tag-test1');
     $item2 = $driverInstance->getItem('tag-test2');
     $item3 = $driverInstance->getItem('tag-test3');
 
     $item1->set('item-test_1')
-        ->expiresAfter(600)
-        ->addTag('tag-test_1')
-        ->addTag('tag-test_all')
-        ->addTag('tag-test_all2')
-        ->addTag('tag-test_all3');
+      ->expiresAfter(600)
+      ->addTag('tag-test_1')
+      ->addTag('tag-test_all')
+      ->addTag('tag-test_all2')
+      ->addTag('tag-test_all3');
 
     $item2->set('item-test_2')
-        ->expiresAfter(600)
-        ->addTag('tag-test_1')
-        ->addTag('tag-test_2')
-        ->addTag('tag-test_all')
-        ->addTag('tag-test_all2')
-        ->addTag('tag-test_all3');
+      ->expiresAfter(600)
+      ->addTag('tag-test_1')
+      ->addTag('tag-test_2')
+      ->addTag('tag-test_all')
+      ->addTag('tag-test_all2')
+      ->addTag('tag-test_all3');
 
     $item3->set('item-test_3')
-        ->expiresAfter(600)
-        ->addTag('tag-test_1')
-        ->addTag('tag-test_2')
-        ->addTag('tag-test_3')
-        ->addTag('tag-test_all')
-        ->addTag('tag-test_all2')
-        ->addTag('tag-test_all3')
-        ->addTag('tag-test_all4');
+      ->expiresAfter(600)
+      ->addTag('tag-test_1')
+      ->addTag('tag-test_2')
+      ->addTag('tag-test_3')
+      ->addTag('tag-test_all')
+      ->addTag('tag-test_all2')
+      ->addTag('tag-test_all3')
+      ->addTag('tag-test_all4');
 
     $driverInstance->saveMultiple($item1, $item2, $item3);
 
     return [
-        'item1' => $item1,
-        'item2' => $item2,
-        'item3' => $item3
+      'item1' => $item1,
+      'item2' => $item2,
+      'item3' => $item3
     ];
 };
 
@@ -64,20 +65,27 @@ $testHelper->printNewLine()->printText('#1 Testing getter: getItemsByTag() // Ex
 $createItemsCallback();
 
 $tagsItems = $driverInstance->getItemsByTag('tag-test_all');
-if (is_array($tagsItems)) {
-    if (count($tagsItems) === 3) {
-        foreach ($tagsItems as $tagsItem) {
-            if (!in_array($tagsItem->getKey(), ['tag-test1', 'tag-test2', 'tag-test3'])) {
+if(is_array($tagsItems))
+{
+    if(count($tagsItems) === 3)
+    {
+        foreach($tagsItems as $tagsItem)
+        {
+            if(!in_array($tagsItem->getKey(), ['tag-test1', 'tag-test2', 'tag-test3'])){
                 $testHelper->printFailText('STEP#1 // Got unexpected tagged item key:' . $tagsItem->getKey());
                 goto itemTagTest2;
             }
         }
         $testHelper->printPassText('STEP#1 // Successfully retrieved 3 tagged item keys');
-    } else {
+    }
+    else
+    {
         $testHelper->printFailText('STEP#1 //Got wrong count of item:' . count($tagsItems));
         goto itemTagTest2;
     }
-} else {
+}
+else
+{
     $testHelper->printFailText('STEP#1 // Expected $tagsItems to be an array, got: ' . gettype($tagsItems));
     goto itemTagTest2;
 }
@@ -92,20 +100,27 @@ $createItemsCallback();
 
 $tagsItems = $driverInstance->getItemsByTagsAll(['tag-test_all', 'tag-test_all2', 'tag-test_all3']);
 
-if (is_array($tagsItems)) {
-    if (count($tagsItems) === 3) {
-        foreach ($tagsItems as $tagsItem) {
-            if (!in_array($tagsItem->getKey(), ['tag-test1', 'tag-test2', 'tag-test3'])) {
+if(is_array($tagsItems))
+{
+    if(count($tagsItems) === 3)
+    {
+        foreach($tagsItems as $tagsItem)
+        {
+            if(!in_array($tagsItem->getKey(), ['tag-test1', 'tag-test2', 'tag-test3'])){
                 $testHelper->printFailText('STEP#2 // Got unexpected tagged item key:' . $tagsItem->getKey());
                 goto itemTagTest3;
             }
         }
         $testHelper->printPassText('STEP#2 // Successfully retrieved 3 tagged item key');
-    } else {
-        $testHelper->printFailText('STEP#2 // Got wrong count of item:' . count($tagsItems));
+    }
+    else
+    {
+        $testHelper->printFailText('STEP#2 // Got wrong count of item:' . count($tagsItems) );
         goto itemTagTest3;
     }
-} else {
+}
+else
+{
     $testHelper->printFailText('STEP#2 // Expected $tagsItems to be an array, got: ' . gettype($tagsItems));
     goto itemTagTest3;
 }
@@ -120,23 +135,32 @@ $createItemsCallback();
 
 $tagsItems = $driverInstance->getItemsByTagsAll(['tag-test_all', 'tag-test_all2', 'tag-test_all3', 'tag-test_all4']);
 
-if (is_array($tagsItems)) {
-    if (count($tagsItems) === 1) {
-        if (isset($tagsItems['tag-test3'])) {
-            if ($tagsItems['tag-test3']->getKey() !== 'tag-test3') {
+if(is_array($tagsItems))
+{
+    if(count($tagsItems) === 1)
+    {
+        if(isset($tagsItems['tag-test3']))
+        {
+            if($tagsItems['tag-test3']->getKey() !== 'tag-test3'){
                 $testHelper->printFailText('STEP#3 // Got unexpected tagged item key:' . $tagsItems['tag-test3']->getKey());
                 goto itemTagTest4;
             }
             $testHelper->printPassText('STEP#3 // Successfully retrieved 1 tagged item keys');
-        } else {
+        }
+        else
+        {
             $testHelper->printFailText('STEP#3 // Got wrong array key, expected "tag-test3", got "' . key($tagsItems) . '"');
             goto itemTagTest4;
         }
-    } else {
+    }
+    else
+    {
         $testHelper->printFailText('STEP#3 // Got wrong count of item:' . count($tagsItems));
         goto itemTagTest4;
     }
-} else {
+}
+else
+{
     $testHelper->printFailText('STEP#3 // Expected $tagsItems to be an array, got: ' . gettype($tagsItems));
     goto itemTagTest4;
 }
@@ -150,17 +174,24 @@ $driverInstance->deleteItems(['item-test_1', 'item-test_2', 'item-test_3']);
 $createItemsCallback();
 $driverInstance->deleteItemsByTag('tag-test_all');
 
-if (count($driverInstance->getItemsByTag('tag-test_all')) > 0) {
+if(count($driverInstance->getItemsByTag('tag-test_all')) > 0)
+{
     $testHelper->printFailText('[FAIL] STEP#4 // Getter getItemsByTag() found item(s), possible memory leak');
-} else {
+}
+else
+{
     $testHelper->printPassText('STEP#4 // Getter getItemsByTag() found no item');
 }
 
 $i = 0;
-while (++$i <= 3) {
-    if ($driverInstance->getItem("tag-test{$i}")->isHit()) {
+while(++$i <= 3)
+{
+    if($driverInstance->getItem("tag-test{$i}")->isHit())
+    {
         $testHelper->printFailText("STEP#4 // Item 'tag-test{$i}' should've been deleted and is still in cache storage");
-    } else {
+    }
+    else
+    {
         $testHelper->printPassText("STEP#4 // Item 'tag-test{$i}' have been deleted and is no longer in cache storage");
     }
 }
@@ -175,17 +206,24 @@ $createItemsCallback();
 
 $driverInstance->deleteItemsByTagsAll(['tag-test_all', 'tag-test_all2', 'tag-test_all3']);
 
-if (count($driverInstance->getItemsByTag('tag-test_all')) > 0) {
+if(count($driverInstance->getItemsByTag('tag-test_all')) > 0)
+{
     $testHelper->printFailText('STEP#5 // Getter getItemsByTag() found item(s), possible memory leak');
-} else {
+}
+else
+{
     $testHelper->printPassText('STEP#5 // Getter getItemsByTag() found no item');
 }
 
 $i = 0;
-while (++$i <= 3) {
-    if ($driverInstance->getItem("tag-test{$i}")->isHit()) {
+while(++$i <= 3)
+{
+    if($driverInstance->getItem("tag-test{$i}")->isHit())
+    {
         $testHelper->printFailText("STEP#5 // Item 'tag-test{$i}' should've been deleted and is still in cache storage");
-    } else {
+    }
+    else
+    {
         $testHelper->printPassText("STEP#5 // Item 'tag-test{$i}' have been deleted and is no longer in cache storage");
     }
 }
@@ -203,9 +241,12 @@ $createItemsCallback();
  */
 $driverInstance->deleteItemsByTagsAll(['tag-test_all', 'tag-test_all2', 'tag-test_all3', 'tag-test_all4']);
 
-if ($driverInstance->getItem('item-test_3')->isHit()) {
+if($driverInstance->getItem('item-test_3')->isHit())
+{
     $testHelper->printFailText('STEP#6 // Getter getItem() found item \'item-test_3\', possible memory leak');
-} else {
+}
+else
+{
     $testHelper->printPassText('STEP#6 // Getter getItem() did not found item \'item-test_3\'');
 }
 
@@ -219,10 +260,14 @@ $createItemsCallback();
 $appendStr = '$*#*$';
 $driverInstance->appendItemsByTagsAll(['tag-test_all', 'tag-test_all2', 'tag-test_all3'], $appendStr);
 
-foreach ($driverInstance->getItems(['tag-test1', 'tag-test2', 'tag-test3']) as $item) {
-    if (strpos($item->get(), $appendStr) === false) {
+foreach($driverInstance->getItems(['tag-test1', 'tag-test2', 'tag-test3']) as $item)
+{
+    if(strpos($item->get(), $appendStr) === false)
+    {
         $testHelper->printFailText("STEP#7 // Item '{$item->getKey()}' does not have the string part '{$appendStr}' in it's value");
-    } else {
+    }
+    else
+    {
         $testHelper->printPassText("STEP#7 // Item 'tag-test{$item->getKey()}' does have the string part '{$appendStr}' in it's value");
     }
 }
@@ -237,10 +282,14 @@ $createItemsCallback();
 $prependStr = '&+_+&';
 $driverInstance->prependItemsByTagsAll(['tag-test_all', 'tag-test_all2', 'tag-test_all3'], $prependStr);
 
-foreach ($driverInstance->getItems(['tag-test1', 'tag-test2', 'tag-test3']) as $item) {
-    if (strpos($item->get(), $prependStr) === false) {
+foreach($driverInstance->getItems(['tag-test1', 'tag-test2', 'tag-test3']) as $item)
+{
+    if(strpos($item->get(), $prependStr) === false)
+    {
         $testHelper->printFailText("STEP#8 // Item '{$item->getKey()}' does not have the string part '{$prependStr}' in it's value");
-    } else {
+    }
+    else
+    {
         $testHelper->printPassText("STEP#8 // Item 'tag-test{$item->getKey()}' does have the string part '{$prependStr}' in it's value");
     }
 }

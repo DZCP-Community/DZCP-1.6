@@ -26,25 +26,19 @@ final class Tuple extends Type
      * Returns "tuple"
      * @return string "tuple"
      */
-    public function name()
-    {
-    }
+    public function name() {}
 
     /**
      * Returns type representation in CQL, e.g. `tuple<varchar, int>`
      * @return string Type representation in CQL
      */
-    public function __toString()
-    {
-    }
+    public function __toString() {}
 
     /**
      * Returns types of values
      * @return array An array of types
      */
-    public function types()
-    {
-    }
+    public function types() {}
 
     /**
      * Creates a new Cassandra\Tuple from the given values.
@@ -53,12 +47,10 @@ final class Tuple extends Type
      *                                            different type than what the
      *                                            tuple expects.
      *
-     * @param  mixed $value,... One or more values to be added to the tuple.
+     * @param  mixed $value,...      One or more values to be added to the tuple.
      *                               When no values given, creates a tuple with
      *                               null for the values.
      * @return Cassandra\Tuple  A tuple with given values.
      */
-    public function create($value = null)
-    {
-    }
+    public function create($value = null) {}
 }

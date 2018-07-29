@@ -23,6 +23,4 @@ namespace Cassandra\Exception;
  * from the required number of replica nodes in time during a read.
  * @see https://github.com/apache/cassandra/blob/cassandra-2.1/doc/native_protocol_v1.spec#L709-L726 Description of ReadTimeout error in the native protocol spec
  */
-class ReadTimeoutException extends ExecutionException
-{
-}
+class ReadTimeoutException extends ExecutionException {}

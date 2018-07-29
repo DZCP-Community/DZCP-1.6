@@ -21,12 +21,12 @@ $string = uniqid('pfc', true);
 list($item, $item2) = array_values($cacheInstance->getItems(['item1', 'item2']));
 
 $item->set($string)
-    ->addTags(['tag-all', 'tag1'])
-    ->expiresAfter(3600);
+  ->addTags(['tag-all', 'tag1'])
+  ->expiresAfter(3600);
 
 $item2->set($string)
-    ->addTags(['tag-all', 'tag2'])
-    ->expiresAfter(3600);
+  ->addTags(['tag-all', 'tag2'])
+  ->expiresAfter(3600);
 
 $cacheInstance->saveMultiple([$item, $item2]);
 $cacheInstance->detachAllItems();

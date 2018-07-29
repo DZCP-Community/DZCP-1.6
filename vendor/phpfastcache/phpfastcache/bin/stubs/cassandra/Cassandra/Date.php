@@ -28,39 +28,29 @@ final class Date implements Value
      *
      * @param int $seconds Absolute seconds from epoch (1970, 1, 1), can be negative, defaults to current time
      */
-    public function __construct($seconds = null)
-    {
-    }
+    public function __construct($seconds = null) {}
 
     /**
      * The type of this date.
      *
      * @return Type
      */
-    public function type()
-    {
-    }
+    public function type() {}
 
     /**
      * @return int Absolute seconds from epoch (1970, 1, 1), can be negative
      */
-    public function seconds()
-    {
-    }
+    public function seconds() {}
 
     /**
      * Converts current date to PHP DateTime.
      *
      * @return \DateTime PHP representation
      */
-    public function toDateTime()
-    {
-    }
+    public function toDateTime() {}
 
     /**
      * @return string this date in string format: Cassandra\Date(seconds=$seconds)
      */
-    public function __toString()
-    {
-    }
+    public function __toString() {}
 }
