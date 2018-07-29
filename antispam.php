@@ -72,7 +72,7 @@ if (isset($_GET['secure']) && !empty($_GET['secure'])) {
         $code = '';
         $passwordComponents = array("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789", "#$@!?&%+");
         $componentsCount = count($passwordComponents);
-        for ($pos = 0; $pos < (int)$_GET['num']; $pos++) {
+        for ($pos = 0; $pos < $num; $pos++) {
             $componentIndex = ($pos % $componentsCount);
             $componentLength = strlen($passwordComponents[$componentIndex]);
             $random = rand(0, $componentLength - 1);
