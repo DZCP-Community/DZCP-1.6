@@ -3,7 +3,7 @@
 =====================
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/20464857/37791864-8dec7444-2e0a-11e8-9264-04bfed8be8be.png"/>
+<img src="https://dzcp.de/dzcp.png"/>
 </p>
 
 <h2>live Demo:</h2>
