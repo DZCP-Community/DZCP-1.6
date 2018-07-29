@@ -11,9 +11,8 @@ if (defined('_UserMenu')) {
         if (!$validator['login']) {
             $index = error($validator['msg'], 1);
         } else {
-            $user = re($validator['input']['user'], true);
-            $pwd = re($validator['input']['pwd'], true);
-            if (($get = checkpwd($user, $pwd)) != false) {
+            if (($get = checkpwd(re($validator['input']['user'], true),
+                    re($validator['input']['pwd'], true))) != false) {
                 if (!isBanned($get['id'])) {
                     if ($get['dsgvo_lock']) {
                         //User Locked

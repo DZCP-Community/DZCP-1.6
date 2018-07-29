@@ -491,6 +491,7 @@ $designpath = '../inc/_templates_/' . $tmpdir;
  * @param $lng
  */
 function lang(string $lng) {
+    global $gump;
     if (!file_exists(basePath . "/inc/lang/languages/" . $lng . ".php")) {
         $files = get_files(basePath . '/inc/lang/languages/', false, true, array('php'));
         $lng = str_replace('.php', '', $files[0]);
@@ -508,6 +509,9 @@ function lang(string $lng) {
 
     //Set bBase-Content-type header
     header("Content-type: text/html; charset=" . $charset);
+
+    //Set language for GUMP
+    $gump->language(language_short_tag());
 
     //-> Neue Languages einbinden, sofern vorhanden
     if ($language_files = get_files(basePath . '/inc/additional-languages/' . $lng . '/', false, true, array('php'))) {
