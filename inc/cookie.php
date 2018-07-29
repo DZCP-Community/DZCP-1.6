@@ -4,32 +4,40 @@
  * http://www.dzcp.de
  */
 
-final class cookie
-{
+final class cookie {
     private static $cname = "";
-    private static $val = array();
+    private static $val = [];
     private static $expires;
     private static $dir = '/';
     private static $site = '';
+    public static $secure = false;
 
     /**
-     * Setzt die Werte f�r ein Cookie und erstellt es.
+     * Setzt die Werte für ein Cookie und erstellt es.
+     * @param $cname
+     * @param bool $cexpires
+     * @param string $cdir
+     * @param string $csite
      */
-    public final static function init($cname, $cexpires = false, $cdir = "/", $csite = "")
-    {
+    public final static function init($cname, $cexpires = false, $cdir = "/", $csite = ""){
         self::$cname = $cname;
         self::$expires = ($cexpires ? $cexpires : (time() + cookie_expires));
         self::$dir = $cdir;
         self::$site = $csite;
         self::$val = array();
+        self::$secure = false;
+        if(hasSecure()) {
+            self::$secure = true;
+        }
+
         self::extract();
     }
 
     /**
      * Extraktiert ein gespeichertes Cookie
+     * @param string $cname
      */
-    public final static function extract($cname = "")
-    {
+    public final static function extract($cname = ""){
         $cname = (empty($cname) ? self::$cname : $cname);
         if (!empty($_COOKIE[$cname])) {
             $arr = json_decode($_COOKIE[$cname], true);
@@ -44,12 +52,12 @@ final class cookie
     }
 
     /**
-     * Liest und gibt einen Wert aus dem Cookie zur�ck
+     * Liest und gibt einen Wert aus dem Cookie zurück
      *
+     * @param $var
      * @return string
      */
-    public final static function get($var)
-    {
+    public final static function get($var){
         if (!isset(self::$val) || empty(self::$val)) return false;
         if (!array_key_exists($var, self::$val)) return false;
         return self::$val[$var];
@@ -57,9 +65,10 @@ final class cookie
 
     /**
      * Setzt ein neuen Key und Wert im Cookie
+     * @param $var
+     * @param $value
      */
-    public final static function put($var, $value)
-    {
+    public final static function put($var, $value){
         self::$val[$var] = $value;
         $_COOKIE[$var] = self::$val[$var];
         if (empty($value)) unset(self::$val[$var]);
@@ -68,8 +77,7 @@ final class cookie
     /**
      * Leert das Cookie
      */
-    public final static function clear()
-    {
+    public final static function clear(){
         self::$val = array();
         self::save();
     }
@@ -77,12 +85,11 @@ final class cookie
     /**
      * Speichert das Cookie
      */
-    public final static function save()
-    {
+    public final static function save(){
         $cookie_val = (empty(self::$val) ? '' : json_encode(self::$val, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP));
         if (strlen($cookie_val) > 4 * 1024)
             trigger_error("The cookie " . self::$cname . " exceeds the specification for the maximum cookie size.  Some data may be lost", E_USER_WARNING);
 
-        setcookie(self::$cname, $cookie_val, self::$expires, self::$dir, self::$site);
+        setcookie(self::$cname, $cookie_val, self::$expires, self::$dir, self::$site, self::$secure, true);
     }
 }
