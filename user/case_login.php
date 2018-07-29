@@ -7,20 +7,18 @@
 if (defined('_UserMenu')) {
     $where = _site_user_login;
     if ($do == "yes" && HasDSGVO()) {
-        if (config('securelogin') &&
-            ((!array_key_exists('sec_login_page', $_SESSION) && !array_key_exists('login_menu', $_SESSION)) ||
-                (($_POST['secure'] != $_SESSION['sec_login_page'] && $_POST['secure'] != $_SESSION['login_menu']) ||
-                    (empty($_SESSION['sec_login_page']) && empty($_SESSION['login_menu'])))))
-            $index = error(_error_invalid_regcode, 1);
-        else {
-            $user = re($_POST['user'], true);
-            $pwd = re($_POST['pwd'], true);
+        $validator = check_securelogin();
+        if (!$validator['login']) {
+            $index = error($validator['msg'], 1);
+        } else {
+            $user = re($validator['input']['user'], true);
+            $pwd = re($validator['input']['pwd'], true);
             if (($get = checkpwd($user, $pwd)) != false) {
                 if (!isBanned($get['id'])) {
                     if ($get['dsgvo_lock']) {
                         //User Locked
                         $_SESSION['user_has_dsgvo_lock'] = true;
-                        $_SESSION['dsgvo_lock_permanent_login'] = isset($_POST['permanent']);
+                        $_SESSION['dsgvo_lock_permanent_login'] = $input['permanent'];
                         $_SESSION['dsgvo_lock_login_id'] = $get['id'];
                         if (!empty($get['language'])) {
                             $_SESSION['language'] = re($get['language']);
@@ -29,7 +27,7 @@ if (defined('_UserMenu')) {
                         header("Location: ?action=userlock");
                     } else {
                         $permanent_key = '';
-                        if (isset($_POST['permanent'])) {
+                        if ($input['permanent']) {
                             cookie::put('id', $get['id']);
                             $permanent_key = hash('sha256', mkpwd(12));
                             cookie::put('pkey', $permanent_key);
@@ -56,7 +54,7 @@ if (defined('_UserMenu')) {
                 } else
                     $index = error(_login_banned);
             } else {
-                $qry = db("SELECT `id` FROM `" . $db['users'] . "` WHERE `user` = '" . up($_POST['user']) . "';");
+                $qry = db("SELECT `id` FROM `" . $db['users'] . "` WHERE `user` = '" . up($validator['input']['user']) . "';");
                 if (_rows($qry)) {
                     $get = _fetch($qry);
                     setIpcheck("trylogin(" . $get['id'] . ")");
@@ -69,7 +67,8 @@ if (defined('_UserMenu')) {
         }
     } else {
         if (!$chkMe) {
-            $secure = config('securelogin') ? show($dir . "/secure", array("help" => _login_secure_help, "security" => _register_confirm)) : '';
+            $secure = config('securelogin') ? show($dir . "/secure",
+                array("help" => _login_secure_help, "security" => _register_confirm)) : '';
             $index = show($dir . "/login", array("loginhead" => _login_head,
                 "loginname" => _loginname,
                 "secure" => $secure,
