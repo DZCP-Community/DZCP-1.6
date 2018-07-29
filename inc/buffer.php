@@ -25,7 +25,7 @@ $time_start = getmicrotime();
 //Filter Sanitize
 $gump = GUMP::get_instance();
 $blacklist = array('comment', 'newstext', 'eintrag',
-    'artikel', 'reason', 'text', 'ich', 'sig');
+    'artikel', 'reason', 'text', 'ich', 'sig', 'bericht');
 $filter = $gump->sanitize($_POST);
 foreach ($_POST as $key => $var) {
     if (in_array($key, $blacklist) ||
