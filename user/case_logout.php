@@ -18,24 +18,17 @@ if (defined('_UserMenu')) {
                 $_SESSION['identy_id'] = '';
                 $_SESSION['ip'] = visitorIp();
 
-                db("UPDATE " . $db['users'] . " SET `online` = '1', `sessid` = '" . session_id() . "' WHERE `id` = " . (int)($_GET['id']));
+                db("UPDATE " . $db['users'] . " SET `online` = 1, `sessid` = '" . session_id() . "' WHERE `id` = " . (int)($_GET['id']));
                 header("Location: ../user/?action=userlobby");
                 exit();
             }
         }
 
         if ($chkMe && $userid) {
-            $dsgvo = array();
-            $dsgvo[0] = $_SESSION['DSGVO'];
-            $dsgvo[1] = $_SESSION['do_show_dsgvo'];
             db("UPDATE " . $db['users'] . " SET online = '0', pkey = '', sessid = '' WHERE id = '" . $userid . "'");
             setIpcheck("logout(" . $userid . ")");
             cookie::clear();
-            session_unset();
             session_destroy();
-            session_regenerate_id();
-            $_SESSION['DSGVO'] = $dsgvo[0];
-            $_SESSION['do_show_dsgvo'] = $dsgvo[1];
         }
 
         header("Location: ../news/");
