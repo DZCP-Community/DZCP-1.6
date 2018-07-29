@@ -14,6 +14,8 @@ if (version_compare(phpversion(), '7.0', '<')) {
 
 include(basePath . '/vendor/autoload.php');
 
+use GUMP\GUMP;
+
 function getmicrotime()
 {
     list($usec, $sec) = explode(" ", microtime());
