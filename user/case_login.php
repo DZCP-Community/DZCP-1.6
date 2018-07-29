@@ -17,7 +17,7 @@ if (defined('_UserMenu')) {
                     if ($get['dsgvo_lock']) {
                         //User Locked
                         $_SESSION['user_has_dsgvo_lock'] = true;
-                        $_SESSION['dsgvo_lock_permanent_login'] = $input['permanent'];
+                        $_SESSION['dsgvo_lock_permanent_login'] = $validator['input']['permanent'];
                         $_SESSION['dsgvo_lock_login_id'] = $get['id'];
                         if (!empty($get['language'])) {
                             $_SESSION['language'] = re($get['language']);
@@ -26,7 +26,7 @@ if (defined('_UserMenu')) {
                         header("Location: ?action=userlock");
                     } else {
                         $permanent_key = '';
-                        if ($input['permanent']) {
+                        if ($validator['input']['permanent']) {
                             cookie::put('id', $get['id']);
                             $permanent_key = hash('sha256', mkpwd(12));
                             cookie::put('pkey', $permanent_key);
