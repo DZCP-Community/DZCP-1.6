@@ -97,9 +97,12 @@ if (!dbc_index::issetIndex('config')) {
     unset($get_config);
 }
 
+$isSecure_cheked = ['check' => false, 'isSecure' => false];
 if (HasDSGVO()) {
 //-> Cookie initialisierung
     cookie::init('dzcp_' . settings('prev'), false, "/", re(settings('i_domain')));
+    $isSecure_cheked['isSecure'] = cookie::$secure;
+    $isSecure_cheked['check'] = true;
 }
 
 //-> SteamAPI
@@ -229,9 +232,7 @@ if ($chkMe && $userid && !empty($_SESSION['ip'])) {
         $_SESSION['ip'] = '';
         $_SESSION['lastvisit'] = '';
         $_SESSION['identy_id'] = '';
-        session_unset();
-        session_destroy();
-        session_regenerate_id();
+        session_reset();
         if (HasDSGVO()) {
             cookie::clear();
         }
@@ -251,20 +252,35 @@ function HasDSGVO() {
 }
 
 function isSecure() {
-    $isSecure = false;
     if (GetServerVars('HTTPS') && GetServerVars('HTTPS') == 'on') {
-        $isSecure = true;
+        return true;
     } elseif ((GetServerVars('HTTP_X_FORWARDED_PROTO') && GetServerVars('HTTP_X_FORWARDED_PROTO') == 'https') ||
         (GetServerVars('HTTP_X_FORWARDED_SSL') && GetServerVars('HTTP_X_FORWARDED_SSL') == 'on')) {
-        $isSecure = true;
+        return true;
     }
 
-    return $isSecure;
+    return false;
+}
+
+function hasSecure() {
+    if (ping_port(GetServerVars('HTTP_HOST'),443,0.1)) {
+        return true;
+    }
+
+    return false;
 }
 
 //Weiterleitung zu einer SSL Verbindung
 if(!isSecure() && use_ssl_auto_redirect && !$ajaxJob && !$installation && !$updater ) {
-    if(ping_port(GetServerVars('HTTP_HOST'),443,0.2)) {
+    if(!$isSecure_cheked['check']) {
+        if(hasSecure()) {
+            header("Location: https://" . GetServerVars('HTTP_HOST') .
+                GetServerVars('REQUEST_URI'));
+            exit();
+        }
+    }
+
+    if($isSecure_cheked['check'] && $isSecure_cheked['isSecure']) {
         header("Location: https://" . GetServerVars('HTTP_HOST') .
             GetServerVars('REQUEST_URI'));
         exit();
@@ -487,9 +503,6 @@ unset($files);
 $designpath = '../inc/_templates_/' . $tmpdir;
 
 //-> Languagefiles einlesen
-/**
- * @param $lng
- */
 function lang(string $lng) {
     global $gump;
     if (!file_exists(basePath . "/inc/lang/languages/" . $lng . ".php")) {
