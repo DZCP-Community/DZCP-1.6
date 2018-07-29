@@ -1,8 +1,8 @@
 {
-  "name": "dzcp/full",
+  "name": "dzcp/core",
   "description": "DZCP-CMS Full Install",
-  "minimum-stability": "stable",
-  "license": "opensource",
+  "minimum-stability": "dev",
+  "license": "MIT",
   "authors": [
     {
       "name": "DZCP.de Team",
@@ -10,10 +10,9 @@
     }
   ],
   "require": {
-    "phpfastcache/phpfastcache": "6.1.2",
+    "phpfastcache/phpfastcache": "6.1.3",
     "phpmailer/phpmailer": "v6.0.5",
-    "jaybizzle/crawler-detect": "v1.2.63",
-    "phpseclib/phpseclib": "2.0.11",
+    "jaybizzle/crawler-detect": "v1.2.65",
     "dzcp/gump": "dev-master"
   }
 }
