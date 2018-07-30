@@ -9,7 +9,7 @@ if (_adminMenu != 'true') exit;
 $where = $where . ': ' . _nletter;
 if ($do == 'preview') {
     $show = show($dir . "/nletter_prev", array("head" => _nletter_prev_head,
-        "text" => bbcode_nletter($_POST['eintrag'])));
+        "text" => bbcode_nletter((string)$_POST['eintrag'])));
     echo '<table class="mainContent" cellspacing="1">' . $show . '</table>';
 
     if (!mysqli_persistconns)
@@ -23,8 +23,7 @@ if ($do == 'preview') {
 
         $error = show("errors/errortable", array("error" => $error));
 
-        $qry = db("SELECT id,name FROM " . $db['squads'] . "
-                       ORDER BY name");
+        $qry = db("SELECT id,name FROM " . $db['squads'] . "  ORDER BY name");
         while ($get = _fetch($qry)) {
             if ($_POST['to'] == $get['id']) $selsq = 'selected="selected"';
             else $selsq = "";
@@ -34,9 +33,12 @@ if ($do == 'preview') {
                 "name" => re($get['name'])));
         }
 
-        if ($_POST['to'] == "reg") $selr = 'selected="selected"';
-        elseif ($_POST['to'] == "member") $selm = 'selected="selected"';
-        elseif ($_POST['to'] == "leader") $sell = 'selected="selected"';
+        if ($_POST['to'] == "reg")
+            $selr = 'selected="selected"';
+        elseif ($_POST['to'] == "member")
+            $selm = 'selected="selected"';
+        elseif ($_POST['to'] == "leader")
+            $sell = 'selected="selected"';
 
         $show = show($dir . "/nletter", array("von" => $userid,
             "an" => _to,
@@ -59,23 +61,24 @@ if ($do == 'preview') {
             "error" => $error,
             "eintraghead" => _eintrag));
     } else {
-        if ($_POST['to'] == "reg") {
-            $message = show(bbcode_email(settings('eml_nletter')), array("text" => bbcode_nletter($_POST['eintrag'])));
+        $sendTO = isset($_POST['to']) ? strtolower($_POST['to']) : '';
+        if ($sendTO == "reg") {
+            $message = show(bbcode_email(re(settings('eml_nletter'))),
+                array("text" => bbcode_nletter(re($_POST['eintrag'],true))));
             $subject = re(settings('eml_nletter_subj'));
 
-            $qry = db("SELECT `email` FROM `" . $db['users'] . "` WHERE `nletter` = 1 AND `dsgv_lock` = 0;");
+            $qry = db("SELECT `email` FROM `" . $db['users'] . "` WHERE `nletter` = 1 AND `dsgvo_lock` = 0;");
             while ($get = _fetch($qry)) {
                 sendMail(re($get['email']), $subject, $message);
             }
 
             db("UPDATE " . $db['userstats'] . " SET `writtenmsg` = (writtenmsg+1) WHERE `user` = " . (int)($userid));
             $show = info(_msg_reg_answer_done, "?admin=nletter");
-
-        } elseif ($_POST['to'] == "member") {
+        } elseif ($sendTO == "member") {
             $message = show(bbcode_email(settings('eml_nletter')), array("text" => bbcode_nletter($_POST['eintrag'])));
             $subject = re(settings('eml_nletter_subj'));
 
-            $qry = db("SELECT `email` FROM `" . $db['users'] . "` WHERE `level` >= 2 AND `dsgv_lock` = 0;");
+            $qry = db("SELECT `email` FROM `" . $db['users'] . "` WHERE `level` >= 2 AND `dsgvo_lock` = 0;");
             while ($get = _fetch($qry)) {
                 sendMail(re($get['email']), $subject, $message);
             }
@@ -87,7 +90,7 @@ if ($do == 'preview') {
             $subject = re(settings('eml_nletter_subj'));
 
             $qry = db("SELECT s2.`email` FROM `" . $db['squaduser'] . "` AS `s1` LEFT JOIN " . $db['users'] . " AS `s2`" .
-                " ON s1.`user` = s2.`id` WHERE s1.`squad` = '" . $_POST['to'] . "' AND s2.`dsgv_lock` = 0;");
+                " ON s1.`user` = s2.`id` WHERE s1.`squad` = '" . $_POST['to'] . "' AND s2.`dsgvo_lock` = 0;");
             while ($get = _fetch($qry)) {
                 sendMail(re($get['email']), $subject, $message);
             }
