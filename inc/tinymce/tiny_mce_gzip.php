@@ -23,6 +23,10 @@ ob_start();
 ## Require ##
 $ajaxJob = false;
 include(basePath . '/vendor/autoload.php');
+
+use GUMP\GUMP;
+$gump = GUMP::get_instance();
+
 include(basePath . "/inc/debugger.php");
 include(basePath . "/inc/config.php");
 include(basePath . "/inc/bbcode.php");
