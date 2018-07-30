@@ -191,8 +191,10 @@ if (defined('_Forum')) {
                             WHERE id = '" . (int)($_GET['zitatt']) . "'");
                         $getzitat = _fetch($qryzitat);
 
-                        if ($getzitat['t_reg'] == "0") $nick = $getzitat['t_nick'];
-                        else                          $nick = data("nick", $getzitat['t_reg']);
+                        if (!$getzitat['t_reg'])
+                            $nick = $getzitat['t_nick'];
+                        else
+                            $nick = data("nick", $getzitat['t_reg']);
 
                         $zitat = zitat($nick, $getzitat['t_text']);
                     } else {
@@ -201,36 +203,39 @@ if (defined('_Forum')) {
 
                     $dowhat = show(_forum_dowhat_add_post, array("id" => $_GET['id'], "kid" => $_GET['kid']));
 
-                    $qryl = db("SELECT * FROM " . $db['f_posts'] . "
-                      WHERE kid = '" . (int)($_GET['kid']) . "'
-                      AND sid = '" . (int)($_GET['id']) . "'
-                      ORDER BY date DESC");
-                    if (_rows($qryl)) {
-                        $getl = _fetch($qryl);
-                        $gett = db("SELECT `topic` FROM `" . $db['f_threads'] . "` WHERE `id` = " . (int)($getl['sid']) . ";", false, true);
+                    $qry_posts = db("SELECT * FROM `".$db['f_posts']."` WHERE `kid` = ".(int)($_GET['kid'])." AND `sid` = ".(int)($_GET['id'])." ORDER BY `date` DESC;");
+                    if (_rows($qry_posts)) {
+                        $get_posts = _fetch($qry_posts);
+                        $gett = db("SELECT `topic` FROM `" . $db['f_threads'] . "` WHERE `id` = " . (int)($get_posts['sid']) . ";", false, true);
 
-                        if (data("signatur", $getl['reg'])) $sig = _sig . bbcode(data("signatur", $getl['reg']));
-                        else                               $sig = "";
+                        $text = bbcode(re($get_posts['text']));
 
-                        if ($getl['reg'] != "0") $userposts = show(_forum_user_posts, array("posts" => userstats("forumposts", $getl['reg'])));
-                        else                    $userposts = "";
+                        if (data("signatur", $get_posts['reg']))
+                            $sig = _sig . bbcode(data("signatur", $get_posts['reg']));
+                        else
+                            $sig = "";
 
-                        if ($getl['reg'] == "0") $onoff = "";
-                        else                    $onoff = onlinecheck($getl['reg']);
+                        if ($get_posts['reg'] != "0")
+                            $userposts = show(_forum_user_posts, array("posts" => userstats("forumposts", $get_posts['reg'])));
+                        else
+                            $userposts = "";
 
-                        $text = bbcode(re(getl['text']));
+                        if ($get_posts['reg'] == "0")
+                            $onoff = "";
+                        else
+                            $onoff = onlinecheck($get_posts['reg']);
 
-                        if ($chkMe == "4") $posted_ip = $getl['ip'];
+                        if ($chkMe == "4") $posted_ip = $get_posts['ip'];
                         else              $posted_ip = _logged;
 
                         $titel = show(_eintrag_titel_forum, array("postid" => (cnt($db['f_posts'], " WHERE sid =" . (int)($_GET['id'])) + 1),
-                            "datum" => date("d.m.Y", $getl['date']),
-                            "zeit" => date("H:i", $getl['date']) . _uhr,
+                            "datum" => date("d.m.Y", $get_posts['date']),
+                            "zeit" => date("H:i", $get_posts['date']) . _uhr,
                             "url" => '#',
                             "edit" => "",
                             "delete" => ""));
-                        if ($getl['reg'] != 0) {
-                            $qryu = db("SELECT nick,icq,hp,email FROM " . $db['users'] . " WHERE id = '" . $getl['reg'] . "'");
+                        if ($get_posts['reg'] != 0) {
+                            $qryu = db("SELECT nick,icq,hp,email FROM " . $db['users'] . " WHERE id = '" . $get_posts['reg'] . "'");
                             $getu = _fetch($qryu);
 
                             $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
@@ -246,17 +251,17 @@ if (defined('_Forum')) {
                         } else {
                             $icq = "";
                             $pn = "";
-                            $email = show(_emailicon_forum, array("email" => eMailAddr(re($getl['email']))));
+                            $email = show(_emailicon_forum, array("email" => eMailAddr(re($get_posts['email']))));
                             if (empty($getl['hp'])) $hp = "";
                             else $hp = show(_hpicon_forum, array("hp" => $getl['hp']));
                         }
 
                         $email = ($chkMe >= 1 ? $email : '');
-                        $lastpost = show($dir . "/forum_posts_show", array("nick" => cleanautor($getl['reg'], '', re($getl['nick']), re(re($getl['email']))),
+                        $lastpost = show($dir . "/forum_posts_show", array("nick" => cleanautor($get_posts['reg'], '', re($get_posts['nick']), re($get_posts['email'])),
                             "postnr" => "",
                             "text" => $text,
-                            "status" => getrank($getl['reg']),
-                            "avatar" => useravatar($getl['reg']),
+                            "status" => getrank($get_posts['reg']),
+                            "avatar" => useravatar($get_posts['reg']),
                             "pn" => $pn,
                             "icq" => $icq,
                             "hp" => $hp,
@@ -265,9 +270,9 @@ if (defined('_Forum')) {
                             "titel" => $titel,
                             "p" => ($page - 1 * config('m_fposts')),
                             "ip" => $posted_ip,
-                            "edited" => $getl['edited'],
+                            "edited" => $get_posts['edited'],
                             "posts" => $userposts,
-                            "date" => _posted_by . date("d.m.y H:i", $getl['date']) . _uhr,
+                            "date" => _posted_by . date("d.m.y H:i", $get_posts['date']) . _uhr,
                             "signatur" => $sig,
                             "zitat" => _forum_zitat_preview,
                             "onoff" => $onoff,
