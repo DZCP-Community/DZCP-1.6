@@ -83,7 +83,7 @@ switch ($action):
                     $qry = db("SELECT id,bday,nick FROM " . $db['users'] . " WHERE bday != 0");
                     while ($get = _fetch($qry)) {
                         if (date("d.m", $get['bday']) == cal($i) . "." . $monat) {
-                            $infoBday .= '&lt;img src=../inc/images/bday.gif class=icon alt= /&gt;' . '&nbsp;' . jsconvert(_kal_birthday . rawautor($get['id'])) . '<br />';
+                            $infoBday .= '&lt;img src=../inc/images/bday.gif class=icon alt= /&gt;' . '&nbsp;' . up(_kal_birthday . rawautor($get['id'])) . '<br />';
                             $CountBday++;
                         }
                     }
@@ -97,7 +97,7 @@ switch ($action):
                      WHERE DATE_FORMAT(FROM_UNIXTIME(datum), '%d.%m.%Y') = '" . cal($i) . "." . $monat . "." . $jahr . "'");
                     if (_rows($qry)) {
                         $infoCW = '';
-                        while ($get = _fetch($qry)) $infoCW .= '&lt;img src=../inc/images/cw.gif class=icon alt= /&gt;' . '&nbsp;' . jsconvert(_kal_cw . re($get['gegner'])) . '<br />';
+                        while ($get = _fetch($qry)) $infoCW .= '&lt;img src=../inc/images/cw.gif class=icon alt= /&gt;' . '&nbsp;' . up(_kal_cw . re($get['gegner'])) . '<br />';
 
                         $info = ' onmouseover="DZCP.showInfo(\'' . $infoCW . '\')" onmouseout="DZCP.hideInfo()"';
                         $cws = '<a href="../clanwars/?action=kalender&amp;time=' . $datum . '"' . $info . '><img src="../inc/images/cw.gif" alt="" /></a>';
@@ -109,7 +109,7 @@ switch ($action):
                    WHERE DATE_FORMAT(FROM_UNIXTIME(datum), '%d.%m.%Y') = '" . cal($i) . "." . $monat . "." . $jahr . "'");
                     if (_rows($qry)) {
                         $infoEvent = '';
-                        while ($get = _fetch($qry)) $infoEvent .= '&lt;img src=../inc/images/event.gif class=icon alt= /&gt;' . '&nbsp;' . jsconvert(_kal_event . re($get['title'])) . '<br />';
+                        while ($get = _fetch($qry)) $infoEvent .= '&lt;img src=../inc/images/event.gif class=icon alt= /&gt;' . '&nbsp;' . up(_kal_event . re($get['title'])) . '<br />';
 
                         $info = ' onmouseover="DZCP.showInfo(\'' . $infoEvent . '\')" onmouseout="DZCP.hideInfo()"';
                         $event = '<a href="?action=show&amp;time=' . $datum . '"' . $info . '><img src="../inc/images/event.gif" alt="" /></a>';

@@ -863,7 +863,7 @@ function glossar(string $txt) {
         // replace words
         for ($g = 0; $g <= count($gl_words) - 1; $g++) {
             $desc = regexChars($gl_desc[$g]);
-            $info = 'onmouseover="DZCP.showInfo(\'' . jsconvert($desc) . '\')" onmouseout="DZCP.hideInfo()"';
+            $info = 'onmouseover="DZCP.showInfo(\'' . up($desc) . '\')" onmouseout="DZCP.hideInfo()"';
             $w = regexChars(html_entity_decode($gl_words[$g]));
             $r = "<a class=\"glossar\" href=\"../glossar/?word=" . $gl_words[$g] . "\" " . $info . ">" . $gl_words[$g] . "</a>";
             $txt = str_ireplace('<tmp|' . $w . '|tmp>', $r, $txt);
@@ -2042,11 +2042,11 @@ function rawautor(int $uid) {
             $get = _fetch($qry);
             dbc_index::setIndex('user_' . $get['id'], $get);
         } else
-            return rawflag('') . " " . jsconvert(re($uid));
+            return rawflag('') . " " . up(re($uid));
     }
 
     return rawflag(dbc_index::getIndexKey('user_' . (int)($uid), 'country')) . " " .
-        jsconvert(re(dbc_index::getIndexKey('user_' . (int)($uid), 'nick')));
+        up(re(dbc_index::getIndexKey('user_' . (int)($uid), 'nick')));
 }
 
 /**
@@ -2078,14 +2078,6 @@ function blank_autor(int $uid) {
     }
 
     return '';
-}
-
-/**
- * @param string $txt
- * @return mixed
- */
-function jsconvert(string $txt) {
-    return str_replace(array("'", "&#039;", "\"", "\r", "\n"), array("\'", "\'", "&quot;", "", ""), $txt);
 }
 
 /**

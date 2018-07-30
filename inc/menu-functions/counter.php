@@ -45,7 +45,7 @@ function counter()
             if (_rows($qryo)) {
                 while ($geto = _fetch($qryo)) {
                     $kats .= fabo_autor($geto['id']) . ';';
-                    $text .= jsconvert(getrank($geto['id'])) . ';';
+                    $text .= up(getrank($geto['id']),true) . ';';
                 }
             }
 
