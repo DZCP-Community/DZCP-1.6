@@ -28,6 +28,7 @@ if (defined('_Clanwars')) {
         $get_id = cnt($db['cw_comments'], " WHERE cw = " . (int)($_GET['id']) . "") + 1;
         $get_userid = $userid;
         $get_date = time();
+        $editedby = '';
 
         if (!$chkMe) $regCheck = false;
         else {
