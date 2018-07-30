@@ -1109,6 +1109,8 @@ function bbcode_email(string $txt)
 {
     $txt = bbcode($txt);
     $txt = str_replace("&#91;", "[", $txt);
+    $txt = str_ireplace("../",
+        GetServerVars('REQUEST_SCHEME').'://'.GetServerVars('HTTP_HOST').'/', $txt);
     return str_replace("&#93;", "]", $txt);
 }
 
