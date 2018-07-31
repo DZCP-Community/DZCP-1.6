@@ -167,6 +167,50 @@ class api {
         return $this->api_output;
     }
 
+    /**
+     * @param string $address
+     * @param bool $use_cache
+     * @param int $ttl
+     * @return array|mixed
+     */
+    public function get_geolocation(string $address, bool $use_cache = true, int $ttl = 30) {
+        global $cache;
+        if (show_api_debug)
+            DebugConsole::insert_info('api.php', 'Call get_geolocation()');
+
+        $this->api_output = [];
+        $this->api_output['results'] = [];
+        $this->api_output['status'] = 'ZERO_RESULTS';
+        $this->api_output['error'] = true;
+        $this->api_output['error_msg'] = 'no content from server';
+
+        //CALL
+        $this->api_input = [];
+        $this->api_input['event'] = 'geocode';
+        $this->api_input['address'] = $address;
+
+        if ($use_cache) {
+            try {
+                $CachedString = $cache->getItem('geolocation_'.md5($address));
+                if (is_null($CachedString->get())) {
+                    $this->call();
+                    $this->varying();
+                    if (!$this->api_output['error']) {
+                        $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
+                        $cache->save($CachedString);
+                    }
+                } else {
+                    $this->api_output = unserialize($CachedString->get());
+                }
+            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
+        } else { // No Cache
+            $this->call();
+            $this->varying();
+        }
+
+        return $this->api_output;
+    }
+
     public static function versionCompare(string $version1,string $operator,string $version2) {
         $_fv = (int)(trim(str_replace('.', '', $version1)));
         $_sv = (int)(trim(str_replace('.', '', $version2)));
