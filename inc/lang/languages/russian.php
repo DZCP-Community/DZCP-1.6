@@ -11,6 +11,8 @@
 
 ## ADDED FOR 1.6.1.0
 $language_text['_config_addoncheck'] = 'Addon Checker';
+$language_text['_config_title_installedaddons'] = 'Installed addons';
+$language_text['_config_title_notinstalledaddons'] = 'Not installed addons';
 $language_text['_site_addoncheck'] = 'Addon Checker';
 $language_text['_perm_addoncheck'] = 'Addon Checker verwalten';
 $language_text['_addoncheck_addon'] = 'Modification';
