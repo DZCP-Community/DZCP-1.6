@@ -58,9 +58,6 @@ class CacheManager
      */
     public static $WriteHits = 0;
 
-    /**
-     * @var bool
-     */
     public static $fallback = false;
 
     /**
@@ -233,6 +230,7 @@ class CacheManager
                             self::$fallback = true;
                             trigger_error(sprintf('The "%s" driver is unavailable at the moment, the fallback driver "%s" has been used instead.', $driver,
                               $fallback), E_USER_WARNING);
+
                         } else {
                             throw new phpFastCacheInvalidConfigurationException('The fallback driver cannot be the same than the default driver', 0, $e);
                         }

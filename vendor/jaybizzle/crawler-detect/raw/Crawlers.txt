@@ -20,6 +20,7 @@
 ^Java\/
 ^Jeode\/
 ^Jetty\/
+^Mail\/
 ^Mget
 ^Microsoft URL Control
 ^NG\/[0-9\.]
@@ -42,6 +43,7 @@ Accoona-AI-Agent
 acoon
 acrylicapps\.com\/pulp
 Acunetix
+AdAuth\/
 adbeat
 AddThis
 ADmantX
@@ -79,10 +81,12 @@ APIs-Google
 AportWorm\/[0-9]
 AppBeat\/[0-9]
 AppEngine-Google
+AppStoreScraperZ
 Arachmo
 arachnode
 Arachnophilia
 aria2
+Arukereso
 asafaweb.com
 AskQuickly
 ASPSeek
@@ -130,7 +134,6 @@ Blogtrottr
 BlowFish
 Boardreader
 boitho\.com-dc
-Bolt
 BPImageWalker
 Braintree-Webhooks
 Branch Metrics API
@@ -188,7 +191,9 @@ CommaFeed
 Commons-HttpClient
 Comodo SSL Checker
 contactbigdatafr
+contentkingapp
 convera
+CookieReports\.com
 copyright sheriff
 CopyRightCheck
 Copyscape
@@ -202,7 +207,6 @@ CSHttp
 curb
 Curious George
 curl
-Custo
 cuwhois\/[0-9]
 cybo\.com
 DareBoost
@@ -210,6 +214,7 @@ DatabaseDriverMysqli
 DataCha0s
 DataparkSearch
 dataprovider
+DataXu
 Daum(oa)?[ \/][0-9]
 Demon
 DeuSu
@@ -264,6 +269,7 @@ Embedly
 europarchive\.org
 evc-batch
 EventMachine HttpClient
+Everwall Link Expander
 Evidon
 Evrinid
 ExactSearch
@@ -307,6 +313,7 @@ FlashGet
 FlipboardBrowserProxy
 FlipboardProxy
 FlipboardRSS
+Flock\/
 fluffy
 Flunky
 flynxapp
@@ -345,6 +352,7 @@ gofetch
 GomezAgent
 gooblog
 Goodzer\/[0-9]
+GoogleCloudMonitoring
 Google favicon
 Google Keyword Suggestion
 Google Keyword Tool
@@ -492,6 +500,7 @@ jobo
 Jobrapido
 Jobsearch1\.5
 JoinVision Generic
+JolokiaPwn
 Joomla
 Jorgee
 JS-Kit
@@ -510,6 +519,7 @@ Kml-Google
 knows\.is
 KOCMOHABT
 kouio
+kube-probe
 kulturarw3
 KumKie
 L\.webis
@@ -580,6 +590,7 @@ MetaURI
 MFC_Tear_Sample
 Microsearch
 Microsoft Office 
+Microsoft Outlook
 Microsoft Windows Network Diagnostics
 Microsoft-WebDAV-MiniRedir
 Microsoft\ Data\ Access
@@ -680,6 +691,7 @@ Optimizer
 Orbiter
 OrgProbe\/[0-9]
 orion-semantics
+Outlook-Express
 ow\.ly
 Owler
 ownCloud News
@@ -892,6 +904,7 @@ SpaceBison
 Spammen
 Spanner
 spaziodati
+SPDYCheck
 Specificfeeds
 speedy
 SPEng
@@ -940,6 +953,7 @@ Test Certificate Info
 Tetrahedron\/[0-9]
 The Drop Reaper
 The Expert HTML Source Viewer
+The Knowledge AI
 The\ Intraformant
 theinternetrules
 TheNomad
@@ -965,6 +979,7 @@ Turnitin
 tweetedtimes\.com
 Tweetminster
 Tweezler\/
+twibble
 Twice
 Twikle
 Twingly
@@ -1076,6 +1091,7 @@ WeLikeLinks
 WEPA
 WeSEE
 wf84
+Wfuzz\/
 wget
 WhatsApp
 WhatsMyIP
@@ -1137,5 +1153,6 @@ Zermelo
 Zeus
 zgrab
 ZnajdzFoto
+Zombie\.js
 ZyBorg
 [a-z0-9\-_]*(bot|crawler|archiver|transcoder|spider|uptime|validator|fetcher)

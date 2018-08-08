@@ -13,6 +13,7 @@
     "phpfastcache/phpfastcache": "6.1.3",
     "phpmailer/phpmailer": "v6.0.5",
     "jaybizzle/crawler-detect": "v1.2.65",
-    "dzcp/gump": "dev-master"
+    "dzcp/gump": "dev-master",
+    "brightnucleus/country-codes": "v0.3.1"
   }
 }

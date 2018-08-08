@@ -1,5 +1,133 @@
 [
     {
+        "name": "brightnucleus/config",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/brightnucleus/config.git",
+            "reference": "68a6b1fea429861a3ec90e4674d567cbcde4c58a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/brightnucleus/config/zipball/68a6b1fea429861a3ec90e4674d567cbcde4c58a",
+            "reference": "68a6b1fea429861a3ec90e4674d567cbcde4c58a",
+            "shasum": ""
+        },
+        "require": {
+            "brightnucleus/exceptions": ">=0.2",
+            "symfony/options-resolver": ">=2.8"
+        },
+        "require-dev": {
+            "malukenho/docheader": "^0.1.5",
+            "mikey179/vfsstream": "^1.6",
+            "phpunit/phpunit": "^4.0|^5.0",
+            "squizlabs/php_codesniffer": "^2.8"
+        },
+        "time": "2017-12-17T14:28:44+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "BrightNucleus\\Config\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alain Schlesser",
+                "email": "alain.schlesser@gmail.com"
+            }
+        ],
+        "description": "Minimal, reusable Config component."
+    },
+    {
+        "name": "brightnucleus/country-codes",
+        "version": "v0.3.1",
+        "version_normalized": "0.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/brightnucleus/country-codes.git",
+            "reference": "022850891c7fe082d33b0b637e9250f6e1258e72"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/brightnucleus/country-codes/zipball/022850891c7fe082d33b0b637e9250f6e1258e72",
+            "reference": "022850891c7fe082d33b0b637e9250f6e1258e72",
+            "shasum": ""
+        },
+        "require": {
+            "brightnucleus/config": ">=0.2",
+            "brightnucleus/exceptions": ">=0.3.0",
+            "composer-plugin-api": "^1",
+            "php": ">=5.4"
+        },
+        "time": "2018-02-02T13:26:37+00:00",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "BrightNucleus\\CountryCodes\\CountryPlugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "BrightNucleus\\CountryCodes\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alain Schlesser",
+                "email": "alain.schlesser@gmail.com"
+            }
+        ],
+        "description": "Automatically updated country data containing ISO codes and English country names, powered by free MaxMind data."
+    },
+    {
+        "name": "brightnucleus/exceptions",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/brightnucleus/exceptions.git",
+            "reference": "7eb528cd2cb71b045ced235c7b1b933d8cfe36a8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/brightnucleus/exceptions/zipball/7eb528cd2cb71b045ced235c7b1b933d8cfe36a8",
+            "reference": "7eb528cd2cb71b045ced235c7b1b933d8cfe36a8",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4",
+            "squizlabs/php_codesniffer": "~2.5"
+        },
+        "time": "2017-04-11T06:19:00+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "BrightNucleus\\Exception\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alain Schlesser",
+                "email": "alain.schlesser@gmail.com"
+            }
+        ],
+        "description": "Exceptions shared across Bright Nucleus components."
+    },
+    {
         "name": "dzcp/gump",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -55,17 +183,17 @@
     },
     {
         "name": "jaybizzle/crawler-detect",
-        "version": "v1.2.63",
-        "version_normalized": "1.2.63.0",
+        "version": "v1.2.65",
+        "version_normalized": "1.2.65.0",
         "source": {
             "type": "git",
             "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-            "reference": "3566bc69d0839ab2dfd739a660b00f25a6f02031"
+            "reference": "1ea1c897018c93e3c2ac76e008519085b24e339e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/3566bc69d0839ab2dfd739a660b00f25a6f02031",
-            "reference": "3566bc69d0839ab2dfd739a660b00f25a6f02031",
+            "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/1ea1c897018c93e3c2ac76e008519085b24e339e",
+            "reference": "1ea1c897018c93e3c2ac76e008519085b24e339e",
             "shasum": ""
         },
         "require": {
@@ -75,7 +203,7 @@
             "phpunit/phpunit": "^4.8|^5.5|^6.5",
             "satooshi/php-coveralls": "1.*"
         },
-        "time": "2018-05-21T19:56:44+00:00",
+        "time": "2018-07-24T17:53:06+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -106,17 +234,17 @@
     },
     {
         "name": "phpfastcache/phpfastcache",
-        "version": "6.1.2",
-        "version_normalized": "6.1.2.0",
+        "version": "6.1.3",
+        "version_normalized": "6.1.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/PHPSocialNetwork/phpfastcache.git",
-            "reference": "0a8acb7d6e80b84a6bfdd7f8fb011097b0ce2a15"
+            "reference": "a1edf28ae8d847b692b6bee8cae867398ff7d2f2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/0a8acb7d6e80b84a6bfdd7f8fb011097b0ce2a15",
-            "reference": "0a8acb7d6e80b84a6bfdd7f8fb011097b0ce2a15",
+            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/a1edf28ae8d847b692b6bee8cae867398ff7d2f2",
+            "reference": "a1edf28ae8d847b692b6bee8cae867398ff7d2f2",
             "shasum": ""
         },
         "require": {
@@ -131,6 +259,7 @@
         },
         "suggest": {
             "ext-apc": "*",
+            "ext-couchbase": "*",
             "ext-intl": "*",
             "ext-leveldb": "*",
             "ext-memcache": "*",
@@ -144,7 +273,7 @@
             "phpfastcache/phpssdb": "~1.0.0",
             "predis/predis": "~1.1.0"
         },
-        "time": "2018-03-23T20:31:49+00:00",
+        "time": "2018-06-08T13:27:13+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -272,30 +401,30 @@
     },
     {
         "name": "psr/cache",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/php-fig/cache.git",
-            "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
+            "reference": "78c5a01ddbf11cf731f1338a4f5aba23b14d5b47"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
-            "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
+            "url": "https://api.github.com/repos/php-fig/cache/zipball/78c5a01ddbf11cf731f1338a4f5aba23b14d5b47",
+            "reference": "78c5a01ddbf11cf731f1338a4f5aba23b14d5b47",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2016-08-06T20:24:11+00:00",
+        "time": "2016-10-13T14:48:10+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
                 "dev-master": "1.0.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "Psr\\Cache\\": "src/"
@@ -320,8 +449,8 @@
     },
     {
         "name": "psr/simple-cache",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/php-fig/simple-cache.git",
@@ -343,7 +472,7 @@
                 "dev-master": "1.0.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "Psr\\SimpleCache\\": "src/"
@@ -366,6 +495,62 @@
             "psr",
             "psr-16",
             "simple-cache"
+        ]
+    },
+    {
+        "name": "symfony/options-resolver",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/options-resolver.git",
+            "reference": "0e4fd9354a31e862240675ad30a26a53cad0a681"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/options-resolver/zipball/0e4fd9354a31e862240675ad30a26a53cad0a681",
+            "reference": "0e4fd9354a31e862240675ad30a26a53cad0a681",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.1.3"
+        },
+        "time": "2018-07-26T08:59:12+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "4.2-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\OptionsResolver\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony OptionsResolver Component",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "config",
+            "configuration",
+            "options"
         ]
     }
 ]

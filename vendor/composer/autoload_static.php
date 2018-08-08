@@ -15,6 +15,10 @@ class ComposerStaticInit1b301fe0cd5df2fcb6e210dbe5c4ef47
         array (
             'phpFastCache\\' => 13,
         ),
+        'S' => 
+        array (
+            'Symfony\\Component\\OptionsResolver\\' => 34,
+        ),
         'P' => 
         array (
             'Psr\\SimpleCache\\' => 16,
@@ -25,12 +29,22 @@ class ComposerStaticInit1b301fe0cd5df2fcb6e210dbe5c4ef47
         array (
             'Jaybizzle\\CrawlerDetect\\' => 24,
         ),
+        'B' => 
+        array (
+            'BrightNucleus\\Exception\\' => 24,
+            'BrightNucleus\\CountryCodes\\' => 27,
+            'BrightNucleus\\Config\\' => 21,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'phpFastCache\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpfastcache/phpfastcache/src/phpFastCache',
+        ),
+        'Symfony\\Component\\OptionsResolver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/options-resolver',
         ),
         'Psr\\SimpleCache\\' => 
         array (
@@ -47,6 +61,18 @@ class ComposerStaticInit1b301fe0cd5df2fcb6e210dbe5c4ef47
         'Jaybizzle\\CrawlerDetect\\' => 
         array (
             0 => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src',
+        ),
+        'BrightNucleus\\Exception\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brightnucleus/exceptions/src',
+        ),
+        'BrightNucleus\\CountryCodes\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brightnucleus/country-codes/src',
+        ),
+        'BrightNucleus\\Config\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brightnucleus/config/src',
         ),
     );
 
