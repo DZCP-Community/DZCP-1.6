@@ -2,23 +2,33 @@
 /**
  * Prüft online ob DZCP aktuell ist.
  *
+ * @param bool $reload
  * @return array
  */
-function show_dzcp_version() {
+function show_dzcp_version(bool $reload=false) {
     global $api;
     $dzcp_version_info = 'onmouseover="DZCP.showInfo(\'<tr><td colspan=2 align=center padding=3 class=infoTop>DZCP Versions Checker</td></tr><tr><td>' . _dzcp_vcheck . '</td></tr>\')" onmouseout="DZCP.hideInfo()"';
     $return = array();
-    if (dzcp_version_checker) {
-        $json = $api->get_dzcp_version();
+    if (dzcp_version_checker && api_enabled) {
+        $json = $api->get_dzcp_version(true, 60 , $reload);
+        if($reload) {
+            header("Location: " . GetServerVars('HTTP_REFERER'));
+        }
+
+        if(strpos(GetServerVars('HTTP_REFERER'), '?') === false) {
+            $href = '../admin/?version_reload=true';
+        } else {
+            $href = GetServerVars('HTTP_REFERER').'&version_reload=true';
+        }
         if (empty($json) || is_bool($json) || (!is_array($json) && !is_object($json))) {
-            $return['version'] = '<b><a href="" [info]>' . _akt_version . ': <span style="color:#FFFF00">' . _version . '</span> / Release: <span style="color:#FFFF00">' . _release . '</span> / Build: <span style="color:#FFFF00">' . _build . '</span></a></b>';
+            $return['version'] = '<b><a href="'.$href.'" [info]>' . _akt_version . ': <span style="color:#FFFF00">' . _version . '</span> / Release: <span style="color:#FFFF00">' . _release . '</span> / Build: <span style="color:#FFFF00">' . _build . '</span></a></b>';
             $return['version'] = show($return['version'], array('info' => $dzcp_version_info));
             $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
             return $return;
         }
 
         if ($json['error']) {
-            $return['version'] = '<b><a href="" [info]>' . _akt_version . ': <span style="color:#7783ff">' . _version . '</span> / Release: <span style="color:#7783ff">' . _release . '</span> / Build: <span style="color:#7783ff">' . _build . '</span> / <span style="color:#FF0000">== API ERROR ==</span></a></b>';
+            $return['version'] = '<b><a href="'.$href.'" [info]>' . _akt_version . ': <span style="color:#7783ff">' . _version . '</span> / Release: <span style="color:#7783ff">' . _release . '</span> / Build: <span style="color:#7783ff">' . _build . '</span> / <span style="color:#FF0000">== API ERROR ==</span></a></b>';
             $return['version'] = show($return['version'], array('info' => $dzcp_version_info));
             $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
             return $return;
@@ -32,7 +42,7 @@ function show_dzcp_version() {
             $return['version'] = '<a href="https://www.dzcp.de/" target="_blank" title="external Link: www.dzcp.de"><b>' . _akt_version . ':</b> <span style="color:#FF0000">' . _version . '</span> / Update Version: <span style="color:#17D427">' . $json['version'] . '</span> / Release: <span style="color:#17D427">' . $json['release'] . '</span> / Build: <span style="color:#17D427">' . $json['build'] . '</span></a>';
             $return['version_img'] = '<img src="../inc/images/admin/version_old.gif" align="absmiddle" width="111" height="14" />';
         } else {
-            $return['version'] = '<b><a href="" [info]>' . _akt_version . ': <span style="color:#17D427">' . _version . '</span> / Release: <span style="color:#17D427">' . _release . '</span> / Build: ' . $_build . '</b></a>';
+            $return['version'] = '<b><a href="'.$href.'" [info]>' . _akt_version . ': <span style="color:#17D427">' . _version . '</span> / Release: <span style="color:#17D427">' . _release . '</span> / Build: ' . $_build . '</b></a>';
             $return['version'] = show($return['version'], array('info' => $dzcp_version_info));
             $return['version_img'] = '<img src="../inc/images/admin/version.gif" align="absmiddle" width="111" height="14" />';
         }

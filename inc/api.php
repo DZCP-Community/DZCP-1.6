@@ -22,7 +22,7 @@ class api {
         $this->api_server = $address;
 
         //Autoupdate only in administration
-        if (api_autoupdate && defined('_Admin'))
+        if (api_autoupdate && defined('_Admin') && api_enabled)
             $this->check_api_version();
     }
 
@@ -123,9 +123,10 @@ class api {
     /**
      * @param bool $use_cache
      * @param int $ttl
+     * @param bool $reload
      * @return array|mixed
      */
-    public function get_dzcp_version(bool $use_cache = true, int $ttl = 30) {
+    public function get_dzcp_version(bool $use_cache = true, int $ttl = 60,bool $reload  = false) {
         global $cache;
         if (show_api_debug)
             DebugConsole::insert_info('api.php', 'Call get_dzcp_version()');
@@ -148,7 +149,7 @@ class api {
         if ($use_cache) {
             try {
                 $CachedString = $cache->getItem('api_dzcp_version');
-                if (is_null($CachedString->get())) {
+                if (is_null($CachedString->get()) || $reload) {
                     $this->call();
                     $this->varying();
                     if (!$this->api_output['error']) {

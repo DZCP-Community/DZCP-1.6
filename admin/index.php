@@ -108,9 +108,10 @@ else {
     if (@file_exists(basePath . "/_installer") && $chkMe == 4 && !view_error_reporting)
         $index = _installdir;
     else {
-        $dzcp_version = show_dzcp_version();
+        $dzcp_version = show_dzcp_version(isset($_GET['version_reload']));
 
-        if(admin_view_dzcp_news)
+        $dzcp_news = ['news' => ''];
+        if(admin_view_dzcp_news && api_enabled)
             $dzcp_news = $api->get_news();
 
         $index = show($dir . "/admin", array("head" => _config_head,
@@ -119,7 +120,7 @@ else {
             "dbase" => _stats_mysql,
             "einst" => _config_einst,
             "content" => _content,
-            "newsticker" => admin_view_dzcp_news && !empty($dzcp_news['news'])
+            "newsticker" => admin_view_dzcp_news && api_enabled && !empty($dzcp_news['news'])
                 ? ('<div style="padding:3px"><b>DZCP News:</b><br />' .
                 '<div id="dzcpticker">' . utf8_encode($dzcp_news['news']) .
                 '</div></div>') : '',
