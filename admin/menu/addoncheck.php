@@ -21,7 +21,14 @@ foreach ($addons_xml as $addon_xml) {
     $addons_installed[] = $array;
 } unset($array,$addon_xml);
 
-$addons_installed = $api->get_addon_versions($addons_installed,true,600);
+if(api_enabled) {
+    $addons_installed = $api->get_addon_versions($addons_installed, true, 600);
+} else {
+    $addons_installed['data'] = [];
+    $addons_installed['error'] = true;
+    $addons_installed['error_msg'] = 'inc/config.php => "api_enabled" is false';
+}
+
 $addons = array_merge($addons_installed['data'],$addons_not_installed);
 $addons['error'] = $addons_installed['error'];
 $addons['error_msg'] = $addons_installed['error_msg'];

@@ -46,6 +46,7 @@ define('steam_infos_cache', true); //Sollen die Profil Daten zwischen gespeicher
 define('steam_only_proxy', false); //Sollen soll nur der Steam Proxy Server verwendet werden
 
 // DZCP.de API Autoupdates
+define('api_enabled', true); //Sollem die funktionen der DZCP.de API verwendet werden? ( Keine Versionsabfrage, Keine Geolocation abfragen für die Memebermap usw. )
 define('api_autoupdate', false); //Soll die DZCP.de API automatisch aktualisiert werden ( Nur in der Administration )
 define('api_autoupdate_interval', (24 * 60 * 60)); //Wann soll die DZCP.de API automatisch aktualisiert werden ( alle 24 Std. )
 define('api_autoupdate_dsgvo', false); //Soll die EU-DSGVO automatisch aktualisiert werden ( Nur in der Administration )
@@ -176,6 +177,7 @@ function show($tpl = "", $array = array(), $array_lang_constant = array(), $arra
         $tpl = (!defined('_Admin') || _Admin != 'true' ? preg_replace("|<is_admin>.*?</is_admin>|is", "", $tpl) : preg_replace("|<not_admin_menu>.*?</not_admin_menu>|is", "", $tpl));
         $tpl = (!$chkMe ? preg_replace("|<logged_in>.*?</logged_in>|is", "", $tpl) : preg_replace("|<logged_out>.*?</logged_out>|is", "", $tpl));
         $tpl = (!HasDSGVO() ? preg_replace("|<dsgvo_lock>.*?</dsgvo_lock>|is", "", $tpl) : $tpl);
+        $tpl = (rootAdmin() ? preg_replace("|<is_root>.*?</is_root>|is", "", $tpl) : $tpl);
         $tpl = str_ireplace(array("<logged_in>", "</logged_in>", "<logged_out>", "</logged_out>"), '', $tpl);
 
         if (count($array) >= 1) {
@@ -332,6 +334,11 @@ function db($query = '', $rows = false, $fetch = false)
  *  d     corresponding variable has type double
  *  s     corresponding variable has type string
  *  b     corresponding variable is a blob and will be sent in packets
+ * @param $query
+ * @param array $params
+ * @param bool $rows
+ * @param bool $fetch
+ * @return array|mixed|void
  */
 function db_stmt($query, $params = array('si', 'hallo', '4'), $rows = false, $fetch = false)
 {
