@@ -112,6 +112,7 @@ if ($do == "add") {
                                  `time`     = " . time() . ",
                                  `pwd_md5`  = 0,
                                  `dsgvo_lock`  = 0,
+                                 `show` = 1,
                                  `gmaps_koord`  = '" . up($_POST['gmaps_koord']) . "',
                                  `status`   = 1;");
 
