@@ -184,20 +184,20 @@ if (defined('_UserMenu')) {
 
             header("Location: ?action=msg");
         } elseif ($do == "new") {
-            $qry = db("SELECT id,nick FROM " . $db['users'] . "
-                 WHERE id != '" . $userid . "'
-                               ORDER BY nick");
+            $users = "";
+            $qry = db("SELECT `id`,`nick` FROM `" . $db['users'] . "` WHERE `id` != " . $userid . " ORDER BY `nick`;");
             while ($get = _fetch($qry)) {
-                $users .= show(_to_users, array("id" => $get['id'],
+                $users .= show(_to_users, array(
+                    "id" => $get['id'],
                     "selected" => "",
                     "nick" => data("nick", $get['id'])));
             }
 
-            $qry = db("SELECT id,user,buddy FROM " . $db['buddys'] . "
-                               WHERE user = " . $userid . "
-                               ORDER BY user");
+            $buddys = "";
+            $qry = db("SELECT `id`,`user`,`buddy` FROM `" . $db['buddys'] . "` WHERE `user` = " . $userid . " ORDER BY `user`;");
             while ($get = _fetch($qry)) {
-                $buddys .= show(_to_buddys, array("id" => $get['buddy'],
+                $buddys .= show(_to_buddys, array(
+                    "id" => $get['buddy'],
                     "selected" => "",
                     "nick" => data("nick", $get['buddy'])));
             }
