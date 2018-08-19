@@ -1412,10 +1412,15 @@ function update_mysql_1_6_1_0()
     db("TRUNCATE `" . $db['f_abo'] . "`;");
 
     db("DROP TABLE IF EXISTS `" . $db['prefix'] . "banned`;"); //Remove old table
+    db("ALTER TABLE `" . $db['users'] . "` DROP `gmaps_koord`;");
     db("ALTER TABLE `" . $db['users'] . "` ADD `language` varchar(249) NOT NULL default '' AFTER `show`;");
     db("ALTER TABLE `" . $db['settings'] . "` DROP `persinfo`;");
     db("ALTER TABLE `" . $db['settings'] . "` DROP `ts_version`;");
     db("ALTER TABLE `" . $db['users'] . "` DROP `hlswid`;");
+    db("ALTER TABLE `" . $db['users'] . "` ADD `geolocation` TEXT NULL DEFAULT NULL AFTER `city`;");
+    db("ALTER TABLE `" . $db['users'] . "` DROP `icq`;");
+    db("ALTER TABLE `" . $db['settings'] . "` ADD `last_conjob` INT(11) NOT NULL DEFAULT '0' AFTER `db_optimize`;");
+    db("ALTER TABLE `" . $db['users'] . "` ADD INDEX(`user`);");
 
     $gets = db("SELECT * FROM `" . $db['settings'] . "`;", false, true);
     if (array_key_exists('last_backup', $gets)) {

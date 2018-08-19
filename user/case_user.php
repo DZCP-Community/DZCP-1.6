@@ -35,13 +35,6 @@ if (defined('_UserMenu')) {
             $battlenetu = empty($get['battlenetid']) ? '-' : show(_battleneticon, array("id" => str_replace(" ", "%20", re($get['battlenetid'])), "img" => "1", "css" => ""));
             $bday = (!$get['bday'] || empty($get['bday'])) ? "-" : date('d.m.Y', $get['bday']);
 
-            $icq = "-";
-            $icqnr = '';
-            if (!empty($get['icq'])) {
-                $icq = show(_icqstatus, array("uin" => $get['icq']));
-                $icqnr = re($get['icq']);
-            }
-
             $status = ($get['status'] == 1 || data('level', (int)($_GET['id']) != 1 && isset($_GET['sq']))) ? _aktiv_icon : _inaktiv_icon;
             $clan = "";
             if (data('level', (int)($_GET['id']) != 1 || isset($_GET['sq']))) {
@@ -250,7 +243,8 @@ if (defined('_UserMenu')) {
                 $city = re($get['city']);
                 $beschreibung = bbcode(re($get['beschreibung']));
                 $email = ($chkMe >= 1 ? $email : '');
-                $show = show($dir . "/profil_show", array("hardware_head" => $hardware_head,
+                $show = show($dir . "/profil_show", array(
+                    "hardware_head" => $hardware_head,
                     "about" => _profil_about,
                     "country" => flag($get['country']),
                     "pcity" => _profil_city,
@@ -275,7 +269,6 @@ if (defined('_UserMenu')) {
                     "contact" => _profil_contact,
                     "preal" => _profil_real,
                     "pemail" => _email,
-                    "picq" => _icq,
                     "psteam" => _steam,
                     "xboxl" => _xboxstatus,
                     "xboxavatarl" => _xboxuserpic,
@@ -308,8 +301,6 @@ if (defined('_UserMenu')) {
                     "age" => getAge($get['bday']),
                     "sex" => $sex,
                     "email" => $email,
-                    "icq" => $icq,
-                    "icqnr" => $icqnr,
                     "skypename" => $skypename,
                     "skype" => $get['skypename'],
                     "pn" => $pn,

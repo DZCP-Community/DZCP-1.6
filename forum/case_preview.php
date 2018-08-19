@@ -39,17 +39,12 @@ if (defined('_Forum')) {
             "edit" => "",
             "delete" => ""));
         if ($guestCheck) {
-            $qryu = db("SELECT nick,icq,hp,email FROM " . $db['users'] . "
+            $qryu = db("SELECT nick,hp,email FROM " . $db['users'] . "
                   WHERE id = '" . $pUId . "'");
             $getu = _fetch($qryu);
 
             $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
             $pn = _forum_pn_preview;
-            if (empty($getu['icq']) || $getu['icq'] == 0) $icq = "";
-            else {
-                $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
-                $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin=' . $getu['icq'] . '" target="_blank">' . $uin . '</a>';
-            }
 
             if (empty($getu['hp'])) $hp = "";
             else $hp = show(_hpicon_forum, array("hp" => $getu['hp']));
@@ -59,7 +54,6 @@ if (defined('_Forum')) {
             $userposts = show(_forum_user_posts, array("posts" => (userstats("forumposts", $pUId) + 1)));
         } else {
             $pn = "";
-            $icq = "";
             $email = show(_emailicon_forum, array("email" => eMailAddr(re($_POST['email'], true))));
             if (empty($_POST['hp'])) $hp = "";
             else $hp = show(_hpicon_forum, array("hp" => links(re($_POST['hp'], true))));
@@ -98,7 +92,6 @@ if (defined('_Forum')) {
             "titel" => $titel,
             "postnr" => "1",
             "pn" => $pn,
-            "icq" => $icq,
             "hp" => $hp,
             "email" => $email,
             "posts" => $userposts,
@@ -162,24 +155,18 @@ if (defined('_Forum')) {
             "edit" => "",
             "delete" => ""));
         if ($guestCheck) {
-            $qryu = db("SELECT nick,icq,hp,email FROM " . $db['users'] . "
+            $qryu = db("SELECT nick,hp,email FROM " . $db['users'] . "
                   WHERE id = '" . (int)($pUId) . "'");
             $getu = _fetch($qryu);
 
             $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
             $pn = _forum_pn_preview;
-            if (empty($getu['icq']) || $getu['icq'] == 0) $icq = "";
-            else {
-                $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
-                $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin=' . $getu['icq'] . '" target="_blank">' . $uin . '</a>';
-            }
 
             if (empty($getu['hp'])) $hp = "";
             else $hp = show(_hpicon_forum, array("hp" => $getu['hp']));
             if (data("signatur", $pUId)) $sig = _sig . bbcode(data("signatur", $pUId));
             else $sig = "";
         } else {
-            $icq = "";
             $pn = "";
             $email = show(_emailicon_forum, array("email" => eMailAddr(re($_POST['email'], true))));
             if (empty($_POST['hp'])) $hp = "";
@@ -193,7 +180,6 @@ if (defined('_Forum')) {
             "class" => 'class="commentsRight"',
             "text" => bbcode(up($_POST['eintrag'])) . $editedby,
             "pn" => $pn,
-            "icq" => $icq,
             "hp" => $hp,
             "email" => $email,
             "status" => getrank($pUId),

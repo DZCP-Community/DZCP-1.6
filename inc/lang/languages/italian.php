@@ -41,6 +41,8 @@ $language_text['_datenschutz_rolle_2'] = 'Datenschutzbeauftragter ( <span style=
 
 $language_text['_user_dont_dsgvo'] = 'Dieser User kann nicht eingesehen werden!';
 $language_text['_user_profile_dont_show'] = 'Dieses Profil ist privat';
+$language_text['_user_profile_show'] = 'Sichtbar';
+$language_text['_user_profile_no_show'] = 'Privat';
 $language_text['_pvisibility_profile'] = 'Profilsichtbarkeit';
 $language_text['_pedit_perm_profile'] = '<option value="0">Public</option><option value="1">User only</option><option value="2">Member only</option><option value="4">Admin only</option>';
 $language_text['_admin_dsgvo_log'] = 'Datenschutz Infos';
@@ -60,8 +62,8 @@ $language_text['_place'] = 'Ort';
 $language_text['_country'] = 'Land';
 $language_text['_e-mail'] = 'E-Mail-Addresse';
 $language_text['_phone'] = 'Telefonnummer';
-$language_text['_website'] = 'Webseite';
-$language_text['_no_entry'] = 'There is no entry!';
+$language_text['_website'] = 'Sito web';
+$language_text['_no_entry'] = 'Non c\'è entrata!';
 
 ## ADDED / REDEFINED FOR 1.6 Final
 $language_text['_txt_navi_main'] = 'Navigazione Principale';
@@ -307,9 +309,9 @@ $language_text['_sponsors_empty_link'] = 'E\' necessario indicare un URL collega
 $language_text['_site_away'] = 'Away Calendar';
 $language_text['_away_list'] = 'Away List';
 $language_text['_config_c_away'] = 'Away List';
-$language_text['_away_status_new'] = '<b><font color=orange>Aggiungi</font></b>';
-$language_text['_away_status_now'] = '<b><font color=green>Corrente</font></b>';
-$language_text['_away_status_done'] = '<b><font color=red>Scaduto</font></b>';
+$language_text['_away_status_new'] = '<b><span style="color:#FFA500">Aggiungi</span></b>';
+$language_text['_away_status_now'] = '<b><span style="color:#008000">Corrente</span></b>';
+$language_text['_away_status_done'] = '<b><span style="color:#FF0000">Scaduto</span></b>';
 $language_text['_away_new'] = 'Rapporto';
 $language_text['_away_empty_titel'] = 'Si prega di specificare il motivo';
 $language_text['_away_empty_reason'] = 'Si prega di specificare un commento';
@@ -675,7 +677,6 @@ Ogni admin clanwar ha ricevuto questo messaggio!<br /><br />
 <span class="fontUnder"><span class="fontBold">Contatto:</span></span><br />
 <span class="fontBold">Nick:</span> [nick]<br />
 <span class="fontBold">Email:</span> [email]<br />
-<span class="fontBold">ICQ-Nr.:</span> [icq]<br /><br />
 <span class="fontBold"><span class="fontUnder">Clandata:</span></span><br />
 <span class="fontBold">Clan name:</span> [clan]<br />
 <span class="fontBold">Homepage:</span> [hp]<br />
@@ -1267,7 +1268,6 @@ $language_text['_contact_text'] = '
 Qualcuno ha compilato il modulo di contatto!<br /><br />
 <span class="fontBold">Nick:</span> [nick]<br />
 <span class="fontBold">Email:</span> [email]<br />
-<span class="fontBold">ICQ-Nr.:</span> [icq]<br />
 <span class="fontBold">Skype:</span> [skype]<br />
 <span class="fontBold">Steam:</span> [steam]<br /><br />
 <span class="fontUnder"><span class="fontBold">Messaggio:</span></span><br />[text]';
@@ -1279,7 +1279,6 @@ Qualcuno ha compilato il modulo unisciti a noi!<br /><br />
 <span class="fontBold">Nick:</span> [nick]<br />
 <span class="fontBold">Eta\':</span> [age]<br />
 <span class="fontBold">Email:</span> [email]<br />
-<span class="fontBold">ICQ-Nr.:</span> [icq]<br />
 <span class="fontBold">Skype:</span> [skype]<br />
 <span class="fontBold">Steam:</span> [steam]<br /><br />
 <span class="fontBold">Team:</span> [squad]<br /><br />
@@ -2219,7 +2218,6 @@ $language_text['_pwd'] = 'Password';
 $language_text['_loginname'] = 'Login-name';
 $language_text['_email'] = 'Email';
 $language_text['_hp'] = 'Homepage';
-$language_text['_icq'] = 'ICQ-No.';
 $language_text['_member'] = 'Membro';
 $language_text['_user'] = 'Utente';
 $language_text['_gast'] = 'non registrato';

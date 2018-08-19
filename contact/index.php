@@ -32,8 +32,7 @@ switch ($action):
                 "pflicht" => _contact_pflichtfeld,
                 "email" => _email,
                 "skype" => _skypeid,
-                "steam" => _steamid,
-                "icq" => _icq));
+                "steam" => _steamid));
         }
         break;
     case 'fightus';
@@ -85,8 +84,7 @@ switch ($action):
                 "pflicht" => _contact_pflichtfeld,
                 "email" => _email,
                 "skype" => _skypeid,
-                "steam" => _steamid,
-                "icq" => _icq));
+                "steam" => _steamid));
         }
         break;
     case 'joinus';
@@ -124,8 +122,7 @@ switch ($action):
                 "pflicht" => _contact_pflichtfeld,
                 "email" => _email,
                 "skype" => _skypeid,
-                "steam" => _steamid,
-                "icq" => _icq));
+                "steam" => _steamid));
         }
         break;
     case 'do';
@@ -142,9 +139,8 @@ switch ($action):
                 elseif (empty($_POST['nick']))
                     $index = error(_empty_nick, 1);
                 else {
-                    $icq = preg_replace("=-=Uis", "", $_POST['icq']);
                     $email = show(_email_mailto, array("email" => $_POST['email']));
-                    $text = show(_contact_text, array("icq" => $icq,
+                    $text = show(_contact_text, array(
                         "skype" => $_POST['skype'],
                         "steam" => $_POST['steam'],
                         "email" => $email,
@@ -203,9 +199,8 @@ switch ($action):
                     } else
                         $qrysquads['name'] = _contact_joinus_no_squad_aviable;
 
-                    $icq = preg_replace("=-=Uis", "", $_POST['icq']);
                     $email = show(_email_mailto, array("email" => $_POST['email']));
-                    $text = show(_contact_text_joinus, array("icq" => $icq,
+                    $text = show(_contact_text_joinus, array(
                         "skype" => $_POST['skype'],
                         "steam" => $_POST['steam'],
                         "email" => $email,
@@ -259,7 +254,6 @@ switch ($action):
                 elseif (empty($_POST['nick']))
                     $index = error(_empty_nick, 1);
                 else {
-                    $icq = preg_replace("=-=Uis", "", $_POST['icq']);
                     $email = show(_email_mailto, array("email" => $_POST['email']));
                     $hp = show(_contact_hp, array("hp" => links(re($_POST['hp'], true))));
 
@@ -271,7 +265,7 @@ switch ($action):
                    WHERE id = '" . (int)($_POST['squad']) . "'");
                     $getsq = _fetch($qrysq);
 
-                    $msg = show(_contact_text_fightus, array("icq" => $icq,
+                    $msg = show(_contact_text_fightus, array(
                         "skype" => $_POST['skype'],
                         "steam" => $_POST['steam'],
                         "email" => $email,

@@ -26,7 +26,7 @@ else if (!empty($_GET['show']))
 switch (strtolower($action)):
     case 'shows';
         $get = db("SELECT * FROM `" . $db['squads'] . "` WHERE `id` = " . (int)($_GET['id']) . ";", false, true);
-        $qrym = db("SELECT s1.`user`,s1.`squad`,s2.`id`,s2.`nick`,s2.`icq`," .
+        $qrym = db("SELECT s1.`user`,s1.`squad`,s2.`id`,s2.`nick`," .
             "s2.`email`,s2.`rlname`,s2.`steamid`,s2.`level`,s2.`bday`,s2.`hp`," .
             "s3.`posi`,s4.`pid` " .
             "FROM `" . $db['squaduser'] . "` AS `s1` " .
@@ -46,15 +46,6 @@ switch (strtolower($action)):
                 continue;
 
             $cntall = cnt($db['squaduser'], " WHERE squad= '" . $get['id'] . "'");
-
-            if ($getm['icq'] == 0) {
-                $icq = "-";
-                $icqnr = "&nbsp;";
-            } else {
-                $icq = show(_icqstatus, array("uin" => $getm['icq']));
-                $icqnr = $getm['icq'];
-            }
-
             $steam = (!empty($getm['steamid']) && steam_enable ? '<div id="infoSteam_' . md5(re($getm['steamid'])) . '"><div style="width:100%"><img src="../inc/images/ajax-loader-mini.gif" alt="" /></div><script language="javascript" type="text/javascript">DZCP.initDynLoader("infoSteam_' . md5(re($getm['steamid'])) . '","steam","&steamid=' . re($getm['steamid']) . '");</script></div>' : '-');
             $class = ($color % 2) ? "contentMainFirst" : "contentMainSecond";
             $color++;
@@ -69,8 +60,7 @@ switch (strtolower($action)):
                 }
             }
 
-            $member .= show($dir . "/squads_member", array("icqs" => $icq,
-                "icq" => $icqnr,
+            $member .= show($dir . "/squads_member", array(
                 "emails" => eMailAddr(re($getm['email'])),
                 "id" => $getm['user'],
                 "psteam" => _steam,

@@ -187,7 +187,6 @@ switch ($action):
                 $showmore = show($dir . "/comments", array("head" => _comments_head,
                     "show" => $comments,
                     "seiten" => $seiten,
-                    "icq" => "",
                     "add" => $add));
 
                 $getkat = db("SELECT `katimg` FROM `" . $db['newskat'] . "` WHERE `id` = " . $get['kat'] . ";", false, true);
@@ -208,7 +207,6 @@ switch ($action):
                     "dir" => $designpath,
                     "ndatum" => _datum,
                     "showmore" => $showmore,
-                    "icq" => "",
                     "text" => bbcode($get['text']),
                     "datum" => date("j.m.y H:i", (int)($get['datum'])) . _uhr,
                     "links" => $links,
@@ -395,7 +393,6 @@ switch ($action):
             "kat" => $artikelimage,
             "ndatum" => _datum,
             "showmore" => $showmore,
-            "icq" => "",
             "text" => bbcode(re($_POST['artikel'], true), true),
             "datum" => date("j.m.y H:i") . _uhr,
             "links" => $links,

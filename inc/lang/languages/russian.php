@@ -42,6 +42,8 @@ $language_text['_datenschutz_rolle_2'] = 'Сотрудник по защите �
 
 $language_text['_user_dont_dsgvo'] = 'Этот пользователь не может быть просмотрен!';
 $language_text['_user_profile_dont_show'] = 'Этот профиль закрыт';
+$language_text['_user_profile_show'] = 'видимый';
+$language_text['_user_profile_no_show'] = 'личный';
 $language_text['_pvisibility_profile'] = 'видимость профиля';
 $language_text['_pedit_perm_profile'] = '<option value="0">Public</option><option value="1">User only</option><option value="2">Member only</option><option value="4">Admin only</option>';
 $language_text['_admin_dsgvo_log'] = 'Информация о защите данных';
@@ -293,9 +295,9 @@ $language_text['_sponsors_empty_link'] = 'Вы должны указать ад�
 $language_text['_site_away'] = 'Календарь отсутствующих';
 $language_text['_away_list'] = 'Список отсутствующих';
 $language_text['_config_c_away'] = 'Список отсутствующих';
-$language_text['_away_status_new'] = '<b><font color=orange>Добавлен</font></b>';
-$language_text['_away_status_now'] = '<b><font color=green>Актуально</font></b>';
-$language_text['_away_status_done'] = '<b><font color=red>Истек</font></b>';
+$language_text['_away_status_new'] = '<b><span style="color:#FFA500">Добавлен</span></b>';
+$language_text['_away_status_now'] = '<b><span style="color:#008000">Актуально</span></b>';
+$language_text['_away_status_done'] = '<b><span style="color:#FF0000">Истек</span></b>';
 $language_text['_away_new'] = 'Сообщить';
 $language_text['_away_empty_titel'] = 'Пожалуйста, укажите причину';
 $language_text['_away_empty_reason'] = 'Пожалуйста, введите комментарию';
@@ -666,7 +668,6 @@ $language_text['_contact_text_fightus'] = '
 <span class="fontUnder"><span class="fontBold">Контактное лицо:</span></span><br />
 <span class="fontBold">Ник:</span> [nick]<br />
 <span class="fontBold">eMail:</span> [email]<br />
-<span class="fontBold">ICQ-Nr.:</span> [icq]<br /><br />
 <span class="fontBold"><span class="fontUnder">Данные Клана:</span></span><br />
 <span class="fontBold">Название Клана:</span> [clan]<br />
 <span class="fontBold">Страница:</span> [hp]<br />
@@ -1255,7 +1256,6 @@ $language_text['_contact_text'] = '
 Кто-то заполнил контактный формуляр!<br /><br />
 <span class="fontBold">Ник:</span> [nick]<br />
 <span class="fontBold">Email:</span> [email]<br />
-<span class="fontBold">ICQ-Nr.:</span> [icq]<br />
 <span class="fontBold">Skype:</span> [skype]<br />
 <span class="fontBold">Steam:</span> [steam]<br /><br />
 <span class="fontUnder"><span class="fontBold">Сообщение:</span></span><br />[text]';
@@ -1267,7 +1267,6 @@ $language_text['_contact_text_joinus'] = '
 <span class="fontBold">Ник:</span> [nick]<br />
 <span class="fontBold">Возраст:</span> [age]<br />
 <span class="fontBold">Email:</span> [email]<br />
-<span class="fontBold">ICQ-Nr.:</span> [icq]<br />
 <span class="fontBold">Skype:</span> [skype]<br />
 <span class="fontBold">Steam:</span> [steam]<br /><br />
 <span class="fontBold">Kоманда:</span> [squad]<br /><br />
@@ -2149,7 +2148,6 @@ $language_text['_pwd'] = 'Пароль';
 $language_text['_loginname'] = 'Логин-Имя';
 $language_text['_email'] = 'E-Mail';
 $language_text['_hp'] = 'Страница';
-$language_text['_icq'] = 'ICQ-Nr.';
 $language_text['_member'] = 'Юзер';
 $language_text['_user'] = 'Пользователь';
 $language_text['_gast'] = 'Незарегистрированный';

@@ -44,6 +44,7 @@ if (defined('_UserMenu')) {
             } elseif ($check_email) {
                 $index = error(_error_email_exists, 1);
             } else {
+                $newpwd = ''; $newpwd = '';
                 if (isset($_POST['pwd']) && isset($_POST['cpwd']) &&
                     !empty($_POST['pwd']) && !empty($_POST['cpwd'])) {
                     if ($_POST['pwd'] == $_POST['cpwd']) {
@@ -59,9 +60,7 @@ if (defined('_UserMenu')) {
                     }
                 }
 
-                $icq = preg_replace("=-=Uis", "", $_POST['icq']);
                 $bday = ($_POST['t'] && $_POST['m'] && $_POST['j'] ? cal($_POST['t']) . "." . cal($_POST['m']) . "." . $_POST['j'] : 0);
-
                 $customfields = '';
                 $qrycustom = db("SELECT `feldname`,`type` FROM `" . $db['profile'] . "`;");
                 while ($getcustom = _fetch($qrycustom)) {
@@ -71,6 +70,7 @@ if (defined('_UserMenu')) {
                         $customfields .= " " . $getcustom['feldname'] . " = '" . up($_POST[$getcustom['feldname']]) . "', ";
                 }
 
+                $get = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . $userid . ";", false, true);
                 db("UPDATE `" . $db['users'] . "` SET " . $newpwd . " " . $customfields . "
                   `country`      = '" . up($_POST['land']) . "',
                   `user`         = '" . up($_POST['user']) . "',
@@ -83,9 +83,7 @@ if (defined('_UserMenu')) {
                   `nletter`      = " . ((int)$_POST['nletter']) . ",
                   `pnmail`       = " . ((int)$_POST['pnmail']) . ",
                   `city`         = '" . up($_POST['city']) . "',
-                  `gmaps_koord`  = '" . up($_POST['gmaps_koord']) . "',
                   `hp`           = '" . up(links(re($_POST['hp'], true))) . "',
-                  `icq`          = " . ((int)$icq) . ",
                   `xboxid`       = '" . up($_POST['xboxid']) . "',
                   `psnid`        = '" . up($_POST['psnid']) . "',
                   `originid`     = '" . up($_POST['originid']) . "',
@@ -98,6 +96,12 @@ if (defined('_UserMenu')) {
                   `perm_gallery` = " . ((int)($_POST['visibility_gallery'])) . ",
                   `show`         = " . ((int)($_POST['visibility_profile'])) . " 
                    WHERE `id` = " . $userid . ";");
+
+                if(isset($_POST['land']) && isset($_POST['city'])) {
+                    if ($get['land'] != up($_POST['land']) || $get['city'] != up($_POST['city'])) {
+                        db("UPDATE `" . $db['users'] . "` SET `geolocation` = '' WHERE `id` = " . $userid . ";");
+                    }
+                }
 
                 $index = info(_info_edit_profile_done, "?action=user&amp;id=" . $userid . "");
             }
@@ -399,14 +403,7 @@ if (defined('_UserMenu')) {
                         "value" => re($getcontent[$getcustom['feldname']])));
                 }
 
-                $icq = '';
-                $pnl = '';
-                $pnm = '';
-                $deleteava = '';
-                $deletepic = '';
-                if (!empty($get['icq']) && $get['icq'] != 0)
-                    $icq = re($get['icq']);
-
+                $pnl = ''; $pnm = ''; $deleteava = ''; $deletepic = '';
                 if ($get['nletter'] == 1)
                     $pnl = 'checked="checked"';
 
@@ -421,8 +418,6 @@ if (defined('_UserMenu')) {
 
                 if (!preg_match("#noavatar#", $avatar))
                     $deleteava = "| " . _profil_delete_ava;
-
-                $gmaps = show('membermap/geocoder', array('form' => 'editprofil'));
 
                 if (rootAdmin($userid)) {
                     $delete = _profil_del_admin;
@@ -459,7 +454,6 @@ if (defined('_UserMenu')) {
                     "pname" => _loginname,
                     "ppwd" => _new_pwd,
                     "cppwd" => _pwd2,
-                    "picq" => _icq,
                     "psig" => _profil_sig,
                     "ppic" => _profil_ppic,
                     "xboxidl" => _xboxid,
@@ -480,10 +474,8 @@ if (defined('_UserMenu')) {
                     "dropdown_age" => $dropdown_age,
                     "ava" => $avatar,
                     "hp" => links(re($get['hp'])),
-                    "gmaps" => $gmaps,
                     "nick" => re($get['nick']),
                     "name" => re($get['user']),
-                    "gmaps_koord" => re($get['gmaps_koord']),
                     "rlname" => re($get['rlname']),
                     "bdayday" => $bdayday,
                     "bdaymonth" => $bdaymonth,
@@ -493,7 +485,6 @@ if (defined('_UserMenu')) {
                     "visibility_gb" => $perm_gb,
                     "visibility_gallery" => $perm_gallery,
                     "visibility_profile" => $perm_profile,
-                    "icqnr" => $icq,
                     "sig" => re_bbcode(re($get['signatur'])),
                     "xboxid" => re($get['xboxid']),
                     "psnid" => re($get['psnid']),

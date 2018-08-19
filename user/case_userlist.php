@@ -10,49 +10,49 @@ if (defined('_UserMenu')) {
     $show_sql = isset($_GET['show']) ? $_GET['show'] : '';
 
     if ($show_sql == "search") {
-        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `" . $db['users'] . "`
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`status`,`position`,`regdatum`,`show` FROM `" . $db['users'] . "`
                    WHERE `nick` LIKE '%" . $_GET['search'] . "%'
                    AND level != 0 " . (permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ') . "
                    ORDER BY nick
                    LIMIT " . ($page - 1) * config('m_userlist') . "," . config('m_userlist') . ";");
     } elseif ($show_sql == "newreg") {
-        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `" . $db['users'] . "`
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`status`,`position`,`regdatum`,`show` FROM `" . $db['users'] . "`
                    WHERE regdatum > '" . $_SESSION['lastvisit'] . "'
                    AND `level` != 0 " . (permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ') . "
                    ORDER BY regdatum DESC,nick
                    LIMIT " . ($page - 1) * config('m_userlist') . "," . config('m_userlist') . ";");
     } elseif ($show_sql == "lastlogin") {
-        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `" . $db['users'] . "`
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`status`,`position`,`regdatum`,`show` FROM `" . $db['users'] . "`
                    WHERE `level` != 0 " . (permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ') . "
                    ORDER BY time DESC,nick
                    LIMIT " . ($page - 1) * config('m_userlist') . "," . config('m_userlist') . ";");
     } elseif ($show_sql == "lastreg") {
-        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `" . $db['users'] . "`
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`status`,`position`,`regdatum`,`show` FROM `" . $db['users'] . "`
                    WHERE `level` != 0 " . (permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ') . "
                    ORDER BY regdatum DESC,nick
                    LIMIT " . ($page - 1) * config('m_userlist') . "," . config('m_userlist') . ";");
     } elseif ($show_sql == "online") {
-        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `" . $db['users'] . "`
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`status`,`position`,`regdatum`,`show` FROM `" . $db['users'] . "`
                    WHERE `level` != 0 " . (permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ') . "
                    ORDER BY time DESC,nick
                    LIMIT " . ($page - 1) * config('m_userlist') . "," . config('m_userlist') . ";");
     } elseif ($show_sql == "country") {
-        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `" . $db['users'] . "`
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`status`,`position`,`regdatum`,`show` FROM `" . $db['users'] . "`
                    WHERE `level` != 0 " . (permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ') . " 
                    ORDER BY country,nick
                    LIMIT " . ($page - 1) * config('m_userlist') . "," . config('m_userlist') . ";");
     } elseif ($show_sql == "sex") {
-        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `" . $db['users'] . "`
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`status`,`position`,`regdatum`,`show` FROM `" . $db['users'] . "`
                    WHERE `level` != 0 " . (permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ') . "
                    ORDER BY sex DESC
                    LIMIT " . ($page - 1) * config('m_userlist') . "," . config('m_userlist') . ";");
     } elseif ($show_sql == "banned") {
-        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `" . $db['users'] . "`
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`status`,`position`,`regdatum`,`show` FROM `" . $db['users'] . "`
                    WHERE `level` = 0 " . (permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ') . " 
                    ORDER BY nick
                    LIMIT " . ($page - 1) * config('m_userlist') . "," . config('m_userlist') . ";");
     } else {
-        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`icq`,`status`,`position`,`regdatum` FROM `" . $db['users'] . "`
+        $qry = db("SELECT `id`,`nick`,`level`,`email`,`hp`,`steamid`,`skypename`,`xboxid`,`psnid`,`originid`,`battlenetid`,`bday`,`sex`,`status`,`position`,`regdatum`,`show` FROM `" . $db['users'] . "`
                   WHERE `level` != 0 " . (permission("editusers") ? '' : 'AND `dsgvo_lock` != 1 ') . "
                   " . orderby_sql(array("nick", "bday"), 'ORDER BY level DESC,nick') . "
                   LIMIT " . ($page - 1) * config('m_userlist') . "," . config('m_userlist') . ";");
@@ -65,14 +65,8 @@ if (defined('_UserMenu')) {
         $psnu = empty($get['psnid']) ? "-" : show(_psnicon, array("id" => re($get['psnid']), "img" => "1", "css" => ""));
         $originu = empty($get['originid']) ? "-" : show(_originicon, array("id" => re($get['originid']), "img" => "1", "css" => ""));
         $battlenetu = empty($get['battlenetid']) ? "-" : show(_battleneticon, array("id" => re($get['battlenetid']), "img" => "1", "css" => ""));
-        $skypename = empty($get['skypename']) ? "-" : "<a href=\"skype:" . re($get['skypename']) . "?chat\"><img src=\"../inc/images/skype.png\"border: none;\" width=\"\" height=\"\" alt=\"\"/></a>";
+        $skypename = empty($get['skypename']) ? "-" : "<a href=\"skype:" . re($get['skypename']) . "?chat\"><i class=\"fab fa-skype fa-lg\"></i></a>";
         $hp = empty($get['hp']) ? "-" : show(_hpicon, array("hp" => re($get['hp'])));
-
-        $icq = "-";
-        if (!empty($get['icq'])) {
-            $uin = show(_icqstatus, array("uin" => re($get['icq'])));
-            $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin=' . re($get['icq']) . '" target="_blank">' . $uin . '</a>';
-        }
 
         $sex = "-";
         if ($get['sex'] == "1")
@@ -106,6 +100,7 @@ if (defined('_UserMenu')) {
 
         $userliste .= show($dir . "/userliste_show", array("nick" => autor($get['id'], '', '', 10),
             "level" => getrank($get['id']),
+            "show" => $chkMe < $get['show'] ? '<i class="far fa-eye-slash fa-lg" title="'._user_profile_no_show.'"></i>' : '<i class="far fa-eye fa-lg" title="'._user_profile_show.'"></i>',
             "status" => $status,
             "email" => $email,
             "age" => getAge($get['bday']),
@@ -113,9 +108,7 @@ if (defined('_UserMenu')) {
             "edit" => $edit,
             "delete" => $delete,
             "class" => $class,
-            "icq" => $icq,
             "skypename" => $skypename,
-            "icquin" => re($get['icq']),
             "onoff" => onlinecheck($get['id']),
             "hp" => $hp,
             "steam" => $steam,
@@ -150,7 +143,6 @@ if (defined('_UserMenu')) {
         "emailicon" => _emailicon_blank,
         "addbuddyicon" => _addbuddyicon_blank,
         "agehead" => _profil_age,
-        "icqicon" => _icqicon_blank,
         "pnicon" => _pnicon_blank,
         "hpicon" => _hpicon_blank,
         "xboxicon" => _xboxicon_blank,

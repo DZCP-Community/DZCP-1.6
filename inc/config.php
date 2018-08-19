@@ -52,13 +52,13 @@ define('api_autoupdate_interval', (24 * 60 * 60)); //Wann soll die DZCP.de API a
 define('api_autoupdate_dsgvo', false); //Soll die EU-DSGVO automatisch aktualisiert werden ( Nur in der Administration )
 define('api_autoupdate_dsgvo_interval', (24 * 60 * 60)); //Wann soll die EU-DSGVO automatisch aktualisiert werden ( alle 24 Std. )
 
-define('use_ssl_auto_redirect', true); //Wenn eine SSL-Verbindung möglich ist, dann wird der Besucher automatisch umgeleitet
+define('use_ssl_auto_redirect', false); //Wenn eine SSL-Verbindung möglich ist, dann wird der Besucher automatisch umgeleitet
 
 /*
 * Bitte vor der Aktivierung der Persistent Connections lesen:
 * http://php.net/manual/de/features.persistent-connections.php
 */
-define('mysqli_persistconns', false);
+define('mysqli_persistconns', true);
 
 /*
  * Use SMTP connection with authentication for Mailing
@@ -75,12 +75,12 @@ define('phpmailer_smtp_secure', 'tls');//Enable TLS encryption, `ssl` also accep
  * Cache Configuration
  */
 $config_cache = array(
-    "storage" => "auto", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
+    "storage" => "zendshm", //auto ,ssdb, files, xcache, sqlite, memcache, memcached, redis, predis, apc, apcu, cookie, wincache
     "server_mem" => array(array("127.0.0.1", 11211, 1)), //memcache / memcached
     "server_redis" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'database' => '', 'timeout' => ''),
     "server_ssdb" => array("host" => '127.0.0.1', 'port' => '', 'password' => '', 'timeout' => ''),
     "dbc" => true,  //use database query caching * only use with memory cache
-    "tpl" => true,  //use template caching * only use with memory cache
+    "tpl" => false,  //use template caching * only use with memory cache
 );
 
 //-> Legt die UserID des Rootadmins fest

@@ -1,9 +1,7 @@
 <tr>
     <td>
-        [gmaps]
         <form id="editprofil" name="editprofil" action="../user/?action=editprofile&amp;do=edit" method="post"
               onsubmit="return(DZCP.submitButton())">
-            <input id="gmaps_koord" name="gmaps_koord" type="hidden" value="[gmaps_koord]"/>
             <table class="hperc" cellspacing="1">
                 <tr>
                     <td colspan="2" class="contentHead"><span class="fontBold">[picturehead]</span></td>
@@ -24,6 +22,7 @@
                 <tr>
                     <td height="10"></td>
                 </tr>
+                <is_root>
                 <tr>
                     <td colspan="2" class="contentHead"><span class="fontBold">[deletehead]</span></td>
                 </tr>
@@ -38,6 +37,7 @@
                 <tr>
                     <td height="10"></td>
                 </tr>
+                </is_root>
                 <tr>
                     <td class="contentHead" colspan="2" align="center"><span class="fontBold">[hphead]</span></td>
                 </tr>
@@ -192,14 +192,6 @@
                 </tr>
                 <tr>
                     <td class="contentHead" colspan="2"><span class="fontBold">[contact]</span></td>
-                </tr>
-                <tr>
-                    <td class="contentMainTop"><span class="fontBold">[picq]:</span></td>
-                    <td class="contentMainFirst" align="center">
-                        <input type="text" name="icq" value="[icqnr]" class="inputField_dis_profil"
-                               onfocus="this.className='inputField_en_profil'"
-                               onblur="this.className='inputField_dis_profil'"/>
-                    </td>
                 </tr>
                 <tr>
                     <td class="contentMainTop"><span class="fontBold">[psteamid]:</span></td>

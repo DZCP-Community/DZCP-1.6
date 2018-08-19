@@ -1,14 +1,16 @@
 // GLOBAL VARS
-var doc = document, ie4 = document.all, opera = window.opera;
-var innerLayer, layer, x, y, offsetX = 15, offsetY = 5, tableObj, obj, objWidth, newWidth;
-var tickerc = 0, mTimer = new Array(), tickerTo = new Array(), tickerSpeed = new Array();
-var shoutInterval = 15000; // refresh interval of the shoutbox in ms
-var teamspeakInterval = 15000; // refresh interval of the teamspeak viewer in ms
-var isIE = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
-var isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
+let doc = document, ie4 = document.all, opera = window.opera;
+let innerLayer, layer, x, y, offsetX = 15, offsetY = 5, tableObj, obj, objWidth, newWidth;
+let tickerc = 0, mTimer = new Array(), tickerTo = new Array(), tickerSpeed = new Array();
+let shoutInterval = 15000; // refresh interval of the shoutbox in ms
+let teamspeakInterval = 15000; // refresh interval of the teamspeak viewer in ms
+let conjobInterval = 60000; // refresh interval of the web-conjob in ms
+let isIE = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
+let isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
+let map = null, dzcp_config = null,layer_markers = null, membermap = new Array();
 
 // DZCP JAVASCRIPT LIBARY FOR JQUERY >= V3.X
-var DZCP = {
+let DZCP = {
     //init
     init: function () {
         doc.body.id = 'dzcp-engine-1.6-1-0';
@@ -22,6 +24,16 @@ var DZCP = {
 
         // refresh teamspeak
         if ($('#navTeamspeakContent')[0]) window.setInterval("$('#navTeamspeakContent').load('../inc/ajax.php?i=teamspeak');", teamspeakInterval);
+
+        // call webconjob
+        window.setInterval(function () {
+            DZCP.webConjob();
+        }, conjobInterval);
+
+        // init membermap
+        if($('#membermap').length) {
+            DZCP.memberMap();
+        }
 
         // init lightbox
         DZCP.initLightbox();
@@ -43,15 +55,17 @@ var DZCP = {
             $(this).tabs();
         });
 
-        if (dsgvo == 1) {
+        if (dzcp_config.dsgvo == 1) {
             DZCP.show_dsgvo("#dialog-confirm");
         }
 
-        if (dsgvo_lock == 1) {
+        if (dzcp_config.dsgvo_lock == 1) {
             DZCP.show_dsgvo_lock("#dialog-confirm-lock");
         }
     },
-
+    setConfig: function (json) { //Set Config
+        dzcp_config = JSON&&JSON.parse(json)|| $.parseJSON(json);
+    },
     show_dsgvo_lock: function (name) {
         $(name).show();
         $(name).dialog({
@@ -62,11 +76,11 @@ var DZCP = {
             modal: true,
             buttons: {
                 "Akzeptieren": function () {
-                    var url = "../user/?action=userlock&dsgvo-lock=1";
+                    let url = "../user/?action=userlock&dsgvo-lock=1";
                     $(location).attr('href', url);
                 },
                 "Ablehnen": function () {
-                    var url = "../user/?action=userlock&dsgvo-lock=0";
+                    let url = "../user/?action=userlock&dsgvo-lock=0";
                     $(location).attr('href', url);
                 }
             }
@@ -83,11 +97,11 @@ var DZCP = {
             modal: true,
             buttons: {
                 "Akzeptieren": function () {
-                    var url = "?dsgvo=1";
+                    let url = "?dsgvo=1";
                     $(location).attr('href', url);
                 },
                 "Ablehnen": function () {
-                    var url = "?dsgvo=0";
+                    let url = "?dsgvo=0";
                     $(location).attr('href', url);
                 }
             }
@@ -99,7 +113,7 @@ var DZCP = {
         lightbox.option({
             resizeDuration: 350,
             positionFromTop: 20,
-            albumLabel: (lng == 'de' ? 'Bild %1 von %2' : 'Image %1 of %2'),
+            albumLabel: (dzcp_config.lng == 'de' ? 'Bild %1 von %2' : 'Image %1 of %2'),
             maxHeight: screen.height / 1.3,
             maxWidth: screen.width / 1.3
         });
@@ -111,7 +125,7 @@ var DZCP = {
             obj.addEventListener(evType, fn, false);
             return true;
         } else if (obj.attachEvent) {
-            var r = obj.attachEvent('on' + evType, fn);
+            const r = obj.attachEvent('on' + evType, fn);
             return r;
         } else return false;
     },
@@ -120,21 +134,22 @@ var DZCP = {
     trackMouse: function (e) {
         innerLayer = $('#infoInnerLayer')[0];
         if (typeof(layer) == 'object') {
-            var ie4 = doc.all;
-            var ns6 = doc.getElementById && !doc.all;
-            var mLeft = 5;
-            var mTop = -15;
+            let ie4 = doc.all;
+            let ns6 = doc.getElementById && !doc.all;
+            let mLeft = 5;
+            let mTop = -15;
+            let layerW = 0;
 
             x = (ns6) ? e.pageX - mLeft : window.event.clientX + doc.documentElement.scrollLeft - mLeft;
             y = (ns6) ? e.pageY - mTop : window.event.clientY + doc.documentElement.scrollTop - mTop;
 
             if (innerLayer) {
-                var layerW = ((ie4) ? innerLayer.offsetWidth : innerLayer.clientWidth) - 3;
+                let layerW = ((ie4) ? innerLayer.offsetWidth : innerLayer.clientWidth) - 3;
 
             } else {
-                var layerW = ((ie4) ? layer.clientWidth : layer.offsetWidth) - 3;
+                let layerW = ((ie4) ? layer.clientWidth : layer.offsetWidth) - 3;
             }
-            var winW = (ns6) ? (window.innerWidth) + window.pageXOffset - 12
+            let winW = (ns6) ? (window.innerWidth) + window.pageXOffset - 12
                 : doc.documentElement.clientWidth + doc.documentElement.scrollLeft;
 
             layer.style.left = ((x + offsetX + layerW >= winW - offsetX) ? x - (layerW + offsetX) : x + offsetX) + 'px';
@@ -147,7 +162,7 @@ var DZCP = {
     popup: function (url, x, y) {
         x = parseInt(x);
         y = parseInt(y) + 50;
-        var popup = window.open(url, 'Popup', "width=1,height=1,location=0,scrollbars=0,resizable=1,status=0");
+        let popup = window.open(url, 'Popup', "width=1,height=1,location=0,scrollbars=0,resizable=1,status=0");
         popup.resizeTo(x, y);
         popup.moveTo((screen.width - x) / 2, (screen.height - y) / 2);
         popup.focus();
@@ -165,7 +180,7 @@ var DZCP = {
 
     // init Ajax DynLoader
     initDynLoader: function (tag, menu, options) {
-        var request = $.ajax({
+        let request = $.ajax({
             url: "../inc/ajax.php?i=" + menu + options,
             type: "GET",
             data: {},
@@ -180,7 +195,7 @@ var DZCP = {
 
     // init Ajax DynCaptcha
     initDynCaptcha: function (tag, num, secure) {
-        var request = $.ajax({
+        let request = $.ajax({
             url: "../antispam.php?secure=" + secure + "&num=" + num,
             type: "GET",
             data: {},
@@ -206,13 +221,13 @@ var DZCP = {
 
     // switch userlist
     switchuser: function () {
-        var url = doc.formChange.changeme.options[doc.formChange.changeme.selectedIndex].value;
+        let url = doc.formChange.changeme.options[doc.formChange.changeme.selectedIndex].value;
         window.location.href = url
     },
 
     // Templateswitch
     tempswitch: function () {
-        var url = doc.form.tempswitch.options[doc.form.tempswitch.selectedIndex].value;
+        let url = doc.form.tempswitch.options[doc.form.tempswitch.selectedIndex].value;
         if (url != 'lazy' && url != tempdir)
             DZCP.goTo("?tmpl_set=" + url);
     },
@@ -236,12 +251,12 @@ var DZCP = {
     // handle info layer
     showInfo: function (info, kats, text, img, width, height) {
         if (typeof(layer) == 'object') {
-            var output = '';
+            let output = '';
             if (kats && text) {
-                var kat = kats.split(";");
-                var texts = text.split(";");
-                var katout = "";
-                for (var i = 0; i < kat.length; ++i) {
+                let kat = kats.split(";");
+                let texts = text.split(";");
+                let katout = "";
+                for (let i = 0; i < kat.length; ++i) {
                     katout = katout + '<tr><td>' + kat[i] + '</td><td>' + texts[i] + '</td></tr>';
                 }
                 output = '<tr><td class="infoTop" colspan="2">' + info + '</td></tr>' + katout + '';
@@ -251,7 +266,7 @@ var DZCP = {
                 output = '<tr><td>' + info + '</td></tr>';
             }
 
-            var userimg = "";
+            let userimg = "";
             if (img) {
                 userimg = '<tr><td colspan=2 align=center><img src="' + img + '" width="' + width + '" height="' + height + '" alt="" /></td></tr>';
             }
@@ -281,7 +296,7 @@ var DZCP = {
 
     // handle Steam layer
     showSteamBox: function (user, img, text, text2, status) {
-        var class_state;
+        let class_state;
         switch (status) {
             case 1:
                 class_state = 'online';
@@ -365,20 +380,20 @@ var DZCP = {
     },
     // resize images
     resizeImages: function () {
-        for (var i = 0; i < doc.images.length; i++) {
-            var d = doc.images[i];
+        for (let i = 0; i < doc.images.length; i++) {
+            let d = doc.images[i];
 
             if (d.className == 'content') {
-                var imgW = d.width;
-                var imgH = d.height;
+                let imgW = d.width;
+                let imgH = d.height;
 
                 if (maxW != 0 && imgW > maxW) {
                     d.width = maxW;
                     d.height = Math.round(imgH * (maxW / imgW));
 
                     if (!DZCP.linkedImage(d)) {
-                        var textLink = doc.createElement("span");
-                        var popupLink = doc.createElement("a");
+                        let textLink = doc.createElement("span");
+                        let popupLink = doc.createElement("a");
 
                         textLink.appendChild(doc.createElement("br"));
                         textLink.setAttribute('class', 'resized');
@@ -435,12 +450,12 @@ var DZCP = {
     },
     // ajax preview
     ajaxPreview: function (form) {
-        var tag = doc.getElementsByTagName("textarea");
-        for (var i = 0; i < tag.length; i++) {
-            var thisTag = tag[i].className;
-            var thisID = tag[i].id;
+        let tag = doc.getElementsByTagName("textarea");
+        for (let i = 0; i < tag.length; i++) {
+            let thisTag = tag[i].className;
+            let thisID = tag[i].id;
             if (thisTag == "editorStyle" || thisTag == "editorStyleWord" || thisTag == "editorStyleNewsletter") {
-                var inst = tinyMCE.getInstanceById(thisID);
+                let inst = tinyMCE.getInstanceById(thisID);
                 $('#' + thisID).prop('value', inst.getBody().innerHTML);
             }
         }
@@ -448,14 +463,14 @@ var DZCP = {
         $('#previewDIV').html('<div style="width:100%;text-align:center">'
             + ' <img src="../inc/images/admin/loading.gif" alt="" />'
             + '</div>');
-        var addpars = "";
+        let addpars = "";
         if (form == 'cwForm') {
             $("input[type=file]").each(function () {
                 addpars = addpars + "&" + $(this).prop('name') + "=" + $(this).prop('value');
             });
         }
 
-        var url = prevURL;
+        let url = prevURL;
         $.post(url, $('#' + form).serialize() + addpars, function (req) {
             $('#previewDIV').html(req);
         });
@@ -471,18 +486,18 @@ var DZCP = {
         $('#allkat').prop('checked', false);
     },
     hideForumAll: function () {
-        for (var i = 0; i < doc.forms['search'].elements.length; i++) {
-            var box = doc.forms['search'].elements[i];
+        for (let i = 0; i < doc.forms['search'].elements.length; i++) {
+            let box = doc.forms['search'].elements[i];
             if (box.id.match(/k_/g))
                 box.checked = false;
         }
     },
     // disable submit button
     submitButton: function (id) {
-        var submitID = (id) ? id : 'contentSubmit';
+        let submitID = (id) ? id : 'contentSubmit';
         $('#' + submitID).prop("disabled", true);
         $('#' + submitID).css('color', '#909090');
-        $('#' + submitID).css('cursor', 'default');
+        $('#' + submitID).css('cursor', 'wait');
 
         return true;
     },
@@ -493,12 +508,12 @@ var DZCP = {
         tickerSpeed[tickerc] = (parseInt(ms) <= 10) ? 10 : parseInt(ms);
 
         // prepare  object
-        var orgData = $('#' + objID).html();
-        var newData = '<div id="scrollDiv' + tickerc + '" class="scrollDiv" style="position:relative;left:0;z-index:1">';
+        let orgData = $('#' + objID).html();
+        let newData = '<div id="scrollDiv' + tickerc + '" class="scrollDiv" style="position:relative;left:0;z-index:1">';
         newData += '<table id="scrollTable' + tickerc + '" class="scrolltable"  cellpadding="0" cellspacing="0">';
         newData += '<tr>';
         newData += '<td onmouseover="clearTimeout(mTimer[' + tickerc + '])" onmouseout="DZCP.startTickerDiv(' + tickerc + ')">';
-        for (var i = 0; i < 10; i++) newData += orgData;
+        for (let i = 0; i < 10; i++) newData += orgData;
         newData += '</td>';
         newData += '</tr>';
         newData += '</table>';
@@ -518,11 +533,55 @@ var DZCP = {
         mTimer[subID] = setInterval("DZCP.moveDiv('" + obj.id + "', " + newWidth + ", " + subID + ");", tickerSpeed[subID]);
     },
     moveDiv: function (obj, width, subID) {
-        var thisObj = $('#' + obj)[0];
+        let thisObj = $('#' + obj)[0];
         if (tickerTo[subID] == 'h') thisObj.style.left = (parseInt(thisObj.style.left) <= (0 - (width / 2) + 2)) ? 0 : parseInt(thisObj.style.left) - 1 + 'px';
         else thisObj.style.top = (thisObj.style.top == '' || (parseInt(thisObj.style.top) < (0 - (width / 2) + 6))) ? 0 : parseInt(thisObj.style.top) - 1 + 'px';
+    },
+    webConjob: function () {
+        $.ajax({
+            url: "../inc/conjob.php",
+            type: "GET",
+            data: {},
+            dataType: "html",
+            timeout: 20000,
+            crossDomain: true,
+        }).done(function () {
+        });
+    },
+    memberMap: function () {
+        let openlayers = OpenLayers;
+        openlayers.Lang.setCode(dzcp_config.lng);
+
+        map = new openlayers.Map('membermap', {
+            projection: new openlayers.Projection("EPSG:900913"),
+            displayProjection: new openlayers.Projection("EPSG:4326"),
+            controls: [
+                new openlayers.Control.Navigation(),
+                new openlayers.Control.PanZoomBar()],
+            maxExtent:
+                new openlayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
+            numZoomLevels: 12,
+            maxResolution: 156543,
+            units: 'meters'
+        });
+
+        let layer_mapnik = new openlayers.Layer.OSM.Mapnik("Mapnik");
+        layer_markers = new openlayers.Layer.Markers("Address", {
+            projection: new openlayers.Projection("EPSG:4326"),
+            visibility: true, displayInLayerSwitcher: true
+        });
+
+        map.addLayers([layer_mapnik, layer_markers]);
+        jumpTo(10.451526, 51.165691, 6);
+
+        for (let i = 0; i < dzcp_config.membermap.length; i++) {
+            let member = dzcp_config.membermap[i];
+            let popuptext = "<span style=\"color:#000000\">" + member.text +
+                "<img src=\"" + member.img.src + "\" width=\""+member.img.width+"\" height=\""+member.img.height+"\"></p></span>";
+            addMarker(layer_markers, member.lng, member.lat, popuptext);
+        }
     }
-}
+};
 
 // load global events
 $(document).ready(function () {

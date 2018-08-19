@@ -40,6 +40,8 @@ $language_text['_datenschutz_rolle_2'] = 'Datenschutzbeauftragter ( <span style=
 
 $language_text['_user_dont_dsgvo'] = 'Dieser User kann nicht eingesehen werden!';
 $language_text['_user_profile_dont_show'] = 'Dieses Profil ist privat';
+$language_text['_user_profile_show'] = 'Sichtbar';
+$language_text['_user_profile_no_show'] = 'Privat';
 $language_text['_pvisibility_profile'] = 'Profilsichtbarkeit';
 $language_text['_pedit_perm_profile'] = '<option value="0">Public</option><option value="1">User only</option><option value="2">Member only</option><option value="4">Admin only</option>';
 $language_text['_admin_dsgvo_log'] = 'Datenschutz Infos';
@@ -291,9 +293,9 @@ $language_text['_sponsors_empty_link'] = 'Du musst eine Linkadresse angeben!';
 $language_text['_site_away'] = 'Abwesenheitskalender';
 $language_text['_away_list'] = 'Abwesenheitsliste';
 $language_text['_config_c_away'] = 'Abwesenheitsliste';
-$language_text['_away_status_new'] = '<b><font color=orange>Hinzugef&uuml;gt</font></b>';
-$language_text['_away_status_now'] = '<b><font color=green>Aktuell</font></b>';
-$language_text['_away_status_done'] = '<b><font color=red>Abgelaufen</font></b>';
+$language_text['_away_status_new'] = '<b><span style="color:#FFA500">Hinzugef&uuml;gt</span></b>';
+$language_text['_away_status_now'] = '<b><span style="color:#008000">Aktuell</span></b>';
+$language_text['_away_status_done'] = '<b><span style="color:#FF0000">Abgelaufen</span></b>';
 $language_text['_away_new'] = 'Melden';
 $language_text['_away_empty_titel'] = 'Bitte einen Grund angeben';
 $language_text['_away_empty_reason'] = 'Bitte ein Kommentar angeben';
@@ -664,7 +666,6 @@ Jeder berechtigte Admin hat darauf hin diese Nachricht empfangen!<br /><br />
 <span class="fontUnder"><span class="fontBold">Ansprechpartner:</span></span><br />
 <span class="fontBold">Nick:</span> [nick]<br />
 <span class="fontBold">Email:</span> [email]<br />
-<span class="fontBold">ICQ-Nr.:</span> [icq]<br /><br />
 <span class="fontBold"><span class="fontUnder">Clandaten:</span></span><br />
 <span class="fontBold">Clanname:</span> [clan]<br />
 <span class="fontBold">Homepage:</span> [hp]<br />
@@ -1253,7 +1254,6 @@ $language_text['_contact_text'] = '
 Jemand hat das Kontaktformular ausgef&uuml;llt!<br /><br />
 <span class="fontBold">Nick:</span> [nick]<br />
 <span class="fontBold">Email:</span> [email]<br />
-<span class="fontBold">ICQ-Nr.:</span> [icq]<br />
 <span class="fontBold">Skype:</span> [skype]<br />
 <span class="fontBold">Steam:</span> [steam]<br /><br />
 <span class="fontUnder"><span class="fontBold">Nachricht:</span></span><br />[text]';
@@ -1265,7 +1265,6 @@ Jemand hat das Joinus-Kontaktformular ausgef&uuml;llt!<br /><br />
 <span class="fontBold">Nick:</span> [nick]<br />
 <span class="fontBold">Alter:</span> [age]<br />
 <span class="fontBold">Email:</span> [email]<br />
-<span class="fontBold">ICQ-Nr.:</span> [icq]<br />
 <span class="fontBold">Skype:</span> [skype]<br />
 <span class="fontBold">Steam:</span> [steam]<br /><br />
 <span class="fontBold">Team:</span> [squad]<br /><br />
@@ -2154,7 +2153,6 @@ $language_text['_pwd'] = 'Passwort';
 $language_text['_loginname'] = 'Login-Name';
 $language_text['_email'] = 'E-Mail';
 $language_text['_hp'] = 'Homepage';
-$language_text['_icq'] = 'ICQ-Nr.';
 $language_text['_member'] = 'Member';
 $language_text['_user'] = 'User';
 $language_text['_gast'] = 'unregistriert';

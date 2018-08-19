@@ -81,20 +81,12 @@ if (defined('_Forum')) {
                     "edit" => $edit,
                     "delete" => $delete));
 
-                $hp = "";
-                $icq = "";
-                $pn = "";
-                $email = "";
+                $hp = ""; $pn = ""; $email = "";
                 if ($getp['reg']) {
-                    $getu = db("SELECT `nick`,`icq`,`hp`,`email` FROM `" . $db['users'] . "` WHERE `id` = " . $getp['reg'] . ";", false, true);
+                    $getu = db("SELECT `nick`,`hp`,`email` FROM `" . $db['users'] . "` WHERE `id` = " . $getp['reg'] . ";", false, true);
 
                     $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
                     $pn = show(_pn_write_forum, array("id" => $getp['reg'], "nick" => $getu['nick']));
-
-                    if (!empty($getu['icq']) || !$getu['icq']) {
-                        $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
-                        $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin=' . $getu['icq'] . '" target="_blank">' . $uin . '</a>';
-                    }
 
                     if (!empty($getu['hp']))
                         $hp = show(_hpicon_forum, array("hp" => links(re($getu['hp']))));
@@ -124,7 +116,6 @@ if (defined('_Forum')) {
                     "text" => $text,
                     "pn" => $pn,
                     "class" => $ftxt['class'],
-                    "icq" => $icq,
                     "hp" => $hp,
                     "email" => $email,
                     "status" => getrank($getp['reg']),
@@ -255,17 +246,11 @@ if (defined('_Forum')) {
                 "edit" => $editt,
                 "delete" => $deletet));
 
-            $icq = "";
-            $hp = "";
-            $pn = "";
+            $hp = ""; $pn = "";
             if ($get['t_reg'] != 0) {
-                $getu = db("SELECT `nick`,`icq`,`hp`,`email` FROM `" . $db['users'] . "` WHERE `id` = " . $get['t_reg'] . ";", false, true);
+                $getu = db("SELECT `nick`,`hp`,`email` FROM `" . $db['users'] . "` WHERE `id` = " . $get['t_reg'] . ";", false, true);
                 $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
                 $pn = show(_pn_write_forum, array("id" => $get['t_reg'], "nick" => $getu['nick']));
-                if (!empty($getu['icq']) || $getu['icq'] >= 1) {
-                    $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
-                    $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin=' . $getu['icq'] . '" target="_blank">' . $uin . '</a>';
-                }
 
                 if (!empty($getu['hp']))
                     $hp = show(_hpicon_forum, array("hp" => links(re($getu['hp']))));
@@ -323,7 +308,6 @@ if (defined('_Forum')) {
                 "postnr" => "1",
                 "class" => $ftxt['class'],
                 "pn" => $pn,
-                "icq" => $icq,
                 "hp" => $hp,
                 "email" => $email,
                 "posts" => $userposts,

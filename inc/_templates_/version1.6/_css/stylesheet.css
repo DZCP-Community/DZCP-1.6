@@ -1,10 +1,10 @@
 steam
-/* 
-Global Styles, to norm all elements 
+    /*
+    Global Styles, to norm all elements
 
-Set margin padding and font stuff for every element,
-then it should not be required to set them again
-*/
+    Set margin padding and font stuff for every element,
+    then it should not be required to set them again
+    */
 html, body, table, td, div, form, button, select, input, textarea, h1, h2, h3, h4, h5, h6, a, p, cite, quote, u, i {
     margin: 0px;
     padding: 0px;
@@ -141,7 +141,7 @@ div#footer {
     border-top: 1px solid #c4c4c4;
     border-bottom: 1px solid #c4c4c4;
     margin-top: 7px;
-        text-align: center;
+    text-align: center;
 }
 
 /* ClanLogoLeft banner in header */
@@ -550,7 +550,7 @@ input.voteSubmit:hover {
     background-color: #cc0033; /* fallback color if gradients are not supported */
     background-image: -webkit-linear-gradient(to top, #cc0033 10%, #660000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
     background-image:    -moz-linear-gradient(to top, #cc0033 10%, #660000); /* For Firefox (3.6 to 15) */
-    background-image:      -o-linear-gradient(to top, #cc0033 10%, #660000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      -o-linear-gradient(to top, #cc0033 10%, #660000); /* For old Opera (11.1 to 12.0) */
     background-image:      linear-gradient(to top, #cc0033 10%, #660000); /* Standard syntax; must be last */
 }
 
@@ -601,7 +601,7 @@ input.shoutSubmit {
     background-color: #cc0033; /* fallback color if gradients are not supported */
     background-image: -webkit-linear-gradient(to top, #cc0033 70%, #660000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
     background-image:    -moz-linear-gradient(to top, #cc0033 70%, #660000); /* For Firefox (3.6 to 15) */
-    background-image:      -o-linear-gradient(to top, #cc0033 70%, #660000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      -o-linear-gradient(to top, #cc0033 70%, #660000); /* For old Opera (11.1 to 12.0) */
     background-image:      linear-gradient(to top, #cc0033 70%, #660000); /* Standard syntax; must be last */
     border: 1px solid #5F5F5F;
     color: #fff;
@@ -806,7 +806,7 @@ td.contentHead, td.infoTop {
     color: #000;
     border-bottom: 1px solid red;
     text-transform: uppercase;
-    text-shadow: 0px 0px 1px #666666;   
+    text-shadow: 0px 0px 1px #666666;
 }
 
 td.contentMainTop, tr.contentMainTop {
@@ -1169,7 +1169,7 @@ td.statsBalken {
     background-image: url('../../../images/vote_bg.gif');
     background-image: -webkit-linear-gradient(to right, #660000 70%, #FF0000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
     background-image:    -moz-linear-gradient(to right, #660000 70%, #FF0000); /* For Firefox (3.6 to 15) */
-    background-image:      -o-linear-gradient(to right, #660000 70%, #FF0000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      -o-linear-gradient(to right, #660000 70%, #FF0000); /* For old Opera (11.1 to 12.0) */
     background-image:      linear-gradient(to right, #660000 70%, #FF0000); /* Standard syntax; must be last */
 }
 
@@ -1276,7 +1276,7 @@ input.submit {
     background-color: #cc0033; /* fallback color if gradients are not supported */
     background-image: -webkit-linear-gradient(top, #cc0033 70%, #660000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
     background-image:    -moz-linear-gradient(top, #cc0033 70%, #660000); /* For Firefox (3.6 to 15) */
-    background-image:      -o-linear-gradient(top, #cc0033 70%, #660000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      -o-linear-gradient(top, #cc0033 70%, #660000); /* For old Opera (11.1 to 12.0) */
     background-image:      linear-gradient(to top, #cc0033 70%, #660000); /* Standard syntax; must be last */
 }
 
@@ -1284,7 +1284,7 @@ input.submit:hover {
     background-color: #660000; /* fallback color if gradients are not supported */
     background-image: -webkit-linear-gradient(top, #cc0033 10%, #660000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
     background-image:    -moz-linear-gradient(top, #cc0033 10%, #660000); /* For Firefox (3.6 to 15) */
-    background-image:      -o-linear-gradient(top, #cc0033 10%, #660000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      -o-linear-gradient(top, #cc0033 10%, #660000); /* For old Opera (11.1 to 12.0) */
     background-image:      linear-gradient(to top, #cc0033 10%, #660000); /* Standard syntax; must be last */
 }
 
@@ -1952,7 +1952,7 @@ img.border {
     background-color: #706c6b; /* fallback color if gradients are not supported */
     background-image: -webkit-linear-gradient(top, #333333 20%, 80%, #000000); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
     background-image:    -moz-linear-gradient(top, #333333 20%, 80%, #000000); /* For Firefox (3.6 to 15) */
-    background-image:      -o-linear-gradient(top, #333333 20%, 80%, #000000); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      -o-linear-gradient(top, #333333 20%, 80%, #000000); /* For old Opera (11.1 to 12.0) */
     background-image:         linear-gradient(to bottom, #333333 20%, #000000 80%); /* Standard syntax; must be last */
     border-radius: 3px;
     text-align: center;
@@ -1962,7 +1962,7 @@ img.border {
     background-color: #9bc861; /* fallback color if gradients are not supported */
     background-image: -webkit-linear-gradient(top, #9bc861 20%, 80%, #789e4c); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
     background-image:    -moz-linear-gradient(top, #9bc861 20%, 80%, #789e4c); /* For Firefox (3.6 to 15) */
-    background-image:      -o-linear-gradient(top, #9bc861 20%, 80%, #789e4c); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      -o-linear-gradient(top, #9bc861 20%, 80%, #789e4c); /* For old Opera (11.1 to 12.0) */
     background-image:         linear-gradient(to bottom, #9bc861 20%, #789e4c 80%); /* Standard syntax; must be last */
 }
 
@@ -1970,7 +1970,7 @@ img.border {
     background-color: #7bafd6; /* fallback color if gradients are not supported */
     background-image: -webkit-linear-gradient(top, #7bafd6 20%, 80%, #506d92); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
     background-image:    -moz-linear-gradient(top, #7bafd6 20%, 80%, #506d92); /* For Firefox (3.6 to 15) */
-    background-image:      -o-linear-gradient(top, #7bafd6 20%, 80%, #506d92); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      -o-linear-gradient(top, #7bafd6 20%, 80%, #506d92); /* For old Opera (11.1 to 12.0) */
     background-image:         linear-gradient(to bottom, #7bafd6 20%, #506d92 80%); /* Standard syntax; must be last */
 }
 
@@ -1978,7 +1978,7 @@ img.border {
     background-color: #706c6b; /* fallback color if gradients are not supported */
     background-image: -webkit-linear-gradient(top, #706c6b 20%, 80%, #4e4d4d); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
     background-image:    -moz-linear-gradient(top, #706c6b 20%, 80%, #4e4d4d); /* For Firefox (3.6 to 15) */
-    background-image:      -o-linear-gradient(top, #706c6b 20%, 80%, #4e4d4d); /* For old Opera (11.1 to 12.0) */ 
+    background-image:      -o-linear-gradient(top, #706c6b 20%, 80%, #4e4d4d); /* For old Opera (11.1 to 12.0) */
     background-image:         linear-gradient(to bottom, #706c6b 20%, #4e4d4d 80%); /* Standard syntax; must be last */
 }
 
@@ -2005,20 +2005,20 @@ img.border {
 
 /* zoom bg and ui-icons */
 .zoom-150 {
-zoom: 150%; 
-    -moz-transform: scale(1.50); 
-    -webkit-zoom: 1.50; 
+    zoom: 150%;
+    -moz-transform: scale(1.50);
+    -webkit-zoom: 1.50;
     -ms-zoom: 1.50;
- }
- .zoom-200 {
-zoom: 200%; 
-    -moz-transform: scale(2.0); 
-    -webkit-zoom: 2.0; 
+}
+.zoom-200 {
+    zoom: 200%;
+    -moz-transform: scale(2.0);
+    -webkit-zoom: 2.0;
     -ms-zoom: 2.0;
- }
+}
 .zoom-400 {
-zoom: 400%; 
-    -moz-transform: scale(4.0); 
-    -webkit-zoom: 4.0; 
+    zoom: 400%;
+    -moz-transform: scale(4.0);
+    -webkit-zoom: 4.0;
     -ms-zoom: 4.0;
- }
+}

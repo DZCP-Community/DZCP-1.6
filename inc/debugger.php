@@ -40,22 +40,22 @@ class DebugConsole
 
     public static final function insert_successful($file, $func)
     {
-        self::$log_array[$file][] = '<font color="#009900">' . $func . '</font>';
+        self::$log_array[$file][] = '<span style="color:#009900">' . $func . '</font>';
     }
 
     public static final function insert_error($file, $msg)
     {
-        self::$log_array[$file][] = '<font color="#FF0000">' . $msg . '</font>';
+        self::$log_array[$file][] = '<span style="color:#FF0000">' . $msg . '</font>';
     }
 
     public static final function insert_loaded($file, $func)
     {
-        if (show_loaded) self::$log_array[$file][] = '<font color="#009900">' . $func . '</font>';
+        if (show_loaded) self::$log_array[$file][] = '<span style="color:#009900">' . $func . '</font>';
     }
 
     public static final function insert_info($file, $info)
     {
-        if (show_info) self::$log_array[$file][] = '<font color="#9900CC">' . $info . '</font>';
+        if (show_info) self::$log_array[$file][] = '<span style="color:#9900CC">' . $info . '</font>';
     }
 
     public static final function insert_var_debug($info)
@@ -65,7 +65,7 @@ class DebugConsole
 
     public static final function insert_warning($file, $func)
     {
-        if (show_warning) self::$log_array[$file][] = '<font color="#FFFF00">' . $func . '</font>';
+        if (show_warning) self::$log_array[$file][] = '<span style="color:#FFFF00">' . $func . '</font>';
     }
 
     public static final function sql_error_handler($query)
@@ -113,8 +113,8 @@ class DebugConsole
                 foreach ($msg_array as $msg) {
                     $set_color = ($color % 2) ? "#CCCCCC" : "#E6E6E6";
                     $color++;
-                    $data .= '<tr><td width="40%" bgcolor="' . $set_color . '"><b><div align="center"><font color="#000000" style="font-size:11px">"' . $file . '"</font></div></b></td>
-                <td width="60%" bgcolor="' . $set_color . '"><b><div align="center"><font color="#000000" style="font-size:11px">"' . $msg . '"</font></div></b></td></tr>';
+                    $data .= '<tr><td width="40%" bgcolor="' . $set_color . '"><b><div align="center"><span style="color:#000000;font-size:11px">"' . $file . '"</font></div></b></td>
+                <td width="60%" bgcolor="' . $set_color . '"><b><div align="center"><span style="color:#000000;font-size:11px">' . $msg . '"</font></div></b></td></tr>';
                     $i++;
                 }
             }

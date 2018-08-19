@@ -29,12 +29,12 @@ use PHPMailer\PHPMailer\PHPMailer;
 $ajaxJob = (!isset($ajaxJob) ? false : $ajaxJob);
 
 //Set DSGVO to false
-if (!array_key_exists('DSGVO', $_SESSION)) {
+if (!$ajaxJob && !array_key_exists('DSGVO', $_SESSION)) {
     $_SESSION['DSGVO'] = false;
 }
 
 //Set DSGVO Lock
-if (!array_key_exists('user_has_dsgvo_lock', $_SESSION)) {
+if (!$ajaxJob && !array_key_exists('user_has_dsgvo_lock', $_SESSION)) {
     $_SESSION['user_has_dsgvo_lock'] = false;
 }
 
@@ -74,14 +74,6 @@ try {
 }
 
 $cache = CacheManager::getInstance($config_cache['storage']); // return your setup storage
-
-//-> Automatische Datenbank Optimierung
-if (auto_db_optimize && settings('db_optimize', false) <= time() && !$installer && !$updater) {
-    @ignore_user_abort(true);
-    db("UPDATE `" . $db['settings'] . "` SET `db_optimize` = '" . (time() + auto_db_optimize_interval) . "' WHERE `id` = 1;");
-    db_optimize();
-    @ignore_user_abort(false);
-}
 
 //-> Settingstabelle auslesen * Use function settings('xxxxxx');
 if (!dbc_index::issetIndex('settings')) {
@@ -263,8 +255,10 @@ function isSecure() {
 }
 
 function hasSecure() {
-    if (ping_port(GetServerVars('HTTP_HOST'),443,0.1)) {
-        return true;
+    if(use_ssl_auto_redirect) {
+        if (ping_port(GetServerVars('HTTP_HOST'), 443, 0.1)) {
+            return true;
+        }
     }
 
     return false;
@@ -1172,8 +1166,7 @@ function smileys(string $txt)
     return str_replace(" ^^", " <img src=\"../inc/images/smileys/^^.gif\" alt=\"\" />", $txt);
 }
 
-function cut(string $text, int $length = 0, bool $dots = true, bool $html = true, string $ending = '', bool $exact = false, bool $considerHtml = true)
-{
+function cut(string $text, int $length = 0, bool $dots = true, bool $html = true, string $ending = '', bool $exact = false, bool $considerHtml = true) {
     if ($length === 0)
         return '';
 
@@ -1280,14 +1273,12 @@ function cut(string $text, int $length = 0, bool $dots = true, bool $html = true
     return $truncate;
 }
 
-function wrap(string $str, int $width = 75, string $break = "\n", bool $cut = true)
-{
+function wrap(string $str, int $width = 75, string $break = "\n", bool $cut = true) {
     return strtr(str_replace(htmlentities($break), $break, htmlentities(wordwrap(html_entity_decode($str), $width, $break, $cut), ENT_QUOTES)), array_flip(get_html_translation_table(HTML_SPECIALCHARS, ENT_COMPAT)));
 }
 
 //-> Funktion um Dateien aus einem Verzeichnis auszulesen
-function get_files(string $dir = null, bool $only_dir = false, bool $only_files = false, array $file_ext = array(), $preg_match = false, array $blacklist = array(), $blacklist_word = false)
-{
+function get_files(string $dir = null, bool $only_dir = false, bool $only_files = false, array $file_ext = array(), $preg_match = false, array $blacklist = array(), $blacklist_word = false) {
     $cache_hash = md5($dir . $only_dir . $only_files . print_r($file_ext, true) . $preg_match . print_r($blacklist, true) . $blacklist_word);
     if (!dbc_index::issetIndex('files') || !dbc_index::getIndexKey('files', $cache_hash) || !dbc_index::MemSetIndex()) {
         $files = array();
@@ -1361,8 +1352,7 @@ function get_files(string $dir = null, bool $only_dir = false, bool $only_files 
 }
 
 //-> Gibt einen Teil eines nummerischen Arrays wieder
-function limited_array(array $array = array(), int $begin, int $max)
-{
+function limited_array(array $array = array(), int $begin, int $max) {
     $array_exp = array();
     $range = range($begin = ($begin - 1), ($begin + $max - 1));
     foreach ($array as $key => $wert) {
@@ -1373,8 +1363,7 @@ function limited_array(array $array = array(), int $begin, int $max)
     return $array_exp;
 }
 
-function array_var_exists($var, $search)
-{
+function array_var_exists($var, $search) {
     foreach ($search as $key => $var_) {
         if ($var_ == $var) return true;
     }
@@ -1382,8 +1371,7 @@ function array_var_exists($var, $search)
 }
 
 //-> Funktion um Sonderzeichen zu konvertieren
-function spChars(string $txt)
-{
+function spChars(string $txt) {
     $txt = str_replace("Ä", "&Auml;", $txt);
     $txt = str_replace("ä", "&auml;", $txt);
     $txt = str_replace("Ü", "&Uuml;", $txt);
@@ -1395,8 +1383,7 @@ function spChars(string $txt)
 }
 
 //-> Funktion um sauber in die DB einzutragen
-function up($txt, bool $escape = true)
-{
+function up($txt, bool $escape = true) {
     global $charset;
     $txt = strval($txt);
     $txt = htmlentities($txt, ENT_COMPAT, $charset);
@@ -1407,8 +1394,7 @@ function up($txt, bool $escape = true)
 }
 
 //-> Funktion um diverse Dinge aus Tabellen auszaehlen zu lassen
-function cnt($count, $where = "", $what = "id")
-{
+function cnt($count, $where = "", $what = "id") {
     $cnt_sql = db("SELECT COUNT(" . $what . ") AS `num` FROM " . $count . " " . $where . ";");
     if (_rows($cnt_sql)) {
         $cnt = _fetch($cnt_sql);
@@ -1419,8 +1405,7 @@ function cnt($count, $where = "", $what = "id")
 }
 
 //-> Funktion um diverse Dinge aus Tabellen zusammenzaehlen zu lassen
-function sum($db, $where = "", $what)
-{
+function sum($db, $where = "", $what) {
     $cnt_sql = db("SELECT SUM(" . $what . ") AS `num` FROM " . $db . $where . ";");
     if (_rows($cnt_sql)) {
         $cnt = _fetch($cnt_sql);
@@ -1430,8 +1415,7 @@ function sum($db, $where = "", $what)
     return 0;
 }
 
-function orderby($sort)
-{
+function orderby($sort) {
     $split = explode("&", GetServerVars('QUERY_STRING'));
     $url = "?";
 
@@ -1450,8 +1434,7 @@ function orderby($sort)
     return $url . "orderby=" . $sort . "&order=ASC";
 }
 
-function orderby_sql(array $sort_by = array(), $default_order = '', $join = '', array $order_by = array('ASC', 'DESC'))
-{
+function orderby_sql(array $sort_by = array(), $default_order = '', $join = '', array $order_by = array('ASC', 'DESC')) {
     if (!isset($_GET['order']) || empty($_GET['order']) || !in_array($_GET['order'], $order_by)) return $default_order;
     if (!isset($_GET['orderby']) || empty($_GET['orderby']) || !in_array($_GET['orderby'], $sort_by)) return $default_order;
     $orderby_real = _real_escape_string($_GET['orderby']);
@@ -1461,16 +1444,14 @@ function orderby_sql(array $sort_by = array(), $default_order = '', $join = '', 
     return 'ORDER BY ' . $join . $orderby_real . " " . $order_real;
 }
 
-function orderby_nav()
-{
+function orderby_nav() {
     $orderby = isset($_GET['orderby']) ? "&orderby" . $_GET['orderby'] : "";
     $orderby .= isset($_GET['order']) ? "&order=" . $_GET['order'] : "";
     return $orderby;
 }
 
 //-> Funktion um ein Datenbankinhalt zu highlighten
-function highlight(string $word)
-{
+function highlight(string $word) {
     if (substr(phpversion(), 0, 1) == 5)
         return str_ireplace($word, '<span class="fontRed">' . $word . '</span>', $word);
     else
@@ -1478,8 +1459,7 @@ function highlight(string $word)
 }
 
 //-> Counter updaten
-function updateCounter()
-{
+function updateCounter() {
     global $db, $reload, $today, $datum, $userip, $CrawlerDetect;
     $ipcheck = db("SELECT `id`,`ip`,`datum` FROM `" . $db['c_ips'] . "` WHERE `ip` = '" . $userip . "' AND FROM_UNIXTIME(datum,'%d.%m.%Y') = '" . date("d.m.Y") . "'");
     db("DELETE FROM " . $db['c_ips'] . " WHERE datum+" . $reload . " <= " . time() . " OR FROM_UNIXTIME(datum,'%d.%m.%Y') != '" . date("d.m.Y") . "'");
@@ -1525,8 +1505,7 @@ function update_maxonline() {
 }
 
 //-> Prueft, wieviele Besucher gerade online sind
-function online_guests(string $where = '')
-{
+function online_guests(string $where = '') {
     global $db, $useronline, $userip, $chkMe, $isSpider;
 
     if (!$isSpider) {
@@ -3010,8 +2989,8 @@ final class dbc_index {
  * @param int $timestamp * der timestamp der ersten zeit-marke.
  * @param int $aktuell * der timestamp der zweiten zeit-marke. * aktuelle zeit *
  * @param int $anzahl_einheiten * wie viele einheiten sollen maximal angezeigt werden
- * @param boolean $zeige_leere_einheiten * sollen einheiten, die den wert 0 haben, angezeigt werden?
- * @param array $zeige_einheiten * zeige nur angegebene einheiten. jahre werden zb in sekunden umgerechnet
+ * @param int $zeige_leere_einheiten * sollen einheiten, die den wert 0 haben, angezeigt werden?
+ * @param int $zeige_einheiten * zeige nur angegebene einheiten. jahre werden zb in sekunden umgerechnet
  * @param string $standard * falls der timestamp 0 oder ungueltig ist, gebe diesen string zurueck
  * @return string
  */
@@ -3079,6 +3058,26 @@ if ($functions_files = get_files(basePath . '/inc/additional-functions/', false,
     unset($functions_files, $func);
 }
 
+class javascript {
+    private static $data_array = [];
+
+    public static function set($key='',$var='') {
+        self::$data_array[$key] = $var;
+    }
+
+    public static function remove($key='') {
+        unset(self::$data_array[$key]);
+    }
+
+    public static function get($key='') {
+        return utf8_decode(self::$data_array[$key]);
+    }
+
+    public static function encode() {
+        return json_encode(self::$data_array);
+    }
+}
+
 //-> Navigation einbinden
 include_once(basePath . '/inc/menu-functions/navi.php');
 
@@ -3092,22 +3091,25 @@ include_once(basePath . '/inc/menu-functions/navi.php');
  */
 function page(string $index = '', string $title = '', string $where = '', string $wysiwyg = '', string $index_templ = 'index') {
     global $db, $userid, $userip, $tmpdir, $chkMe, $charset, $mysql, $isSpider;
-    global $designpath, $cp_color, $time_start;
+    global $designpath, $time_start;
 
     // Timer Stop
     $time = round(generatetime() - $time_start, 4);
 
     // JS-Dateine einbinden
-    $lng = language_short_tag();
-    $login = '';
-    $edr = ($wysiwyg == '_word') ? 'advanced' : 'normal';
-    $lcolor = ($cp_color == 1) ? 'lcolor=true;' : '';
+    $lng = language_short_tag(); $login = '';
     $dsgvo = (!array_key_exists('do_show_dsgvo', $_SESSION) || !$_SESSION['do_show_dsgvo'] ? 1 : 0);
     $dsgvo_lock = (!array_key_exists('user_has_dsgvo_lock', $_SESSION) || !$_SESSION['user_has_dsgvo_lock'] ? 0 : 1);
-    $java_vars = '<script language="javascript" type="text/javascript">var maxW = ' . config('maxwidth') . ',lng = \'' . $lng . '\',dsgvo = \'' . $dsgvo . '\',
-    dsgvo_lock = \'' . $dsgvo_lock . '\',dzcp_editor = \'' . $edr . '\',tempdir = \'' . $_SESSION['tmpdir'] . '\';' . $lcolor . '</script>' . "\n";
-    $min = (use_min_css_js_files ? '.min' : '');
 
+    javascript::set('maxW',config('maxwidth'));
+    javascript::set('lng',$lng);
+    javascript::set('dsgvo',$dsgvo);
+    javascript::set('dsgvo_lock',$dsgvo_lock);
+    javascript::set('dzcp_editor',($wysiwyg == '_word') ? 'advanced' : 'normal');
+    javascript::set('tempdir',$_SESSION['tmpdir']);
+
+    $java_vars = '<script language="javascript" type="text/javascript">DZCP.setConfig(\''.javascript::encode().'\');</script>'."\n";
+    $min = (use_min_css_js_files ? '.min' : '');
     if (!strstr(GetServerVars('HTTP_USER_AGENT'), 'Android') && !strstr(GetServerVars('HTTP_USER_AGENT'), 'webOS'))
         $java_vars .= '<script language="javascript" type="text/javascript" src="' . $designpath . '/_js/wysiwyg' . $min . '.js"></script>' . "\n";
 

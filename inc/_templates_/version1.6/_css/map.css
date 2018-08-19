@@ -1,0 +1,10 @@
+#map {
+    width: 743px;
+    height: 473px;
+}
+
+#osm {
+    font-size: 0.7em;
+    font-style: italic;
+    margin-bottom: 3px;
+}
