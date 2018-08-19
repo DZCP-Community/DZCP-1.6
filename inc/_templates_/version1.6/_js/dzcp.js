@@ -387,9 +387,9 @@ let DZCP = {
                 let imgW = d.width;
                 let imgH = d.height;
 
-                if (maxW != 0 && imgW > maxW) {
-                    d.width = maxW;
-                    d.height = Math.round(imgH * (maxW / imgW));
+                if (dzcp_config.maxW != 0 && imgW > dzcp_config.maxW) {
+                    d.width = dzcp_config.maxW;
+                    d.height = Math.round(imgH * (dzcp_config.maxW / imgW));
 
                     if (!DZCP.linkedImage(d)) {
                         let textLink = doc.createElement("span");
