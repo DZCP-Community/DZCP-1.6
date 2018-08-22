@@ -1599,22 +1599,28 @@ function permission(string $check, int $uid = 0) {
         return true;
     else {
         if ($uid) {
-            // check rank permission
-            if (db("SELECT s1.`" . $check . "` FROM " . $db['permissions'] . " AS s1
-                   LEFT JOIN " . $db['userpos'] . " AS s2 ON s1.`pos` = s2.`posi`
-                   WHERE s2.`user` = '" . (int)($uid) . "' AND s1.`" . $check . "` = '1' AND s2.`posi` != '0'", true))
-                return true;
+            $qry = db("SHOW columns FROM `" . $db['permissions'] . "`;");
+            while ($get = _fetch($qry)) {
+                if ($get['Field'] == $check) {
+                    // check rank permission
+                    if (db("SELECT s1.`" . $check . "` FROM `" . $db['permissions'] . "` AS `s1`
+                   LEFT JOIN `" . $db['userpos'] . "` AS `s2` ON s1.`pos` = s2.`posi`
+                   WHERE s2.`user` = " . (int)($uid) . " AND s1.`" . $check . "` = 1 AND s2.`posi` != 0;", true))
+                        return true;
 
-            // check user permission
-            if (!dbc_index::issetIndex('user_permission_' . $uid)) {
-                $permissions = db("SELECT * FROM " . $db['permissions'] . " WHERE user = '" . (int)($uid) . "'", false, true);
-                dbc_index::setIndex('user_permission_' . $uid, $permissions);
+                    // check user permission
+                    if (!dbc_index::issetIndex('user_permission_' . $uid)) {
+                        $permissions = db("SELECT * FROM " . $db['permissions'] . " WHERE `user` = " . (int)($uid) . ";", false, true);
+                        dbc_index::setIndex('user_permission_' . $uid, $permissions);
+                    }
+
+                    return dbc_index::getIndexKey('user_permission_' . $uid, $check) ? true : false;
+                }
             }
-
-            return dbc_index::getIndexKey('user_permission_' . $uid, $check) ? true : false;
-        } else
-            return false;
+        }
     }
+
+    return false;
 }
 
 /**
