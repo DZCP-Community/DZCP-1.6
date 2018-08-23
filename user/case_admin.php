@@ -156,7 +156,7 @@ if (defined('_UserMenu')) {
                             setIpcheck("deluser(" . $userid . "_" . $getdel['id'] . ")");
 
                             $ips = array();
-                            $ips[$getdel['ip']] = true;
+                            $ips[] = $getdel['ip'];
 
                             $qry = db("SELECT * FROM `" . $db['f_threads'] . "` WHERE `t_reg` = " . $getdel['id'] . ";");
                             while ($get = _fetch($qry)) {
@@ -191,27 +191,27 @@ if (defined('_UserMenu')) {
                             //Save IPS
                             $qry = db("SELECT `ip` FROM `" . $db['f_posts'] . "` WHERE `reg` = " . $getdel['id'] . ";");
                             while ($get = _fetch($qry)) {
-                                $ips[$get['ip']] = true;
+                                $ips[] = $get['ip'];
                             }
 
                             $qry = db("SELECT `ip` FROM `" . $db['gb'] . "` WHERE `reg` = " . $getdel['id'] . ";");
                             while ($get = _fetch($qry)) {
-                                $ips[$get['ip']] = true;
+                                $ips[] = $get['ip'];
                             }
 
                             $qry = db("SELECT `ip` FROM `" . $db['acomments'] . "` WHERE `reg` = " . $getdel['id'] . ";");
                             while ($get = _fetch($qry)) {
-                                $ips[$get['ip']] = true;
+                                $ips[] = $get['ip'];
                             }
 
                             $qry = db("SELECT `ip` FROM `" . $db['cw_comments'] . "` WHERE `reg` = " . $getdel['id'] . ";");
                             while ($get = _fetch($qry)) {
-                                $ips[$get['ip']] = true;
+                                $ips[] = $get['ip'];
                             }
 
                             $qry = db("SELECT `ip` FROM `" . $db['newscomments'] . "` WHERE `reg` = " . $getdel['id'] . ";");
                             while ($get = _fetch($qry)) {
-                                $ips[$get['ip']] = true;
+                                $ips[] = $get['ip'];
                             }
 
                             db("DELETE FROM `" . $db['f_posts'] . "` WHERE `reg` = " . $getdel['id'] . " OR `email` = '" . $getdel['email'] . "';");
@@ -237,20 +237,24 @@ if (defined('_UserMenu')) {
                             db("DELETE FROM `" . $db['usergallery'] . "` WHERE `user` = " . $getdel['id'] . ";");
 
                             //IP-Check Loop
-                            foreach ($ips as $ip => $null) {
-                                if (!validateIpV4Range($ip, ['[192].[168].[0-255].[0-255]', '[127].[0].[0-255].[0-255]',
-                                    '[10].[0-255].[0-255].[0-255]', '[172].[16-31].[0-255].[0-255]'])) {
-                                    db("DELETE FROM `" . $db['acomments'] . "` WHERE `ip` = '" . $ip . "';");
-                                    db("DELETE FROM `" . $db['c_ips'] . "` WHERE `ip` = '" . $ip . "';");
-                                    db("DELETE FROM `" . $db['c_who'] . "` WHERE `ip` = '" . $ip . "';");
-                                    db("DELETE FROM `" . $db['cw_comments'] . "` WHERE `ip` = '" . $ip . "';");
-                                    db("DELETE FROM `" . $db['ipcheck'] . "` WHERE `ip` = '" . $ip . "' OR `user_id` = " . $getdel['id'] . ";");
-                                    db("DELETE FROM `" . $db['newscomments'] . "` WHERE `ip` = '" . $ip . "';");
-                                    db("DELETE FROM `" . $db['shout'] . "` WHERE `ip` = '" . $ip . "';");
-                                    db("DELETE FROM `" . $db['usergb'] . "` WHERE `ip` = '" . $ip . "';");
+                            foreach ($ips as $ip) {
+                                if(is_array($ip))
+                                    continue;
+
+                                if(!empty($ip)) {
+                                    if (!validateIpV4Range((string)$ip, ['[192].[168].[0-255].[0-255]', '[127].[0].[0-255].[0-255]',
+                                        '[10].[0-255].[0-255].[0-255]', '[172].[16-31].[0-255].[0-255]'])) {
+                                        db("DELETE FROM `" . $db['acomments'] . "` WHERE `ip` = '" . $ip . "';");
+                                        db("DELETE FROM `" . $db['c_ips'] . "` WHERE `ip` = '" . $ip . "';");
+                                        db("DELETE FROM `" . $db['c_who'] . "` WHERE `ip` = '" . $ip . "';");
+                                        db("DELETE FROM `" . $db['cw_comments'] . "` WHERE `ip` = '" . $ip . "';");
+                                        db("DELETE FROM `" . $db['ipcheck'] . "` WHERE `ip` = '" . $ip . "' OR `user_id` = " . $getdel['id'] . ";");
+                                        db("DELETE FROM `" . $db['newscomments'] . "` WHERE `ip` = '" . $ip . "';");
+                                        db("DELETE FROM `" . $db['shout'] . "` WHERE `ip` = '" . $ip . "';");
+                                        db("DELETE FROM `" . $db['usergb'] . "` WHERE `ip` = '" . $ip . "';");
+                                    }
                                 }
-                            }
-                            unset($ips);
+                            } unset($ips);
 
                             foreach ($picformat as $tmpendung) {
                                 if (file_exists(basePath . "/inc/images/uploads/userpics/" . (int)($getdel['id']) . "." . $tmpendung))
