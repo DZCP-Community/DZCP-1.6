@@ -9,7 +9,8 @@ if (defined('_UserMenu')) {
     if (HasDSGVO()) {
         if (array_key_exists('identy_id', $_SESSION)) {
             if (!empty($_SESSION['identy_id'])) {
-                db("UPDATE " . $db['users'] . " SET `online` = 0, `sessid` = '' WHERE `id` = " . $userid . ";"); //Logout
+                db("UPDATE " . $db['users'] . " SET `online` = 0, `time` = ".
+                    $_SESSION['lastvisit'].", `sessid` = '' WHERE `id` = " . $userid . ";"); //Logout
                 session_regenerate_id();
 
                 $_SESSION['id'] = $_SESSION['identy_id'];
@@ -17,6 +18,7 @@ if (defined('_UserMenu')) {
                 $_SESSION['identy_ip'] = '';
                 $_SESSION['identy_id'] = '';
                 $_SESSION['ip'] = visitorIp();
+                $_SESSION['lastvisit'] = data("time", (int)($_SESSION['identy_id']));
 
                 db("UPDATE " . $db['users'] . " SET `online` = 1, `sessid` = '" . session_id() . "' WHERE `id` = " . (int)($_GET['id']));
                 header("Location: ../user/?action=userlobby");

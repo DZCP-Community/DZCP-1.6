@@ -51,13 +51,15 @@ if (defined('_UserMenu')) {
                             $msg = show(_admin_user_get_identy, array("nick" => autor($identy_userid)));
                             $_SESSION['identy_id'] = $userid; //Save Last ID
 
-                            db("UPDATE " . $db['users'] . " SET `online` = 0, `sessid` = '' WHERE `id` = " . $userid . ";"); //Logout
+                            db("UPDATE " . $db['users'] . " SET `online` = 0, `sessid` = '', ".
+                                "`time` = ".$_SESSION['lastvisit']." WHERE `id` = " . $userid . ";"); //Logout
                             session_regenerate_id();
 
                             $_SESSION['id'] = $_GET['id'];
                             $_SESSION['pwd'] = data("pwd", $identy_userid);
                             $_SESSION['ip'] = data("ip", $identy_userid);
                             $_SESSION['identy_ip'] = $_SESSION['ip'];
+                            $_SESSION['lastvisit'] = data("time", $identy_userid);
 
                             db("UPDATE " . $db['users'] . " SET `online` = 1, `sessid` = '" . session_id() . "' WHERE `id` = " . $identy_userid . ";");
                             setIpcheck("ident(" . $userid . "_" . $identy_userid . ")");
