@@ -67,7 +67,7 @@ class api {
                 } else {
                     $this->api_output = unserialize($CachedString->get());
                 }
-            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
+            } catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
         } else { // No Cache
             $this->call();
             $this->varying();
@@ -111,7 +111,7 @@ class api {
                 } else {
                     $this->api_output = unserialize($CachedString->get());
                 }
-            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
+            } catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
         } else { // No Cache
             $this->call();
             $this->varying();
@@ -159,7 +159,7 @@ class api {
                 } else {
                     $this->api_output = unserialize($CachedString->get());
                 }
-            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
+            } catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
         } else { // No Cache
             $this->call();
             $this->varying();
@@ -203,7 +203,7 @@ class api {
                 } else {
                     $this->api_output = unserialize($CachedString->get());
                 }
-            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
+            } catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
         } else { // No Cache
             $this->call();
             $this->varying();
@@ -247,7 +247,7 @@ class api {
                 } else {
                     $this->api_output = unserialize($CachedString->get());
                 }
-            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
+            } catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
         } else { // No Cache
             $this->call();
             $this->varying();
@@ -303,7 +303,7 @@ class api {
             } else {
                 $this->api_output = unserialize($CachedString->get());
             }
-        } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
+        } catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {
         }
 
         if (!$this->api_output['error'] && array_key_exists('version', $this->api_output)) {

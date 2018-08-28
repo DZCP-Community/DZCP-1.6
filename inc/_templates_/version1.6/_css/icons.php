@@ -8,7 +8,7 @@ include(basePath . '/vendor/autoload.php');
 include(basePath . "/inc/debugger.php");
 include(basePath . "/inc/config.php");
 
-use phpFastCache\CacheManager;
+use Phpfastcache\CacheManager;
 
 // Cache
 try {
@@ -24,7 +24,7 @@ try {
         "cacheFileExtension" => 'pfc',
         "fallback" => "files"
     ));
-} catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
+} catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {
 }
 
 $cache = CacheManager::getInstance($config_cache['storage']); // return your setup storage

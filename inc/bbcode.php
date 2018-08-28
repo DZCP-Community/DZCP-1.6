@@ -21,7 +21,7 @@ require_once(basePath . '/inc/steamapi.php');
 require_once(basePath . '/inc/api.php');
 
 //Libs
-use phpFastCache\CacheManager;
+use Phpfastcache\CacheManager;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -75,7 +75,7 @@ try {
         "cacheFileExtension" => 'pfc',
         "fallback" => "files"
     ));
-} catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
+} catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {
 }
 
 $cache = CacheManager::getInstance($config_cache['storage']); // return your setup storage
@@ -2906,7 +2906,7 @@ final class dbc_index {
                 $data_cache = null;
                 try {
                     $data_cache = $cache->getItem('dbc_' . $index_key);
-                } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
+                } catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {
                 }
                 $data_cache->set(serialize($data))->expiresAfter(1.5);
                 $cache->save($data_cache);
@@ -2960,7 +2960,7 @@ final class dbc_index {
             $data = null;
             try {
                 $data = $cache->getItem('dbc_' . $index_key);
-            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
+            } catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
 
             if (!is_null($data->get())) {
                 if (show_dbc_debug)
