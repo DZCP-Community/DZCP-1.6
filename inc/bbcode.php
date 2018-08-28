@@ -25,6 +25,11 @@ use phpFastCache\CacheManager;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use PHPMailer\PHPMailer\PHPMailer;
 
+//Set Build
+$_build = str_replace('.','',_version);
+$_release = substr(_release, 0, -5);
+define('_build', $_build.'.'.$_release);
+
 ## Is AjaxJob ##
 $ajaxJob = (!isset($ajaxJob) ? false : $ajaxJob);
 
