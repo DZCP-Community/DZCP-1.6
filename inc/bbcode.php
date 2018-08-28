@@ -909,9 +909,9 @@ function replace(string $txt, bool $type = false, bool $no_vid_tag = false) {
         $txt = preg_replace_callback("/\[youtube\](?:http?s?:\/\/)?(?:www\.)?youtu(?:\.be\/|be\.com\/watch\?v=)([A-Z0-9\-_]+)(?:&(.*?))?\[\/youtube\]/i",
             function ($match) {
                 return '<object width="425" height="344"><param name="movie" value="//www.youtube.com/v/' . trim($match[1]) . '?hl=de_DE&amp;version=3&amp;rel=0"></param>
-            <param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param>
-            <embed src="//www.youtube.com/v/' . trim($match[1]) . '?hl=de_DE&amp;version=3&amp;rel=0" type="application/x-shockwave-flash" width="425" height="344" allowscriptaccess="always" allowfullscreen="true">
-            </embed></object>';
+            < name="allowFullScreen" value="true">< name="allowscriptaccess" value="always">
+            < src="//www.youtube.com/v/' . trim($match[1]) . '?hl=de_DE&amp;version=3&amp;rel=0" type="application/x-shockwave-flash" width="425" height="344" allowscriptaccess="always" allowfullscreen="true">
+            </object>';
             }, $txt);
     }
 
@@ -1462,7 +1462,7 @@ function highlight(string $word) {
 function updateCounter() {
     global $db, $reload, $today, $datum, $userip, $CrawlerDetect;
     $ipcheck = db("SELECT `id`,`ip`,`datum` FROM `" . $db['c_ips'] . "` WHERE `ip` = '" . $userip . "' AND FROM_UNIXTIME(datum,'%d.%m.%Y') = '" . date("d.m.Y") . "'");
-    db("DELETE FROM " . $db['c_ips'] . " WHERE datum+" . $reload . " <= " . time() . " OR FROM_UNIXTIME(datum,'%d.%m.%Y') != '" . date("d.m.Y") . "'");
+    db("DELETE FROM `" . $db['c_ips'] . "` WHERE `datum`+" . $reload . " <= " . time() . " OR FROM_UNIXTIME(datum,'%d.%m.%Y') != '" . date("d.m.Y") . "'");
     $count = db("SELECT id,visitors,today FROM " . $db['counter'] . " WHERE today = '" . $today . "'");
     if (_rows($ipcheck) >= 1) {
         $get = _fetch($ipcheck);
@@ -1474,7 +1474,7 @@ function updateCounter() {
                 db("INSERT INTO `" . $db['counter'] . "` SET `visitors` = '1', `today` = '" . $today . "'");
 
             if (db("SELECT `id` FROM `" . $db['c_ips'] . "` WHERE `ip` = '" . $userip . "';", true)) {
-                db("UPDATE " . $db['c_ips'] . " SET `datum` = '" . ((int)$datum) . "', `agent` = '" . $CrawlerDetect->userAgent . "' WHERE `ip` = '" . $userip . "';");
+                db("UPDATE " . $db['c_ips'] . " SET `datum` = " . ((int)$datum) . ", `agent` = '" . $CrawlerDetect->userAgent . "' WHERE `ip` = '" . $userip . "';");
             } else {
                 db("INSERT INTO `" . $db['c_ips'] . "` SET `ip` = '" . $userip . "', `datum` = '" . ((int)$datum) . "', `agent` = '" . $CrawlerDetect->userAgent . "';");
             }
@@ -1629,8 +1629,8 @@ function permission(string $check, int $uid = 0) {
  */
 function check_msg() {
     global $db;
-    if (db("SELECT page FROM " . $db['msg'] . " WHERE an = '" . $_SESSION['id'] . "' AND page = 0", true)) {
-        db("UPDATE " . $db['msg'] . " SET `page` = '1' WHERE an = '" . $_SESSION['id'] . "'");
+    if (db("SELECT `page` FROM `" . $db['msg'] . "` WHERE `an` = " . ((int)$_SESSION['id']) . " AND `page` = 0;", true)) {
+        db("UPDATE `" . $db['msg'] . "` SET `page` = 1 WHERE `an` = " . ((int)$_SESSION['id']) . ";");
         return show("user/new_msg", array("new" => _site_msg_new));
     }
 
