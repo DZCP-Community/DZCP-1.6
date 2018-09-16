@@ -18,7 +18,7 @@ function show_dzcp_version(bool $reload=false) {
         if(strpos(GetServerVars('HTTP_REFERER'), '?') === false) {
             $href = '../admin/?version_reload=true';
         } else {
-            $href = GetServerVars('HTTP_REFERER').'&version_reload=true';
+            $href = '?'.GetServerVars('QUERY_STRING').'&version_reload=true';
         }
         if (empty($json) || is_bool($json) || (!is_array($json) && !is_object($json))) {
             $return['version'] = '<b><a href="'.$href.'" [info]>' . _akt_version . ': <span style="color:#FFFF00">' . _version . '</span> / Release: <span style="color:#FFFF00">' . _release . '</span> / Build: <span style="color:#FFFF00">' . _build . '</span></a></b>';
