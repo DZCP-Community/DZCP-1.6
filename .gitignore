@@ -1,10 +1,5 @@
-*.project
 inc/mysql.php
 .idea
-*.prefs
-/nbproject/private/
-nbproject/project.properties
-#2337-fastreply-addon/
 activity/
 bilder/
 inc/_templates_/DBMFC/
@@ -19,3 +14,12 @@ vendor/brightnucleus/exceptions/composer.lock
 rss.xml
 banner/sponsors/
 banner/partners/
+download_stuff/
+gallery/images/
+inc/images/clanwars/
+inc/images/uploads/
+inc/images/gameicons/
+inc/images/squads/
+inc/images/newskat/
+inc/images/smileys/
+inc/twitch_main.php
