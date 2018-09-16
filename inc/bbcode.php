@@ -78,8 +78,9 @@ if (!dbc_index::issetIndex('config')) {
     unset($get_config);
 }
 
+$userip = HasDSGVO() ? visitorIp() : '0.0.0.0';
 $isSecure_cheked = ['check' => false, 'isSecure' => false];
-if (HasDSGVO()) {
+if (HasDSGVO() && is_validate_ip($userip)) {
 //-> Cookie initialisierung
     cookie::init('dzcp_' . settings('prev'), false, "/", re(settings('i_domain')));
     $isSecure_cheked['isSecure'] = cookie::$secure;
@@ -111,7 +112,6 @@ $reload = 3600 * 24;
 $datum = time();
 $today = date("j.n.Y");
 $picformat = array("jpg", "gif", "png");
-$userip = HasDSGVO() ? visitorIp() : '0.0.0.0';
 $maxpicwidth = 90;
 $maxadmincw = 10;
 $maxfilesize = @ini_get('upload_max_filesize');
@@ -125,7 +125,8 @@ $do = isset($_GET['do']) ? strtolower($_GET['do']) : '';
 $index = ''; $show = ''; $color = 0;
 
 //-> Auslesen der Cookies und automatisch anmelden
-if (HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false && empty($_SESSION['id']) && !checkme())) {
+if (is_validate_ip($userip) && HasDSGVO() && (cookie::get('id') != false &&
+        cookie::get('pkey') != false && empty($_SESSION['id']) && !checkme())) {
     //-> User aus der Datenbank suchen
     $sql = db_stmt("SELECT `id`,`user`,`nick`,`pwd`,`email`,`level`,`time`,`pkey`,`dsgvo_lock`,`language` FROM `" .
         $db['users'] . "` WHERE `id` = ? AND `pkey` = ? AND `level` != 0;",
@@ -254,7 +255,7 @@ function hasSecure() {
 }
 
 //Weiterleitung zu einer SSL Verbindung
-if(!isSecure() && use_ssl_auto_redirect && !$ajaxJob && !$installation && !$updater ) {
+if(is_validate_ip($userip) && !isSecure() && use_ssl_auto_redirect && !$ajaxJob && !$installation && !$updater ) {
     if(!$isSecure_cheked['check']) {
         if(hasSecure()) {
             header("Location: https://" . GetServerVars('HTTP_HOST') .
@@ -300,6 +301,17 @@ function visitorIp() {
         return trim($TheIp);
 
     return '0.0.0.0';
+}
+
+/**
+ * @param $ip
+ * @return bool
+ */
+function is_validate_ip(string $ip) {
+    if(strpos($ip, '0.0.0.0') !== false)
+        return false;
+
+    return (filter_var($ip, FILTER_VALIDATE_IP) == true);
 }
 
 /**
@@ -386,8 +398,8 @@ function allow_url_fopen_support() {
 
 //-> Auslesen der UserID
 function userid() {
-    global $db;
-    if (HasDSGVO()) {
+    global $db,$userip;
+    if (HasDSGVO() && is_validate_ip($userip)) {
         if (empty($_SESSION['id']) || empty($_SESSION['pwd'])) return 0;
         if (!dbc_index::issetIndex('user_' . $_SESSION['id'])) {
             $sql = db("SELECT * FROM `" . $db['users'] . "` WHERE `id` = " . $_SESSION['id'] . " AND `pwd` = '" . $_SESSION['pwd'] . "';");
@@ -3085,7 +3097,7 @@ include_once(basePath . '/inc/menu-functions/navi.php');
  * @param string $index_templ
  */
 function page(string $index = '', string $title = '', string $where = '', string $wysiwyg = '', string $index_templ = 'index') {
-    global $db, $userid, $userip, $tmpdir, $chkMe, $charset, $mysql, $isSpider;
+    global $db, $userid, $userip, $tmpdir, $chkMe, $mysql, $isSpider;
     global $designpath, $time_start;
 
     // Timer Stop
@@ -3130,7 +3142,7 @@ function page(string $index = '', string $title = '', string $where = '', string
             "title" => re(strip_tags($title)),
             "login" => $login));
     } else {
-        if (!$isSpider && HasDSGVO()) {
+        if (!$isSpider && HasDSGVO() && is_validate_ip($userip)) {
             updateCounter();
             update_maxonline();
         }

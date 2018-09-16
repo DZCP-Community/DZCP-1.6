@@ -55,7 +55,7 @@ $qry = db("SELECT * FROM " . $db['c_who'] . "
 
 if (_rows($qry)) {
     while ($get = _fetch($qry)) {
-        if(strpos($get['ip'], '0.0.0.0') !== false) {
+        if(!is_validate_ip($get['ip'])) {
             continue;
         }
 
