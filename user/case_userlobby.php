@@ -9,10 +9,6 @@ if (defined('_UserMenu')) {
     if ($chkMe) {
         $can_erase = false;
 
-        //Get Userinfos
-        $lastvisit = userstats('lastvisit');
-        $lastvisit = empty($lastvisit) ? "0" : $lastvisit;
-
         /** Neue Foreneintraege anzeigen */
         $qrykat = db("SELECT s1.`id`,s2.`kattopic`,s1.`intern`,s2.`id` FROM `" .
             $db['f_kats'] . "` AS `s1` LEFT JOIN `" . $db['f_skats'] .
@@ -26,13 +22,13 @@ if (defined('_UserMenu')) {
                 unset($forumposts_show);
 
                 if (fintern($getkat['id'])) {
-                    $qrytopic = db("SELECT `lp`,`id`,`topic`,`first`,`sticky` FROM `" . $db['f_threads'] . "` WHERE `kid` = " . $getkat['id'] . " AND `lp` > " . $lastvisit . " ORDER BY `lp` DESC LIMIT 150;");
+                    $qrytopic = db("SELECT `lp`,`id`,`topic`,`first`,`sticky` FROM `" . $db['f_threads'] . "` WHERE `kid` = " . $getkat['id'] . " AND `lp` > " . $_SESSION['lastvisit'] . " ORDER BY `lp` DESC LIMIT 150;");
                     if (_rows($qrytopic) >= 1) {
                         $forumposts_show = '';
                         while ($gettopic = _fetch($qrytopic)) {
                             $lp = 0;
                             $cnt = "";
-                            $count = cnt($db['f_posts'], " WHERE `date` > " . $lastvisit . " AND `sid` = " . $gettopic['id']);
+                            $count = cnt($db['f_posts'], " WHERE `date` > " . $_SESSION['lastvisit'] . " AND `sid` = " . $gettopic['id']);
                             $lp = cnt($db['f_posts'], " WHERE `sid` = " . $gettopic['id']);
 
                             if ($count == 0) {
@@ -85,7 +81,7 @@ if (defined('_UserMenu')) {
         if (_rows($qrycw) >= 1) {
             while ($getcw = _fetch($qrycw)) {
                 if (!empty($getcw) && check_new((int)$getcw['datum'])) {
-                    $check = cnt($db['cw'], " WHERE `datum` > " . $lastvisit);
+                    $check = cnt($db['cw'], " WHERE `datum` > " . $_SESSION['lastvisit']);
 
                     if ($check == 1) {
                         $cnt = 1;
@@ -108,7 +104,7 @@ if (defined('_UserMenu')) {
         $getu = db("SELECT `id`,`regdatum` FROM `" . $db['users'] . "` ORDER BY `id` DESC", false, true);
         $user = '';
         if (!empty($getu) && check_new((int)$getu['regdatum'])) {
-            $check = cnt($db['users'], " WHERE `regdatum` > " . $lastvisit);
+            $check = cnt($db['users'], " WHERE `regdatum` > " . $_SESSION['lastvisit']);
 
             if ($check == 1) {
                 $cnt = 1;
@@ -135,7 +131,7 @@ if (defined('_UserMenu')) {
             if (!$permission_gb && settings('gb_activ'))
                 $cntgb = "AND `public` = 1";
 
-            $check = cnt($db['gb'], " WHERE `datum` > " . $lastvisit . " " . $cntgb);
+            $check = cnt($db['gb'], " WHERE `datum` > " . $_SESSION['lastvisit'] . " " . $cntgb);
 
             if ($check == 1) {
                 $cnt = "1";
@@ -153,7 +149,7 @@ if (defined('_UserMenu')) {
         $getmember = db("SELECT `id`,`datum` FROM `" . $db['usergb'] . "` WHERE `user` = " . $userid . " ORDER BY `datum` DESC;", false, true);
         $membergb = '';
         if (!empty($getmember) && check_new((int)$getmember['datum'])) {
-            $check = cnt($db['usergb'], " WHERE `datum` > " . $lastvisit . " AND `user` = " . $userid);
+            $check = cnt($db['usergb'], " WHERE `datum` > " . $_SESSION['lastvisit'] . " AND `user` = " . $userid);
             if ($check == "1") {
                 $cnt = "1";
                 $eintrag = _new_eintrag_1;
@@ -188,7 +184,7 @@ if (defined('_UserMenu')) {
         if (_rows($qrynews) >= 1) {
             while ($getnews = _fetch($qrynews)) {
                 if (check_new((int)$getnews['datum'])) {
-                    $check = cnt($db['news'], " WHERE `datum` > " . $lastvisit . " AND `public` = 1");
+                    $check = cnt($db['news'], " WHERE `datum` > " . $_SESSION['lastvisit'] . " AND `public` = 1");
                     $cnt = $check == "1" ? "1" : $check;
                     $can_erase = true;
                     $news = show(_user_new_news, array("cnt" => $cnt, "eintrag" => _lobby_new_news));
@@ -205,7 +201,7 @@ if (defined('_UserMenu')) {
                 if (_rows($getnewsc)) {
                     $getnewsc = _fetch($getnewsc);
                     if (check_new((int)$getnewsc['datum'])) {
-                        $check = cnt($db['newscomments'], " WHERE `datum` > " . $lastvisit . " AND `news` = " . $getnewsc['news']);
+                        $check = cnt($db['newscomments'], " WHERE `datum` > " . $_SESSION['lastvisit'] . " AND `news` = " . $getnewsc['news']);
                         if ($check == "1") {
                             $cnt = "1";
                             $eintrag = _lobby_new_newsc_1;
@@ -231,7 +227,7 @@ if (defined('_UserMenu')) {
             while ($getcheckcw = _fetch($qrycheckcw)) {
                 $getcwc = db("SELECT `id`,`cw`,`datum` FROM `" . $db['cw_comments'] . "` WHERE `cw` = " . $getcheckcw['id'] . " ORDER BY `datum` DESC;", false, true);
                 if (!empty($getcwc) && check_new((int)$getcwc['datum'])) {
-                    $check = cnt($db['cw_comments'], " WHERE `datum` > " . $lastvisit . " AND `cw` = '" . $getcwc['cw'] . "'");
+                    $check = cnt($db['cw_comments'], " WHERE `datum` > " . $_SESSION['lastvisit'] . " AND `cw` = '" . $getcwc['cw'] . "'");
                     if ($check == 1) {
                         $cnt = 1;
                         $eintrag = _lobby_new_cwc_1;
@@ -257,7 +253,7 @@ if (defined('_UserMenu')) {
 
         $newv = '';
         if (!empty($getnewv) && check_new((int)$getnewv['datum'])) {
-            $check = cnt($db['votes'], " WHERE `datum` > " . $lastvisit . " AND `forum` = 0");
+            $check = cnt($db['votes'], " WHERE `datum` > " . $_SESSION['lastvisit'] . " AND `forum` = 0");
             if ($check == "1") {
                 $cnt = "1";
                 $eintrag = _new_vote_1;
@@ -288,7 +284,7 @@ if (defined('_UserMenu')) {
         $getaw = db("SELECT `id`,`postdate` FROM `" . $db['awards'] . "` ORDER BY `id` DESC;", false, true);
         $awards = '';
         if (!empty($getaw) && check_new((int)$getaw['postdate'])) {
-            $check = cnt($db['awards'], " WHERE `postdate` > " . $lastvisit);
+            $check = cnt($db['awards'], " WHERE `postdate` > " . $_SESSION['lastvisit']);
             if ($check == "1") {
                 $cnt = "1";
                 $eintrag = _new_awards_1;
@@ -305,7 +301,7 @@ if (defined('_UserMenu')) {
         $getra = db("SELECT `id`,`postdate` FROM `" . $db['rankings'] . "` ORDER BY `id` DESC;", false, true);
         $rankings = '';
         if (!empty($getra) && check_new((int)$getra['postdate'])) {
-            $check = cnt($db['rankings'], " WHERE `postdate` > " . $lastvisit);
+            $check = cnt($db['rankings'], " WHERE `postdate` > " . $_SESSION['lastvisit']);
             if ($check == "1") {
                 $cnt = "1";
                 $eintrag = _new_rankings_1;
@@ -324,7 +320,7 @@ if (defined('_UserMenu')) {
         if (_rows($qryart) >= 1) {
             while ($getart = _fetch($qryart)) {
                 if (check_new((int)$getart['datum'])) {
-                    $check = cnt($db['artikel'], " WHERE `datum` > " . $lastvisit . " AND `public` = 1");
+                    $check = cnt($db['artikel'], " WHERE `datum` > " . $_SESSION['lastvisit'] . " AND `public` = 1");
                     if ($check == "1") {
                         $cnt = "1";
                         $eintrag = _lobby_new_art_1;
@@ -346,7 +342,7 @@ if (defined('_UserMenu')) {
             while ($getchecka = _fetch($qrychecka)) {
                 $getartc = db("SELECT `id`,`artikel`,`datum` FROM `" . $db['acomments'] . "` WHERE `artikel` = " . $getchecka['id'] . " ORDER BY `datum` DESC;", false, true);
                 if (!empty($getartc) && check_new((int)$getartc['datum'])) {
-                    $check = cnt($db['acomments'], " WHERE `datum` > " . $lastvisit . " AND `artikel` = " . $getartc['artikel']);
+                    $check = cnt($db['acomments'], " WHERE `datum` > " . $_SESSION['lastvisit'] . " AND `artikel` = " . $getartc['artikel']);
                     if ($check == "1") {
                         $cnt = "1";
                         $eintrag = _lobby_new_artc_1;
@@ -365,7 +361,7 @@ if (defined('_UserMenu')) {
         $getgal = db("SELECT `id`,`datum` FROM `" . $db['gallery'] . "` ORDER BY `id` DESC;", false, true);
         $gal = '';
         if (!empty($getgal) && check_new((int)$getgal['datum'])) {
-            $check = cnt($db['gallery'], " WHERE `datum` > " . $lastvisit);
+            $check = cnt($db['gallery'], " WHERE `datum` > " . $_SESSION['lastvisit']);
             if ($check == "1") {
                 $cnt = "1";
                 $eintrag = _new_gal_1;

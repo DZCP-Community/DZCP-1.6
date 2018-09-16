@@ -147,7 +147,7 @@ if (HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false &&
             //-> Schreibe Werte in die Server Sessions
             $_SESSION['id'] = $get['id'];
             $_SESSION['pwd'] = $get['pwd'];
-            $_SESSION['lastvisit'] = $get['time'];
+            $_SESSION['lastvisit'] = userstats('lastvisit',$get['id']);
             $_SESSION['ip'] = $userip;
 
             if (!empty($get['language'])) {
@@ -155,13 +155,13 @@ if (HasDSGVO() && (cookie::get('id') != false && cookie::get('pkey') != false &&
             }
 
             if (data("ip", $get['id']) != $_SESSION['ip'])
-                $_SESSION['lastvisit'] = data("time", $get['id']);
+                $_SESSION['lastvisit'] = userstats('lastvisit',$get['id']);
 
             if (empty($_SESSION['lastvisit']))
-                $_SESSION['lastvisit'] = data("time", $get['id']);
+                $_SESSION['lastvisit'] = userstats('lastvisit',$get['id']);
 
             //-> Aktualisiere Datenbank
-            db("UPDATE `" . $db['users'] . "` SET `online` = 1, `sessid` = '" . session_id() . "', `ip` = '" . $userip . "', `pkey` = '" . $permanent_key . "' WHERE `id` = " . $get['id'] . ";");
+            db("UPDATE `" . $db['users'] . "` SET `online` = 1, `sessid` = '" . session_id() . "', `ip` = '" . $userip . "', `pkey` = '" . $permanent_key . "', `time` = ".time()." WHERE `id` = " . $get['id'] . ";");
 
             //-> Aktualisiere die User-Statistik
             db("UPDATE `" . $db['userstats'] . "` SET `logins` = (logins+1) WHERE `user` = " . $get['id'] . ";");
@@ -3137,9 +3137,9 @@ function page(string $index = '', string $title = '', string $where = '', string
 
         //check permissions
         $check_msg = '';
-        if ($chkMe) {
+        if ($chkMe && empty($_SESSION['identy_id'])) {
             $check_msg = check_msg();
-            set_lastvisit();
+            //set_lastvisit();
             db("UPDATE `" . $db['users'] . "` SET `time` = " . time() . ", `whereami` = '" . up($where) . "' WHERE `id` = " . (int)($userid) . ";");
         }
 

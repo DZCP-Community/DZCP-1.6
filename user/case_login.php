@@ -45,7 +45,8 @@ if (defined('_UserMenu')) {
                         }
 
                         db("UPDATE `" . $db['userstats'] . "` SET `logins` = (logins+1) WHERE `user` = " . $get['id'] . ";");
-                        db("UPDATE `" . $db['users'] . "` SET `online` = 1, `sessid` = '" . session_id() . "', `ip` = '" . $userip . "', `pkey` = '" . $permanent_key . "' WHERE `id` = " . $get['id'] . ";");
+                        db("UPDATE `" . $db['users'] . "` SET `online` = 1, `sessid` = '" . session_id() . "', `ip` = '" . $userip . "', `pkey` = '" .
+                            $permanent_key . "', `time` = ".time()." WHERE `id` = " . $get['id'] . ";");
                         setIpcheck("login(" . $get['id'] . ")");
 
                         header("Location: ?action=userlobby");

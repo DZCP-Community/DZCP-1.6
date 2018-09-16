@@ -59,7 +59,7 @@ if (defined('_UserMenu')) {
                             $_SESSION['pwd'] = data("pwd", $identy_userid);
                             $_SESSION['ip'] = data("ip", $identy_userid);
                             $_SESSION['identy_ip'] = $_SESSION['ip'];
-                            $_SESSION['lastvisit'] = data("time", $identy_userid);
+                            $_SESSION['lastvisit'] = userstats("lastvisit", $identy_userid);
 
                             db("UPDATE " . $db['users'] . " SET `online` = 1, `sessid` = '" . session_id() . "' WHERE `id` = " . $identy_userid . ";");
                             setIpcheck("ident(" . $userid . "_" . $identy_userid . ")");

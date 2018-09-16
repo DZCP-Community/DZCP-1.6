@@ -265,7 +265,7 @@ if (defined('_UserMenu')) {
                     "votes" => userstats("votes", $_GET['id']),
                     "cws" => userstats("cws", $_GET['id']),
                     "regdatum" => date("d.m.Y H:i", $get['regdatum']) . _uhr,
-                    "lastvisit" => date("d.m.Y H:i", userstats("lastvisit", $_GET['id'])) . _uhr,
+                    "lastvisit" => date("d.m.Y H:i", $get['time']) . _uhr,
                     "contact" => _profil_contact,
                     "preal" => _profil_real,
                     "pemail" => _email,
