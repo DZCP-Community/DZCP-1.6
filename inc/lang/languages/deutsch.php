@@ -79,6 +79,7 @@ $language_text['_txt_ftopics'] = 'Forenbeitr&auml;ge';
 $language_text['_txt_l_wars'] = 'Letzte Wars';
 $language_text['_txt_n_wars'] = 'n&auml;chste Wars';
 $language_text['_txt_teams'] = 'Teams';
+$language_text['_txt_motm'] = 'Member des Tages';
 $language_text['_txt_gallerie'] = 'Unsere Gallerien';
 $language_text['_txt_top_match'] = 'Top Match';
 $language_text['_txt_shout'] = 'Shoutbox';
