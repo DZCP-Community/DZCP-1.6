@@ -22,10 +22,8 @@ if ($chkMe)
     db("UPDATE " . $db['users'] . " SET `time` = '" . time() . "', `whereami` = '" . up($where) . "' WHERE id = '" . $userid . "'");
 
 //Users
-$qry = db("SELECT id,ip,nick,whereami FROM " . $db['users'] . "
-           WHERE time+'" . $useronline . "'>'" . time() . "'
-           AND online = 1
-           " . orderby_sql(array("whereami", "ip"), 'ORDER BY nick'));
+$qry = db("SELECT `id`,`ip`,`nick`,`whereami` FROM `" . $db['users'] . "` WHERE `time`+" . $useronline . " > " . time() .
+    " AND `online` = 1 " . orderby_sql(array("whereami", "ip"), 'ORDER BY `nick`;'));
 
 if (_rows($qry)) {
     while ($get = _fetch($qry)) {
@@ -57,8 +55,14 @@ $qry = db("SELECT * FROM " . $db['c_who'] . "
 
 if (_rows($qry)) {
     while ($get = _fetch($qry)) {
-        if (!preg_match("#autor_#is", $get['whereami'])) $whereami = re($get['whereami']);
-        else $whereami = preg_replace_callback("#autor_(.*?)$#", function ($id) { return autor($id); }, $get['whereami']);
+        if(strpos($get['ip'], '0.0.0.0') !== false) {
+            continue;
+        }
+
+        if (!preg_match("#autor_#is", $get['whereami']))
+            $whereami = re($get['whereami']);
+        else
+            $whereami = preg_replace_callback("#autor_(.*?)$#", function ($id) { return autor($id); }, $get['whereami']);
 
         if ($chkMe == 4) {
             $online_ip = $get['ip'];
