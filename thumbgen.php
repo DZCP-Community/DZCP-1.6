@@ -7,15 +7,45 @@
 ob_start();
 define('basePath', dirname(__FILE__));
 $thumbgen = true;
+include(basePath . '/vendor/autoload.php');
 include(basePath . "/inc/debugger.php");
 include(basePath . "/inc/config.php");
+
+use GUMP\GUMP;
+use Phpfastcache\CacheManager;
+
+$gump = GUMP::get_instance();
+$_GET = $gump->sanitize($_GET);
 
 if (!isset($_GET['img']) || empty($_GET['img']) || !extension_loaded('gd'))
     die('"gd" extension not loaded or "img" is empty');
 
-if (!file_exists(basePath . '/' . $_GET['img']))
-    die('"' . basePath . '/' . $_GET['img'] . '" file is not exists');
+//Error Output
+if (!file_exists(basePath . '/' . $_GET['img'])) {
+    $size = getimagesize(basePath . '/inc/images/no_preview.png');
+    $file_exp = explode('.', $_GET['img']);
+    $breite = $size[0];
+    $hoehe = $size[1];
 
+    $neueBreite = empty($_GET['width']) ? 100 : (int)($_GET['width']);
+    $neueHoehe = (int)($hoehe * $neueBreite / $breite);
+
+    header("Content-Type: image/png");
+    $altesBild = imagecreatefrompng(basePath . '/inc/images/no_preview.png');
+    $neuesBild = imagecreatetruecolor($neueBreite, $neueHoehe);
+    imagealphablending($neuesBild, false);
+    imagesavealpha($neuesBild, true);
+    imagecopyresampled($neuesBild, $altesBild, 0, 0, 0, 0, $neueBreite, $neueHoehe, $breite, $hoehe);
+    ob_start();
+        imagepng($neuesBild);
+    $bild = ob_get_contents();
+    ob_end_clean();
+
+    echo $bild;
+    exit();
+}
+
+$rebuild = isset($_GET['rebuild']);
 $size = getimagesize(basePath . '/' . $_GET['img']);
 $file_exp = explode('.', $_GET['img']);
 $breite = $size[0];
@@ -23,14 +53,18 @@ $hoehe = $size[1];
 
 $neueBreite = empty($_GET['width']) ? 100 : (int)($_GET['width']);
 $neueHoehe = (int)($hoehe * $neueBreite / $breite);
-$file_cache = basePath . '/' . $file_exp[0] . '_minimize_' . $neueBreite . 'x' . $neueHoehe;
+$cachehash = str_replace(['/','\\'],'_',$file_exp[0]) . '_minimize_' . $neueBreite . 'x' . $neueHoehe;
 $picture_build = false;
+
+// Cache
+$cache = CacheManager::getInstance($config_cache['storage'], $config_cache['config'],'default');
 
 switch ($size[2]) {
     case 1: ## GIF ##
         header("Content-Type: image/gif");
-        $file_cache = $file_cache . '.gif';
-        if (!thumbgen_cache || !file_exists($file_cache) || time() - filemtime($file_cache) > thumbgen_cache_time) {
+        $cachehash = md5($cachehash . '_gif');
+        $CachedString = $cache->getItem($cachehash);
+        if ($rebuild || !thumbgen_cache || is_null($CachedString->get())) {
             $altesBild = imagecreatefromgif(basePath . '/' . $_GET['img']);
             $neuesBild = imagecreatetruecolor($neueBreite, $neueHoehe);
             $CT = imagecolortransparent($altesBild);
@@ -38,36 +72,75 @@ switch ($size[2]) {
             imagefill($neuesBild, 0, 0, $CT);
             imagecolortransparent($neuesBild, $CT);
             imagecopyresampled($neuesBild, $altesBild, 0, 0, 0, 0, $neueBreite, $neueHoehe, $breite, $hoehe);
-            thumbgen_cache ? imagegif($neuesBild, $file_cache) : imagegif($neuesBild);
+            ob_start();
+            imagegif($neuesBild);
+                $bild = ob_get_contents();
+            ob_end_clean();
+
+            if(thumbgen_cache) {
+                $CachedString->set(bin2hex($bild))->expiresAfter(thumbgen_cache_time);
+            }
+
+            echo $bild;
             $picture_build = true;
+        } else {
+            echo hex2bin($CachedString->get());
         }
         break;
     default:
     case 2: ## JPEG ##
         header("Content-Type: image/jpeg");
-        $file_cache = $file_cache . '.jpg';
-        if (!thumbgen_cache || !file_exists($file_cache) || time() - @filemtime($file_cache) > thumbgen_cache_time) {
+        $cachehash = md5($cachehash . '_jpg');
+        $CachedString = $cache->getItem($cachehash);
+        if ($rebuild || !thumbgen_cache || is_null($CachedString->get())) {
             $altesBild = imagecreatefromjpeg(basePath . '/' . $_GET['img']);
             $neuesBild = imagecreatetruecolor($neueBreite, $neueHoehe);
             imagecopyresampled($neuesBild, $altesBild, 0, 0, 0, 0, $neueBreite, $neueHoehe, $breite, $hoehe);
-            thumbgen_cache ? imagejpeg($neuesBild, $file_cache, 100) : imagejpeg($neuesBild, null, 100);
+            ob_start();
+            imagejpeg($neuesBild, null, 100);
+                $bild = ob_get_contents();
+            ob_end_clean();
+
+            if(thumbgen_cache) {
+                $CachedString->set(bin2hex($bild))->expiresAfter(thumbgen_cache_time);
+            }
+
+            echo $bild;
             $picture_build = true;
+        } else {
+            echo hex2bin($CachedString->get());
         }
         break;
     case 3: ## PNG ##
         header("Content-Type: image/png");
-        $file_cache = $file_cache . '.png';
-        if (!thumbgen_cache || !file_exists($file_cache) || time() - @filemtime($file_cache) > thumbgen_cache_time) {
+        $cachehash = md5($cachehash . '_png');
+        $CachedString = $cache->getItem($cachehash);
+        if ($rebuild || !thumbgen_cache || is_null($CachedString->get())) {
             header("Content-Type: image/png");
             $altesBild = imagecreatefrompng(basePath . '/' . $_GET['img']);
             $neuesBild = imagecreatetruecolor($neueBreite, $neueHoehe);
             imagealphablending($neuesBild, false);
             imagesavealpha($neuesBild, true);
             imagecopyresampled($neuesBild, $altesBild, 0, 0, 0, 0, $neueBreite, $neueHoehe, $breite, $hoehe);
-            thumbgen_cache ? imagepng($neuesBild, $file_cache) : imagepng($neuesBild);
+            ob_start();
+            imagepng($neuesBild);
+                $bild = ob_get_contents();
+            ob_end_clean();
+
+            if(thumbgen_cache) {
+                $CachedString->set(bin2hex($bild))->expiresAfter(thumbgen_cache_time);
+            }
+
+            echo $bild;
             $picture_build = true;
+        } else {
+            echo hex2bin($CachedString->get());
         }
         break;
+}
+
+if(thumbgen_cache && $picture_build) {
+    $cache->save($CachedString);
 }
 
 if ($picture_build && is_resource($altesBild)) {
@@ -78,7 +151,4 @@ if ($picture_build && is_resource($neuesBild)) {
     imagedestroy($neuesBild);
 }
 
-if (thumbgen_cache && file_exists($file_cache)) {
-    echo file_get_contents($file_cache);
-}
 ob_end_flush();
