@@ -305,10 +305,10 @@ function visitorIp() {
 /**
  * Pruft eine IP gegen eine IP-Range
  * @param string $ip
- * @param string $range
+ * @param string|array $range
  * @return boolean
  */
-function validateIpV4Range(string $ip, string $range) {
+function validateIpV4Range(string $ip, $range) {
     if (!is_array($range)) {
         $counter = 0;
         $tip = explode('.', $ip);
@@ -900,7 +900,7 @@ function replace(string $txt, bool $type = false, bool $no_vid_tag = false) {
                 return '<object width="425" height="344"><param name="movie" value="//www.youtube.com/v/' . trim($match[1]) . '?hl=de_DE&amp;version=3&amp;rel=0"></param>
             < name="allowFullScreen" value="true">< name="allowscriptaccess" value="always">
             < src="//www.youtube.com/v/' . trim($match[1]) . '?hl=de_DE&amp;version=3&amp;rel=0" type="application/x-shockwave-flash" width="425" height="344" allowscriptaccess="always" allowfullscreen="true">
-            </object>';
+            </param></object>';
             }, $txt);
     }
 
