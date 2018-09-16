@@ -36,10 +36,10 @@ $support .= "\r\n";
 $support .= "#####################\r\n";
 $support .= "Server Cache\r\n";
 $support .= "#####################\r\n";
-$support .= "PhpFastCache Version: " . phpFastCache\Api::getVersion() . "\r\n";
-$support .= "Cache Storage: " . str_replace('\\phpFastCache\\Drivers\\', '', $cache->getDriverName()) . "\r\n";
+$support .= "PhpFastCache Version: " . Phpfastcache\Api::getVersion() . "\r\n";
+$support .= "Cache Storage: " . str_replace('\\Phpfastcache\\Drivers\\', '', $cache->getDriverName()) . "\r\n";
 $support .= "Cache Fallback Storage: " . $cache->getConfig()['fallback'] . "\r\n";
-$support .= "Cache Fallback Enabled: " . (\phpFastCache\CacheManager::$fallback ? 'On' : 'Off') . "\r\n";
+$support .= "Cache Fallback Enabled: " . (\Phpfastcache\CacheManager::$fallback ? 'On' : 'Off') . "\r\n";
 $support .= "\r\n";
 
 $support .= "#####################\r\n";
