@@ -8,6 +8,7 @@
 //$charset = 'utf-8';
 
 ## ADDED FOR 1.6.1.0
+$language_text['_txt_fastreply'] = 'Schnellantwort';
 $language_text['_config_addoncheck'] = 'Addon Checker';
 $language_text['_config_title_installedaddons'] = 'Installierte Addons';
 $language_text['_config_title_notinstalledaddons'] = 'Nicht Installierte Addons';

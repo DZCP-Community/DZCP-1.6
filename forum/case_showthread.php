@@ -298,36 +298,75 @@ if (defined('_Forum')) {
 
             $title = re($getw['topic']) . ' - ' . $title;
             $email = ($chkMe >= 1 ? $email : '');
-            $index = show($dir . "/forum_posts", array(
-                "head" => _forum_head,
-                "where" => $wheres,
-                "admin" => $admin,
-                "nick" => $nick,
-                "threadhead" => re($getw['topic']),
-                "titel" => $titel,
-                "postnr" => "1",
-                "class" => $ftxt['class'],
-                "pn" => $pn,
-                "hp" => $hp,
-                "email" => $email,
-                "posts" => $userposts,
-                "text" => $text,
-                "status" => getrank($get['t_reg']),
-                "avatar" => useravatar($get['t_reg']),
-                "edited" => $get['edited'],
-                "signatur" => $sig,
-                "date" => _posted_by . date("d.m.y H:i", $get['t_date']) . _uhr,
-                "zitat" => $zitat,
-                "onoff" => $onoff,
-                "ip" => $posted_ip,
-                "top" => _topicon,
-                "lpost" => $lpost,
-                "lp" => cnt($db['f_posts'], " WHERE sid = '" . (int)($_GET['id']) . "'") + 1,
-                "add" => $add,
-                "nav" => $nav,
-                "vote" => $vote,
-                "f_abo" => $f_abo,
-                "show" => $show));
+            $fastreply = "";
+
+            if($chkMe){
+                if(!$get['closed']) {
+                    $fastreply=show($dir."/forum_fastreply",array(
+                        "fasttext"=>'',
+                        "id"=>$get['id'],
+                        "kid"=>((int)$getw['kid']),
+                        "action"=>'?action=showthread&id='.$_GET['id'].'&do=fastreply',
+                        "what"=>_button_value_add));
+                }
+            }
+
+            if($do == "fastreply") {
+                db("INSERT INTO `".$db['f_posts']."` SET `kid` = ".((int)$getw['kid']).
+                    ",`sid` = ".((int)$_GET['id']).
+                    ",`date` = ".time().
+                    ",`nick` = '".up($_POST['nick']).
+                    "',`email` = '".up($_POST['email']).
+                    "',`hp` = '".links(strval($_POST['hp'])).
+                    "',`reg` = '".up($userid).
+                    "',`text` = '".up($_POST['eintrag'],true).
+                    "',`ip` = '".up($userip)."';");
+
+                db("UPDATE ".$db['f_threads']." SET `lp`=".time().", `first` = 0 WHERE `id` = ".(int)$_GET['id'].";");
+                setIpcheck("fid(".((int)$getw['kid']).")");
+                db("UPDATE `".$db['userstats']."` SET `forumposts`= (forumposts+1) WHERE `user` = ".$userid.";");
+
+                $entrys= cnt($db['f_posts'],"WHERE `sid`=".(int)$_GET['id']);
+                if($entrys == "0")
+                    $pagenr = "1";
+                else
+                    $pagenr = ceil($entrys/config('m_fposts'));
+
+                $lpost=show(_forum_add_lastpost,array("id"=>$entrys+1, "tid"=>$_GET['id'], "page"=>$pagenr));
+                $index = info(_forum_newpost_successful, $lpost);
+            } else {
+                $index = show($dir . "/forum_posts", array(
+                    "head" => _forum_head,
+                    "where" => $wheres,
+                    "admin" => $admin,
+                    "nick" => $nick,
+                    "threadhead" => re($getw['topic']),
+                    "titel" => $titel,
+                    "postnr" => "1",
+                    "class" => $ftxt['class'],
+                    "pn" => $pn,
+                    "hp" => $hp,
+                    "email" => $email,
+                    "posts" => $userposts,
+                    "text" => $text,
+                    "status" => getrank($get['t_reg']),
+                    "avatar" => useravatar($get['t_reg']),
+                    "edited" => $get['edited'],
+                    "signatur" => $sig,
+                    "date" => _posted_by . date("d.m.y H:i", $get['t_date']) . _uhr,
+                    "zitat" => $zitat,
+                    "onoff" => $onoff,
+                    "ip" => $posted_ip,
+                    "top" => _topicon,
+                    "fastreply" => $fastreply,
+                    "lpost" => $lpost,
+                    "lp" => cnt($db['f_posts'], " WHERE `sid` = " . (int)($_GET['id'])) + 1,
+                    "add" => $add,
+                    "nav" => $nav,
+                    "vote" => $vote,
+                    "f_abo" => $f_abo,
+                    "show" => $show));
+            }
         }
     } else {
         $index = error(_error_wrong_permissions, 1);
