@@ -11,23 +11,8 @@ include(basePath . "/inc/config.php");
 use Phpfastcache\CacheManager;
 
 // Cache
-try {
-    CacheManager::setDefaultConfig(array(
-        "path" => basePath . "/inc/_cache_",
-        "defaultTtl" => 10,
-        "storage" => $config_cache['storage'],
-        "memcache" => $config_cache['server_mem'],
-        "redis" => $config_cache['server_redis'],
-        "ssdb" => $config_cache['server_ssdb'],
-        "default_chmod" => 0775,
-        "compress_data" => true,
-        "cacheFileExtension" => 'pfc',
-        "fallback" => "files"
-    ));
-} catch (\Phpfastcache\Exceptions\phpFastCacheInvalidArgumentException $e) {
-}
+$cache = CacheManager::getInstance($config_cache['storage'], $config_cache['config'],'default');
 
-$cache = CacheManager::getInstance($config_cache['storage']); // return your setup storage
 $CachedString = $cache->getItem('css_icons');
 if (is_null($CachedString->get())) {
     function getIcons($dir)
