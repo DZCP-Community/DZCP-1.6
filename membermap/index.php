@@ -28,6 +28,14 @@ else {
     $mm_qry = db('SELECT u.`id`, u.`nick`, u.`city` FROM ' . $db['users'] .
         ' u WHERE u.`level` > ' . $level . ' ORDER BY u.id');
 
+    $test = ['type'=>'FeatureCollection','features'=>[
+        'type' => 'Feature',
+        'geometry' => ['type'=>'Point','coordinates'=>[1332700, 7906300]],
+        'properties' => ['Name'=>'Igor Tihonov','Country'=>'Sweden','City'=>'Gothenburg'],
+    ]];
+    $test = json_encode($test);
+    //file_put_contents('test.json',$test);
+
     $mm_coords = '';
     $mm_infos = "'<tr>";
     $mm_markerIcon = '';

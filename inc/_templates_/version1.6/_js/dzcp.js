@@ -31,7 +31,7 @@ let DZCP = {
         }, conjobInterval);
 
         // init membermap
-        if($('#membermap').length) {
+        if($('#map').length) {
             DZCP.memberMap();
         }
 
@@ -549,37 +549,119 @@ let DZCP = {
         });
     },
     memberMap: function () {
-        let openlayers = OpenLayers;
-        openlayers.Lang.setCode(dzcp_config.lng);
+        // Member layers
+        var MemberLayer = new OpenLayers.Layer.Vector('Member', {
+            protocol: new OpenLayers.Protocol.HTTP({
+                url: "test.json",
+                format: new OpenLayers.Format.GeoJSON({
+                    // adds the thumbnail attribute to the feature
+                 //   createFeatureFromItem: function(item) {
+                  //      var feature = OpenLayers.Format.GeoRSS.prototype.createFeatureFromItem.apply(this, arguments);
+                  //      feature.attributes.thumbnail = this.getElementsByTagNameNS(item, "*", "thumbnail")[0].getAttribute("url");
+                   //     return feature;
+                   // }
+                })
+            }),
+            strategies: [new OpenLayers.Strategy.Fixed()],
+            styleMap: new OpenLayers.StyleMap({
+                externalGraphic: '../inc/images/mappin_team.png',
+                graphicOpacity: 1.0,
+                graphicWith: 34,
+                graphicHeight: 20,
+                graphicYOffset: -20
+            })
+        });
 
-        map = new openlayers.Map('membermap', {
-            projection: new openlayers.Projection("EPSG:900913"),
-            displayProjection: new openlayers.Projection("EPSG:4326"),
-            controls: [
-                new openlayers.Control.Navigation(),
-                new openlayers.Control.PanZoomBar()],
-            maxExtent:
-                new openlayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
+        /*
+        OpenLayers.Request.GET({
+            url: "test.json",
+            headers: {'Accept':'application/json'},
+            success: function (req) {
+                var g = new OpenLayers.Format.GeoJSON();
+                var feature_collection = g.read(req.responseText);
+                MemberLayer.destroyFeatures();
+                MemberLayer.addFeatures(feature_collection);
+            }
+        });*/
+
+        /*
+// Users layers
+var UserLayer = new OpenLayers.Layer.Vector('User', {
+    styleMap: new OpenLayers.StyleMap({
+        externalGraphic: '../inc/images/mappin.png',
+        graphicOpacity: 1.0,
+        graphicWith: 34,
+        graphicHeight: 20,
+        graphicYOffset: -20
+    })
+});
+
+OpenLayers.Request.GET({
+    url: "test.json",
+    headers: {'Accept':'application/json'},
+    success: function (req) {
+        var g = new OpenLayers.Format.GeoJSON();
+        var feature_collection = g.read(req.responseText);
+        UserLayer.destroyFeatures();
+        UserLayer.addFeatures(feature_collection);
+    }
+});*/
+
+        //Make Map
+        map = new OpenLayers.Map({
+            div: 'map',
+            theme: null,
+            projection: new OpenLayers.Projection('EPSG:900913'),
+            displayProjection: new OpenLayers.Projection('EPSG:4326'),
+            units: 'm',
             numZoomLevels: 12,
-            maxResolution: 156543,
-            units: 'meters'
+            maxResolution: 156543.0339,
+            maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
+            controls: [
+                new OpenLayers.Control.Attribution(),
+                new OpenLayers.Control.Navigation(),
+                new OpenLayers.Control.PanZoom(),
+            ],
+            layers: [
+                new OpenLayers.Layer.OSM('OpenStreetMap', null),
+                MemberLayer,
+              //  UserLayer,
+            ],
+            center: new OpenLayers.LonLat(0, 0),
+            zoom: 2
         });
 
-        let layer_mapnik = new openlayers.Layer.OSM.Mapnik("Mapnik");
-        layer_markers = new openlayers.Layer.Markers("Address", {
-            projection: new openlayers.Projection("EPSG:4326"),
-            visibility: true, displayInLayerSwitcher: true
+        // Create control and add some layers
+        // ----------------------------------
+        let fpControl = new OpenLayers.Control.FeaturePopups({
+            boxSelectionOptions: {},
+            layers: [
+                [
+                    // Uses: Internationalized templates.
+                    MemberLayer, {
+                    templates: {
+                        hover: '${.Name}',
+                        single: '${i18n("Name")}: ${.Name}<br>' +
+                            '${i18n("Country")}: ${.Country}<br>' +
+                            '${i18n("City")}: ${.City}<br>',
+                        item: '<li><a href="#" ${showPopup()}>${.Name}</a></li>'
+                    }
+                }],
+               /* [
+                    // Uses: Internationalized templates.
+                    UserLayer, {
+                    templates: {
+                        hover: '${.Name}',
+                        single: '${i18n("Name")}: ${.Name}<br>' +
+                            '${i18n("Country")}: ${.Country}<br>' +
+                            '${i18n("City")}: ${.City}<br>',
+                        item: '<li><a href="#" ${showPopup()}>${.Name}</a></li>'
+                    }
+                }]*/
+            ]
         });
 
-        map.addLayers([layer_mapnik, layer_markers]);
-        jumpTo(10.451526, 51.165691, 6);
-
-        for (let i = 0; i < dzcp_config.membermap.length; i++) {
-            let member = dzcp_config.membermap[i];
-            let popuptext = "<span style=\"color:#000000\">" + member.text +
-                "<img src=\"" + member.img.src + "\" width=\""+member.img.width+"\" height=\""+member.img.height+"\"></p></span>";
-            addMarker(layer_markers, member.lng, member.lat, popuptext);
-        }
+        map.addControl(fpControl);
     }
 };
 
