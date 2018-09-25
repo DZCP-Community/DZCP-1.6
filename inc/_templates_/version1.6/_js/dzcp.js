@@ -228,7 +228,7 @@ let DZCP = {
     // Templateswitch
     tempswitch: function () {
         let url = doc.form.tempswitch.options[doc.form.tempswitch.selectedIndex].value;
-        if (url != 'lazy' && url != tempdir)
+        if (url != 'lazy' && url != dzcp_config.tempdir)
             DZCP.goTo("?tmpl_set=" + url);
     },
 
