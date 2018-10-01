@@ -8,7 +8,7 @@
 //-> DZCP Settings Start
 #########################################
 
-define('view_error_reporting', true); // Zeigt alle Fehler und Notices etc.
+define('view_error_reporting', false); // Zeigt alle Fehler und Notices etc.
 define('debug_all_sql_querys', false);
 define('debug_save_to_file', false);
 define('debug_dzcp_handler', true);
@@ -58,7 +58,7 @@ define('use_ssl_auto_redirect', false); //Wenn eine SSL-Verbindung möglich ist,
 * Bitte vor der Aktivierung der Persistent Connections lesen:
 * http://php.net/manual/de/features.persistent-connections.php
 */
-define('mysqli_persistconns', true);
+define('mysqli_persistconns', false);
 
 /*
  * Use SMTP connection with authentication for Mailing
@@ -78,7 +78,7 @@ use Phpfastcache\Config\Config;
 $config_cache = array(
     //auto ,apc, apcu, cassandra, cookie, couchbase, couchdb, files, leveldb, memcache, memcached, memstatic, mongodb, predis
     //redis, riak, sqlite, ssdb, wincache, xcache, zenddisk, zendshm
-    "storage" => "zendshm",
+    "storage" => "files",
     "config" => new Config([
         "autoTmpFallback" => true,
         "defaultTtl" => 10,
@@ -89,7 +89,7 @@ $config_cache = array(
         "path" => basePath . "/inc/_cache_/"
     ]),
     "dbc" => true,  //use database query caching * only use with memory cache
-    "tpl" => true  //use template caching * only use with memory cache
+    "tpl" => false  //use template caching * only use with memory cache
 );
 
 //-> Legt die UserID des Rootadmins fest
