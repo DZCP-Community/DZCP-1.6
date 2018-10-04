@@ -275,7 +275,7 @@ if ($do == "add") {
             "name" => $type,
             "id" => $get['id'],
             "set" => $set,
-            "url" => cut($get['url'], 34, true, false),
+            "url" => cut(re($get['url']), 34, true, false),
             "kat" => re($get['katname']),
             "shown" => $shown,
             "edit" => $edit,
