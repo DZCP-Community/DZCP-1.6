@@ -358,7 +358,7 @@ class api {
     }
 
     private function call() {
-        if (!allow_url_fopen_support()) {
+        if (!fsockopen_support() && !fsockopen_support_bypass) {
             return;
         }
 

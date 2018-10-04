@@ -93,10 +93,13 @@ if (defined('_UserMenu')) {
         }
 
         $steam = '-';
-        if (!empty($get['steamid']))
+        if (!empty($get['steamid']) && fsockopen_support() || (!empty($get['steamid']) && fsockopen_support_bypass)) {
             $steam = '<div id="infoSteam_' . md5(re($get['steamid'])) . '">
             <div style="width:100%;text-align:center"><img src="../inc/images/ajax-loader-mini.gif" alt="" /></div>
             <script language="javascript" type="text/javascript">DZCP.initDynLoader("infoSteam_' . md5(re($get['steamid'])) . '","steam","&steamid=' . re($get['steamid']) . '&list=true");</script></div>';
+        } else if(!empty($get['steamid']) && !fsockopen_support()) {
+            DebugConsole::insert_warning('user:userlist','fsockopen support is not available!');
+        }
 
         $userliste .= show($dir . "/userliste_show", array("nick" => autor($get['id'], '', '', 10),
             "level" => getrank($get['id']),

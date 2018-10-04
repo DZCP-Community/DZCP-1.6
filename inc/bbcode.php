@@ -389,13 +389,6 @@ function disable_functions(string $function = '')
     return false;
 }
 
-function allow_url_fopen_support() {
-    if (ini_get('allow_url_fopen') == 1)
-        return true;
-
-    return false;
-}
-
 //-> Auslesen der UserID
 function userid() {
     global $db,$userip;
@@ -540,7 +533,7 @@ function lang(string $lng) {
 
 //->Daten uber file_get_contents oder curl abrufen
 function get_external_contents(string $url, $post = false, bool $nogzip = false, int $timeout = file_get_contents_timeout) {
-    if (!allow_url_fopen_support() && (!extension_loaded('curl') || !use_curl_support))
+    if (!fsockopen_support() && (!extension_loaded('curl') || !use_curl_support))
         return false;
 
     $url_p = @parse_url($url);

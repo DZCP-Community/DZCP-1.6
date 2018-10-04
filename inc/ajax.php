@@ -42,7 +42,7 @@ function steamIMG($steamID = '')
 {
     global $cache;
     if (empty($steamID) || !steam_enable) return '-';
-    if (!allow_url_fopen_support() && !fsockopen_support_bypass) return _fopen;
+    if (!fsockopen_support() && !fsockopen_support_bypass) return '-';
     if (!$steam = SteamAPI::getUserInfos($steamID)) return '-'; //UserInfos
     if (!$steam || empty($steam) || !is_array($steam) || count($steam) <= 1) return '-';
 
