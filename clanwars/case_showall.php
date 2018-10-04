@@ -20,7 +20,7 @@ if (defined('_Clanwars')) {
         while ($get = _fetch($qry)) {
             $img = squad($get['icon']);
             $flagge = flag($get['gcountry']);
-            $gegner = show(_cw_details_gegner, array("gegner" => re(cut($get['clantag'] . " - " . $get['gegner'], config('l_clanwars', true, false))),
+            $gegner = show(_cw_details_gegner, array("gegner" => cut(re($get['clantag']) . " - " . re($get['gegner']), config('l_clanwars', true), false),
                 "url" => '?action=details&amp;id=' . $get['id']));
 
             $details = show(_cw_show_details, array("id" => $get['id']));

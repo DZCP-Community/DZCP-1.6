@@ -418,7 +418,7 @@ switch ($do) {
                 "title" => _button_title_del,
                 "del" => convSpace(_confirm_del_news)));
 
-            $titel = show(_news_show_link, array("titel" => cut(re($get['titel']), config('l_newsadmin'), true, true), "id" => $get['id']));
+            $titel = show(_news_show_link, array("titel" => cut(re($get['titel']), config('l_newsadmin')), "id" => $get['id']));
             $intern = ($get['intern'] ? _votes_intern : '');
             $sticky = ($get['sticky'] ? _news_sticky : '');
             $datum = empty($get['datum']) ? _no_public : date("d.m.y H:i", $get['datum']) . _uhr;

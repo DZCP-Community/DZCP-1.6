@@ -57,7 +57,7 @@ if (defined('_Forum')) {
                     WHERE id = '" . (int)($_GET['id']) . "'", false, true);
 
                 $threadlink = show(_forum_thread_link, array(
-                    "topic" => re(cut($get['topic'], config('l_forumtopic'), true, false)),
+                    "topic" => cut(re($get['topic']), config('l_forumtopic')),
                     "id" => $get['id'],
                     "kid" => $gets['id'],
                     "sticky" => $sticky,
@@ -67,7 +67,7 @@ if (defined('_Forum')) {
                     "page" => $pagenr));
             } else {
                 $threadlink = show(_forum_thread_search_link, array(
-                    "topic" => re(cut($get['topic'], config('l_forumtopic'), true, false)),
+                    "topic" => cut(re($get['topic']), config('l_forumtopic')),
                     "id" => $get['id'],
                     "sticky" => $sticky,
                     "hl" => $_POST['suche'],
@@ -93,7 +93,7 @@ if (defined('_Forum')) {
             $color++;
             $threads .= show($dir . "/forum_show_threads", array("new" => (check_new((int)$get['lp']) ? _newicon : ''),
                 "topic" => $threadlink,
-                "subtopic" => re(cut($get['subtopic'], config('l_forumsubtopic'), true, false)),
+                "subtopic" => cut(re($get['subtopic']), config('l_forumsubtopic')),
                 "hits" => $get['hits'],
                 "replys" => cnt($db['f_posts'], " WHERE sid = '" . $get['id'] . "'"),
                 "class" => $class,

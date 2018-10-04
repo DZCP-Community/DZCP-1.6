@@ -16,13 +16,12 @@ class SteamAPI
     static private $user_data = array();
     static private $api_data = array();
     static private $community_data = array();
-    static private $games_data = array();
 
     /**
      * Setzt einige Einstellungen für die Steam API
-     *
      * @param string $key
      * @param string $var
+     * @return bool
      */
     public static function set(string $key = '', string $var = '')
     {
@@ -121,8 +120,11 @@ class SteamAPI
 
     /**
      * Ruft die aktuellen Status Informationen des Users ab
-     *
+     * @param string $interface
+     * @param string $method
+     * @param string $version
      * @return boolean
+     * @throws \Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException
      */
     private static final function get_api(string $interface = 'ISteamUser', string $method = 'GetPlayerSummaries', string $version = 'v0002')
     {
@@ -176,7 +178,10 @@ class SteamAPI
     /**
      * Gibt die Steam Community Informationen zurück
      *
+     * @param string $zone
+     * @param string $xml
      * @return boolean
+     * @throws \Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException
      */
     private static final function get_steamcommunity(string $zone = '', string $xml = 'profile')
     {
@@ -234,8 +239,7 @@ class SteamAPI
         return false;
     }
 
-    public static final function objectToArray($d)
-    {
+    public static final function objectToArray($d) {
         return json_decode(json_encode($d, JSON_FORCE_OBJECT), true);
     }
 }

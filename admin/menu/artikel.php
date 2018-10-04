@@ -256,7 +256,7 @@ switch ($do) {
                 "title" => _button_title_del,
                 "del" => convSpace(_confirm_del_artikel)));
 
-            $titel = show(_artikel_show_link, array("titel" => cut(re($get['titel']), config('l_newsadmin'), true, true), "id" => $get['id']));
+            $titel = show(_artikel_show_link, array("titel" => cut(re($get['titel']), config('l_newsadmin')), "id" => $get['id']));
 
             $public = ($get['public'] ? '<a href="?admin=artikel&amp;do=public&amp;id=' . $get['id'] . '&amp;what=unset"><img src="../inc/images/public.gif" alt="" title="' . _non_public . '" /></a>'
                 : '<a href="?admin=artikel&amp;do=public&amp;id=' . $get['id'] . '&amp;what=set"><img src="../inc/images/nonpublic.gif" alt="" title="' . _public . '" /></a>');
