@@ -851,7 +851,7 @@ function glossar(string $txt) {
         // replace words
         for ($g = 0; $g <= count($gl_words) - 1; $g++) {
             $desc = regexChars($gl_desc[$g]);
-            $info = 'onmouseover="DZCP.showInfo(\'' . up($desc) . '\')" onmouseout="DZCP.hideInfo()"';
+            $info = 'onmouseover="DZCP.showInfo(\'' . jsconvert($desc) . '\')" onmouseout="DZCP.hideInfo()"';
             $w = regexChars(html_entity_decode($gl_words[$g]));
             $r = "<a class=\"glossar\" href=\"../glossar/?word=" . $gl_words[$g] . "\" " . $info . ">" . $gl_words[$g] . "</a>";
             $txt = str_ireplace('<tmp|' . $w . '|tmp>', $r, $txt);
@@ -2863,6 +2863,21 @@ function getBoardPermissions(int $checkID = 0, int $pos = 0) {
     }
 
     return $i_forum;
+}
+
+/**
+ * Zeichen für JS codieren
+ * @param $txt
+ * @return mixed
+ */
+function jsconvert($txt) {
+    global $charset;
+    $txt = str_replace(
+        array("'","&#039;","\"","\r","\n","&Uuml;","&uuml;","&Auml;","&auml;","&Ouml;","&ouml;","&szlig;"),
+        array("\'","\'","&quot;","","","\u00dc","\u00fc","\u00c4","\u00e4","\u00d6","\u00f6","\u00df"),$txt);
+
+    $txt = htmlentities($txt, ENT_COMPAT, $charset);
+    return utf8_encode($txt);
 }
 
 /**

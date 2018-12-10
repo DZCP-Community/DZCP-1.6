@@ -31,7 +31,7 @@ function top_match()
             }
 
             if (config('allowhover') == 1 || config('allowhover') == 2)
-                $hover = 'onmouseover="DZCP.showInfo(\'' . up(re($get['name'])) . ' vs. ' . up(re($get['gegner'])) . '\', \'' . _played_at . ';' . _cw_xonx . ';' . _result . ';' . _comments_head . '\', \'' . date("d.m.Y H:i", $get['datum']) . _uhr . ';' . up(re($get['xonx'])) . ';' . cw_result_nopic_nocolor($get['punkte'], $get['gpunkte']) . ';' . cnt($db['cw_comments'], "WHERE cw = '" . $get['id'] . "'") . '\')" onmouseout="DZCP.hideInfo()"';
+                $hover = 'onmouseover="DZCP.showInfo(\'' . up(re($get['name'])) . ' vs. ' . jsconvert(re($get['gegner'])) . '\', \'' . _played_at . ';' . _cw_xonx . ';' . _result . ';' . _comments_head . '\', \'' . date("d.m.Y H:i", $get['datum']) . _uhr . ';' . jsconvert(re($get['xonx'])) . ';' . cw_result_nopic_nocolor($get['punkte'], $get['gpunkte']) . ';' . cnt($db['cw_comments'], "WHERE cw = '" . $get['id'] . "'") . '\')" onmouseout="DZCP.hideInfo()"';
 
             $topmatch .= show("menu/top_match", array("id" => $get['id'],
                 "clantag" => re(cut(re($get['clantag']), config('l_lwars'), true, false)),

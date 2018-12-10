@@ -18,7 +18,7 @@ function gallerie()
         $files = limited_array($files, 1, 4);
         foreach ($files as $file) {
             if (!empty($file)) {
-                $info = 'onmouseover="DZCP.showInfo(\'' . up(re($get['kat'])) . '\', \'' . _gal_pics . '\', \'' . $cnt . '\')" onmouseout="DZCP.hideInfo()"';
+                $info = 'onmouseover="DZCP.showInfo(\'' . jsconvert(re($get['kat'])) . '\', \'' . _gal_pics . '\', \'' . $cnt . '\')" onmouseout="DZCP.hideInfo()"';
                 $gallery .= show("menu/gallerie", array("image" => $file,
                     "kat" => re($get['kat']),
                     "info" => $info,

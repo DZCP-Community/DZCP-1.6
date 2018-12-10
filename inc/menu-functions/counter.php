@@ -49,7 +49,7 @@ function counter()
                 }
             }
 
-            $info = 'onmouseover="DZCP.showInfo(\'' . _online_head . '\', \'' . $kats . '\', \'' . $text . '\')" onmouseout="DZCP.hideInfo()"';
+            $info = 'onmouseover="DZCP.showInfo(\'' . _online_head . '\', \'' . jsconvert($kats) . '\', \'' . jsconvert($text) . '\')" onmouseout="DZCP.hideInfo()"';
         }
 
         $counter = show("menu/counter", array("v_today" => $v_today,

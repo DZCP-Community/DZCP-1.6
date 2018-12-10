@@ -16,7 +16,7 @@ function events()
     $eventbox = '';
     if (_rows($qry)) {
         while ($get = _fetch($qry)) {
-            $info = 'onmouseover="DZCP.showInfo(\'' . up(re($get['title']),true) . '\', \'' . _kalender_uhrzeit . ';' . _datum . '\', \'' . date("H:i", $get['datum']) . _uhr . ';' . date("d.m.Y", $get['datum']) . '\')" onmouseout="DZCP.hideInfo()"';
+            $info = 'onmouseover="DZCP.showInfo(\'' . jsconvert(re($get['title']),true) . '\', \'' . _kalender_uhrzeit . ';' . _datum . '\', \'' . date("H:i", $get['datum']) . _uhr . ';' . date("d.m.Y", $get['datum']) . '\')" onmouseout="DZCP.hideInfo()"';
             $events = show(_next_event_link, array("datum" => date("d.m.", $get['datum']),
                 "timestamp" => $get['datum'],
                 "event" => $get['title'],

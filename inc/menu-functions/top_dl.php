@@ -14,7 +14,7 @@ function top_dl()
         while ($get = _fetch($qry)) {
             if (config('allowhover') == 1) {
                 $getkat = db("SELECT name FROM " . $db['dl_kat'] . " WHERE id = '" . $get['kat'] . "'", false, true);
-                $info = 'onmouseover="DZCP.showInfo(\'' . up(re($get['download'])) . '\', \'' . _datum . ';' . _dl_dlkat . ';' . _hits . '\', \'' . date("d.m.Y H:i", $get['date']) . _uhr . ';' . up(re($getkat['name'])) . ';' . $get['hits'] . '\')" onmouseout="DZCP.hideInfo()"';
+                $info = 'onmouseover="DZCP.showInfo(\'' . jsconvert(re($get['download'])) . '\', \'' . _datum . ';' . _dl_dlkat . ';' . _hits . '\', \'' . date("d.m.Y H:i", $get['date']) . _uhr . ';' . jsconvert(re($getkat['name'])) . ';' . $get['hits'] . '\')" onmouseout="DZCP.hideInfo()"';
             }
 
             $top_dl .= show("menu/top_dl", array("id" => $get['id'],
