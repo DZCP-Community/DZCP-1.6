@@ -325,11 +325,11 @@ WHERE id = '" . (int)($_GET['id']) . "'");
     $show = info((empty($_GET['set']) ? _cw_admin_top_unsetted : _cw_admin_top_setted), "?admin=cw");
 } else {
     $whereqry = '';
-    if (isset($_GET['squad']) && is_numeric($_GET['squad'])) {
-        $whereqry = ' WHERE squad_id = ' . ((int)$_GET['squad']) . ' ';
+    if (isset($_GET['squad']) && is_numeric($_GET['squad']) && ((int)$_GET['squad']) >= 1) {
+        $whereqry = ' WHERE `squad_id` = ' . ((int)$_GET['squad']) . ' ';
     }
 
-    $qry = db("SELECT * FROM " . $db['cw'] . " " . $whereqry . " ORDER BY datum DESC LIMIT " . ($page - 1) * $maxadmincw . "," . $maxadmincw . "");
+    $qry = db("SELECT * FROM " . $db['cw'] . " " . $whereqry . " ORDER BY datum DESC LIMIT " . ($page - 1) * $maxadmincw . "," . $maxadmincw . ";");
     $entrys = cnt($db['cw']);
     $squads = show(_cw_edit_select_field_squads, array("name" => _all,
         "sel" => "",
