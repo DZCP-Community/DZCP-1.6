@@ -314,7 +314,7 @@ function _real_escape_string($string = '')
 
 function db($query = '', $rows = false, $fetch = false)
 {
-    global $mysql, $updater;
+    global $mysql, $updater, $db;
 
     if (debug_all_sql_querys) DebugConsole::wire_log('debug', 9, 'SQL_Query', $query);
     if ($updater) {
@@ -324,8 +324,9 @@ function db($query = '', $rows = false, $fetch = false)
             DebugConsole::sql_error_handler($query);
             $language_text = [];
             include_once(basePath.'/inc/lang/languages/english.php');
+            $get = _fetch($mysql->query("SELECT `clanname` FROM `" . $db['settings'] . "`;"));
             die('<img src="../inc/images/dberror.png" align="absmiddle"/>&nbsp;&nbsp;<b>Upps...</b><br /><br />Entschuldige bitte! Das h&auml;tte nicht passieren d&uuml;rfen.<p>'.
-                'Wir k&uuml;mmern uns so schnell wie m&ouml;glich darum.<br><br>' . settings('clanname',false) . '<br><br>' . $language_text['_back']);
+                'Wir k&uuml;mmern uns so schnell wie m&ouml;glich darum.<br><br>' . utf8_decode($get['clanname']) . '<br><br>' . $language_text['_back']);
         }
     }
 
