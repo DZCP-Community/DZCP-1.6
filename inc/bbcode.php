@@ -583,13 +583,11 @@ function get_external_contents(string $url, $post = false, bool $nogzip = false,
             return false;
         }
 
-        if ($gzip) {
-            $org_content = $content;
-            $curl_info = curl_getinfo($curl, CURLINFO_HEADER_OUT);
-            if (stristr($curl_info, 'accept-encoding') && stristr($curl_info, 'gzip') && !$nogzip) {
-                $content = @gzinflate(substr($content, 10, -8));
-                if (!$content)
-                    $content = $org_content;
+        if ( strlen($content) && (curl_errno($curl)==CURLE_OK) && (curl_getinfo($curl, CURLINFO_HTTP_CODE)==200) ) {
+            // check for gzipped content
+            if ( (ord($content[0])==0x1f) && (ord($content[1])==0x8b) ) {
+                // skip header and ungzip the data
+                $content = gzinflate(substr($content,10));
             }
         }
 
