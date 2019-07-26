@@ -2515,7 +2515,7 @@ function pfields_name(string $name) {
 function ipcheck(string $what, int $time = 0) {
     global $db, $userip;
     $get = db("SELECT `time`,`what` FROM `" . $db['ipcheck'] . "` WHERE `what` = '" . $what . "' AND `ip` = '" . $userip . "' ORDER BY `time` DESC;", false, true);
-    if (count($get) >= 1) {
+    if ($get != null && count($get) >= 1) {
         if (preg_match("#vid#", $get['what']))
             return true;
         else {
