@@ -1,0 +1,30 @@
+{
+  "name": "dzcp/core",
+  "description": "DZCP-CMS",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lucas Brucksch",
+      "email": "lbrucksch@dzcp.de",
+      "homepage": "https://www.dzcp.de",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php" : "^7.1 | ^7.2",
+    "doctrine/orm": "2.6.*",
+    "symfony/yaml": "2.*",
+    "wixel/gump": "1.5.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "DZCP\\Controllers\\": "src/Controllers/",
+      "DZCP\\Exceptions\\": "src/Exceptions/",
+      "DZCP\\Helper\\": "src/Helper/",
+      "DZCP\\Interfaces\\": "src/Interfaces/",
+      "DZCP\\Models\\": "src/Models/",
+      "DZCP\\Traits\\": "src/Traits/"
+    }
+  }
+}

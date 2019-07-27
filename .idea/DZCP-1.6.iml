@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/brightnucleus/config" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/brightnucleus/country-codes" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/brightnucleus/exceptions" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/collections" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/common" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/dbal" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/event-manager" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/inflector" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/orm" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/persistence" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/doctrine/reflection" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/dzcp/gump" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/jaybizzle/crawler-detect" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/phpfastcache/phpfastcache" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/phpmailer/phpmailer" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/symfony/options-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/symfony/polyfill-php73" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/Core/vendor/symfony/yaml" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

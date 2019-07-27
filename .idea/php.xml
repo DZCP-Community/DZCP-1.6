@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Behat">
+    <behat_settings>
+      <BehatSettings />
+    </behat_settings>
+  </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/dzcp/gump" />
+      <path value="$PROJECT_DIR$/vendor/brightnucleus/exceptions" />
+      <path value="$PROJECT_DIR$/vendor/brightnucleus/config" />
+      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/brightnucleus/country-codes" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/jaybizzle/crawler-detect" />
+      <path value="$PROJECT_DIR$/vendor/phpfastcache/phpfastcache" />
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/phpmailer/phpmailer" />
+      <path value="$PROJECT_DIR$/Core/vendor/dzcp/gump" />
+      <path value="$PROJECT_DIR$/Core/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/Core/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/Core/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/Core/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/Core/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/Core/vendor/composer" />
+      <path value="$PROJECT_DIR$/Core/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/Core/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/Core/vendor/jaybizzle/crawler-detect" />
+      <path value="$PROJECT_DIR$/Core/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/Core/vendor/brightnucleus/exceptions" />
+      <path value="$PROJECT_DIR$/Core/vendor/brightnucleus/config" />
+      <path value="$PROJECT_DIR$/Core/vendor/brightnucleus/country-codes" />
+      <path value="$PROJECT_DIR$/Core/vendor/phpfastcache/phpfastcache" />
+      <path value="$PROJECT_DIR$/Core/vendor/phpmailer/phpmailer" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/reflection" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/Core/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/persistence" />
+      <path value="$PROJECT_DIR$/Core/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/common" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/Core/vendor/doctrine/orm" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings />
+    </phpunit_settings>
+  </component>
+</project>
