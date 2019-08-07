@@ -1,0 +1,26 @@
+language: php
+
+sudo: false
+
+php:
+    - 7.1
+    - 7.2
+
+env: MONGODB_SERVER=
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+services: mongodb
+
+before_install: echo 'extension=mongodb.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
+install: composer install --prefer-dist
+
+script: bin/phpunit -c tests/
+
+notifications:
+    email:
+        - gediminas.morkevicius@gmail.com
+        - developers@atlantic18.com

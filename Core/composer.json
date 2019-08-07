@@ -1,6 +1,6 @@
 {
   "name": "dzcp/core",
-  "description": "DZCP-CMS",
+  "description": "deV!Lz ClanPortal - Core Application",
   "minimum-stability": "dev",
   "license": "MIT",
   "authors": [
@@ -12,19 +12,26 @@
     }
   ],
   "require": {
-    "php" : "^7.1 | ^7.2",
+    "php" : "^7.2",
     "doctrine/orm": "2.6.*",
     "symfony/yaml": "2.*",
-    "wixel/gump": "1.5.*"
+    "symfony/filesystem": "4.3.*",
+    "gedmo/doctrine-extensions": "dev-master",
+    "monolog/monolog": "2.0.0-beta2",
+    "tea-m-speak-interface/doctrine-extensions": "6.0.1",
+    "tea-m-speak-interface/gump": "v1.6.0.4",
+    "smarty/smarty": "dev-master"
   },
   "autoload": {
     "psr-4": {
-      "DZCP\\Controllers\\": "src/Controllers/",
-      "DZCP\\Exceptions\\": "src/Exceptions/",
-      "DZCP\\Helper\\": "src/Helper/",
-      "DZCP\\Interfaces\\": "src/Interfaces/",
-      "DZCP\\Models\\": "src/Models/",
-      "DZCP\\Traits\\": "src/Traits/"
+      "Application\\Controllers\\": "Application/Controllers/",
+      "Application\\Exceptions\\": "Application/Exceptions/",
+      "Application\\Helper\\": "Application/Helper/",
+      "Application\\Interfaces\\": "Application/Interfaces/",
+      "Application\\Libraries\\": "Application/Libraries/",
+      "Application\\Models\\": "Application/Models/",
+      "Application\\Traits\\": "Application/Traits/",
+      "Application\\Entities\\": "Application/Entities/"
     }
   }
 }

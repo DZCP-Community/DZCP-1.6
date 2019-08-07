@@ -1,0 +1,37 @@
+{
+    "name": "tea-m-speak-interface/gump",
+    "type": "library",
+    "description": "A fast, extensible & stand-alone PHP input validation class that allows you to validate any data for Tea(m)Speak-Interface",
+    "keywords": [
+        "filter",
+        "validators"
+    ],
+    "authors": [
+        {
+            "name": "Sean Nieuwoudt",
+            "homepage": "https://wixelhq.com"
+        },
+        {
+            "name": "Filis Futsarov",
+            "homepage": "https://filis.me"
+        },
+        {
+            "name": "Lucas Brucksch",
+            "email": "lbrucksch@hammermaps.de",
+            "homepage": "https://www.dzcp.de/"
+        }
+    ],
+    "license": "MIT",
+    "homepage": "https://wixelhq.com/",
+    "require": {
+        "php": "^7.1",
+      "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wixel\\GUMP\\": "src/",
+            "Wixel\\GUMP\\Filters\\": "src/",
+            "Wixel\\GUMP\\Validators\\": "src/"
+        }
+    }
+}

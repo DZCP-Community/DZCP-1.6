@@ -1,5 +1,51 @@
 [
     {
+        "name": "behat/transliterator",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Behat/Transliterator.git",
+            "reference": "826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Behat/Transliterator/zipball/826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c",
+            "reference": "826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "chuyskywalker/rolling-curl": "^3.1",
+            "php-yaoi/php-yaoi": "^1.0"
+        },
+        "time": "2017-04-04T11:38:05+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Behat\\Transliterator": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Artistic-1.0"
+        ],
+        "description": "String transliterator",
+        "keywords": [
+            "i18n",
+            "slug",
+            "transliterator"
+        ]
+    },
+    {
         "name": "doctrine/annotations",
         "version": "1.7.x-dev",
         "version_normalized": "1.7.9999999.9999999-dev",
@@ -923,6 +969,176 @@
         ]
     },
     {
+        "name": "gedmo/doctrine-extensions",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
+            "reference": "f3bdc16fc2e793c37c1fefb1e4fa2f8a0a59edfc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/f3bdc16fc2e793c37c1fefb1e4fa2f8a0a59edfc",
+            "reference": "f3bdc16fc2e793c37c1fefb1e4fa2f8a0a59edfc",
+            "shasum": ""
+        },
+        "require": {
+            "behat/transliterator": "~1.2",
+            "doctrine/common": "^2.10",
+            "php": ">=7.1"
+        },
+        "conflict": {
+            "doctrine/annotations": "<1.2",
+            "doctrine/mongodb": "<1.3",
+            "sebastian/comparator": "<2.0"
+        },
+        "provide": {
+            "ext-mongo": "1.6.12"
+        },
+        "require-dev": {
+            "alcaeus/mongo-php-adapter": "^1.1",
+            "doctrine/mongodb-odm": "^1.2",
+            "doctrine/orm": "^2.6",
+            "phpunit/phpunit": "^6.5",
+            "symfony/yaml": "^4.1"
+        },
+        "suggest": {
+            "doctrine/mongodb-odm": "to use the extensions with the MongoDB ODM",
+            "doctrine/orm": "to use the extensions with the ORM"
+        },
+        "time": "2019-03-19T13:05:13+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Gedmo\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "David Buchmann",
+                "email": "david@liip.ch"
+            },
+            {
+                "name": "Gediminas Morkevicius",
+                "email": "gediminas.morkevicius@gmail.com"
+            },
+            {
+                "name": "Gustavo Falco",
+                "email": "comfortablynumb84@gmail.com"
+            }
+        ],
+        "description": "Doctrine2 behavioral extensions",
+        "homepage": "http://gediminasm.org/",
+        "keywords": [
+            "Blameable",
+            "behaviors",
+            "doctrine2",
+            "extensions",
+            "gedmo",
+            "loggable",
+            "nestedset",
+            "sluggable",
+            "sortable",
+            "timestampable",
+            "translatable",
+            "tree",
+            "uploadable"
+        ]
+    },
+    {
+        "name": "monolog/monolog",
+        "version": "2.0.0-beta2",
+        "version_normalized": "2.0.0.0-beta2",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Seldaek/monolog.git",
+            "reference": "bf486002a08ca7cb156540e1a38c7be70fa8ed59"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bf486002a08ca7cb156540e1a38c7be70fa8ed59",
+            "reference": "bf486002a08ca7cb156540e1a38c7be70fa8ed59",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.2",
+            "psr/log": "^1.0.1"
+        },
+        "provide": {
+            "psr/log-implementation": "1.0.0"
+        },
+        "require-dev": {
+            "aws/aws-sdk-php": "^2.4.9 || ^3.0",
+            "doctrine/couchdb": "~1.0@dev",
+            "elasticsearch/elasticsearch": "^6.0",
+            "graylog2/gelf-php": "^1.4.2",
+            "jakub-onderka/php-parallel-lint": "^0.9",
+            "php-amqplib/php-amqplib": "~2.4",
+            "php-console/php-console": "^3.1.3",
+            "phpspec/prophecy": "^1.6.1",
+            "phpunit/phpunit": "^7.5",
+            "predis/predis": "^1.1",
+            "rollbar/rollbar": "^1.3",
+            "ruflin/elastica": ">=0.90 <3.0",
+            "swiftmailer/swiftmailer": "^5.3|^6.0"
+        },
+        "suggest": {
+            "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
+            "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+            "elasticsearch/elasticsearch": "Allow sending log messages to an Elasticsearch server via official client",
+            "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+            "ext-mongodb": "Allow sending log messages to a MongoDB server (via driver)",
+            "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+            "mongodb/mongodb": "Allow sending log messages to a MongoDB server (via library)",
+            "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
+            "php-console/php-console": "Allow sending log messages to Google Chrome",
+            "rollbar/rollbar": "Allow sending log messages to Rollbar",
+            "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
+        },
+        "time": "2019-07-06T13:17:41+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Monolog\\": "src/Monolog"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jordi Boggiano",
+                "email": "j.boggiano@seld.be",
+                "homepage": "http://seld.be"
+            }
+        ],
+        "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+        "homepage": "http://github.com/Seldaek/monolog",
+        "keywords": [
+            "log",
+            "logging",
+            "psr-3"
+        ]
+    },
+    {
         "name": "psr/container",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -974,18 +1190,125 @@
         ]
     },
     {
+        "name": "psr/log",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/log.git",
+            "reference": "c4421fcac1edd5a324fda73e589a5cf96e52ffd0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/c4421fcac1edd5a324fda73e589a5cf96e52ffd0",
+            "reference": "c4421fcac1edd5a324fda73e589a5cf96e52ffd0",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2018-11-21T13:42:00+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Psr\\Log\\": "Psr/Log/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for logging libraries",
+        "homepage": "https://github.com/php-fig/log",
+        "keywords": [
+            "log",
+            "psr",
+            "psr-3"
+        ]
+    },
+    {
+        "name": "smarty/smarty",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/smarty-php/smarty.git",
+            "reference": "c9f0de05f41b9e52798b268ab1e625fac3b8578c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/smarty-php/smarty/zipball/c9f0de05f41b9e52798b268ab1e625fac3b8578c",
+            "reference": "c9f0de05f41b9e52798b268ab1e625fac3b8578c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "6.4.1"
+        },
+        "time": "2019-02-28T06:42:20+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "libs/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Monte Ohrt",
+                "email": "monte@ohrt.com"
+            },
+            {
+                "name": "Uwe Tews",
+                "email": "uwe.tews@googlemail.com"
+            },
+            {
+                "name": "Rodney Rehm",
+                "email": "rodney.rehm@medialize.de"
+            }
+        ],
+        "description": "Smarty - the compiling PHP template engine",
+        "homepage": "http://www.smarty.net",
+        "keywords": [
+            "templating"
+        ]
+    },
+    {
         "name": "symfony/console",
         "version": "4.4.x-dev",
         "version_normalized": "4.4.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/console.git",
-            "reference": "e1f3adb3bdb662169e9b57382352a16d04fdfd8d"
+            "reference": "8176e45ff37c886ce35853cb9c406bdb872eeb75"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/console/zipball/e1f3adb3bdb662169e9b57382352a16d04fdfd8d",
-            "reference": "e1f3adb3bdb662169e9b57382352a16d04fdfd8d",
+            "url": "https://api.github.com/repos/symfony/console/zipball/8176e45ff37c886ce35853cb9c406bdb872eeb75",
+            "reference": "8176e45ff37c886ce35853cb9c406bdb872eeb75",
             "shasum": ""
         },
         "require": {
@@ -1017,7 +1340,7 @@
             "symfony/lock": "",
             "symfony/process": ""
         },
-        "time": "2019-07-24T17:14:38+00:00",
+        "time": "2019-07-27T12:53:28+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1048,6 +1371,58 @@
             }
         ],
         "description": "Symfony Console Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "symfony/filesystem",
+        "version": "4.3.x-dev",
+        "version_normalized": "4.3.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/filesystem.git",
+            "reference": "b9896d034463ad6fd2bf17e2bf9418caecd6313d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/filesystem/zipball/b9896d034463ad6fd2bf17e2bf9418caecd6313d",
+            "reference": "b9896d034463ad6fd2bf17e2bf9418caecd6313d",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.1.3",
+            "symfony/polyfill-ctype": "~1.8"
+        },
+        "time": "2019-06-23T08:51:25+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "4.3-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Filesystem\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Filesystem Component",
         "homepage": "https://symfony.com"
     },
     {
@@ -1344,27 +1719,92 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "wixel/gump",
-        "version": "v1.5.7",
-        "version_normalized": "1.5.7.0",
+        "name": "tea-m-speak-interface/doctrine-extensions",
+        "version": "6.0.1",
+        "version_normalized": "6.0.1.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/Wixel/GUMP.git",
-            "reference": "b32c92206fb7014a40179b8468ba8bab90b3f879"
+            "url": "https://github.com/tea-m-speak-interface/doctrine-extensions.git",
+            "reference": "9632a123f30280da4221acf0724c66d8ace3f50d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Wixel/GUMP/zipball/b32c92206fb7014a40179b8468ba8bab90b3f879",
-            "reference": "b32c92206fb7014a40179b8468ba8bab90b3f879",
+            "url": "https://api.github.com/repos/tea-m-speak-interface/doctrine-extensions/zipball/9632a123f30280da4221acf0724c66d8ace3f50d",
+            "reference": "9632a123f30280da4221acf0724c66d8ace3f50d",
             "shasum": ""
         },
-        "time": "2018-06-02T23:09:34+00:00",
+        "require": {
+            "doctrine/orm": ">=2.6.0,<2.7-dev",
+            "php": ">=7.1"
+        },
+        "time": "2019-07-28T00:47:55+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
-            "files": [
-                "gump.class.php"
-            ]
+            "psr-4": {
+                "Webmasters\\Doctrine\\": "lib/Webmasters/Doctrine/",
+                "Webmasters\\Doctrine\\DBAL\\Types\\": "lib/Webmasters/Doctrine/DBAL/Types/",
+                "Webmasters\\Doctrine\\ORM\\": "lib/Webmasters/Doctrine/ORM/",
+                "Webmasters\\Doctrine\\ORM\\Listener\\": "lib/Webmasters/Doctrine/ORM/Listener/",
+                "Webmasters\\Doctrine\\ORM\\Query\\": "lib/Webmasters/Doctrine/ORM/Query/",
+                "Webmasters\\Doctrine\\ORM\\Util\\StringConverter\\": "lib/Webmasters/Doctrine/ORM/Traits/",
+                "Webmasters\\Doctrine\\ORM\\Util\\": "lib/Webmasters/Doctrine/ORM/Util/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jan Teriete",
+                "email": "leisure.larry@habmalnefrage.de",
+                "homepage": "http://blog-das-oertchen.de/"
+            },
+            {
+                "name": "Lucas Brucksch",
+                "email": "lbrucksch@hammermaps.de",
+                "homepage": "https://www.dzcp.de/"
+            }
+        ],
+        "description": "Doctrine2 extensions for Tea(m)Speak-Interface",
+        "homepage": "https://github.com/tea-m-speak-interface/doctrine-extensions",
+        "keywords": [
+            "bootstrap",
+            "doctrine2",
+            "extensions",
+            "validators",
+            "webmasters"
+        ]
+    },
+    {
+        "name": "tea-m-speak-interface/gump",
+        "version": "v1.6.0.4",
+        "version_normalized": "1.6.0.4",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tea-m-speak-interface/GUMP.git",
+            "reference": "b8bad3caca730eb290ae0bb8a691ee52ab1a358e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tea-m-speak-interface/GUMP/zipball/b8bad3caca730eb290ae0bb8a691ee52ab1a358e",
+            "reference": "b8bad3caca730eb290ae0bb8a691ee52ab1a358e",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "php": "^7.1"
+        },
+        "time": "2019-07-28T19:47:23+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Wixel\\GUMP\\": "src/",
+                "Wixel\\GUMP\\Filters\\": "src/",
+                "Wixel\\GUMP\\Validators\\": "src/"
+            }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -1378,9 +1818,18 @@
             {
                 "name": "Filis Futsarov",
                 "homepage": "https://filis.me"
+            },
+            {
+                "name": "Lucas Brucksch",
+                "email": "lbrucksch@hammermaps.de",
+                "homepage": "https://www.dzcp.de/"
             }
         ],
-        "description": "A fast, extensible & stand-alone PHP input validation class that allows you to validate any data",
-        "homepage": "https://wixelhq.com/"
+        "description": "A fast, extensible & stand-alone PHP input validation class that allows you to validate any data for Tea(m)Speak-Interface",
+        "homepage": "https://wixelhq.com/",
+        "keywords": [
+            "filter",
+            "validators"
+        ]
     }
 ]

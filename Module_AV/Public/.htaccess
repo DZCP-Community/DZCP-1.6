@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^([^/]*)/([^/]*)\.html$ /?controller=$1&action=$2 [L]

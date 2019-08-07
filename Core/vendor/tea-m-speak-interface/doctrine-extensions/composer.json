@@ -1,0 +1,42 @@
+{
+    "name": "tea-m-speak-interface/doctrine-extensions",
+    "type": "library",
+    "description": "Doctrine2 extensions for Tea(m)Speak-Interface",
+    "keywords": [
+        "webmasters",
+        "doctrine2",
+        "extensions",
+        "bootstrap",
+        "validators"
+    ],
+    "homepage": "https://github.com/tea-m-speak-interface/doctrine-extensions",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jan Teriete",
+            "email": "leisure.larry@habmalnefrage.de",
+            "homepage": "http://blog-das-oertchen.de/"
+        },
+        {
+            "name": "Lucas Brucksch",
+            "email": "lbrucksch@hammermaps.de",
+            "homepage": "https://www.dzcp.de/"
+        }
+
+    ],
+    "require": {
+        "php": ">=7.1",
+        "doctrine/orm": ">=2.6.0,<2.7-dev"
+    },
+    "autoload": {
+	    "psr-4": {
+            "Webmasters\\Doctrine\\": "lib/Webmasters/Doctrine/",
+            "Webmasters\\Doctrine\\DBAL\\Types\\": "lib/Webmasters/Doctrine/DBAL/Types/",
+            "Webmasters\\Doctrine\\ORM\\": "lib/Webmasters/Doctrine/ORM/",
+            "Webmasters\\Doctrine\\ORM\\Listener\\": "lib/Webmasters/Doctrine/ORM/Listener/",
+            "Webmasters\\Doctrine\\ORM\\Query\\": "lib/Webmasters/Doctrine/ORM/Query/",
+            "Webmasters\\Doctrine\\ORM\\Util\\StringConverter\\": "lib/Webmasters/Doctrine/ORM/Traits/",
+            "Webmasters\\Doctrine\\ORM\\Util\\": "lib/Webmasters/Doctrine/ORM/Util/"
+        }
+    }
+}
