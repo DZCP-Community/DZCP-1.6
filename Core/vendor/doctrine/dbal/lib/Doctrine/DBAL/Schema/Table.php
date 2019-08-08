@@ -34,7 +34,9 @@ class Table extends AbstractAsset
     protected $_fkConstraints = [];
 
     /** @var mixed[] */
-    protected $_options = [];
+    protected $_options = [
+        'create_options' => [],
+    ];
 
     /** @var SchemaConfig|null */
     protected $_schemaConfig = null;
@@ -69,7 +71,7 @@ class Table extends AbstractAsset
             $this->_addForeignKeyConstraint($constraint);
         }
 
-        $this->_options = $options;
+        $this->_options = array_merge($this->_options, $options);
     }
 
     /**
@@ -837,5 +839,18 @@ class Table extends AbstractAsset
         }
 
         return $this->trimQuotes(strtolower($identifier));
+    }
+
+    public function setComment(?string $comment) : self
+    {
+        // For keeping backward compatibility with MySQL in previous releases, table comments are stored as options.
+        $this->addOption('comment', $comment);
+
+        return $this;
+    }
+
+    public function getComment() : ?string
+    {
+        return $this->_options['comment'] ?? null;
     }
 }

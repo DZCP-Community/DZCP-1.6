@@ -22,6 +22,7 @@ class Configuration implements IConfiguration {
     private $cache;
     private $custom;
     private $entity_namespace;
+    private $cache_dir;
 
     /**
      * Configuration constructor.
@@ -41,6 +42,7 @@ class Configuration implements IConfiguration {
         $this->cache['result'] = null;
         $this->custom = new OptionsCollection([]);
         $this->entity_namespace = "";
+        $this->cache_dir = "Cache";
     }
 
     /**
@@ -244,5 +246,19 @@ class Configuration implements IConfiguration {
      */
     public function setCustomConfigArray(array $config): void {
         $this->custom = new WORM\Util\OptionsCollection($config);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCacheDir(): string {
+        return $this->cache_dir;
+    }
+
+    /**
+     * @param string $dir
+     */
+    public function setCacheDir(string $dir = ""): void {
+        $this->cache_dir = $dir;
     }
 }

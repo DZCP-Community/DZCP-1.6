@@ -102,8 +102,7 @@ class Table
     /**
      * Sets a style definition.
      *
-     * @param string     $name  The style name
-     * @param TableStyle $style A TableStyle instance
+     * @param string $name The style name
      */
     public static function setStyleDefinition($name, TableStyle $style)
     {
@@ -439,7 +438,7 @@ class Table
     /**
      * Renders vertical column separator.
      */
-    private function renderColumnSeparator($type = self::BORDER_OUTSIDE)
+    private function renderColumnSeparator(int $type = self::BORDER_OUTSIDE)
     {
         $borders = $this->style->getBorderChars();
 
@@ -499,7 +498,7 @@ class Table
     /**
      * Calculate number of columns for this table.
      */
-    private function calculateNumberOfColumns($rows)
+    private function calculateNumberOfColumns(array $rows)
     {
         $columns = [0];
         foreach ($rows as $row) {
@@ -513,7 +512,7 @@ class Table
         $this->numberOfColumns = max($columns);
     }
 
-    private function buildTableRows($rows)
+    private function buildTableRows(array $rows)
     {
         /** @var WrappableOutputFormatterInterface $formatter */
         $formatter = $this->output->getFormatter();

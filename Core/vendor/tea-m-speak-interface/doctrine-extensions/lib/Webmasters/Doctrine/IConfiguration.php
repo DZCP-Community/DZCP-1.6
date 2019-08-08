@@ -31,4 +31,6 @@ interface IConfiguration {
     public function getCustomConfig(): OptionsCollection;
     public function setCustomConfig(OptionsCollection $config): void;
     public function setCustomConfigArray(array $config): void;
+    public function getCacheDir(): string;
+    public function setCacheDir(string $dir): void;
 }

@@ -52,12 +52,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/annotations.git",
-            "reference": "3f3525529066549f3991dd33192e063c2e89b530"
+            "reference": "fa4c4e861e809d6a1103bd620cce63ed91aedfeb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/annotations/zipball/3f3525529066549f3991dd33192e063c2e89b530",
-            "reference": "3f3525529066549f3991dd33192e063c2e89b530",
+            "url": "https://api.github.com/repos/doctrine/annotations/zipball/fa4c4e861e809d6a1103bd620cce63ed91aedfeb",
+            "reference": "fa4c4e861e809d6a1103bd620cce63ed91aedfeb",
             "shasum": ""
         },
         "require": {
@@ -66,9 +66,9 @@
         },
         "require-dev": {
             "doctrine/cache": "1.*",
-            "phpunit/phpunit": "^7.0"
+            "phpunit/phpunit": "^7.5@dev"
         },
-        "time": "2019-03-25T19:17:05+00:00",
+        "time": "2019-08-08T18:11:40+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -87,16 +87,16 @@
         ],
         "authors": [
             {
+                "name": "Guilherme Blanco",
+                "email": "guilhermeblanco@gmail.com"
+            },
+            {
                 "name": "Roman Borschel",
                 "email": "roman@code-factory.org"
             },
             {
                 "name": "Benjamin Eberlei",
                 "email": "kontakt@beberlei.de"
-            },
-            {
-                "name": "Guilherme Blanco",
-                "email": "guilhermeblanco@gmail.com"
             },
             {
                 "name": "Jonathan Wage",
@@ -364,12 +364,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/dbal.git",
-            "reference": "ea92d5602028676d06021bebe8b806e24aa99f58"
+            "reference": "9ff47e738575ab208f3ab4031412c58eb676ed1e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/dbal/zipball/ea92d5602028676d06021bebe8b806e24aa99f58",
-            "reference": "ea92d5602028676d06021bebe8b806e24aa99f58",
+            "url": "https://api.github.com/repos/doctrine/dbal/zipball/9ff47e738575ab208f3ab4031412c58eb676ed1e",
+            "reference": "9ff47e738575ab208f3ab4031412c58eb676ed1e",
             "shasum": ""
         },
         "require": {
@@ -382,14 +382,13 @@
             "doctrine/coding-standard": "^6.0",
             "jetbrains/phpstorm-stubs": "^2019.1",
             "phpstan/phpstan": "^0.11.3",
-            "phpunit/phpunit": "^8.2.1",
-            "symfony/console": "^2.0.5|^3.0|^4.0|^5.0",
-            "symfony/phpunit-bridge": "^3.4.5|^4.0.5|^5.0"
+            "phpunit/phpunit": "^8.3.3",
+            "symfony/console": "^2.0.5|^3.0|^4.0|^5.0"
         },
         "suggest": {
             "symfony/console": "For helpful console commands such as SQL execution and import of files."
         },
-        "time": "2019-07-07T19:23:17+00:00",
+        "time": "2019-08-08T14:07:27+00:00",
         "bin": [
             "bin/doctrine-dbal"
         ],
@@ -412,16 +411,16 @@
         ],
         "authors": [
             {
+                "name": "Guilherme Blanco",
+                "email": "guilhermeblanco@gmail.com"
+            },
+            {
                 "name": "Roman Borschel",
                 "email": "roman@code-factory.org"
             },
             {
                 "name": "Benjamin Eberlei",
                 "email": "kontakt@beberlei.de"
-            },
-            {
-                "name": "Guilherme Blanco",
-                "email": "guilhermeblanco@gmail.com"
             },
             {
                 "name": "Jonathan Wage",
@@ -664,12 +663,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/lexer.git",
-            "reference": "975c0e44ab85fb72acc5be2082464e74cade966b"
+            "reference": "6c4b4c3432406c73a4979b7e56efbffb0462ef64"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/lexer/zipball/975c0e44ab85fb72acc5be2082464e74cade966b",
-            "reference": "975c0e44ab85fb72acc5be2082464e74cade966b",
+            "url": "https://api.github.com/repos/doctrine/lexer/zipball/6c4b4c3432406c73a4979b7e56efbffb0462ef64",
+            "reference": "6c4b4c3432406c73a4979b7e56efbffb0462ef64",
             "shasum": ""
         },
         "require": {
@@ -680,11 +679,11 @@
             "phpstan/phpstan": "^0.11.8",
             "phpunit/phpunit": "^8.2"
         },
-        "time": "2019-06-11T06:26:51+00:00",
+        "time": "2019-07-30T19:38:35+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.1.x-dev"
+                "dev-master": "1.2.x-dev"
             }
         },
         "installation-source": "dist",
@@ -699,12 +698,12 @@
         ],
         "authors": [
             {
-                "name": "Roman Borschel",
-                "email": "roman@code-factory.org"
-            },
-            {
                 "name": "Guilherme Blanco",
                 "email": "guilhermeblanco@gmail.com"
+            },
+            {
+                "name": "Roman Borschel",
+                "email": "roman@code-factory.org"
             },
             {
                 "name": "Johannes Schmitt",
@@ -975,12 +974,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-            "reference": "f3bdc16fc2e793c37c1fefb1e4fa2f8a0a59edfc"
+            "reference": "e1e2dffdf22081ab9b4d761d54a6844b93c8b63d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/f3bdc16fc2e793c37c1fefb1e4fa2f8a0a59edfc",
-            "reference": "f3bdc16fc2e793c37c1fefb1e4fa2f8a0a59edfc",
+            "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/e1e2dffdf22081ab9b4d761d54a6844b93c8b63d",
+            "reference": "e1e2dffdf22081ab9b4d761d54a6844b93c8b63d",
             "shasum": ""
         },
         "require": {
@@ -1007,7 +1006,7 @@
             "doctrine/mongodb-odm": "to use the extensions with the MongoDB ODM",
             "doctrine/orm": "to use the extensions with the ORM"
         },
-        "time": "2019-03-19T13:05:13+00:00",
+        "time": "2019-07-18T21:31:28+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1026,16 +1025,16 @@
         ],
         "authors": [
             {
-                "name": "David Buchmann",
-                "email": "david@liip.ch"
-            },
-            {
                 "name": "Gediminas Morkevicius",
                 "email": "gediminas.morkevicius@gmail.com"
             },
             {
                 "name": "Gustavo Falco",
                 "email": "comfortablynumb84@gmail.com"
+            },
+            {
+                "name": "David Buchmann",
+                "email": "david@liip.ch"
             }
         ],
         "description": "Doctrine2 behavioral extensions",
@@ -1303,12 +1302,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/console.git",
-            "reference": "8176e45ff37c886ce35853cb9c406bdb872eeb75"
+            "reference": "d96646ee66718f47905c50afceaa514bc4e9cc67"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/console/zipball/8176e45ff37c886ce35853cb9c406bdb872eeb75",
-            "reference": "8176e45ff37c886ce35853cb9c406bdb872eeb75",
+            "url": "https://api.github.com/repos/symfony/console/zipball/d96646ee66718f47905c50afceaa514bc4e9cc67",
+            "reference": "d96646ee66718f47905c50afceaa514bc4e9cc67",
             "shasum": ""
         },
         "require": {
@@ -1320,6 +1319,7 @@
         "conflict": {
             "symfony/dependency-injection": "<3.4",
             "symfony/event-dispatcher": "<4.3|>=5",
+            "symfony/lock": "<4.4",
             "symfony/process": "<3.3"
         },
         "provide": {
@@ -1340,7 +1340,7 @@
             "symfony/lock": "",
             "symfony/process": ""
         },
-        "time": "2019-07-27T12:53:28+00:00",
+        "time": "2019-08-08T15:14:45+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1380,19 +1380,19 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/filesystem.git",
-            "reference": "b9896d034463ad6fd2bf17e2bf9418caecd6313d"
+            "reference": "e5c9fc262277a7bf4078fbcd93fe4fdc4d4ea061"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/filesystem/zipball/b9896d034463ad6fd2bf17e2bf9418caecd6313d",
-            "reference": "b9896d034463ad6fd2bf17e2bf9418caecd6313d",
+            "url": "https://api.github.com/repos/symfony/filesystem/zipball/e5c9fc262277a7bf4078fbcd93fe4fdc4d4ea061",
+            "reference": "e5c9fc262277a7bf4078fbcd93fe4fdc4d4ea061",
             "shasum": ""
         },
         "require": {
             "php": "^7.1.3",
             "symfony/polyfill-ctype": "~1.8"
         },
-        "time": "2019-06-23T08:51:25+00:00",
+        "time": "2019-08-08T15:11:33+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1432,12 +1432,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-ctype.git",
-            "reference": "82ebae02209c21113908c229e9883c419720738a"
+            "reference": "550ebaac289296ce228a706d0867afc34687e3f4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/82ebae02209c21113908c229e9883c419720738a",
-            "reference": "82ebae02209c21113908c229e9883c419720738a",
+            "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/550ebaac289296ce228a706d0867afc34687e3f4",
+            "reference": "550ebaac289296ce228a706d0867afc34687e3f4",
             "shasum": ""
         },
         "require": {
@@ -1446,11 +1446,11 @@
         "suggest": {
             "ext-ctype": "For best performance"
         },
-        "time": "2019-02-06T07:57:58+00:00",
+        "time": "2019-08-06T08:03:45+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.11-dev"
+                "dev-master": "1.12-dev"
             }
         },
         "installation-source": "dist",
@@ -1468,12 +1468,12 @@
         ],
         "authors": [
             {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            },
-            {
                 "name": "Gert de Pagter",
                 "email": "BackEndTea@gmail.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
             }
         ],
         "description": "Symfony polyfill for ctype functions",
@@ -1492,12 +1492,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "fe5e94c604826c35a32fa832f35bd036b6799609"
+            "reference": "b42a2f66e8f1b15ccf25652c3424265923eb4f17"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fe5e94c604826c35a32fa832f35bd036b6799609",
-            "reference": "fe5e94c604826c35a32fa832f35bd036b6799609",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/b42a2f66e8f1b15ccf25652c3424265923eb4f17",
+            "reference": "b42a2f66e8f1b15ccf25652c3424265923eb4f17",
             "shasum": ""
         },
         "require": {
@@ -1506,11 +1506,11 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2019-02-06T07:57:58+00:00",
+        "time": "2019-08-06T08:03:45+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.11-dev"
+                "dev-master": "1.12-dev"
             }
         },
         "installation-source": "dist",
@@ -1553,22 +1553,22 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-php73.git",
-            "reference": "639cc79605c22d3404d4082dd3af0fec66e0e975"
+            "reference": "2ceb49eaccb9352bff54d22570276bb75ba4a188"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/639cc79605c22d3404d4082dd3af0fec66e0e975",
-            "reference": "639cc79605c22d3404d4082dd3af0fec66e0e975",
+            "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/2ceb49eaccb9352bff54d22570276bb75ba4a188",
+            "reference": "2ceb49eaccb9352bff54d22570276bb75ba4a188",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2019-06-29T06:17:32+00:00",
+        "time": "2019-08-06T08:03:45+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.11-dev"
+                "dev-master": "1.12-dev"
             }
         },
         "installation-source": "dist",
@@ -1613,12 +1613,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/service-contracts.git",
-            "reference": "f391a00de78ec7ec8cf5cdcdae59ec7b883edb8d"
+            "reference": "3cd78bb952668d7bc1701f9599cf009353d50886"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/service-contracts/zipball/f391a00de78ec7ec8cf5cdcdae59ec7b883edb8d",
-            "reference": "f391a00de78ec7ec8cf5cdcdae59ec7b883edb8d",
+            "url": "https://api.github.com/repos/symfony/service-contracts/zipball/3cd78bb952668d7bc1701f9599cf009353d50886",
+            "reference": "3cd78bb952668d7bc1701f9599cf009353d50886",
             "shasum": ""
         },
         "require": {
@@ -1628,7 +1628,7 @@
         "suggest": {
             "symfony/service-implementation": ""
         },
-        "time": "2019-06-13T11:15:36+00:00",
+        "time": "2019-08-02T12:15:04+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1720,24 +1720,24 @@
     },
     {
         "name": "tea-m-speak-interface/doctrine-extensions",
-        "version": "6.0.1",
-        "version_normalized": "6.0.1.0",
+        "version": "6.0.4",
+        "version_normalized": "6.0.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/tea-m-speak-interface/doctrine-extensions.git",
-            "reference": "9632a123f30280da4221acf0724c66d8ace3f50d"
+            "reference": "75d5d21391a875eee83ffc839a45afb3facca312"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/tea-m-speak-interface/doctrine-extensions/zipball/9632a123f30280da4221acf0724c66d8ace3f50d",
-            "reference": "9632a123f30280da4221acf0724c66d8ace3f50d",
+            "url": "https://api.github.com/repos/tea-m-speak-interface/doctrine-extensions/zipball/75d5d21391a875eee83ffc839a45afb3facca312",
+            "reference": "75d5d21391a875eee83ffc839a45afb3facca312",
             "shasum": ""
         },
         "require": {
             "doctrine/orm": ">=2.6.0,<2.7-dev",
             "php": ">=7.1"
         },
-        "time": "2019-07-28T00:47:55+00:00",
+        "time": "2019-08-08T20:05:13+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

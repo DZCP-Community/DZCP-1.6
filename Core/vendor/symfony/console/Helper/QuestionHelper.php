@@ -335,7 +335,7 @@ class QuestionHelper extends Helper
         return $fullChoice;
     }
 
-    private function mostRecentlyEnteredValue($entered)
+    private function mostRecentlyEnteredValue(string $entered)
     {
         // Determine the most recent value that the user entered
         if (false === strpos($entered, ',')) {
@@ -353,13 +353,12 @@ class QuestionHelper extends Helper
     /**
      * Gets a hidden response from user.
      *
-     * @param OutputInterface $output      An Output instance
-     * @param resource        $inputStream The handler resource
-     * @param bool            $trimmable   Is the answer trimmable
+     * @param resource $inputStream The handler resource
+     * @param bool     $trimmable   Is the answer trimmable
      *
      * @throws RuntimeException In case the fallback is deactivated and the response cannot be hidden
      */
-    private function getHiddenResponse(OutputInterface $output, $inputStream, $trimmable = true): string
+    private function getHiddenResponse(OutputInterface $output, $inputStream, bool $trimmable = true): string
     {
         if ('\\' === \DIRECTORY_SEPARATOR) {
             $exe = __DIR__.'/../Resources/bin/hiddeninput.exe';
@@ -416,9 +415,7 @@ class QuestionHelper extends Helper
     /**
      * Validates an attempt.
      *
-     * @param callable        $interviewer A callable that will ask for a question and return the result
-     * @param OutputInterface $output      An Output instance
-     * @param Question        $question    A Question instance
+     * @param callable $interviewer A callable that will ask for a question and return the result
      *
      * @return mixed The validated response
      *

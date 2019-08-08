@@ -2,7 +2,7 @@
 
 namespace Webmasters\Doctrine;
 
-use Doctrine\Common\Cache\{ChainCache, ApcuCache, ArrayCache, ZendDataCache};
+use Doctrine\Common\Cache\{ChainCache, ApcuCache, ArrayCache, ZendDataCache, PhpFileCache};
 use Doctrine\Common\Annotations\{AnnotationException, CachedReader, AnnotationReader};
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
@@ -38,7 +38,7 @@ class Bootstrap implements IBootstrap {
         $host = php_uname('n');
         $this->errorMode();
 
-        if (empty($configuration->getConnectionOptions())) {
+        if (empty($this->configuration->getConnectionOptions())) {
             $path = $baseDir . '/Config/';
             if (file_exists($path . $host . '-config.php')) {
                 require_once $path . $host . '-config.php';
@@ -52,40 +52,44 @@ class Bootstrap implements IBootstrap {
             }
 
             if(isset($connectionOptions)) {
-                $configuration->setConnectionOptions($connectionOptions);
+                $this->configuration->setConnectionOptions($connectionOptions);
             } else if(isset($applicationConfig) && array_key_exists('connectionOptions',$applicationConfig)) {
-                $configuration->setConnectionOptions($applicationConfig['connectionOptions']);
+                $this->configuration->setConnectionOptions($applicationConfig['connectionOptions']);
             } else {
                 die(sprintf('Connection options missing!', $host));
             }
         }
 
-        if(empty($configuration->getBaseDir())) {
-            $configuration->setBaseDir($baseDir);
+        if(empty($this->configuration->getBaseDir())) {
+            $this->configuration->setBaseDir($baseDir);
         }
 
-        if(empty($configuration->getEntityDir())) {
-            $configuration->setEntityDir($baseDir . '/src/Entities');
+        if(empty($this->configuration->getEntityDir())) {
+            $this->configuration->setEntityDir($baseDir . '/src/Entities');
         }
 
-        if(empty($configuration->getVendorDir())) {
-            $configuration->setVendorDir($vendorDir);
+        if(empty($this->configuration->getVendorDir())) {
+            $this->configuration->setVendorDir($vendorDir);
         }
 
         if(empty($this->configuration->getMetadataCacheImpl())) {
-            $configuration->setMetadataCacheImpl($this->getDefaultCache());
+            $this->configuration->setMetadataCacheImpl($this->getDefaultCache());
         }
 
         if(empty($this->configuration->getQueryCacheImpl())) {
-            $configuration->setQueryCacheImpl($this->getDefaultCache());
+            $this->configuration->setQueryCacheImpl($this->getDefaultCache());
         }
 
         if(empty($this->configuration->getResultCacheImpl())) {
-            $configuration->setResultCacheImpl($this->getDefaultCache());
+            $this->configuration->setResultCacheImpl($this->getDefaultCache());
         }
 
         if (empty($this->configuration->getEntityNamespace())) {
-            $this->configuration->setEntityNamespace(basename($configuration->getEntityDir()));
+            $this->configuration->setEntityNamespace(basename($this->configuration->getEntityDir()));
+        }
+
+        if (empty($this->configuration->getCacheDir())) {
+            $this->configuration->setCacheDir( 'Cache');
         }
     }
 
@@ -102,6 +106,7 @@ class Bootstrap implements IBootstrap {
             $driver[] = new ApcuCache();
         }
 
+        $driver[] = new PhpFileCache($this->configuration->getBaseDir().$this->configuration->getCacheDir());
         $driver[] = new ArrayCache();
         return new ChainCache($driver);
     }

@@ -23,24 +23,25 @@ require_once(_RootPath_."Application/logger.php");
 /**
  * Namespace Imports
  */
-use Webmasters\Doctrine\{Bootstrap,Configuration};
+use Webmasters\Doctrine\{Bootstrap};
 use Symfony\Component\Filesystem\Filesystem;
 use Application\Controllers\IndexController;
 use Wixel\GUMP\GUMP;
 use Application\Logger\Logger;
-use Monolog as MLogger;
-
-/**
- *  ######### Logger Instance #########
- */
-$logger = new Logger(MLogger\Logger::DEBUG);
 
 /**
  * Include Config
  */
-$applicationConfig = new Configuration();
-$applicationConfig->getCustomConfig()->set('installed',false);
-require_once(_RootPath_."Config/default-config.php");
+require_once(_RootPath_."Application/default-config.php");
+
+/**
+ *  ######### Logger Instance #########
+ */
+$logger = new Logger($applicationConfig->getCustomConfig()->get('logger_level'));
+
+/**
+ * Load user application config
+ */
 if(file_exists(_RootPath_."Config/app-config.php") &&
     !empty(filesize(_RootPath_."Config/app-config.php"))) {
     $logger->getDebugLogger()->debug('Load application config',[_RootPath_."Config/app-config.php"]);
@@ -67,6 +68,7 @@ foreach ($dirs as $dir) {
 } unset($dirs,$dir);
 $applicationConfig->getCustomConfig()->set('dir',$dir_index);
 $applicationConfig->setProxyDir(_RootPath_."Proxy");
+$applicationConfig->setBaseDir(_RootPath_);
 unset($dir_index);
 
 /**

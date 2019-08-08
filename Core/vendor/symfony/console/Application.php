@@ -41,8 +41,10 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Debug\ErrorHandler;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\Debug\ErrorHandler as LegacyErrorHandler;
+use Symfony\Component\Debug\Exception\FatalThrowableError as LegacyFatalThrowableError;
+use Symfony\Component\ErrorHandler\ErrorHandler;
+use Symfony\Component\ErrorHandler\Exception\FatalThrowableError;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Contracts\Service\ResetInterface;
@@ -127,7 +129,7 @@ class Application implements ResetInterface
 
         $renderException = function ($e) use ($output) {
             if (!$e instanceof \Exception) {
-                $e = class_exists(FatalThrowableError::class) ? new FatalThrowableError($e) : new \ErrorException($e->getMessage(), $e->getCode(), E_ERROR, $e->getFile(), $e->getLine());
+                $e = class_exists(FatalThrowableError::class) ? new FatalThrowableError($e) : (class_exists(LegacyFatalThrowableError::class) ? new LegacyFatalThrowableError($e) : new \ErrorException($e->getMessage(), $e->getCode(), E_ERROR, $e->getFile(), $e->getLine()));
             }
             if ($output instanceof ConsoleOutputInterface) {
                 $this->renderException($e, $output->getErrorOutput());
@@ -137,10 +139,10 @@ class Application implements ResetInterface
         };
         if ($phpHandler = set_exception_handler($renderException)) {
             restore_exception_handler();
-            if (!\is_array($phpHandler) || !$phpHandler[0] instanceof ErrorHandler) {
-                $debugHandler = true;
-            } elseif ($debugHandler = $phpHandler[0]->setExceptionHandler($renderException)) {
-                $phpHandler[0]->setExceptionHandler($debugHandler);
+            if (!\is_array($phpHandler) || (!$phpHandler[0] instanceof ErrorHandler && !$phpHandler[0] instanceof LegacyErrorHandler)) {
+                $errorHandler = true;
+            } elseif ($errorHandler = $phpHandler[0]->setExceptionHandler($renderException)) {
+                $phpHandler[0]->setExceptionHandler($errorHandler);
             }
         }
 
@@ -172,7 +174,7 @@ class Application implements ResetInterface
                     restore_exception_handler();
                 }
                 restore_exception_handler();
-            } elseif (!$debugHandler) {
+            } elseif (!$errorHandler) {
                 $finalHandler = $phpHandler[0]->setExceptionHandler(null);
                 if ($finalHandler !== $renderException) {
                     $phpHandler[0]->setExceptionHandler($finalHandler);
@@ -1028,12 +1030,8 @@ class Application implements ResetInterface
 
     /**
      * Returns abbreviated suggestions in string format.
-     *
-     * @param array $abbrevs Abbreviated suggestions to convert
-     *
-     * @return string A formatted string of abbreviated suggestions
      */
-    private function getAbbreviationSuggestions($abbrevs)
+    private function getAbbreviationSuggestions(array $abbrevs): string
     {
         return '    '.implode("\n    ", $abbrevs);
     }
@@ -1060,12 +1058,9 @@ class Application implements ResetInterface
      * Finds alternative of $name among $collection,
      * if nothing is found in $collection, try in $abbrevs.
      *
-     * @param string   $name       The string
-     * @param iterable $collection The collection
-     *
      * @return string[] A sorted array of similar string
      */
-    private function findAlternatives($name, $collection)
+    private function findAlternatives(string $name, iterable $collection): array
     {
         $threshold = 1e3;
         $alternatives = [];
@@ -1137,7 +1132,7 @@ class Application implements ResetInterface
         return $this->singleCommand;
     }
 
-    private function splitStringByWidth($string, $width)
+    private function splitStringByWidth(string $string, int $width)
     {
         // str_split is not suitable for multi-byte characters, we should use preg_split to get char array properly.
         // additionally, array_slice() is not enough as some character has doubled width.
@@ -1176,11 +1171,9 @@ class Application implements ResetInterface
     /**
      * Returns all namespaces of the command name.
      *
-     * @param string $name The full name of the command
-     *
      * @return string[] The namespaces of the command
      */
-    private function extractAllNamespaces($name)
+    private function extractAllNamespaces(string $name): array
     {
         // -1 as third argument is needed to skip the command short name when exploding
         $parts = explode(':', $name, -1);
