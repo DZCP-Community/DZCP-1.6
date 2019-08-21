@@ -20,6 +20,7 @@ use Application\Interfaces\IAbstractBase;
 use Application\Traits\TAbstractBase;
 use Application\Logger\Logger;
 use Application\Helper\{Smarty_CacheResource_Doctrine};
+use Defuse\Crypto\Key;
 
 /**
  * Class AbstractBase
@@ -41,12 +42,17 @@ abstract class AbstractBase implements IAbstractBase {
     /**
      * @var \Smarty|null
      */
-    public $smarty = null;
+    private $smarty = null;
 
     /**
      * @var Filesystem|null
      */
-    public $filesystem = null;
+    private $filesystem = null;
+
+    /**
+     * @var Key|null
+     */
+    private $cryptokey = null;
 
     /**
      * AbstractBase constructor.
@@ -55,9 +61,15 @@ abstract class AbstractBase implements IAbstractBase {
      * @throws \SmartyException
      */
     public function __construct(Bootstrap $bootstrap, Logger $logger) {
-        global $filesystem;
+        global $filesystem,$cryptoKey;
+
         if(!$filesystem instanceof Filesystem) {
             $logger->getSystemLogger()->critical('$filesystem is not instanceof Filesystem!');
+            $this->showCriticalError(); //Show CriticalError page and exit()
+        }
+
+        if(!$cryptoKey instanceof Key) {
+            $logger->getSystemLogger()->critical('$cryptoKey is not instanceof Key!');
             $this->showCriticalError(); //Show CriticalError page and exit()
         }
 
@@ -65,6 +77,7 @@ abstract class AbstractBase implements IAbstractBase {
         $this->filesystem = $filesystem;
         $this->bootstrap = $bootstrap;
         $this->logger = $logger;
+        $this->cryptokey = $cryptoKey;
 
         //Register Smarty
         try {
@@ -117,7 +130,50 @@ abstract class AbstractBase implements IAbstractBase {
     }
 
     /**
+     * @return Filesystem
+     */
+    public function getFilesystem() : Filesystem {
+        return $this->filesystem;
+    }
+
+    /**
+     * @return Bootstrap
+     */
+    public function getBootstrap() : Bootstrap {
+        return $this->bootstrap;
+    }
+
+    /**
+     * @return Logger
+     */
+    public function getLogger() : Logger {
+        return $this->logger;
+    }
+
+    /**
+     * @return Key
+     */
+    public function getCryptoKey() : Key {
+        return $this->cryptokey;
+    }
+
+    /**
+     * @return \Smarty
+     */
+    public function getSmarty() : \Smarty {
+        return $this->smarty;
+    }
+
+    /**
      * @param String $action
      */
     abstract public function run(String $action): void;
+
+    /**
+     * Render 404
+     */
+    public function render404(): void
+    {
+        echo '404';
+    }
 }

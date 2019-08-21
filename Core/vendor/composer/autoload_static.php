@@ -10,6 +10,7 @@ class ComposerStaticInit45d092568430020968ab8d1e0a6cac69
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -60,6 +61,11 @@ class ComposerStaticInit45d092568430020968ab8d1e0a6cac69
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
+            'Defuse\\Crypto\\' => 14,
+        ),
+        'B' => 
+        array (
+            'Behat\\Transliterator\\' => 21,
         ),
         'A' => 
         array (
@@ -198,6 +204,14 @@ class ComposerStaticInit45d092568430020968ab8d1e0a6cac69
             2 => __DIR__ . '/..' . '/doctrine/persistence/lib/Doctrine/Common',
             3 => __DIR__ . '/..' . '/doctrine/reflection/lib/Doctrine/Common',
         ),
+        'Defuse\\Crypto\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/defuse/php-encryption/src',
+        ),
+        'Behat\\Transliterator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/behat/transliterator/src/Behat/Transliterator',
+        ),
         'Application\\Traits\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Application/Traits',
@@ -229,16 +243,6 @@ class ComposerStaticInit45d092568430020968ab8d1e0a6cac69
         'Application\\Controllers\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Application/Controllers',
-        ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'B' => 
-        array (
-            'Behat\\Transliterator' => 
-            array (
-                0 => __DIR__ . '/..' . '/behat/transliterator/src',
-            ),
         ),
     );
 
@@ -424,7 +428,6 @@ class ComposerStaticInit45d092568430020968ab8d1e0a6cac69
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit45d092568430020968ab8d1e0a6cac69::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit45d092568430020968ab8d1e0a6cac69::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit45d092568430020968ab8d1e0a6cac69::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit45d092568430020968ab8d1e0a6cac69::$classMap;
 
         }, null, ClassLoader::class);

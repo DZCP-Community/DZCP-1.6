@@ -10,6 +10,8 @@
 
 namespace Application\Exceptions;
 
+use Exception;
+
 /**
  * Class BaseException
  * @package Application\Exceptions
