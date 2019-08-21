@@ -32,9 +32,4 @@ class IndexController extends AbstractBase
     {
         echo 'test';
     }
-
-    public function render404(): void
-    {
-        echo '404';
-    }
 }

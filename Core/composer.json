@@ -19,8 +19,9 @@
     "gedmo/doctrine-extensions": "dev-master",
     "monolog/monolog": "2.0.0-beta2",
     "tea-m-speak-interface/doctrine-extensions": "6.0.4",
-    "tea-m-speak-interface/gump": "v1.6.0.4",
-    "smarty/smarty": "dev-master"
+    "tea-m-speak-interface/gump": "v1.6.0.5",
+    "smarty/smarty": "dev-master",
+    "defuse/php-encryption": "v2.2.1"
   },
   "autoload": {
     "psr-4": {

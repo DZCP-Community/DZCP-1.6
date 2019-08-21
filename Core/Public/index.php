@@ -9,5 +9,6 @@
  */
 
 ob_start();
+define('_rpc',false); //Called from RPC
 require_once(dirname(__DIR__).'/Application/bootstrap.php');
 ob_end_flush();
