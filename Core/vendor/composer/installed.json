@@ -6,12 +6,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/Behat/Transliterator.git",
-            "reference": "9eb1092ed2a3eb06d3c51f79f208fe8ac1cac553"
+            "reference": "826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Behat/Transliterator/zipball/9eb1092ed2a3eb06d3c51f79f208fe8ac1cac553",
-            "reference": "9eb1092ed2a3eb06d3c51f79f208fe8ac1cac553",
+            "url": "https://api.github.com/repos/Behat/Transliterator/zipball/826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c",
+            "reference": "826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c",
             "shasum": ""
         },
         "require": {
@@ -21,7 +21,7 @@
             "chuyskywalker/rolling-curl": "^3.1",
             "php-yaoi/php-yaoi": "^1.0"
         },
-        "time": "2019-07-16T11:59:04+00:00",
+        "time": "2017-04-04T11:38:05+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -30,8 +30,8 @@
         },
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "Behat\\Transliterator\\": "src/Behat/Transliterator"
+            "psr-0": {
+                "Behat\\Transliterator": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -43,71 +43,6 @@
             "i18n",
             "slug",
             "transliterator"
-        ]
-    },
-    {
-        "name": "defuse/php-encryption",
-        "version": "v2.2.1",
-        "version_normalized": "2.2.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/defuse/php-encryption.git",
-            "reference": "0f407c43b953d571421e0020ba92082ed5fb7620"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/defuse/php-encryption/zipball/0f407c43b953d571421e0020ba92082ed5fb7620",
-            "reference": "0f407c43b953d571421e0020ba92082ed5fb7620",
-            "shasum": ""
-        },
-        "require": {
-            "ext-openssl": "*",
-            "paragonie/random_compat": ">= 2",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "nikic/php-parser": "^2.0|^3.0|^4.0",
-            "phpunit/phpunit": "^4|^5"
-        },
-        "time": "2018-07-24T23:27:56+00:00",
-        "bin": [
-            "bin/generate-defuse-key"
-        ],
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Defuse\\Crypto\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Taylor Hornby",
-                "email": "taylor@defuse.ca",
-                "homepage": "https://defuse.ca/"
-            },
-            {
-                "name": "Scott Arciszewski",
-                "email": "info@paragonie.com",
-                "homepage": "https://paragonie.com"
-            }
-        ],
-        "description": "Secure PHP Encryption Library",
-        "keywords": [
-            "aes",
-            "authenticated encryption",
-            "cipher",
-            "crypto",
-            "cryptography",
-            "encrypt",
-            "encryption",
-            "openssl",
-            "security",
-            "symmetric key cryptography"
         ]
     },
     {
@@ -187,12 +122,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/cache.git",
-            "reference": "c29471b93a163e79674d1928ec996916f509178c"
+            "reference": "17ec59c730888541191c63927791523be09fe3f7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/cache/zipball/c29471b93a163e79674d1928ec996916f509178c",
-            "reference": "c29471b93a163e79674d1928ec996916f509178c",
+            "url": "https://api.github.com/repos/doctrine/cache/zipball/17ec59c730888541191c63927791523be09fe3f7",
+            "reference": "17ec59c730888541191c63927791523be09fe3f7",
             "shasum": ""
         },
         "require": {
@@ -211,7 +146,7 @@
         "suggest": {
             "alcaeus/mongo-php-adapter": "Required to use legacy MongoDB driver"
         },
-        "time": "2019-08-13T13:45:33+00:00",
+        "time": "2019-05-24T17:46:08+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -230,16 +165,16 @@
         ],
         "authors": [
             {
-                "name": "Guilherme Blanco",
-                "email": "guilhermeblanco@gmail.com"
-            },
-            {
                 "name": "Roman Borschel",
                 "email": "roman@code-factory.org"
             },
             {
                 "name": "Benjamin Eberlei",
                 "email": "kontakt@beberlei.de"
+            },
+            {
+                "name": "Guilherme Blanco",
+                "email": "guilhermeblanco@gmail.com"
             },
             {
                 "name": "Jonathan Wage",
@@ -792,12 +727,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/orm.git",
-            "reference": "642e543b4b3d677af61f42915b1fca45cd7316f0"
+            "reference": "6296bd4e1dbea45c0783d07e5f15dd5b4cbb510a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/orm/zipball/642e543b4b3d677af61f42915b1fca45cd7316f0",
-            "reference": "642e543b4b3d677af61f42915b1fca45cd7316f0",
+            "url": "https://api.github.com/repos/doctrine/orm/zipball/6296bd4e1dbea45c0783d07e5f15dd5b4cbb510a",
+            "reference": "6296bd4e1dbea45c0783d07e5f15dd5b4cbb510a",
             "shasum": ""
         },
         "require": {
@@ -819,7 +754,7 @@
         "suggest": {
             "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
         },
-        "time": "2019-08-14T16:07:58+00:00",
+        "time": "2019-06-18T06:30:35+00:00",
         "bin": [
             "bin/doctrine"
         ],
@@ -841,16 +776,16 @@
         ],
         "authors": [
             {
-                "name": "Guilherme Blanco",
-                "email": "guilhermeblanco@gmail.com"
-            },
-            {
                 "name": "Roman Borschel",
                 "email": "roman@code-factory.org"
             },
             {
                 "name": "Benjamin Eberlei",
                 "email": "kontakt@beberlei.de"
+            },
+            {
+                "name": "Guilherme Blanco",
+                "email": "guilhermeblanco@gmail.com"
             },
             {
                 "name": "Jonathan Wage",
@@ -1203,57 +1138,6 @@
         ]
     },
     {
-        "name": "paragonie/random_compat",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/paragonie/random_compat.git",
-            "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
-            "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.*|5.*"
-        },
-        "suggest": {
-            "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
-        },
-        "time": "2019-01-03T20:59:08+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/random.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Paragon Initiative Enterprises",
-                "email": "security@paragonie.com",
-                "homepage": "https://paragonie.com"
-            }
-        ],
-        "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-        "keywords": [
-            "csprng",
-            "polyfill",
-            "pseudorandom",
-            "random"
-        ]
-    },
-    {
         "name": "psr/container",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -1418,12 +1302,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/console.git",
-            "reference": "c2ac8e1013073c5baf09f91d4bfa8beb7ba690aa"
+            "reference": "d96646ee66718f47905c50afceaa514bc4e9cc67"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/console/zipball/c2ac8e1013073c5baf09f91d4bfa8beb7ba690aa",
-            "reference": "c2ac8e1013073c5baf09f91d4bfa8beb7ba690aa",
+            "url": "https://api.github.com/repos/symfony/console/zipball/d96646ee66718f47905c50afceaa514bc4e9cc67",
+            "reference": "d96646ee66718f47905c50afceaa514bc4e9cc67",
             "shasum": ""
         },
         "require": {
@@ -1456,7 +1340,7 @@
             "symfony/lock": "",
             "symfony/process": ""
         },
-        "time": "2019-08-19T11:17:23+00:00",
+        "time": "2019-08-08T15:14:45+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1496,19 +1380,19 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/filesystem.git",
-            "reference": "8af2a2242c9d774c6dc6ccded7b519adca3218c5"
+            "reference": "e5c9fc262277a7bf4078fbcd93fe4fdc4d4ea061"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/filesystem/zipball/8af2a2242c9d774c6dc6ccded7b519adca3218c5",
-            "reference": "8af2a2242c9d774c6dc6ccded7b519adca3218c5",
+            "url": "https://api.github.com/repos/symfony/filesystem/zipball/e5c9fc262277a7bf4078fbcd93fe4fdc4d4ea061",
+            "reference": "e5c9fc262277a7bf4078fbcd93fe4fdc4d4ea061",
             "shasum": ""
         },
         "require": {
             "php": "^7.1.3",
             "symfony/polyfill-ctype": "~1.8"
         },
-        "time": "2019-08-19T11:14:47+00:00",
+        "time": "2019-08-08T15:11:33+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1729,12 +1613,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/service-contracts.git",
-            "reference": "5327348240527c29097ee1612dddcfbfdeec75d7"
+            "reference": "3cd78bb952668d7bc1701f9599cf009353d50886"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/service-contracts/zipball/5327348240527c29097ee1612dddcfbfdeec75d7",
-            "reference": "5327348240527c29097ee1612dddcfbfdeec75d7",
+            "url": "https://api.github.com/repos/symfony/service-contracts/zipball/3cd78bb952668d7bc1701f9599cf009353d50886",
+            "reference": "3cd78bb952668d7bc1701f9599cf009353d50886",
             "shasum": ""
         },
         "require": {
@@ -1744,7 +1628,7 @@
         "suggest": {
             "symfony/service-implementation": ""
         },
-        "time": "2019-08-14T13:27:41+00:00",
+        "time": "2019-08-02T12:15:04+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1895,24 +1779,24 @@
     },
     {
         "name": "tea-m-speak-interface/gump",
-        "version": "v1.6.0.5",
-        "version_normalized": "1.6.0.5",
+        "version": "v1.6.0.4",
+        "version_normalized": "1.6.0.4",
         "source": {
             "type": "git",
             "url": "https://github.com/tea-m-speak-interface/GUMP.git",
-            "reference": "e5ade97d33c45f4408a6e02655041bd35d13c4bb"
+            "reference": "b8bad3caca730eb290ae0bb8a691ee52ab1a358e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/tea-m-speak-interface/GUMP/zipball/e5ade97d33c45f4408a6e02655041bd35d13c4bb",
-            "reference": "e5ade97d33c45f4408a6e02655041bd35d13c4bb",
+            "url": "https://api.github.com/repos/tea-m-speak-interface/GUMP/zipball/b8bad3caca730eb290ae0bb8a691ee52ab1a358e",
+            "reference": "b8bad3caca730eb290ae0bb8a691ee52ab1a358e",
             "shasum": ""
         },
         "require": {
             "ext-curl": "*",
             "php": "^7.1"
         },
-        "time": "2019-08-08T20:45:10+00:00",
+        "time": "2019-07-28T19:47:23+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

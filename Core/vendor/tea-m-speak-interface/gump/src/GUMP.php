@@ -163,17 +163,17 @@ class GUMP {
 
     /**
      * Adds a custom validation rule using a callback function.
-     * @param string $rule
+     * @param string   $rule
      * @param callable $callback
-     * @param string $error_message
+     * @param string   $error_message
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function add_validator(string $rule,callable $callback,string $error_message = null): bool {
         $method = 'validate_'.$rule;
 
         if (method_exists(__CLASS__, $method) || isset(self::$validation_methods[$rule])) {
-            throw new \Exception("Validator rule '$rule' already exists.");
+            throw new Exception("Validator rule '$rule' already exists.");
         }
 
         self::$validation_methods[$rule] = $callback;
@@ -189,13 +189,13 @@ class GUMP {
      * @param string   $rule
      * @param callable $callback
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function add_filter(string $rule,callable $callback): bool {
         $method = 'filter_'.$rule;
 
         if (method_exists(__CLASS__, $method) || isset(self::$filter_methods[$rule])) {
-            throw new \Exception("Filter rule '$rule' already exists.");
+            throw new Exception("Filter rule '$rule' already exists.");
         }
 
         self::$filter_methods[$rule] = $callback;
@@ -256,9 +256,9 @@ class GUMP {
      * @param string $rules_delimiter
      * @param string $parameters_delimiters
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    public function run(array $data,bool $check_fields = false,string $rules_delimiter='|',string $parameters_delimiters=',') {
+    public function run(array $data,bool $check_fields = false,string $rules_delimiter='|',string $parameters_delimiters=','): array {
         $data = $this->filter($data, $this->filter_rules(), $rules_delimiter, $parameters_delimiters);
 
         $validated = $this->validate(
@@ -360,7 +360,7 @@ class GUMP {
      * @param string $rules_delimiter
      * @param string $parameters_delimiter
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function validate(array $input, array $ruleset,string $rules_delimiter='|',string $parameters_delimiter=',') {
         $this->errors = [];
@@ -405,8 +405,7 @@ class GUMP {
                             $method = 'validate_'.$rule;
                         }
 
-                        if (is_callable(array($this->validators, $method))) {
-                            $result = $this->validators->$method(strval($field), $input, $param);
+                        if (is_callable(array($this, $method))) { $result = $this->validators->$method($field, $input, $param);
                             if (is_array($result)) {
                                 if (array_search($result['field'], array_column($this->errors, 'field')) === false) {
                                     $this->errors[] = $result;
@@ -420,7 +419,7 @@ class GUMP {
                                 }
                             }
                         } else {
-                            throw new \Exception("Validator method '$method' does not exist.");
+                            throw new Exception("Validator method '$method' does not exist.");
                         }
                     }
                 }
@@ -506,7 +505,7 @@ class GUMP {
      * @return array
      * @throws \Exception
      */
-    public function get_readable_errors(bool $convert_to_string = false,string $field_class = 'gump-field',string $error_class = 'gump-error-message') {
+    public function get_readable_errors(bool $convert_to_string = false,string $field_class = 'gump-field',string $error_class = 'gump-error-message'): array {
         if (empty($this->errors)) {
             return ($convert_to_string) ? null : [];
         }
@@ -638,15 +637,11 @@ class GUMP {
                         $method = 'filter_'.$filter;
                         $value = $this->filters->$method($value, $params);
                     } elseif (function_exists($filter)) {
-                        if($filter == 'json_decode') {
-                            $value = json_decode($value,true);
-                        } else {
-                            $value = $filter($value);
-                        }
+                        $value = $filter($value);
                     } elseif (isset(self::$filter_methods[$filter])) {
                         $value = call_user_func(self::$filter_methods[$filter], $value, $params);
                     } else {
-                        throw new \Exception("Filter method '$filter' does not exist.");
+                        throw new Exception("Filter method '$filter' does not exist.");
                     }
                 }
             }

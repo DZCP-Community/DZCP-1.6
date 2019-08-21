@@ -803,8 +803,6 @@ class Validators {
         if (!is_string($input[$field]) || !is_object(json_decode($input[$field]))) {
             return ['field' => $field, 'value' => $input[$field], 'rule' => __FUNCTION__, 'param' => $param];
         }
-
-        return null;
     }
 
     /**

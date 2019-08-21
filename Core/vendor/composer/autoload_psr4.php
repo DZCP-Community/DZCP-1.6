@@ -36,8 +36,6 @@ return array(
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib/Doctrine/Common/Cache'),
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations'),
     'Doctrine\\Common\\' => array($vendorDir . '/doctrine/common/lib/Doctrine/Common', $vendorDir . '/doctrine/event-manager/lib/Doctrine/Common', $vendorDir . '/doctrine/persistence/lib/Doctrine/Common', $vendorDir . '/doctrine/reflection/lib/Doctrine/Common'),
-    'Defuse\\Crypto\\' => array($vendorDir . '/defuse/php-encryption/src'),
-    'Behat\\Transliterator\\' => array($vendorDir . '/behat/transliterator/src/Behat/Transliterator'),
     'Application\\Traits\\' => array($baseDir . '/Application/Traits'),
     'Application\\Models\\' => array($baseDir . '/Application/Models'),
     'Application\\Libraries\\' => array($baseDir . '/Application/Libraries'),

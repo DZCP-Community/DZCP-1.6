@@ -94,13 +94,7 @@ class DefaultRegion implements Region
      */
     public function get(CacheKey $key)
     {
-        $entry = $this->cache->fetch($this->getCacheEntryKey($key));
-
-        if (! $entry instanceof CacheEntry) {
-            return null;
-        }
-
-        return $entry;
+        return $this->cache->fetch($this->getCacheEntryKey($key)) ?: null;
     }
 
     /**
@@ -114,7 +108,7 @@ class DefaultRegion implements Region
             $entryKey   = $this->getCacheEntryKey($key);
             $entryValue = $this->cache->fetch($entryKey);
 
-            if (! $entryValue instanceof CacheEntry) {
+            if ($entryValue === false) {
                 return null;
             }
 

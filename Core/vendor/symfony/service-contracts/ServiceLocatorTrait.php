@@ -36,8 +36,6 @@ trait ServiceLocatorTrait
 
     /**
      * {@inheritdoc}
-     *
-     * @return bool
      */
     public function has($id)
     {

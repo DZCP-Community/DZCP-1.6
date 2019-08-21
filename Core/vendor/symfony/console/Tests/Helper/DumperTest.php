@@ -37,10 +37,7 @@ class DumperTest extends TestCase
      */
     public function testInvoke($variable)
     {
-        $output = $this->getMockBuilder(OutputInterface::class)->getMock();
-        $output->method('isDecorated')->willReturn(false);
-
-        $dumper = new Dumper($output);
+        $dumper = new Dumper($this->getMockBuilder(OutputInterface::class)->getMock());
 
         $this->assertDumpMatchesFormat($dumper($variable), $variable);
     }
