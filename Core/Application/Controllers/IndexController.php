@@ -13,6 +13,8 @@ namespace Application\Controllers;
 /**
  * Namespace Imports
  */
+
+use Entities\User;
 use Webmasters\Doctrine\Bootstrap;
 use Application\Logger\Logger;
 
@@ -30,6 +32,15 @@ class IndexController extends AbstractBase
 
     public function run(String $action): void
     {
+        $test = new User();
+        $test->setUsername('masterbee');
+        $test->setPassword('sdfssdfsdfsdfsdf');
+
+        $this->getBootstrap()->getEntityManager()->persist($test);
+        $this->getBootstrap()->getEntityManager()->flush();
+
+        echo "Created User with ID " . $test->getId() . PHP_EOL;
+
         echo 'test';
     }
 }

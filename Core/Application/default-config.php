@@ -12,9 +12,10 @@ use Webmasters\Doctrine\Configuration;
 use Webmasters\Doctrine\ORM\Util\OptionsCollection;
 
 $applicationConfig = new Configuration();
-$applicationConfig->setConnectionOptions(['driver' => 'pdo_sqlite', 'path' => _RootPath_ . '/dev.sqlite']);
+$applicationConfig->setConnectionOptions(['driver' => 'pdo_sqlite', 'path' => _RootPath_ . 'dev.sqlite']);
 $applicationConfig->setDebugMode(false);
-$applicationConfig->setEntityDir(_RootPath_ . '/Application/Entities');
+$applicationConfig->setEntityDir(_RootPath_ . 'Application/Entities');
+$applicationConfig->setEntityNamespace('Entities');
 $applicationConfig->getCustomConfig()->set('installed',false);
 $applicationConfig->getCustomConfig()->set('logger_level',Monolog\Logger::ALERT);
 

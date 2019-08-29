@@ -1742,6 +1742,7 @@ class UnitOfWork implements PropertyChangedListener
     {
         $oid = spl_object_hash($entity);
 
+
         if (isset($visited[$oid])) {
             return; // Prevent infinite recursion
         }
@@ -1749,6 +1750,9 @@ class UnitOfWork implements PropertyChangedListener
         $visited[$oid] = $entity; // Mark visited
 
         $class = $this->em->getClassMetadata(get_class($entity));
+
+        var_dump($class);
+        die();
 
         // We assume NEW, so DETACHED entities result in an exception on flush (constraint violation).
         // If we would detect DETACHED here we would throw an exception anyway with the same

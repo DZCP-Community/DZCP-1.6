@@ -423,12 +423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "9ff47e738575ab208f3ab4031412c58eb676ed1e"
+                "reference": "d9b377cda7bb9f97cc03fe77449cfac16f0152c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/9ff47e738575ab208f3ab4031412c58eb676ed1e",
-                "reference": "9ff47e738575ab208f3ab4031412c58eb676ed1e",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/d9b377cda7bb9f97cc03fe77449cfac16f0152c2",
+                "reference": "d9b377cda7bb9f97cc03fe77449cfac16f0152c2",
                 "shasum": ""
             },
             "require": {
@@ -507,7 +507,7 @@
                 "sqlserver",
                 "sqlsrv"
             ],
-            "time": "2019-08-08T14:07:27+00:00"
+            "time": "2019-08-29T07:19:21+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -1384,12 +1384,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "c2ac8e1013073c5baf09f91d4bfa8beb7ba690aa"
+                "reference": "8372ce7fd5fdc8a9e90cc47c65085e1fd8128492"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/c2ac8e1013073c5baf09f91d4bfa8beb7ba690aa",
-                "reference": "c2ac8e1013073c5baf09f91d4bfa8beb7ba690aa",
+                "url": "https://api.github.com/repos/symfony/console/zipball/8372ce7fd5fdc8a9e90cc47c65085e1fd8128492",
+                "reference": "8372ce7fd5fdc8a9e90cc47c65085e1fd8128492",
                 "shasum": ""
             },
             "require": {
@@ -1452,7 +1452,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-19T11:17:23+00:00"
+            "time": "2019-08-26T09:00:56+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -1460,12 +1460,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "8af2a2242c9d774c6dc6ccded7b519adca3218c5"
+                "reference": "9abbb7ef96a51f4d7e69627bc6f63307994e4263"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/8af2a2242c9d774c6dc6ccded7b519adca3218c5",
-                "reference": "8af2a2242c9d774c6dc6ccded7b519adca3218c5",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/9abbb7ef96a51f4d7e69627bc6f63307994e4263",
+                "reference": "9abbb7ef96a51f4d7e69627bc6f63307994e4263",
                 "shasum": ""
             },
             "require": {
@@ -1502,7 +1502,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-19T11:14:47+00:00"
+            "time": "2019-08-20T14:07:54+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -1685,12 +1685,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "5327348240527c29097ee1612dddcfbfdeec75d7"
+                "reference": "ea7263d6b6d5f798b56a45a5b8d686725f2719a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/5327348240527c29097ee1612dddcfbfdeec75d7",
-                "reference": "5327348240527c29097ee1612dddcfbfdeec75d7",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/ea7263d6b6d5f798b56a45a5b8d686725f2719a3",
+                "reference": "ea7263d6b6d5f798b56a45a5b8d686725f2719a3",
                 "shasum": ""
             },
             "require": {
@@ -1735,7 +1735,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2019-08-14T13:27:41+00:00"
+            "time": "2019-08-20T14:44:19+00:00"
         },
         {
             "name": "symfony/yaml",

@@ -13,7 +13,6 @@ namespace Application\Controllers;
 /**
  * Namespace Imports
  */
-
 use Symfony\Component\Filesystem\Filesystem;
 use Webmasters\Doctrine\Bootstrap;
 use Application\Interfaces\IAbstractBase;
@@ -21,6 +20,7 @@ use Application\Traits\TAbstractBase;
 use Application\Logger\Logger;
 use Application\Helper\{Smarty_CacheResource_Doctrine};
 use Defuse\Crypto\Key;
+use \Doctrine\ORM\Tools\SchemaTool;
 
 /**
  * Class AbstractBase
@@ -58,6 +58,9 @@ abstract class AbstractBase implements IAbstractBase {
      * AbstractBase constructor.
      * @param Bootstrap $bootstrap
      * @param Logger $logger
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \SmartyException
      */
     public function __construct(Bootstrap $bootstrap, Logger $logger) {
@@ -84,6 +87,21 @@ abstract class AbstractBase implements IAbstractBase {
             $this->smarty = $this->initSmarty();
         } catch (\Exception $exception) {
             $this->logger->getSystemLogger()->critical('Can not create a Smarty instance!',$exception->getTrace());
+            $this->showCriticalError(); //Show CriticalError page and exit()
+        }
+
+        $schemaTool = new SchemaTool($bootstrap->getEntityManager());
+        $factory = $bootstrap->getEntityManager()->getMetadataFactory();
+        $metadata = $factory->getAllMetadata();
+
+        try {
+             $schemaTool->updateSchema($metadata);
+        } catch (PDOException $e) {
+            $this->logger->getSystemLogger()->critical('A critical database error!',$e->getTrace());
+            if (preg_match("/Unknown database '(.*)'/", $e->getMessage(), $matches)) {
+                $this->logger->getDatabaseLogger()->critical("Create the database ".$matches[1]." with the collation utf8_general_ci!");
+            }
+
             $this->showCriticalError(); //Show CriticalError page and exit()
         }
 

@@ -50,6 +50,10 @@ class ComposerStaticInit45d092568430020968ab8d1e0a6cac69
         array (
             'Gedmo\\' => 6,
         ),
+        'E' => 
+        array (
+            'Entities\\' => 9,
+        ),
         'D' => 
         array (
             'Doctrine\\ORM\\' => 13,
@@ -70,12 +74,10 @@ class ComposerStaticInit45d092568430020968ab8d1e0a6cac69
         'A' => 
         array (
             'Application\\Traits\\' => 19,
-            'Application\\Models\\' => 19,
             'Application\\Libraries\\' => 22,
             'Application\\Interfaces\\' => 23,
             'Application\\Helper\\' => 19,
             'Application\\Exceptions\\' => 23,
-            'Application\\Entities\\' => 21,
             'Application\\Controllers\\' => 24,
         ),
     );
@@ -165,6 +167,10 @@ class ComposerStaticInit45d092568430020968ab8d1e0a6cac69
         array (
             0 => __DIR__ . '/..' . '/gedmo/doctrine-extensions/src',
         ),
+        'Entities\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Application/Entities',
+        ),
         'Doctrine\\ORM\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/orm/lib/Doctrine/ORM',
@@ -216,10 +222,6 @@ class ComposerStaticInit45d092568430020968ab8d1e0a6cac69
         array (
             0 => __DIR__ . '/../..' . '/Application/Traits',
         ),
-        'Application\\Models\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/Application/Models',
-        ),
         'Application\\Libraries\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Application/Libraries',
@@ -235,10 +237,6 @@ class ComposerStaticInit45d092568430020968ab8d1e0a6cac69
         'Application\\Exceptions\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Application/Exceptions',
-        ),
-        'Application\\Entities\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/Application/Entities',
         ),
         'Application\\Controllers\\' => 
         array (

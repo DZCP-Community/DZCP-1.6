@@ -30,9 +30,8 @@
       "Application\\Helper\\": "Application/Helper/",
       "Application\\Interfaces\\": "Application/Interfaces/",
       "Application\\Libraries\\": "Application/Libraries/",
-      "Application\\Models\\": "Application/Models/",
-      "Application\\Traits\\": "Application/Traits/",
-      "Application\\Entities\\": "Application/Entities/"
+      "Entities\\": "Application/Entities/",
+      "Application\\Traits\\": "Application/Traits/"
     }
   }
 }
