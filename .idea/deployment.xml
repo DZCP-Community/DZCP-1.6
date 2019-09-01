@@ -7,7 +7,6 @@
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$/Core" web="/" />
             <mapping deploy="/" local="$PROJECT_DIR$/Template" web="/" />
-            <mapping deploy="/" local="$PROJECT_DIR$/Module_AV" web="/" />
           </mappings>
         </serverdata>
       </paths>

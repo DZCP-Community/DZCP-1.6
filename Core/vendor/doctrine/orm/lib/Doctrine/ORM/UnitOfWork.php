@@ -1751,9 +1751,6 @@ class UnitOfWork implements PropertyChangedListener
 
         $class = $this->em->getClassMetadata(get_class($entity));
 
-        var_dump($class);
-        die();
-
         // We assume NEW, so DETACHED entities result in an exception on flush (constraint violation).
         // If we would detect DETACHED here we would throw an exception anyway with the same
         // consequences (not recoverable/programming error), so just assuming NEW here
