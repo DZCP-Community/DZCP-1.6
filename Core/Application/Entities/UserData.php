@@ -18,8 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="user_data")
  */
-class UserData
-{
+class UserData {
     /**
      * @var int
      * @ORM\Id
@@ -27,4 +26,12 @@ class UserData
      * @ORM\Column(type="integer", length=11)
      */
     protected $id = 0;
+
+    /**
+     * @var int
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer", length=11)
+     */
+    protected $uid = 0;
+
 }

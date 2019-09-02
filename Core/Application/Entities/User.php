@@ -18,8 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
-class User
-{
+class User {
     /**
      * @var int
      * @ORM\Id
@@ -72,6 +71,20 @@ class User
      * @param string $password
      */
     public final function setPassword(string $password) {
-        $this->password = $password;
+        $this->password = password_hash($password,PASSWORD_DEFAULT);
+    }
+
+    /**
+     * @param string $password
+     * @return bool
+     */
+    public final function checkPassword(string $password): bool {
+       if(password_verify($password,$this->password)) {
+           $this->password = password_needs_rehash($this->password, PASSWORD_DEFAULT) ?
+               password_hash($password, PASSWORD_DEFAULT) : $this->password;
+           return true;
+       }
+
+       return false;
     }
 }
