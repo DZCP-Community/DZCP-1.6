@@ -11,7 +11,7 @@
   ],
   "require": {
     "phpfastcache/phpfastcache": "7.0.2",
-    "phpmailer/phpmailer": "v6.0.5",
+    "phpmailer/phpmailer": "v6.0.6",
     "jaybizzle/crawler-detect": "v1.2.65",
     "dzcp/gump": "dev-master",
     "brightnucleus/country-codes": "v0.3.1"
