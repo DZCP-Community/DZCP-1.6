@@ -20,20 +20,19 @@ $dir = "stats";
 
 ## SECTIONS ##
 if ($action == "gb") {
-    $qry = db("SELECT email,reg,nick,datum FROM " . $db['gb'] . "
-               ORDER BY datum ASC LIMIT 1");
-    $get = _fetch($qry);
+    $get = db("SELECT `email`,`reg`,`nick`,`datum` FROM `" . $db['gb'] . "` ORDER BY `datum` ASC LIMIT 1;",false,true);
 
-    if ($get['reg'] != "0") $first = date("d.m.Y H:i", $get['datum']) . "h " . _from . " " . autor($get['reg']);
-    else $first = date("d.m.Y H:i", $get['datum']) . "h " . _from . " " . autor($get['reg'], '', re($get['nick']), re($get['email']));
+    if ($get['reg'])
+        $first = date("d.m.Y H:i", $get['datum']) . "h " . _from . " " . autor($get['reg']);
+    else
+        $first = date("d.m.Y H:i", $get['datum']) . "h " . _from . " " . autor(0, '', re($get['nick']), re($get['email']));
 
-    $qry = db("SELECT email,reg,nick,datum FROM " . $db['gb'] . "
-               ORDER BY datum DESC
-               LIMIT 1");
-    $get = _fetch($qry);
+    $get = db("SELECT `email`,`reg`,`nick`,`datum` FROM `" . $db['gb'] . "` ORDER BY `datum` DESC LIMIT 1;",false,true);
 
-    if ($get['reg'] != "0") $last = date("d.m.Y H:i", $get['datum']) . "h " . _from . " " . autor($get['reg']);
-    else $last = date("d.m.Y H:i", $get['datum']) . "h " . _from . " " . autor($get['reg'], '', re($get['nick']), re($get['email']));
+    if ($get['reg'])
+        $last = date("d.m.Y H:i", $get['datum']) . "h " . _from . " " . autor($get['reg']);
+    else
+        $last = date("d.m.Y H:i", $get['datum']) . "h " . _from . " " . autor(0, '', re($get['nick']), re($get['email']));
 
     $stats = show($dir . "/gb", array("head" => _site_gb,
         "all" => _stats_gb_all,
@@ -47,18 +46,15 @@ if ($action == "gb") {
 } elseif ($action == "forum") {
     $allthreads = cnt($db['f_threads']);
     $allposts = cnt($db['f_posts']);
+    $ppert = 0; $pperd = 0; $topposter = "-";
     if ($allthreads > 0 && $allposts >= 0) {
         $ppert = round($allposts / $allthreads, 2);
 
-        $qry = db("SELECT id,forumposts FROM " . $db['userstats'] . "
-                 ORDER BY forumposts DESC");
-        $get = _fetch($qry);
+        $get = db("SELECT `id`,`forumposts` FROM `" . $db['userstats'] . "` ORDER BY `forumposts` DESC;",false,true);
 
         $topposter = autor($get['id']) . " (" . $get['forumposts'] . " Posts)";
 
-        $qry = db("SELECT t_date FROM " . $db['f_threads'] . "
-                 ORDER BY t_date ASC");
-        $get = _fetch($qry);
+        $get = db("SELECT `t_date` FROM `" . $db['f_threads'] . "` ORDER BY `t_date` ASC;",false,true);
 
         $time = time() - $get['t_date'];
         $days = @round($time / 86400);

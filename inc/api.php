@@ -7,23 +7,80 @@
  */
 
 class api {
-    private $api_server = null;
-    private $call_varying = null;
-    private $api_callback = null;
-    private $api_input = array();
-    private $api_output = array();
-    private $api_version = '1.0.0';
+    /**
+     * @var array
+     */
+    private $api_input;
+
+    /**
+     * @var array
+     */
+    private $api_output;
+
+    /**
+     * @var string
+     */
+    private $api_output_stream;
+
+    /**
+     * @var array
+     */
+    private $api_curl_errors;
+
+    /**
+     * @var string
+     */
+    private $api_server;
+
+    /**
+     * @var string
+     */
+    private $api_version;
+
+    /**
+     * @var string
+     */
+    private $api_language;
+
+    /**
+     * @var bool
+     */
+    private $api_compress;
 
     /**
      * api constructor.
      * @param string $address
      */
-    function __construct(string $address = 'api.dzcp.de') {
-        $this->api_server = $address;
+    function __construct(string $address = 'api.dzcp.de')
+    {
+        global $cache;
 
-        //Autoupdate only in administration
-        if (api_autoupdate && defined('_Admin') && api_enabled)
-            $this->check_api_version();
+        $this->api_server = $address;
+        $this->api_input = [];
+        $this->api_output = [];
+        $this->api_output_stream = '';
+        $this->api_curl_errors = [];
+        $this->api_version = '0.0.0';
+        $this->api_language = 'en';
+        $this->api_compress = false;
+
+        /** @var bool */
+        $this->api_input['event'] = 'api';
+        $this->api_input['call'] = 'version';
+
+        $this->call(0.5);
+        $this->varying();
+
+        $CachedString = $cache->getItem('api_version');
+        if (is_null($CachedString->get())) {
+            if (!$this->api_output['error'] && $this->api_output['code'] == 200) {
+                $this->api_version = $this->api_output['results']['version'];
+                $CachedString->set($this->api_version)->expiresAfter(300);
+                $cache->save($CachedString);
+            }
+        } else {
+            $this->api_version = $CachedString->get();
+        }
     }
 
     /**
@@ -39,10 +96,10 @@ class api {
      * @param int $ttl
      * @return array|mixed
      */
-    public function get_news(bool $use_cache = true, int $ttl = 120) {
+    public function getNews(bool $use_cache = true, int $ttl = 120) {
         global $cache;
         if (show_api_debug)
-            DebugConsole::insert_info('api.php', 'Call get_addon_versions()');
+            DebugConsole::insert_info('api.php', 'Call getNews()');
 
         $this->api_output = [];
         $this->api_output['news'] = '';
@@ -73,7 +130,6 @@ class api {
             $this->varying();
         }
 
-        $this->api_output['news'] = hex2bin($this->api_output['news']); //Decode from HEX
         return $this->api_output;
     }
 
@@ -83,10 +139,12 @@ class api {
      * @param int $ttl
      * @return array|mixed
      */
-    public function get_addon_versions(array $addons, bool $use_cache = true, int $ttl = 30) {
+    public function getAddonVersions(array $addons, bool $use_cache = true, int $ttl = 30) {
         global $cache;
         if (show_api_debug)
-            DebugConsole::insert_info('api.php', 'Call get_addon_versions()');
+            DebugConsole::insert_info('api.php', 'Call getAddonVersions()');
+
+        $this->api_compress = true;
 
         $this->api_output = [];
         $this->api_output['data'] = json_encode($addons);
@@ -96,7 +154,8 @@ class api {
         //CALL
         $this->api_input = [];
         $this->api_input['event'] = 'addons';
-        $this->api_input['data'] = $this->api_output['data'];
+        $this->api_input['call'] = 'checkAddons';
+        $this->api_input['data'] = bin2hex(gzcompress($this->api_output['data']));
 
         if ($use_cache) {
             try {
@@ -104,6 +163,7 @@ class api {
                 if (is_null($CachedString->get())) {
                     $this->call();
                     $this->varying();
+
                     if (!$this->api_output['error']) {
                         $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
                         $cache->save($CachedString);
@@ -126,10 +186,10 @@ class api {
      * @param bool $reload
      * @return array|mixed
      */
-    public function get_dzcp_version(bool $use_cache = true, int $ttl = 60,bool $reload  = false) {
+    public function getDzcpVersion(bool $use_cache = true, int $ttl = 60,bool $reload  = false) {
         global $cache;
         if (show_api_debug)
-            DebugConsole::insert_info('api.php', 'Call get_dzcp_version()');
+            DebugConsole::insert_info('api.php', 'Call getDzcpVersion()');
 
         $this->api_output = [];
         $this->api_output['version'] = _version;
@@ -174,10 +234,10 @@ class api {
      * @param int $ttl
      * @return array|mixed
      */
-    public function get_geolocation(string $address, bool $use_cache = true, int $ttl = 30) {
+    public function getGeoLocation(string $address, bool $use_cache = true, int $ttl = 30) {
         global $cache;
         if (show_api_debug)
-            DebugConsole::insert_info('api.php', 'Call get_geolocation()');
+            DebugConsole::insert_info('api.php', 'Call getGeoLocation()');
 
         $this->api_output = [];
         $this->api_output['results'] = [];
@@ -187,56 +247,13 @@ class api {
 
         //CALL
         $this->api_input = [];
-        $this->api_input['event'] = 'geocode';
+        $this->api_input['event'] = 'proxy';
+        $this->api_input['call'] = 'getGeocode';
         $this->api_input['address'] = $address;
 
         if ($use_cache) {
             try {
                 $CachedString = $cache->getItem('geolocation_'.md5($address));
-                if (is_null($CachedString->get())) {
-                    $this->call();
-                    $this->varying();
-                    if (!$this->api_output['error']) {
-                        $CachedString->set(serialize($this->api_output))->expiresAfter($ttl);
-                        $cache->save($CachedString);
-                    }
-                } else {
-                    $this->api_output = unserialize($CachedString->get());
-                }
-            } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {}
-        } else { // No Cache
-            $this->call();
-            $this->varying();
-        }
-
-        return $this->api_output;
-    }
-
-    /**
-     * @param string $servers
-     * @param bool $use_cache
-     * @param int $ttl
-     * @return array|mixed
-     */
-    public function get_gameserver(string $servers, bool $use_cache = true, int $ttl = 30) {
-        global $cache;
-        if (show_api_debug)
-            DebugConsole::insert_info('api.php', 'Call get_gameserver()');
-
-        $this->api_output = [];
-        $this->api_output['results'] = [];
-        $this->api_output['status'] = 'ZERO_RESULTS';
-        $this->api_output['error'] = true;
-        $this->api_output['error_msg'] = 'no content from server';
-
-        //CALL
-        $this->api_input = [];
-        $this->api_input['event'] = 'gsproxy';
-        $this->api_input['servers'] = json_encode($servers);
-
-        if ($use_cache) {
-            try {
-                $CachedString = $cache->getItem('geolocation_'.md5($servers));
                 if (is_null($CachedString->get())) {
                     $this->call();
                     $this->varying();
@@ -277,110 +294,66 @@ class api {
         return version_compare((string)$_fv,(string)$_sv,$operator);
     }
 
-    private function check_api_version() {
-        global $cache;
-
-        $this->api_output = [];
-        $this->api_output['version'] = $this->api_version;
-        $this->api_output['url'] = '';
-        $this->api_output['error'] = true;
-        $this->api_output['error_msg'] = 'no content from server';
-
-        //CALL
-        $this->api_input = [];
-        $this->api_input['event'] = 'api_version';
-        $this->api_input['version'] = $this->api_version;
-
-        try {
-            $CachedString = $cache->getItem('api_version');
-            if (is_null($CachedString->get())) {
-                $this->call();
-                $this->varying();
-                if (!$this->api_output['error']) {
-                    $CachedString->set(serialize($this->api_output))->expiresAfter(api_autoupdate_interval);
-                    $cache->save($CachedString);
-                }
-            } else {
-                $this->api_output = unserialize($CachedString->get());
-            }
-        } catch (\phpFastCache\Exceptions\phpFastCacheInvalidArgumentException $e) {
-        }
-
-        if (!$this->api_output['error'] && array_key_exists('version', $this->api_output)) {
-            if ((int)str_replace('.', '', $this->api_output['version']) >
-                (int)str_replace('.', '', $this->api_version)) {
-                ignore_user_abort(true);
-                set_time_limit(600);
-                $api_file = get_external_contents(re('https://raw.githubusercontent.com/DZCP-Community/DZCP-1.6/final/inc/api.php', true), false, true);
-                if (!empty($api_file) && $api_file != false && strpos($api_file, 'class api') !== false) {
-                    if (file_exists(basePath . '/inc/api.php.old')) {
-                        @unlink(basePath . '/inc/api.php.old'); //Remove old Backups
-                    }
-
-                    if (rename(basePath . '/inc/api.php', basePath . '/inc/api.php.old')) {
-                        if (!file_put_contents(basePath . '/inc/api.php', $api_file)) {
-                            rename(basePath . '/inc/api.php.old', basePath . '/inc/api.php');
-                        }
-                    }
-                }
-                unset($api_file);
-
-                ignore_user_abort(false);
-                set_time_limit(30);
-            }
-        }
-    }
-
     private function varying() {
         if (show_api_debug)
             DebugConsole::insert_info('api.php', 'Call varying');
 
-        if (!empty($this->api_callback) && $this->api_callback != false) {
-            if ($this->call_varying === hash('crc32', $this->api_callback)) {
-                $this->api_callback = json_decode($this->api_callback, true);
-
-                if (show_api_debug)
-                    DebugConsole::insert_info('api.php', 'api_callback = <pre>' . print_r($this->api_callback) . '</pre>');
-
-                if (is_array($this->api_callback) && array_key_exists('error', $this->api_callback)) {
-                    $this->api_output = $this->api_callback;
-                    $this->api_output['error_msg'] = '';
-                    $this->api_callback = null;
-                } else {
-                    $this->api_output['error'] = true;
-                    $this->api_output['error_msg'] = 'api_callback data is not a array';
-                }
-            } else {
-                $this->api_output['error'] = true;
-                $this->api_output['error_msg'] = 'crc32 hash is not identical';
+        //Uncompress
+        if(array_key_exists('compress',$this->api_output['results'])) {
+            unset($this->api_output['results']['compress']);
+            foreach ($this->api_output['results'] as $key => $result) {
+                $this->api_output['results'][$key] = json_decode(gzuncompress(hex2bin($result)),true);
             }
         }
+
+        $this->api_output['results'] = (array)$this->api_output['results'] ;
+        $this->api_output['code'] = intval($this->api_output['code']);
+        $this->api_output['error'] = boolval($this->api_output['error']);
+        $this->api_output['status'] = strval($this->api_output['status']);
     }
 
-    private function call() {
+    private function call(float $timeout = 10) {
         if (!fsockopen_support() && !fsockopen_support_bypass) {
             return;
         }
 
-        if (!array_key_exists('type', $this->api_input))
-            $this->api_input['type'] = 'json';
-
-        $this->api_input['language'] = language_short_tag();
-
-        if (show_api_debug)
-            DebugConsole::insert_info('api.php', 'api_input = <pre>' . print_r($this->api_input) . '</pre>');
-
-        $this->api_callback = get_external_contents(re('https://' . $this->api_server, true), $this->api_input);
+        $this->api_input += ['event' => 'null'];
+        $this->api_input += ['format' => 'json'];
+        $this->api_input += ['language' => $this->api_language];
+        $this->api_input += ['compress' => $this->api_compress];
 
         if (show_api_debug)
-            DebugConsole::insert_info('api.php', 'api_callback = <pre>' . print_r($this->api_callback) . '</pre>');
+            DebugConsole::insert_info('api.php', 'apiInput: <pre>' . var_export($this->api_input,true) . '</pre>');
 
-        if (!empty($this->api_callback) && $this->api_callback != false && strpos($this->api_callback, 'not found') === false) {
-            $this->call_varying = explode('[hash]', $this->api_callback);
-            if (count($this->call_varying) == 2) {
-                $this->api_callback = trim($this->call_varying[0]);
-                $this->call_varying = trim($this->call_varying[1]);
-            }
+        //Call to Server
+        $this->api_output_stream = get_external_contents('https://'.$this->api_server,$this->api_input,false,$timeout);
+
+        if(!$this->api_output_stream || empty($this->api_output_stream)) {
+            $this->api_output['results'] = [];
+            $this->api_output['code'] = 500;
+            $this->api_output['error'] = true;
+            $this->api_output['status'] = 'server response is empty';
+            return false;
         }
+
+        $this->api_output = json_decode($this->api_output_stream,true);
+
+        DebugConsole::insert_info('api.php', 'apiOutput: <pre>' . var_export($this->api_output,true) . '</pre>');
+
+        if(json_last_error()) {
+            $this->api_output['results'] = [];
+            $this->api_output['code'] = 500;
+            $this->api_output['error'] = true;
+            $this->api_output['status'] = json_last_error();
+            return false;
+        }
+
+        if($this->api_output['crc32'] != crc32(serialize($this->api_output['results']))) {
+            $this->api_output['error'] = true;
+            $this->api_output['status'] = 'crc32 checksum is not identical';
+            return false;
+        } unset($this->api_output['crc32']);
+
+        return true;
     }
 }

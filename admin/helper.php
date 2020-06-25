@@ -10,7 +10,7 @@ function show_dzcp_version(bool $reload=false) {
     $dzcp_version_info = 'onmouseover="DZCP.showInfo(\'<tr><td colspan=2 align=center padding=3 class=infoTop>DZCP Versions Checker</td></tr><tr><td>' . _dzcp_vcheck . '</td></tr>\')" onmouseout="DZCP.hideInfo()"';
     $return = array();
     if (dzcp_version_checker && api_enabled) {
-        $json = $api->get_dzcp_version(true, 60 , $reload);
+        $json = $api->getDzcpVersion(true, 60 , $reload);
         if($reload) {
             header("Location: " . GetServerVars('HTTP_REFERER'));
         }
@@ -35,11 +35,11 @@ function show_dzcp_version(bool $reload=false) {
         }
 
         $_build = '<span style="color:#17D427">' . _build . '</span>';
-        if ((int)(str_replace('.', '', $json['build'])) > (int)(str_replace('.', '', _build)))
-            $_build = '<span style="color:#FF0000">' . _build . '</span> => <span style="color:#17D427">' . $json['build'] . '</span>';
+        if ((int)(str_replace('.', '', $json['results']['build'])) > (int)(str_replace('.', '', _build)))
+            $_build = '<span style="color:#FF0000">' . _build . '</span> => <span style="color:#17D427">' . $json['results']['build'] . '</span>';
 
-        if ((int)(str_replace('.', '', $json['version'])) > (int)(str_replace('.', '', _version))) {
-            $return['version'] = '<a href="https://www.dzcp.de/" target="_blank" title="external Link: www.dzcp.de"><b>' . _akt_version . ':</b> <span style="color:#FF0000">' . _version . '</span> / Update Version: <span style="color:#17D427">' . $json['version'] . '</span> / Release: <span style="color:#17D427">' . $json['release'] . '</span> / Build: <span style="color:#17D427">' . $json['build'] . '</span></a>';
+        if ((int)(str_replace('.', '', $json['results']['version'])) > (int)(str_replace('.', '', _version))) {
+            $return['version'] = '<a href="https://www.dzcp.de/" target="_blank" title="external Link: www.dzcp.de"><b>' . _akt_version . ':</b> <span style="color:#FF0000">' . _version . '</span> / Update Version: <span style="color:#17D427">' . $json['results']['version'] . '</span> / Release: <span style="color:#17D427">' . $json['results']['release'] . '</span> / Build: <span style="color:#17D427">' . $json['results']['build'] . '</span></a>';
             $return['version_img'] = '<img src="../inc/images/admin/version_old.gif" align="absmiddle" width="111" height="14" />';
         } else {
             $return['version'] = '<b><a href="'.$href.'" [info]>' . _akt_version . ': <span style="color:#17D427">' . _version . '</span> / Release: <span style="color:#17D427">' . _release . '</span> / Build: ' . $_build . '</b></a>';

@@ -61,6 +61,7 @@ if (defined('_News')) {
         "comments" => _news_comments_prev,
         "showmore" => "",
         "dp" => "",
+        "edit" => "",
         "dir" => $designpath,
         "nautor" => _autor,
         "intern" => $intern,

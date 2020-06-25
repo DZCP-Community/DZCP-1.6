@@ -246,10 +246,11 @@ function isSecure() {
 }
 
 function hasSecure() {
-    if(use_ssl_auto_redirect) {
-        if (ping_port(GetServerVars('HTTP_HOST'), 443, 0.1)) {
+    if (isset($_SERVER['HTTPS']) ) {
+        if (strtolower(GetServerVars('HTTPS')) == 'on' )
             return true;
-        }
+    } elseif (isset($_SERVER['SERVER_PORT']) && ( '443' == $_SERVER['SERVER_PORT'] ) ) {
+        return true;
     }
 
     return false;
@@ -530,6 +531,71 @@ function lang(string $lng) {
         }
     }
     unset($language_text, $key, $text);
+}
+
+/**
+ * @param $csv_string
+ * @param string $delimiter
+ * @param bool $skip_empty_lines
+ * @param bool $trim_fields
+ * @return array|false[][]|string[][]|string[][][]
+ */
+function parse_csv($csv_string, $delimiter = ",", $skip_empty_lines = true, $trim_fields = true)
+{
+    return array_map(
+        function ($line) use ($delimiter, $trim_fields) {
+            return array_map(
+                function ($field) {
+                    return str_replace('!!Q!!', '"', utf8_decode(urldecode($field)));
+                },
+                $trim_fields ? array_map('trim', explode($delimiter, $line)) : explode($delimiter, $line)
+            );
+        },
+        preg_split(
+            $skip_empty_lines ? ($trim_fields ? '/( *\R)+/s' : '/\R+/s') : '/\R/s',
+            preg_replace_callback(
+                '/"(.*?)"/s',
+                function ($field) {
+                    return urlencode(utf8_encode($field[1]));
+                },
+                $enc = preg_replace('/(?<!")""/', '!!Q!!', $csv_string)
+            )
+        )
+    );
+}
+
+/**
+ * @param string $land
+ * @return false|mixed|string|string[]
+ * @throws \Psr\Cache\InvalidArgumentException
+ * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
+ */
+function getCountryName(string $land)
+{
+    global $cache;
+
+    if (!fsockopen_support() && (!extension_loaded('curl') || !use_curl_support))
+        return '';
+
+    $csv = [];
+    $CachedString = $cache->getItem('CountryNames');
+    if (is_null($CachedString->get())) {
+        $stream = get_external_contents('https://static.dzcp.de/csv/iso3166.csv');
+        if (!empty($stream)) {
+            $csv = parse_csv($stream);
+            $CachedString->set(serialize($csv))->expiresAfter(604800);
+            $cache->save($CachedString);
+        }
+    } else {
+        $csv = unserialize($CachedString->get());
+    }
+
+    foreach ($csv as $row) {
+        if(strtolower(trim($row[0])) == strtolower(trim($land)))
+            return $row[1];
+    }
+
+    return '';
 }
 
 //->Daten uber file_get_contents oder curl abrufen
@@ -2966,6 +3032,9 @@ if ($functions_files = get_files(basePath . '/inc/additional-functions/', false,
     unset($functions_files, $func);
 }
 
+/**
+ * Class javascript
+ */
 class javascript {
     private static $data_array = [];
 

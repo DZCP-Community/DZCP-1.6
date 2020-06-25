@@ -20,7 +20,7 @@ $title = $pagetitle . " - " . $where . "";
 ## SECTIONS ##
 switch ($action):
     default:
-        $qry = db("SELECT * FROM " . $db['linkus'] . " ORDER BY banner DESC");
+        $qry = db("SELECT * FROM `" . $db['linkus'] . "` ORDER BY `banner` DESC;");
         if (_rows($qry)) {
             while ($get = _fetch($qry)) {
                 $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";

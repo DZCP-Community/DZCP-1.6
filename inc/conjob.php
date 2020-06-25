@@ -33,21 +33,25 @@ if((settings('last_conjob',false)+90) <= time()) {
 
     //Update longitudes & latitude for membermap for PHP
     if(api_enabled) {
-        $qry = db("SELECT `id`,`city`,`country` FROM `" . $db['users'] . "` WHERE `city` != '' AND (`geolocation` IS NULL OR `geolocation` = '');");
-        while ($get = _fetch($qry)) {
-            $adress = re($get['city']);
-            if (!empty($get['country'])) {
-                $name = Country::getNameFromCode(strtoupper(re($get['country'])));
-                $adress = (str_replace(' ', '+', $name) . '+' . $adress);
+        //Update
+        $mme_qry = db('SELECT `id`, `city`, `country` FROM `'.$db['users'].'` WHERE `gmaps_koord` IS NULL OR `gmaps_koord` = "" ORDER BY id;');
+        while($mme_get = _fetch($mme_qry)) {
+            $geo = null;
+            if(!empty($mme_get['city']) && !empty($mme_get['country'])) {
+                $geo = $api->getGeoLocation(strtolower(re($mme_get['city'])).','.strtolower(getCountryName($mme_get['country'])));
+            }
+            else if(!empty($mme_get['city'])) {
+                $geo = $api->getGeoLocation(strtolower(re($mme_get['city'])));
+            }
+            else if(!empty($mme_get['country'])) {
+                $geo = $api->getGeoLocation(strtolower(getCountryName($mme_get['country'])));
             }
 
-            $geolocation = $api->get_geolocation($adress);
-            if ($geolocation && !$geolocation['error'] && $geolocation['status'] == 'OK') {
-                db("UPDATE `" . $db['users'] . "` SET `geolocation` = '" .
-                    json_encode($geolocation['results'][0]['geometry']['location']) . "', `city` = '" .
-                    up($geolocation['results'][0]['address_components'][0]['long_name']) . "' WHERE `id` = " . $get['id'] . ";");
+            if(!is_null($geo) && !$geo['error'] && array_key_exists('lat',$geo['results']) && array_key_exists('lng',$geo['results']) &&
+                !empty($geo['results']['lat']) && $geo['results']['lat'] != 0 && !empty($geo['results']['lng']) && $geo['results']['lng'] != 0) {
+                db("UPDATE `" . $db['users'] . "` SET `gmaps_koord` = '".$geo['results']['lat'].",".$geo['results']['lng']."' WHERE `id` = " . $mme_get['id'] . ";");
             }
-        }
+        } unset($mme_qry,$mme_get,$geo);
     }
 
     //-> Automatische Datenbank Optimierung

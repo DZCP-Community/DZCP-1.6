@@ -13,7 +13,7 @@ $addons_installed = array(); $addons_not_installed = array();
 $addons_xml = get_files(basePath . "/inc/_versions_"); $addons_local = array();
 foreach ($addons_xml as $addon_xml) {
     $array = json_decode(json_encode(simplexml_load_file(basePath . '/inc/_versions_/' . $addon_xml)),true);
-    if(!$array['Version'] || !$array['AID'] || empty($array['AID'])) {
+    if(!$array['Version'] || !$array['AID'] ||   empty($array['AID'])) {
         $addons_not_installed[] = $array;
         continue;
     }
@@ -22,14 +22,20 @@ foreach ($addons_xml as $addon_xml) {
 } unset($array,$addon_xml);
 
 if(api_enabled) {
-    $addons_installed = $api->get_addon_versions($addons_installed, true, 600);
+    $api_data = $api->getAddonVersions($addons_installed, true, 600);
+    $addons_installed['error'] = true;
+    if(!empty($api_data) && !$api_data['error']) {
+        $addons_installed = $api_data['results'];
+        $addons_installed['error'] = false;
+        $addons_installed['error_msg'] = $api_data['status'];
+    }
 } else {
     $addons_installed['data'] = [];
     $addons_installed['error'] = true;
     $addons_installed['error_msg'] = 'inc/config.php => "api_enabled" is false';
 }
 
-$addons = array_merge($addons_installed['data'],$addons_not_installed);
+$addons = array_merge($addons_installed,$addons_not_installed);
 $addons['error'] = $addons_installed['error'];
 $addons['error_msg'] = $addons_installed['error_msg'];
 unset($addons_installed,$addons_not_installed);

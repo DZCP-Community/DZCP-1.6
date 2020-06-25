@@ -98,8 +98,19 @@ if (defined('_UserMenu')) {
                    WHERE `id` = " . $userid . ";");
 
                 if(isset($_POST['land']) && isset($_POST['city'])) {
-                    if ($get['land'] != up($_POST['land']) || $get['city'] != up($_POST['city'])) {
-                        db("UPDATE `" . $db['users'] . "` SET `geolocation` = '' WHERE `id` = " . $userid . ";");
+                    if ($get['country'] != up($_POST['land']) || $get['city'] != up($_POST['city'])) {
+                        if(empty($_POST['land'])) {
+                            $geo = $api->getGeoLocation(strtolower($_POST['city']));
+                        } else if(empty($_POST['land'])) {
+                            $geo = $api->getGeoLocation(strtolower(getCountryName($_POST['land'])));
+                        } else {
+                            $geo = $api->getGeoLocation(strtolower($_POST['city']).','.strtolower(getCountryName($_POST['land'])));
+                        }
+
+                        if(!$geo['error'] && array_key_exists('lat',$geo['results']) && array_key_exists('lng',$geo['results']) &&
+                        !empty($geo['results']['lat']) && $geo['results']['lat'] != 0 && !empty($geo['results']['lng']) && $geo['results']['lng'] != 0) {
+                            db("UPDATE `" . $db['users'] . "` SET `gmaps_koord` = '".$geo['results']['lat'].",".$geo['results']['lng']."' WHERE `id` = " . $userid . ";");
+                        }
                     }
                 }
 

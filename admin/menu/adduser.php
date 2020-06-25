@@ -11,8 +11,6 @@ $dropdown_age = show(_dropdown_date, array("day" => dropdown("day", 0, 1),
     "month" => dropdown("month", 0, 1),
     "year" => dropdown("year", 0, 1)));
 
-$gmaps = show('membermap/geocoder', array('form' => 'adduser'));
-
 $qrysq = db("SELECT id,name FROM " . $db['squads'] . " ORDER BY pos");
 $esquads = '';
 while ($getsq = _fetch($qrysq)) {
@@ -54,7 +52,6 @@ $show = show($dir . "/register", array("registerhead" => _useradd_head,
     "pcity" => _profil_city,
     "pcountry" => _profil_country,
     "country" => show_countrys('de'),
-    "gmaps" => $gmaps,
     "level" => _admin_user_level,
     "ruser" => _status_user,
     "trial" => _status_trial,
@@ -117,6 +114,21 @@ if ($do == "add") {
 
         $insert_id = mysqli_insert_id($mysql);
         setIpcheck("createuser(" . $userid . "_" . $insert_id . ")");
+
+        if(isset($_POST['land']) && isset($_POST['city'])) {
+            if(empty($_POST['land'])) {
+                $geo = $api->getGeoLocation(strtolower($_POST['city']));
+            } else if(empty($_POST['land'])) {
+                $geo = $api->getGeoLocation(strtolower(getCountryName($_POST['land'])));
+            } else {
+                $geo = $api->getGeoLocation(strtolower($_POST['city']).','.strtolower(getCountryName($_POST['land'])));
+            }
+
+            if(!$geo['error'] && array_key_exists('lat',$geo['results']) && array_key_exists('lng',$geo['results']) &&
+                !empty($geo['results']['lat']) && $geo['results']['lat'] != 0 && !empty($geo['results']['lng']) && $geo['results']['lng'] != 0) {
+                db("UPDATE `" . $db['users'] . "` SET `gmaps_koord` = '".$geo['results']['lat'].",".$geo['results']['lng']."' WHERE `id` = " . $insert_id . ";");
+            }
+        }
 
         // permissions
         if (!empty($_POST['perm'])) {

@@ -61,14 +61,14 @@ if (defined('_UserMenu')) {
                     "ip" => _iplog_info,
                     "eintraghead" => _eintrag));
             } else {
-                $qryperm = db("SELECT perm_gb FROM " . $db['users'] . " WHERE id = " . $_GET['id'], false, true);
+                $qryperm = db("SELECT `perm_gb` FROM `" . $db['users'] . "` WHERE `id` = " . $_GET['id'].";", false, true);
                 if ($qryperm['perm_gb']) {
                     $qry = db("INSERT INTO " . $db['usergb'] . "
                                          SET `user`       = '" . ((int)$_GET['id']) . "',
                                                  `datum`      = '" . time() . "',
-                                                 `nick`       = '" . up($_POST['nick']) . "',
-                                                 `email`      = '" . up($_POST['email']) . "',
-                                                 `hp`         = '" . up(links(re($_POST['hp'], true))) . "',
+                                                 `nick`       = '" . (isset($_POST['nick']) ? up($_POST['nick']) : '') . "',
+                                                 `email`      = '" . (isset($_POST['email']) ? up($_POST['email']) : '') . "',
+                                                 `hp`         = '" . (isset($_POST['hp']) ? up(links(re($_POST['hp'], true))) : '') . "',
                                                  `reg`        = '" . ((int)$userid) . "',
                                                  `nachricht`  = '" . up($_POST['eintrag']) . "',
                                                  `ip`         = '" . $userip . "'");
