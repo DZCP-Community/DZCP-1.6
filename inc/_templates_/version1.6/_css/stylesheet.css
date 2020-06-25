@@ -460,7 +460,7 @@ span.welcomebar {
 /* Attributes of the main-content (shouldnt be edited) e.g. index.html */
 table.mainContent {
     width: 100%;
-    background: #fff;
+    background: #eaeaea;
     margin-top: 15px;
     text-align: left;
     padding: 0 7px 7px 7px;
@@ -969,7 +969,7 @@ img.squadMember {
 /* Attributes of several links e.g. menu/*.html */
 a.navUser:link, a.navUser:visited, a.navTrial:link, a.navTrial:visited, a.navMember:link, a.navMember:visited, a.navAdmin:link, a.navAdmin:visited, a.navLostPwd:link, a.navLostPwd:visited, a.navLastNews:link, a.navLastNews:visited, a.navFtopics:link, a.navFtopics:visited, a.navTopdl:link, a.navTopdl:visited, a.navLastReg:link, a.navLastReg:visited, a.navLastArtikel:link, a.navLastArtikel:visited, a.navLastCw:link, a.navLastCw:visited, a.navNextCw:link, a.navNextCw:visited, a.navKal:link, a.navKal:visited, a.navVote:link, a.navVote:visited, a.navCounter:link, a.navCounter:visited, a.navShout:link, a.navShout:visited, a.navTeam:link, a.navTeam:visited, a.navServerStats:link, a.navServerStats:visited, a.navTeamspeak:link, a.navTeamspeak:visited {
     font-weight: normal;
-    color: #414141;
+    color: #222222;
 }
 
 a.navUser:hover, a.navUser:active, a.navTrial:hover, a.navTrial:active, a.navMember:hover, a.navMember:active, a.navAdmin:hover, a.navAdmin:active, a.navLostPwd:hover, a.navLostPwd:active, a.navLastNews:hover, a.navLastNews:active, a.navFtopics:hover, a.navFtopics:active, a.navTopdl:hover, a.navTopdl:active, a.navLastCw:hover, a.navLastCw:active, a.navNextCw:hover, a.navNextCw:active, a.navLastArtikel:hover, a.navLastArtikel:active, a.navLastReg:hover, a.navLastReg:active, a.navKal:hover, a.navKal:active, a.navVote:hover, a.navVote:active, a.navCounter:hover, a.navCounter:active, a.navShout:hover, a.navShout:active, a.navTeam:hover, a.navTeam:active, a.navServerStats:hover, a.navServerStats:active, a.navTeamspeak:hover, a.navTeamspeak:active {
@@ -2021,4 +2021,7 @@ img.border {
     -moz-transform: scale(4.0);
     -webkit-zoom: 4.0;
     -ms-zoom: 4.0;
+}
+#map {
+    height: 100%;
 }
