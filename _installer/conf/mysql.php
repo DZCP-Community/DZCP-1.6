@@ -1,7 +1,7 @@
 <?php
 /**
  * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * https://www.dzcp.de
  */
 
 //MySQL-Daten einlesen
@@ -123,7 +123,7 @@ function install_mysql($login, $nick, $pwd, $email)
       `top` int(1) NOT NULL DEFAULT '0');");
 
     //-> Daten für Tabelle `dzcp_clanwars`
-    db("INSERT INTO `" . $db['cw'] . "` VALUES (1, 1, '', 'de', '', '', '', " . (time() - 1000) . ", 'DZCP', 'deV!L`z Clanportal', 'http://www.dzcp.de', '5on5', 'DZCP', 0, 21, 'de_dzcp', '', '', '', '', 1);");
+    db("INSERT INTO `" . $db['cw'] . "` VALUES (1, 1, '', 'de', '', '', '', " . (time() - 1000) . ", 'DZCP', 'deV!L`z Clanportal', 'https://www.dzcp.de', '5on5', 'DZCP', 0, 21, 'de_dzcp', '', '', '', '', 1);");
 
     //-> Tabellenstruktur für Tabelle `dzcp_clanwar_players`
     db("DROP TABLE IF EXISTS `" . $db['cw_player'] . "`;");
@@ -411,7 +411,7 @@ function install_mysql($login, $nick, $pwd, $email)
       `hits` int(50) NOT NULL DEFAULT '0');");
 
 //-> Daten für Tabelle `".$db['links']."`
-    db("INSERT INTO `" . $db['links'] . "` VALUES (1, 'http://www.dzcp.de', 'http://www.dzcp.de/banner/dzcp.gif', 1, 'deV!L`z Clanportal', 0);");
+    db("INSERT INTO `" . $db['links'] . "` VALUES (1, 'https://www.dzcp.de', 'https://www.dzcp.de/banner/dzcp.gif', 1, 'deV!L`z Clanportal', 0);");
 
 //-> Tabellenstruktur für Tabelle `".$db['linkus']."`
     db("DROP TABLE IF EXISTS `" . $db['linkus'] . "`;");
@@ -423,7 +423,7 @@ function install_mysql($login, $nick, $pwd, $email)
       `beschreibung` varchar(249) DEFAULT NULL);");
 
 //-> Daten für Tabelle `".$db['linkus']."`
-    db("INSERT INTO `" . $db['linkus'] . "` VALUES (1, 'http://www.dzcp.de', 'http://www.dzcp.de/banner/button.gif', 1, 'deV!L`z Clanportal');");
+    db("INSERT INTO `" . $db['linkus'] . "` VALUES (1, 'https://www.dzcp.de', 'https://www.dzcp.de/banner/button.gif', 1, 'deV!L`z Clanportal');");
 
     //-> Tabellenstruktur für Tabelle `".$db['msg']."`
     db("DROP TABLE IF EXISTS `" . $db['msg'] . "`;");
@@ -541,7 +541,7 @@ function install_mysql($login, $nick, $pwd, $email)
       `timeshift` int(14) NOT NULL DEFAULT '0');");
 
     //-> Daten für Tabelle `".$db['news']."`
-    db("INSERT INTO `" . $db['news'] . "` VALUES (1, '1', '" . (time() - 120) . "', 1, 0, 'deV!L`z Clanportal', 0, '<p>deV!L`z Clanportal wurde erfolgreich installiert!</p><p>Bei Fragen oder Problemen kannst du gerne das Forum unter <a href=\"http://www.dzcp.de/\" target=\"_blank\">www.dzcp.de</a> kontaktieren.</p><p>Mehr Designtemplates und Modifikationen findest du unter <a href=\"http://www.templatebar.de/\" target=\"_blank\" title=\"Templates, Designs &amp; Modifikationen\">www.templatebar.de</a>.</p><p><br /></p><p>Viel Spass mit dem DZCP w&uuml;nscht dir das Team von www.dzcp.de.</p>', '', '', 'www.dzcp.de', 'http://www.dzcp.de', 'TEMPLATEbar.de', 'http://www.templatebar.de', '', '', 0, 1, 0);");
+    db("INSERT INTO `" . $db['news'] . "` VALUES (1, '1', '" . (time() - 120) . "', 1, 0, 'deV!L`z Clanportal', 0, '<p>deV!L`z Clanportal wurde erfolgreich installiert!</p><p>Bei Fragen oder Problemen kannst du gerne das Forum unter <a href=\"https://www.dzcp.de/\" target=\"_blank\">www.dzcp.de</a> kontaktieren.</p><p>Mehr Designtemplates und Modifikationen findest du unter <a href=\"http://www.templatebar.de/\" target=\"_blank\" title=\"Templates, Designs &amp; Modifikationen\">www.templatebar.de</a>.</p><p><br /></p><p>Viel Spass mit dem DZCP w&uuml;nscht dir das Team von www.dzcp.de.</p>', '', '', 'www.dzcp.de', 'https://www.dzcp.de', 'TEMPLATEbar.de', 'http://www.templatebar.de', '', '', 0, 1, 0);");
 
     //-> Tabellenstruktur für Tabelle `".$db['newscomments']."`
     db("DROP TABLE IF EXISTS `" . $db['newscomments'] . "`;");
@@ -578,8 +578,8 @@ function install_mysql($login, $nick, $pwd, $email)
     //-> Daten für Tabelle `".$db['partners']."`
     db("INSERT INTO `" . $db['partners'] . "` VALUES
     (1, 'http://www.hogibo.net', 'hogibo.gif', 0),
-    (2, 'http://www.dzcp.de', 'dzcp.gif', 0),
-    (3, 'http://www.dzcp.de', 'dzcp.de', 1),
+    (2, 'https://www.dzcp.de', 'dzcp.gif', 0),
+    (3, 'https://www.dzcp.de', 'dzcp.de', 1),
     (4, 'http://www.hogibo.net', 'Webspace', 1);");
 
     //-> Tabellenstruktur für Tabelle `".$db['permissions']."`
@@ -835,7 +835,7 @@ function install_mysql($login, $nick, $pwd, $email)
       `hits` int(50) NOT NULL DEFAULT '0');");
 
     //-> Daten für Tabelle `".$db['sponsoren']."`
-    db("INSERT INTO `" . $db['sponsoren'] . "` VALUES (1, 'DZCP', 'http://www.dzcp.de', '<p>deV!L\'z Clanportal, das CMS for Online-Clans!</p>', 0, '', '', 0, '', '', 1, 'gif', '', 7, 0),(2, 'DZCP Rotationsbanner', 'http://www.dzcp.de', '<p>deV!L`z Clanportal</p>', 0, '', '', 1, '', 'http://www.dzcp.de/banner/dzcp.gif', 0, '', '', 5, 0);");
+    db("INSERT INTO `" . $db['sponsoren'] . "` VALUES (1, 'DZCP', 'https://www.dzcp.de', '<p>deV!L\'z Clanportal, das CMS for Online-Clans!</p>', 0, '', '', 0, '', '', 1, 'gif', '', 7, 0),(2, 'DZCP Rotationsbanner', 'https://www.dzcp.de', '<p>deV!L`z Clanportal</p>', 0, '', '', 1, '', 'https://www.dzcp.de/banner/dzcp.gif', 0, '', '', 5, 0);");
 
     //-> Tabellenstruktur für Tabelle `".$db['squads']."`
     db("DROP TABLE IF EXISTS `" . $db['squads'] . "`;");
