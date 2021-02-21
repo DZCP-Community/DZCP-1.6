@@ -15,14 +15,14 @@ use BrightNucleus\Config\Exception\FailedToLoadConfigException;
 use Exception;
 
 /**
- * Class PHPLoader.
+ * Class JSONLoader.
  *
- * @since   0.4.0
+ * @since   0.1.0
  *
  * @package BrightNucleus\Config\Loader
- * @author  Alain Schlesser <alain.schlesser@gmail.com>
+ * @author  Pascal Knecht <pascal.knecht99@gmail.com>
  */
-class PHPLoader extends AbstractLoader
+class JSONLoader extends AbstractLoader
 {
 
     /**
@@ -38,7 +38,7 @@ class PHPLoader extends AbstractLoader
     {
         $path = pathinfo($uri);
 
-        return 'php' === mb_strtolower($path['extension']);
+        return 'json' === mb_strtolower($path['extension']);
     }
 
     /**
@@ -54,17 +54,15 @@ class PHPLoader extends AbstractLoader
     protected function loadUri($uri)
     {
         try {
-            // Try to load the file through PHP's include().
-            // Make sure we don't accidentally create output.
             ob_start();
-            $data = include($uri);
+            $data = json_decode(file_get_contents($uri), true);
             ob_end_clean();
 
-            return $data;
+            return (array)$data;
         } catch (Exception $exception) {
             throw new FailedToLoadConfigException(
                 sprintf(
-                    _('Could not include PHP config file "%1$s". Reason: "%2$s".'),
+                    _('Could not include JSON config file "%1$s". Reason: "%2$s".'),
                     $uri,
                     $exception->getMessage()
                 ),
@@ -89,7 +87,7 @@ class PHPLoader extends AbstractLoader
         if (! is_readable($uri)) {
             throw new FailedToLoadConfigException(
                 sprintf(
-                    _('The requested PHP config file "%1$s" does not exist or is not readable.'),
+                    _('The requested JSON config file "%1$s" does not exist or is not readable.'),
                     $uri
                 )
             );

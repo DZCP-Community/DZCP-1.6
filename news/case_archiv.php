@@ -24,11 +24,11 @@ if (defined('_News')) {
     }
 
     $kat = isset($_GET['kat']) ? (int)($_GET['kat']) : 0;
-    $n_kat = !$kat ? "" : "AND kat = '" . $kat . "'";
+    $n_kat = !$kat ? "" : "AND `kat` = '" . $kat . "'";
 
     if (($search = isset($_GET['search']) && !empty($_GET['search']) ? $_GET['search'] : false)) {
         $qry = db("SELECT `id`,`titel`,`autor`,`datum`,`kat`,`text`
-                      FROM " . $db['news'] . "
+                      FROM `" . $db['news'] . "`
                       WHERE `text` LIKE '%" . $search . "%'
                       " . $intern . "
                       AND `datum` <= " . time() . "
@@ -38,31 +38,31 @@ if (defined('_News')) {
                       ORDER BY `datum` DESC
                       LIMIT " . ($page - 1) * config('m_archivnews') . "," . config('m_archivnews') . "");
 
-        $entrys = cnt($db['news'], " WHERE text LIKE '%" . $search . "%' OR klapptext LIKE '%" . $search . "%' " . $intern . "");
+        $entrys = cnt($db['news'], " WHERE `text` LIKE '%" . $search . "%' OR `klapptext` LIKE '%" . $search . "%' " . $intern . "");
 
     } else if ($pyear) {
         $from = mktime(0, 0, 0, $pmonth, 1, $pyear);
         $til = mktime(0, 0, 0, $pmonth + 1, 1, $pyear);
 
-        $qry = db("SELECT id,titel,autor,datum,kat,text FROM " . $db['news'] . "
-                       WHERE datum BETWEEN " . $from . " AND " . $til . "
+        $qry = db("SELECT `id`,`titel`,`autor`,`datum`,`kat`,`text` FROM `" . $db['news'] . "`
+                       WHERE `datum` BETWEEN " . $from . " AND " . $til . "
                        " . $intern . "
-                       ORDER BY datum DESC
-                       LIMIT " . ($page - 1) * config('m_archivnews') . "," . config('m_archivnews') . "");
+                       ORDER BY `datum` DESC
+                       LIMIT " . ($page - 1) * config('m_archivnews') . "," . config('m_archivnews') . ";");
         $entrys = cnt($db['news'], " WHERE datum BETWEEN " . $from . " AND " . $til . " " . $intern . "");
     } else {
-        $qry = db("SELECT id,titel,autor,datum,kat,text
-                       FROM " . $db['news'] . "
+        $qry = db("SELECT `id`,`titel`,`autor`,`datum`,`kat`,`text`
+                       FROM `" . $db['news'] . "`
                        " . $intern2 . "
                        " . $n_kat . "
                        " . orderby_sql(array("datum", "autor", "titel", "kat"), 'ORDER BY datum DESC') . "
-                       LIMIT " . ($page - 1) * config('m_archivnews') . "," . config('m_archivnews') . "");
+                       LIMIT " . ($page - 1) * config('m_archivnews') . "," . config('m_archivnews') . ";");
         $entrys = cnt($db['news'], " " . $intern2 . " " . $n_kat);
     }
 
     while ($get = _fetch($qry)) {
-        $getk = db("SELECT kategorie FROM " . $db['newskat'] . " WHERE id = '" . $get['kat'] . "'", false, true);
-        $comments = cnt($db['newscomments'], " WHERE news = " . $get['id'] . "");
+        $getk = db("SELECT `kategorie` FROM `" . $db['newskat'] . "` WHERE `id` = '" . $get['kat'] . "';", false, true);
+        $comments = cnt($db['newscomments'], " WHERE `news` = " . $get['id'] . "");
         $titel = show(_news_show_link, array("titel" => cut(re($get['titel']), config('l_newsarchiv'), true, false), "id" => $get['id']));
         $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst";
         $color++;
@@ -74,7 +74,7 @@ if (defined('_News')) {
             "comments" => $comments));
     }
 
-    $y = db("SELECT datum FROM " . $db['news'] . " " . $intern2 . " ORDER BY datum LIMIT 1");
+    $y = db("SELECT `datum` FROM `" . $db['news'] . "` " . $intern2 . " ORDER BY `datum` LIMIT 1;");
     $sy = _fetch($y);
     $min = date("Y", $sy['datum']);
     $ty = date("Y", time());
@@ -82,9 +82,7 @@ if (defined('_News')) {
     $years = '';
     for ($x = $min; $x <= $ty - 1; $x++) {
         $sel = ($x == date("Y", time()) ? 'selected="selected"' : "");
-        $years .= show(_select_field, array("value" => $x,
-            "sel" => $sel,
-            "what" => $x));
+        $years .= show(_select_field, array("value" => $x, "sel" => $sel, "what" => $x));
     }
 
     $endc = $_SESSION['language'] == "deutsch" ? 'n' : '';
@@ -95,19 +93,21 @@ if (defined('_News')) {
         "comments" => cnt($db['newscomments']),
         "com" => $com));
 
-    $qrykat = db("SELECT * FROM " . $db['newskat'] . "");
+    $qrykat = db("SELECT * FROM " . $db['newskat'] . ";");
     $kategorien = '';
     while ($getkat = _fetch($qrykat)) {
         $kategorien .= '<option value="' . $getkat['id'] . '">-> ' . $getkat['kategorie'] . '</option>';
     }
 
+    $sel = [];
     for ($i = 1; $i <= 12; $i++) {
         if (!$pyear) {
-            if ($i == date("n", time())) $sel[$i] = 'selected="selected"';
-            else $sel[$i] = "";
+            $sel[$i] = "";
+            if ($i == date("n", time()))
+                $sel[$i] = 'selected="selected"';
         } else {
-            if ($i == nonum($pmonth)) $sel[$i] = 'selected="selected"';
-            else $sel[$i] = "";
+            if ($i == nonum($pmonth))
+                $sel[$i] = 'selected="selected"';
         }
     }
 

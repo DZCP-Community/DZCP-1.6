@@ -2600,16 +2600,6 @@ function ipcheck(string $what, int $time = 0) {
  * Gibt die Tageszahl eines Monats aus
  * @param int $month
  * @param int $year
- * @return int
- */
-function days_in_month(int $month, int $year) {
-    return $month == 2 ? ($year % 4 ? 28 : ($year % 100 ? 29 : ($year % 400 ? 28 : 29))) : (($month - 1) % 7 % 2 ? 30 : 31);
-}
-
-/**
- * Setzt bei einem Tag >10 eine 0 vorran (Kalender)
- * @param int $i
- * @return int|null|string|string[]
  */
 function cal(int $i) {
     if (preg_match("=10|20|30=Uis", $i) == FALSE) $i = preg_replace("=0=", "", $i);
@@ -3134,6 +3124,7 @@ function page(string $index = '', string $title = '', string $where = '', string
         $rss = $clanname;
         $dir = $designpath;
         $title = re(strip_tags($title));
+        $gmaps_key = re(settings("gmaps_key"));
 
         if (check_internal_url())
             $index = error(_error_have_to_be_logged, 1);
@@ -3152,7 +3143,7 @@ function page(string $index = '', string $title = '', string $where = '', string
 
         //filter placeholders
         $blArr = array("[clanname]", "[title]", "[copyright]", "[java_vars]", "[min]",
-            "[headtitle]", "[index]", "[time]", "[rss]", "[dir]", "[charset]", "[where]", "[lang]");
+            "[headtitle]", "[index]", "[time]", "[rss]", "[dir]", "[charset]", "[where]", "[lang]", "[gmaps_key]");
         $pholdervars = '';
         for ($i = 0; $i <= count($blArr) - 1; $i++) {
             if (preg_match("#" . $blArr[$i] . "#", $pholder))
