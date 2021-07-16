@@ -1,19 +1,30 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Geolim4
- * Date: 01/10/2017
- * Time: 00:08
+ *
+ * This file is part of phpFastCache.
+ *
+ * @license MIT License (MIT)
+ *
+ * For full copyright and license information, please see the docs/CREDITS.txt file.
+ *
+ * @author Khoa Bui (khoaofgod)  <khoaofgod@gmail.com> https://www.phpfastcache.com
+ * @author Georges.L (Geolim4)  <contact@geolim4.com>
+ *
  */
+
 declare(strict_types=1);
 
 namespace Phpfastcache\Util;
+
+use ArrayAccess;
+use Countable;
+use Iterator;
 
 /**
  * Class ArrayObject
  * @package phpFastCache\Util
  */
-class ArrayObject implements \ArrayAccess, \Iterator, \Countable
+class ArrayObject implements ArrayAccess, Iterator, Countable
 {
 
     /**
@@ -32,7 +43,7 @@ class ArrayObject implements \ArrayAccess, \Iterator, \Countable
      */
     public function __construct(...$args)
     {
-        $this->array = (\count($args) === 1 && \is_array($args[0]) ? $args[0] : $args);
+        $this->array = (count($args) === 1 && is_array($args[0]) ? $args[0] : $args);
     }
 
     /**
@@ -68,6 +79,15 @@ class ArrayObject implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset): bool
+    {
+        return array_key_exists($offset, $this->array);
+    }
+
+    /**
      *
      */
     public function rewind()
@@ -80,16 +100,7 @@ class ArrayObject implements \ArrayAccess, \Iterator, \Countable
      */
     public function count(): int
     {
-        return \count($this->array);
-    }
-
-    /**
-     * @param mixed $offset
-     * @return bool
-     */
-    public function offsetExists($offset): bool
-    {
-        return \array_key_exists($offset, $this->array);
+        return count($this->array);
     }
 
     /**
@@ -134,21 +145,21 @@ class ArrayObject implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * @return array|mixed
-     */
-    protected function &getArray()
-    {
-        return $this->array;
-    }
-
-    /**
      * @param array $array
      * @return self
      */
     public function mergeArray($array): self
     {
-        $this->array = \array_merge($this->array, $array);
+        $this->array = array_merge($this->array, $array);
 
         return $this;
+    }
+
+    /**
+     * @return array|mixed
+     */
+    protected function &getArray()
+    {
+        return $this->array;
     }
 }

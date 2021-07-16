@@ -1,10 +1,18 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Geolim4
- * Date: 12/02/2018
- * Time: 23:10
+ *
+ * This file is part of phpFastCache.
+ *
+ * @license MIT License (MIT)
+ *
+ * For full copyright and license information, please see the docs/CREDITS.txt file.
+ *
+ * @author Khoa Bui (khoaofgod)  <khoaofgod@gmail.com> https://www.phpfastcache.com
+ * @author Georges.L (Geolim4)  <contact@geolim4.com>
+ *
  */
+
+declare(strict_types=1);
 
 namespace Phpfastcache\Drivers\Redis;
 
@@ -24,12 +32,12 @@ class Config extends ConfigurationOption
     protected $port = 6379;
 
     /**
-     * @var string
+     * @var null|string
      */
     protected $password = '';
 
     /**
-     * @var int
+     * @var null|int
      */
     protected $database = 0;
 
@@ -85,7 +93,7 @@ class Config extends ConfigurationOption
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
     public function getPassword()
     {
@@ -93,28 +101,30 @@ class Config extends ConfigurationOption
     }
 
     /**
-     * @param string $password
+     * @param string|null $password
+     *
      * @return self
      */
-    public function setPassword(string $password): self
+    public function setPassword(string $password = null): self
     {
         $this->password = $password;
         return $this;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getDatabase(): int
+    public function getDatabase(): ?int
     {
         return $this->database;
     }
 
     /**
-     * @param int $database
+     * @param int|null $database
+     *
      * @return self
      */
-    public function setDatabase(int $database): self
+    public function setDatabase(int $database = null): self
     {
         $this->database = $database;
         return $this;

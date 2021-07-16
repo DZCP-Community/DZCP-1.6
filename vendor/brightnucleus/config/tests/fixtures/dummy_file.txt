@@ -1,3 +1,0 @@
-# Readme File to force an exception from Config constructor
-
-Just some random content.

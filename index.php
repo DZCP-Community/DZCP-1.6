@@ -1,35 +1,29 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Server ( api.dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * DZCP - deV!L`z ClanPortal - Server
+ * Homepage: https://www.dzcp.de
+ * E-Mail: lbrucksch@hammermaps.de
+ * Author Lucas Brucksch
+ * Copyright 2021 © Codedesigns
  */
 
-ob_start();
-define('basePath', dirname(__FILE__));
-$sql_prefix = '';
-$sql_host = '';
-$sql_user = '';
-$sql_pass = '';
-$sql_db = '';
+define('SCRIPT_PATH', dirname($_SERVER["SCRIPT_FILENAME"]));
 
-if (version_compare(phpversion(), '7.0', '<')) {
-    die('Bitte verwende PHP-Version 7.0 oder h&ouml;her.<p>Please use PHP-Version 7.0 or higher.');
-}
+require_once SCRIPT_PATH."/config.php";
+require_once SCRIPT_PATH."/vendor/autoload.php";
 
-if (file_exists(basePath . "/inc/mysql.php"))
-    require_once(basePath . "/inc/mysql.php");
+//System
+require_once SCRIPT_PATH."/system/BaseSystemAbstract.php";
+require_once SCRIPT_PATH."/system/BaseSession.php";
+require_once SCRIPT_PATH."/system/BaseSystem.php";
 
-include(basePath . '/vendor/autoload.php');
-use GUMP\GUMP;
-$gump = GUMP::get_instance();
+$baseSystem = new BaseSystem(false);
 
-if (empty($sql_user) && empty($sql_pass) && empty($sql_db)) {
-    header('Location: _installer/index.php');
-} else {
-    $global_index = true;
-    include(basePath . "/inc/debugger.php");
-    include(basePath . "/inc/config.php");
-    include(basePath . "/inc/bbcode.php");
-    header('Location: ' . ($userid && $chkMe ? 'user/?action=userlobby' : 'news/'));
-}
-ob_end_flush();
+$baseSystem->__run();
+
+$baseSystem->__shutdown();
+
