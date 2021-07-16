@@ -1,0 +1,1 @@
+{$datum} - <a class="navLastReg" href="../../kalender?action=show&amp;time={$timestamp}">{$event}</a>

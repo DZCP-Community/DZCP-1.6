@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<title>CSS Examples - NBBC: The New BBCode Parser</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel='stylesheet' type='text/css' href='styles.css' />
+</head>
+
+<body>
+
+<div align='center'><div class='page_container2'><div class='page_container'>
+
+<h2>VI. Appendices</h2>
+
+<p style='text-align:right;margin:0;'>[ Previous: <a href="app_example.html">E. Common Rule Examples</a> | Next: <a href="app_internals.html">G. How the Parser Works</a> ]</p>
+
+<h3>F. CSS Examples</h3>
+
+<p>This appendix provides some sample CSS that you can use on your own sites.
+It is not flashy, but it will do the job acceptably well for most needs, and
+provides a good starting point for creating your own BBCode styles.</p>
+
+<h4>Black text, white background, blue accents</h4>
+
+<p>The CSS below is suitable for use with <i>black</i> text on a <i>white</i> background.
+Acronyms have dashed light-green underlines; spoilers are black-on-black; and quotes
+and code blocks use <i>blue</i> borders.</p>
+
+<div style='margin-left:2em;'>
+<div class='code_header'>Code:</div>
+<xmp class='code'>/* Add a dashed underline to acronyms. */
+span.acronym { border-bottom:1px dashed green; }
+span.acronym:hover { color: green; border-bottom:1px dashed lightgreen; }
+
+/* Make spoilers invisible, so that you need to select them with the mouse. */
+span.spoiler { background-color: black; color: black; }
+
+/* Align columns to the top, and add some space between them. */
+table.bbcode_columns { border-collapse: collapse;
+    margin-top: 1em; margin-bottom: 1em; }
+table.bbcode_columns td.bbcode_column { padding: 0 1em; vertical-align: top;}
+table.bbcode_columns td.bbcode_firstcolumn { border-left: 0; padding-left: 0; }
+
+/* Wrap quotes in a big blue box. */
+div.bbcode_quote { border: 1px solid blue; margin: 0.5em 0; }
+div.bbcode_quote_head { background-color: blue; color: white;
+    font-weight: bold; padding: 0.25em 0.5em; }
+div.bbcode_quote_head a:link { color: yellow; }
+div.bbcode_quote_head a:visited { color: yellow; }
+div.bbcode_quote_head a:hover { color: white; text-decoration: underline; }
+div.bbcode_quote_head a:active { color: white; text-decoration: underline; }
+div.bbcode_quote_body { background-color: skyblue;
+    color: black; padding: 0.5em 1em; }
+
+/* Wrap code in a big blue box. */
+div.bbcode_code { border: 1px solid blue; margin: 0.5em 0; }
+div.bbcode_code_head { background-color: blue; color: white;
+    font-weight: bold; padding: 0.25em 0.5em; }
+div.bbcode_code_body { background-color: skyblue; color: black;
+    font: 10pt monospace; padding: 0.5em 1em; }</xmp>
+</div>
+
+<h4>White text, black background, red accents</h4>
+
+<p>The CSS below is suitable for use with <i>white</i> text on a <i>black</i> background.
+Acronyms have dashed dark-green underlines; spoilers are gray-on-gray; and quotes
+and code blocks use <i>red</i> borders.</p>
+
+<div style='margin-left:2em;'>
+<div class='code_header'>Code:</div>
+<xmp class='code'>/* Add a dashed underline to acronyms. */
+span.acronym { border-bottom:1px dashed darkgreen; }
+span.acronym:hover { color: lightgreen; border-bottom:1px dashed green; }
+
+/* Make spoilers invisible, so that you need to select them with the mouse. */
+span.spoiler { background-color: gray; color: gray; }
+
+/* Align columns to the top, and add some space between them. */
+table.bbcode_columns { border-collapse: collapse;
+    margin-top: 1em; margin-bottom: 1em; }
+table.bbcode_columns td.bbcode_column { padding: 0 1em; vertical-align: top;}
+table.bbcode_columns td.bbcode_firstcolumn { border-left: 0; padding-left: 0; }
+
+/* Wrap quotes in a big red box. */
+div.bbcode_quote { border: 1px solid darkred; margin: 0.5em 0; }
+div.bbcode_quote_head { background-color: darkred; color: white;
+    font-weight: bold; padding: 0.25em 0.5em; }
+div.bbcode_quote_head a:link { color: yellow; }
+div.bbcode_quote_head a:visited { color: yellow; }
+div.bbcode_quote_head a:hover { color: white; text-decoration: underline; }
+div.bbcode_quote_head a:active { color: white; text-decoration: underline; }
+div.bbcode_quote_body { background-color: #333;
+    color: white; padding: 0.5em 1em; }
+
+/* Wrap code in a big red box. */
+div.bbcode_code { border: 1px solid darkred; margin: 0.5em 0; }
+div.bbcode_code_head { background-color: darkred; color: white;
+    font-weight: bold; padding: 0.25em 0.5em; }
+div.bbcode_code_body { background-color: #333; color: white;
+    font: 10pt monospace; padding: 0.5em 1em; }</xmp>
+</div>
+
+<p style='text-align:right;'>[ Previous: <a href="app_example.html">E. Common Rule Examples</a> | Next: <a href="app_internals.html">G. How the Parser Works</a> ]</p>
+
+<hr />
+
+<div style='text-align:center;'>Copyright &copy; 2010, the Phantom Inker.  All rights reserved.</div>
+
+</div></div></div>
+
+</body>
+
+</html>

@@ -1,48 +1,65 @@
-.*Java.*outbrain
-008\/
-192\.comAgent
-2ip\.ru
-404checker
+ YLT
+^b0t$
 ^bluefish 
 ^Calypso v\/
+^Corax
 ^COMODO DCV
 ^DangDang
 ^DavClnt
+^DHSH
 ^FDM 
-^Grabber
 ^git\/
 ^Goose\/
+^Grabber
 ^HTTPClient\/
 ^Java\/
 ^Jeode\/
 ^Jetty\/
+^Mail\/
 ^Mget
 ^Microsoft URL Control
 ^NG\/[0-9\.]
 ^NING\/
-^PHP\/[0-9]
+^Nuclei
+^PHP\/
 ^RMA\/
 ^Ruby|Ruby\/[0-9]
-^scrutiny\/
+^Swurl 
 ^VSE\/[0-9]
 ^WordPress\.com
 ^XRL\/[0-9]
 ^ZmEu
+008\/
+13TABS
+192\.comAgent
+2GDPR\/
+2ip\.ru
+404enemy
+7Siters
+80legs
+a\.pr-cy\.ru
 a3logics\.in
 A6-Indexer
-a\.pr-cy\.ru
-Abonti\/
+Abonti
 Aboundex
 aboutthedomain
 Accoona-AI-Agent
+acebookexternalhit\/
 acoon
 acrylicapps\.com\/pulp
+Acunetix
+AdAuth\/
 adbeat
 AddThis
 ADmantX
+AdminLabs
 adressendeutschland
-adscanner\/
-Advanced Email Extractor v
+adreview\/
+adscanner
+Adstxtaggregator
+adstxt-worker
+adstxt\.com
+AffiliateLabz\/
 agentslug
 AHC
 aihit
@@ -53,333 +70,523 @@ akula\/
 alertra
 alexa site audit
 Alibaba\.Security\.Heimdall
-allloadin\.com
+Alligator
+allloadin
+AllSubmitter
 alyze\.info
 amagit
+^Amazon Simple Notification Service Agent$
+Anarchie
 AndroidDownloadManager
 Anemone
-AngleSharp\/
+AngleSharp
+annotate_google
+Anthill
 Ant\.com
 Anturis Agent
 AnyEvent-HTTP\/
 Apache Droid
-ApacheBench\/
-Apache-HttpAsyncClient\/
-Apache-HttpClient\/
+Apache OpenOffice
+Apache-HttpAsyncClient
+Apache-HttpClient
+ApacheBench
+Apexoo
+apimon\.de
 APIs-Google
-AportWorm\/[0-9]
-AppBeat\/[0-9]
+AportWorm\/
+AppBeat\/
 AppEngine-Google
+AppleSyndication
+Aprc\/[0-9]
 Arachmo
 arachnode
 Arachnophilia
 aria2
-asafaweb.com
+Arukereso
+asafaweb
+Asana\/
 AskQuickly
+Ask Jeeves
+ASPSeek
+Asterias
 Astute
 asynchttp
+Attach
+attohttpc
 autocite
+AutomaticWPTester
 Autonomy
+axios\/
+AWS Security Scanner
 B-l-i-t-z-B-O-T
-^b0t$
-Backlink-Ceck\.de
+Backlink-Ceck
+backlink-check
+BacklinkHttpStatus
+BackStreet
+BackupLand
+BackWeb
 Bad-Neighborhood
+Badass
 baidu\.com
-baypup\/[0-9]
-baypup\/colbert
+Bandit
+basicstate
+BatchFTP
+Battleztar Bazinga
+baypup\/
 BazQux
+BBBike
 BCKLINKS
 BDFetch
-BegunAdvertising\/
+BegunAdvertising
+Bewica-security-scan
+Bidtellect
 BigBozz
+Bigfoot
 biglotron
 BingLocalSearch
 BingPreview
 binlar
 biNu image cacher
+Bitacle
 biz_Directory
+BKCTwitterUnshortener\/
+Black Hole
 Blackboard Safeassign
+BlackWidow
+BlockNote\.Net
+BlogBridge
+Bloglines
 Bloglovin
 BlogPulseLive
 BlogSearch
 Blogtrottr
+BlowFish
 boitho\.com-dc
+Boost\.Beast
 BPImageWalker
 Braintree-Webhooks
 Branch Metrics API
 Branch-Passthrough
+Brandprotect
+BrandVerity
+Brandwatch
 Brodie\/
 Browsershots
 BUbiNG
+Buck\/
+Buddy
+BuiltWith
+Bullseye
+BunnySlippers
 Burf Search
 Butterfly\/
 BuzzSumo
 CAAM\/[0-9]
 CakePHP
-CapsuleChecker
+Calculon
+Canary%20Mail
 CaretNail
 catexplorador
-cb crawl
 CC Metadata Scaper
+Cegbfeieh
+censys
+centuryb.o.t9[at]gmail.com
 Cerberian Drtrs
 CERT\.at-Statistics-Survey
+cf-facebook
 cg-eye
 changedetection
-ChangesMeter\/
+ChangesMeter
 Charlotte
 CheckHost
 checkprivacy
+CherryPicker
+ChinaClaw
+Chirp\/
 chkme\.com
-Chirp\/[0-9]
-CirrusExplorer\/
+Chlooe
+Chromaxa
+CirrusExplorer
 CISPA Vulnerability Notification
 Citoid
 CJNetworkQuality
 Clarsentia
 clips\.ua\.ac\.be
-Cloud mapping experiment
+Cloud mapping
 CloudEndure
 CloudFlare-AlwaysOnline
-Cloudinary\/[0-9]
+Cloudflare-Healthchecks
+Cloudinary
 cmcm\.com
 coccoc
+cognitiveseo
 colly -
 CommaFeed
 Commons-HttpClient
-Comodo SSL Checker
+commonscan
 contactbigdatafr
+contentkingapp
+Contextual Code Sites Explorer
 convera
+CookieReports
 copyright sheriff
+CopyRightCheck
+Copyscape
+cortex\/
+Cosmos4j\.feedback
 Covario-IDS
-CrawlForMe\/[0-9]
-cron-job\.org
+Craw\/
+Crescent
 Crowsnest
+Criteo
+CSHttp
+CSSCheck
+Cula\/
 curb
 Curious George
 curl
-cuwhois\/[0-9]
+cuwhois\/
 cybo\.com
+DAP\/NetHTTP
 DareBoost
+DatabaseDriverMysqli
+DataCha0s
+Datafeedwatch
+Datanyze
 DataparkSearch
 dataprovider
+DataXu
 Daum(oa)?[ \/][0-9]
+dBpoweramp
+ddline
+deeris
+delve\.ai
+Demon
 DeuSu
 developers\.google\.com\/\+\/web\/snippet\/
+Devil
 Digg
+Digincore
+DigitalPebble
+Dirbuster
+Discourse Forum Onebox
+Disqus\/
 Dispatch\/
+DittoSpyder
 dlvr
 DMBrowser
-DNS-Tools Header-Analyzer
 DNSPod-reporting
 docoloc
-Dolphin http client\/
+Dolphin http client
 DomainAppender
+DomainLabz
+Domains Project\/
 Donuts Content Explorer
 dotMailer content retrieval
 dotSemantic
 downforeveryoneorjustme
-downnotifier\.com
+Download Wonder
+downnotifier
 DowntimeDetector
-Dragonfly File Reader
+Drip
 drupact
 Drupal \(\+http:\/\/drupal\.org\/\)
+DTS Agent
 dubaiindex
+DuplexWeb-Google
+DynatraceSynthetic
 EARTHCOM
 Easy-Thumb
+EasyDL
+Ebingbong
 ec2linkfinder
 eCairn-Grabber
+eCatch
 ECCP
-echocrawl
 eContext\/
+Ecxi
+EirGrabber
 ElectricMonk
 elefent
 EMail Exractor
-Email%20Extractor%20Lite
+EMail Wolf
 EmailWolf
+Embarcadero
 Embed PHP Library
 Embedly
+endo\/
 europarchive\.org
-evc-batch\/[0-9]
+evc-batch
 EventMachine HttpClient
+Everwall Link Expander
 Evidon
 Evrinid
 ExactSearch
 ExaleadCloudview
 Excel\/
-Exif Viewer
+exif
+ExoRank
 Exploratodo
 Express WebPictures
+Extreme Picture Finder
+EyeNetIE
 ezooms
 facebookexternalhit
+facebookexternalua
 facebookplatform
 fairshare
 Faraday v
 fasthttp
 Faveeo
 Favicon downloader
+faviconkit
+faviconarchive
 FavOrg
 Feed Wrangler
+Feedable\/
 Feedbin
 FeedBooster
 FeedBucket
-FeedBunch\/[0-9]
+FeedBunch\/
 FeedBurner
-FeedChecker
+feeder
 Feedly
+Feedshow\/
+FeedshowOnline
 Feedspot
-Feedwind\/[0-9]
+FeedViewer\/
+Feedwind\/
+FeedZcollector
 feeltiptop
 Fetch API
 Fetch\/[0-9]
 Fever\/[0-9]
+FHscan
+Fiery%20Feeds
+Filestack
+Fimap
 findlink
 findthatfile
+FlashGet
 FlipboardBrowserProxy
 FlipboardProxy
 FlipboardRSS
+Flock\/
+Florienzh\/
 fluffy
+Flunky
 flynxapp
 forensiq
-FoundSeoTool\/[0-9]
+FoundSeoTool
+http:\/\/www.neomo.de\/
 free thumbnails
-FreeWebMonitoring SiteChecker
+Freeuploader
+FreshRSS
 Funnelback
+Fuzz Faster U Fool
 G-i-g-a-b-o-t
 g00g1e\.net
-GAChecker
-ganarvisitas\/[0-9]
+ganarvisitas
+gdnplus\.com
 geek-tools
-Genderanalyzer
 Genieo
 GentleSource
+GetCode
+Getintent
 GetLinkInfo
-getprismatic\.com
-GetURLInfo\/[0-9]
+getprismatic
+GetRight
+getroot
+GetURLInfo\/
+GetWeb
+Geziyor
 Ghost Inspector
 GigablastOpenSource
 GIS-LABS
 github-camo
-github\.com\/
+GitHub-Hookshot
+github\.com
+Goldfire Server
 Go [\d\.]* package http
+Go http package
+Go-Ahead-Got-It
 Go-http-client
+Go!Zilla
 gobyus
+Gofeed
 gofetch
 GomezAgent
 gooblog
-Goodzer\/[0-9]
+Goodzer\/
+Google AppsViewer
+Google Desktop
 Google favicon
 Google Keyword Suggestion
 Google Keyword Tool
 Google Page Speed Insights
+Google-Podcast
 Google PP Default
 Google Search Console
 Google Web Preview
+Google-Ads-Creatives-Assistant
+Google-Ads-Overview
 Google-Adwords
 Google-Apps-Script
 Google-Calendar-Importer
 Google-HotelAdsVerifier
 Google-HTTP-Java-Client
 Google-Publisher-Plugin
+Google-Read-Aloud
 Google-SearchByImage
 Google-Site-Verification
+Google-speakr
 Google-Structured-Data-Testing-Tool
 Google-Youtube-Links
-google_partner_monitoring
+google-xrawler
 GoogleDocs
 GoogleHC\/
 GoogleProducer
+GoogleSites
+Google-Transparency-Report
 Gookey
-GoScraper
 GoSpotCheck
-GoSquared-Status-Checker
 gosquared-thumbnailer
+Gotit
+GoZilla
 grabify
+GrabNet
+Grafula
 Grammarly
-grouphigh
+GrapeFX
+GreatNews
+Gregarius
+GRequests
 grokkit
+grouphigh
 grub-client
 gSOAP\/
+GT::WWW
 GTmetrix
 GuzzleHttp
 gvfs\/
 HAA(A)?RTLAND http client
+Haansoft
 hackney\/
+Hadi Agent
+HappyApps-WebCheck
 Hatena
-hawkReader
+Havij
+HaxerMen
+HeadlessChrome
 HEADMasterSEO
 HeartRails_Capture
+help@dataminr\.com
 heritrix
-historious\/
-hledejLevne\.cz\/[0-9]
+Hexometer
+historious
+hkedcity
+hledejLevne\.cz
+Hloader
+HMView
 Holmes
+HonesoSearchEngine
 HootSuite Image proxy
-Hootsuite-WebFeed\/[0-9]
+Hootsuite-WebFeed
+hosterstats
 HostTracker
 ht:\/\/check
 htdig
-HTMLParser\/
+HTMLparser
+htmlyse
+HTTP Banner Detection
+HTTP_Compression_Test
+http_request2
+http_requester
 http-get
 HTTP-Header-Abfrage
 http-kit
 http-request\/
 HTTP-Tiny
-HTTP_Compression_Test
-http_request2
-http_requester
+HTTP::Lite
+http\.rb\/
+http_get
 HttpComponents
 httphr
 HTTPMon
-PEAR HTTPRequest
-http\.rb\/
+HTTPie
+httpRequest
 httpscheck
 httpssites_power
 httpunit
 HttpUrlConnection
 httrack
-hosterstats
 huaweisymantec
-HubPages.*crawlingpolicy
 HubSpot 
-HyperZbozi.cz Feeder
+HubSpot-Link-Resolver
+Humanlinks
 i2kconnect\/
+Iblog
 ichiro
+Id-search
 IdeelaborPlagiaat
 IDG Twitter Links Resolver
-IDwhois\/[0-9]
+IDwhois\/
 Iframely
 igdeSpyder
+iGooglePortal
 IlTrovatore
+Image Fetch
+Image Sucker
 ImageEngine\/
+ImageVisu\/
 Imagga
+imagineeasy
 imgsizer
 InAGist
 inbound\.li parser
 InDesign%20CC
+Indy Library
+InetURL
 infegy
 infohelfer
-InfoWizards Reciprocal Link System PRO
-Instapaper
+InfoTekies
+InfoWizards Reciprocal Link
 inpwrd\.com
+instabid
+Instapaper
 Integrity
 integromedb
+Intelliseek
+InterGET
 internet_archive
+Internet Ninja
 InternetSeer
 internetVista monitor
+internetwache
 intraVnews
 IODC
 IOI
 iplabel
-IPS\/[0-9]
 ips-agent
+IPS\/[0-9]
 IPWorks HTTP\/S Component
 iqdb\/
+Iria
 Irokez
 isitup\.org
 iskanie
+isUp\.li
+iThemes Sync\/
+IZaBEE
 iZSearch
+JAHHO
 janforman
 Jaunt\/
+Java.*outbrain
+javelin\.io
+Jbrofuzz
 Jersey\/
+JetCar
 Jigsaw
 Jobboerse
 JobFeed discovery
@@ -388,478 +595,749 @@ jobo
 Jobrapido
 Jobsearch1\.5
 JoinVision Generic
+JolokiaPwn
+Joomla
+Jorgee
 JS-Kit
+JustView
 Kaspersky Lab CFR link resolver
-KeepRight OpenStreetMap Checker
 Kelny\/
 Kerrigan\/
 KeyCDN
-Keyword Extractor
+Keyword Density
 Keywords Research
+khttp\/
 KickFire
 KimonoLabs\/
 Kml-Google
 knows\.is
 KOCMOHABT
 kouio
+kubectl
+kube-probe
 kulturarw3
 KumKie
 L\.webis
 Larbin
-LayeredExtractor
+Lavf\/
+LeechFTP
+LeechGet
 letsencrypt
+Lftp
 LibVLC
+LibWeb
+Libwhisker
 libwww
-Licorne Image Snapshot
+Licorne
 Liferea\/
-link checker
+Lightspeedsystems
+Lighthouse
+Likse
+limber\.io
 Link Valet
 link_thumbnailer
+LinkAnalyser
 LinkAlarm\/
 linkCheck
 linkdex
 LinkExaminer
 linkfluence
 linkpeek
-LinkPreviewGenerator
+LinkScan
+LinksManager
+LinkPreview
 LinkTiger
 LinkWalker
 Lipperhey
+Litemage_walker
 livedoor ScreenShot
-LoadImpactPageAnalyzer
 LoadImpactRload
+localsearch-web
 LongURL API
+longurl-r-package
+looid\.com
 looksystems\.net
 ltx71
 lua-resty-http
+Lush Http Client
+lwp-request
 lwp-trivial
+LWP::Simple
 lycos
 LYT\.SR
 mabontland
+MacOutlook\/
+Mag-Net
 MagpieRSS
-Mail.Ru
+Mail\.Ru
 MailChimp
+Majestic12
+makecontact\/
 Mandrill
 MapperCmd
 marketinggrader
-masscan\/[0-9]
+MarkMonitor
+MarkWatch
+Mass Downloader
+masscan\/
+Mata Hari
+mattermost
+Mediametric
 Mediapartners-Google
+mediawords
 MegaIndex\.ru
-Melvil Rawi\/
-MergeFlow-PageReader
+MeltwaterNews
+Melvil Rawi
+MemGator
 Metaspinner
 MetaURI
+MFC_Tear_Sample
 Microsearch
-Microsoft-WebDAV-MiniRedir
-Microsoft Data Access Internet Publishing Provider Protocol
-Microsoft Office 
+Microsoft\.Data\.Mashup
+Microsoft Office
+Microsoft Outlook
 Microsoft Windows Network Diagnostics
-Miniature.io\/
+Microsoft-WebDAV-MiniRedir
+Microsoft Data Access
+MIDown tool
+MIIxpc
 Mindjet
+Miniature\.io
 Miniflux
+Mister PiX
 mixdata dot com
 mixed-content-scan
 mixnode
 Mnogosearch
 mogimogi
+Mojeek
 Mojolicious \(Perl\)
+Monit\/
 monitis
-Monitority\/[0-9]
+Monitority\/
 montastic
 MonTools
 Moreover
+Morfeus Fucking Scanner
 Morning Paper
-mowser
 MovableType
+mowser
+Mr\.4x3 Powered
 Mrcgiguy
+MS Web Services Client Protocol
+MSFrontPage
 mShots
-MxToolbox\/
 MuckRack\/
+muhstik-scan
 MVAClient
+MxToolbox\/
+myseosnapshot
 nagios
-Najdi\.si\/
-Needle\/
+Najdi\.si
+Name Intelligence
+NameFo\.com
+Nameprotect
+nationalarchives
+Navroad
+NearSite
+Needle
+Nessus
+Net Vampire
+NetAnts
 NETCRAFT
-NetLyzer FastProbe
+NetLyzer
+NetMechanic
+NetNewsWire
 Netpursual
 netresearch
 NetShelter ContentScan
 Netsparker
 NetTrack
 Netvibes
+NetZIP
 Neustar WPM
 NeutrinoAPI
-NewRelicPinger\/1.0 \(\d+\)
+NewRelicPinger
 NewsBlur .*Finder
 NewsGator
 newsme
 newspaper\/
+NetSystemsResearch
 Nexgate Ruby Client
+nghttp2
 NG-Search
-nineconnections\.com
+Nibbler
+NICErsPRO
+Nikto
+nineconnections
 NLNZ_IAHarvester
 Nmap Scripting Engine
 node-superagent
-node-urllib\/
+node-urllib
 node\.io
+Nodemeter
+NodePing
 nominet\.org\.uk
+nominet\.uk
 Norton-Safeweb
 Notifixious
 notifyninja
+NotionEmbedder
 nuhk
 nutch
 Nuzzel
 nWormFeedFinder
+nyawc\/
 Nymesis
-Ocelli\/[0-9]
+NYU
+Observatory\/
+Ocelli\/
+Octopus
 oegp
 Offline Explorer
+Offline Navigator
+OgScrper
 okhttp
-Omea Reader
 omgili
 OMSC
 Online Domain Tools
 OpenCalaisSemanticProxy
+Openfind
+OpenLinkProfiler
 Openstat\/
 OpenVAS
+OPPO A33
 Optimizer
+Open Source RSS
 Orbiter
-OrgProbe\/[0-9]
-Owler
+OrgProbe\/
+orion-semantics
+Outlook-Express
+Outlook-iOS
 ow\.ly
+Owler
+Owlin
 ownCloud News
-OxfordCloudService\/[0-9]
-Page Analyzer
+OxfordCloudService
 Page Valet
-page2rss
 page_verifier
+page scorer
+page2rss
+PageFreezer
+PageGrabber
 PagePeeker
-Pagespeed\/[0-9]
+PageScorer
+Pagespeed\/
 Panopta
 panscient
+Papa Foto
 parsijoo
+Pavuk
 PayPal IPN
+pcBrowser
 Pcore-HTTP
+PDF24 URL To PDF
 Pearltrees
+PECL::HTTP
 peerindex
 Peew
+PeoplePal
 Perlu -
-PhantomJS\/
 PhantomJS Screenshoter
+PhantomJS\/
 Photon\/
-phpcrawl
 phpservermon
+php-requests
 Pi-Monster
-ping\.blo\.gs\/
+Picscout
+Picsearch
+PictureFinder
+Pimonster
+ping\.blo\.gs
 Pingability
+PingAdmin\.Ru
 Pingdom
 Pingoscope
 PingSpot
 pinterest\.com
+Pixray
 Pizilla
+Plagger\/
+Pleroma 
 Ploetz \+ Zeller
 Plukkie
+plumanalytics
+PocketImageCache
 PocketParser
-POE-Component-Client-HTTP\/
+Pockey
+PodcastAddict\/
+POE-Component-Client-HTTP
+Polymail\/
 Pompos
 Porkbun
 Port Monitor
 postano
+PostmanRuntime
+postplanner\.com
 PostPost
 postrank
 PowerPoint\/
+Prebid
 Priceonomics Analysis Engine
-PritTorrent\/[0-9]
-PrintFriendly\.com
+PrintFriendly
+PritTorrent
 Prlog
 probethenet
-Project 25499
-Promotion_Tools_www.searchenginepromotionhelp.com
+Project ?25499
+Project-Resonance
 prospectb2b
 Protopage
+ProWebWalker
 proximic
 PRTG Network Monitor
 pshtt, https scanning
 PTST 
 PTST\/[0-9]+
-Pulsepoint XT3 web scraper
+Pump
+python-httpx
 Python-httplib2
 python-requests
 Python-urllib
 Qirina Hurdler
 QQDownload
+QrafterPro
 Qseero
-Qualidator.com SiteAnalyzer
+Qualidator
+QueryN Metasearch
+queuedriver
+QuiteRSS
 Quora Link Preview
 Qwantify
 Radian6
+Railgun\/
+RankActive
+RankFlex
 RankSonicSiteAuditor
+Re-re Studio
+ReactorNetty
 Readability
+RealDownload
 RealPlayer%20Downloader
 RebelMouse
+Recorder
 RecurPost\/
 redback\/
-Redirect Checker Tool
 ReederForMac
+Reeder\/
+ReGet
+RepoMonkey
 request\.js
-ResponseCodeTest\/[0-9]
+reqwest\/
+ResponseCodeTest
 RestSharp
-RetrevoPageAnalyzer
 Riddler
 Rival IQ
 Robosourcer
-Robozilla\/[0-9]
+Robozilla
 ROI Hunter
 RPT-HTTPClient
 RSSOwl
+RSSMix\/
+RyowlEngine
 safe-agent-scanner
 SalesIntelligent
 Saleslift
+Sendsay\.Ru
 SauceNAO
 SBIder
+sc-downloader
 scalaj-http
+Scamadviser-Frontend
+scan\.lol
+ScanAlert
 Scoop
 scooter
 ScoutJet
+ScopeContentAG-HTTP-Client
 ScoutURLMonitor
+ScrapeBox Page Scanner
 Scrapy
-ScreenShotService\/[0-9]
+Screaming
+ScreenShotService
 Scrubby
+Scrutiny\/
 search\.thunderstone
-Search37\/
+Search37
+searchenginepromotionhelp
+Searchestate
+SearchExpress
 SearchSight
+SearchWP
 Seeker
 semanticdiscovery
 semanticjuice
 Semiocast HTTP client
+Semrush
 sentry\/
 SEO Browser
 Seo Servis
-seo-nastroj.cz
+seo-nastroj\.cz
+seo4ajax
 Seobility
 SEOCentro
 SeoCheck
-SeopultContentAnalyzer
-Server Density Service Monitoring
-servernfo\.com
-SetCronJob\/
-Seznam screenshot-generator
+SEOkicks
+SEOlizer
+Seomoz
+SEOprofiler
+SEOsearch
+seoscanners
+seositecheckup
+SEOstats
+servernfo
+sexsearcher
+Seznam
 Shelob
-Shoppimon Analyzer
-ShoppimonAgent\/[0-9]
+Shodan
+Shoppimon
 ShopWiki
+shortURL lengthener
 ShortLinkTranslate
 shrinktheweb
-SilverReader
 Sideqik
+Siege
 SimplePie
 SimplyFast
-Sitebulb\/
-SiteIndexed
+Siphon
+SISTRIX
 Site-Shot\/
+Site Sucker
 Site24x7
 SiteBar
+Sitebeam
+Sitebulb\/
 SiteCondor
-siteexplorer\.info
+SiteExplorer
 SiteGuardian
-Siteimprove\.com
+Siteimprove
+SiteIndexed
 Sitemap(s)? Generator
+SitemapGenerator
 SiteMonitor
 Siteshooter B0t
+SiteSnagger
 SiteSucker
 SiteTruth
+Sitevigil
 sitexy\.com
 SkypeUriPreview
 Slack\/
 slider\.com
+sli-systems\.com
 slurp
+SlySearch
+SmartDownload
 SMRF URL Expander
 SMUrlExpander
+Snake
 Snappy
+SnapSearch
+Snarfer\/
 SniffRSS
 sniptracker
 Snoopy
 SnowHaze Search
 sogou web
 SortSite
+Sottopop
 sovereign\.ai
+SpaceBison
+SpamExperts
+Spammen
+Spanner
 spaziodati
+SPDYCheck
 Specificfeeds
 speedy
 SPEng
 Spinn3r
 spray-can
 Sprinklr 
-sqlmap
 spyonweb
+sqlmap
+Sqlworm
 Sqworm
 SSL Labs
 ssl-tools
 StackRambler
 Statastico\/
+Statically-Screenshot
 StatusCake
+Steeler
 Stratagems Kumo
-Stroke.cz
+Stripe\/
+Stroke\.cz
 StudioFACA
+StumbleUpon
 suchen
+Sucuri
 summify
-Super Monitoring
+SuperHTTP
 Surphace Scout
-SwiteScraper
+Suzuran
+swcd 
+Symfony BrowserKit
 Symfony2 BrowserKit
+Syndirella\/
 SynHttpClient-Built
 Sysomos
-Symfony BrowserKit
+sysscan
+Szukacz
 T0PHackTeam
+tAkeOut
 Tarantula\/
 Taringa UGC
+TarmotGezgin
+tchelebi\.io
+techiaith\.cymru
+Teleport
+Telesoft
+Telesphoreo
+Telesphorep
 Tenon\.io
 teoma
-terrainformatica\.com
+terrainformatica
 Test Certificate Info
-Tetrahedron\/[0-9]
-Thinklab
+testuri
+Tetrahedron
+TextRazor Downloader
 The Drop Reaper
 The Expert HTML Source Viewer
+The Knowledge AI
+The Intraformant
 theinternetrules
-theoldreader\.com
+TheNomad
+Thinklab
 Thumbshots
 ThumbSniper
+Thumbor
+timewe\.net
 TinEye
 Tiny Tiny RSS
 TLSProbe\/
+Toata
 topster
-touche.com
-Traackr.com
+touche\.com
+Traackr\.com
+tracemyfile
+Trackuity
 TrapitAgent
-trendspottr\.com
+Trendiction
+Trendsmap
+trendspottr
 truwoGPS
+TryJsoup
 TulipChain
-Twisted PageGetter
-tweetedtimes\.com
+Turingos
+Turnitin
+tweetedtimes
 Tweetminster
 Tweezler\/
+twibble
+Twice
 Twikle
 Twingly
+Twisted PageGetter
+Typhoeus
 ubermetrics-technologies
 uclassify
-uCrawlr\/
 UdmSearch
+unchaos
+unirest-java
+ultimate_sitemap_parser
 UniversalFeedParser
-Unshorten\.It\!\/[0-9]
+Unshorten\.It
 Untiny
 UnwindFetchor
 updated
 updown\.io daemon
 Upflow
 Uptimia
+Urlcheckr
 URL Verifier
-URLChecker
-URLitor.com
+URLitor
 urlresolver
 Urlstat
+URLTester
 UrlTrends Ranking Updater
+URLy Warning
+URLy\.Warning
+Vacuum
 Vagabondo
+VB Project
 vBSEO
+VCI
 via ggpht\.com GoogleImageProxy
-VidibleScraper\/
+Virusdie
 visionutils
 vkShare
+VoidEYE
+Voil
 voltron
 voyager\/
-VSAgent\/[0-9]
-VSB-TUO\/[0-9]
+VSAgent\/
+VSB-TUO\/
 Vulnbusters Meter
 VYU2
 w3af\.org
+W3C_Unicorn
 W3C-checklink
 W3C-mobileOK
-W3C_I18n-Checker
-W3C_Unicorn
+WAC-OFU
+Wallpapers\/[0-9]+
+WallpapersHD
+WakeletLinkExpander
 wangling
 Wappalyzer
 WatchMouse
 WbSrch\/
+WDT\.io
 web-capture\.net
-Web-Monitoring
 Web-sniffer
+Web Auto
+Web Collage
+Web Enhancer
+Web Fetch
+Web Fuck
+Web Pix
+Web Sauger
+Web spyder
+Web Sucker
+Webalta
 Webauskunft
+WebAuto
 WebCapture
 WebClient\/
 webcollage
 WebCookies
 WebCopier
 WebCorp
+WebDataStats
 WebDoc
+WebEnhancer
 WebFetch
+WebFuck
+WebGazer
+WebGo IS
+WebImageCollector
 WebImages
 WebIndex
 webkit2png
+WebLeacher
 webmastercoffee
 webmon 
+WebPix
+WebReaper
+WebSauger
 webscreenie
+Webshag
 Webshot
-Website Analyzer\/
+Website Quester
 websitepulse agent
-websitepulse[+ ]checker
-Websnapr\/
-Webthumb\/[0-9]
+WebsiteQuester
+Websnapr
+WebSniffer
+Webster
+WebStripper
+WebSucker
+Webthumb\/
 WebThumbnail
-WeCrawlForThePeace
+WebWhacker
+WebZIP
 WeLikeLinks
 WEPA
 WeSEE
 wf84
+Wfuzz\/
 wget
+WhatCMS
 WhatsApp
 WhatsMyIP
 WhatWeb
 WhereGoes\?
 Whibse
+WhoAPI\/
 WhoRunsCoinHive
 Whynder Magnet
+WinHTTP\/
+WinHttp-Autoproxy-Service
 Windows-RSS-Platform
-WinHttpRequest
+WinPodder
 wkhtmlto
 wmtips
 Woko
+Wolfram HTTPClient
+woorankreview
 Word\/
 WordPress\/
+worldping-api
+WordupinfoSearch
 wotbox
 WP Engine Install Performance API
+WP Rocket
 wpif
 wprecon\.com survey
 WPScan
 wscheck
+Wtrace
+WWW-Collector-E
 WWW-Mechanize
+WWW::Document
+WWW::Mechanize
 www\.monitor\.us
+WWWOFFLE
+x09Mozilla
+x22Mozilla
 XaxisSemanticsClassifier
+XenForo\/
 Xenu Link Sleuth
-XING-contenttabreceiver\/[0-9]
-XmlSitemapGenerator
+XING-contenttabreceiver
 xpymep([0-9]?)\.exe
 Y!J-(ASR|BSC)
+Y\!J-BRW
 Yaanb
 yacy
-Yahoo Ad monitoring
 Yahoo Link Preview
 YahooCacheSystem
+YahooMailProxy
 YahooYSMcm
 YandeG
 Yandex(?!Search)
 yanga
 yeti
- YLT
 Yo-yo
 Yoleo Consumer
+yomins\.com
 yoogliFetchAgent
 YottaaMonitor
+Your-Website-Sucks
 yourls\.org
+YoYs\.net
+YP\.PL
+Zabbix
+Zade
 Zao
+Zauba
 Zemanta Aggregator
-Zend\\Http\\Client
 Zend_Http_Client
+Zend\\Http\\Client
+Zermelo
+Zeus 
 zgrab
 ZnajdzFoto
+ZnHTTP
+Zombie\.js
+Zoom\.Mac
+ZoteroTranslationServer
 ZyBorg
-[a-z0-9\-_]*((?<!cu)bot|crawler|archiver|transcoder|spider|uptime|validator|fetcher)
+[a-z0-9\-_]*(bot|crawl|archiver|transcoder|spider|uptime|validator|fetcher|cron|checker|reader|extractor|monitoring|analyzer|scraper)

@@ -1,33 +1,41 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2017 © CodeKing, my-STARMEDIA, Codedesigns
  */
 
 if(_adminMenu != 'true') exit;
 
-    $where = $where.': '._config_impressum_head;
-      $wysiwyg = '_word';
+$where = $where.': '._config_impressum_head;
 
-      $qry = db("SELECT i_domain,i_autor FROM ".$db['settings']."");
-      $get = _fetch($qry);
+if(common::$do == "update") {
+    if(settings::changed(($key='i_autor'),($var=stringParser::encode($_POST['seitenautor'])))) settings::set($key,$var);
+    if(settings::changed(($key='i_domain'),($var=stringParser::encode($_POST['domain'])))) settings::set($key,$var);
+    settings::load();
+    $show = common::info(_config_set, "?admin=impressum");
+} else {
+    $smarty->caching = false;
+    $smarty->assign('domain',stringParser::decode(settings::get('i_domain')));
+    $smarty->assign('bbcode',BBCode::parse_html(settings::get('seitenautor')));
+    $smarty->assign('postautor',stringParser::decode(settings::get('i_autor')));
+    $show = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/form_impressum.tpl');
+    $smarty->clearAllAssign();
 
-      $show_ = show($dir."/form_impressum", array("idomain" => _config_impressum_domains,
-                                                  "domain" => re($get['i_domain']),
-                                                  "bbcode" => bbcode("seitenautor"),
-                                                  "iautor" => _config_impressum_autor,
-                                                  "postautor" => re_bbcode($get['i_autor'])));
-
-      $show = show($dir."/imp", array("head" => _config_impressum_head,
-                                      "what" => "impressum",
-                                      "value" => _button_value_edit,
-                                      "show" => $show_));
-      if($do == "update")
-      {
-        $qry = db("UPDATE ".$db['settings']."
-                   SET `i_autor` = '".up($_POST['seitenautor'])."',
-                       `i_domain` = '".up($_POST['domain'])."'
-                   WHERE id = 1");
-
-        $show = info(_config_set, "?admin=impressum");
-      }
+    $smarty->caching = false;
+    $smarty->assign('what',"impressum");
+    $smarty->assign('value',_button_value_edit);
+    $smarty->assign('show',$show);
+    $show = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/imp.tpl');
+    $smarty->clearAllAssign();
+}

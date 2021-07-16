@@ -1,0 +1,1 @@
+&nbsp;&nbsp;<a href="../votes/"><span class="fontWichtig">{$cnt}</span> {$eintrag}</a><br />

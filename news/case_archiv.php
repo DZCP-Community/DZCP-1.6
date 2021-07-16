@@ -1,159 +1,79 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2017 © CodeKing, my-STARMEDIA, Codedesigns
  */
 
 if(defined('_News')) {
-        if(permission("intnews")) {
-            $intern = "WHERE `public` = 1";
-            $intern2 = "WHERE `intern` = 1 OR `intern` = 0 AND `datum` <= ".time()." AND `public` = 1";
-        } else {
-            $intern = "AND `intern` = 0 AND `public` = 1";
-            $intern2 = "WHERE `intern` = 0 AND `datum` <= ".time()." AND `public` = 1";
+    if(common::permission("intnews")) {
+        $intern = "WHERE `intern` = 1 OR `intern` = 0 AND `datum` <= ".time()." AND `public` = 1";
+    } else {
+        $intern = "WHERE `intern` = 0 AND `datum` <= ".time()." AND `public` = 1";
+    }
+
+    //SQL
+    $qry = common::$sql['default']->select("SELECT `id`,`titel`,`autor`,`datum`,`kat`,`text`
+                   FROM `{prefix_news}`
+                   ".$intern."
+                   ".common::orderby_sql(["datum","autor","titel","kat"], 'ORDER BY datum DESC')."
+                   LIMIT ".(common::$page - 1)*settings::get('m_archivnews').",".settings::get('m_archivnews').";");
+    $entrys = common::cnt('{prefix_news}', " ".$intern);
+
+    //News
+    if(common::$sql['default']->rowCount()) {
+        $show = ''; $color = 0;
+        foreach ($qry as $get) {
+            $getk = common::$sql['default']->fetch("SELECT `kategorie` FROM `{prefix_news_kats}` WHERE `id` = ?;", [$get['kat']]);
+
+            //News Link
+            $smarty->caching = false;
+            $smarty->assign('link', common::cut(stringParser::decode($get['titel']), settings::get('l_newsarchiv')));
+            $smarty->assign('url', "../news/?action=show&amp;id=" . $get['id']);
+            $smarty->assign('target', "_self");
+            $titel = str_replace('&raquo;', '', strip_tags($smarty->fetch('file:[' . common::$tmpdir . ']' . $dir . '/news_link.tpl'), '<a><div>'));
+            $smarty->clearAllAssign();
+
+            //-> Gen List
+            $smarty->caching = true;
+            $smarty->assign('autor', common::autor($get['autor']));
+            $smarty->assign('date', date("d.m.y", $get['datum']));
+            $smarty->assign('titel', $titel);
+            $smarty->assign('color',$color);
+            $smarty->assign('kat', stringParser::decode($getk['kategorie']));
+            $smarty->assign('comments', common::cnt('{prefix_news_comments}', " WHERE `news` = ?","id",[$get['id']]));
+            $show .= $smarty->fetch('file:[' . common::$tmpdir . ']' . $dir . '/archiv_show.tpl', common::getSmartyCacheHash('news_archiv_show_' . $get['id']));
+            $smarty->clearAllAssign(); $color++;
         }
+    } else {
+        $smarty->caching = false;
+        $smarty->assign('colspan',5);
+        $show = $smarty->fetch('string:'._no_entrys_yet);
+        $smarty->clearAllAssign();
+    }
 
-        if(isset($_GET['page'])) {
-            $psearch = isset($_GET['search']) ? $_GET['search'] : '';
-            $pyear = isset($_GET['year']) ? $_GET['year'] : '';
-            $pmonth = isset($_GET['month']) ? $_GET['month'] : '';
-        } else {
-            $psearch = isset($_POST['search']) ? $_POST['search'] : '';
-            $pyear = isset($_POST['year']) ? $_POST['year'] : '';
-            $pmonth = isset($_POST['month']) ? $_POST['month'] : '';
-        }
-
-        $kat = isset($_GET['kat']) ? (int)($_GET['kat']) : 0;
-        $n_kat = !$kat ? "" : "AND kat = '".$kat."'";
-
-        if(($search = isset($_GET['search']) && !empty($_GET['search']) ? $_GET['search'] : false)) {
-            $qry = db("SELECT `id`,`titel`,`autor`,`datum`,`kat`,`text`
-                      FROM ".$db['news']."
-                      WHERE `text` LIKE '%".$search."%'
-                      ".$intern."
-                      AND `datum` <= ".time()."
-                      OR `klapptext` LIKE '%".$search."%'
-                      ".$intern."
-                      AND `datum` <= ".time()."
-                      ORDER BY `datum` DESC
-                      LIMIT ".($page - 1)*config('m_archivnews').",".config('m_archivnews')."");
-
-            $entrys = cnt($db['news'], " WHERE text LIKE '%".$search."%' OR klapptext LIKE '%".$search."%' ".$intern."");
-
-        } else if($pyear) {
-            $from = mktime(0,0,0,$pmonth,1,$pyear);
-            $til = mktime(0,0,0,$pmonth+1,1,$pyear);
-
-            $qry = db("SELECT id,titel,autor,datum,kat,text FROM ".$db['news']."
-                       WHERE datum BETWEEN ".$from ." AND ".$til."
-                       ".$intern."
-                       ORDER BY datum DESC
-                       LIMIT ".($page - 1)*config('m_archivnews').",".config('m_archivnews')."");
-            $entrys = cnt($db['news'], " WHERE datum BETWEEN ".$from." AND ".$til." ".$intern."");
-        } else {
-            $qry = db("SELECT id,titel,autor,datum,kat,text
-                       FROM ".$db['news']."
-                       ".$intern2."
-                       ".$n_kat."
-                       ".orderby_sql(array("datum","autor","titel","kat"), 'ORDER BY datum DESC')."
-                       LIMIT ".($page - 1)*config('m_archivnews').",".config('m_archivnews')."");
-            $entrys = cnt($db['news'], " ".$intern2." ".$n_kat);
-        }
-
-        while($get = _fetch($qry)) {
-            $getk = db("SELECT kategorie FROM ".$db['newskat']." WHERE id = '".$get['kat']."'",false,true);
-            $comments = cnt($db['newscomments'], " WHERE news = ".$get['id']."");
-            $titel = show(_news_show_link, array("titel" => cut(re($get['titel']),config('l_newsarchiv'),true,false), "id" => $get['id']));
-            $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
-            $show .= show($dir."/archiv_show", array("autor" => autor($get['autor']),
-                                                     "date" => date("d.m.y", $get['datum']),
-                                                     "titel" => $titel,
-                                                     "class" => $class,
-                                                     "kat" => re($getk['kategorie']),
-                                                     "comments" => $comments));
-        }
-
-        $y = db("SELECT datum FROM ".$db['news']." ".$intern2." ORDER BY datum LIMIT 1");
-        $sy = _fetch($y);
-        $min = date("Y",$sy['datum']);
-        $ty = date("Y", time());
-
-        $years = '';
-        for($x=$min;$x<=$ty-1;$x++) {
-            $sel = ($x == date("Y", time()) ? 'selected="selected"' : "");
-            $years .= show(_select_field, array("value" => $x,
-                                                "sel" => $sel,
-                                                "what" => $x));
-        }
-
-        $endc = $_SESSION['language'] == "deutsch" ? 'n' : '';
-        $ccount = cnt($db['newscomments']);
-        $com = ($ccount == "1" ? _news_kommentar : _news_kommentare.$endc);
-
-        $stats = show(_news_stats, array("news" => $entrys,
-                                         "comments" => cnt($db['newscomments']),
-                                         "com" => $com));
-
-        $qrykat = db("SELECT * FROM ".$db['newskat'].""); $kategorien = '';
-        while($getkat = _fetch($qrykat)) {
-            $kategorien .= '<option value="'.$getkat['id'].'">-> '.$getkat['kategorie'].'</option>';
-        }
-
-        for($i=1;$i<=12;$i++) {
-            if(!$pyear) {
-                  if($i == date("n", time())) $sel[$i] = 'selected="selected"';
-                  else $sel[$i] = "";
-            } else {
-                  if($i == nonum($pmonth)) $sel[$i] = 'selected="selected"';
-                  else $sel[$i] = "";
-            }
-        }
-
-        $nav = nav($entrys,config('m_archivnews'),"?action=archiv&year=".$pyear."&month=".$pmonth."&search=".$psearch.orderby_nav());
-        $index = show($dir."/archiv", array("head" => _news_archiv_head,
-                                            "head_sort" => _news_archiv_sort,
-                                            "date" => _datum,
-                                            "titel" => _titel,
-                                            "years" => $years,
-                                            "nav" => $nav,
-                                            "or" => _or,
-                                            "kategorien" => $kategorien,
-                                            "choose" => _news_kat_choose,
-                                            "search" => re($search),
-                                            "btn_search" => _button_value_search,
-                                            "thisyear" => $ty,
-                                            "kat" => _news_admin_kat,
-                                            "order_date" => orderby('datum'),
-                                            "order_titel" => orderby('titel'),
-                                            "order_autor" => orderby('autor'),
-                                            "order_kat" => orderby('kat'),
-                                            "show" => $show,
-                                            "stats" => $stats,
-                                            "stichwort" => _stichwort,
-                                            "autor" => _autor,
-                                            "com" => _news_com,
-                                            "jan" => _jan,
-                                            "feb" => _feb,
-                                            "mar" => _mar,
-                                            "apr" => _apr,
-                                            "mai" => _mai,
-                                            "jun" => _jun,
-                                            "jul" => _jul,
-                                            "aug" => _aug,
-                                            "sep" => _sep,
-                                            "okt" => _okt,
-                                            "nov" => _nov,
-                                            "dez" => _dez,
-                                            "sel01" => $sel[1],
-                                            "sel02" => $sel[2],
-                                            "sel03" => $sel[3],
-                                            "sel04" => $sel[4],
-                                            "sel05" => $sel[5],
-                                            "sel06" => $sel[6],
-                                            "sel07" => $sel[7],
-                                            "sel08" => $sel[8],
-                                            "sel09" => $sel[9],
-                                            "sel10" => $sel[10],
-                                            "sel11" => $sel[11],
-                                            "sel12" => $sel[12]));
+    //Index Output
+    $nav = common::nav($entrys,settings::get('m_archivnews'),"?action=archiv".common::orderby_nav());
+    $smarty->caching = false;
+    $smarty->assign('nav',$nav);
+    $smarty->assign('idir','../inc/images');
+    $smarty->assign('order_date',common::orderby('datum'));
+    $smarty->assign('order_titel',common::orderby('titel'));
+    $smarty->assign('order_autor',common::orderby('autor'));
+    $smarty->assign('order_kat',common::orderby('kat'));
+    /** @var TYPE_NAME $show */
+    $smarty->assign('show',$show);
+    $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/archiv.tpl');
+    $smarty->clearAllAssign();
+    unset($nav,$show,$get,$qry,$class,$getk,$entrys,$intern);
 }

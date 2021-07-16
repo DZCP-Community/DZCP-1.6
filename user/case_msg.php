@@ -1,388 +1,429 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2017 © CodeKing, my-STARMEDIA, Codedesigns
  */
 
 if(defined('_UserMenu')) {
-  $where = _site_msg;
-  if(!$chkMe)
-    {
-        $index = error(_error_have_to_be_logged, 1);
+    $where = _site_msg;
+    if(!common::$chkMe) {
+        $index = common::error(_error_have_to_be_logged, 1);
     } else {
-      if($do == "show")
-      {
-      $qry = db("SELECT * FROM ".$db['msg']."
-                           WHERE id = ".(int)($_GET['id']));
-        $get = _fetch($qry);
-      if($get['von'] == $userid || $get['an'] == $userid)
-      {
-            $update = db("UPDATE ".$db['msg']."
-                                        SET `readed` = 1
-                                        WHERE id = ".(int)($_GET['id']));
+        switch (common::$do) {
+            case 'show':
+                $get = common::$sql['default']->fetch("SELECT * FROM `{prefix_messages}` WHERE `id` = ? LIMIT 1;", [(int)($_GET['id'])]);
+                if(common::$sql['default']->rowCount() && ($get['von'] == common::$userid || $get['an'] == common::$userid)) {
+                    common::$sql['default']->update("UPDATE `{prefix_messages}` SET `readed` = 1 WHERE `id` = ?;", [$get['id']]);
 
-            $delete = show(_delete, array("id" => $get['id']));
+                    //delete icon
+                    $smarty->caching = false;
+                    $smarty->assign('id',$get['id']);
+                    $delete = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_delete.tpl');
+                    $smarty->clearAllAssign();
 
-        if($get['von'] == 0)
-        {
-          $answermsg = show(_msg_answer_msg, array("nick" => "MsgBot"));
-          $answer = "&nbsp;";
-        } else {
-          $answermsg = show(_msg_answer_msg, array("nick" => autor($get['von'])));
-            $answer = show(_msg_answer, array("id" => $get['id']));
-          }
+                    if(!$get['von']) {
+                        //message from MsgBot
+                        $smarty->caching = false;
+                        $smarty->assign('nick','MsgBot');
+                        $answermsg = $smarty->fetch('string:'._msg_answer_msg);
+                        $smarty->clearAllAssign();
+                        $answer = "";
+                    } else {
+                        //message von ..
+                        $smarty->caching = false;
+                        $smarty->assign('nick',common::autor($get['von']));
+                        $answermsg = $smarty->fetch('string:'._msg_answer_msg);
+                        $smarty->clearAllAssign();
 
-        if($get['sendnews'] == 1 || $get['sendnews'] == 2)
-        {
-          $sendnews = show(_msg_sendnews_user, array("id" => $get['id'],
-                                                     "datum" => $get['datum']));
-        } elseif($get['sendnews'] == 3) {
-          $sendnews = show(_msg_sendnews_done, array("user" => autor($get['sendnewsuser'])));
-        } else { $sendnews = ''; }
+                        //answer form
+                        $smarty->caching = false;
+                        $smarty->assign('id',$get['id']);
+                        $answer = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_answer.tpl');
+                        $smarty->clearAllAssign();
+                    }
 
-          $index = show($dir."/msg_show", array("answermsg" => $answermsg,
-                                                "titel" => re($get['titel']),
-                                                "nachricht" => bbcode($get['nachricht']),
-                                                "answer" => $answer,
-                                                "sendnews" => $sendnews,
-                                                "delete" => $delete));
-      }
-      } elseif($do == "sendnewsdone") {
-          $qry = db("SELECT * FROM ".$db['msg']."
-                     WHERE id = '".(int)($_GET['id'])."'");
-          while($get = _fetch($qry))
-          {
-             $update = db("UPDATE ".$db['msg']."
-                               SET `sendnews` = 3,
-                               `sendnewsuser` = '".$userid."',
-                               `readed`= 1
-                               WHERE datum = '".(int)($_GET['datum'])."'");
+                    $smarty->caching = false;
+                    $smarty->assign('answermsg',$answermsg);
+                    $smarty->assign('titel',stringParser::decode($get['titel']));
+                    $smarty->assign('nachricht',BBCode::parse_html((string)$get['nachricht']));
+                    $smarty->assign('answer',$answer);
+                    $smarty->assign('delete',$delete);
+                    $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_show.tpl');
+                    $smarty->clearAllAssign();
+                }
+            break;
+            case 'showsended':
+                $get = common::$sql['default']->fetch("SELECT `id`,`von`,`an`,`titel`,`nachricht` "
+                                        . "FROM `{prefix_messages}` "
+                                        . "WHERE `id` = ? LIMIT 1;", [(int)$_GET['id']]);
+                if(common::$sql['default']->rowCount() && ($get['von'] == common::$userid || $get['an'] == common::$userid)) {
+                    $smarty->caching = false;
+                    $smarty->assign('nick',common::autor($get['an']));
+                    $answermsg = $smarty->fetch('string:'._msg_sended_msg);
+                    $smarty->clearAllAssign();
+                    $answer = _back;
 
-            $index = info(_send_news_done, "?action=msg&do=show&id=".$get['id']."");
-          }
-      } elseif($do == "showsended") {
-          $qry = db("SELECT * FROM ".$db['msg']."
-                     WHERE id = ".(int)($_GET['id']));
-          $get = _fetch($qry);
+                    //delete icon
+                    $smarty->caching = false;
+                    $smarty->assign('id',$get['id']);
+                    $delete = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_delete.tpl');
+                    $smarty->clearAllAssign();
 
-      if($get['von'] == $userid || $get['an'] == $userid)
-      {
-            $answermsg = show(_msg_sended_msg, array("nick" => autor($get['an'])));
-            $answer = _back;
+                    $smarty->caching = false;
+                    $smarty->assign('answermsg',$answermsg);
+                    $smarty->assign('titel',stringParser::decode($get['titel']));
+                    $smarty->assign('nachricht',BBCode::parse_html((string)$get['nachricht']));
+                    $smarty->assign('answer',$answer);
+                    $smarty->assign('delete',$delete);
+                    $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_show.tpl');
+                    $smarty->clearAllAssign();
+                }
+            break;
+            case 'answer':
+                $get = common::$sql['default']->fetch("SELECT * FROM `{prefix_messages}` WHERE `id` = ? LIMIT 1;", [(int)$_GET['id']]);
+                if(common::$sql['default']->rowCount() && ($get['von'] == common::$userid || $get['an'] == common::$userid)) {
+                    $titel = (preg_match("#RE:#is",stringParser::decode($get['titel'])) ? stringParser::decode($get['titel']) : "RE: ".stringParser::decode($get['titel']));
+                    $smarty->caching = false;
+                    $smarty->assign('von',common::$userid);
+                    $smarty->assign('an',$get['von']);
+                    $smarty->assign('titel',$titel);
+                    $smarty->assign('nick',common::autor($get['von']));
+                    $smarty->assign('zitat',BBCode::zitat(common::autor($get['von']),stringParser::decode($get['nachricht'])));
+                    $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/answer.tpl');
+                    $smarty->clearAllAssign();
+                }
+            break;
+            case 'pn':
+                $uid = (isset($_GET['id']) && !empty($_GET['id']) ? (int)($_GET['id']) : common::$userid);
+                if (!common::$chkMe) {
+                    $index = common::error(_error_have_to_be_logged);
+                } elseif ($uid == common::$userid) {
+                    $index = common::error(_error_msg_self, 1);
+                } else {
+                    $smarty->caching = false;
+                    $smarty->assign('nick',stringParser::decode(common::data("nick")));
+                    $titel = $smarty->fetch('string:'._msg_from_nick);
+                    $smarty->clearAllAssign();
 
-            $index = show($dir."/msg_show", array("answermsg" => $answermsg,
-                                                "titel" => re($get['titel']),
-                                                "nachricht" => bbcode($get['nachricht']),
-                                                "answer" => $answer,
-                                                "sendnews" => "",
-                                                "delete" => ""));
-      }
-      } elseif($do == "answer") {
-          $qry = db("SELECT * FROM ".$db['msg']."
-                               WHERE id = ".(int)($_GET['id']));
-          $get = _fetch($qry);
+                    //index
+                    $smarty->caching = false;
+                    $smarty->assign('von',common::$userid);
+                    $smarty->assign('an',$uid);
+                    $smarty->assign('titel',$titel);
+                    $smarty->assign('nick', common::autor($uid));
+                    $smarty->assign('zitat','');
+                    $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/answer.tpl');
+                    $smarty->clearAllAssign();
+                }
+            break;
+            case 'sendanswer':
+                if(empty($_POST['titel'])) {
+                    $index = common::error(_empty_titel, 1);
+                } elseif(empty($_POST['eintrag'])) {
+                    $index = common::error(_empty_eintrag, 1);
+                } else {
+                    common::$sql['default']->insert("INSERT INTO `{prefix_messages}` "
+                               . "SET `datum`  = ".time().","
+                               . "`von`        = ?,"
+                               . "`an`         = ?,"
+                               . "`titel`      = ?,"
+                               . "`nachricht`  = ?,"
+                               . "`see`        = 1;",
+                    [common::$userid,(int)$_POST['an'],stringParser::encode($_POST['titel']),stringParser::encode($_POST['eintrag'])]);
+                    common::userstats_increase('writtenmsg');
 
-      if($get['von'] == $userid || $get['an'] == $userid)
-      {
-        if(preg_match("#RE:#is",re($get['titel']))) $titel = re($get['titel']);
-        else $titel = "RE: ".re($get['titel']);
+                    //benachrichtigungs email senden
+                    if(common::data('pnmail',(int)$_POST['an'])) {
+                        //E-Mail an empfänger senden
+                        $smarty->caching = false;
+                        $smarty->assign('nick',stringParser::decode(common::data('nick',(int)$_POST['an'])));
+                        $smarty->assign('titel',stringParser::encode($_POST['titel']));
+                        $smarty->assign('clan',common::$pagetitle);
+                        $message = $smarty->fetch('string:'.BBCode::bbcode_email(stringParser::decode(settings::get('eml_pn'))));
+                        $smarty->clearAllAssign();
 
-            $index = show($dir."/answer", array("von" => $userid,
-                                              "an" => $get['von'],
-                                              "titel" => $titel,
-                                              "headtitel" => _msg_titel_answer,
-                                              "titelhead" => _titel,
-                                              "nickhead" => _to,
-                                              "value" => _button_value_msg,
-                                              "bbcodehead" => _bbcode,
-                                              "eintraghead" => _answer,
-                                              "nick" => autor($get['von']),
-                                              "zitat" => zitat(autor($get['von']),$get['nachricht'])));
-      }
-      } elseif($do == "pn") {
-          if(!$chkMe)       $index = error(_error_have_to_be_logged);
-          elseif($_GET['id'] == $userid) $index = error(_error_msg_self, 1);
-          else {
+                        //subj
+                        $smarty->caching = false;
+                        $smarty->assign('domain',common::$httphost);
+                        $subj = $smarty->fetch('string:'.stringParser::decode(settings::get('eml_pn_subj')));
+                        $smarty->clearAllAssign();
 
-		 $titel = show(_msg_from_nick, array("nick" => re(data("nick"))));
+                        //send e-mail
+                        common::sendMail(stringParser::decode(common::data('email',(int)$_POST['an'])), $subj, $message);
+                    }
 
-          $index = show($dir."/answer", array("von" => $userid,
-                                              "an" => $_GET['id'],
-                                              "titel" => $titel,
-                                              "value" => _button_value_msg,
-                                              "titelhead" => _titel,
-                                              "headtitel" => _msg_titel,
-                                              "nickhead" => _to,
-                                              "bbcodehead" => _bbcode,
-                                              "eintraghead" => _answer,
-                                              "nick" => autor($_GET['id']),
-                                              "zitat" => ""));
-          }
-      } elseif($do == "sendanswer") {
-        if(empty($_POST['titel']))
-          {
-              $index = error(_empty_titel, 1);
-          } elseif(empty($_POST['eintrag'])) {
-              $index = error(_empty_eintrag, 1);
-          } else {
-              $qry = db("INSERT INTO ".$db['msg']."
-                         SET `datum`      = '".time()."',
-                                `von`        = '".((int)$_POST['von'])."',
-                             `an`         = '".((int)$_POST['an'])."',
-                             `titel`      = '".up($_POST['titel'])."',
-                             `nachricht`  = '".up($_POST['eintrag'])."',
-                             `see`        = '1'");
+                    $index = common::info(_msg_answer_done, "?action=msg", 5, false);
+                }
+            break;
+            case 'delete':
+                if(!empty($_POST)) {
+                    foreach ($_POST as $key => $id) {
+                        if(strpos($key, 'posteingang_') !== false) {
+                            $get = common::$sql['default']->fetch("SELECT `id`,`see` FROM `{prefix_messages}` WHERE `id` = ? LIMIT 1;", [(int)($id)]);
+                            if(!$get['see']) {
+                                common::$sql['default']->delete("DELETE FROM `{prefix_messages}` WHERE `id` = ?;", [$get['id']]);
+                            } else {
+                                common::$sql['default']->update("UPDATE `{prefix_messages}` SET `see_u` = 1 WHERE `id` = ?;", [$get['id']]);
+                            }
+                        }
+                    }
+                }
+                header("Location: ?action=msg");
+            break;
+            case 'deletethis':
+                $get = common::$sql['default']->fetch("SELECT `id`,`see` FROM `{prefix_messages}` WHERE `id` = ? LIMIT 1;", [(int)($_GET['id'])]);
+                if(common::$sql['default']->rowCount()) {
+                    if(!$get['see']) {
+                        common::$sql['default']->delete("DELETE FROM `{prefix_messages}` WHERE `id` = ?;", [$get['id']]);
+                    } else {
+                        common::$sql['default']->update("UPDATE `{prefix_messages}` SET `see_u` = 1 WHERE `id` = ?;", [$get['id']]);
+                    }
+                }
+                
+                $index = common::info(_msg_deleted, "?action=msg");
+            break;
+            case 'deletesended':
+                if(!empty($_POST)) {
+                    foreach ($_POST as $key => $id) {
+                        if(strpos($key, 'postausgang_') !== false) {
+                            common::$sql['default']->delete("DELETE FROM `{prefix_messages}` WHERE `id` = ?;", [(int)($id)]);
+                        }
+                    }
+                }
+                header("Location: ?action=msg");
+            break;
+            case 'new':
+                //To users *list
+                $qry = common::$sql['default']->select("SELECT `id`,`nick` "
+                                  . "FROM `{prefix_users}` "
+                                  . "WHERE `id` != ? "
+                                  . "ORDER BY `nick`;", [common::$userid]);
+                $users = '';
+                foreach($qry as $get) {
+                    $smarty->caching = false;
+                    $smarty->assign('id',$get['id']);
+                    $smarty->assign('selected','');
+                    $smarty->assign('nick',stringParser::decode($get['nick']));
+                    $users .= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_option_users.tpl');
+                    $smarty->clearAllAssign();
+                }
 
-              $qry = db("UPDATE ".$db['userstats']."
-                           SET `writtenmsg` = writtenmsg+1
-                           WHERE user = ".$userid);
+                //To buddy *list
+                $qry = common::$sql['default']->select("SELECT userbuddy.`buddy`,user.`nick` "
+                                  . "FROM `{prefix_user_buddys}` AS `userbuddy` "
+                                  . "LEFT JOIN `{prefix_users}` AS `user` "
+                                  . "ON (user.`id` = userbuddy.`buddy`) "
+                                  . "WHERE userbuddy.`user` = ? "
+                                  . "ORDER BY userbuddy.`user`;", [common::$userid]);
+                $buddys = '';
+                foreach($qry as $get) {
+                    $smarty->caching = false;
+                    $smarty->assign('id',$get['buddy']);
+                    $smarty->assign('selected','');
+                    $smarty->assign('nick',stringParser::decode($get['nick']));
+                    $buddys .= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_option_users.tpl');
+                    $smarty->clearAllAssign();
+                }
 
-        $index = info(_msg_answer_done, "?action=msg");
-          }
-      } elseif($do == "delete") {
-      $qry = db("SELECT * FROM ".$db['msg']."
-                 WHERE an = '".$userid."'
-                 AND see_u = 0");
-      while($get = _fetch($qry))
-      {
-        if(isset($_POST['pe'.$get['id']]))
-        {
-          if($get['see'] == 0)
-          {
-            $del = db("DELETE FROM ".$db['msg']."
-                       WHERE id = ".(int)($_POST['pe'.$get['id']]));
-          } else {
-                $del = db("UPDATE ".$db['msg']."
-                                     SET `see_u` = 1
-                                      WHERE id = ".(int)($_POST['pe'.$get['id']]));
-          }
+                //index
+                $smarty->caching = false;
+                $smarty->assign('buddys',$buddys);
+                $smarty->assign('users',$users);
+                $smarty->assign('posttitel','');
+                $smarty->assign('posteintrag','');
+                $smarty->assign('notification_page','');
+                $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_new.tpl');
+                $smarty->clearAllAssign();
+            break;
+            case 'send':
+                if(empty($_POST['titel']) || empty($_POST['eintrag']) || $_POST['buddys'] == "-" && $_POST['users'] == "-" || $_POST['buddys'] != "-"
+                   && $_POST['users'] != "-" || $_POST['users'] == common::$userid || $_POST['buddys'] == common::$userid) {
+                    if (empty($_POST['titel'])) {
+                        notification::add_error(_empty_titel);
+                    } elseif (empty($_POST['eintrag'])) {
+                        notification::add_error(_empty_eintrag);
+                    } elseif ($_POST['buddys'] == "-" && $_POST['users'] == "-") {
+                        notification::add_error(_empty_to);
+                    } elseif ($_POST['buddys'] != "-" && $_POST['users'] != "-") {
+                        notification::add_error(_msg_to_just_1);
+                    } elseif ($_POST['buddys'] == common::$userid || $_POST['users'] == common::$userid) {
+                        notification::add_error(_msg_not_to_me);
+                    }
+
+                    //To users *list
+                    $qry = common::$sql['default']->select("SELECT `id`,`nick` "
+                                      . "FROM `{prefix_users}` "
+                                      . "WHERE `id` != ? "
+                                      . "ORDER BY `nick`;", [common::$userid]);
+                    $users = '';
+                    foreach($qry as $get) {
+                        $selected = isset($_POST['users']) && $get['id'] == $_POST['users'] ? 'selected="selected"' : '';
+                        $smarty->caching = false;
+                        $smarty->assign('id',$get['id']);
+                        $smarty->assign('selected',$selected);
+                        $smarty->assign('nick',stringParser::decode($get['nick']));
+                        $users .= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_option_users.tpl');
+                        $smarty->clearAllAssign();
+                    }
+
+                    //To buddy *list
+                    $qry = common::$sql['default']->select("SELECT userbuddy.`buddy`,user.`nick` "
+                            . "FROM `{prefix_user_buddys}` AS `userbuddy` "
+                            . "LEFT JOIN `{prefix_users}` AS `user` "
+                            . "ON (user.`id` = userbuddy.`buddy`) "
+                            . "WHERE userbuddy.`user` = ? "
+                            . "ORDER BY userbuddy.`user`;", [common::$userid]);
+                    $buddys = '';
+                    foreach($qry as $get) {
+                        $selected = isset($_POST['buddys']) && $get['buddy'] == $_POST['buddys'] ? 'selected="selected"' : '';
+                        $smarty->caching = false;
+                        $smarty->assign('id',$get['buddy']);
+                        $smarty->assign('selected',$selected);
+                        $smarty->assign('nick',stringParser::decode($get['nick']));
+                        $buddys .= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_option_users.tpl');
+                        $smarty->clearAllAssign();
+                    }
+
+                    //index
+                    $smarty->caching = false;
+                    $smarty->assign('buddys',$buddys);
+                    $smarty->assign('users',$users);
+                    $smarty->assign('posttitel',stringParser::decode($_POST['titel']));
+                    $smarty->assign('posteintrag',stringParser::decode($_POST['eintrag']));
+                    $smarty->assign('notification_page',notification::get());
+                    $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_new.tpl');
+                    $smarty->clearAllAssign();
+                } else {
+                    $to = ($_POST['buddys'] == "-" ? $_POST['users'] : $_POST['buddys']);
+                    common::$sql['default']->insert("INSERT INTO `{prefix_messages}` "
+                               . "SET `datum` = ".time().", "
+                               . "`von` = ?, "
+                               . "`an` = ?, "
+                               . "`titel` = ?, "
+                               . "`nachricht` = ?,"
+                               . "`see` = 1;", [common::$userid,(int)$to,stringParser::encode($_POST['titel']),stringParser::encode($_POST['eintrag'])]);
+
+                    //benachrichtigungs email senden
+                    if(common::data('pnmail',(int)$to)) {
+                        //E-Mail an empfänger senden
+                        $smarty->caching = false;
+                        $smarty->assign('nick',stringParser::decode(common::data('nick',(int)$to)));
+                        $smarty->assign('titel',stringParser::encode($_POST['titel']));
+                        $smarty->assign('clan',common::$pagetitle);
+                        $message = $smarty->fetch('string:'.BBCode::bbcode_email(stringParser::decode(settings::get('eml_pn'))));
+                        $smarty->clearAllAssign();
+
+                        //subj
+                        $smarty->caching = false;
+                        $smarty->assign('domain',common::$httphost);
+                        $subj = $smarty->fetch('string:'.stringParser::decode(settings::get('eml_pn_subj')));
+                        $smarty->clearAllAssign();
+
+                        //send e-mail
+                        common::sendMail(stringParser::decode(common::data('email',(int)$to)), $subj, $message);
+                    }
+
+                    common::userstats_increase('writtenmsg');
+                    $index = common::info(_msg_answer_done, "?action=msg");
+                }
+            break;
+            default:
+                //-> Post Eingang
+                $qry = common::$sql['default']->select("SELECT `von`,`titel`,`datum`,`readed`,`see_u`,`id` "
+                                  . "FROM `{prefix_messages}` "
+                                  . "WHERE `an` = ? AND `see_u` = 0 "
+                                  . "ORDER BY datum DESC;", [common::$userid]);
+                $posteingang = "";
+                if(common::$sql['default']->rowCount()) {
+                    foreach($qry as $get) {
+                        $absender = !$get['von'] ? _msg_bot : common::autor($get['von']);
+                        $smarty->caching = false;
+                        $smarty->assign('titel',stringParser::decode($get['titel']));
+                        $smarty->assign('id',$get['id']);
+                        $titel = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_in_title.tpl');
+                        $smarty->clearAllAssign();
+
+                        $date = date("d.m.Y H:i", $get['datum'])._uhr;
+                        $new = !$get['readed'] && !$get['see_u'] ? _newicon : '';
+
+                        //posteingang
+                        $smarty->caching = false;
+                        $smarty->assign('titel',$titel);
+                        $smarty->assign('absender',$absender);
+                        $smarty->assign('datum',$date);
+                        $smarty->assign('color',$color);
+                        $smarty->assign('new',$new);
+                        $smarty->assign('id',$get['id']);
+                        $posteingang.= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/posteingang.tpl');
+                        $smarty->clearAllAssign(); $color++;
+                    }
+                }
+                
+                if(empty($posteingang)) {
+                    $smarty->caching = false;
+                    $smarty->assign('colspan',5);
+                    $posteingang = $smarty->fetch('string:'._no_entrys_yet);
+                    $smarty->clearAllAssign();
+                }
+                
+                $qry = common::$sql['default']->select("SELECT `titel`,`datum`,`readed`,`an`,`id` "
+                                  . "FROM `{prefix_messages}` "
+                                  . "WHERE `von` = ? AND `see` = 1 "
+                                  . "ORDER BY datum DESC;", [common::$userid]);
+                $postausgang = "";
+                foreach($qry as $get) {
+                    $smarty->caching = false;
+                    $smarty->assign('titel',stringParser::decode($get['titel']));
+                    $smarty->assign('id',$get['id']);
+                    $titel = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg_out_title.tpl');
+                    $smarty->clearAllAssign();
+
+                    $date = date("d.m.Y H:i", $get['datum'])._uhr;
+                    $readed = !$get['readed'] ? _noicon : _yesicon;
+
+                    //postausgang
+                    $smarty->caching = false;
+                    $smarty->assign('titel',$titel);
+                    $smarty->assign('empfaenger',common::autor($get['an']));
+                    $smarty->assign('datum',$date);
+                    $smarty->assign('color',$color);
+                    $smarty->assign('readed',$readed);
+                    $smarty->assign('id',$get['id']);
+                    $postausgang.= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/postausgang.tpl');
+                    $smarty->clearAllAssign(); $color++;
+                }
+
+                if (empty($postausgang)) {
+                    $smarty->caching = false;
+                    $smarty->assign('colspan',5);
+                    $postausgang = $smarty->fetch('string:'._no_entrys_yet);
+                    $smarty->clearAllAssign();
+                }
+
+                $smarty->caching = false;
+                $smarty->assign('nick',common::autor(common::$userid));
+                $msghead = $smarty->fetch('string:'._msghead);
+                $smarty->clearAllAssign();
+
+                //index
+                $smarty->caching = false;
+                $smarty->assign('msghead',$msghead);
+                $smarty->assign('showincoming',$posteingang);
+                $smarty->assign('showsended',$postausgang);
+                $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/msg/msg.tpl');
+                $smarty->clearAllAssign();
+            break;
         }
-          }
-
-        header("Location: ?action=msg");
-      } elseif($do == "deletethis") {
-      $qry = db("SELECT * FROM ".$db['msg']."
-                 WHERE id = '".(int)($_GET['id'])."'");
-      $get = _fetch($qry);
-
-      if($get['see'] == 0)
-      {
-        $del = db("DELETE FROM ".$db['msg']."
-                   WHERE id = ".(int)($_GET['id']));
-      } else {
-            $del = db("UPDATE ".$db['msg']."
-                                SET `see_u` = 1
-                              WHERE id = ".(int)($_GET['id']));
-      }
-
-      $index = info(_msg_deleted, "?action=msg");
-    } elseif($do == "deletesended") {
-      $qry = db("SELECT * FROM ".$db['msg']."
-                 WHERE von = '".$userid."'
-                 AND see = 1");
-      while($get = _fetch($qry))
-      {
-        if(isset($_POST['pa'.$get['id']]))
-        {
-          if($get['see_u'] == "1")
-          {
-            $del = db("DELETE FROM ".$db['msg']."
-                       WHERE id = ".(int)($_POST['pa'.$get['id']]));
-          } else {
-                $del = db("UPDATE ".$db['msg']."
-                                     SET `see` = 0
-                                      WHERE id = ".(int)($_POST['pa'.$get['id']]));
-          }
-        }
-          }
-
-          header("Location: ?action=msg");
-      } elseif($do == "new") {
-          $qry = db("SELECT id,nick FROM ".$db['users']."
-                 WHERE id != '".$userid."'
-                               ORDER BY nick");
-          while($get = _fetch($qry))
-          {
-              $users .= show(_to_users, array("id" => $get['id'],
-                                        "selected" => "",
-                                                                              "nick" => data("nick",$get['id'])));
-          }
-
-          $qry = db("SELECT id,user,buddy FROM ".$db['buddys']."
-                               WHERE user = ".$userid."
-                               ORDER BY user");
-          while($get = _fetch($qry))
-          {
-              $buddys .= show(_to_buddys, array("id" => $get['buddy'],
-                                          "selected" => "",
-                                                                                  "nick" => data("nick",$get['buddy'])));
-          }
-
-          $index = show($dir."/new", array("von" => $userid,
-                                                                           "an" => _to,
-                                                                           "or" => _or,
-                                                                           "buddys" => $buddys,
-                                                                           "users" => $users,
-                                                                           "value" => _button_value_msg,
-                                                                           "titelhead" => _titel,
-                                                                           "titel" => _msg_titel,
-                                                                            "nickhead" => _nick,
-                                                                            "bbcodehead" => _bbcode,
-                                                                            "eintraghead" => _eintrag,
-                                                                            "posttitel" => "",
-                                                                            "error" => "",
-                                                                            "posteintrag" => ""));
-      } elseif($do == "send") {
-        if(empty($_POST['titel']) || empty($_POST['eintrag']) || $_POST['buddys'] == "-" && $_POST['users'] == "-" || $_POST['buddys'] != "-"
-      && $_POST['users'] != "-" || $_POST['users'] == $userid || $_POST['buddys'] == $userid)
-          {
-            if(empty($_POST['titel'])) $error = _empty_titel;
-            elseif(empty($_POST['eintrag'])) $error = _empty_eintrag;
-            elseif($_POST['buddys'] == "-" AND $_POST['users'] == "-") $error = _empty_to;
-            elseif($_POST['buddys'] != "-" AND $_POST['users'] != "-") $error = _msg_to_just_1;
-            elseif($_POST['buddys'] OR $_POST['users'] == $userid) $error = _msg_not_to_me;
-
-            $error = show("errors/errortable", array("error" => $error));
-
-            $qry = db("SELECT id FROM ".$db['users']."
-                   WHERE id != '".$userid."'
-                   ORDER BY nick");
-            while($get = _fetch($qry))
-            {
-              if($get['id'] == $_POST['users']) $selected = 'selected="selected"';
-                else $selected = "";
-
-                $users .= show(_to_users, array("id" => $get['id'],
-                                                                                "nick" => data("nick",$get['id']),
-                                                                                "selected" => $selected));
-            }
-
-            $qry = db("SELECT id,user,buddy FROM ".$db['buddys']."
-                                 WHERE user = ".$userid);
-            while($get = _fetch($qry))
-            {
-                if($get['buddy'] == $_POST['buddys']) $selected = 'selected="selected"';
-                else $selected = "";
-
-                $buddys .= show(_to_buddys, array("id" => $get['buddy'],
-                                                                                    "nick" => data("nick",$get['buddy']),
-                                                                                    "selected" => $selected));
-            }
-
-            $index = show($dir."/new", array("von" => $userid,
-                                                                             "an" => _to,
-                                                                             "or" => _or,
-                                                                             "posttitel" => re($_POST['titel']),
-                                                                             "posteintrag" => re_bbcode($_POST['eintrag']),
-                                                                             "postto" => $_POST['buddys']."".$_POST['users'],
-                                                                             "buddys" => $buddys,
-                                                                             "value" => _button_value_msg,
-                                                                             "users" => $users,
-                                                                             "titelhead" => _titel,
-                                                                             "titel" => _msg_titel,
-                                                                             "nickhead" => _nick,
-                                                                             "bbcodehead" => _bbcode,
-                                                                             "error" => $error,
-                                                                             "eintraghead" => _eintrag));
-          } else {
-                if($_POST['buddys'] == "-") $to = $_POST['users'];
-            else $to = $_POST['buddys'];
-
-            $qry = db("INSERT INTO ".$db['msg']."
-                           SET `datum`      = '".time()."',
-                       `von`        = '".((int)$userid)."',
-                       `an`         = '".((int)$to)."',
-                       `titel`      = '".up($_POST['titel'])."',
-                       `nachricht`  = '".up($_POST['eintrag'])."',
-                       `see`        = '1'");
-
-            $qry = db("UPDATE ".$db['userstats']."
-                                 SET `writtenmsg` = writtenmsg+1
-                                 WHERE user = ".$userid);
-
-            $index = info(_msg_answer_done, "?action=msg");
-          }
-      } else {
-          $qry = db("SELECT * FROM ".$db['msg']."
-                               WHERE an = ".$userid."
-                 AND see_u = '0'
-                               ORDER BY datum DESC");
-        while($get = _fetch($qry))
-          {
-            if(_rows($qry))
-              {
-          if($get['von'] == 0) $absender = _msg_bot;
-          else $absender = autor($get['von']);
-
-                  $titel = show(_msg_in_title, array("titel" => re($get['titel'])));
-
-                  $delete = _delete;
-                  $date = date("d.m.Y H:i", $get['datum'])._uhr;
-                  if($get['readed'] == 0 && $get['see_u'] == 0) $new = _newicon;
-          else                                          $new = '';
-              } else {
-                  $titel = "-";
-                  $absender = "-";
-                  $date = "-";
-                  $delete = "";
-                  $new = "";
-              }
-
-        $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
-            $posteingang.= show($dir."/posteingang", array("titel" => $titel,
-                                                                                                         "absender" => $absender,
-                                                                                                         "datum" => $date,
-                                                       "class" => $class,
-                                                                                                         "delete" => $delete,
-                                                                                                         "new" => $new,
-                                                                                                         "id" => $get['id']));
-            }
-
-          $qry = db("SELECT * FROM ".$db['msg']."
-                               WHERE von = ".$userid."
-                               AND see = 1
-                               ORDER BY datum DESC");
-
-        while($get = _fetch($qry))
-          {
-              $titel = show(_msg_out_title, array("titel" => re($get['titel'])));
-              $delete = _msg_delete_sended;
-              $date = date("d.m.Y H:i", $get['datum'])._uhr;
-
-
-            if($get['readed'] == "0") $readed = _noicon;
-              else $readed = _yesicon;
-
-        $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
-            $postausgang.= show($dir."/postausgang", array("titel" => $titel,
-                                                                                                         "empfaenger" => autor($get['an']),
-                                                                                                         "datum" => $date,
-                                                       "class" => $class,
-                                                                                                         "readed" => $readed,
-                                                                                                         "delete" => $delete,
-                                                                                                         "id" => $get['id']));
-            }
-
-          $msghead = show(_msghead, array("nick" => autor($userid)));
-
-          $index = show($dir."/msg", array("msghead" => $msghead,
-                                                                              "posteingang" => _posteingang,
-                                                                              "postausgang" => _postausgang,
-                                                                              "titel" => _msg_title,
-                                        "del" => _msg_del,
-                                                                              "absender" => _msg_absender,
-                                                                              "legende" => _legende,
-                                                                              "legendemsg" => _legende_msg,
-                                                                              "legendereaded" => _legende_readed,
-                                                                              "empfaenger" => _msg_empfaenger,
-                                                                              "datum" => _datum,
-                                                                              "new" => _msg_new,
-                                        "newglobal" => $newglobal,
-                                                                              "newicon" => _newicon,
-                                                                              "yesno" => _yesno,
-                                                                              "deleteicon" => _deleteicon_blank,
-                                                                              "showincoming" => $posteingang,
-                                                                              "showsended" => $postausgang));
-      }
     }
 }

@@ -1,0 +1,53 @@
+
+<p>Tags are good, but what about smileys, emoticons, the thing where the user types <tt>:-)</tt> and
+sees a little smiley-face icon appear in the output?  NBBC includes full support for
+smileys, and includes a default selection of 30 fairly common ones.  (You can find a
+full list of the standard smileys in the <a href="app_smiley.html">appendix</a>.)  But
+if those 30 aren't enough for you, installing your own is easy.</p>
+
+<p>First, the smiley you want to add must be a PNG, GIF, or JPEG image file; browsers can't
+handle other file formats.  Upload your image to the server, and then copy it into the
+<tt>smileys/</tt> directory.</p>
+
+<p>Then you'll have to choose a name for your smiley:  You'll have to choose what people
+need to type to see it.  Simple smileys like <tt>:-)</tt> are easy, but what if yours
+is a picture of, say, a dog driving a car?  For complex smileys like this that can't be
+readily described by a simple symbol, most users generally prefer to use a short keyword
+surrounded by colons, like <tt>:dogcar:</tt>.  Let's add the <tt>:dogcar:</tt> smiley so
+that NBBC will convert it into "<tt>dogcar.png</tt>":</p>
+
+<div class='code_header'>Code:</div>
+<xmp class='code'>$bbcode->AddSmiley(":dogcar:", "dogcar.png");</xmp>
+
+<p>That's all it takes; the <tt>:dogcar:</tt> smiley is now available!</p>
+
+	<div class='tipbox'>
+	<div class='tipbox_header'>
+		<div class='tipbox_star'>*</div><div><b>Tech Tip</b></div>
+	</div>
+	<div class='tipbox_content'><div class='tipbox_content2'>
+
+		<p>For what it's worth, your smiley codes may include every character on your keyboard
+		except for space, <tt>[</tt>, and <tt>]</tt>, which are all used by other things.  Generally,
+		you should never use smileys shorter than two characters long, and even that's probably
+		too short, with some exceptions.  And NBBC is smart enough to know that if <tt>:D</tt> and
+		<tt>D:</tt> are smileys, it should <i>not</i> convert <tt>PAID:</tt> or <tt>:DUDE:</tt>
+		just because they look like they have smileys in them:  Any smiley that butts up against
+		an alphanumeric character (or underscore) will <i>not</i> be converted to an image.</p>
+
+		<p>While you can register any sequence of characters as a smiley, it's usually a bad
+		idea to register something that might be a commonly-typed word.  For example, registering
+		<tt>83</tt> is probably a bad idea, simply because the number "83" is likely to eventually
+		appear in text somewhere.  The last thing you ever want to see on your site is something
+		like this:</p>
+		
+		<p style='margin-left: 2em;'><tt><img src="../smileys/teeth.gif" width='16' height='16' alt='83' /> people died in that plane crash.</tt></p>
+		
+		<p>This is why most unusual smileys on most sites are done with keywords surrounded by
+		colons:  If this smiley had been registered as <tt>:goofygrin:</tt> instead of as <tt>83</tt>,
+		this tragedy might have been averted.</p>
+		
+		<p>So it's up to you what smileys you register, but be careful:  Your smileys may have
+		unintendend consequences if you don't think carefully about how they might be used.</p>
+	</div></div>
+	</div>

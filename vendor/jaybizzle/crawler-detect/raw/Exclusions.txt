@@ -1,6 +1,6 @@
 Safari.[\d\.]*
 Firefox.[\d\.]*
-Chrome.[\d\.]*
+ Chrome.[\d\.]*
 Chromium.[\d\.]*
 MSIE.[\d\.]
 Opera\/[\d\.]*
@@ -38,4 +38,11 @@ Build
 Opera Mini\/\d{1,2}\.\d{1,2}\.[\d\.]*\/\d{1,2}\.
 Opera
  \.NET[\d\.]*
-;
+cubot
+; M bot
+; CRONO
+; B bot
+; IDbot
+; ID bot
+; POWER BOT
+OCTOPUS-CORE

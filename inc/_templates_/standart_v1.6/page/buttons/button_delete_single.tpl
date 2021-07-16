@@ -1,0 +1,1 @@
+<a href="?{$action}&amp;id={$id}" rel="{$del}" class="confirm"><i class="fas fa-trash-alt fa-lg" title="{$title}" alt="{$title}"></i></a>

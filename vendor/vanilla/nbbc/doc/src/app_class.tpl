@@ -1,0 +1,83 @@
+
+<p>Content classes control which tags are allowed to nest within others and which
+are not:  If a tag is not allowed to nest inside the current class, it will be treated
+as plain text instead of as a tag.  You can define your own classes depending on your
+needs, but the most common classes are as follows:</p>
+
+<ul>
+<li><b><tt>block</tt></b>:  A rectangular block of text, equivalent to the CSS <tt>display:block</tt>
+	property.  This is generally an outer containing class.<br />
+	<i>Usually contained by:</i>  Blocks, list items, columns.<br />
+	<i>Can usually contain:</i>  Blocks, inlines, links, lists, columns, images, code<br /><br /></li>
+
+<li><b><tt>inline</tt></b>:  A span of text with an unusual property, like italics or
+	boldface or a color change.  This is generally an innermost class:  Most other tags
+	can't go inside it, with some exceptions.<br />
+	<i>Usually contained by:</i>  Blocks, list items, columns, links, inlines.<br />
+	<i>Can usually contain:</i>  Inlines, links, images.<br /><br /></li>
+
+<li><b><tt>link</tt></b>:  A span of text that is a clickable link to somewhere.  Links
+	usually cannot be placed inside other links.<br />
+	<i>Usually contained by:</i>  Blocks, list items, columns, inlines.<br />
+	<i>Can usually contain:</i>  Inlines, images.<br /><br /></li>
+
+<li><b><tt>list</tt></b>:  A block-like region that may only contain list items.<br />
+	<i>Usually contained by:</i>  Blocks, list items, columns.<br />
+	<i>Can usually contain:</i>  List items.<br /><br /></li>
+
+<li><b><tt>listitem</tt></b>:  A single item in a list, this is a block-like region that
+	can contain just about anything else.<br />
+	<i>Usually contained by:</i>  Lists.<br />
+	<i>Can usually contain:</i>  Blocks, inlines, links, lists, columns, images, code<br /><br /></li>
+
+<li><b><tt>columns</tt></b>:  A block-like region that may contain multiple parallel
+	columns of blocks within it.<br />
+	<i>Usually contained by:</i>  Blocks, list items, columns.<br />
+	<i>Can usually contain:</i>  Blocks, inlines, links, lists, columns, images, code<br /><br /></li>
+
+<li><b><tt>nextcol</tt></b>:  An infinitely small class (with no content) designed to
+	separate columns of a column group.<br />
+	<i>Usually contained by:</i>  Columns.<br />
+	<i>Can usually contain:</i>  (nothing; has no body)<br /><br /></li>
+
+<li><b><tt>image</tt></b>:  An inline text-like object that is replaced with external content.<br />
+	<i>Usually contained by</i>:  Blocks, inlines, links, list items, columns, code.<br />
+	<i>Can usually contain:</i>  (nothing; has no body)<br /><br /></li>
+
+<li><b><tt>code</tt></b>:  A block-like region that reproduces its contents exactly.<br />
+	<i>Usually contained by</i>:  Blocks, list items, columns.<br />
+	<i>Can usually contain:</i>  (nothing; body is verbatim)</li>
+</ul>
+
+<p>So the standard class containers are related like this:</p>
+
+<table align='center' class='class_containers'>
+<thead><tr><th colspan='2' class='empty'></th>
+	<th colspan='7'>Can be placed within this class*:</th></tr>
+	<tr><th colspan='2' class='empty'></th>
+		<th>block</th><th>inline</th><th>link</th><th>list</th><th>listitem</th><th>columns</th><th>code</th></tr>
+</thead>
+<tbody>
+	<tr><th rowspan='9'>Tag<br/ >of<br/ >class:</th>
+		<th>block</th>      <td>Yes</td><td>.  </td><td>.  </td><td>.  </td><td>Yes</td><td>.  </td><td>.  </td></tr>
+	<tr><th>inline</th>     <td>Yes</td><td>Yes</td><td>Yes</td><td>.  </td><td>Yes</td><td>.  </td><td>.  </td></tr>
+	<tr><th>link</th>       <td>Yes</td><td>Yes</td><td>.  </td><td>.  </td><td>Yes</td><td>.  </td><td>.  </td></tr>
+	<tr><th>list</th>       <td>Yes</td><td>.  </td><td>.  </td><td>.  </td><td>Yes</td><td>.  </td><td>.  </td></tr>
+	<tr><th>listitem</th>   <td>.  </td><td>.  </td><td>.  </td><td>Yes</td><td>.  </td><td>.  </td><td>.  </td></tr>
+	<tr><th>columns</th>    <td>Yes</td><td>.  </td><td>.  </td><td>.  </td><td>Yes</td><td>.  </td><td>.  </td></tr>
+	<tr><th>nextcol</th>    <td>.  </td><td>.  </td><td>.  </td><td>.  </td><td>.  </td><td>Yes</td><td>.  </td></tr>
+	<tr><th>image</th>      <td>Yes</td><td>Yes</td><td>Yes</td><td>.  </td><td>Yes</td><td>Yes</td><td>.  </td></tr>
+	<tr><th>code</th>       <td>Yes</td><td>.  </td><td>.  </td><td>.  </td><td>Yes</td><td>Yes</td><td>.  </td></tr>
+	<tr><th rowspan='3'>Special<br />content:</th>
+		<th>[plaintext]</th><td>Yes</td><td>Yes</td><td>Yes</td><td>.  </td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+	<tr><th>[smileys]</th>  <td>Yes</td><td>Yes</td><td>Yes</td><td>.  </td><td>Yes</td><td>Yes</td><td>.  </td></tr>
+	<tr><th>[rules]</th>    <td>Yes</td><td>.  </td><td>.  </td><td>.  </td><td>Yes</td><td>Yes</td><td>.  </td></tr>
+</tbody>
+</table>
+
+<p>* Note: In the list of possible containers, the <tt>nextcol</tt> and <tt>image</tt> classes
+are omitted because they cannot contain any content.</p>
+
+<p>The initial container class that wraps around the entire input document is "<tt>block</tt>" by
+default; however, this can be changed at runtime with the <a href="api_root.html#ref_parser_SetRoot"><tt>BBCode::SetRoot</tt></a>
+family of functions.</p>

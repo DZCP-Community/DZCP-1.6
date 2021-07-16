@@ -1,0 +1,218 @@
+
+<a name="usage_enhtag_theory"></a><h4>Enhanced Tags, the Theory</h4>
+
+<p>What if simple HTML replacement isn't enough for your tags?  NBBC provides two techniques
+for performing more sophisticated conversions; the first is <i>enhanced tags</i>,
+and the second is <i>callback tags</i>.  We'll start with <i>enhanced tags</i>.</p>
+
+<p>Let's say you want to add a tag that lets your users add a border around their
+text, a <tt>[border]</tt> tag.  You want the user to be able to specify the color
+and thickness of the border, like this:</p>
+
+<div class='code_header'>Code:</div>
+<xmp class='code'>[border color=blue size=2]This has a blue border![/border]</xmp>
+<div class='output_header'>Output:</div>
+<div class='output'><div style='border: 2px solid blue;'>This has a blue border!</div></div>
+
+<p>Obviously, a simple replacement of HTML isn't going to be sufficient for this;
+we need to generate customized HTML depending on what the user supplies for the
+color and the size, and we need to also make sure the user supplied a color and
+size that makes sense:  A size of "-1" is no good, and a color named "blork" is no
+good either.</p>
+
+<p>This is where <i>enhanced mode</i> comes in.  In enhanced mode, instead of supplying
+a pair of chunks of replacement HTML text, you supply a template with locations in it
+where the user's values should be inserted.  Like this:</p>
+
+<div class='code_header'>Code:</div>
+<xmp class='code'>    $bbcode->AddRule('border',  Array(
+        'mode' => BBCODE_MODE_ENHANCED,
+        'template' => '<div style="border: {$size}px solid {$color}">{$_content}</div>',
+        'class' => 'block',
+        'allow_in' => Array('listitem', 'block', 'columns'),
+    ));</xmp>
+
+<p>There are several things different here from the last example.  First, we've added
+the <tt>mode</tt> parameter, which controls how a tag rule is processed by NBBC.  The
+default mode is <tt>BBCODE_MODE_SIMPLE</tt>, which we just looked at; you can also use
+<tt>BBCODE_MODE_ENHANCED</tt> and <tt>BBCODE_MODE_CALLBACK</tt>, and NBBC itself uses
+<tt>BBCODE_MODE_INTERNAL</tt> and <tt>BBCODE_MODE_LIBRARY</tt> as part of the standard
+BBcode library.</p>
+
+<p>Second, we've switched from <tt>inline</tt> class to <tt>block</tt> class, because
+HTML borders tend to look a little weird when applied to individual lines of text,
+and because applying them to a single line or word usually isn't what the user thinks
+will happen with a <tt>[border]</tt> tag anyway:  He'll expect that it produces a big
+border around all of his text.  So our output will be based on <tt>&lt;div&gt;</tt> and
+not <tt>&lt;span&gt;</tt>, and our class is <tt>block</tt>, and because a <tt>&lt;div&gt;</tt>
+in HTML can't go inside a <tt>&lt;span&gt;</tt>, we've restricted the <tt>allow_in</tt>
+array to things that <tt>&lt;div&gt;</tt> elements can actually go inside:  Other
+blocks, list items, and columns (which are table cells in disguise).</p>
+
+<p>Last, we come to the meat of the rule, the <tt>template</tt> itself.  Let's break
+that out and look at it by itself:</p>
+
+<div class='code_header'>Code:</div>
+<xmp class='code'><div style="border: {$size}px solid {$color}">{$_content}</div></xmp>
+
+<p>This template includes three <i>inserts</i>, places where text from the user may be
+substituted.  The first, <tt>{$size}</tt> swaps in the user's provided border size;
+the second, <tt>{$color}</tt> swaps in the user's provided border color; and the third,
+<tt>{$_content}</tt>, is a special insert that substitutes the content or body of the
+tag, the text between the [border] tag and the [/border] tag.  You may substitute in
+any parameters from the tag that you want, not just <tt>color</tt> and <tt>size</tt>.</p>
+
+<p>(There are two additional possible built-in "special" inserts, like <tt>{$_content}</tt>.
+They are <tt>{$_name}</tt>, which is always the name of the tag itself; and <tt>{$_default}</tt>
+which is the default value provided by the user.  The default value is the value attached to
+the name of the tag and not any specific other parameter; for example, in <tt>[font=Times]</tt>,
+the default value is "Times".  Most of the tags in the standard library use and support
+default values whenever possible, since they're easiest for the user to work with.)</p>
+
+<a name="usage_enhtag_val"></a><h4>Input Validation</h4>
+
+<p>So now we have a tag that wraps our text in a border.  What's wrong with that?</p>
+
+<p>The answer is that we haven't done any kind of validation:  What if, for example, the
+user wrote this malicious BBCode?
+
+<div class='code_header'>Code:</div>
+<xmp class='code'>[border color="blue;font-size:40pt" size=2]This has a blue border![/border]</xmp>
+<div class='output_header'>Output:</div>
+<div class='output'><div style='border: 2px solid blue;font-size:40pt;'>This has a blue border!</div></div>
+
+<p>Oops!  That's not supposed to happen!  The user's not supposed to be able to
+use the <tt>[border]</tt> tag to change the font size!  We have a problem here
+because we haven't checked the user's input, and that's dangerous:  The whole point
+behind a <i>validating</i> BBCode parser is that it ensures that the user can't do things
+like this.  Imagine what would happen if the user inserted some Javascript?  Your
+page could be made to unknowingly distribute viruses!  Since that's bad ---
+<i>very</i> bad --- let's look at how to fix this problem.</p>
+
+<p>The solution is to specify some restrictions on what the user is allowed to use
+for attributes.  To do this, we use regular expressions
+to limit the possible values of <tt>{$size}</tt> and <tt>{$color}</tt> to things
+that we know are safe, like "1" and "red," and to prohibit all other values.  When
+NBBC sees a prohibited value, it rejects the tag in its entirety, thus ensuring that
+your output will still be safe.</p>
+
+	<div class='tipbox'>
+	<div class='tipbox_header'>
+		<div class='tipbox_star'>*</div><div><b>Tech Tip</b></div>
+	</div>
+	<div class='tipbox_content'><div class='tipbox_content2'>
+		<p><b>Don't know what regular expressions are?</b>  They're used pretty frequently in NBBC,
+		but we won't introduce them here:  They're documented very well in other places, and you
+		can even buy whole books on them if you want to learn them in depth.
+		Online, there's a good manual documenting NBBC's Perl-compatible regular expressions
+		(<a href="http://perldoc.perl.org/perlre.html">PCRE</a>) in detail, and there are also good
+		introductions/tutorials to regular expressions, both <a href="http://perldoc.perl.org/perlrequick.html">short intros</a>
+		and <a href="http://perldoc.perl.org/perlretut.html">long tutorials</a>.</p>
+		
+		<p>In this manual, though, we're going to use just the following basic syntax:</p>
+		<ul>
+		<li><b><tt>a</tt></b> - the letter "a"; a letter or number or symbol usually matches itself</li>
+		<li><b><tt>[a-z]</tt></b> - a character class, matching "a" through "z", inclusive</li>
+		<li><b><tt>[a-f0-9z]</tt></b> - a character class, matching "a" through "f", and "0" through "9", and "z"</li>
+		<li><b><tt>^</tt></b> - anchor to the beginning of the input</li>
+		<li><b><tt>$</tt></b> - anchor to the end of the input</li>
+		</ul>
+		<ul>
+		<li><b><tt>r*</tt></b> - zero or more of "r"</li>
+		<li><b><tt>r+</tt></b> - one or more of "r"</li>
+		<li><b><tt>r?</tt></b> - zero or one of "r", i.e., an optional "r"</li>
+		<li><b><tt>r|s</tt></b> - "r" or "s"</li>
+		<li><b><tt>(r)</tt></b> - parentheses control precedence, just like in arithmetic</li>
+		</ul>
+		<p>That's it:  We're going to use just the basics, and not going to touch advanced syntax like
+		<tt>(?=...)</tt> or <tt>r{n,m}</tt> in the NBBC manual.  If you need to learn or brush up
+		on regexes to follow this, there are plenty of other documents that will teach you how to do so.</p>
+	</div></div>
+	</div>
+
+<p>These are the regular expressions we'll use for <tt>{$size}</tt> and <tt>{$color}</tt>, and we'll
+err on the side of being too restrictive:  That's generally safer than being too permissive.
+In this case, we'll allow any positive integer for <tt>{$size}</tt>, and any hex value or alphabetic
+string for <tt>{$color}</tt>.  This leaves out CSS-style <tt>rgb(r,g,b)</tt> colors and the new
+CSS3 <tt>hsv(h,s,v)</tt> colors, but it's simple, usable, and reasonably flexible:</p>
+
+<div class='code_header'>Regex for validating a <tt>{$size}</tt>:</div>
+<xmp class='code'>/^[1-9][0-9]*$/</xmp>
+
+<div class='code_header'>Regex for validating a <tt>{$color}</tt>:</div>
+<xmp class='code'>/^#[0-9a-fA-F]+|[a-zA-Z]+$/</xmp>
+
+<p>So how do we use these expressions?  They get added to the BBCode rule for <tt>[border]</tt>
+under its <tt>'allow'</tt> property, like this:</p>
+
+<div class='code_header'>Code:</div>
+<xmp class='code'>    $bbcode->AddRule('border',  Array(
+        'mode' => BBCODE_MODE_ENHANCED,
+        'template' => '<div style="border: {$size}px solid {$color}">{$_content}</div>',
+        'allow' => Array(
+            'color' => '/^#[0-9a-fA-F]+|[a-zA-Z]+$/',
+            'size' => '/^[1-9][0-9]*$/',
+        ),
+        'class' => 'block',
+        'allow_in' => Array('listitem', 'block', 'columns'),
+    ));</xmp>
+
+<p>Now any time NBBC sees a tag whose parameters are valid, it'll accept that tag; but
+any time it sees a tag whose parameters don't match the <tt>'allow'</tt> regexes, that
+tag will be rejected, like this:</p>
+
+<div class='code_header'>Code:</div>
+<xmp class='code'>[border color="blue;font-size:40pt" size=2]This has a blue border![/border]
+[border color="green" size=2]This has a green border![/border]</xmp>
+<div class='output_header'>Output:</div>
+<div class='output'>[border color="blue;font-size:40pt" size=2]This has a blue border![/border]
+<div style='border: 2px solid green;'>This has a green border!</div></div>
+
+<p>While this output isn't perfect (for example, it might be better when given a bad color
+or size to try to clean it up than to outright ignore it), it's at least safe output; the
+user typed garbage input, and got garbage output, which is much better than what we had
+before.</p>
+
+<a name="usage_enhtag_default"></a><h4>Default Values</h4>
+
+<p>Okay, one more question:  What happens if the user doesn't provide a color or size
+for the border?  The <tt>'allow'</tt> property is only checked for the parameters that
+get included, so it's entirely possible for the user to still produce bad output like this:</p>
+
+<div class='code_header'>Code:</div>
+<xmp class='code'>[border color=blue]This has a blue border![/border]</xmp>
+<div class='output_header'>Output:</div>
+<div class='output'>This has a blue border!</div>
+
+<p>Obviously, that's not what you want, and whether it'll work at all depends on how
+the browser treats a damaged CSS style (most will ignore it).  Instead, it would be good
+to be able to say that if, say, a size is not included, use a size of "<tt>1</tt>" so
+that the output is valid and useful even if not all of the information is included.  We
+can do this using default values:</p>
+
+<div class='code_header'>Code:</div>
+<xmp class='code'>    $bbcode->AddRule('border',  Array(
+        'mode' => BBCODE_MODE_ENHANCED,
+        'template' => '<div style="border: {$size}px solid {$color}">{$_content}</div>',
+        'allow' => Array(
+            'color' => '/^#[0-9a-fA-F]+|[a-zA-Z]+$/',
+            'size' => '/^[1-9][0-9]*$/',
+        ),
+        'default' => Array(
+            'color' => 'blue',
+            'size' => '1',
+        ),
+        'class' => 'block',
+        'allow_in' => Array('listitem', 'block', 'columns'),
+    ));</xmp>
+
+<p>Now whenever the user leaves out the <tt>color</tt> parameter, NBBC will pretend
+that the user included <tt>color=blue</tt>; and likewise, when <tt>size</tt> is omitted,
+NBBC will pretend that the user included <tt>size=1</tt>.  This is certainly much more
+in keeping with the user's expectations (that if he uses <tt>[border]</tt>, he'll get a
+border), and it makes the enhanced tag useful in pretty much all circumstances:</p>
+
+<div class='code_header'>Code:</div>
+<xmp class='code'>[border]This has a blue border![/border]</xmp>
+<div class='output_header'>Output:</div>
+<div class='output'><div style='border: 1px solid blue;'>This has a blue border!</div></div>

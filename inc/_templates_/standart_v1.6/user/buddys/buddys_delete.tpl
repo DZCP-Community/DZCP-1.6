@@ -1,0 +1,1 @@
+<a href="?action=buddys&amp;do=delete&amp;id={$id}"><i class="fas fa-trash-alt fa-lg" title="" alt=""></i></a>

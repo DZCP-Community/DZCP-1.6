@@ -1,0 +1,1 @@
+&nbsp;&nbsp;<a href="../forum/?action=showthread&amp;id={$tid}&amp;page={$page}#p{$lp}">{$intern}{$wichtig}<span class="fontWichtig">{$cnt}</span> {$post} {$nthread} <span class="fontWichtig">{$thread}</span></a><br />

@@ -22,7 +22,7 @@ class Exclusions extends AbstractProvider
     protected $data = array(
         'Safari.[\d\.]*',
         'Firefox.[\d\.]*',
-        'Chrome.[\d\.]*',
+        ' Chrome.[\d\.]*',
         'Chromium.[\d\.]*',
         'MSIE.[\d\.]',
         'Opera\/[\d\.]*',
@@ -60,6 +60,13 @@ class Exclusions extends AbstractProvider
         'Opera Mini\/\d{1,2}\.\d{1,2}\.[\d\.]*\/\d{1,2}\.',
         'Opera',
         ' \.NET[\d\.]*',
-        ';', // Remove the following characters ;
+        'cubot',
+        '; M bot',
+        '; CRONO',
+        '; B bot',
+        '; IDbot',
+        '; ID bot',
+        '; POWER BOT',
+        'OCTOPUS-CORE',
     );
 }

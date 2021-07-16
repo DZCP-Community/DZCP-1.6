@@ -1,26 +1,28 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2017 © CodeKing, my-STARMEDIA, Codedesigns
  */
 
-if(settings("reg_dl") == "1" && $chkMe == "unlogged")
-{
-    $index = error(_error_unregistered,1);
-} else {
-    $qry = db("SELECT url FROM ".$db['downloads']."
-               WHERE id = '".intval($_GET['id'])."'");
-    $get = _fetch($qry);
+if (!defined('_Downloads')) exit();
 
-    $file = preg_replace("#added...#Uis", "", $get['url']);
-
-    if(preg_match("=added...=Uis",$get['url']) != FALSE)
-        $dlFile = "files/".$file;
-    else $dlFile = $get['url'];
-
-    $upd = db("UPDATE ".$db['downloads']."
-               SET `hits` = hits+1
-               WHERE id = '".intval($_GET['id'])."'");
-//download file
-    header("Location: ".$dlFile);
+if(settings::get("reg_dl") && !common::$chkMe)
+    $index = common::error(_error_unregistered,1);
+else if($_SESSION['dl_id'] >= 1) {
+    $dl_key = common::$server->getDownloadKey($_SESSION['dl_id']);
+    if(!$dl_key->isError() && !empty($dl_key->getKey()))
+        header("Location: ".$dl_key->getServer()."?key=".$dl_key->getKey());
+    else
+        $index = common::error(_error_api,1);
 }

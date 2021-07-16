@@ -1,0 +1,1 @@
+<select id="t" name="t" class="selectpicker{$class}">{$day}</select> <select id="m" name="m" class="selectpicker{$class}">{$month}</select> <select id="j" name="j" class="selectpicker">{$year}</select>

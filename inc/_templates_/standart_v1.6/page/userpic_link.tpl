@@ -1,0 +1,1 @@
+<img src="../inc/images/uploads/userpics/{$id}.{$endung}" width="{$width}" height="{$height}" alt="" />

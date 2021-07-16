@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<title>How a Typical NBBC Program Works - NBBC: The New BBCode Parser</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel='stylesheet' type='text/css' href='styles.css' />
+</head>
+
+<body>
+
+<div align='center'><div class='page_container2'><div class='page_container'>
+
+<h2>III. Using NBBC</h2>
+
+<p style='text-align:right;margin:0;'>[ Previous: <a href="usage_basic.html">A. Your First NBBC Program</a> | Next: <a href="usage_add.html">C. Adding Your Own Tags</a> ]</p>
+
+<h3>B. How a Typical NBBC Program Works</h3>
+
+<p>While the example in the <a href="usage_basic.html">previous section</a>
+is simple, it's not very useful.  Generally, most programs using NBBC
+will be structured like this:</p>
+
+<div class='code_header'>Code:</div>
+<xmp class='code'><?php
+    ...other includes...
+    require_once("nbbc.php");
+	
+    ...
+	
+    $bbcode = new BBCode;
+    ...possible additional optional setup for the $bbcode object...
+	
+    ...
+	
+    $string = [some BBCode from somewhere, usually either a file or a database]
+    $output = $bbcode->Parse($string);
+	
+    ...
+	
+    print $output;
+?></xmp>
+
+<p>The setup phase, where you create the new <tt>BBCode</tt> object and maybe alter its
+functionality a little (say, to add more smileys and BBCode rules, or remove existing ones),
+only needs to be done once in your script:  The <tt>BBCode</tt> object, once it's been
+set up, can be reused again and again to convert different pieces of BBCode text in the
+same script.</p>
+
+<p style='text-align:right;'>[ Previous: <a href="usage_basic.html">A. Your First NBBC Program</a> | Next: <a href="usage_add.html">C. Adding Your Own Tags</a> ]</p>
+
+<hr />
+
+<div style='text-align:center;'>Copyright &copy; 2010, the Phantom Inker.  All rights reserved.</div>
+
+</div></div></div>
+
+</body>
+
+</html>

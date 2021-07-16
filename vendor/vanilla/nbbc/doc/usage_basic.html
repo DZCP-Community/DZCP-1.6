@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<title>Your First NBBC Program - NBBC: The New BBCode Parser</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel='stylesheet' type='text/css' href='styles.css' />
+</head>
+
+<body>
+
+<div align='center'><div class='page_container2'><div class='page_container'>
+
+<h2>III. Using NBBC</h2>
+
+<p style='text-align:right;margin:0;'>[ Previous: <a href="install_unpack.html">II.B. Installation</a> | Next: <a href="usage_how.html">B. How a Typical NBBC Program Works</a> ]</p>
+
+<h3>A. Your First NBBC Program</h3>
+
+<p>NBBC is designed to be very easy to use, even for the most meager of PHP programmers.  Let's
+try creating your first program that parses BBCode.  Create a new file in your project directory,
+named "<tt>hello.php</tt>", and use your favorite text editor to put this very simple PHP
+program in it:
+
+<div class='code_header'>Code:</div>
+<xmp class='code'><?php
+    require_once("nbbc.php");
+    $bbcode = new BBCode;
+    print $bbcode->Parse("[i]Hello, World![/i]  This is the magic of [b]BBCode[/b]!");
+?></xmp>
+
+<div class='output_header'>Output:</div>
+<div class='output'>
+<i>Hello, World!</i>  This is the magic of <b>BBCode</b>!
+</div>
+
+<p>Let's look at what this does.  First, the <tt>require_once</tt> directive adds NBBC to your
+program.  Next, <tt>new BBCode</tt> creates a new BBCode parser object and sets it up to be
+ready for performing parsing.  The new <a href="api.html"><tt>BBCode</tt></a> object is then stored in the variable
+<tt>$bbcode</tt>.  Finally, the big one...  we ask the <tt>BBCode</tt> object to convert
+some BBCode text to HTML, and we print the result.</p>
+
+<p style='text-align:right;'>[ Previous: <a href="install_unpack.html">II.B. Installation</a> | Next: <a href="usage_how.html">B. How a Typical NBBC Program Works</a> ]</p>
+
+<hr />
+
+<div style='text-align:center;'>Copyright &copy; 2010, the Phantom Inker.  All rights reserved.</div>
+
+</div></div></div>
+
+</body>
+
+</html>

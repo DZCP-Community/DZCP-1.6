@@ -1,0 +1,4 @@
+RewriteEngine on 
+RewriteRule society_version.txt$ proxy.php?version=society
+RewriteRule version.txt$ proxy.php?version=full
+RewriteRule dzcp_news.php$ proxy.php?news=1

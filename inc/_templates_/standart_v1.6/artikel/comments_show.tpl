@@ -1,0 +1,32 @@
+<!-- start comments_show.tpl -->
+<tr>
+  <td colspan="2" class="contentMainTop">
+    <table class="hperc" cellspacing="0">
+      <tr>
+        <td>{$titel}</td>
+        <td style="text-align:right">{$ip}</td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td class="commentsLeft">
+    <table class="hperc">
+      <tr>
+        <td>{$nick}</td>
+        <td align="right">{$onoff}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="fontItalic">{$rank}</span></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align:center">{$avatar}</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align:center">{$hp}</td>
+      </tr>
+    </table>
+  </td>
+  <td class="commentsRight">{$comment}{$editby}</td>
+</tr>
+<!-- end comments_show.tpl -->

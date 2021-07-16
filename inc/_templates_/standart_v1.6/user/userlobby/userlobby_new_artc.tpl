@@ -1,0 +1,1 @@
+&nbsp;&nbsp;<a href="../../artikel?action=show&amp;id={$id}#lastcomment"><span class="fontWichtig">{$cnt}</span> {$eintrag}</a><br />

@@ -1,0 +1,1 @@
+&nbsp;&nbsp;<a href="../news/?action=show&amp;id={$id}#lastcomment"><span class="fontWichtig">{$cnt}</span> {$eintrag} in <span class="fontWichtig">{$news}</span></a><br />

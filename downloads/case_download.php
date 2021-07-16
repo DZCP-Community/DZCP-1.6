@@ -1,148 +1,108 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2020 © CodeKing, my-STARMEDIA, Codedesigns
  */
-if(settings("reg_dl") == 1 && $chkMe == "unlogged")
-{
-    $index = error(_error_unregistered);
-} else {
-    $qry = db("SELECT * FROM ".$db['downloads']."
-               WHERE id = '".intval($_GET['id'])."'");
-    $get = _fetch($qry);
 
-    $file = preg_replace("#added...#Uis", "files/", $get['url']);
-    if(strpos($get['url'],"../") != 0) $rawfile = @basename($file);
-    else                                   $rawfile = re($get['download']);
+if (!defined('_Downloads')) exit();
 
-    $size = @filesize($file);
-    $size_mb = @round($size/1048576,2);
-    $size_kb = @round($size/1024,2);
+$_SESSION['dl_id'] = 0;
+if(array_key_exists('id',$_GET) && isset($_GET['id'])) {
+    $_SESSION['dl_id'] = (int)($_GET['id']);
+}
 
-    $speed_modem = @round(($size/1024)/(56/8)/60,2);
-    $speed_isdn = @round(($size/1024)/(128/8)/60,2);
-    $speed_dsl256 = @round(($size/1024)/(256/8)/60,2);
-    $speed_dsl512 = @round(($size/1024)/(512/8)/60,2);
-    $speed_dsl1024 = @round(($size/1024)/(1024/8)/60,2);
-    $speed_dsl2048 = @round(($size/1024)/(2048/8)/60,2);
-    $speed_dsl3072 = @round(($size/1024)/(3072/8)/60,2);
-    $speed_dsl6016 = @round(($size/1024)/(6016/8)/60,2);
-    $speed_dsl16128 = @round(($size/1024)/(16128/8)/60,2);
+if(settings::get("reg_dl") && !common::$chkMe)
+    $index = common::error(_error_unregistered);
+else if($_SESSION['dl_id'] >= 1) {
+    $download = common::$server->getDownload(['id'=>$_SESSION['dl_id']]);
 
-    if(strlen(@round(($size/1048576)*$get['hits'],0)) >= 4)
-        $traffic = @round(($size/1073741824)*$get['hits'],2).' GB';
-    else $traffic = @round(($size/1048576)*$get['hits'],2).' MB';
+    if(!$download->isError() && !$download->isIntern() || ($download->isIntern() && common::checkme())) {
+        $pic = '';
+        foreach(common::SUPPORTED_PICTURE as $tmpendung) {
+            if(file_exists(rootPath."/static/images/downloads/dl_".$download->getId().".".$tmpendung)) {
+                $pic .= '<li data-thumb="https://static.dzcp.de/thumbgen.php?width=25&height=18&img=images/downloads/dl_'.$download->getId().'.'.
+                    $tmpendung.'"><img src="https://static.dzcp.de/images/downloads/dl_'.$download->getId().'.'.$tmpendung.'" /></li>';
+            }
 
-    $getfile = show(_dl_getfile, array("file" => $rawfile));
-
-    if($size == false)
-    {
-        $dlsize = $traffic = 'n/a';
-        $br1 = '<!--';
-        $br2 = '-->';
-    } else {
-        $dlsize = $size_mb.' MB ('.$size_kb.' KB)';
-        $br1 = '';
-        $br2 = '';
-    }
-    if(empty($get['date']))
-    {
-        if($size == false) $date = 'n/a';
-        else $date = date("d.m.Y H:i",@filemtime($file))._uhr;
-    } else $date = date("d.m.Y H:i",$get['date'])._uhr;
-    $lastdate = date("d.m.Y H:i",@fileatime($file))._uhr;
-
-
-    foreach($picformat as $endung)
-    {
-        if(file_exists(basePath."/inc/images/downloads/".$get['id'].".png"))
-        {
-            $picturea = show(_downloads_pica, array("pica" => img_download('inc/images/downloads/'.$get['id'].'.png')));
-            $thumba = show(_downloads_pica_link, array("thumba" => '../inc/images/downloads/'.$get['id'].'.png'));
-            foreach($picformat as $endung)
-            {
-                if(file_exists(basePath."/inc/images/downloads/".$get['id']."-1.png"))
-                {
-                    $pictureb = show(_downloads_picb, array("picb" => img_download('inc/images/downloads/'.$get['id'].'-1.png')));
-                    $thumbb = show(_downloads_picb_link, array("thumbb" => '../inc/images/downloads/'.$get['id'].'-1.png'));
-                    break;
-                }else{
-                    $pictureb = "";
-                    $thumbb = "";
+            for ($i = 1; $i <= 6; $i++) {
+                if(file_exists(rootPath."/static/images/downloads/dl_".$download->getId()."_".$i.".".$tmpendung)) {
+                    $pic .= '<li data-thumb="https://static.dzcp.de/thumbgen.php?width=25&height=18&img=images/downloads/dl_'.$download->getId().'_'.$i.'.'.
+                        $tmpendung.'"><img src="https://static.dzcp.de/images/downloads/dl_'.$download->getId().'_'.$i.'.'.$tmpendung.'" /></li>';
                 }
             }
-            foreach($picformat as $endung)
-            {
-                if(file_exists(basePath."/inc/images/downloads/".$get['id']."-2.png"))
-                {
-                    $picturec = show(_downloads_picc, array("picc" => img_download('inc/images/downloads/'.$get['id'].'-2.png')));
-                    $thumbc = show(_downloads_picc_link, array("thumbc" => '../inc/images/downloads/'.$get['id'].'-2.png'));
-                    break;
-                }else{
-                    $picturec = "";
-                    $thumbc = "";
-                }
-            }
-            foreach($picformat as $endung)
-            {
-                if(file_exists(basePath."/inc/images/downloads/".$get['id']."-3.png"))
-                {
-                    $pictured = show(_downloads_picd, array("picd" => img_download('inc/images/downloads/'.$get['id'].'-3.png')));
-                    $thumbd = show(_downloads_picd_link, array("thumbd" => '../inc/images/downloads/'.$get['id'].'-3.png'));
-                    break;
-                }else{
-                    $pictured = "";
-                    $thumbd = "";
-                }
-            }
-            $pic = show($dir."/info_slider", array("picture-a" => $picturea,
-                "picture-b" => $pictureb,
-                "picture-c" => $picturec,
-                "picture-d" => $pictured,
-                "thumb-a" => $thumba,
-                "thumb-b" => $thumbb,
-                "thumb-c" => $thumbc,
-                "thumb-d" => $thumbd));
-            break;
-        }else{
-            $pic = '<img src="../inc/images/nodl.jpg" alt=""/>';
         }
+
+        if(empty($pic)) {
+            $pic = '<li data-thumb="../thumbgen.php?width=100&height=71&img='.common::getTplImgDir().'/downloads/nodl.jpg" ><img src="../'.common::getTplImgDir().'/downloads/nodl.jpg" /></li>';
+        }
+
+        $smarty->caching = false;
+        $smarty->assign('date',date("d.m.Y H:i",$download->getTime())._uhr);
+        $smarty->assign('id',$download->getId());
+        $smarty->assign('kat',stringParser::decode($download->getCategoryName()));
+        $smarty->assign('titel',stringParser::decode($download->getName()));
+        $smarty->assign('hits',$download->getStats()->getDownloads());
+        $smarty->assign('size',common::parser_filesize($download->getStats()->getSize()));
+        $smarty->assign('desc',BBCode::parse_html($download->getDescription()));
+        $smarty->assign('updated',date("d.m.Y H:i",$download->getUpdated())._uhr);
+        $smarty->assign('forum_url',$download->getForumUrl());
+        $smarty->assign('has_forum_url',$download->hasForumUrl());
+        $smarty->assign('file',stringParser::decode($download->getFile()));
+        $smarty->assign('crc',stringParser::decode($download->getCrc()));
+        $smarty->assign('pic',$pic);
+        $show = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/info.tpl');
+        $smarty->clearAllAssign();
+
+        $qry = common::$server->getDlCategorys(1200); $kats = '';
+        if(count($qry->getCategorys()) && !$qry->isError()) {
+            foreach($qry->getCategorys() as $get) {
+                /*
+                 * SubKats
+                 */
+                $subkats = '';
+                foreach($get->getSubCategorys() as $get_subkats) {
+                    $smarty->cache_lifetime = 1200;
+                    $smarty->assign('subkat',stringParser::decode($get_subkats['name']));
+                    $smarty->assign('kid',stringParser::decode($get->getId()));
+                    $smarty->assign('skid',stringParser::decode($get_subkats['id']));
+                    $subkats .= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/download_subkats.tpl');
+                    $smarty->clearAllAssign();
+                }
+
+                /*
+                 * Kats
+                 */
+                if(!empty($subkats)) {
+                    $smarty->cache_lifetime = 1200;
+                    $smarty->assign('kat', stringParser::decode($get->getName()));
+                    $smarty->assign('subkats', $subkats);
+                    $kats .= $smarty->fetch('file:[' . common::$tmpdir . ']' . $dir . '/download_kats.tpl');
+                    $smarty->clearAllAssign();
+                }
+            }
+        }
+
+        $smarty->caching = false;
+        $smarty->assign('kats',$kats);
+        $smarty->assign('show',$show);
+        $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/downloads_more.tpl');
+        $smarty->clearAllAssign();
+    } else if(!$download->isError() && $download->isIntern()) {
+        $index = common::error(_error_no_access);
+    } else {
+        $index = common::error(_id_dont_exist,1);
     }
-
-
-    $index = show($dir."/info", array("head" => _dl_info,
-        "headd" => _dl_info2,
-        "pictures" => _downloads_pictures_head,
-        "infos" => _downloads_infos_head,
-        "klickinfo" => _download_klickinfo,
-        "getfile" => $getfile,
-        "dl_file" => _dl_file,
-        "dl_besch" => _dl_besch,
-        "dl_size" => _dl_size,
-        "dl_speed" => _dl_speed,
-        "dl_traffic" => _dl_traffic,
-        "dl_loaded" => _dl_loaded,
-        "dl_date" => _dl_date,
-        "last_date" => _download_last_date,
-        "br1" => $br1,
-        "br2" => $br2,
-        "pic" => $pic,
-        "date" => $date,
-        "lastdate" => $lastdate,
-        "id" => $_GET['id'],
-        "dlname" => re($get['download']),
-        "loaded" => $get['hits'],
-        "traffic" => $traffic,
-        "speed_modem" => $speed_modem,
-        "speed_isdn" => $speed_isdn,
-        "speed_dsl256" => $speed_dsl256,
-        "speed_dsl512" => $speed_dsl512,
-        "speed_dsl1024" => $speed_dsl1024,
-        "speed_dsl2048" => $speed_dsl2048,
-        "speed_dsl3072" => $speed_dsl3072,
-        "speed_dsl6016" => $speed_dsl6016,
-        "speed_dsl16128" => $speed_dsl16128,
-        "size" => $dlsize,
-        "besch" => bbcode($get['beschreibung']),
-        "file" => $rawfile));
+} else {
+    $index = common::error(_id_dont_exist,1);
 }

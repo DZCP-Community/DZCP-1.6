@@ -11,18 +11,18 @@
 
 namespace Jaybizzle\CrawlerDetect;
 
-use Jaybizzle\CrawlerDetect\Fixtures\Headers;
 use Jaybizzle\CrawlerDetect\Fixtures\Crawlers;
 use Jaybizzle\CrawlerDetect\Fixtures\Exclusions;
+use Jaybizzle\CrawlerDetect\Fixtures\Headers;
 
 class CrawlerDetect
 {
     /**
      * The user agent.
      *
-     * @var null
+     * @var string|null
      */
-    protected $userAgent = null;
+    protected $userAgent;
 
     /**
      * Headers that contain a user agent.
@@ -106,7 +106,7 @@ class CrawlerDetect
      *
      * @param array|null $httpHeaders
      */
-    public function setHttpHeaders($httpHeaders = null)
+    public function setHttpHeaders($httpHeaders)
     {
         // Use global _SERVER if $httpHeaders aren't defined.
         if (! is_array($httpHeaders) || ! count($httpHeaders)) {
@@ -140,30 +140,17 @@ class CrawlerDetect
      *
      * @param string|null $userAgent
      */
-    public function setUserAgent($userAgent = null)
+    public function setUserAgent($userAgent)
     {
-        if (false === empty($userAgent)) {
-            $this->userAgent = $userAgent;
-        } else {
-            $this->userAgent = null;
+        if (is_null($userAgent)) {
             foreach ($this->getUaHttpHeaders() as $altHeader) {
-                if (false === empty($this->httpHeaders[$altHeader])) { // @todo: should use getHttpHeader(), but it would be slow.
-                    $this->userAgent .= $this->httpHeaders[$altHeader].' ';
+                if (isset($this->httpHeaders[$altHeader])) {
+                    $userAgent .= $this->httpHeaders[$altHeader].' ';
                 }
             }
-
-            $this->userAgent = (! empty($this->userAgent) ? trim($this->userAgent) : null);
         }
-    }
 
-    /**
-     * Set the user agent.
-     *
-     * @param string|null $userAgent
-     */
-    public function getUserAgent()
-    {
-        return $this->userAgent;
+        return $this->userAgent = $userAgent;
     }
 
     /**
@@ -175,21 +162,17 @@ class CrawlerDetect
      */
     public function isCrawler($userAgent = null)
     {
-        $agent = $userAgent ?: $this->userAgent;
+        $agent = trim(preg_replace(
+            "/{$this->compiledExclusions}/i",
+            '',
+            $userAgent ?: $this->userAgent
+        ));
 
-        $agent = preg_replace('/'.$this->compiledExclusions.'/i', '', $agent);
-
-        if (strlen(trim($agent)) == 0) {
+        if ($agent === '') {
             return false;
         }
 
-        $result = preg_match('/'.$this->compiledRegex.'/i', trim($agent), $matches);
-
-        if ($matches) {
-            $this->matches = $matches;
-        }
-
-        return (bool) $result;
+        return (bool) preg_match("/{$this->compiledRegex}/i", $agent, $this->matches);
     }
 
     /**

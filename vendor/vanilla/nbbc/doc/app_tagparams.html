@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<title>Tag Parameters - NBBC: The New BBCode Parser</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel='stylesheet' type='text/css' href='styles.css' />
+</head>
+
+<body>
+
+<div align='center'><div class='page_container2'><div class='page_container'>
+
+<h2>VI. Appendices</h2>
+
+<p style='text-align:right;margin:0;'>[ Previous: <a href="app_internals.html">G. How the Parser Works</a> ]</p>
+
+<h3>H. Tag Parameters</h3>
+
+<p>In versions 1.0 through 1.3 of NBBC, the tag parameters provided to the callback function
+were fairly simple and straightforward.  There were the parameters provided by the user, and
+these three parameters were provided by NBBC itself:</p>
+
+<ul>
+<li style='margin-bottom:1em;'><tt>_name</tt>:  The name of the tag, like "<tt>url</tt>" or "<tt>color</tt>".</li>
+
+<li style='margin-bottom:1em;'><tt>_default</tt>: The default value of the tag; in <tt>[font=Arial&nbsp;size=5]</tt> the
+	default value would be "<tt>Arial</tt>".</li>
+
+<li style='margin-bottom:1em;'><tt>_end</tt>: A boolean value that is false if the tag is a start tag and true if
+	the tag is an end tag <i>(note that this will always be <tt>false</tt> for a callback function, so
+	it's not very useful outside of NBBC's internals)</i>.</li>
+</ul>
+
+<p>However, in v1.4 and later of NBBC, the tag parameters have been expanded to include the
+following additional parameters:</p>
+
+<ul>
+<li style='margin-bottom:1em;'><tt>_tag</tt>: The raw verbatim text of the tag, unparsed.  For example, in
+	<tt>[font=Arial&nbsp;size=5]...[/font]</tt>, this will contain "<tt>[font=Arial&nbsp;size=5]</tt>".</li>
+
+<li style='margin-bottom:1em;'><tt>_endtag</tt>: The raw verbatim text of the closing tag, unparsed.  For example, in
+	<tt>[font=Arial&nbsp;size=5]...[/font]</tt>, this will contain "<tt>[/font]</tt>".  Note
+	that if an end tag is optional, or it's required but the user forgets to provide it, this
+	value will still contain appropriate closing-tag text (i.e., the parser will create a suitable
+	end tag).</li>
+	
+<li style='margin-bottom:1em;'><tt>_hasend</tt>: If a closing tag was provided by the user, this will be set to <tt>true</tt>;
+	if no closing tag was provided, or this tag didn't allow a closing tag, this will be set to <tt>false</tt>.
+	You can use this field to distinguish whether the user has provided a closing tag or not when
+	closing tags are optional.</li>
+	
+<li style='margin-bottom:1em;'><tt>_params</tt>: The exact parameters of the tag, parsed, in list form.  For example, in
+	<tt>[font=Arial&nbsp;size=5]</tt>, this parameter will contain this array:
+<pre>Array(
+    Array("key" =&gt; "font", "value" =&gt; "Arial"),
+    Array("key" =&gt; "size", "value" =&gt; "5")
+)</pre>
+		While this may appear to be identical to the array that contains it, it's not.  First, the
+		0th array element is <i>always</i> set to the tag's default value (even if there is no
+		default value), and second, if redundant parameters are provided, this will list them
+		separately.  For example:
+<pre>[includes file="Larry" file="George" file="Bill"]
+=&gt; Array(
+    Array("key" =&gt; "includes", "value" =&gt; ""),
+    Array("key" =&gt; "file", "value" =&gt; "Larry"),
+    Array("key" =&gt; "file", "value" =&gt; "George"),
+    Array("key" =&gt; "file", "value" =&gt; "Bill")
+)</pre>
+</ul>
+
+<p>In addition, in v1.4, the rule was established that no user-provided parameter may have a name
+that starts with an underscore (_); names that start with underscores are reserved for use by
+NBBC itself.</p>
+
+<p>Some of these values are debatably useful; for example, the <tt>_end</tt> parameter is primarily
+used by NBBC to ensure proper tag parsing and doesn't help a callback rule much.  But others, such
+as the new <tt>_params</tt> parameter, provide significant power to callback rules that they never
+had before.</p>
+
+<hr />
+
+<p>In particular, the <tt>_tag</tt> and <tt>_endtag</tt> parameters are now provided so
+that callbacks can do late validation of their data.  For example, consider a callback for the tag
+<tt>[fruit]</tt>.  This callback wants to allow <tt>[fruit]apple[/fruit]</tt> and <tt>[fruit]orange[/fruit]</tt>
+but not <tt>[fruit]green[/fruit]</tt>.  The callback cannot use the validation stage of rule processing
+to answer this because it doesn't know what its contents will be until it has already said "yes".
+But with the <tt>_tag</tt> and <tt>_endtag</tt> parameters, the <tt>[fruit]</tt> tag can now "fake"
+correct behavior:</p>
+
+<xmp class='code'>function DoFruit($bbcode, $action, $name, $default, $params, $content) {
+    // We can't check this with BBCODE_CHECK because we have no fruit
+    // before the content has been processed.
+    if ($action == BBCODE_CHECK) return true;
+
+    if ($content == "apple" || $content == "orange") {
+        // Generate proper output for our [fruit] tag.
+        return "<div class='fruit'>" . $content . "</div>";
+    }
+    else {
+        // Just output the original tag's text, since it's not valid.
+        return htmlspecialchars($params['_tag']) . $content
+            . htmlspecialchars($params['_endtag']);
+    }
+}</xmp>
+
+<p>Notice how this callback, if given an invalid type of fruit, simply returns the original
+tag and its contents, unchanged.  This pattern is used in several places in the Standard BBCode
+Library in NBBC v1.4, and can be very useful in your own rules as rell.</p>
+
+<p style='text-align:right;'>[ Previous: <a href="app_internals.html">G. How the Parser Works</a> ]</p>
+
+<hr />
+
+<div style='text-align:center;'>Copyright &copy; 2010, the Phantom Inker.  All rights reserved.</div>
+
+</div></div></div>
+
+</body>
+
+</html>

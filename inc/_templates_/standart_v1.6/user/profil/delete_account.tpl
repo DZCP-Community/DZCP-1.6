@@ -1,0 +1,1 @@
+<a href="?action=editprofile&amp;do=delete&amp;id={$id}" rel="{lang msgID="confirm_del_account"}" class="confirm">{lang msgID="button_title_del_account"}</a>

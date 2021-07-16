@@ -1,329 +1,355 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2017 © CodeKing, my-STARMEDIA, Codedesigns
  */
 
-if(defined('_News')) {
-        $check = db("SELECT intern FROM ".$db['news']." WHERE id = '".(int)($_GET['id'])."'",false,true);
+if(defined('_News') && isset($_GET['id']) && !empty($_GET['id'])) {
+    $news_id = (int)($_GET['id']); $add = ''; $notification_p = '';
+    if (common::$sql['default']->fetch("SELECT `intern` FROM `{prefix_news}` WHERE `id` = ?;", [$news_id],'intern') && !common::permission("intnews")) {
+        $index = common::error(_error_wrong_permissions, 1);
+    } else {
+        $add = false;
+        $get_news = common::$sql['default']->fetch("SELECT * FROM `{prefix_news}` WHERE `id` = ?".(common::permission("news") ? ";" : " AND public = 1;"), [$news_id]);
+        if (!common::$sql['default']->rowCount()) {
+            $index = common::error(_id_dont_exist, 1);
+        } else {
+            switch (common::$do) {
+                case 'add':
+                    if (common::$sql['default']->rows("SELECT `id` FROM `{prefix_news}` WHERE `id` = ?;", [$news_id]) != 0) {
+                        if (!common::$chkMe) {
+                            $index = common::error(_error_have_to_be_logged, 1);
+                        } else {
+                            if (!common::ipcheck("ncid(" . $news_id . ")", settings::get('f_newscom'))) {
+                                if (empty($_POST['comment'])) {
+                                    if (empty($_POST['eintrag'])) {
+                                        notification::add_error(_empty_eintrag,'news');
+                                    }
 
-        if($check['intern'] && !permission("intnews"))
-            $index = error(_error_wrong_permissions, 1);
-        else
-        {
-            $qry = db("SELECT * FROM ".$db['news']." WHERE id = '".(int)($_GET['id'])."'".(permission("news") ? "" : " AND public = 1") );
-            if(_rows($qry) == 0)
-                $index = error(_id_dont_exist,1);
-            else
-            {
-                db("UPDATE ".$db['news']." SET `viewed` = viewed+1 WHERE id = '".(int)($_GET['id'])."'");
+                                    if(notification::has('news')) {
+                                        javascript::set('AnchorMove', 'comForm');
+                                    }
+                                } else {
+                                    common::$sql['default']->insert("INSERT INTO `{prefix_news_comments}` SET `news` = ?,`datum` = ?,`nick` = ?,`email` = ?,`hp` = ?,`reg` = ?,`comment` = ?, `ipv4` = ?, `ipv6` = ?;",
+                                    [$news_id,time(),common::data('nick'),common::data('email'),
+                                        (isset($_POST['hp']) && !common::$userid ? common::links($_POST['hp']) : common::links(common::data('hp'))),
+                                        common::$userid,stringParser::encode($_POST['comment']),common::$userip['v4'],common::$userip['v6']]);
 
-                $get = _fetch($qry);
-                $getkat = db("SELECT katimg FROM ".$db['newskat']." WHERE id = '".$get['kat']."'",false,true);
+                                    common::setIpcheck("ncid(" . $news_id . ")");
+                                    $_POST = []; //Clear Post
 
-                $klapp = "";
-                if($get['klapptext'])
-                    $klapp = show(_news_klapplink, array("klapplink" => re($get['klapplink']),
-                            "which" => "expand",
-                            "id" => $get['id']));
+                                    notification::add_success(_comment_added,'news', '../news/?action=show&id='.$news_id.'#comments',2);
 
-                $viewed = show(_news_viewed, array("viewed" => $get['viewed']));
-
-                $links1 = ""; $rel = "";
-                if(!empty($get['url1'])) {
-                    $rel = _related_links;
-                    $links1 = show(_news_link, array("link" => re($get['link1']),
-                            "url" => $get['url1']));
-                }
-
-                $links2 = "";
-                if(!empty($get['url2'])) {
-                    $rel = _related_links;
-                    $links2 = show(_news_link, array("link" => re($get['link2']),
-                            "url" => $get['url2']));
-                }
-
-                $links3 = "";
-                if(!empty($get['url3'])) {
-                    $rel = _related_links;
-                    $links3 = show(_news_link, array("link" => re($get['link3']),
-                            "url" => $get['url3']));
-                }
-
-                $links = "";
-                if(!empty($links1) || !empty($links2) || !empty($links3))
-                    $links = show(_news_links, array("link1" => $links1,
-                            "link2" => $links2,
-                            "link3" => $links3,
-                            "rel" => $rel));
-
-                $qryc = db("SELECT * FROM ".$db['newscomments']."
-                            WHERE news = ".(int)($_GET['id'])."
-                            ORDER BY datum DESC
-                            LIMIT ".($page - 1)*config('m_comments').",".config('m_comments')."");
-
-                $entrys = cnt($db['newscomments'], " WHERE news = ".(int)($_GET['id']));
-                $i = $entrys-($page - 1)*config('m_comments');
-
-                $comments = '';
-                while($getc = _fetch($qryc)) {
-                    $edit = ""; $delete = "";
-                    if(($chkMe >= 1 && $getc['reg'] == $userid) || permission("news")) {
-                        $edit = show("page/button_edit_single", array("id" => $get['id'],
-                                                                      "action" => "action=show&amp;do=edit&amp;cid=".$getc['id'],
-                                                                      "title" => _button_title_edit));
-
-                        $delete = show("page/button_delete_single", array("id" => $get['id'],
-                                                                         "action" => "action=show&amp;do=delete&amp;cid=".$getc['id'],
-                                                                         "title" => _button_title_del,
-                                                                         "del" => convSpace(_confirm_del_entry)));
+                                    if(notification::has('news')) {
+                                        javascript::set('AnchorMove', 'notification-box'); //Move to notification
+                                    }
+                                }
+                            } else {
+                                $smarty->caching = false;
+                                $smarty->assign('sek',settings::get('f_newscom'));
+                                $error = $smarty->fetch('string:'._error_flood_post);
+                                $smarty->clearAllAssign();
+                                notification::add_error($error);
+                                unset($error);
+                                if(notification::has()) {
+                                    javascript::set('AnchorMove', 'notification-box'); //Move to notification
+                                }
+                            }
+                        }
+                    } else {
+                        notification::add_error(_id_dont_exist,'news');
+                        if(notification::has('news')) {
+                            javascript::set('AnchorMove', 'notification-box'); //Move to notification
+                        }
+                    }
+                    break;
+                case 'delete':
+                    $reg = common::$sql['default']->fetch("SELECT `reg` FROM `{prefix_news_comments}` WHERE `id` = ?;", [($cid = (int)($_GET['cid']))],'reg');
+                    if (common::$userid >= 1 && ($reg == common::$userid || common::permission('news'))) {
+                        common::$sql['default']->delete("DELETE FROM `{prefix_news_comments}` WHERE `id` = ?;", [$cid]);
+                        notification::add_success(_comment_deleted,'news');
+                    } else {
+                        notification::add_error(_error_wrong_permissions,'news');
                     }
 
-                    $email = ""; $hp = ""; $onoff = onlinecheck($getc['reg']); $nick = autor($getc['reg']); $avatar = ""; $onoff = "";
-                    if($getc['reg'] == "0") {
-                        if($getc['hp'])
-                            $hp = show(_hpicon_forum, array("hp" => $getc['hp']));
+                    if(notification::has('news')) {
+                        javascript::set('AnchorMove', 'notification-box'); //Move to notification
+                    }
+                    break;
+                case 'editcom':
+                    $reg = common::$sql['default']->fetch("SELECT `reg` FROM `{prefix_news_comments}` WHERE `id` = ?;", [($cid = (int)($_GET['cid']))],'reg');
+                    if (common::$sql['default']->rowCount() && !empty($_POST['comment'])) {
+                        if (common::$userid >= 1 && ($reg == common::$userid || common::permission('news'))) {
+                            //-> Editby Text
+                            $smarty->caching = false;
+                            $smarty->assign('autor',common::autor(common::$userid));
+                            $smarty->assign('time',date("d.m.Y H:i", time()));
+                            $editedby = $smarty->fetch('string:'._edited_by);
+                            $smarty->clearAllAssign();
 
-                        if($getc['email'])
-                            $email = '<br />'.show(_emailicon_forum, array("email" => eMailAddr(re($getc['email']))));
+                            common::$sql['default']->update("UPDATE `{prefix_news_comments}` SET `nick` = ?, `email` = ?, `hp` = ?, `comment` = ?, `editby` = ?
+                                          WHERE `id` = ?;", [(isset($_POST['nick']) ? stringParser::encode($_POST['nick']) : ''),
+                                          (isset($_POST['email']) ? stringParser::encode($_POST['email']) : ''),
+                                          (isset($_POST['hp']) ? common::links($_POST['hp']) : ''),
+                                          (isset($_POST['comment']) ? stringParser::encode($_POST['comment']) : ''),
+                                          stringParser::encode($editedby),$cid]);
 
-                        $nick = show(_link_mailto, array("nick" => re($getc['nick']), "email" => eMailAddr(re($getc['email']))));
+                            $_POST = []; //Clear Post
+                            notification::add_success(_comment_edited,'news');
+
+                            if(notification::has('news')) {
+                                javascript::set('AnchorMove', 'notification-box'); //Move to notification
+                            }
+                        } else {
+                            notification::add_error(_error_edit_post,'news');
+                            javascript::set('AnchorMove', 'comForm'); //Move to from
+                        }
+                    } else {
+                        notification::add_error(_empty_eintrag,'news');
+                        javascript::set('AnchorMove', 'comForm'); //Move to from
+                    }
+                    break;
+                case 'edit':
+                    $get = common::$sql['default']->fetch("SELECT `id`,`reg`,`comment` FROM `{prefix_news_comments}` WHERE `id` = ?;", [(int)($_GET['cid'])]);
+                    if (common::$userid >= 1 && ($get['reg'] == common::$userid || common::permission('news'))) {
+                        $smarty->caching = false;
+                        $smarty->assign('nick',common::autor($get['reg']));
+                        $smarty->assign('action','?action=show&amp;do=editcom&amp;id=' . $news_id .'&amp;cid=' . (int)($_GET['cid']));
+                        $smarty->assign('prevurl','../news/?action=compreview&do=edit&id=' . $news_id .'&cid=' . (int)($_GET['cid']));
+                        $smarty->assign('id',$get['id']);
+                        $smarty->assign('posteintrag',stringParser::decode($get['comment']));
+                        $smarty->assign('notification',notification::get('news',true));
+                        $add = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/comments_edit.tpl');
+                        $smarty->clearAllAssign();
+                        javascript::set('AnchorMove', 'comForm'); //Move to from
+                    } else {
+                        notification::add_error(_error_edit_post,'news');
+
+                        if(notification::has('news')) {
+                            javascript::set('AnchorMove', 'notification-box'); //Move to notification
+                        }
+
+                    }
+                    break;
+            }
+
+            /************************
+             * View News
+             ************************/
+            //Update viewed
+            if (common::count_clicks('news', $news_id)) {
+                common::$sql['default']->update("UPDATE `{prefix_news}` SET `viewed` = (viewed+1) WHERE `id` = ?;", [$news_id]);
+            }
+
+            //News Comments
+            $qryc = common::$sql['default']->select("SELECT * FROM `{prefix_news_comments}` WHERE `news` = ? "
+                                ."ORDER BY `datum` DESC LIMIT ".(common::$page - 1)*settings::get('m_comments').",".settings::get('m_comments').";",
+                                [$news_id]);
+            
+            $entrys = common::cnt('{prefix_news_comments}', " WHERE `news` = ?","id",[$news_id]);
+            $i = ($entrys - (common::$page - 1) * settings::get('m_comments')); $comments = '';
+            foreach($qryc as $getc) {
+                $edit = ""; $delete = "";
+                if ((common::$chkMe >= 1 && $getc['reg'] == common::$userid) || common::permission("news")) {
+                    $smarty->caching = true;
+                    $smarty->assign('action',"?action=show&amp;do=edit&amp;cid=" . $getc['id']."&amp;id=".$get_news['id'].
+                        (isset($_GET['page']) ? "&amp;page=".common::$page : ""));
+                    $smarty->assign('title',_button_title_edit);
+                    $smarty->assign('idir','../inc/images');
+                    $edit = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/button_edit.tpl',
+                        common::getSmartyCacheHash('_button_edit_'.$get_news['id'].'_cid_'.$getc['id']));
+                    $smarty->clearAllAssign();
+
+                    $smarty->caching = true;
+                    $smarty->assign('id',$get_news['id']);
+                    $smarty->assign('action',"?action=show&amp;do=delete&amp;cid=".$getc['id']."&amp;id=".$get_news['id']);
+                    $smarty->assign('title',_button_title_del);
+                    $smarty->assign('del',_confirm_del_entry);
+                    $smarty->assign('idir','../inc/images');
+                    $delete = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/button_delete.tpl',
+                        common::getSmartyCacheHash('_button_delete_'.$get_news['id'].'_cid_'.$getc['id']));
+                    $smarty->clearAllAssign();
+                }
+
+                $email = ""; $hp = ""; $avatar = ""; $onoff = "";
+                if (!$getc['reg']) {
+                    //-> Homepage Link
+                    $hp = "";
+                    if (!empty($getc['hp'])) {
+                        $smarty->caching = false;
+                        $smarty->assign('hp',common::links(stringParser::decode($getc['hp'])));
+                        $hp = $smarty->fetch('string:'._hpicon_forum);
+                        $smarty->clearAllAssign();
                     }
 
-                    $titel = show(_eintrag_titel, array("postid" => $i,
-                                                        "datum" => date("d.m.Y", $getc['datum']),
-                                                        "zeit" => date("H:i", $getc['datum'])._uhr,
-                                                        "edit" => $edit,
-                                                        "delete" => $delete));
+                    if ($getc['email']) {
+                        $email = '<br />' . common::CryptMailto(stringParser::decode($getc['email']), _emailicon_forum);
+                    }
 
-                    $posted_ip = $chkMe == 4 ? $getc['ip'] : _logged;
-                    $comments .= show("page/comments_show", array("titel" => $titel,
-                                                                  "comment" => bbcode($getc['comment']),
-                                                                  "nick" => $nick,
-                                                                  "hp" => $hp,
-                                                                  "editby" => bbcode($getc['editby']),
-                                                                  "email" => $email,
-                                                                  "avatar" => useravatar($getc['reg']),
-                                                                  "onoff" => $onoff,
-                                                                  "rank" => getrank($getc['reg']),
-                                                                  "ip" => $posted_ip));
+                    $smarty->caching = true;
+                    $smarty->assign('nick',stringParser::decode($getc['nick']));
+                    $smarty->assign('email',$email);
+                    $nick = $smarty->fetch('string:'._link_mailto,common::getSmartyCacheHash('_link_mailto_'.$email.'_'.stringParser::decode($getc['nick'])));
+                    $smarty->clearAllAssign();
+                } else {
+                    $onoff = common::onlinecheck($getc['reg']);
+                    $nick = common::autor($getc['reg']);
+                }
+
+                $smarty->caching = false;
+                $smarty->assign('postid',$i);
+                $smarty->assign('datum',date("d.m.Y", $getc['datum']));
+                $smarty->assign('zeit',date("H:i", $getc['datum']));
+                $smarty->assign('edit',$edit);
+                $smarty->assign('delete',$delete);
+                $titel = $smarty->fetch('string:'._eintrag_titel);
+                $smarty->clearAllAssign();
+
+                $smarty->caching = true;
+                $smarty->assign('titel',$titel);
+                $smarty->assign('comment',BBCode::parse_html((string)$getc['comment']));
+                $smarty->assign('nick',$nick);
+                $smarty->assign('hp',$hp);
+                $smarty->assign('editby',BBCode::parse_html((string)$getc['editby']));
+                $smarty->assign('email',$email);
+                $smarty->assign('avatar',common::useravatar($getc['reg']));
+                $smarty->assign('onoff',$onoff);
+                $smarty->assign('rank',common::getrank($getc['reg']));
+                $smarty->assign('ip',common::getPostedIP($getc));
+                $comments .= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/comments_show.tpl',common::getSmartyCacheHash('news_comments_'.$getc['id']));
+                $smarty->clearAllAssign();
                 $i--;
             }
 
-            if((settings("reg_newscomments") && !$chkMe) || !HasDSGVO())
-                $add = _error_unregistered_nc;
-            else {
-                if($userid >= 1)
-                    $form = show("page/editor_regged", array("nick" => autor($userid), "von" => _autor));
-                else
-                    $form = show("page/editor_notregged", array("nickhead" => _nick, "emailhead" => _email, "hphead" => _hp));
-
-                $add = '';
-                if(!ipcheck("ncid(".$_GET['id'].")", config('f_newscom')))
-                {
-                    $add = show("page/comments_add", array("titel" => _news_comments_write_head,
-                                                           "bbcodehead" => _bbcode,
-                                                           "form" => $form,
-                                                           "show" => "none",
-                                                           "what" => _button_value_add,
-                                                           "ip" => _iplog_info,
-                                                           "preview" => _preview,
-                                                           "sec" => $dir,
-                                                           "security" => _register_confirm,
-                                                           "action" => '?action=show&amp;do=add&amp;id='.$_GET['id'],
-                                                           "prevurl" => '../news/?action=compreview&id='.$_GET['id'],
-                                                           "id" => $_GET['id'],
-                                                           "postemail" => "",
-                                                           "posthp" => "",
-                                                           "postnick" => "",
-                                                           "posteintrag" => "",
-                                                           "error" => "",
-                                                           "eintraghead" => _eintrag));
+            if (settings::get("reg_newscomments") && common::$chkMe) {
+                if (!common::ipcheck("ncid(".$_GET['id'].")", settings::get('f_newscom')) && empty($add)) {
+                    $smarty->caching = false;
+                    $smarty->assign('nick',common::autor(common::$userid));
+                    $smarty->assign('action','../news/?action=show&amp;do=add&amp;id=' . (isset($_GET['id']) ? $_GET['id'] : '1'));
+                    $smarty->assign('prevurl','../news/?action=compreview&id=' . (isset($_GET['id']) ? $_GET['id'] : '1'));
+                    $smarty->assign('id',(isset($_GET['id']) ? $_GET['id'] : '1'));
+                    $smarty->assign('posteintrag',(isset($_POST['comment']) ? $_POST['comment'] : ''));
+                    $smarty->assign('notification',notification::get('news',true),true);
+                    $add = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/comments_add.tpl');
+                    $smarty->clearAllAssign();
                 }
             }
 
-            $seiten = nav($entrys,config('m_comments'),"?action=show&amp;id=".$_GET['id']."");
-            $showmore = show($dir."/comments",array("head" => _comments_head,
-                                                    "show" => $comments,
-                                                    "seiten" => $seiten,
-                                                    "add" => $add));
+            if(empty($comments)) {
+                $smarty->caching = false;
+                $smarty->assign('colspan',1);
+                $comments = $smarty->fetch('string:'._no_entrys_yet);
+                $smarty->clearAllAssign();
+            }
 
-            $intern = $get['intern'] ? _votes_intern : "";
-            $newsimage = '../inc/images/newskat/'.$getkat['katimg'];
-            foreach($picformat as $tmpendung) {
-                if(file_exists(basePath."/inc/images/uploads/news/".$get['id'].".".$tmpendung)) {
-                    $newsimage = '../inc/images/uploads/news/'.$get['id'].'.'.$tmpendung;
+            $seiten = common::nav($entrys, settings::get('m_comments'), "?action=show&amp;id=" . $_GET['id'] . "");
+            $smarty->caching = false;
+            $smarty->assign('show',$comments,true);
+            $smarty->assign('seiten',$seiten,true);
+            $smarty->assign('add',$add,true);
+            $smarty->assign('permissions',settings::get("reg_newscomments") && common::$chkMe,true);
+            $smarty->assign('notification',notification::get('news'));
+            $showmore = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/comments.tpl');
+            $smarty->clearAllAssign();
+
+            $links1 = '';
+            if(!empty($get_news['url1'])) {
+                $smarty->caching = false;
+                $smarty->assign('link',stringParser::decode($get_news['link1']));
+                $smarty->assign('url',utf8_decode($get_news['url1']));
+                $smarty->assign('target',"_blank");
+                $links1 = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/news_link.tpl');
+                $smarty->clearAllAssign();
+            }
+
+            $links2 = '';
+            if(!empty($get_news['url2'])) {
+                $smarty->caching = false;
+                $smarty->assign('link',stringParser::decode($get_news['link2']));
+                $smarty->assign('url',utf8_decode($get_news['url2']));
+                $smarty->assign('target',"_blank");
+                $links2 = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/news_link.tpl');
+                $smarty->clearAllAssign();
+            }
+
+            $links3 = '';
+            if(!empty($get_news['url3'])) {
+                $smarty->caching = false;
+                $smarty->assign('link',stringParser::decode($get_news['link3']));
+                $smarty->assign('url',utf8_decode($get_news['url3']));
+                $smarty->assign('target',"_blank");
+                $links3 = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/news_link.tpl');
+                $smarty->clearAllAssign();
+            }
+            
+            $links = '';
+            if (!empty($links1) || !empty($links2) || !empty($links3)) {
+                $smarty->caching = true;
+                $smarty->assign('link1',$links1);
+                $smarty->assign('link2',$links2);
+                $smarty->assign('link3',$links3);
+                $links = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/news_links.tpl',md5('news_links_'.$get_news['id']));
+                $smarty->clearAllAssign();
+            }
+
+            //-> News-Kategorie Bild
+            foreach(common::SUPPORTED_PICTURE as $end) {
+                if (file_exists(basePath . "/inc/images/nopic." . $end)) {
+                    $newsimage = '../inc/images/nopic.' . $end;
                     break;
                 }
             }
-            
-            $news_edit = '';
-            if(permission('news')) {
-                $news_edit .= show("page/button_edit_url", array("action" => "../admin/?admin=newsadmin&amp;do=edit&amp;return=news&amp;id=".$get['id'],
-                                                                 "title" => _button_title_edit));
-                $news_edit .= ' ';
-                $news_edit .= show("page/button_delete_url", array("action" => "../admin/?admin=newsadmin&amp;do=delete&amp;return=news&amp;id=".$get['id'],
-                                                                   "title" => _button_title_del,
-                                                                   "del" => convSpace(_confirm_del_news)));
+
+            //Intern
+            $intern = $get_news['intern'] ? _votes_intern : "";
+
+            //Sticky
+            $sticky = $get_news['sticky'] ? _news_sticky : '';
+
+            //Bild
+            $newsimage_get = common::$sql['default']->fetch("SELECT `katimg`,`kategorie`,`color` FROM `{prefix_news_kats}` WHERE `id` = ?;", [$get_news['kat']]);
+            $newsimage = 'https://static.dzcp.de/thumbgen.php?img=images/newskat/'.stringParser::decode($newsimage_get['katimg']).'&width=238';
+
+            //-> News Bild by ID
+            foreach(common::SUPPORTED_PICTURE as $tmpendung) {
+                //-> News Bild by ID
+                if(file_exists(rootPath."/static/images/news/".$get_news['id'].".".$tmpendung)) {
+                    $newsimage = 'https://static.dzcp.de/thumbgen.php?img=images/news/'.$get_news['id'].'.'.$tmpendung.'&width=238';
+                    break;
+                }
             }
 
-            $title = re($get['titel']).' - '.$title;
-            $index = show($dir."/news_show_full", array("titel" => re($get['titel']),
-                                                   "kat" => $newsimage,
-                                                   "id" => $get['id'],
-                                                   "dp" => "none",
-                                                   "nautor" => _autor,
-                                                   "dir" => $designpath,
-                                                   "ndatum" => _datum,
-                                                   "rel" => $rel,
-                                                   "sticky" => "",
-                                                   "intern" => $intern,
-                                                   "ncomments" => "",
-                                                   "edit" => $news_edit,
-                                                   "showmore" => $showmore,
-                                                   "klapp" => $klapp,
-                                                   "more" => bbcode($get['klapptext']),
-                                                   "viewed" => "",
-                                                   "text" => bbcode($get['text']),
-                                                   "datum" => date("j.m.y H:i", (empty($get['datum']) ? time() : $get['datum']))._uhr,
-                                                   "links" => $links,
-                                                   "autor" => autor($get['autor'])));
-
-            switch($do)
-            {
-                case 'add':
-                    if(db("SELECT `id` FROM ".$db['news']." WHERE `id` = ".(int)($_GET['id']),true,false) != 0)
-                    {
-                        if(settings("reg_newscomments") && !$chkMe)
-                            $index = error(_error_have_to_be_logged, 1);
-                        else {
-                            if(!ipcheck("ncid(".$_GET['id'].")", config('f_newscom'))) {
-                                if($userid >= 1)
-                                    $toCheck = empty($_POST['comment']);
-                                else
-                                    $toCheck = empty($_POST['nick']) || empty($_POST['email']) || empty($_POST['comment']) || !check_email($_POST['email']) || $_POST['secure'] != $_SESSION['sec_'.$dir] || empty($_SESSION['sec_'.$dir]);
-
-                                if($toCheck) {
-                                    if($userid >= 1) {
-                                        if(empty($_POST['eintrag'])) $error = _empty_eintrag;
-                                        $form = show("page/editor_regged", array("nick" => autor($userid), "von" => _autor));
-                                    } else {
-                                        if(($_POST['secure'] != $_SESSION['sec_'.$dir]) || empty($_SESSION['sec_'.$dir])) $error = _error_invalid_regcode;
-                                        else if(empty($_POST['nick'])) $error = _empty_nick;
-                                        else if(empty($_POST['email'])) $error = _empty_email;
-                                        else if(!check_email($_POST['email'])) $error = _error_invalid_email;
-                                        else if(empty($_POST['eintrag'])) $error = _empty_eintrag;
-                                        $form = show("page/editor_notregged", array("nickhead" => _nick,
-                                                                                    "emailhead" => _email,
-                                                                                    "hphead" => _hp));
-                                    }
-
-                                    $error = show("errors/errortable", array("error" => $error));
-                                    $index = show("page/comments_add", array("titel" => _news_comments_write_head,
-                                                                             "nickhead" => _nick,
-                                                                             "bbcodehead" => _bbcode,
-                                                                             "emailhead" => _email,
-                                                                             "security" => _register_confirm,
-                                                                             "hphead" => _hp,
-                                                                             "sec" => $dir,
-                                                                             "form" => $form,
-                                                                             "preview" => _preview,
-                                                                             "prevurl" => '../news/?action=compreview&amp;id='.$_GET['id'],
-                                                                             "action" => '?action=show&amp;do=add&amp;id='.$_GET['id'],
-                                                                             "ip" => _iplog_info,
-                                                                             "id" => $_GET['id'],
-                                                                             "what" => _button_value_add,
-                                                                             "show" => "",
-                                                                             "postemail" => $_POST['email'],
-                                                                             "posthp" => links($_POST['hp']),
-                                                                             "postnick" => re($_POST['nick']),
-                                                                             "posteintrag" => re_bbcode($_POST['comment']),
-                                                                             "error" => $error,
-                                                                             "eintraghead" => _eintrag));
-                                } else {
-                                    db("INSERT INTO ".$db['newscomments']." SET `news`     = '".(int)($_GET['id'])."',
-                                                                                `datum`    = '".time()."',
-                                                                                `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : data('nick'))."',
-                                                                                `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : data('email'))."',
-                                                                                `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : links(data('hp')))."',
-                                                                                `reg`      = '".(int)($userid)."',
-                                                                                `comment`  = '".up($_POST['comment'],1)."',
-                                                                                `ip`       = '".$userip."'");
-
-                                    setIpcheck("ncid(".(int)($_GET['id']).")");
-                                    $index = info(_comment_added, "?action=show&amp;id=".$_GET['id']."");
-                                }
-                            }
-                            else
-                                $index = error(show(_error_flood_post, array("sek" => config('f_newscom'))), 1);
-                        }
-                    }
-                    else
-                        $index = error(_id_dont_exist,1);
-                break;
-                case 'delete':
-                    $get = db("SELECT `reg` FROM ".$db['newscomments']." WHERE `id` = '".($cid=(int)($_GET['cid']))."'",false,true);
-                    if($get['reg'] == $userid || permission('news')) {
-                        db("DELETE FROM ".$db['newscomments']." WHERE `id` = '".$cid."'");
-                        $index = info(_comment_deleted, "?action=show&amp;id=".$_GET['id']."");
-                    }
-                    else
-                        $index = error(_error_wrong_permissions, 1);
-                break;
-                case 'editcom':
-                    $get = db("SELECT `reg` FROM ".$db['newscomments']." WHERE `id` = '".($cid=(int)($_GET['cid']))."'",false,true);
-                    if($get['reg'] == $userid || permission('news')) {
-                        $editedby = show(_edited_by, array("autor" => autor($userid), "time" => date("d.m.Y H:i", time())._uhr));
-                        $qry = db("UPDATE ".$db['newscomments']."
-                                   SET `nick`     = '".(isset($_POST['nick']) ? up($_POST['nick']) : '')."',
-                                       `email`    = '".(isset($_POST['email']) ? up($_POST['email']) : '')."',
-                                       `hp`       = '".(isset($_POST['hp']) ? links($_POST['hp']) : '')."',
-                                       `comment`  = '".(isset($_POST['comment']) ? up($_POST['comment']) : '')."',
-                                       `editby`   = '".addslashes($editedby)."'
-                                   WHERE id = ".$cid);
-
-                        $index = info(_comment_edited, "?action=show&amp;id=".$_GET['id']."");
-                    }
-                    else
-                        $index = error(_error_edit_post,1);
-                break;
-                case 'edit':
-                    $get = db("SELECT `reg`,`comment` FROM ".$db['newscomments']." WHERE `id` = '".(int)($_GET['cid'])."'",false,true);
-                    if($get['reg'] == $userid || permission('news')) {
-                        if($get['reg'] != 0)
-                            $form = show("page/editor_regged", array("nick" => autor($get['reg']), "von" => _autor));
-                        else {
-                            $form = show("page/editor_notregged", array("nickhead" => _nick,
-                                                                        "emailhead" => _email,
-                                                                        "hphead" => _hp,
-                                                                        "postemail" => re($get['email']),
-                                                                        "posthp" => links($get['hp']),
-                                                                        "postnick" => re($get['nick'])));
-                        }
-
-                        $index = show("page/comments_add", array("titel" => _comments_edit,
-                                                                 "nickhead" => _nick,
-                                                                 "security" => _register_confirm,
-                                                                 "bbcodehead" => _bbcode,
-                                                                 "emailhead" => _email,
-                                                                 "hphead" => _hp,
-                                                                 "form" => $form,
-                                                                 "sec" => $dir,
-                                                                 "preview" => _preview,
-                                                                 "prevurl" => '../news/?action=compreview&do=edit&id='.$_GET['id'].'&cid='.$_GET['cid'],
-                                                                 "action" => '?action=show&amp;do=editcom&amp;id='.$_GET['id'].'&amp;cid='.$_GET['cid'],
-                                                                 "ip" => _iplog_info,
-                                                                 "id" => $_GET['id'],
-                                                                 "what" => _button_value_edit,
-                                                                 "show" => "",
-                                                                 "posteintrag" => re_bbcode($get['comment']),
-                                                                 "error" => "",
-                                                                 "eintraghead" => _eintrag));
-                    }
-                    else
-                        $index = error(_error_edit_post,1);
-                break;
-            }
+            //-> News [Caching]
+            $where = $where." - ".stringParser::decode($get_news['titel']);
+            $smarty->caching = true;
+            $smarty->assign('titel',stringParser::decode($get_news['titel']));
+            $smarty->assign('kat',$newsimage);
+            $smarty->assign('id',$get_news['id']);
+            $smarty->assign('kat_name',stringParser::decode($newsimage_get['kategorie']));
+            $smarty->assign('color',stringParser::decode($newsimage_get['color']));
+            $smarty->assign('comments',common::cnt('{prefix_news_comments}', " WHERE `news` = ?","id",[$get_news['id']]));
+            $smarty->assign('sticky',$sticky);
+            $smarty->assign('intern',$intern);
+            $smarty->assign('showmore',$showmore,true); //Comments
+            $smarty->assign('more',BBCode::parse_html((string)$get_news['more']));
+            $smarty->assign('text',BBCode::parse_html((string)$get_news['text']));
+            $smarty->assign('datum',date("j.m.y H:i", (empty($get_news['datum']) ? time() : $get_news['datum'])));
+            $smarty->assign('links',$links);
+            $smarty->assign('autor',common::autor($get_news['autor']));
+            $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/news_show_full.tpl',
+                common::getSmartyCacheHash('news_full_'.$get_news['id']));
+            $smarty->clearAllAssign();
         }
     }
 }

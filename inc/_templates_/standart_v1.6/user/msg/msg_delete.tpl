@@ -1,0 +1,1 @@
+<a href="?action=msg&amp;do=deletethis&amp;id={$id}"><i class="fas fa-trash-alt fa-lg" title="{lang msgID="button_title_del"}" alt=""></i></a>

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<title>Columns - NBBC: The New BBCode Parser</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel='stylesheet' type='text/css' href='styles.css' />
+</head>
+
+<body>
+
+<div align='center'><div class='page_container2'><div class='page_container'>
+
+<h2>V. Standard BBCode Library</h2>
+
+<p style='text-align:right;margin:0;'>[ Previous: <a href="bbc_align.html">E. Alignment</a> | Next: <a href="bbc_ctr.html">G. Containers</a> ]</p>
+
+<h3>F. Columns</h3>
+
+<a name="ref_lib_columns_columns"></a>
+<p class='bblib'><b><tt>[columns]...[nextcol]...[nextcol]...[/columns]</tt></b><br />
+	The <tt>[columns]</tt> tag begins a section where separate chunks of text are placed
+	visually side-by-side, like with newspaper columns.  The <tt>[nextcol]</tt> tag works
+	with the <tt>[columns]</tt> tag to separate individual columns from one another.
+	Usage of the <tt>[columns]</tt> tag is best demonstrated by example:</p>
+	
+	<div style='margin-left:2em;'>
+	<div class='code_header'>Code:</div>
+	<xmp class='code'>This text goes before the columns.
+[columns]
+This text is in the first column.
+This is a second line in the first column.
+[nextcol]
+This is the second column,
+with a second line.
+[nextcol]
+This is a third column.
+Are we having fun yet?
+[/columns]
+This text goes after the columns.</xmp>
+	<div class='output_header'>Output:</div>
+	<div class='output'>
+		This text goes before the columns.
+		<table class="bbcode_columns"><tbody><tr><td class="bbcode_column bbcode_firstcolumn">
+		This text is in the first column.<br />
+		This is a second line in the first column.
+		</td><td class="bbcode_column">
+		This is the second column,<br />
+		with a second line.
+		</td><td class="bbcode_column">
+		This is a third column.<br />
+		Are we having fun yet?
+		</td></tr></table>
+		This text goes after the columns.
+	</div>
+	</div>
+
+	<p style='margin-left:2em;'>The ending <tt>[/columns]</tt> tag is required.</p>
+
+<p style='text-align:right;'>[ Previous: <a href="bbc_align.html">E. Alignment</a> | Next: <a href="bbc_ctr.html">G. Containers</a> ]</p>
+
+<hr />
+
+<div style='text-align:center;'>Copyright &copy; 2010, the Phantom Inker.  All rights reserved.</div>
+
+</div></div></div>
+
+</body>
+
+</html>

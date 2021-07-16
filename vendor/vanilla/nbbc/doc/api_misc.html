@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<title>Miscellaneous Support Functions - NBBC: The New BBCode Parser</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel='stylesheet' type='text/css' href='styles.css' />
+</head>
+
+<body>
+
+<div align='center'><div class='page_container2'><div class='page_container'>
+
+<h2>IV. API Reference</h2>
+
+<p style='text-align:right;margin:0;'>[ Previous: <a href="api_repl.html">I. Replaced-Item Functions</a> | Next: <a href="bbc.html">V.A. Alphabetical BBCode List</a> ]</p>
+
+<h3>J. Miscellaneous Support Functions</h3>
+
+<a name="ref_parser_nl2br"></a>
+<div class='api'>
+	<div class='api_head'>string <b>BBCode::nl2br</b> ( string $<tt>input</tt> )</div>
+	<div class='api_descr'>This function is nearly identical to PHP's built-in <tt><a href="http://www.php.net/nl2br">nl2br()</a></tt>
+		function; however, unlike the built-in function, this correctly handles all four major forms of
+		line breaks (Windows "\r\n" and "\n\r"; Un*x "\n"; and Mac "\r"), and always generates
+		"<tt>&lt;br /&gt;</tt>" as its output, making it XHTML-safe.  In general, you should
+		always prefer this over the built-in function; while the built-in function is somewhat
+		faster, this yields more correct, more compatible behavior.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>input</i>: The string to convert.</li>
+		</ul>
+	</div>
+	<div class='api_info'><b>Return Value:</b>  An identical string, where all newlines have
+		been replaced with XHTML-compatible "<tt>&lt;br /&gt;</tt>" elements.</div>
+</div>
+
+<a name="ref_parser_IsValidURL"></a>
+<div class='api'>
+	<div class='api_head'>bool <b>BBCode::IsValidURL</b> ( string $<tt>address</tt> )</div>
+	<div class='api_descr'>This function tests the input string to see if it is a legal
+		URL.  A legal URL must either be a relative URL, in which case it has no protocol
+		identifier, or must contain the <tt>http:</tt> or <tt>https:</tt> or <tt>ftp:</tt>
+		protocol identifiers followed by a legal domain name or IP address.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>address</i>: The string to test.</li>
+		</ul>
+	</div>
+	<div class='api_info'><b>Return Value:</b>  True if this is a legal URL; false if
+		this is an illegal URL.</div>
+</div>
+
+<a name="ref_parser_IsValidEmail"></a>
+<div class='api'>
+	<div class='api_head'>bool <b>BBCode::IsValidEmail</b> ( string $<tt>address</tt> )</div>
+	<div class='api_descr'>This function tests the input string to see if it is a legal
+		e-mail address.  A legal e-mail address must follow the rules defined in the
+		SMTP RFC:  It must start with a user's name, that followed with an @ sign, and end
+		with a legal domain name or IP address.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>address</i>: The string to test.</li>
+		</ul>
+	</div>
+	<div class='api_info'><b>Return Value:</b>  True if this is a legal e-mail address; false if
+		this is an illegal e-mail address.</div>
+	<div class='api_info_block'><b>Note:</b><br /><br />
+		This performs exactly the test required by the SMTP RFC, and no other; so some
+		e-mail addresses that are obviously illegal, like "<tt>'#$%'@foo.foo.foo</tt>" (a
+		completely garbage address that follows the correct pattern), or
+		"<tt>john@sales.yoyodyne</tt>" (where the user forgot to add a TLD like "<tt>.com</tt>" or "<tt>.org</tt>")
+		are still permitted by this function.  Still, this is a useful validator, because
+		it ensures that <i>true</i> garbage addresses like "<tt>foo.bar</tt>" and
+		"<tt>bleep@you</tt>" and "<tt>go!away</tt>" are correctly ignored.
+	</div>
+</div>
+
+<a name="ref_parser_HTMLEncode"></a>
+<div class='api'>
+	<div class='api_head'>string <b>BBCode::HTMLEncode</b> ( string $<tt>input</tt> )</div>
+	<div class='api_descr'>This function calls PHP's <tt>htmlspecialchars()</tt> function.
+		It is called by the parser to convert each chunk of plain text to safe HTML.  This
+		function can safely assume that there are no embedded tags or smileys; those will
+		have been removed before this is called.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>input</i>: The string to HTML-encode.</li>
+		</ul>
+	</div>
+	<div class='api_info'><b>Return Value:</b>  An encoded HTML string.</div>
+	<div class='api_info_block'><b>Note:</b><br /><br />
+		This function is an internal part of the NBBC parser.  It is exposed so that if
+		you inherit the BBCode class, you can override it and change its behavior.  (You
+		could, for example, use <tt>htmlentities()</tt> instead of <tt>htmlspecialchars()</tt>, or
+		maybe add support for processing your own kind of variable {$inserts}, or maybe
+		add support for easy *boldface* and /italics/.  It's up to you how you use this
+		function, so long as the output is valid HTML; that freedom is why it is exposed
+		by the parser.)
+	</div>
+</div>
+
+<a name="ref_parser_FixupOutput"></a>
+<div class='api'>
+	<div class='api_head'>string <b>BBCode::FixupOutput</b> ( string $<tt>input</tt> )</div>
+	<div class='api_descr'>This function is used internally by the parser to process
+		strings of plain text:  It strips out smileys, converting them to images, and
+		then passes the rest of the text through <a href="#ref_parser_HTMLEncode">HTMLEncode()</a>
+		to convert unsafe characters like &lt; and &gt; and &amp; to <tt>&amp;lt;</tt>
+		and <tt>&amp;gt;</tt> and <tt>&amp;amp;</tt>, respectively.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>input</i>: The string to convert to HTML.</li>
+		</ul>
+	</div>
+	<div class='api_info'><b>Return Value:</b>  An encoded HTML string.</div>
+	<div class='api_info_block'><b>Note:</b><br /><br />
+		This function is an internal part of the NBBC parser.  It is exposed for two
+		reasons:  First, if you inherit the BBCode class, you can override it and change
+		its behavior; but second, and more importantly, it allows you to easily convert
+		plain-text .  (You
+		could, for example, use <tt>htmlentities()</tt> instead of <tt>htmlspecialchars()</tt>, or
+		maybe add support for processing your own kind of variable {$inserts}, or maybe
+		add support for easy *boldface* and /italics/.  It's up to you how you use this
+		function, so long as the output is valid HTML; that freedom is why it is exposed
+		by the parser.)
+	</div>
+</div>
+
+<a name="ref_parser_FillTemplate"></a>
+<div class='api'>
+	<div class='api_head'>string <b>BBCode::FillTemplate</b> ( string $<tt>template</tt> , array $<tt>params</tt> , array $<tt>default</tt> = array() )</div>
+	<div class='api_descr'>This function is used by the parser in a number of
+		places to fill variables into templates, most notably in the templates
+		associated with <a href="usage_enh.html">enhanced tags</a>.  It is exposed
+		so that you can use it to fill values into your own templates easily.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>template</i>: The template string, possibly containing variable inserts.</li>
+		<li><i>params</i>: An array of values to use when filling in the template.  For example,
+			if "<tt>{$foo}</tt>" is found in the template, it will be replaced with the value
+			of the '<tt>foo</tt>' member of this array.</li>
+		<li><i>default</i>: An array of values to use when a desired value does not exist in
+			the $<tt>params</tt> array.  For example, if "<tt>{$foo}</tt>" is found in the
+			template, but the $<tt>params</tt> array does not contain a '<tt>foo</tt>' member,
+			FillTemplate() will check to see if the $<tt>default</tt> array contains a '<tt>foo</tt>'
+			member, and if it does, FillTemplate() will use that value instead.  Only when
+			neither the $<tt>params</tt> array nor the $<tt>default</tt> array contains the
+			value will FillTemplate() use an empty string instead.</li>
+		</ul>
+	</div>
+	<div class='api_info'><b>Return Value:</b>  A string with all variable inserts replaced with values,
+		possibly formatted with <a href="app_enhflags.html">formatting flags</a> if any have been given.</div>
+	<div class='api_info_block'><b>Note:</b><br /><br />
+		While this function is no substitute for a good, full templating engine like
+		<a href="http://www.smarty.net">Smarty</a>, it is very lightweight and can perform
+		some of the same operations.  NBBC uses it internally in several places, and in
+		NBBC 1.3, it has been exposed as a simple public templating API.<br />
+		<br />
+		Variable inserts in your templates come in one of four basic forms:<br />
+		<ul>
+		<li><tt>{$param}</tt> - A simple replaced variable with no formatting or translation applied to it.</li>
+		<li><tt>{$param/flags}</tt> - A replaced variable that has <a href="app_enhflags.html">formatting flags</a>
+			applied to its value when the value is inserted into the template.</li>
+		<li><tt>{$param.index}</tt> and <tt>{$param.index/flags}</tt> - You can use the special dot (<tt>.</tt>)
+			operator to access members of an array or members of an object.  For example, if
+			<tt>$params['person']</tt> contains an array <tt>('father'=&lt;'john','mother'=&lt;'sue')</tt>,
+			then you can access the person's mother by writing <tt>{$person.mother}</tt>
+			in your template.  Multiple dot operators are permitted, and are evaluated from
+			left to right, like PHP's arrow (<tt>-&gt;</tt>) operator, but unlike PHP's brackets (<tt>[...]</tt>)
+			operator.</li>
+		</ul>
+		An example usage of this function is demonstrated below:
+		<div class='code_header'>Code:</div>
+		<xmp class='code'>$template = "{$name} is {$age} years old,"
+    . " and {$pronouns.owner} mother is {$family.mother}.\n";
+
+$params = Array(
+    'name' => "John",
+    'age' => 20,
+    'gender' => 'male',
+	'family' => Array(
+        'father' => "Bill",
+        'mother' => "Sue",
+        'brother' => "George",
+        'sister' => "Sally",
+    ),
+    'pronouns' => Array(
+        'self' => "him",
+        'owner' => "his",
+    ),
+);
+
+$bbcode = new BBCode;
+$output = $bbcode->FillTemplate($template, $params);
+
+print htmlspecialchars($output);</xmp>
+	</div>
+</div>
+
+<p style='text-align:right;'>[ Previous: <a href="api_repl.html">I. Replaced-Item Functions</a> | Next: <a href="bbc.html">V.A. Alphabetical BBCode List</a> ]</p>
+
+<hr />
+
+<div style='text-align:center;'>Copyright &copy; 2010, the Phantom Inker.  All rights reserved.</div>
+
+</div></div></div>
+
+</body>
+
+</html>

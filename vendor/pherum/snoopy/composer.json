@@ -1,0 +1,18 @@
+{
+    "name": "pherum/snoopy",
+    "description": "snoopy",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Andrei Zmievski"
+        }
+    ],
+	"require": {
+		"php": ">=5.4"
+	},
+    "autoload": {
+        "psr-4": {
+            "Snoopy\\": "src/"
+        }
+    }
+}

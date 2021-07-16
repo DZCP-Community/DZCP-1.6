@@ -1,284 +1,303 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2017 © CodeKing, my-STARMEDIA, Codedesigns
  */
 
 if(_adminMenu != 'true') exit;
 
-    $where = $where.': '._editor_head;
-      $wysiwyg = '_word';
-      if($do == "add")
-      {
-        $qry = db("SELECT s2.*, s1.name AS katname, s1.placeholder FROM ".$db['navi_kats']." AS s1 LEFT JOIN ".$db['navi']." AS s2 ON s1.`placeholder` = s2.`kat`
-                   ORDER BY s1.name, s2.pos");
-         $thiskat = '';
-        while($get = _fetch($qry))
-        {
-          if($thiskat != $get['kat']) {
-            $position .= '
-              <option class="dropdownKat" value="lazy">'.re($get['katname']).'</option>
-              <option value="'.re($get['placeholder']).'-1">-> '._admin_first.'</option>
-            ';
-          }
-          $thiskat = $get['kat'];
-          $sel = ($get['editor'] == $_GET['id']) ? 'selected="selected"' : '';
+$where = $where.': '._editor_head;
 
-          $position .= empty($get['name']) ? '' : '<option value="'.re($get['placeholder']).'-'.($get['pos']+1).'" '.$sel.'>'._nach.' -> '.navi_name(re($get['name'])).'</option>';
-        }
+switch(common::$do) {
+    case 'add':
+        $qry = common::$sql['default']->select("SELECT s2.*, s1.`name` AS `katname`, s1.`placeholder` "
+                . "FROM `{prefix_navi_kats}` AS `s1` "
+                . "LEFT JOIN `{prefix_navi}` AS `s2` "
+                . "ON s1.`placeholder` = s2.`kat` "
+                . "ORDER BY s1.`name`, s2.`pos`;");
 
-        $show = show($dir."/form_editor", array("head" => _editor_add_head,
-                                                "what" => _button_value_add,
-                                                "bbcode" => _bbcode,
-                                                "titel" => _titel,
-                                                "preview" => _preview,
-                                                "e_titel" => "",
-                                                "e_inhalt" => "",
-                                                "checked" => "",
-                                                "pos" => _position,
-                                                "name" => _editor_linkname,
-                                                "n_name" => "",
-                                                "position" => $position,
-                                                "ja" => _yes,
-                                                "nein" => _no,
-                                                "wichtig" => _navi_wichtig,
-                                                "error" => "",
-                                                "allow_html" => _editor_allow_html,
-                                                "inhalt" => _inhalt,
-                                                "do" => "addsite"));
-      } elseif($do == "addsite") {
-        if(empty($_POST['titel']) || empty($_POST['inhalt']) || $_POST['pos'] == "lazy")
-        {
-          if(empty($_POST['titel'])) $error = _empty_titel;
-          elseif(empty($_POST['inhalt'])) $error = _empty_editor_inhalt;
-          elseif($_POST['pos'] == "lazy") $error = _navi_no_pos;
-
-          $error = show("errors/errortable", array("error" => $error));
-
-          if(isset($_POST['html'])) $checked = 'checked="checked"';
-
-          $kat_ = preg_replace('/-(\d+)/','',$_POST['pos']);
-          $pos_ = preg_replace("=nav_(.*?)-=","",$_POST['pos']);
-
-          $qry = db("SELECT s2.*, s1.name AS katname, s1.placeholder FROM ".$db['navi_kats']." AS s1 LEFT JOIN ".$db['navi']." AS s2 ON s1.`placeholder` = s2.`kat`
-                     ORDER BY s1.name, s2.pos");
-          $thiskat = '';
-          while($get = _fetch($qry))
-          {
+        $thiskat = ''; $position = '';
+        foreach($qry as $get) {
             if($thiskat != $get['kat']) {
-              $position .= '
-                <option class="dropdownKat" value="lazy">'.re($get['katname']).'</option>
-                <option value="'.re($get['placeholder']).'-1">-> '._admin_first.'</option>
-              ';
+                $position .= '<option class="selectpicker" value="lazy">'.stringParser::decode($get['katname']).'</option>
+                              <option value="'.stringParser::decode($get['placeholder']).'-1">-> '._admin_first.'</option>';
             }
 
             $thiskat = $get['kat'];
-            $sel = ($get['kat'] == $kat_ && ($get['pos']+1) == $pos_) ? 'selected="selected"' : '';
-
-            $position .= empty($get['name']) ? '' : '<option value="'.re($get['placeholder']).'-'.($get['pos']+1).'" '.$sel.'>'._nach.' -> '.navi_name(re($get['name'])).'</option>';
-          }
-
-          $show = show($dir."/form_editor", array("head" => _editor_add_head,
-                                                  "what" => _button_value_add,
-                                                  "preview" => _preview,
-                                                  "bbcode" => _bbcode,
-                                                  "error" => $error,
-                                                  "checked" => $checked,
-                                                  "pos" => _position,
-                                                  "ja" => _yes,
-                                                  "nein" => _no,
-                                                  "name" => _editor_linkname,
-                                                  "position" => $position,
-                                                  "n_name" => re($_POST['name']),
-                                                  "wichtig" => _navi_wichtig,
-                                                  "titel" => _titel,
-                                                  "e_titel" => re($_POST['titel']),
-                                                  "e_inhalt" => re_bbcode($_POST['inhalt']),
-                                                  "allow_html" => _editor_allow_html,
-                                                  "inhalt" => _inhalt,
-                                                  "do" => "addsite"));
-        } else {
-          $qry = db("INSERT INTO ".$db['sites']."
-                     SET `titel` = '".up($_POST['titel'])."',
-                         `text`  = '".up($_POST['inhalt'])."',
-                         `html`  = '".((int)$_POST['html'])."'");
-          $insert_id = mysqli_insert_id($mysql);
-
-          if($_POST['pos'] == "1" || "2") $sign = ">= ";
-          else $sign = "> ";
-
-          $kat = preg_replace('/-(\d+)/','',$_POST['pos']);
-          $pos = preg_replace("=nav_(.*?)-=","",$_POST['pos']);
-
-          $url = "../sites/?show=".$insert_id."";
-
-          $posi = db("UPDATE ".$db['navi']."
-                      SET `pos` = pos+1
-                      WHERE pos ".$sign." '".(int)($pos)."'");
-
-          $posi = db("INSERT INTO ".$db['navi']."
-                      SET `pos`     = '".((int)$pos)."',
-                          `kat`     = '".up($kat)."',
-                          `name`    = '".up($_POST['name'])."',
-                          `url`     = '".up($url)."',
-                          `shown`   = '1',
-                          `type`    = '3',
-                          `editor`  = '".((int)$insert_id)."',
-                          `wichtig` = '0'");
-
-          $show = info(_site_added, "?admin=editor");
-        }
-      } elseif($do == "edit") {
-        $qrys = db("SELECT * FROM ".$db['sites']."
-                    WHERE id = '".(int)($_GET['id'])."'");
-        $gets = _fetch($qrys);
-
-        $qry = db("SELECT s2.*, s1.name AS katname, s1.placeholder FROM ".$db['navi_kats']." AS s1 LEFT JOIN ".$db['navi']." AS s2 ON s1.`placeholder` = s2.`kat`
-                   ORDER BY s1.name, s2.pos");
-        $thiskat = '';
-        while($get = _fetch($qry))
-        {
-          if($thiskat != $get['kat']) {
-            $position .= '
-              <option class="dropdownKat" value="lazy">'.re($get['katname']).'</option>
-              <option value="'.re($get['placeholder']).'-1">-> '._admin_first.'</option>
-            ';
-          }
-          $thiskat = $get['kat'];
-          $sel = ($get['editor'] == $_GET['id']) ? 'selected="selected"' : '';
-
-          $position .= empty($get['name']) ? '' : '<option value="'.re($get['placeholder']).'-'.($get['pos']+1).'" '.$sel.'>'._nach.' -> '.navi_name(re($get['name'])).'</option>';
+            $sel = ($get['editor'] == (isset($_GET['id']) ? $_GET['id'] : 0)) ? 'selected="selected"' : '';
+            $position .= empty($get['name']) ? '' : '<option value="'.stringParser::decode($get['placeholder']).'-'.($get['pos']+1).'" '.$sel.'>'._nach.' -> '.common::navi_name(stringParser::decode($get['name'])).'</option>';
         }
 
-        $qryn = db("SELECT * FROM ".$db['navi']."
-                    WHERE editor = '".(int)($_GET['id'])."'");
-        $getn = _fetch($qryn);
+        $smarty->caching = false;
+        $smarty->assign('head',_editor_add_head);
+        $smarty->assign('what',_button_value_add);
+        $smarty->assign('titel',_titel);
+        $smarty->assign('preview',_preview);
+        $smarty->assign('e_titel','');
+        $smarty->assign('e_inhalt','');
+        $smarty->assign('checked','');
+        $smarty->assign('checked_php','');
+        $smarty->assign('disabled_php', (php_code_enabled ? '' : ' disabled'));
+        $smarty->assign('pos',_position);
+        $smarty->assign('name',_editor_linkname);
+        $smarty->assign('n_name','');
+        $smarty->assign('position',$position);
+        $smarty->assign('ja',_yes);
+        $smarty->assign('nein',_no);
+        $smarty->assign('wichtig',_navi_wichtig);
+        $smarty->assign('error','');
+        $smarty->assign('allow_html',_editor_allow_html);
+        $smarty->assign('inhalt',_inhalt);
+        $smarty->assign('do',"addsite");
+        $show = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/form_editor.tpl');
+        $smarty->clearAllAssign();
 
-        if($gets['html'] == "1") $checked = 'checked="checked"';
+    break;
+    case 'addsite':
+        if(empty($_POST['titel']) || empty($_POST['inhalt']) || $_POST['pos'] == "lazy") {
+            if(empty($_POST['titel']))
+                $error = _empty_titel;
+            elseif(empty($_POST['inhalt']))
+                $error = _empty_editor_inhalt;
+            elseif($_POST['pos'] == "lazy")
+                $error = _navi_no_pos;
 
-        $show = show($dir."/form_editor", array("head" => _editor_edit_head,
-                                                "what" => _button_value_edit,
-                                                "bbcode" => _bbcode,
-                                                "preview" => _preview,
-                                                "titel" => _titel,
-                                                "e_titel" => re($gets['titel']),
-                                                "e_inhalt" => re_bbcode($gets['text']),
-                                                "checked" => $checked,
-                                                "pos" => _position,
-                                                "name" => _editor_linkname,
-                                                "n_name" => re($getn['name']),
-                                                "position" => $position,
-                                                "ja" => _yes,
-                                                "nein" => _no,
-                                                "wichtig" => _navi_wichtig,
-                                                "error" => "",
-                                                "allow_html" => _editor_allow_html,
-                                                "inhalt" => _inhalt,
-                                                "do" => "editsite&amp;id=".$_GET['id'].""));
-      } elseif($do == "editsite") {
-        if(empty($_POST['titel']) || empty($_POST['inhalt']) || $_POST['pos'] == "lazy")
-        {
-          if(empty($_POST['titel'])) $error = _empty_titel;
-          elseif(empty($_POST['inhalt'])) $error = _empty_editor_inhalt;
-          elseif($_POST['pos'] == "lazy") $error = _navi_no_pos;
+            $smarty->caching = false;
+            $smarty->assign('error',$error);
+            $error = $smarty->fetch('file:['.common::$tmpdir.']/errors/errortable.tpl');
+            $smarty->clearAllAssign();
 
-          $error = show("errors/errortable", array("error" => $error));
+            $checked = isset($_POST['html']) ? 'checked="checked"' : '';
+            $checked_php = isset($_POST['php']) ? 'checked="checked"' : '';
+            $kat_ = preg_replace('/-(\d+)/','',$_POST['pos']);
+            $pos_ = preg_replace("=nav_(.*?)-=","",$_POST['pos']);
 
-          if(isset($_POST['html'])) $checked = 'checked="checked"';
+            $qry = common::$sql['default']->select("SELECT s2.*, s1.`name` AS `katname`, s1.`placeholder` "
+                    . "FROM `{prefix_navi_kats}` AS `s1` "
+                    . "LEFT JOIN `{prefix_navi}` AS `s2` "
+                    . "ON s1.`placeholder` = s2.`kat` "
+                    . "ORDER BY s1.`name`, s2.`pos`;");
+            $thiskat = ''; $position = '';
+            foreach($qry as $get) {
+                if($thiskat != $get['kat']) {
+                    $position .= '<option class="selectpicker" value="lazy">'.stringParser::decode($get['katname']).'</option>
+                    <option value="'.stringParser::decode($get['placeholder']).'-1">-> '._admin_first.'</option>';
+                }
 
-          $qry = db("SELECT s2.*, s1.name AS katname, s1.placeholder FROM ".$db['navi_kats']." AS s1 LEFT JOIN ".$db['navi']." AS s2 ON s1.`placeholder` = s2.`kat`
-                     ORDER BY s1.name, s2.pos");
-          $thiskat = '';
-          while($get = _fetch($qry))
-          {
-            if($thiskat != $get['kat']) {
-              $position .= '
-                <option class="dropdownKat" value="lazy">'.re($get['katname']).'</option>
-                <option value="'.re($get['placeholder']).'-1">-> '._admin_first.'</option>
-              ';
+                $thiskat = $get['kat'];
+                $sel = ($get['kat'] == $kat_ && ($get['pos']+1) == $pos_) ? 'selected="selected"' : '';
+                $position .= empty($get['name']) ? '' : '<option value="'.stringParser::decode($get['placeholder']).'-'.($get['pos']+1).'" '.$sel.'>'._nach.' -> '.common::navi_name(stringParser::decode($get['name'])).'</option>';
             }
+
+            $smarty->caching = false;
+            $smarty->assign('head',_editor_add_head);
+            $smarty->assign('what',_button_value_add);
+            $smarty->assign('preview',_preview);
+            $smarty->assign('error',$error);
+            $smarty->assign('checked',$checked);
+            $smarty->assign('checked_php',$checked_php);
+            $smarty->assign('disabled_php',(php_code_enabled ? '' : ' disabled'));
+            $smarty->assign('pos',_position);
+            $smarty->assign('ja',_yes);
+            $smarty->assign('nein',_no);
+            $smarty->assign('name',_editor_linkname);
+            $smarty->assign('position',$position);
+            $smarty->assign('n_name',stringParser::decode($_POST['name']));
+            $smarty->assign('wichtig',_navi_wichtig);
+            $smarty->assign('titel',_titel);
+            $smarty->assign('e_titel',stringParser::decode($_POST['titel']));
+            $smarty->assign('e_inhalt',stringParser::decode($_POST['inhalt']));
+            $smarty->assign('allow_html',_editor_allow_html);
+            $smarty->assign('inhalt',_inhalt);
+            $smarty->assign('do',"addsite");
+            $show = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/form_editor.tpl');
+            $smarty->clearAllAssign();
+        } else {
+            $_POST['html'] = (isset($_POST['html']) ? $_POST['html'] : 0);
+            $_POST['php'] = (isset($_POST['php']) ? $_POST['php'] : 0);
+            common::$sql['default']->insert("INSERT INTO `{prefix_sites}` SET `titel` = ?, `text` = ?, `html` = ?, `php` = ?;",
+                    [stringParser::encode($_POST['titel']),stringParser::encode($_POST['inhalt']),(int)($_POST['html']),(php_code_enabled ? (int)($_POST['php']) : 0)]);
+
+            $insert_id = common::$sql['default']->lastInsertId();
+            $sign = (isset($_POST['pos']) && ($_POST['pos'] == "1" || $_POST['pos'] == "2")) ? ">= " : "> ";
+            $kat = preg_replace('/-(\d+)/','',$_POST['pos']);
+            $pos = preg_replace("=nav_(.*?)-=","",$_POST['pos']);
+            $url = "../sites/?show=".$insert_id."";
+
+            common::$sql['default']->update("UPDATE `{prefix_navi}` SET `pos` = (pos+1) WHERE `pos` ".$sign." ?;", [(int)($pos)]);
+            common::$sql['default']->insert("INSERT INTO `{prefix_navi}` SET `pos` = ?, `kat` = ?, `name` = ?, `url` = ?, `shown` = 1, `type` = 3, `editor` = ?, `wichtig` = 0;",
+                    [(int)($pos),stringParser::encode($kat),stringParser::encode($_POST['name']),stringParser::encode($url),(int)($insert_id)]);
+
+            $show = common::info(_site_added, "?admin=editor");
+        }
+    break;
+    case 'edit':
+        $gets = common::$sql['default']->fetch("SELECT * FROM `{prefix_sites}` WHERE `id` = ?;", [(int)($_GET['id'])]);
+        $qry = common::$sql['default']->select("SELECT s2.*, s1.`name` AS `katname`, s1.`placeholder` "
+                . "FROM `{prefix_navi_kats}` AS `s1` "
+                . "LEFT JOIN `{prefix_navi}` AS `s2` "
+                . "ON s1.`placeholder` = s2.`kat` "
+                . "ORDER BY s1.`name`, s2.`pos`;");
+
+        $thiskat = ''; $position = '';
+        foreach($qry as $get) {
+            if($thiskat != $get['kat']) {
+                $position .= '<option class="selectpicker" value="lazy">'.stringParser::decode($get['katname']).'</option>
+                  <option value="'.stringParser::decode($get['placeholder']).'-1">-> '._admin_first.'</option>';
+            }
+
             $thiskat = $get['kat'];
             $sel = ($get['editor'] == $_GET['id']) ? 'selected="selected"' : '';
+            $position .= empty($get['name']) ? '' : '<option value="'.stringParser::decode($get['placeholder']).'-'.($get['pos']+1).'" '.$sel.'>'._nach.' -> '.common::navi_name(stringParser::decode($get['name'])).'</option>';
+        }
 
-            $position .= empty($get['name']) ? '' : '<option value="'.re($get['placeholder']).'-'.($get['pos']+1).'" '.$sel.'>'._nach.' -> '.navi_name(re($get['name'])).'</option>';
-          }
+        $getn = common::$sql['default']->fetch("SELECT `name` FROM `{prefix_navi}` WHERE `editor` = ?;", [(int)($_GET['id'])]);
+        $checked = ($gets['html'] ? 'checked="checked"' : '');
+        $checked_php = $gets['php'] ? 'checked="checked"' : '';
 
-          $show = show($dir."/form_editor", array("head" => _editor_edit_head,
-                                                  "what" => _button_value_edit,
-                                                  "bbcode" => _bbcode,
-                                                  "preview" => _preview,
-                                                  "error" => $error,
-                                                  "checked" => $checked,
-                                                  "pos" => _position,
-                                                  "ja" => _yes,
-                                                  "nein" => _no,
-                                                  "name" => _editor_linkname,
-                                                  "position" => $position,
-                                                  "n_name" => re($_POST['name']),
-                                                  "wichtig" => _navi_wichtig,
-                                                  "titel" => _titel,
-                                                  "e_titel" => re($_POST['titel']),
-                                                  "e_inhalt" => re_bbcode($_POST['inhalt']),
-                                                  "allow_html" => _editor_allow_html,
-                                                  "inhalt" => _inhalt,
-                                                  "do" => "editsite&amp;id=".$_GET['id'].""));
+
+        $smarty->caching = false;
+        $smarty->assign('head',_editor_edit_head);
+        $smarty->assign('what',_button_value_edit);
+        $smarty->assign('preview',_preview);
+        $smarty->assign('titel',_titel);
+        $smarty->assign('e_titel',stringParser::decode($gets['titel']));
+        $smarty->assign('e_inhalt',stringParser::decode($gets['inhalt']));
+        $smarty->assign('checked',$checked);
+        $smarty->assign('checked_php',$checked_php);
+        $smarty->assign('disabled_php',(php_code_enabled ? '' : ' disabled'));
+        $smarty->assign('pos',_position);
+        $smarty->assign('name',_editor_linkname);
+        $smarty->assign('n_name',stringParser::decode($getn['name']));
+        $smarty->assign('position',$position);
+        $smarty->assign('ja',_yes);
+        $smarty->assign('nein',_no);
+        $smarty->assign('wichtig',_navi_wichtig);
+        $smarty->assign('error','');
+        $smarty->assign('allow_html',_editor_allow_html);
+        $smarty->assign('inhalt',_inhalt);
+        $smarty->assign('do', "editsite&amp;id=".$_GET['id']."");
+        $show = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/form_editor.tpl');
+        $smarty->clearAllAssign();
+
+    break;
+    case 'editsite':
+        if(empty($_POST['titel']) || empty($_POST['inhalt']) || $_POST['pos'] == "lazy") {
+            if(empty($_POST['titel']))
+                $error = _empty_titel;
+            elseif(empty($_POST['inhalt']))
+                $error = _empty_editor_inhalt;
+            elseif($_POST['pos'] == "lazy")
+                $error = _navi_no_pos;
+            $smarty->caching = false;
+            $smarty->assign('error',$error);
+            $error = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'errors/errortable.tpl');
+            $smarty->clearAllAssign();
+            $checked = isset($_POST['html']) ? 'checked="checked"' : '';
+            $checked_php = isset($_POST['php']) ? 'checked="checked"' : '';
+
+            $qry = common::$sql['default']->select("SELECT s2.*, s1.`name` AS `katname`, s1.`placeholder` "
+                    . "FROM `{prefix_navi_kats}` AS `s1` "
+                    . "LEFT JOIN `{prefix_navi}` AS `s2` "
+                    . "ON s1.`placeholder` = s2.`kat` "
+                    . "ORDER BY s1.`name`, s2.`pos`;");
+
+            $thiskat = ''; $position = '';
+            foreach($qry as $get) {
+                if($thiskat != $get['kat']) {
+                    $position .= '<option class="selectpicker" value="lazy">'.stringParser::decode($get['katname']).'</option>'
+                            . '<option value="'.stringParser::decode($get['placeholder']).'-1">-> '._admin_first.'</option>';
+                }
+
+                $thiskat = $get['kat'];
+                $sel = (isset($_GET['id']) && $get['editor'] == $_GET['id']) ? 'selected="selected"' : '';
+                $position .= empty($get['name']) ? '' : '<option value="'.stringParser::decode($get['placeholder']).'-'.($get['pos']+1).'" '.$sel.'>'._nach.' -> '.common::navi_name(stringParser::decode($get['name'])).'</option>';
+            }
+
+            $smarty->caching = false;
+            $smarty->assign('head',_editor_edit_head);
+            $smarty->assign('what',_button_value_edit);
+            $smarty->assign('preview',_preview);
+            $smarty->assign('error',$error);
+            $smarty->assign('checked',$checked);
+            $smarty->assign('checked_php',$checked_php);
+            $smarty->assign('disabled_php',(php_code_enabled ? '' : ' disabled'));
+            $smarty->assign('pos',_position);
+            $smarty->assign('ja',_yes);
+            $smarty->assign('nein',_no);
+            $smarty->assign('name',_editor_linkname);
+            $smarty->assign('position',$position);
+            $smarty->assign('n_name',stringParser::decode($_POST['name']));
+            $smarty->assign('wichtig',_navi_wichtig);
+            $smarty->assign('titel',_titel);
+            $smarty->assign('e_titel',stringParser::decode($_POST['titel']));
+            $smarty->assign('e_inhalt',stringParser::decode($_POST['inhalt']));
+            $smarty->assign('allow_html',_editor_allow_html);
+            $smarty->assign('inhalt',_inhalt);
+            $smarty->assign('do',"editsite&amp;id=".$_GET['id']."");
+            $show = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/form_editor.tpl');
+            $smarty->clearAllAssign();
         } else {
-          $qry = db("UPDATE ".$db['sites']."
-                     SET `titel` = '".up($_POST['titel'])."',
-                         `text`  = '".up($_POST['inhalt'])."',
-                         `html`   = '".((int)$_POST['html'])."'
-                     WHERE id = '".(int)($_GET['id'])."'");
+            $_POST['html'] = isset($_POST['html']) ? $_POST['html'] : 0;
+            $_POST['php'] = isset($_POST['php']) ? $_POST['php'] : 0;
+            common::$sql['default']->update("UPDATE `{prefix_sites}` SET `titel` = ?,`text` = ?,`html` = ?, `php` = ? WHERE `id` = ?;",
+                    [stringParser::encode($_POST['titel']),stringParser::encode($_POST['inhalt']),(int)($_POST['html']),(php_code_enabled ? (int)($_POST['php']) : 0),(int)($_GET['id'])]);
 
-          if($_POST['pos'] == "1" || "2") $sign = ">= ";
-          else $sign = "> ";
+            $sign = (isset($_POST['pos']) && ($_POST['pos'] == "1" || $_POST['pos'] == "2")) ? ">= " : "> ";
+            $kat = preg_replace('/-(\d+)/','',$_POST['pos']);
+            $pos = preg_replace("=nav_(.*?)-=","",$_POST['pos']);
 
-          $kat = preg_replace('/-(\d+)/','',$_POST['pos']);
-          $pos = preg_replace("=nav_(.*?)-=","",$_POST['pos']);
+            $url = "../sites/?show=".$_GET['id'];
+            common::$sql['default']->update("UPDATE `{prefix_navi}` SET `pos` = (pos+1) WHERE `pos` ".$sign." ?;", [(int)($pos)]);
+            common::$sql['default']->update("UPDATE `{prefix_navi}` SET `pos` = ?, `kat` = ?, `name` = ?,`url` = ? WHERE `editor` = ?;",
+                    [(int)($pos),stringParser::encode($kat),stringParser::encode($_POST['name']),stringParser::encode($url),(int)($_GET['id'])]);
 
-          $url = "../sites/?show=".$_GET['id']."";
-
-          $posi = db("UPDATE ".$db['navi']."
-                      SET `pos` = pos+1
-                      WHERE pos ".$sign." '".(int)($pos)."'");
-
-          $posi = db("UPDATE ".$db['navi']."
-                      SET `pos`     = '".((int)$pos)."',
-                          `kat`     = '".up($kat)."',
-                          `name`    = '".up($_POST['name'])."',
-                          `url`     = '".up($url)."'
-                      WHERE editor = '".(int)($_GET['id'])."'");
-
-          $show = info(_site_edited, "?admin=editor");
+            $show = common::info(_site_edited, "?admin=editor");
         }
-      } elseif($do == "delete") {
-        $qry = db("DELETE FROM ".$db['sites']."
-                   WHERE id = '".(int)($_GET['id'])."'");
-        $qry = db("DELETE FROM ".$db['navi']."
-                   WHERE editor = '".(int)($_GET['id'])."'");
-        $show = info(_editor_deleted, "?admin=editor");
-      } else {
-        $qry = db("SELECT * FROM ".$db['sites']."");
-        while($get = _fetch($qry))
-        {
-          $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
-          $edit = show("page/button_edit_single", array("id" => $get['id'],
-                                                        "action" => "admin=editor&amp;do=edit",
-                                                        "title" => _button_title_edit));
-          $delete = show("page/button_delete_single", array("id" => $get['id'],
-                                                            "action" => "admin=editor&amp;do=delete",
-                                                            "title" => _button_title_del,
-                                                            "del" => convSpace(_confirm_del_site)));
+    break;
+    case 'delete':
+        common::$sql['default']->delete("DELETE FROM `{prefix_sites}` WHERE `id` = ?;", [(int)($_GET['id'])]);
+        common::$sql['default']->delete("DELETE FROM `{prefix_navi}` WHERE `editor` = ?;", [(int)($_GET['id'])]);
+        $show = common::info(_editor_deleted, "?admin=editor");
+    break;
+    default:
+        $qry = common::$sql['default']->select("SELECT * FROM `{prefix_sites}`;");
+        foreach($qry as $get) {
+            $class = ($color % 2) ? "contentMainSecond" : "contentMainFirst"; $color++;
+            $edit = common::getButtonEditSingle($get['id'],"admin=".$admin."&amp;do=edit");
+            $delete = common::button_delete_single($get['id'],"admin=".$admin."&amp;do=delete",_button_title_del,_confirm_del_site);
 
-          $show_ .= show($dir."/editor_show", array("name" => "<a href='../sites/?show=".$get['id']."'>".re($get['titel'])."</a>",
-                                                    "del" => $delete,
-                                                    "edit" => $edit,
-                                                    "class" => $class));
+            $smarty->caching = false;
+            $smarty->assign('name', "<a href='../sites/?show=".$get['id']."'>".stringParser::decode($get['titel'])."</a>");
+            $smarty->assign('del',$delete);
+            $smarty->assign('edit',$edit);
+            $smarty->assign('class',$class);
+            $show .= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/editor_show.tpl');
+            $smarty->clearAllAssign();
         }
 
-        $show = show($dir."/editor", array("head" => _editor_head,
-                                           "show" => $show_,
-                                           "add" => _editor_add_head,
-                                           "edit" => _editicon_blank,
-                                           "del" => _deleteicon_blank,
-                                           "name" => _editor_name));
-      }
+        if(empty($show)) {
+            $smarty->caching = false;
+            $smarty->assign('colspan',4);
+            $show = $smarty->fetch('string:'._no_entrys_yet);
+            $smarty->clearAllAssign();
+        }
+
+        $smarty->caching = false;
+        $smarty->assign('show',$show);
+        $show = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/editor.tpl');
+        $smarty->clearAllAssign();
+
+    break;
+}

@@ -1,0 +1,1 @@
+{$country} <a{if $class != ""} class="{$class}"{/if} href="../user/?action=user&amp;id={$id}"><div style="color: {$color}">{$nick}</div></a>

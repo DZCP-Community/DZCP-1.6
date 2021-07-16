@@ -1,42 +1,28 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2017 © CodeKing, my-STARMEDIA, Codedesigns
  */
 
 if(defined('_UserMenu')) {
     $where = _site_user_logout;
-    if(array_key_exists('identy_id',$_SESSION)) {
-        if(!empty($_SESSION['identy_id'])) {
-            db("UPDATE ".$db['users']." SET `online` = 0, `sessid` = '' WHERE `id` = ".$userid.";"); //Logout
-            session_regenerate_id();
-
-            $_SESSION['id'] = $_SESSION['identy_id'];
-            $_SESSION['pwd'] = data("pwd",(int)($_SESSION['identy_id']));
-            $_SESSION['identy_ip'] = '';
-            $_SESSION['identy_id'] = '';
-            $_SESSION['ip'] = visitorIp();
-
-            db("UPDATE ".$db['users']." SET `online` = '1', `sessid` = '".session_id()."' WHERE `id` = ".(int)($_GET['id']));
-            header("Location: ../user/?action=userlobby");
-            exit();
-        }
-    }
-
-    if($chkMe && $userid) {
-        $dsgvo = array();
-        $dsgvo[0] = $_SESSION['DSGVO'];
-        $dsgvo[1] = $_SESSION['do_show_dsgvo'];
-        db("UPDATE ".$db['users']." SET online = '0', pkey = '', sessid = '' WHERE id = '".$userid."'");
-        setIpcheck("logout(".$userid.")");
-        cookie::clear();
-        session_unset();
-        session_destroy();
-        session_regenerate_id();
-        $_SESSION['DSGVO'] = $dsgvo[0];
-        $_SESSION['do_show_dsgvo'] = $dsgvo[1];
+    if(common::$chkMe && common::$userid) {
+        common::$sql['default']->update("UPDATE `{prefix_users}` SET `online` = 0, `sessid` = '' WHERE `id` = ?;", [common::$userid]);
+        common::$sql['default']->delete("DELETE FROM `{prefix_autologin}` WHERE `ssid` = ?;", [session_id()]);
+        common::setIpcheck("logout(".common::$userid.")");
+        common::dzcp_session_destroy();
     }
 
     header("Location: ../news/");
-    exit();
 }

@@ -13,9 +13,9 @@ if(defined('_UserMenu')) {
                 $_SESSION['user_has_dsgvo_lock'] = false;
                 $permanent_key = '';
                 if ($_SESSION['dsgvo_lock_permanent_login']) {
-                    cookie::put('id', $get['id']);
+                    cookie::set('id', $get['id']);
                     $permanent_key = hash('sha256', mkpwd(12));
-                    cookie::put('pkey', $permanent_key);
+                    cookie::set('pkey', $permanent_key);
                     cookie::save();
                 }
 

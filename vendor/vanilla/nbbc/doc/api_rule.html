@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<title>Rule Functions - NBBC: The New BBCode Parser</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel='stylesheet' type='text/css' href='styles.css' />
+</head>
+
+<body>
+
+<div align='center'><div class='page_container2'><div class='page_container'>
+
+<h2>IV. API Reference</h2>
+
+<p style='text-align:right;margin:0;'>[ Previous: <a href="api_root.html">E. Root-Class Functions</a> | Next: <a href="api_wiki.html">G. Wiki-Link Functions</a> ]</p>
+
+<h3>F. Rule Functions</h3>
+
+<a name="ref_parser_AddRule"></a>
+<div class='api'>
+	<div class='api_head'>void <b>BBCode::AddRule</b> ( string $<tt>name</tt> , array $<tt>params</tt> )</div>
+	<div class='api_descr'>This function adds a new tag rule.  Tag rules control the processing of
+		BBCode [tags]; with the correct rule definition, you can make a tag do just about anything
+		you can think of.  To add a rule for a given tag, call AddRule() and provide the name of
+		the tag rule you wish to add or replace, and an array containing
+		<a href="app_rule.html">rule parameters</a> that defines what NBBC should do when it sees
+		that tag.  Any old rule parameters defined for that tag will be removed by this function,
+		so this can also replace tag rules as well as adding new rules.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>name</i>: The name of a tag you wish to add or replace, like "<tt>b</tt>" or
+			"<tt>url</tt>" or "<tt>larry</tt>".  Nearly any name is allowed; however, the name may not include
+			the following characters:  '[', ']', '=', or any whitespace character.</li>
+		<li><i>params</i>:  An array of <a href="app_rule.html">rule parameters</a> defining
+			what NBBC should do when it processes this tag.</li>
+		</ul>
+	</div>
+	<div class='api_info'><b>Return Value:</b>  None.</div>
+	<div class='api_info_block'>
+		(The user's manual, sections <a href="usage_add.html">III.C</a> through
+		<a href="usage_call.html">III.F</a> as well as <a href="app_rule.html">appendix B</a>
+		and <a href="app_rule.html">appendix E</a>, contains extensive documentation on
+		using this function, so that information will not be repeated here.)
+	</div>
+</div>
+
+<a name="ref_parser_RemoveRule"></a>
+<div class='api'>
+	<div class='api_head'>void <b>BBCode::RemoveRule</b> ( string $<tt>name</tt> )</div>
+	<div class='api_descr'>This function un-defines the current rule for the given tag --- in short,
+		this causes NBBC to stop recognizing the given tag as a tag.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>name</i>: The name of a tag to remove from the ruleset.</li>
+		</ul>
+	</div>
+	<div class='api_info'><b>Return Value:</b>  None.</div>
+</div>
+
+<a name="ref_parser_GetRule"></a>
+<div class='api'>
+	<div class='api_head'>array <b>BBCode::GetRule</b> ( string $<tt>name</tt> )</div>
+	<div class='api_descr'>This function returns the <a href="app_rule.html">parameter array</a> for a given tag,
+		by name, the same array as was most recently given to <a href="api_root.html#ref_parser_AddRule">AddRule()</a>
+		for that same tag name.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>name</i>: The name of the tag whose parameters you'd like to retrieve.</li>
+		</ul>
+	</div>
+	<div class='api_info'><b>Return values:</b>  The parameter array for the given tag, if the tag
+		has a rule; if it does not, the return value is <tt>false</tt>.</div>
+</div>
+
+<a name="ref_parser_ClearRules"></a>
+<div class='api'>
+	<div class='api_head'>void <b>BBCode::ClearRules</b> ( )</div>
+	<div class='api_descr'>This function removes <i>all</i> rules currently associated with this
+		BBCode object, after which the BBCode object will have no rules defined at all.  This
+		is useful if you want to replace the default ruleset entirely with your own custom ruleset.</div>
+	<div class='api_info'><b>Parameters:</b>  None.</div>
+	<div class='api_info'><b>Return Value:</b>  None.</div>
+</div>
+
+<a name="ref_parser_GetDefaultRule"></a>
+<div class='api'>
+	<div class='api_head'>array <b>BBCode::GetDefaultRule</b> ( string $<tt>name</tt> )</div>
+	<div class='api_descr'>This function returns the default <a href="app_rule.html">parameter array</a>
+		for a given tag, by name, the same array that would be used by a newly-constructed BBCode object.
+		This provides you with an easy way to look up a rule provided by the <a href="bbc.html">Standard BBCode Library</a>.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>name</i>: The name of the tag whose parameters you'd like to retrieve.</li>
+		</ul>
+	</div>
+	<div class='api_info'><b>Return values:</b>  The Standard BBCode Library's parameter array for the
+		given tag, if the tag has a rule; if it does not, the return value is <tt>false</tt>.</div>
+</div>
+
+<a name="ref_parser_SetDefaultRule"></a>
+<div class='api'>
+	<div class='api_head'>void <b>BBCode::SetDefaultRule</b> ( string $<tt>name</tt> )</div>
+	<div class='api_descr'>This function changes the <a href="app_rule.html">parameter array</a>
+		for a given tag, by name, to the same array that would be used by a newly-constructed BBCode object,
+		the same array that would be returned by <a href="#ref_parser_GetDefaultRule">GetDefaultRule()</a>.</div>
+	<div class='api_info'><b>Parameters:</b>
+		<ul>
+		<li><i>name</i>: The name of the tag whose rule you'd like to revert to its default setting.</li>
+		</ul>
+	</div>
+</div>
+
+<a name="ref_parser_GetDefaultRules"></a>
+<div class='api'>
+	<div class='api_head'>array <b>BBCode::GetDefaultRules</b> ( )</div>
+	<div class='api_descr'>This function returns a key =&gt; value array that contains <i>all</i>
+		of the default rules --- all of the rules for the <a href="bbc.html">Standard BBCode Library</a>.  Each key
+		is the name of a tag, and each value is an array containing <a href="app_rule.html">rule parameters</a>.
+		This is exactly the same as calling <a href="#ref_parser_GetDefaultRule">GetDefaultRule()</a>
+		many times, once for each tag in the Standard BBCode Library, only much, much faster.</div>
+	<div class='api_info'><b>Parameters:</b>  None.</div>
+	<div class='api_info'><b>Return Value:</b>  An array containing all of the default BBCode rules.</div>
+</div>
+
+<a name="ref_parser_SetDefaultRules"></a>
+<div class='api'>
+	<div class='api_head'>void <b>BBCode::SetDefaultRules</b> ( )</div>
+	<div class='api_descr'>This function causes the BBCode object's entire current ruleset to be
+		replaced with the default rules --- in other words, to be changed back to the rules
+		that it had just after it was newly-created --- in other words, to the ruleset for the
+		<a href="bbc.html">Standard BBCode Library</a>.  All of the existing rules of this
+		object will be deleted, and the new, default rules will be installed instead.</div>
+	<div class='api_info'><b>Parameters:</b>  None.</div>
+	<div class='api_info'><b>Return Value:</b>  None.</div>
+</div>
+
+<p style='text-align:right;'>[ Previous: <a href="api_root.html">E. Root-Class Functions</a> | Next: <a href="api_wiki.html">G. Wiki-Link Functions</a> ]</p>
+
+<hr />
+
+<div style='text-align:center;'>Copyright &copy; 2010, the Phantom Inker.  All rights reserved.</div>
+
+</div></div></div>
+
+</body>
+
+</html>

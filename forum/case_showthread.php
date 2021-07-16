@@ -1,327 +1,345 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2017 © CodeKing, my-STARMEDIA, Codedesigns
  */
 
 if(defined('_Forum')) {
-    $checks = db("SELECT s3.name,s3.intern,s2.sid,s1.kid,s2.id FROM ".
-        $db['f_kats']." s3, ".$db['f_skats']." s2, ".$db['f_threads'].
-        " s1 WHERE s1.kid = s2.id AND s2.sid = s3.id AND s1.id = '".
-        (int)($_GET['id'])."'",false,true);
+    $checks = common::$sql['default']->fetch("SELECT s3.`name`,s3.`intern`,s2.`sid`,s1.`kid`,s2.`id` FROM ".
+        "`{prefix_forum_kats}` AS s3, `{prefix_forum_sub_kats}` AS s2, `{prefix_forum_threads}` AS s1 WHERE ".
+        "s1.`kid` = s2.`id` AND s2.`sid` = s3.`id` AND s1.`id` = ?;",[(int)($_GET['id'])]);
 
-    $f_check = db("SELECT * FROM `".$db['f_threads']."`  WHERE `id` = ".(int)($_GET['id'])." AND `kid` = ".$checks['kid'].";");
-    if(_rows($f_check)) {
-        if($checks['intern'] == 1 && !permission("intforum") && !fintern($checks['id'])) {
-            $index = error(_error_wrong_permissions, 1);
+    //Fix correct kat_ID
+    if (!array_key_exists('kid', $_SESSION) || !$_SESSION['kid'] || $_SESSION['kid'] != $checks['kid']) {
+        $_SESSION['kid'] = $checks['kid'] ? $checks['kid'] : 0;
+    }
+
+    if(common::$sql['default']->rows("SELECT * FROM `{prefix_forum_threads}` WHERE `id` = ? AND `kid` = ?;",[(int)($_GET['id']),$checks['kid']])) {
+        if($checks['intern'] == 1 && !common::permission("intforum") && !common::forum_intern($checks['id'])) {
+            $index = common::error(_error_wrong_permissions, 1);
         } else {
-            db("UPDATE `".$db['f_threads']."` SET `hits` = (hits+1) WHERE `id` = ".(int)($_GET['id']).";");
+            //Update Hits
+            if(!common::$CrawlerDetect->isCrawler()) {
+                common::$sql['default']->update("UPDATE `{prefix_forum_threads}` SET `hits` = (hits+1) WHERE `id` = ?;", [(int)($_GET['id'])]);
+            }
 
-            $entrys = cnt($db['f_posts'], " WHERE `sid` = ".(int)($_GET['id']));
-            $pagenr = "1";
-            if($entrys >= 1)
-                $pagenr = ceil($entrys/config('m_fposts'));
+            //Fix last post time update
+            $qryp = common::$sql['default']->select("SELECT `date` FROM `{prefix_forum_posts}` WHERE sid = ?;",[(int)($_GET['id'])]);
+            $update_lp_time = 0; //Last Post Time
+            foreach($qryp as $getp) {
+                if(!$update_lp_time || $update_lp_time < $getp['date']) {
+                    $update_lp_time = $getp['date'];
+                }
+            } unset($qryp,$getp);
 
-            $hL = '';
-            if(!empty($_GET['hl']))
-                $hL = '&amp;hl='.$_GET['hl'];
+            $qryp = common::$sql['default']->select("SELECT * FROM `{prefix_forum_posts}` WHERE sid = ? ".
+                "ORDER BY id LIMIT ".(common::$page - 1)*($m_fposts=settings::get('m_fposts')).",".$m_fposts.";",
+                [(int)($_GET['id'])]);
 
-            $lpost = show(_forum_lastpost, array("id" => $entrys+1, "tid" => $_GET['id'], "page" => $pagenr.$hL));
+            //Button "Zum letzten Eintrag"
+            $entrys = common::cnt("{prefix_forum_posts}", " WHERE `sid` = ?",'id',[(int)($_GET['id'])]);
+            $pagenr = (!$entrys ? "1" : ceil($entrys/settings::get('m_fposts')));
+            $hL = (!empty($_GET['hl']) ? '&amp;hl='.$_GET['hl'] : '');
 
-            //Posts
-            $qryp = db("SELECT * FROM `".$db['f_posts']."` WHERE `sid` = ".(int)($_GET['id'])." ORDER BY `id` LIMIT ".($page - 1)*config('m_fposts').",".config('m_fposts').";");
-            $i = 2;
-            while($getp = _fetch($qryp)) {
-                $sig = "";
-                if(data("signatur",$getp['reg']))
-                    $sig = _sig.bbcode(data("signatur",$getp['reg']));
+            $smarty->caching = false;
+            $smarty->assign('id',$entrys+1);
+            $smarty->assign('tid',$_GET['id']);
+            $smarty->assign('page',$pagenr.$hL);
+            $lpost = $smarty->fetch('string:'._forum_lastpost);
+            $smarty->clearAllAssign();
 
-                $userposts = "";
-                if($getp['reg'])
-                    $userposts = show(_forum_user_posts, array("posts" => userstats("forumposts",$getp['reg'])));
+            /*
+             * ###################################
+             * Posts
+             * ###################################
+             */
+            $i = 2; //Begin Post ID 2 (1 is thread)
+            foreach($qryp as $getp) {
+                //User Signatur ausgeben
+                $signatur = common::data("signatur",$getp['reg']); $sig = '';
+                if(!empty($signatur)) {
+                    $sig = sprintf('%s%s',_sig,BBCode::parse_html((string)$signatur));
+                } unset($signatur);
 
-                $onoff = "";
-                if($getp['reg'])
-                    $onoff = onlinecheck($getp['reg']);
-
-                $zitat = show("page/button_zitat", array("id" => $_GET['id'],
-                    "action" => "action=post&amp;do=add&amp;kid=".$getp['kid']."&amp;zitat=".$getp['id'],
-                    "title" => _button_title_zitat));
-
-                $delete = ""; $edit = "";
-                if($chkMe >= 1 && $getp['reg'] == $userid || permission("forum")) {
-                    $edit = show("page/button_edit_single", array("id" => $getp['id'],
-                        "action" => "action=post&amp;do=edit",
-                        "title" => _button_title_edit));
-
-                    $delete = show("page/button_delete_single", array("id" => $getp['id'],
-                        "action" => "action=post&amp;do=delete",
-                        "title" => _button_title_del,
-                        "del" => convSpace(_confirm_del_entry)));
+                //User Posts ( Uber Avatar )
+                $userposts = '';
+                if($getp['reg']) {
+                    $smarty->caching = false;
+                    $smarty->assign('posts',common::userstats("forumposts",$getp['reg']));
+                    $userposts = $smarty->fetch('string:'._forum_user_posts);
+                    $smarty->clearAllAssign();
                 }
 
-                $ftxt = hl($getp['text'], isset($_GET['hl']) ? $_GET['hl'] : '');
-                if(isset($_GET['hl']))
-                    $text = bbcode($ftxt['text']);
-                else
-                    $text = bbcode($getp['text']);
+                //User Online check
+                $onoff = ($getp['reg'] ? common::onlinecheck($getp['reg']) : '');
 
-                if($chkMe == 4)
-                    $posted_ip = $getp['ip'];
-                else
-                    $posted_ip = _logged;
+                //Button Zitat
+                $zitat = common::a_img_link("?action=post&amp;do=add&amp;kid=".$_SESSION['kid']."&amp;zitat_post=".$getp['id'].
+                    "&amp;id=".$_GET['id'],'quote', _button_title_zitat,'_self');
 
-                $titel = show(_eintrag_titel_forum, array("postid" => $i+($page-1)*config('m_fposts'),
-                    "datum" => date("d.m.Y", $getp['date']),
-                    "zeit" => date("H:i", $getp['date'])._uhr,
-                    "url" => '?action=showthread&amp;id='.(int)($_GET['id']).'&amp;page='.$page.'#p'.($i+($page-1)*config('m_fposts')),
-                    "edit" => $edit,
-                    "delete" => $delete));
+                //Delete & Edit Button
+                $delete = ""; $edit = "";
+                if($getp['reg'] == common::$userid || common::permission("forum")) {
+                    $edit = common::getButtonEditSingle($getp['id'],"action=post&amp;do=edit");
+                    $delete = common::button_delete_single($getp['id'],"action=post&amp;do=delete",_button_title_del,_confirm_del_entry);
+                }
 
-                $hp = ""; $icq = ""; $pn = ""; $email = "";
+                $ftxt = hl($getp['text'], (isset($_GET['hl']) ? $_GET['hl'] : ''));
+                $text = isset($_GET['hl']) ? BBCode::parse_html((string)$ftxt['text']) : BBCode::parse_html((string)$getp['text']);
+
+                //Titel
+                $smarty->caching = false;
+                $smarty->assign('postid', $i+(common::$page-1)*settings::get('m_fposts'));
+                $smarty->assign('datum',date("d.m.Y", $getp['date']));
+                $smarty->assign('zeit',date("H:i", $getp['date']));
+                $smarty->assign('url','?action=showthread&amp;id='.(int)($_GET['id']).'&amp;page='.common::$page.'#p'.($i+(common::$page-1)*settings::get('m_fposts')));
+                $smarty->assign('edit',$edit);
+                $smarty->assign('delete',$delete);
+                $titel = $smarty->fetch('string:'._eintrag_titel_forum);
+                $smarty->clearAllAssign();
+
+                $pn = ""; $hp = "";
                 if($getp['reg'] != 0) {
-                    $getu = db("SELECT `nick`,`icq`,`hp`,`email` FROM `".$db['users']."` WHERE `id` = ".$getp['reg'].";",false,true);
+                    $getu = common::$sql['default']->fetch("SELECT `nick`,`hp`,`email` FROM `{prefix_users}` WHERE `id` = '".$getp['reg']."';");
 
-                    $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
-                    $pn = show(_pn_write_forum, array("id" => $getp['reg'], "nick" => $getu['nick']));
+                    //PM
+                    $smarty->caching = false;
+                    $smarty->assign('nick',stringParser::decode($getu['nick']));
+                    $pn_name = $smarty->fetch('string:'._pn_write_forum);
+                    $smarty->clearAllAssign();
+                    $pn = common::a_img_link('../user/?action=msg&amp;do=pn&amp;id='.$getp['reg'],'pn', $pn_name);
+                    unset($pn_name);
 
-                    if(!empty($getu['icq']) || $getu['icq'] == 0) {
-                        $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
-                        $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin='.$getu['icq'].'" target="_blank">'.$uin.'</a>';
+                    //-> Homepage Link
+                    if (!empty($getu['hp'])) {
+                        $hp = common::a_img_link(common::links(stringParser::decode($getu['hp'])),'hp', common::links(stringParser::decode($getu['hp'])));
                     }
 
-                    if(!empty($getu['hp']))
-                        $hp = show(_hpicon_forum, array("hp" => links(re($getu['hp']))));
                 } else {
-                    $email = show(_emailicon_forum, array("email" => eMailAddr(re($getp['email']))));
-
-                    if(!empty($getp['hp']))
-                        $hp = show(_hpicon_forum, array("hp" => links(re($getp['hp']))));
+                    //-> Homepage Link
+                    if (!empty($getp['hp'])) {
+                        $hp = common::a_img_link(common::links(stringParser::decode($getp['hp'])),'hp', common::links(stringParser::decode($getp['hp'])));
+                    }
                 }
 
-                $nick = autor($getp['reg'], '', re($getp['nick']), re($getp['email']));
+                $nick = common::autor($getp['reg'], '', $getp['nick'], stringParser::decode($getp['email']));
                 if(!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor') {
                     if(preg_match("#".$_GET['hl']."#i",$nick))
                         $ftxt['class'] = 'class="highlightSearchTarget"';
                 }
 
-                $email = ($chkMe >= 1 ? $email : '');
-                $show .= show($dir."/forum_posts_show", array("nick" => $nick,
-                    "postnr" => "#".($i+($page-1)*config('m_fposts')),
-                    "p" => ($i+($page-1)*config('m_fposts')),
-                    "text" => $text,
-                    "pn" => $pn,
-                    "class" => $ftxt['class'],
-                    "icq" => $icq,
-                    "hp" => $hp,
-                    "email" => $email,
-                    "status" => getrank($getp['reg']),
-                    "avatar" => useravatar($getp['reg']),
-                    "ip" => $posted_ip,
-                    "edited" => $getp['edited'],
-                    "posts" => $userposts,
-                    "titel" => $titel,
-                    "signatur" => $sig,
-                    "zitat" => $zitat,
-                    "onoff" => $onoff,
-                    "top" => _topicon,
-                    "lp" => cnt($db['f_posts'], " WHERE sid = '".(int)($_GET['id'])."'")+1));
+                $smarty->caching = false;
+                $smarty->assign('nick',$nick);
+                $smarty->assign('chkme',common::$chkMe);
+                $smarty->assign('postnr',"#".($i+(common::$page-1)*settings::get('m_fposts')));
+                $smarty->assign('p',($i+(common::$page-1)*settings::get('m_fposts')));
+                $smarty->assign('text',$text);
+                $smarty->assign('class',stringParser::decode($ftxt['class']));
+                $smarty->assign('pn',$pn);
+                $smarty->assign('hp',$hp);
+                $smarty->assign('status',common::getrank($getp['reg']));
+                $smarty->assign('avatar',common::useravatar($getp['reg']));
+                $smarty->assign('ip',common::getPostedIP($getp));
+                $smarty->assign('edited',stringParser::decode($getp['edited']));
+                $smarty->assign('posts',$userposts);
+                $smarty->assign('titel',$titel);
+                $smarty->assign('signatur',$sig);
+                $smarty->assign('zitat',$zitat);
+                $smarty->assign('permission',common::permission("forum"));
+                $smarty->assign('closed',common::$sql['default']->fetch("SELECT `closed` FROM `{prefix_forum_threads}` WHERE `id` = ?;",[$getp['sid']],'closed'));
+                $smarty->assign('onoff',$onoff);
+                $smarty->assign('lp',common::cnt("{prefix_forum_posts}", " WHERE `sid` = ?;","id", [(int)($_GET['id'])])+1);
+                $show .= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/forum_posts_show.tpl');
+                $smarty->clearAllAssign();
                 $i++;
             }
 
-            $get = db("SELECT * FROM `".$db['f_threads']."` WHERE `id` = ".(int)($_GET['id']).";",false,true);
+            /*
+             * ###################################
+             * Thread
+             * ###################################
+             */
+            $get = common::$sql['default']->fetch("SELECT * FROM `{prefix_forum_threads}` WHERE `id` = ?;",[(int)($_GET['id'])]);
+            $getw = common::$sql['default']->fetch("SELECT s1.`kid`,s1.`topic`,s2.`kattopic`,s2.`sid` FROM ".
+                "`{prefix_forum_threads}` AS s1 LEFT JOIN `{prefix_forum_sub_kats}` AS s2 ON s1.`kid` = s2.`id` WHERE s1.`id` = ?;",
+                [(int)($_GET['id'])]);
 
-            $getw = db("SELECT s1.`kid`,s1.`topic`,s2.`kattopic`,s2.`sid` ".
-                "FROM `".$db['f_threads']."` AS `s1` ".
-                "LEFT JOIN `".$db['f_skats']."` AS `s2` ON s1.`kid` = s2.`id`  ".
-                "WHERE s1.`id` = ".(int)($_GET['id']).";",false,true);
+            $kat = common::$sql['default']->fetch("SELECT `name` FROM `{prefix_forum_kats}` WHERE `id` = ?;",[$getw['sid']]);
 
-            $kat = db("SELECT `name` FROM `".$db['f_kats']."` WHERE `id` = ".$getw['sid'].";",false,true);
+            //Fix LastPost Time Bug
+            if(!$update_lp_time) {
+                $update_lp_time = $get['t_date'];
+            }
 
-            $wheres = show(_forum_post_where, array("wherepost" => re($getw['topic']),
-                "wherekat" => re($getw['kattopic']),
-                "mainkat" => re($kat['name']),
-                "tid" => $_GET['id'],
-                "kid" => $getw['kid']));
+            if($get['lp'] >= $update_lp_time) {
+                common::$sql['default']->update("UPDATE `{prefix_forum_threads}` SET `lp` = ? WHERE `id` = ?;",
+                    [$update_lp_time,$get['id']]);
+                $get['lp'] = $update_lp_time;
+            } unset($update_lp_time);
 
-            $userposts = ""; $onoff = "";
+            //Breadcrumbs
+            $smarty->caching = false;
+            $smarty->assign('wherepost',stringParser::decode($getw['topic']));
+            $smarty->assign('wherekat',stringParser::decode($getw['kattopic']));
+            $smarty->assign('mainkat',stringParser::decode($kat['name']));
+            $smarty->assign('tid',$_GET['id']);
+            $smarty->assign('kid',$getw['kid']);
+            $wheres = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/forum_subkat_where.tpl');
+            $smarty->clearAllAssign();
+
+            $userposts = ''; $onoff = '';
             if($get['t_reg']) {
-                $onoff = onlinecheck($get['t_reg']);
-                $userposts = show(_forum_user_posts, array("posts" => userstats("forumposts",$get['t_reg'])));
+                $onoff = common::onlinecheck($get['t_reg']);
+                $smarty->caching = false;
+                $smarty->assign('posts',common::userstats("forumposts",$get['t_reg']));
+                $userposts = $smarty->fetch('string:'._forum_user_posts);
+                $smarty->clearAllAssign();
             }
 
-            $zitat = show("page/button_zitat", array("id" => $_GET['id'],
-                "action" => "action=post&amp;do=add&amp;kid=".$getw['kid']."&amp;zitatt=".$get['id'],
-                "title" => _button_title_zitat));
+            //Button Zitat
+            $zitat = common::a_img_link("?action=post&amp;do=add&amp;kid=".$_SESSION['kid']."&amp;zitat_thread=".$get['id'].
+                "&amp;id=".$_GET['id'],'quote', _button_title_zitat,'_self');
 
-            $add = '';
-            if($get['closed']) {
-                $add = show("page/button_closed", array());
-            } else if(HasDSGVO()) {
-                $add = show(_forum_addpost, array("id" => $_GET['id'], "kid" => $getw['kid']));
-            }
+            $nav = common::nav($entrys,settings::get('m_fposts'),"?action=showthread&amp;id=".$_GET['id'].$hL);
+            $sig = ($signatur=common::data("signatur",$get['t_reg'])) ? _sig.BBCode::parse_html((string)$signatur) : '';
+            $edit = $get['t_reg'] == common::$userid || common::permission("forum") ? common::getButtonEditSingle($get['id'],"action=thread&amp;do=edit") : '';
 
-            $nav = nav($entrys,config('m_fposts'),"?action=showthread&amp;id=".$_GET['id'].$hL);
-
-            $sig = "";
-            if(data("signatur",$get['t_reg']))
-                $sig = _sig.bbcode(data("signatur",$get['t_reg']));
-
-            $admin = ''; $editt = ''; $deletet = '';
-            if(permission("forum")) {
-                $editt = show("page/button_edit_single", array("id" => $get['id'],
-                    "action" => "action=thread&amp;do=edit",
-                    "title" => _button_title_edit));
-
-                $sticky = $get['sticky'] ? 'checked="checked"' : "";
-                $global = $get['global'] ? 'checked="checked"' : "";
-
-                if($get['closed'])
-                {
-                    $closed = 'checked="checked"';
-                    $opened = "";
-                } else {
-                    $opened = 'checked="checked"';
-                    $closed = "";
-                }
-
-                $qryok = db("SELECT * FROM `".$db['f_kats']."` ORDER BY `kid`;"); $move = '';
-                while($getok = _fetch($qryok)) {
-                    $skat = "";
-                    $qryo = db("SELECT * FROM ".$db['f_skats']." WHERE sid = '".$getok['id']."' ORDER BY kattopic;");
-                    while($geto = _fetch($qryo))
-                    {
-                        $skat .= show(_forum_select_field_skat, array("value" => $geto['id'],
-                            "what" => re($geto['kattopic'])));
+            //Admin
+            $admin = '';
+            if(common::permission("forum")) {
+                $qryok = common::$sql['default']->select("SELECT * FROM `{prefix_forum_kats}` ORDER BY `kid`;"); $move = '';
+                foreach($qryok as $getok) {
+                    $skat = ""; $c = 0;
+                    $qryo = common::$sql['default']->select("SELECT * FROM `{prefix_forum_sub_kats}` WHERE `sid` = ? ORDER BY `kattopic`;",[$getok['id']]);
+                    foreach($qryo as $geto) {
+                        $skat .= common::select_field($geto['id'],false,'-> '.stringParser::decode($geto['kattopic']));
+                        $c++;
                     }
 
-                    $move .= show(_forum_select_field_kat, array("value" => "lazy",
-                        "what" => re($getok['name']),
-                        "skat" => $skat));
+                    if($c) {
+                        $move .= common::select_field("lazy", false, stringParser::decode($getok['name']), 'dropdownKat') . $skat;
+                    }
                 }
 
-                $admin = show($dir."/admin", array("admin" => _admin,
-                    "id" => $get['id'],
-                    "open" => _forum_admin_open,
-                    "close" => _forum_admin_close,
-                    "asticky" => _forum_admin_addsticky,
-                    "delete" => _forum_admin_delete,
-                    "moveto" => _forum_admin_moveto,
-                    "aglobal" => _forum_admin_global,
-                    "move" => $move,
-                    "closed" => $closed,
-                    "opened" => $opened,
-                    "global" => $global,
-                    "sticky" => $sticky));
-            } else {
-                //User Admin
-                if($get['t_reg'] == $userid) {
-                    $editt = show("page/button_edit_single", array("id" => $get['id'], "action" => "action=thread&amp;do=edit", "title" => _button_title_edit));
-                    $deletet = show("page/button_delete_single", array("id" => $get['id'], "action" => "action=thread&amp;do=anonym", "title" => _button_title_del, "del" => convSpace(_confirm_del_entry)));
-                }
+                $smarty->caching = false;
+                $smarty->assign('id',$get['id']);
+                $smarty->assign('move',$move);
+                $smarty->assign('closed',$get['closed'] ? 'checked="checked"' : '');
+                $smarty->assign('opened',!$get['closed'] ? 'checked="checked"' : '');
+                $smarty->assign('global',$get['global'] ? 'checked="checked"' : "");
+                $smarty->assign('sticky',$get['sticky'] ? 'checked="checked"' : "");
+                $admin = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/admin/showthread_admin.tpl');
+                $smarty->clearAllAssign();
+                unset($move,$skat,$c,$qryo,$geto,$qryok,$getok);
             }
 
+            //Zitat
             $hl = isset($_GET['hl']) ? $_GET['hl'] : '';
             $ftxt = hl($get['t_text'], $hl);
-
             if(isset($_GET['hl']))
-                $text = bbcode($ftxt['text']);
+                $text = stringParser::decode($ftxt['text']);
             else
-                $text = bbcode($get['t_text']);
+                $text = BBCode::parse_html((string)$get['t_text']);
 
-            if($chkMe == "4")
-                $posted_ip = $get['ip'];
-            else
-                $posted_ip = _logged;
+            //Titel
+            $smarty->caching = false;
+            $smarty->assign('postid',1);
+            $smarty->assign('datum',date("d.m.Y", $get['t_date']));
+            $smarty->assign('zeit',date("H:i", $get['t_date']));
+            $smarty->assign('url','?action=showthread&amp;id='.(int)($_GET['id']).'&amp;page=1#p1');
+            $smarty->assign('edit',$edit);
+            $smarty->assign('delete','');
+            $titel = $smarty->fetch('string:'._eintrag_titel_forum);
+            $smarty->clearAllAssign();
 
-            $titel = show(_eintrag_titel_forum, array("postid" => "1",
-                "datum" => date("d.m.Y", $get['t_date']),
-                "zeit" => date("H:i", $get['t_date'])._uhr,
-                "url" => '?action=showthread&amp;id='.(int)($_GET['id']).'&amp;page=1#p1',
-                "edit" => $editt,
-                "delete" => $deletet));
+            $pn = ""; $hp = "";
+            if($get['t_reg']) {
+                $getu = common::$sql['default']->fetch("SELECT `nick`,`hp`,`email` FROM `{prefix_users}` WHERE `id` = ?;",[$get['t_reg']]);
 
-            $icq = ""; $hp = ""; $pn = "";
-            if($get['t_reg'] != 0) {
-                $getu = db("SELECT nick,icq,hp,email FROM ".$db['users']." WHERE id = '".$get['t_reg']."'",false,true);
-                $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
-                $pn = show(_pn_write_forum, array("id" => $get['t_reg'], "nick" => $getu['nick']));
-                if(!empty($getu['icq']) || $getu['icq'] >= 1) {
-                    $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
-                    $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin='.$getu['icq'].'" target="_blank">'.$uin.'</a>';
+                //PM
+                $smarty->caching = false;
+                $smarty->assign('nick',stringParser::decode($getu['nick']));
+                $pn_name = $smarty->fetch('string:'._pn_write_forum);
+                $smarty->clearAllAssign();
+                $pn = common::a_img_link('../user/?action=msg&amp;do=pn&amp;id='.$get['t_reg'],'pn', $pn_name);
+                unset($pn_name);
+
+                //-> Homepage Link
+                if (!empty($getu['hp'])) {
+                    $hp = common::a_img_link(common::links(stringParser::decode($getu['hp'])),'hp', common::links(stringParser::decode($getu['hp'])));
                 }
-
-                if(!empty($getu['hp']))
-                    $hp = show(_hpicon_forum, array("hp" => links(re($getu['hp']))));
             } else {
-                if(!$get['dsgvo']) {
-                    $email = show(_emailicon_forum, array("email" => eMailAddr($get['t_email'])));
-                    if(!empty($get['t_hp']))
-                        $hp = show(_hpicon_forum, array("hp" => links(re($get['t_hp']))));
-                } else {
-                    $text = _dsgvo_deleted_text;
-                    $email = ''; $zitat = '';
+                //-> Homepage Link
+                if (!empty($get['t_hp'])) {
+                    $hp = common::a_img_link(common::links(stringParser::decode($get['t_hp'])),'hp', common::links(stringParser::decode($get['t_hp'])));
                 }
             }
 
-            $nick = autor($get['t_reg'], '', re($get['t_nick']), re($get['t_email']));
+            $nick = common::autor($get['t_reg'], '', $get['t_nick'], $get['t_email']);
             if(!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor') {
                 if(preg_match("#".$_GET['hl']."#i",$nick))
                     $ftxt['class'] = 'class="highlightSearchTarget"';
             }
 
-            $abo = db("SELECT user FROM ".$db['f_abo']." WHERE user = '".$userid."' AND fid = '".(int)($_GET['id'])."'",true) ? 'checked="checked"' : '';
-            if(!$chkMe) {
-                $f_abo = '';
-            } else {
-                $f_abo = show($dir."/forum_abo", array("id" => (int)($_GET['id']),
-                    "abo" => $abo,
-                    "abo_info" => _foum_fabo_checkbox,
-                    "abo_title" => _forum_abo_title,
-                    "submit" => _button_value_save
-                ));
+            //Forum ABO
+            $f_abo = '';
+            if(common::$chkMe) {
+                $abo = common::$sql['default']->rows("SELECT `id` FROM `{prefix_forum_abo}` WHERE `user` = ? AND `fid` = ?;",
+                    [common::$userid,(int)($_GET['id'])]) ? 'checked="checked"' : '';
+                $smarty->caching = false;
+                $smarty->assign('id',(int)($_GET['id']));
+                $smarty->assign('abo',$abo);
+                $f_abo = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/forum_abo.tpl');
+                $smarty->clearAllAssign();
             }
 
-            $vote = "";
-            if(!empty($get['vote'])) {
-                include_once(basePath.'/inc/menu-functions/fvote.php');
-                $vote = '<tr><td>'.fvote($get['vote']).'</td></tr>';
-            }
-
-            $title = re($getw['topic']).' - '.$title;
-            $email = ($chkMe >= 1 ? $email : '');
-            $index = show($dir."/forum_posts", array("head" => _forum_head,
-                "where" => $wheres,
-                "admin" => $admin,
-                "nick" => $nick,
-                "threadhead" => re($getw['topic']),
-                "titel" => $titel,
-                "postnr" => "1",
-                "class" => $ftxt['class'],
-                "pn" => $pn,
-                "icq" => $icq,
-                "hp" => $hp,
-                "email" => $email,
-                "posts" => $userposts,
-                "text" => $text,
-                "status" => getrank($get['t_reg']),
-                "avatar" => useravatar($get['t_reg']),
-                "edited" => $get['edited'],
-                "signatur" => $sig,
-                "date" => _posted_by.date("d.m.y H:i", $get['t_date'])._uhr,
-                "zitat" => $zitat,
-                "onoff" => $onoff,
-                "ip" => $posted_ip,
-                "top" => _topicon,
-                "lpost" => $lpost,
-                "lp" => cnt($db['f_posts'], " WHERE sid = '".(int)($_GET['id'])."'")+1,
-                "add" => $add,
-                "nav" => $nav,
-                "vote" => $vote,
-                "f_abo" => $f_abo,
-                "show" => $show));
+            $where = $where.' - '.stringParser::decode($getw['topic']);
+            $smarty->caching = false;
+            $smarty->assign('where',$wheres);
+            $smarty->assign('chkme',common::$chkMe);
+            $smarty->assign('admin',$admin);
+            $smarty->assign('nick',$nick);
+            $smarty->assign('threadhead',stringParser::decode($getw['topic']));
+            $smarty->assign('titel',$titel);
+            $smarty->assign('postnr',1);
+            $smarty->assign('class',stringParser::decode($ftxt['class']));
+            $smarty->assign('pn',$pn);
+            $smarty->assign('hp',$hp);
+            $smarty->assign('posts',$userposts);
+            $smarty->assign('text',$text);
+            $smarty->assign('status',common::getrank($get['t_reg']));
+            $smarty->assign('avatar',common::useravatar($get['t_reg']));
+            $smarty->assign('edited',stringParser::decode($get['edited']));
+            $smarty->assign('editedby','');
+            $smarty->assign('signatur',$sig);
+            $smarty->assign('zitat',$zitat);
+            $smarty->assign('onoff',$onoff);
+            $smarty->assign('ip',common::getPostedIP($get));
+            $smarty->assign('id',$_GET['id']);
+            $smarty->assign('lpost',$lpost);
+            $smarty->assign('lp',common::cnt("{prefix_forum_posts}", " WHERE `sid` = ?","id",[(int)($_GET['id'])])+1);
+            $smarty->assign('closed',$get['closed']);
+            $smarty->assign('permission',common::permission("forum"));
+            $smarty->assign('nav',$nav);
+            $smarty->assign('is_vote',!empty($get['vote']));
+            $smarty->assign('vote',fvote($get['vote']));
+            $smarty->assign('f_abo',$f_abo);
+            $smarty->assign('show',$show);
+            $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/forum_posts.tpl');
+            $smarty->clearAllAssign();
         }
     } else {
-        $index = error(_error_wrong_permissions, 1);
+        $index = common::error(_error_wrong_permissions, 1);
     }
 }

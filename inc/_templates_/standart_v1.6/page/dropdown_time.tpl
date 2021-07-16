@@ -1,0 +1,1 @@
+<select id="h" name="h" class="selectpicker{$class}">{$hour}</select> <select id="min" name="min" class="selectpicker{$class}">{$minute}</select>{lang msgID="uhr"}

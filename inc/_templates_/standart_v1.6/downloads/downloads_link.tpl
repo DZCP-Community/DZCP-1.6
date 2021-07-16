@@ -1,0 +1,1 @@
+<a href="?action=download&amp;id={$id}" style="display:block" title="{$titel}"><img src="{idir}/download.gif" alt="" class="icon" /> {$download}</a>

@@ -1,219 +1,157 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2017 © CodeKing, my-STARMEDIA, Codedesigns
  */
 
 if(defined('_News')) {
+    //-> Kategorie Filter
     if(!($kat = isset($_GET['kat']) ? (int)($_GET['kat']) : 0)) {
         $navKat = 'lazy';
         $n_kat = '';
-        $navWhere = "WHERE public = 1 ".(!permission("intnews") ? "AND `intern` = '0'" : '')."";
+        $navWhere = "WHERE `public` = 1 ".(!common::permission("intnews") ? "AND `intern` = 0" : '')."";
     } else {
-        $n_kat = "AND kat = '".$kat."'";
+        $n_kat = "AND `kat` = ".$kat;
         $navKat = $kat;
-        $navWhere = "WHERE kat = '".$kat."' AND public = 1 ".(!permission("intnews") ? "AND `intern` = '0'" : '')."";
+        $navWhere = "WHERE `kat` = '".$kat."' AND public = 1 ".(!common::permission("intnews") ? "AND `intern` = 0" : '')."";
     }
 
     //Sticky News
-    $qry = db("SELECT * FROM ".$db['news']."
-                       WHERE sticky >= ".time()."
-                       AND datum <= ".time()."
-                       AND public = 1 ".(permission("intnews") ? "" : "AND `intern` = '0'")."
-                       ".$n_kat."
-                       ORDER BY datum DESC
-                       LIMIT ".($page - 1)*config('m_news').",".config('m_news').";");
+    $qry = common::$sql['default']->select("SELECT * FROM `{prefix_news}` WHERE `sticky` >= ? AND `datum` <= ? AND "
+            . "`public` = 1 ".(common::permission("intnews") ? "" : "AND `intern` = 0")." ".$n_kat." "
+            . "ORDER BY `datum` DESC LIMIT ".((common::$page - 1)*settings::get('m_news')).",".settings::get('m_news').";",
+            [($time=time()),$time]);
 
     $show_sticky = '';
-    if(_rows($qry)) {
-        while($get = _fetch($qry)) {
-            $getkat = db("SELECT katimg FROM ".$db['newskat']." WHERE id = '".$get['kat']."'",false,true);
-            $count = cnt($db['newscomments'], " WHERE news = '".$get['id']."'");
+    if(common::$sql['default']->rowCount()) {
+        foreach($qry as $get) {
+            //-> Viewed
+            $smarty->caching = false;
+            $smarty->assign('viewed',$get['viewed']);
+            $viewed = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/news_viewed.tpl');
+            $smarty->clearAllAssign();
 
-            $comments = show(_news_comments, array("comments" => '0', "id" => $get['id']));
-            if($count >= 2)
-                $comments = show(_news_comments, array("comments" => $count, "id" => $get['id']));
-            else if($count == 1)
-                $comments = show(_news_comment, array("comments" => "1", "id" => $get['id']));
-
-            $klapp = "";
-            if($get['klapptext'])
-                $klapp = show(_news_klapplink, array("klapplink" => re($get['klapplink']),
-                    "which" => "expand",
-                    "id" => $get['id']));
-
-            $viewed = show(_news_viewed, array("viewed" => $get['viewed']));
-
-            $links1 = "";
-            if(!empty($get['url1'])) {
-                $rel = _related_links;
-                $links1 = show(_news_link, array("link" => re($get['link1']),
-                    "url" => $get['url1']));
-            }
-
-            $links2 = "";
-            if(!empty($get['url2'])) {
-                $rel = _related_links;
-                $links2 = show(_news_link, array("link" => re($get['link2']),
-                    "url" => $get['url2']));
-            }
-
-            $links3 = "";
-            if(!empty($get['url3'])) {
-                $rel = _related_links;
-                $links3 = show(_news_link, array("link" => re($get['link3']),
-                    "url" => $get['url3']));
-            }
-
-            $links = "";
-            if(!empty($links1) || !empty($links2) || !empty($links3))
-                $links = show(_news_links, array("link1" => $links1,
-                    "link2" => $links2,
-                    "link3" => $links3,
-                    "rel" => $rel));
-
-            $intern = $get['intern'] ? _votes_intern : "";
-            $newsimage = '../inc/images/newskat/'.$getkat['katimg'];
-            foreach($picformat as $tmpendung) {
-                if(file_exists(basePath."/inc/images/uploads/news/".$get['id'].".".$tmpendung)) {
-                    $newsimage = '../inc/images/uploads/news/'.$get['id'].'.'.$tmpendung;
+            //Bild
+            $newsimage_get = common::$sql['default']->fetch("SELECT `katimg`,`kategorie` FROM `{prefix_news_kats}` WHERE `id` = ?;", [$get['kat']]);
+            $newsimage = 'https://static.dzcp.de/images/newskat/'.stringParser::decode($newsimage_get['katimg']);
+            foreach(common::SUPPORTED_PICTURE as $tmpendung) {
+                if(file_exists(rootPath."/static/images/news/".$get['id'].".".$tmpendung)) {
+                    $newsimage = 'https://static.dzcp.de/images/news/'.$get['id'].'.'.$tmpendung;
                     break;
                 }
             }
 
-            $show_sticky .= show($dir."/news_show", array("titel" => re($get['titel']),
-                "kat" => $newsimage,
-                "id" => $get['id'],
-                "comments" => $comments,
-                "showmore" => "",
-                "dp" => "none",
-                "dir" => $designpath,
-                "nautor" => _autor,
-                "intern" => $intern,
-                "sticky" => _news_sticky,
-                "ndatum" => _datum,
-                "ncomments" => _news_kommentare.":",
-                "klapp" => $klapp,
-                "more" => bbcode($get['klapptext']),
-                "viewed" => $viewed,
-                "text" => bbcode($get['text']),
-                "datum" => date("d.m.y H:i", $get['datum'])._uhr,
-                "links" => $links,
-                "autor" => autor($get['autor'])));
+            //-> News [Caching]
+            $smarty->caching = true;
+            $smarty->assign('titel',stringParser::decode($get['titel']));
+            $smarty->assign('kat',$newsimage);
+            $smarty->assign('kat_name',stringParser::decode($newsimage_get['kategorie']));
+            $smarty->assign('id',$get['id']);
+            $smarty->assign('is_mobile',common::$mobile->isMobile(),true);
+            $smarty->assign('comments',common::cnt('{prefix_news_comments}', " WHERE `news` = ?","id",[(int)($get['id'])]));
+            $smarty->assign('showmore','');
+            $smarty->assign('dp','none');
+            $smarty->assign('dir',common::$designpath);
+            $smarty->assign('intern',boolval($get['intern']));
+            $smarty->assign('sticky',_news_sticky);
+            $smarty->assign('more',BBCode::parse_html((string)$get['klapptext']));
+            $smarty->assign('viewed',$viewed);
+            $smarty->assign('text',BBCode::parse_html((string)$get['text']));
+            $smarty->assign('datum',date("d.m.y H:i", $get['datum']));
+            $smarty->assign('autor',common::autor($get['autor']));
+            $show_sticky .= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/news_show.tpl',common::getSmartyCacheHash('news_'.$get['id']));
+            $smarty->clearAllAssign();
         }
+
+        unset($get,$newsimage,$viewed,$links);
     }
 
     //News
-    $qry = db("SELECT * FROM ".$db['news']."
-                       WHERE sticky < ".time()." AND datum <= ".time()." AND public = 1 ".(permission("intnews") ? "" : "AND `intern` = '0'")."
-                       ".$n_kat."
-                       ORDER BY datum DESC
-                       LIMIT ".($page - 1)*config('m_news').",".config('m_news')."");
+    $qry = common::$sql['default']->select("SELECT * FROM `{prefix_news}` WHERE `sticky` < ? AND `datum` <= ? "
+            . "AND `public` = 1 ".(common::permission("intnews") ? "" : "AND `intern` = 0")." ".$n_kat." "
+            . "ORDER BY `datum` DESC LIMIT ".(common::$page - 1)*settings::get('m_news').",".settings::get('m_news').";",
+            [($time=time()),$time]); $show = '';
 
-    if(_rows($qry)) {
-        while($get = _fetch($qry))
-        {
-            $getkat = db("SELECT katimg FROM ".$db['newskat']." WHERE id = '".$get['kat']."'",false,true);
-            $count = cnt($db['newscomments'], " WHERE news = '".$get['id']."'");
+    if(common::$sql['default']->rowCount()) {
+        foreach($qry as $get) {
+            //-> Viewed
+            $smarty->caching = false;
+            $smarty->assign('viewed',$get['viewed']);
+            $viewed = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/news_viewed.tpl');
+            $smarty->clearAllAssign();
 
-            $comments = show(_news_comments, array("comments" => '0', "id" => $get['id']));
-            if($count >= 2)
-                $comments = show(_news_comments, array("comments" => $count, "id" => $get['id']));
-            else if($count == 1)
-                $comments = show(_news_comment, array("comments" => "1", "id" => $get['id']));
-
-            $klapp = "";
-            if($get['klapptext'])
-                $klapp = show(_news_klapplink, array("klapplink" => re($get['klapplink']),
-                    "which" => "expand",
-                    "id" => $get['id']));
-
-            $viewed = show(_news_viewed, array("viewed" => $get['viewed']));
-
-            $links1 = "";
-            if(!empty($get['url1'])) {
-                $rel = _related_links;
-                $links1 = show(_news_link, array("link" => re($get['link1']),
-                    "url" => $get['url1']));
-            }
-
-            $links2 = "";
-            if(!empty($get['url2'])) {
-                $rel = _related_links;
-                $links2 = show(_news_link, array("link" => re($get['link2']),
-                    "url" => $get['url2']));
-            }
-
-            $links3 = "";
-            if(!empty($get['url3'])) {
-                $rel = _related_links;
-                $links3 = show(_news_link, array("link" => re($get['link3']),
-                    "url" => $get['url3']));
-            }
-
-            $links = "";
-            if(!empty($links1) || !empty($links2) || !empty($links3))
-                $links = show(_news_links, array("link1" => $links1,
-                    "link2" => $links2,
-                    "link3" => $links3,
-                    "rel" => $rel));
-
-            $intern = $get['intern'] ? _votes_intern : "";
-            $newsimage = '../inc/images/newskat/'.$getkat['katimg'];
-            foreach($picformat as $tmpendung) {
-                if(file_exists(basePath."/inc/images/uploads/news/".$get['id'].".".$tmpendung)) {
-                    $newsimage = '../inc/images/uploads/news/'.$get['id'].'.'.$tmpendung;
+            //-> News-Kategorie Bild
+            foreach(common::SUPPORTED_PICTURE as $end) {
+                if (file_exists(basePath . "/inc/images/nopic." . $end)) {
+                    $newsimage = '../inc/images/nopic.' . $end;
                     break;
                 }
             }
 
-            $news_edit = '';
-            if(permission('news')) {
-                $news_edit = ' | ';
-                $news_edit .= show("page/button_edit_url", array("action" => "../admin/?admin=newsadmin&amp;do=edit&amp;return=news&amp;id=".$get['id'],
-                    "title" => _button_title_edit));
-                $news_edit .= ' ';
-                $news_edit .= show("page/button_delete_url", array("action" => "../admin/?admin=newsadmin&amp;do=delete&amp;return=news&amp;id=".$get['id'],
-                    "title" => _button_title_del,
-                    "del" => convSpace(_confirm_del_news)));
+            //Bild
+            $newsimage_get = common::$sql['default']->fetch("SELECT `katimg`,`kategorie`,`color` FROM `{prefix_news_kats}` WHERE `id` = ?;", [$get['kat']]);
+            $newsimage = 'https://static.dzcp.de/thumbgen.php?img=images/newskat/'.stringParser::decode($newsimage_get['katimg']).'&width=238';
+
+            //-> News Bild by ID
+            foreach(common::SUPPORTED_PICTURE as $tmpendung) {
+                //-> News Bild by ID
+                if(file_exists(rootPath."/static/images/news/".$get['id'].".".$tmpendung)) {
+                    $newsimage = 'https://static.dzcp.de/thumbgen.php?img=images/news/'.$get['id'].'.'.$tmpendung.'&width=238';
+                    break;
+                }
             }
 
-            $show .= show($dir."/news_show", array("titel" => re($get['titel']),
-                "kat" => $newsimage,
-                "id" => $get['id'],
-                "comments" => $comments,
-                "showmore" => "",
-                "dp" => "none",
-                "nautor" => _autor,
-                "dir" => $designpath,
-                "intern" => $intern,
-                "sticky" => "",
-                "ndatum" => _datum,
-                "edit" => $news_edit,
-                "ncomments" => _news_kommentare.":",
-                "klapp" => $klapp,
-                "more" => bbcode($get['klapptext']),
-                "viewed" => $viewed,
-                "text" => bbcode($get['text']),
-                "datum" => date("d.m.y H:i", $get['datum'])._uhr,
-                "links" => $links,
-                "autor" => autor($get['autor'])));
+            //-> News [Caching]
+            $smarty->caching = true;
+            $smarty->assign('titel',stringParser::decode($get['titel']));
+            $smarty->assign('kat',$newsimage);
+            $smarty->assign('kat_name',stringParser::decode($newsimage_get['kategorie']));
+            $smarty->assign('id',$get['id']);
+            $smarty->assign('is_mobile',common::$mobile->isMobile(),true);
+            $smarty->assign('comments',common::cnt('{prefix_news_comments}', " WHERE `news` = ?","id",[(int)($get['id'])]));
+            $smarty->assign('showmore','');
+            $smarty->assign('dir',common::$designpath);
+            $smarty->assign('intern',boolval($get['intern']));
+            $smarty->assign('color',stringParser::decode($newsimage_get['color']));
+            $smarty->assign('sticky','');
+            $smarty->assign('more',BBCode::parse_html((string)$get['more']));
+            $smarty->assign('viewed',$viewed);
+            $smarty->assign('text',BBCode::parse_html((string)$get['text']));
+            $smarty->assign('datum',date("d.m.y H:i", $get['datum']));
+            $smarty->assign('autor',common::autor($get['autor']));
+            $show .= $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/news_show.tpl',common::getSmartyCacheHash('news_'.$get['id']));
+            $smarty->clearAllAssign();
         }
+
+        unset($get,$newsimage,$viewed,$links);
     }
 
-    $qrykat = db("SELECT * FROM ".$db['newskat']."");
+    //-> Kategorie Filter Menu
+    $qrykat = common::$sql['default']->select("SELECT `id`,`kategorie` FROM `{prefix_news_kats}`;");
     $kategorien = '';
-    if(_rows($qrykat)) {
-        while($getkat = _fetch($qrykat)) {
-            $sel = (isset($_GET['kat']) && $_GET['kat'] == $getkat['id'] ? 'selected' : '');
-            $kategorien .= "<option value='".$getkat['id']."' ".$sel.">".$getkat['kategorie']."</option>";
+    if(common::$sql['default']->rowCount()) {
+        foreach($qrykat as $getkat) {
+            $kategorien .= common::select_field($getkat['id'],(isset($_GET['kat']) && (int)($_GET['kat']) == $getkat['id']),stringParser::decode($getkat['kategorie']));
         }
     }
 
-    $index = show($dir."/news", array("show" => $show,
-        "show_sticky" => $show_sticky,
-        "nav" => nav(cnt($db['news'],$navWhere),config('m_news'),"?kat=".$navKat,false),
-        "kategorien" => $kategorien,
-        "choose" => _news_kat_choose,
-        "archiv" => _news_archiv));
+    //-> Index Output
+    $smarty->caching = false;
+    $smarty->assign('show',$show);
+    $smarty->assign('show_sticky',$show_sticky);
+    $smarty->assign('nav',common::nav(common::cnt('{prefix_news}',$navWhere),settings::get('m_news'),"?kat=".$navKat));
+    $smarty->assign('kategorien',$kategorien);
+    $index = $smarty->fetch('file:['.common::$tmpdir.']'.$dir.'/news.tpl');
+    unset($smarty,$show,$show_sticky,$kategorien);
 }

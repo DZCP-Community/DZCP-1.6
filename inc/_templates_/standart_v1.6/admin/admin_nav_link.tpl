@@ -1,0 +1,1 @@
+['{$link}','?admin={$name}','background-image:url(menu/{$name}.{$end});'],

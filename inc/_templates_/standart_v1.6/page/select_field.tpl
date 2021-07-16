@@ -1,0 +1,1 @@
+<option{$class}{$thumbnail}{$icon} value="{$value}"{$sel}>{$what}</option>

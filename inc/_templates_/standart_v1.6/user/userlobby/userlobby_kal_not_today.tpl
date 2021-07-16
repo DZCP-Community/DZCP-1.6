@@ -1,0 +1,1 @@
+{lang msgID="userlobby_kal_not_today"} <a href="../kalender/?action=show&time=[time]"><span class="fontUnder">[date] - [event]</span></a>

@@ -1,756 +1,498 @@
 <?php
 /**
- * DZCP - deV!L`z ClanPortal 1.6 Final
- * http://www.dzcp.de
+ * DZCP - deV!L`z ClanPortal - Mainpage ( dzcp.de )
+ * deV!L`z Clanportal ist ein Produkt von CodeKing,
+ * geändert durch my-STARMEDIA und Codedesigns.
+ *
+ * Diese Datei ist ein Bestandteil von dzcp.de
+ * Diese Version wurde speziell von Lucas Brucksch (Codedesigns) für dzcp.de entworfen bzw. verändert.
+ * Eine Weitergabe dieser Datei außerhalb von dzcp.de ist nicht gestattet.
+ * Sie darf nur für die Private Nutzung (nicht kommerzielle Nutzung) verwendet werden.
+ *
+ * Homepage: http://www.dzcp.de
+ * E-Mail: info@web-customs.com
+ * E-Mail: lbrucksch@codedesigns.de
+ * Copyright 2017 © CodeKing, my-STARMEDIA, Codedesigns
  */
 
 if(defined('_Forum')) {
-    if($do == "edit") {
-        $get = db("SELECT * FROM `".$db['f_posts']."` WHERE `id` = ".(int)($_GET['id']).";",false,true);
-        if($get['reg'] == $userid || permission("forum")) {
-            if($get['reg'] != 0) {
-                $form = show("page/editor_regged", array("nick" => autor($get['reg']), "von" => _autor));
-            } else {
-                $form = show("page/editor_notregged", array(
-                    "nickhead" => _nick,
-                    "emailhead" => _email,
-                    "hphead" => _hp,
-                    "postemail" => re($get['email']),
-                    "posthp" => re($get['hp']),
-                    "postnick" => re($get['nick'])));
-            }
+    if(common::$userid && common::$chkMe >= 1) {
+        switch (common::$do) {
+            case 'edit':
+                $get = common::$sql['default']->fetch("SELECT * FROM `{prefix_forum_posts}` WHERE `id` = ?;", [(int)($_GET['id'])]);
+                if (common::$sql['default']->rowCount() && ($get['reg'] == common::$userid || common::permission("forum"))) {
+                    /*
+                     * ########################################################
+                     * POST
+                     * ########################################################
+                     */
+                    if (array_key_exists('eintrag', $_POST)) {
+                        if (!$get['reg']) {
+                            //validation
+                            common::$gump->validation_rules(['eintrag' => 'required',
+                                'nick' => 'required|alpha_numeric',
+                                'email' => 'required|valid_email']);
 
-            $dowhat = show(_forum_dowhat_edit_post, array(
-                "id" => $_GET['id']));
+                            //filter
+                            common::$gump->filter_rules(['eintrag' => 'trim',
+                                'nick' => 'trim|sanitize_string',
+                                'email' => 'trim|sanitize_email']);
+                        } else {
+                            //validation
+                            common::$gump->validation_rules(['eintrag' => 'required|min_len,1']);
 
-            $index = show($dir."/post", array(
-                "titel" => _forum_edit_post_head,
-                "nickhead" => _nick,
-                "emailhead" => _email,
-                "kid" => "",
-                "id" => (int)$_GET['id'],
-                "ip" => _iplog_info,
-                "dowhat" => $dowhat,
-                "form" => $form,
-                "zitat" => "",
-                "preview" => _preview,
-                "br1" => "<!--",
-                "br2" => "-->",
-                "security" => _register_confirm,
-                "lastpost" => "",
-                "last_post" => _forum_no_last_post,
-                "bbcodehead" => _bbcode,
-                "eintraghead" => _eintrag,
-                "error" => "",
-                "what" => _button_value_edit,
-                "posteintrag" => re_bbcode($get['text'])));
-        } else {
-            $index = error(_error_wrong_permissions, 1);
-        }
-    } elseif($do == "editpost") {
-        $get = db("SELECT `reg` FROM `".$db['f_posts']."` WHERE `id` = ".(int)($_GET['id']).";",false,true);
-        if($get['reg'] == $userid || permission("forum")) {
-            if($get['reg'] != 0 || permission('forum')) {
-                $toCheck = empty($_POST['eintrag']);
-            } else {
-                $toCheck = empty($_POST['nick']) || empty($_POST['email']) || empty($_POST['eintrag']) ||
-                    $_POST['secure'] != $_SESSION['sec_'.$dir] || empty($_SESSION['sec_'.$dir]);
-            }
+                            //filter
+                            common::$gump->filter_rules(['eintrag' => 'trim']);
+                        }
 
-            if($toCheck) {
-                if($get['reg'] != 0) {
-                    if(empty($_POST['eintrag']))
-                        $error = _empty_eintrag;
+                        $validated_post_data = common::$gump->run($_POST);
+                        if ($validated_post_data !== false && $get['id'] >= 1) {
+                            //-> Editby Text
+                            $smarty->caching = false;
+                            $smarty->assign('autor', common::autor(common::$userid));
+                            $smarty->assign('time', date("d.m.Y H:i", time()));
+                            $editedby = $smarty->fetch('string:' . _edited_by);
+                            $smarty->clearAllAssign();
 
-                    $form = show("page/editor_regged", array("nick" => autor($userid), "von" => _autor));
+                            if (!$get['reg']) {
+                                common::$sql['default']->update("UPDATE `{prefix_forum_posts}` SET `nick` = ?, `email`  = ?, `text` = ?, `hp` = ?, `edited` = ? WHERE `id` = ?;",
+                                    [stringParser::encode($_POST['nick']), stringParser::encode($_POST['email']), stringParser::encode($_POST['eintrag']),
+                                        stringParser::encode(common::links($_POST['hp'])), stringParser::encode($editedby), $get['id']]);
+                            } else {
+                                common::$sql['default']->update("UPDATE `{prefix_forum_posts}` SET `text` = ?, `edited` = ? WHERE `id` = ?;",
+                                    [stringParser::encode($_POST['eintrag']), stringParser::encode($editedby), $get['id']]);
+                            }
+
+                            send_forum_abo(false, $get['sid'], $_POST['eintrag'], true);
+
+                            $entrys = common::cnt("{prefix_forum_posts}", " WHERE `sid` = ?", "id", [$getp['sid']]); //TODO: FIX $getp
+                            $pagenr = !$entrys ? 1 : ceil($entrys / settings::get('m_fposts'));
+                            $index = common::info(_forum_editpost_successful, '?action=showthread&amp;id=' . $getp['sid'] . '&amp;page=' . $pagenr . '#p' . ($entrys + 1));
+                        } else {
+                            DebugConsole::insert_info('forum/case_post.php', common::$gump->get_readable_errors(true));
+                            //Errors
+                            if (!isset($_POST['eintrag']) || empty($_POST['eintrag'])) {
+                                notification::add_error(_empty_eintrag);
+                            }
+
+                            //Errors on reg is 0
+                            if (!$get['reg']) {
+                                if (!isset($_POST['nick']) || empty($_POST['nick'])) {
+                                    notification::add_error(_empty_nick);
+                                }
+
+                                if (!isset($_POST['email']) || empty($_POST['email'])) {
+                                    notification::add_error(_empty_email);
+                                }
+                            }
+                        }
+                    }
+
+                    /*
+                     * ########################################################
+                     * EDITOR
+                     * ########################################################
+                     */
+
+                    $smarty->caching = false;
+                    $smarty->assign('is_edit', true);
+                    $smarty->assign('zitat', '');
+                    $smarty->assign('lastpost', '');
+                    $smarty->assign('from', common::editor_is_reg($get));
+                    $smarty->assign('br', false);
+                    $smarty->assign('id', $get['id']);
+                    $smarty->assign('notification', notification::get('global', true));
+                    $smarty->assign('posteintrag', isset($_POST['eintrag']) ? stringParser::decode($_POST['eintrag']) : stringParser::decode($get['text']));
+                    $index = $smarty->fetch('file:[' . common::$tmpdir . ']' . $dir . '/post.tpl');
+                    $smarty->clearAllAssign();
                 } else {
-                    if(($_POST['secure'] != $_SESSION['sec_'.$dir]) && !$userid) $error = _error_invalid_regcode;
-                    elseif(empty($_POST['nick']))
-                        $error = _empty_nick;
-                    elseif(empty($_POST['email']))
-                        $error = _empty_email;
-                    elseif(!check_email($_POST['email']))
-                        $error = _error_invalid_email;
-                    elseif(empty($_POST['eintrag']))
-                        $error = _empty_eintrag;
-
-                    $form = show("page/editor_notregged", array("nickhead" => _nick, "emailhead" => _email, "hphead" => _hp));
+                    $index = common::error(_error_wrong_permissions);
                 }
-
-                $error = show("errors/errortable", array("error" => $error));
-                $dowhat = show(_forum_dowhat_edit_post, array("id" => $_GET['id']));
-                $index = show($dir."/post", array("titel" => _forum_edit_post_head,
-                    "nickhead" => _nick,
-                    "bbcodehead" => _bbcode,
-                    "preview" => _preview,
-                    "emailhead" => _email,
-                    "zitat" => $zitat,
-                    "form" => $form,
-                    "dowhat" => $dowhat,
-                    "security" => _register_confirm,
-                    "what" => _button_value_edit,
-                    "ip" => _iplog_info,
-                    "id" => $_GET['id'],
-                    "kid" => $_GET['kid'],
-                    "br1" => "<!--",
-                    "br2" => "-->",
-                    "postemail" => re($get['email']),
-                    "postnick" => re($get['nick']),
-                    "posteintrag" => re_bbcode($_POST['eintrag']),
-                    "error" => $error,
-                    "eintraghead" => _eintrag));
-            } else {
-                $getp = db("SELECT `sid` FROM `".$db['f_posts']."` WHERE `id` = ".(int)($_GET['id']).";",false,true);
-
-                $editedby = show(_edited_by, array("autor" => autor($userid), "time" => date("d.m.Y H:i", time())._uhr));
-                db("UPDATE `".$db['f_posts']."` SET".
-                    " `nick` = '".up($_POST['nick']).
-                    "',`email` = '".up($_POST['email']).
-                    "',`text` = '".up($_POST['eintrag']).
-                    "',`hp` = '".up(links($_POST['hp'])).
-                    "',`edited` = '".addslashes($editedby).
-                    "' WHERE `id` = ".(int)($_GET['id']).";");
-
-                $checkabo = db("SELECT s1.`user`,s1.`fid`,s2.`nick`,s2.`id`,s2.`email` FROM `".$db['f_abo'].
-                    "` AS `s1` LEFT JOIN `".$db['users']."` AS `s2` ON s2.`id` = s1.`user` WHERE s1.`fid` = ".$getp['sid'].
-                    " AND s2.`dsgvo_lock` != 1;");
-                while($getabo = _fetch($checkabo))
-                {
-                    if($userid != $getabo['user'])
-                    {
-                        $topic = db("SELECT topic FROM ".$db['f_threads']." WHERE id = '".$getp['sid']."'");
-                        $gettopic = _fetch($topic);
-
-                        $entrys = cnt($db['f_posts'], " WHERE `sid` = ".$getp['sid']);
-
-                        if($entrys == "0") $pagenr = "1";
-                        else $pagenr = ceil($entrys/config('m_fposts'));
-
-                        $subj = show(re(settings('eml_fabo_pedit_subj')), array("titel" => $title));
-
-                        $message = show(bbcode_email(settings('eml_fabo_pedit')), array("nick" => re($getabo['nick']),
-                            "postuser" => fabo_autor($userid),
-                            "topic" => $gettopic['topic'],
-                            "titel" => $title,
-                            "domain" => $httphost,
-                            "id" => $getp['sid'],
-                            "entrys" => $entrys+1,
-                            "page" => $pagenr,
-                            "text" => bbcode($_POST['eintrag']),
-                            "clan" => settings('clanname')));
-
-                        sendMail(re($getabo['email']),$subj,$message);
-                    }
-                }
-
-                $entrys = cnt($db['f_posts'], " WHERE `sid` = ".$getp['sid']);
-                if(!$entrys)
-                    $pagenr = "1";
-                else
-                    $pagenr = ceil($entrys/config('m_fposts'));
-
-                $lpost = show(_forum_add_lastpost, array("id" => $entrys+1, "tid" => $getp['sid'], "page" => $pagenr));
-                $index = info(_forum_editpost_successful, $lpost);
-            }
-        } else {
-            $index = error(_error_wrong_permissions, 1);
-        }
-    } elseif($do == "add") {
-        if(settings("reg_forum") && !$chkMe) {
-            $index = error(_error_unregistered,1);
-        } else if(HasDSGVO()) {
-            if(!ipcheck("fid(".$_GET['kid'].")", config('f_forum')))
-            {
-                $check = db("SELECT s2.id,s1.intern FROM ".$db['f_kats']." AS s1
-                     LEFT JOIN ".$db['f_skats']." AS s2
-                     ON s2.sid = s1.id
-                     WHERE s2.id = '".(int)($_GET['kid'])."'");
-                $checks = _fetch($check);
-                if(forumcheck($_GET['id'], "closed"))
-                {
-                    $index = error(_error_forum_closed, 1);
-                } elseif($checks['intern'] == 1 && !permission("intforum") && !fintern($checks['id'])) {
-                    $index = error(_error_no_access, 1);
+                break;
+            case 'add':
+                if (!common::$chkMe) {
+                    $index = common::error(_error_unregistered, 1);
                 } else {
-                    if($userid >= 1)
-                    {
-                        $postnick = data("nick");
-                        $postemail = data("email");
+                    common::$sql['default']->fetch("SELECT `id` FROM `{prefix_forum_threads}` WHERE `id` = ?;", [(int)$_GET['id']]);
+                    if (!common::$sql['default']->rowCount()) {
+                        $index = common::error(_id_dont_exist, 1);
                     } else {
-                        $postnick = "";
-                        $postemail = "";
-                    }
-                    if(isset($_GET['zitat']))
-                    {
-                        $qryzitat = db("SELECT nick,reg,text FROM ".$db['f_posts']."
-                            WHERE id = '".(int)($_GET['zitat'])."'");
-                        $getzitat = _fetch($qryzitat);
+                        if (!common::ipcheck("fid(" . $_SESSION['kid'] . ")", settings::get('f_forum'))) {
+                            $lastpost = '';
+                            $checks = common::$sql['default']->fetch("SELECT s2.`id`,s1.`intern` FROM `{prefix_forum_kats}` AS s1 LEFT JOIN `{prefix_forum_sub_kats}` AS s2 ON s2.`sid` = s1.`id` WHERE s2.`id` = ?;",
+                                [$_SESSION['kid']]);
 
-                        if($getzitat['reg'] == "0")
-                            $nick = $getzitat['nick'];
-                        else
-                            $nick = autor($getzitat['reg']);
+                            if (common::$sql['default']->rows("SELECT `id` FROM `{prefix_forum_threads}` WHERE `id` = ? AND `closed` = 1;",
+                                    [($id = (int)($_GET['id']))]) && common::$chkMe != 4 && !common::permission("forum")
+                            ) {
+                                $index = common::error(_error_forum_closed);
+                            } elseif ($checks['intern'] && !common::permission("intforum") && !common::forum_intern($checks['id'])) {
+                                $index = common::error(_error_no_access);
+                            } else {
+                                /*
+                                 * ########################################################
+                                 * POST
+                                 * ########################################################
+                                 */
+                                if (array_key_exists('eintrag', $_POST)) {
+                                    //validation
+                                    common::$gump->validation_rules(['eintrag' => 'required|min_len,1']);
 
-                        $zitat = zitat($nick, $getzitat['text']);
-                    } elseif(isset($_GET['zitatt'])) {
-                        $qryzitat = db("SELECT t_nick,t_reg,t_text FROM ".$db['f_threads']."
-                            WHERE id = '".(int)($_GET['zitatt'])."'");
-                        $getzitat = _fetch($qryzitat);
+                                    //filter
+                                    common::$gump->filter_rules(['eintrag' => 'trim']);
 
-                        if($getzitat['t_reg'] == "0") $nick = $getzitat['t_nick'];
-                        else                          $nick = data("nick",$getzitat['t_reg']);
+                                    $validated_post_data = common::$gump->run($_POST);
+                                    if ($validated_post_data !== false && $id >= 1) {
+                                        $getdp = common::$sql['default']->fetch("SELECT * FROM `{prefix_forum_posts}` WHERE `kid` = ? AND `sid` = ? LIMIT 1;",
+                                            [$_SESSION['kid'], $id]);
 
-                        $zitat = zitat($nick, $getzitat['t_text']);
-                    } else {
-                        $zitat = "";
-                    }
+                                        $double_post = 0;
+                                        if (common::$sql['default']->rowCount()) {
+                                            $gettdp = [];
+                                            if (common::$userid >= 1) {
+                                                $double_post = (common::$userid == $getdp['reg'] && settings::get('double_post')) ? common::FORUM_DOUBLE_POST_TH_ADD : 0;
+                                            } else {
+                                                $double_post = (stringParser::encode($_POST['nick']) == $getdp['nick'] && settings::get('double_post')) ? common::FORUM_DOUBLE_POST_TH_ADD : 0;
+                                            }
+                                        } else {
+                                            $gettdp = common::$sql['default']->fetch("SELECT * FROM `{prefix_forum_threads}` WHERE `kid` = ? AND `id` = ?;",
+                                                [$_SESSION['kid'], $id]);
 
-                    $dowhat = show(_forum_dowhat_add_post, array("id" => $_GET['id'], "kid" => $_GET['kid']));
+                                            if (common::$userid >= 1) {
+                                                $double_post = (common::$userid == $gettdp['t_reg'] && settings::get('double_post')) ? common::FORUM_DOUBLE_POST_PO_ADD : 0;
+                                            } else {
+                                                $double_post = ($_POST['nick'] == $gettdp['t_nick'] && settings::get('double_post')) ? common::FORUM_DOUBLE_POST_PO_ADD : 0;
+                                            }
+                                        }
 
-                    $qryl = db("SELECT * FROM ".$db['f_posts']."
-                      WHERE kid = '".(int)($_GET['kid'])."'
-                      AND sid = '".(int)($_GET['id'])."'
-                      ORDER BY date DESC");
-                    if(_rows($qryl))
-                    {
-                        $getl = _fetch($qryl);
-                        $gett = db("SELECT `topic` FROM `".$db['f_threads']."` WHERE `id` = ".(int)($getl['sid']).";",false,true);
+                                        switch ($double_post) {
+                                            case common::FORUM_DOUBLE_POST_TH_ADD:
+                                                $smarty->caching = false;
+                                                $smarty->assign('autor', common::autor(common::$userid));
+                                                $smarty->assign('ltext', stringParser::decode($getdp['text']));
+                                                $smarty->assign('ntext', stringParser::encode($_POST['eintrag']));
+                                                $text = $smarty->fetch('string:' . _forum_spam_text);
+                                                $smarty->clearAllAssign();
 
-                        if(data("signatur",$getl['reg'])) $sig = _sig.bbcode(data("signatur",$getl['reg']));
-                        else                               $sig = "";
+                                                common::$sql['default']->update("UPDATE `{prefix_forum_threads}` SET `lp` = ? WHERE `kid` = ? AND `id` = ?;",
+                                                    [time(), $_SESSION['kid'], $id]);
+                                                common::$sql['default']->update("UPDATE `{prefix_forum_posts}` SET `date` = ?, `text` = ? WHERE `id` = ?;",
+                                                    [time(), $text, $getdp['id']]);
+                                                unset($getdp, $text);
+                                                break;
+                                            case common::FORUM_DOUBLE_POST_PO_ADD:
+                                                $smarty->caching = false;
+                                                $smarty->assign('autor', common::autor(common::$userid));
+                                                $smarty->assign('ltext', stringParser::decode($gettdp['t_text']));
+                                                $smarty->assign('ntext', stringParser::encode($_POST['eintrag']));
+                                                $text = $smarty->fetch('string:' . _forum_spam_text);
+                                                $smarty->clearAllAssign();
 
-                        if($getl['reg'] != "0") $userposts = show(_forum_user_posts, array("posts" => userstats("forumposts",$getl['reg'])));
-                        else                    $userposts = "";
+                                                common::$sql['default']->update("UPDATE `{prefix_forum_threads}` SET `lp`= ?, `t_text` = ?, `posts` = (posts+1)  WHERE `id` = ?;",
+                                                    [time(), $text, $gettdp['id']]);
+                                                unset($gettdp, $text);
+                                                break;
+                                            default:
+                                            case common::FORUM_DOUBLE_POST_INSERT:
+                                                common::$sql['default']->insert("INSERT INTO `{prefix_forum_posts}` SET `kid` = ?, `sid` = ?, `date` = ?, `nick` = ?,`email` = ?,`reg` = ?,`text` = ?,`ipv4`= ?;",
+                                                    [$_SESSION['kid'], $id, time(), stringParser::encode($_POST['nick']), stringParser::encode($_POST['email']),
+                                                        common::$userid, stringParser::encode($_POST['eintrag']), common::$userip['v4']]);
 
-                        if($getl['reg'] == "0") $onoff = "";
-                        else                    $onoff = onlinecheck($getl['reg']);
+                                                common::$sql['default']->update("UPDATE `{prefix_forum_threads}` SET `lp` = ?,`first` = 0,`posts` = (posts+1) WHERE id = ?;",
+                                                    [time(), $id]);
+                                                break;
+                                        }
+                                        unset($double_post);
 
-                        $text = bbcode($getl['text']);
+                                        common::setIpcheck("fid(" . $_SESSION['kid'] . ")");
+                                        common::userstats_increase('forumposts');
+                                        send_forum_abo(false, $id, $_POST['eintrag']);
 
-                        if($chkMe == "4") $posted_ip = $getl['ip'];
-                        else              $posted_ip = _logged;
+                                        $entrys = common::cnt("{prefix_forum_posts}", " WHERE `sid` = ?", "id", [$id]);
+                                        $pagenr = !$entrys ? 1 : ceil($entrys / settings::get('m_fposts'));
+                                        $index = common::info(_forum_newpost_successful, '?action=showthread&amp;id=' . $_GET['id'] . ($pagenr >= 2 ? '&amp;page=' . $pagenr : '') . '#p' . ($entrys + 1));
+                                    } else {
+                                        DebugConsole::insert_info('forum/case_post.php', common::$gump->get_readable_errors(true));
+                                        //Errors
+                                        if (!isset($_POST['eintrag']) || empty($_POST['eintrag'])) {
+                                            notification::add_error(_empty_eintrag);
+                                        }
+                                    }
+                                }
 
-                        $titel = show(_eintrag_titel_forum, array("postid" => (cnt($db['f_posts'], " WHERE sid =".(int)($_GET['id']))+1),
-                            "datum" => date("d.m.Y", $getl['date']),
-                            "zeit" => date("H:i", $getl['date'])._uhr,
-                            "url" => '#',
-                            "edit" => "",
-                            "delete" => ""));
-                        if($getl['reg'] != 0)
-                        {
-                            $qryu = db("SELECT nick,icq,hp,email FROM ".$db['users']." WHERE id = '".$getl['reg']."'");
-                            $getu = _fetch($qryu);
+                                /*
+                                 * ########################################################
+                                 * EDITOR
+                                 * ########################################################
+                                 */
 
-                            $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
-                            $pn = _forum_pn_preview;
-                            if(empty($getu['icq']) || $getu['icq'] == 0) $icq = "";
-                            else {
-                                $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
-                                $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin='.$getu['icq'].'" target="_blank">'.$uin.'</a>';
+                                if (empty($index)) {
+                                    $postnick = "";
+                                    $postemail = "";
+                                    if (common::$userid >= 1) {
+                                        $postnick = stringParser::decode(common::data("nick"));
+                                        $postemail = stringParser::decode(common::data("email"));
+                                    }
+
+                                    //Zitat
+                                    $zitat = "";
+                                    if (isset($_GET['zitat'])) {
+                                        $getzitat = common::$sql['default']->fetch("SELECT `nick`,`reg`,`text` FROM `{prefix_forum_posts}` WHERE `id` = ?;",
+                                            [(int)($_GET['zitat'])]);
+
+                                        $nick = (!$getzitat['reg'] ? $getzitat['nick'] : common::autor($getzitat['reg']));
+                                        $zitat = BBCode::zitat($nick, $getzitat['text']);
+                                    } else if (isset($_GET['zitat_thread'])) {
+                                        $getzitat = common::$sql['default']->fetch("SELECT `t_nick`,`t_reg`,`t_text` FROM `{prefix_forum_threads}` WHERE `id` = ?;",
+                                            [(int)($_GET['zitat_thread'])]);
+
+                                        $nick = (!$getzitat['t_reg'] ? $getzitat['t_nick'] : stringParser::decode(common::data("nick", $getzitat['t_reg'])));
+                                        $zitat = BBCode::zitat($nick, $getzitat['t_text']);
+                                    }
+
+                                    //Show last post
+                                    $get = common::$sql['default']->fetch("SELECT * FROM `{prefix_forum_posts}` WHERE `kid` = ? AND `sid` = ? ORDER BY `date` DESC;",
+                                        [$_SESSION['kid'], $id]);
+
+                                    if (common::$sql['default']->rowCount()) {
+                                        $sig = "";
+                                        if (common::data("signatur", $get['reg']))
+                                            $sig = _sig . BBCode::parse_html(common::data("signatur", $get['reg']));
+
+                                        //User Posts ( Uber Avatar )
+                                        $userposts = '';
+                                        if ($get['reg']) {
+                                            $smarty->caching = false;
+                                            $smarty->assign('posts', common::userstats("forumposts", $get['reg']));
+                                            $userposts = $smarty->fetch('string:' . _forum_user_posts);
+                                            $smarty->clearAllAssign();
+                                        }
+
+                                        //User Online check
+                                        $onoff = ($get['reg'] ? common::onlinecheck($get['reg']) : '');
+
+                                        //Titel
+                                        $smarty->caching = false;
+                                        $smarty->assign('postid', (common::cnt("{prefix_forum_posts}", " WHERE sid = ?", "id", [$id]) + 1));
+                                        $smarty->assign('datum', date("d.m.Y", $get['date']));
+                                        $smarty->assign('zeit', date("H:i", $get['date']));
+                                        $smarty->assign('url', '#');
+                                        $smarty->assign('edit', "");
+                                        $smarty->assign('delete', "");
+                                        $titel = $smarty->fetch('string:' . _eintrag_titel_forum);
+                                        $smarty->clearAllAssign();
+
+                                        if ($get['reg']) {
+                                            $getu = common::$sql['default']->fetch("SELECT `nick`,`hp`,`email` FROM `{prefix_users}` WHERE `id` = ?;", [$get['reg']]);
+                                            $hp = "";
+
+                                            //PM
+                                            $smarty->caching = false;
+                                            $smarty->assign('nick',stringParser::decode($getu['nick']));
+                                            $pn_name = $smarty->fetch('string:'._pn_write_forum);
+                                            $smarty->clearAllAssign();
+                                            $pn = common::a_img_link('../user/?action=msg&amp;do=pn&amp;id='.$get['reg'],'pn', $pn_name);
+                                            unset($pn_name);
+
+                                            //-> Homepage Link
+                                            if (!empty($getu['hp'])) {
+                                                $hp = common::a_img_link(common::links(stringParser::decode($getu['hp'])),'hp', common::links(stringParser::decode($getu['hp'])));
+                                            }
+                                        } else {
+                                            $pn = ""; $hp = "";
+                                            //-> Homepage Link
+                                            if (!empty($get['hp'])) {
+                                                $hp = common::a_img_link(common::links(stringParser::decode($get['hp'])),'hp', common::links(stringParser::decode($get['hp'])));
+                                            }
+                                        }
+
+                                        $class = 'class="commentsRight"';
+                                        if (!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor') {
+                                            /** @var TYPE_NAME $nick */
+                                            if (preg_match("#" . $_GET['hl'] . "#i", $nick))
+                                                $class = 'class="highlightSearchTarget"';
+                                        }
+
+                                        $smarty->caching = false;
+                                        $smarty->assign('nick', common::cleanautor($get['reg'], '', $get['nick'], stringParser::decode($get['email'])));
+                                        $smarty->assign('chkme', common::$chkMe);
+                                        $smarty->assign('postnr', "");
+                                        $smarty->assign('p', (common::$page - 1 * settings::get('m_fposts')));
+                                        $smarty->assign('text', BBCode::parse_html((string)$get['text']));
+                                        $smarty->assign('class', $class);
+                                        $smarty->assign('pn', $pn);
+                                        $smarty->assign('hp', $hp);
+                                        $smarty->assign('closed', false);
+                                        $smarty->assign('status', common::getrank($get['reg']));
+                                        $smarty->assign('avatar', common::useravatar($get['reg']));
+                                        $smarty->assign('ip', common::getPostedIP($get));
+                                        $smarty->assign('edited', stringParser::decode($get['edited']));
+                                        $smarty->assign('posts', $userposts);
+                                        $smarty->assign('titel', $titel);
+                                        $smarty->assign('signatur', $sig);
+                                        $smarty->assign('zitat', $zitat);
+                                        $smarty->assign('onoff', $onoff);
+                                        $smarty->assign('lp', common::cnt("{prefix_forum_posts}", " WHERE `sid` = ?", 'id', [$id]) + 1);
+                                        $lastpost = $smarty->fetch('file:[' . common::$tmpdir . ']' . $dir . '/forum_posts_show.tpl');
+                                        $smarty->clearAllAssign();
+                                    }
+
+                                    if (empty($lastpost)) { //Show last forum thread ( if last post is empty )
+                                        $get = common::$sql['default']->fetch("SELECT * FROM `{prefix_forum_threads}` WHERE `kid` = ? AND `id` = ?;", [$_SESSION['kid'], $id]);
+                                        $sig = (($signatur = common::data("signatur", $get['t_reg'])) ? _sig . BBCode::parse_html((string)$signatur) : '');
+
+                                        //User Posts ( Uber Avatar )
+                                        $userposts = '';
+                                        if ($get['t_reg']) {
+                                            $smarty->caching = false;
+                                            $smarty->assign('posts', common::userstats("forumposts", $get['t_reg']));
+                                            $userposts = $smarty->fetch('string:' . _forum_user_posts);
+                                            $smarty->clearAllAssign();
+                                        }
+
+                                        //User Online check
+                                        $onoff = ($get['t_reg'] ? common::onlinecheck($get['t_reg']) : '');
+
+                                        $ftxt = hl($get['t_text'], (isset($_GET['hl']) ? $_GET['hl'] : ''));
+                                        $text = isset($_GET['hl']) ? BBCode::parse_html((string)$ftxt['text']) : BBCode::parse_html((string)$get['t_text']);
+
+                                        //Titel
+                                        $smarty->caching = false;
+                                        $smarty->assign('postid', '1');
+                                        $smarty->assign('datum', date("d.m.Y", $get['t_date']));
+                                        $smarty->assign('zeit', date("H:i", $get['t_date']));
+                                        $smarty->assign('url', '#');
+                                        $smarty->assign('edit', "");
+                                        $smarty->assign('delete', "");
+                                        $titel = $smarty->fetch('string:' . _eintrag_titel_forum);
+                                        $smarty->clearAllAssign();
+
+                                        if ($get['t_reg'] != 0) {
+                                            $getu = common::$sql['default']->fetch("SELECT `nick`,`hp`,`email` FROM `{prefix_users}` WHERE `id` = ?;", [$get['t_reg']]);
+                                            $email = common::CryptMailto(stringParser::decode($getu['email']), _emailicon_forum);
+
+                                            //PM
+                                            $smarty->caching = false;
+                                            $smarty->assign('nick',stringParser::decode($getu['nick']));
+                                            $pn_name = $smarty->fetch('string:'._pn_write_forum);
+                                            $smarty->clearAllAssign();
+                                            $pn = common::a_img_link('../user/?action=msg&amp;do=pn&amp;id='.$get['t_reg'],'pn', $pn_name);
+                                            unset($pn_name);
+
+                                            //-> Homepage Link
+                                            if (!empty($getu['hp'])) {
+                                                $hp = common::a_img_link(common::links(stringParser::decode($getu['hp'])),'hp', common::links(stringParser::decode($getu['hp'])));
+                                            }
+                                        } else {
+                                            $pn = ""; $hp = "";
+                                            //-> Homepage Link
+                                            if (!empty($get['t_hp'])) {
+                                                $hp = common::a_img_link(common::links(stringParser::decode($get['t_hp'])),'hp', common::links(stringParser::decode($get['t_hp'])));
+                                            }
+                                        }
+
+                                        $smarty->caching = false;
+                                        $smarty->assign('nick', common::cleanautor($get['t_reg'], '', $get['t_nick'], stringParser::decode($get['t_email'])));
+                                        $smarty->assign('chkme', common::$chkMe);
+                                        $smarty->assign('postnr', "");
+                                        $smarty->assign('p', (common::$page - 1 * settings::get('m_fposts')));
+                                        $smarty->assign('text', BBCode::parse_html((string)$get['t_text']));
+                                        $smarty->assign('class', $ftxt['class']);
+                                        $smarty->assign('pn', $pn);
+                                        $smarty->assign('hp', $hp);
+                                        $smarty->assign('status', common::getrank($get['t_reg']));
+                                        $smarty->assign('avatar', common::useravatar($get['t_reg']));
+                                        $smarty->assign('ip', common::getPostedIP($get));
+                                        $smarty->assign('edited', stringParser::decode($get['edited']));
+                                        $smarty->assign('posts', $userposts);
+                                        $smarty->assign('titel', $titel);
+                                        $smarty->assign('signatur', $sig);
+                                        $smarty->assign('zitat', '');
+                                        $smarty->assign('onoff', $onoff);
+                                        $smarty->assign('lp', common::cnt("{prefix_forum_posts}", " WHERE `sid` = ?", 'id', [$id]) + 1);
+                                        $lastpost = $smarty->fetch('file:[' . common::$tmpdir . ']' . $dir . '/forum_posts_show.tpl');
+                                        $smarty->clearAllAssign();
+                                    }
+
+                                    unset($get, $hp, $text, $pn, $ftxt, $email, $titel, $page, $userposts, $sig, $onoff);
+
+                                    //Get topic for $where
+                                    $topic = common::$sql['default']->fetch("SELECT `topic` FROM `{prefix_forum_threads}` WHERE `kid` = ? AND `id` = ?;",
+                                        [$_SESSION['kid'], $id], 'topic');
+                                    $where = $where . ' - ' . stringParser::decode($topic);
+                                    unset($topic);
+
+                                    $smarty->caching = false;
+                                    $smarty->assign('is_edit', false);
+                                    $smarty->assign('zitat', $zitat);
+                                    $smarty->assign('lastpost', $lastpost);
+                                    $smarty->assign('from', common::editor_is_reg());
+                                    $smarty->assign('br', true);
+                                    $smarty->assign('id', $_GET['id']);
+                                    $smarty->assign('notification', notification::get('global', true));
+                                    $smarty->assign('posteintrag', isset($_POST['eintrag']) ? stringParser::decode($_POST['eintrag']) : '');
+                                    $index = $smarty->fetch('file:[' . common::$tmpdir . ']' . $dir . '/post.tpl');
+                                    $smarty->clearAllAssign();
+                                    unset($zitat, $lastpost);
+                                }
                             }
-
-                            if(empty($getu['hp'])) $hp = "";
-                            else $hp = show(_hpicon_forum, array("hp" => $getu['hp']));
                         } else {
-                            $icq = "";
-                            $pn = "";
-                            $email = show(_emailicon_forum, array("email" => eMailAddr(re($getl['email']))));
-                            if(empty($getl['hp'])) $hp = "";
-                            else $hp = show(_hpicon_forum, array("hp" => $getl['hp']));
+                            $smarty->caching = false;
+                            $smarty->assign('sek', settings::get('f_forum'));
+                            $error = $smarty->fetch('string:' . _error_flood_post);
+                            $smarty->clearAllAssign();
+                            $index = common::error($error);
+                            unset($error);
                         }
-
-                        $email =  ($chkMe >= 1 ? $email : '');
-                        $lastpost = show($dir."/forum_posts_show", array("nick" => cleanautor($getl['reg'], '', re($getl['nick']), re(re($getl['email']))),
-                            "postnr" => "",
-                            "text" => $text,
-                            "status" => getrank($getl['reg']),
-                            "avatar" => useravatar($getl['reg']),
-                            "pn" => $pn,
-                            "icq" => $icq,
-                            "hp" => $hp,
-                            "class" => 'class="commentsRight"',
-                            "email" => $email,
-                            "titel" => $titel,
-                            "p" => ($page-1*config('m_fposts')),
-                            "ip" => $posted_ip,
-                            "edited" => $getl['edited'],
-                            "posts" => $userposts,
-                            "date" => _posted_by.date("d.m.y H:i", $getl['date'])._uhr,
-                            "signatur" => $sig,
-                            "zitat" => _forum_zitat_preview,
-                            "onoff" => $onoff,
-                            "top" => "",
-                            "lp" => cnt($db['f_posts'], " WHERE sid = '".(int)($_GET['id'])."'")+1));
-                    } else {
-                        $gett = db("SELECT * FROM `".$db['f_threads']."` WHERE `kid` = ".(int)($_GET['kid'])." AND `id` = ".(int)($_GET['id']).";",false,true);
-
-                        $sig = "";
-                        if(data("signatur",$gett['t_reg']))
-                            $sig = _sig.bbcode(data("signatur",$gett['t_reg']));
-
-                        $userposts = "";
-                        if($gett['t_reg'] != "0")
-                            $userposts = show(_forum_user_posts, array("posts" => userstats("forumposts",$gett['t_reg'])));
-
-                        if($gett['t_reg'] == "0") $onoff = "";
-                        else                      $onoff = onlinecheck($gett['t_reg']);
-
-                        $ftxt = hl($gett['t_text'], (isset($_GET['hl']) ? $_GET['hl'] : ''));
-                        if(isset($_GET['hl'])) $text = bbcode($ftxt['text']);
-                        else $text = bbcode($gett['t_text']);
-
-                        if($chkMe == "4") $posted_ip = $gett['ip'];
-                        else                 $posted_ip = _logged;
-
-                        $titel = show(_eintrag_titel_forum, array("postid" => "1",
-                            "datum" => date("d.m.Y", $gett['t_date']),
-                            "zeit" => date("H:i", $gett['t_date'])._uhr,
-                            "url" => '#',
-                            "edit" => "",
-                            "delete" => ""));
-                        if($gett['t_reg'] != 0)
-                        {
-                            $qryu = db("SELECT nick,icq,hp,email FROM ".$db['users']." WHERE id = '".$gett['t_reg']."'");
-                            $getu = _fetch($qryu);
-
-                            $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
-                            $pn = show(_pn_write_forum, array("id" => $gett['t_reg'],
-                                "nick" => $getu['nick']));
-                            if(empty($getu['icq']) || $getu['icq'] == 0) $icq = "";
-                            else {
-                                $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
-                                $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin='.$getu['icq'].'" target="_blank">'.$uin.'</a>';
-                            }
-
-                            if(empty($getu['hp'])) $hp = "";
-                            else $hp = show(_hpicon_forum, array("hp" => $getu['hp']));
-                        } else {
-                            $icq = "";
-                            $pn = "";
-                            $email = show(_emailicon_forum, array("email" => eMailAddr($gett['t_email'])));
-                            if(empty($gett['t_hp'])) $hp = "";
-                            else $hp = show(_hpicon_forum, array("hp" => $gett['t_hp']));
-                        }
-
-                        $email =  ($chkMe >= 1 ? $email : '');
-                        $lastpost = show($dir."/forum_posts_show", array("nick" => cleanautor($gett['t_reg'], '', $gett['t_nick'], $gett['t_email']),
-                            "postnr" => "",
-                            "text" => $text,
-                            "status" => getrank($gett['t_reg']),
-                            "avatar" => useravatar($gett['t_reg']),
-                            "pn" => $pn,
-                            "icq" => $icq,
-                            "class" => $ftxt['class'],
-                            "hp" => $hp,
-                            "email" => $email,
-                            "titel" => $titel,
-                            "ip" => $posted_ip,
-                            "p" => ($page-1*config('m_fposts')),
-                            "edited" => $gett['edited'],
-                            "posts" => $userposts,
-                            "date" => _posted_by.date("d.m.y H:i", $gett['t_date'])._uhr,
-                            "signatur" => $sig,
-                            "zitat" => "",
-                            "onoff" => $onoff,
-                            "top" => "",
-                            "lp" => cnt($db['f_posts'], " WHERE sid = '".(int)($_GET['id'])."'")+1));
                     }
-
-                    if($userid >= 1)
-                    {
-                        $form = show("page/editor_regged", array("nick" => autor($userid),
-                            "von" => _autor));
-                    } else {
-                        $form = show("page/editor_notregged", array("nickhead" => _nick,
-                            "emailhead" => _email,
-                            "hphead" => _hp));
-                    }
-
-                    $title = re($gett['topic']).' - '.$title;
-                    $index = show($dir."/post", array("titel" => _forum_new_post_head,
-                        "nickhead" => _nick,
-                        "emailhead" => _email,
-                        "id" => $_GET['id'],
-                        "kid" => $_GET['kid'],
-                        "zitat" => $zitat,
-                        "last_post" => _forum_lp_head,
-                        "preview" => _preview,
-                        "lastpost" => $lastpost,
-                        "bbcodehead" => _bbcode,
-                        "form" => $form,
-                        "br1" => "",
-                        "security" => _register_confirm,
-                        "ip" => _iplog_info,
-                        "br2" => "",
-                        "what" => _button_value_add,
-                        "dowhat" => $dowhat,
-                        "error" => "",
-                        "postnick" => $postnick,
-                        "postemail" => $postemail,
-                        "posthp" => '',
-                        "posteintrag" => ""));
                 }
-            } else {
-                $index = error(show(_error_flood_post, array("sek" => config('f_forum'))), 1);
-            }
-        }
-    } elseif($do == "addpost") {
-        $qry_thread = db("SELECT `id`,`kid` FROM ".$db['f_threads']." WHERE `id` = '".(int)$_GET['id']."'");
-        if(_rows($qry_thread) == 0)
-        {
-            $index = error(_id_dont_exist,1);
-        } else {
-            if((settings("reg_forum") && !$chkMe) || !HasDSGVO())
-            {
-                $index = error(_error_unregistered,1);
-            } else {
-                $get_threadkid = _fetch($qry_thread);
-                $checks = db("SELECT s2.id,s1.intern FROM ".$db['f_kats']." AS s1 LEFT JOIN ".$db['f_skats']." AS s2 ON s2.sid = s1.id WHERE s2.id = '".(int)($_GET['kid'])."'",false,true);
-                if($checks['intern'] == 1 && !permission("intforum") && !fintern($checks['id'])) {
-                    if(!mysqli_persistconns)
-                        $mysql->close(); //MySQL
+                break;
+            case 'delete':
+                $get = common::$sql['default']->fetch("SELECT `id`,`reg`,`sid`,`kid` FROM `{prefix_forum_posts}` WHERE `id` = ?;", [(int)($_GET['id'])]);
+                if (common::$sql['default']->rowCount() && ($get['reg'] == common::$userid || common::permission("forum"))) {
+                    //Update forumstats
+                    common::$sql['default']->update("UPDATE `{prefix_forum_threads}` SET `posts` = (posts-1)  WHERE `id` = ?;", [$get['sid']]);
 
-                    exit();
+                    //Update userstats
+                    common::$sql['default']->update("UPDATE `{prefix_user_stats}`SET `forumposts` = (forumposts-1) WHERE `user` = ?;", [$get['reg']]);
+
+                    //Delete post
+                    common::$sql['default']->delete("DELETE FROM `{prefix_forum_posts}` WHERE `id` = ?;", [$get['id']]);
+
+                    //Update thread
+                    $entrys = common::cnt("{prefix_forum_posts}", " WHERE `sid` = ?", "id", [$get['sid']]);
+                    if (!$entrys) {
+                        common::$sql['default']->update("UPDATE `{prefix_forum_threads}` SET `first` = 1 WHERE `kid` = ?", [$get['kid']]);
+                    }
+
+                    //Fix last post time update
+                    $qryp = common::$sql['default']->select("SELECT `date` FROM `{prefix_forum_posts}` WHERE sid = ? ORDER BY `date` ASC;",
+                        [$get['sid']]);
+                    $update_lp_time = 0; //Last Post Time
+                    foreach($qryp as $getp) {
+                        if(!$update_lp_time || $update_lp_time < $getp['date']) {
+                            $update_lp_time = $getp['date'];
+                        }
+                    } unset($qryp,$getp);
+
+                    //Fix LastPost Time Bug
+                    $gett = common::$sql['default']->fetch("SELECT `t_date`,`id`,`lp` FROM `{prefix_forum_threads}` WHERE `id` = ?;", [$get['sid']]);
+                    if(!$update_lp_time) {
+                        $update_lp_time = $gett['t_date'];
+                    }
+
+                    if($gett['lp'] >= $update_lp_time) {
+                        common::$sql['default']->update("UPDATE `{prefix_forum_threads}` SET `lp` = ? WHERE `id` = ?;",
+                            [$update_lp_time,$gett['id']]);
+                        $get['lp'] = $update_lp_time;
+                    } unset($update_lp_time,$gett);
+
+                    $pagenr = !$entrys ? 1 : ceil($entrys / settings::get('m_fposts'));
+                    $index = common::info(_forum_delpost_successful, '?action=showthread&amp;id=' . $get['sid'] . '&amp;page=' . $pagenr . '#p' . ($entrys + 1));
                 }
-
-                if($userid >= 1)
-                    $toCheck = empty($_POST['eintrag']);
-                else
-                    $toCheck = empty($_POST['nick']) || empty($_POST['email']) || empty($_POST['eintrag']) || !check_email($_POST['email']) || $_POST['secure'] != $_SESSION['sec_'.$dir] || empty($_SESSION['sec_'.$dir]);
-
-                if($toCheck)
-                {
-                    if($userid >= 1)
-                    {
-                        if(empty($_POST['eintrag'])) $error = _empty_eintrag;
-                        $form = show("page/editor_regged", array("nick" => autor($userid),
-                            "von" => _autor));
-                    } else {
-                        if(($_POST['secure'] != $_SESSION['sec_'.$dir]) || empty($_SESSION['sec_'.$dir])) $error = _error_invalid_regcode;
-                        elseif(empty($_POST['nick'])) $error = _empty_nick;
-                        elseif(empty($_POST['email'])) $error = _empty_email;
-                        elseif(!check_email($_POST['email'])) $error = _error_invalid_email;
-                        elseif(empty($_POST['eintrag'])) $error = _empty_eintrag;
-                        $form = show("page/editor_notregged", array("nickhead" => _nick,
-                            "emailhead" => _email,
-                            "hphead" => _hp));
-                    }
-
-                    $error = show("errors/errortable", array("error" => $error));
-                    $dowhat = show(_forum_dowhat_add_post, array("id" => $_GET['id'],
-                        "kid" => $get_threadkid['kid']));
-                    $qryl = db("SELECT * FROM ".$db['f_posts']."
-                                            WHERE kid = '".(int)($get_threadkid['kid'])."'
-                                            AND sid = '".(int)($_GET['id'])."'
-                                            ORDER BY date DESC");
-                    if(_rows($qryl))
-                    {
-                        $getl = _fetch($qryl);
-
-                        if(data("signatur",$getl['reg'])) $sig = _sig.bbcode(data("signatur",$getl['reg']));
-                        else $sig = "";
-
-                        if($getl['reg'] != "0") $userposts = show(_forum_user_posts, array("posts" => userstats("forumposts",$getl['reg'])));
-                        else $userposts = "";
-
-                        if($getl['reg'] == "0") $onoff = "";
-                        else $onoff = onlinecheck($getl['reg']);
-
-                        $ftxt = hl($getl['text'], $_GET['hl']);
-                        if($_GET['hl']) $text = bbcode($ftxt['text']);
-                        else $text = bbcode($getl['text']);
-
-                        if($chkMe == "4") $posted_ip = $getl['ip'];
-                        else $posted_ip = _logged;
-
-                        $titel = show(_eintrag_titel_forum, array("postid" => (cnt($db['f_posts'], " WHERE sid = ".(int)($_GET['id']))+1),
-                            "datum" => date("d.m.Y", $getl['date']),
-                            "zeit" => date("H:i", $getl['date'])._uhr,
-                            "url" => '#',
-                            "edit" => "",
-                            "delete" => ""));
-
-                        if($getl['reg'] != 0)
-                        {
-                            $qryu = db("SELECT nick,icq,hp,email FROM ".$db['users']."
-                                                    WHERE id = '".$getl['reg']."'");
-                            $getu = _fetch($qryu);
-
-                            $email = show(_emailicon_forum, array("email" => eMailAddr($getu['email'])));
-                            $pn = show(_pn_write_forum, array("id" => $getl['reg'],
-                                "nick" => $getu['nick']));
-                            if(empty($getu['icq']) || $getu['icq'] == 0) $icq = "";
-                            else {
-                                $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
-                                $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin='.$getu['icq'].'" target="_blank">'.$uin.'</a>';
-                            }
-
-                            if(empty($getu['hp'])) $hp = "";
-                            else $hp = show(_hpicon_forum, array("hp" => $getu['hp']));
-                        } else {
-                            $icq = "";
-                            $pn = "";
-                            $email = show(_emailicon_forum, array("email" => eMailAddr($getl['email'])));
-                            if(empty($getl['hp'])) $hp = "";
-                            else $hp = show(_hpicon_forum, array("hp" => $getl['hp']));
-                        }
-
-                        $nick = autor($getl['reg'], '', re($getl['nick']), re($getl['email']));
-                        if(!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor')
-                        {
-                            if(preg_match("#".$_GET['hl']."#i",$nick)) $ftxt['class'] = 'class="highlightSearchTarget"';
-                        }
-
-                        $email =  ($chkMe >= 1 ? $email : '');
-                        $lastpost = show($dir."/forum_posts_show", array("nick" => $nick,
-                            "postnr" => "",
-                            "text" => $text,
-                            "status" => getrank($getl['reg']),
-                            "avatar" => useravatar($getl['reg']),
-                            "titel" => $titel,
-                            "pn" => $pn,
-                            "icq" => $icq,
-                            "hp" => $hp,
-                            "class" => $ftxt['class'],
-                            "email" => $email,
-                            "ip" => $posted_ip,
-                            "p" => ($i+($page-1)*config('m_fposts')),
-                            "edited" => $getl['edited'],
-                            "posts" => $userposts,
-                            "signatur" => $sig,
-                            "zitat" => "",
-                            "onoff" => $onoff,
-                            "top" => "",
-                            "lp" => cnt($db['f_posts'], " WHERE `sid` = ".(int)($_GET['id']))+1));
-                    } else {
-                        $gett = db("SELECT * FROM `".$db['f_threads']."` WHERE `kid` = ".(int)($get_threadkid['kid']).
-                            " AND `id` = ".(int)($_GET['id']).";",false,true);
-
-                        $sig = "";
-                        if(data("signatur",$gett['t_reg']))
-                            $sig = _sig.bbcode(data("signatur",$gett['t_reg']));
-
-                        $userposts = "";
-                        if($gett['t_reg'])
-                            $userposts = show(_forum_user_posts, array("posts" => userstats("forumposts",$gett['t_reg'])));
-
-                        $onoff = "";
-                        if($gett['t_reg'])
-                            $onoff = onlinecheck($gett['t_reg']);
-
-                        $text = bbcode($gett['t_text']);
-                        if(isset($_GET['hl'])) {
-                            $ftxt = hl($gett['t_text'], $_GET['hl']);
-                            if($_GET['hl'])
-                                $text = bbcode($ftxt['text']);
-                        }
-
-                        $posted_ip = ($chkMe == 4 ? re($gett['ip']) : _logged);
-                        if($gett['t_reg'] != 0) {
-                            $getu = db("SELECT `nick`,`icq`,`hp`,`email` FROM `".$db['users']."` WHERE `id` = ".$gett['t_reg'].";",false,true);
-
-                            $email = show(_emailicon_forum, array("email" => eMailAddr(re($getu['email']))));
-                            $pn = show(_pn_write_forum, array("id" => $gett['t_reg'], "nick" => $getu['nick']));
-
-                            $icq = "";
-                            if(!empty($getu['icq']) && $getu['icq'] >= 1) {
-                                $uin = show(_icqstatus_forum, array("uin" => $getu['icq']));
-                                $icq = '<a href="http://www.icq.com/whitepages/about_me.php?uin=' . $getu['icq'] . '" target="_blank">' . $uin . '</a>';
-                            }
-
-                            $hp = "";
-                            if(!empty($getu['hp']))
-                                $hp = show(_hpicon_forum, array("hp" => links(re($getu['hp']))));
-                        } else {
-                            $icq = ""; $pn = ""; $hp = "";
-                            $email = show(_emailicon_forum, array("email" => eMailAddr(re($gett['t_email']))));
-                            if(!empty($gett['t_hp']))
-                                $hp = show(_hpicon_forum, array("hp" => links(re($gett['t_hp']))));
-                        }
-
-                        $nick = autor($gett['t_reg'], '', $gett['t_nick'], $gett['t_email']);
-                        if(!empty($_GET['hl']) && $_SESSION['search_type'] == 'autor') {
-                            if(preg_match("#".$_GET['hl']."#i",$nick))
-                                $ftxt['class'] = 'class="highlightSearchTarget"';
-                        }
-
-                        $email =  ($chkMe >= 1 ? $email : '');
-                        $lastpost = show($dir."/forum_posts_show", array("nick" => $nick,
-                            "postnr" => "",
-                            "text" => $text,
-                            "status" => getrank($gett['t_reg']),
-                            "avatar" => useravatar($gett['t_reg']),
-                            "ip" => $posted_ip,
-                            "pn" => $pn,
-                            "class" => $ftxt['class'],
-                            "icq" => $icq,
-                            "hp" => $hp,
-                            "email" => $email,
-                            "edit" => "",
-                            "p" => ($i+($page-1)*config('m_fposts')),
-                            "delete" => "",
-                            "edited" => $gett['edited'],
-                            "posts" => $userposts,
-                            "date" => _posted_by.date("d.m.y H:i", $gett['t_date'])._uhr,
-                            "signatur" => $sig,
-                            "zitat" => "",
-                            "onoff" => $onoff,
-                            "top" => "",
-                            "lp" => cnt($db['f_posts'], " WHERE `sid` = ".(int)($_GET['id']))+1));
-                    }
-
-                    $index = show($dir."/post", array("titel" => _forum_new_post_head,
-                        "nickhead" => _nick,
-                        "bbcodehead" => _bbcode,
-                        "emailhead" => _email,
-                        "zitat" => $zitat,
-                        "what" => _button_value_add,
-                        "preview" => _preview,
-                        "form" => $form,
-                        "br1" => "",
-                        "br2" => "",
-                        "security" => _register_confirm,
-                        "lastpost" => $lastpost,
-                        "last_post" => _forum_lp_head,
-                        "dowhat" => $dowhat,
-                        "id" => $_GET['id'],
-                        "ip" => _iplog_info,
-                        "kid" => $_GET['kid'],
-                        "postemail" => $_POST['email'],
-                        "posthp" => $_POST['hp'],
-                        "postnick" => re($_POST['nick']),
-                        "posteintrag" => re_bbcode($_POST['eintrag']),
-                        "error" => $error,
-                        "eintraghead" => _eintrag));
-                } else {
-                    $spam = 0;
-                    $qrydp = db("SELECT * FROM `".$db['f_posts']."` WHERE `kid` = ".(int)($get_threadkid['kid']).
-                        " AND `sid` = ".(int)($_GET['id'])." ORDER BY `date` DESC LIMIT 1;");
-                    if(_rows($qrydp))
-                    {
-                        $getdp = _fetch($qrydp);
-                        if($userid >= 1)
-                        {
-                            if($userid == $getdp['reg'] && settings('double_post')) $spam = 1;
-                            else $spam = 0;
-                        } else {
-                            if($_POST['nick'] == $getdp['nick'] && settings('double_post')) $spam = 1;
-                            else $spam = 0;
-                        }
-                    } else {
-                        $gettdp = db("SELECT * FROM `".$db['f_threads']."` WHERE `kid` = ".(int)($get_threadkid['kid']).
-                            " AND `id` = ".(int)($_GET['id']).";",false,true);
-                        if($userid >= 1) {
-                            if($userid == $gettdp['t_reg'] && settings('double_post'))
-                                $spam = 2;
-                            else
-                                $spam = 0;
-                        } else {
-                            if($_POST['nick'] == $gettdp['t_nick'] && settings('double_post'))
-                                $spam = 2;
-                            else
-                                $spam = 0;
-                        }
-                    }
-
-                    if($spam == 1)
-                    {
-                        if($userid >= 1)
-                            $fautor = autor($userid);
-                        else
-                            $fautor = autor('', '', $_POST['nick'], $_POST['email']);
-
-                        $text = show(_forum_spam_text, array("autor" => $fautor, "ltext" => addslashes($getdp['text']), "ntext" => up($_POST['eintrag'])));
-
-                        db("UPDATE `".$db['f_threads']."` SET `lp` = ".time()." WHERE `kid` = ".(int)($_GET['kid'])." AND `id` = ".(int)($_GET['id']).";");
-                        db("UPDATE `".$db['f_posts']."` SET `date` = ".time().", `text` = '".$text."' WHERE `id` = ".$getdp['id'].";");
-                    } elseif($spam == 2) {
-                        if($userid >= 1)
-                            $fautor = autor($userid);
-                        else
-                            $fautor = autor('', '', $_POST['nick'], $_POST['email']);
-
-                        $text = show(_forum_spam_text, array("autor" => $fautor, "ltext" => addslashes($gettdp['t_text']), "ntext" => up($_POST['eintrag'])));
-                        db("UPDATE `".$db['f_threads']."` SET `lp` = ".time().", `t_text` = '".$text."' WHERE `id` = ".$gettdp['id'].";");
-                    } else {
-                        db("INSERT INTO `".$db['f_posts']."` SET `kid` = ".((int)$get_threadkid['kid']).
-                        ", `sid` = ".((int)$_GET['id']).
-                        ", `date` = ".time().
-                        ", `nick`  = '".(isset($_POST['nick']) && !empty($_POST['nick']) ? up($_POST['nick']) : '')."'".
-                        ", `email` = '".(isset($_POST['email']) && !empty($_POST['email']) ? up($_POST['email']) : '')."'".
-                        ", `hp` = '".(isset($_POST['hp']) && !empty($_POST['hp']) ? up(links($_POST['hp'])) : '')."'".
-                        ", `reg`   = '".up($userid)."'".
-                        ", `text`  = '".up($_POST['eintrag'])."'".
-                        ", `ip`    = '".$userip."';");
-
-                        db("UPDATE `".$db['f_threads']."` SET `lp` = ".time().", `first` = 0 WHERE `id` = ".(int)($_GET['id']).";");
-                    }
-
-                    setIpcheck("fid(".$get_threadkid['kid'].")");
-
-                    db("UPDATE `".$db['userstats']."` SET `forumposts` = (forumposts+1) WHERE `user` = ".$userid.";");
-
-                    $checkabo = db("SELECT s1.`user`,s1.`fid`,s2.`nick`,s2.`id`,s2.`email` FROM `".$db['f_abo']."` AS `s1` ".
-                        "LEFT JOIN `".$db['users']."` AS `s2` ON s2.`id` = s1.`user` ".
-                        "WHERE s1.`fid` = ".((int)$_GET['id'])." AND s2.`dsgvo_lock` != 1;");
-                    while($getabo = _fetch($checkabo))
-                    {
-                        if($userid != $getabo['user'])
-                        {
-                            $gettopic = db("SELECT `topic` FROM `".$db['f_threads']."` WHERE `id` = ".(int)($_GET['id']).";",false,true);
-                            $entrys = cnt($db['f_posts'], " WHERE `sid` = ".(int)($_GET['id']));
-
-                            if($entrys == "0") $pagenr = "1";
-                            else $pagenr = ceil($entrys/config('m_fposts'));
-
-                            $subj = show(settings('eml_fabo_npost_subj'), array("titel" => $title));
-
-                            $message = show(bbcode_email(settings('eml_fabo_npost')), array("nick" => re($getabo['nick']),
-                                "postuser" => fabo_autor($userid),
-                                "topic" => $gettopic['topic'],
-                                "titel" => $title,
-                                "domain" => $httphost,
-                                "id" => (int)($_GET['id']),
-                                "entrys" => $entrys+1,
-                                "page" => $pagenr,
-                                "text" => bbcode($_POST['eintrag']),
-                                "clan" => settings('clanname')));
-
-                            sendMail(re($getabo['email']),$subj,$message);
-                        }
-                    }
-
-                    $entrys = cnt($db['f_posts'], " WHERE `sid` = ".(int)($_GET['id']));
-
-                    if($entrys == "0") $pagenr = "1";
-                    else $pagenr = ceil($entrys/config('m_fposts'));
-
-                    $lpost = show(_forum_add_lastpost, array("id" => $entrys+1,
-                        "tid" => $_GET['id'],
-                        "page" => $pagenr));
-
-                    $index = info(_forum_newpost_successful, $lpost);
-                }
-            }
+                break;
         }
-    } elseif($do == "delete") {
-        $get = db("SELECT `reg`,`sid`,`kid` FROM `".$db['f_posts']."` WHERE `id` = ".(int)($_GET['id']).";",false,true);
-        if($get['reg'] == $userid OR permission("forum")) {
-            db("DELETE FROM `".$db['f_posts']."` WHERE `id` = ".(int)($_GET['id']).";");
-
-            $fposts = userstats("forumposts",$get['reg'])-1;
-            db("UPDATE `".$db['userstats']."` SET `forumposts` = ".((int)$fposts)." WHERE `user` = ".$get['reg'].";");
-
-            $entrys = cnt($db['f_posts'], " WHERE `sid` = ".$get['sid']);
-            if(!$entrys) {
-                $pagenr = "1";
-                $update = db("UPDATE `".$db['f_threads']."` SET `first` = 1 WHERE `kid` = ".$get['kid'].";");
-            } else {
-                $pagenr = ceil($entrys/config('m_fposts'));
-            }
-
-            $lpost = show(_forum_add_lastpost, array("id" => $entrys+1,"tid" => $get['sid'], "page" => $pagenr));
-            $index = info(_forum_delpost_successful, $lpost);
-        }
+    } else {
+        $index = common::error(_error_have_to_be_logged);
     }
 }

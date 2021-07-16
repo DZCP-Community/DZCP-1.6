@@ -1,0 +1,1 @@
+<a href="?{$action}{if $id >= 1}&amp;id={$id}{/if}"><i class="fas fa-cloud-upload-alt fa-lg"></i></a>

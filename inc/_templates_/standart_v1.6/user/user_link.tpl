@@ -1,0 +1,1 @@
+{$country} <a class="{$class}" href="../user/?action=user&amp;id={$id}{$get}">{$nick}</a>

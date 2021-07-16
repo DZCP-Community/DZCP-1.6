@@ -1,0 +1,1 @@
+&nbsp;&nbsp;<a href="../artikel"><span class="fontWichtig">{$cnt}</span> {$eintrag}</span><br />

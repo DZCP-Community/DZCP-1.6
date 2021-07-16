@@ -18,7 +18,7 @@ switch ($do) {
         $navigation = ''; $thiskat = '';
         while($getnav = _fetch($qrynav)) {
             if($thiskat != $getnav['kat']) {
-                $navigation .= '<option class="dropdownKat" value="lazy">'.re($getnav['katname']).'</option>
+                $navigation .= '<option class="selectpicker" value="lazy">'.re($getnav['katname']).'</option>
                                 <option value="'.re($getnav['placeholder']).'-1">-> '._admin_first.'</option>';
             }
 
@@ -326,7 +326,7 @@ switch ($do) {
         $i = 1; $thiskat = ''; $navigation = '';
         while($getnav = _fetch($qrynav)) {
             if($thiskat != $getnav['kat']) {
-                $navigation .= '<option class="dropdownKat" value="lazy">'.re($getnav['katname']).'</option>
+                $navigation .= '<option class="selectpicker" value="lazy">'.re($getnav['katname']).'</option>
                 <option value="'.re($getnav['placeholder']).'-1">-> '._admin_first.'</option>';
             }
 

@@ -6,4 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Suin\\RSSWriter' => array($vendorDir . '/suin/php-rss-writer/src'),
+    'Phine\\Exception' => array($vendorDir . '/phine/exception/src/lib'),
+    'Phine\\Country' => array($vendorDir . '/phine/country/src/lib'),
+    'Less' => array($vendorDir . '/oyejorge/less.php/lib'),
+    'Detection' => array($vendorDir . '/mobiledetect/mobiledetectlib/namespaced'),
 );

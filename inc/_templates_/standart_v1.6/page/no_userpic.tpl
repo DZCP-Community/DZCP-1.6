@@ -1,0 +1,1 @@
+<img src="../inc/images/nopic.gif" width="{$width}" height="{$height}" alt="" />

@@ -1,0 +1,1 @@
+<li class="list-group-item"><i class="fas fa-save"></i> <a href="index.php?action=show&amp;id={$kid}&amp;sub={$skid}">{$subkat}</a></li>

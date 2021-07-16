@@ -1,0 +1,235 @@
+
+/*  evol.colorpicker = ColorPicker widget for jQuery UI  */
+/*  (c) 2014 Olivier Giulieri  */
+/*  https://github.com/evoluteur/colorpicker */
+/*
+.evo-colortxt-ie {
+	position:relative;
+	top:-6px;
+}*/
+.evo-pop {
+  z-index: 10000;
+  width: 204px;
+  padding: 3px 3px 0;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+  }
+}
+.evo-pop-ie {
+  z-index: 10000;
+  width: 212px;
+  padding: 3px;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+  }
+}
+.evo-palette {
+  td {
+    font-size: 1px;
+    border: solid 1px #c0c0c0;
+    padding: 7px;
+    cursor: pointer;
+  }
+  tr.top {
+    >td {
+      border-bottom: 0;
+    }
+  }
+  tr.in {
+    >td {
+      border-top: 0;
+      border-bottom: 0;
+    }
+  }
+  tr.bottom {
+    >td {
+      border-top: 0;
+    }
+  }
+  div.sep {
+    height: 3px;
+  }
+  border-collapse: separate;
+  border-spacing: 4px 0px;
+  *border-collapse: expression('separate', cellSpacing='2px');
+  th {
+    border: 0;
+    padding: 5px 3px;
+    text-align: left;
+    font-weight: normal;
+    background: transparent !important;
+  }
+}
+.evo-palette-ie {
+  border-collapse: separate;
+  border-spacing: 4px 0px;
+  *border-collapse: expression('separate', cellSpacing='2px');
+  th {
+    border: 0;
+    padding: 5px 3px;
+    text-align: left;
+    font-weight: normal;
+    background: transparent !important;
+  }
+  td {
+    font-size: 1px;
+    border: solid 1px #c0c0c0;
+    padding: 7px;
+    cursor: pointer;
+  }
+}
+.evo-palette2 {
+  margin: auto;
+  border-collapse: collapse;
+  td {
+    font-size: 1px;
+    cursor: pointer;
+    padding: 6px 7px;
+  }
+}
+.evo-palette2-ie {
+  margin: auto;
+  border-collapse: collapse;
+  td {
+    font-size: 1px;
+    cursor: pointer;
+    padding: 5px;
+  }
+}
+.evo-palcenter {
+  padding: 5px;
+  text-align: center;
+}
+.evo-colorind {
+  border: solid 1px #c3c3c3;
+  width: 18px;
+  height: 18px;
+  float: right;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+  }
+}
+.evo-colorind-ie {
+  border: solid 1px #c3c3c3;
+  width: 18px;
+  height: 18px;
+  float: right;
+  position: relative;
+  top: -23px;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+  }
+}
+.evo-colorind-ff {
+  border: solid 1px #c3c3c3;
+  width: 18px;
+  height: 18px;
+  float: right;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+  }
+}
+.evo-colorbox-ie {
+  font-size: 8px;
+  padding: 3px 9px !important;
+}
+.evo-color {
+  span {
+    &:after {
+      content: ".";
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden;
+      font-size: 0;
+    }
+    font-size: 15px;
+    margin: 1px 0 4px 3px;
+    float: left;
+  }
+  width: 94px;
+  padding: 1px 3px 0 4px;
+  div {
+    border: solid 1px #808080;
+    border-right: solid 1px #c0c0c0;
+    border-bottom: solid 1px #c0c0c0;
+    padding: 3px;
+    margin-bottom: 5px;
+    width: 10px;
+    height: 10px;
+    float: left;
+  }
+}
+.evo-cHist {
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+  }
+  padding: 3px;
+  div {
+    cursor: pointer;
+    border: solid 1px #c0c0c0;
+    padding: 3px;
+    margin: 5px;
+    width: 10px;
+    height: 10px;
+    float: left;
+  }
+}
+.evo-sep {
+  height: 10px;
+  font-size: 0;
+}
+.evo-more {
+  padding: 4px 5px 4px;
+  font-size: smaller;
+}
+.evo-transparent {
+  background-image: repeating-linear-gradient(135deg, #000000, #000000 1px, #ffffff 1px, #ffffff 3px);
+}
+.evo-tr-box {
+  cursor: pointer;
+  border: solid 1px #c0c0c0;
+  padding: 3px;
+  width: 7px;
+  height: 7px;
+  float: right;
+  position: relative;
+  right: -3px;
+  top: 2px;
+}
+a.evo-hist {
+  margin-left: 6px;
+}
+.evo-pointer {
+  cursor: pointer;
+}

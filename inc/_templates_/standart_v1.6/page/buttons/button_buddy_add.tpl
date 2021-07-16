@@ -1,0 +1,1 @@
+<a href="../user/?action=buddys&amp;do=addbuddy&amp;id={$id}"><img alt="" src="{lang msgID="buddy_icon"}" class="icon" /></a>

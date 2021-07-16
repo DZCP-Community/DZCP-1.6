@@ -1,17 +1,551 @@
-<?xml version="1.0" encoding="iso-8859-1" ?>
-<rss version="0.91">
-<channel>
-  <title>Dein Seitentitel hier!</title>
-  <link>http://127.0.0.1</link>
-  <description>Clannews von Dein Clanname hier!</description>
-  <language>de-de</language>
-  <copyright>2014 Dein Clanname hier!</copyright>
-  <item>
-    <pubDate>Sun, 02 Mar 2014 11:01:53 +0000</pubDate>
-    <author>Godkiller_NT</author>
-    <title>deV!L`z Clanportal</title>
-    <description>deV!L`z Clanportal wurde erfolgreich installiert!Bei Fragen oder Problemen kannst du gerne das Forum unter www.dzcp.de kontaktieren.Mehr Designtemplates und Modifikationen findest du unter www.templatebar.de.Viel Spass mit dem DZCP wuenscht dir das Team von www.dzcp.de.    </description>
-    <link>http://127.0.0.1/dzcp/news/?action=show&amp;id=1</link>
-  </item>
-</channel>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>deV!L`z ClanPortal</title>
+    <link>http://www.dzcp.de</link>
+    <description>Clannews von DZCP.de</description>
+    <language>de-DE</language>
+    <copyright>2020 DZCP.de</copyright>
+    <pubDate>Mon, 22 Jun 2020 00:40:01 +0200</pubDate>
+    <lastBuildDate>Mon, 22 Jun 2020 00:40:01 +0200</lastBuildDate>
+    <ttl>60</ttl>
+    <item>
+      <title><![CDATA[Ankündigung für Dzcp.de]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=264</link>
+      <description><![CDATA[[color=#1abc9c][size=200]T[/size][/color][size=150][color=#3498db]e[/color][color=#c0392b]s[/color][color=#f39c12]t [/color][/size][b]Big [/b][i]Kursiv [/i][u]Unterstrichen[/u] [u][b][i]ALLES[/i][/b][/u] [url=http://beta.dzcp.de/admin/?admin=newsadmin&do=edit&id=264]LINK[/url]]]></description>
+      <content:encoded><![CDATA[[color=#1abc9c][size=200]T[/size][/color][size=150][color=#3498db]e[/color][color=#c0392b]s[/color][color=#f39c12]t [/color][/size][b]Big [/b][i]Kursiv [/i][u]Unterstrichen[/u] [u][b][i]ALLES[/i][/b][/u] [url=http://beta.dzcp.de/admin/?admin=newsadmin&do=edit&id=264]LINK[/url]]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=264</guid>
+      <pubDate>Tue, 16 May 2017 03:54:06 +0200</pubDate>
+      <author>-{ICK}-Chris</author>
+    </item>
+    <item>
+      <title><![CDATA[Wir brauchen eure Unterstützung!]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=263</link>
+      <description><![CDATA[<p>Hallo liebe Community, <br>
+wie der Titel es schon verrï¿½t, kï¿½nnten wir ein wenig Hilfe gebrauchen.<br><br><br>
+
+Getreu dem Motto: "Viele Hï¿½nde, schnelles Ende" suchen wir auf diesem Wege aktive Designer und Coder.<br><br></p>
+<p>
+Je nach deinen Fï¿½higkeiten werden deine Aufgaben folgende sein: <br><br>
+Designer:<br>
+- Entwerfen von neuen Designs (Templates), die hier kostenfrei zum Download angeboten werden sollen<br>
+(- wenn du kannst, auch direkt die Anpassung deiner Templates an Dzcp)<br>
+- Entwerfen von Logos, Grafiken und Bannern (fï¿½r dzcp) nach Bedarf
+<br><br>
+Coder:<br>
+- Anpassung alter Mods an die neue Version, bzw. Entwicklung neuer Mods, welche hier kostenfrei zum Download angeboten werden<br>
+- Anpassung von Templates an die neue Version von Dzcp <br>
+- ggf. Mitwirkung an den neuen Dzcp Versionen (nach Absprache mit Lucas)<br>
+- Hilfestellung zu Dzcp, den Mods und daraus resultierenden Bugs hier im Forum geben 
+
+<br><br></p>
+
+<br>Solltest du Interesse, Zeit und Lust haben, unser Team zu unterstï¿½tzen, dann schreib bitte hier als dzcp_news-Kommentar drunter. (Das Kommentieren von dzcp_news sollte ja bereits wieder gehen.) Wir melden uns dann kurzfristig bei dir.<br><br>
+<br>
+lg. Chris<br>
+Dzcp-Team]]></description>
+      <content:encoded><![CDATA[<p>Hallo liebe Community, <br>
+wie der Titel es schon verrï¿½t, kï¿½nnten wir ein wenig Hilfe gebrauchen.<br><br><br>
+
+Getreu dem Motto: "Viele Hï¿½nde, schnelles Ende" suchen wir auf diesem Wege aktive Designer und Coder.<br><br></p>
+<p>
+Je nach deinen Fï¿½higkeiten werden deine Aufgaben folgende sein: <br><br>
+Designer:<br>
+- Entwerfen von neuen Designs (Templates), die hier kostenfrei zum Download angeboten werden sollen<br>
+(- wenn du kannst, auch direkt die Anpassung deiner Templates an Dzcp)<br>
+- Entwerfen von Logos, Grafiken und Bannern (fï¿½r dzcp) nach Bedarf
+<br><br>
+Coder:<br>
+- Anpassung alter Mods an die neue Version, bzw. Entwicklung neuer Mods, welche hier kostenfrei zum Download angeboten werden<br>
+- Anpassung von Templates an die neue Version von Dzcp <br>
+- ggf. Mitwirkung an den neuen Dzcp Versionen (nach Absprache mit Lucas)<br>
+- Hilfestellung zu Dzcp, den Mods und daraus resultierenden Bugs hier im Forum geben 
+
+<br><br></p>
+
+<br>Solltest du Interesse, Zeit und Lust haben, unser Team zu unterstï¿½tzen, dann schreib bitte hier als dzcp_news-Kommentar drunter. (Das Kommentieren von dzcp_news sollte ja bereits wieder gehen.) Wir melden uns dann kurzfristig bei dir.<br><br>
+<br>
+lg. Chris<br>
+Dzcp-Team]]></content:encoded>
+      <category>Coding</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=263</guid>
+      <pubDate>Tue, 16 May 2017 03:34:01 +0200</pubDate>
+      <author>-{ICK}-Chris</author>
+    </item>
+    <item>
+      <title><![CDATA[Stand der Dinge (04.05.17)]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=262</link>
+      <description><![CDATA[<p>Hallo liebe Community,
+<br>
+<br>
+da meine letzte dzcp_news nun schon eine Woche alt ist, möchte ich euch jetzt über den aktuellen Stand informieren:</p>
+
+<p>Das Design für die neue Seite steht. Es werden aktuell nur noch kleinere Anpassungen vorgenommen. 
+<br>
+Mehr verrate ich an dieser Stelle noch nicht, denn sonst wäre ja die �?berraschung weg ;P 
+<br>
+<br> 
+Au�?erdem wird aktuell noch an dem Code der Seite gearbeitet. Wie lange diese Arbeiten noch andauern werden, ist zum jetzigen Zeitpunkt nicht klar.
+<br> 
+<br>
+Ebenfalls werden bereits weitere Vorbereitungen für den Content der neuen Seite vorbereitet. Was ich damit genau meine, seht ihr wenn die Seite online ist ;) </p>
+
+<br>
+<br>
+<p>Weitere Infos folgen...</p>
+<br>
+<br>
+<p>LG. Chris
+<br> Dzcp-Team</p>]]></description>
+      <content:encoded><![CDATA[<p>Hallo liebe Community,
+<br>
+<br>
+da meine letzte dzcp_news nun schon eine Woche alt ist, möchte ich euch jetzt über den aktuellen Stand informieren:</p>
+
+<p>Das Design für die neue Seite steht. Es werden aktuell nur noch kleinere Anpassungen vorgenommen. 
+<br>
+Mehr verrate ich an dieser Stelle noch nicht, denn sonst wäre ja die �?berraschung weg ;P 
+<br>
+<br> 
+Au�?erdem wird aktuell noch an dem Code der Seite gearbeitet. Wie lange diese Arbeiten noch andauern werden, ist zum jetzigen Zeitpunkt nicht klar.
+<br> 
+<br>
+Ebenfalls werden bereits weitere Vorbereitungen für den Content der neuen Seite vorbereitet. Was ich damit genau meine, seht ihr wenn die Seite online ist ;) </p>
+
+<br>
+<br>
+<p>Weitere Infos folgen...</p>
+<br>
+<br>
+<p>LG. Chris
+<br> Dzcp-Team</p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=262</guid>
+      <pubDate>Thu, 04 May 2017 11:26:30 +0200</pubDate>
+      <author>-{ICK}-Chris</author>
+    </item>
+    <item>
+      <title><![CDATA[Wir sind wieder online!!]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=261</link>
+      <description><![CDATA[<p>Hallo liebe Community,<br />
+  ihr werdet es wahrscheinlich festgestellt haben, dass die dzcp Seite die letzten Tage leider nicht erreichbar war.
+  Lasst mich den Hintergrund einmal ganz schnell erklären:
+  
+  <br />
+  <br />
+  Wenn ein Programmierer, der sich schon vor etlichen Jahren aus dzcp zurückgezogen hat, den Space auf dem dzcp.de liegt, kündigt, ohne vorher gro�?artig Bescheid zu sagen oder ein Backup zu machen, ist dies im höchsten Ma�?e unglücklich!! So kam es also, dass unser ganzes Team mit dieser Situation konfrontiert wurde. 
+  
+  <br />
+  <br />
+  Zusätzlich verging leider nochmal anschlie�?end Zeit, bis die Domain umgeschaltet war und wir die alten Daten von der Seite bekamen. Diese waren leider aus dem Jahr 2015 -.- . Wundert euch also nicht, dass die Datenbank auch den Stand aus 2015 hat.
+  
+  <br />
+  </p>
+<p>Doch kommen wir nach all den schlechten Nachrichten auch zu dem Erfreulichem:
+  
+  <br />
+  <br />
+  1.) Dzcp befindet sich ab sofort unter neuer Leitung! Lucas AKA [url=http://dzcp.de/user/?action=user&id=39391]Hammermaps.de DEV[/url] ist der neue Leiter des Community-Projekts dzcp!
+  <br />
+  2.) Wir arbeiten bereits seit Tagen im Hintergrund mit Hochdruck an einer neuen Hauptseite, sowie der neuen Version 1.7. Gebt uns also nicht auf! Es wird eine neue Version 1.7 geben, mit neuen und alt-bewährten Features und vielem anderen.<br />
+  3.) Es wird hier auf der Seite einen Download-Bereich für Mods und Templates geben. Au�?erdem werden wieder viele neue Toturials kommen...
+  
+  <br />
+  <br />
+  Mehr möchte ich jetzt an dieser Stelle noch nicht verraten. Weitere Infos kommen die nächsten Tage für euch.
+  
+  <br />
+  Nach dem jetzigen Stand wird auf der neuen Hauptseite auch eine frische Datenbank laufen. Wir haben uns dazu entschlossen, da es aufgrund des Alters der Datenbank und der Dateien immer wieder zu Fehlern kam. Welche Daten ggf. noch übernommen werden können, ist aktuell noch nicht klar. Infos folgen.
+  
+  <br />
+  <br />
+  Aus diesem Grund werdet ihr uns primär im Forum als eher zurückhaltend erfahren. Support wird es natürlich dennoch geben. Schreibt eure Supportanfragen bitte wie gewohnt ins Forum!
+  
+  <br />
+  <br />
+  Weitere Infos für euch folgen!
+  
+  <br />
+  <br />
+  Liebe Grü�?e,
+  euer Dzcp-Team </p>]]></description>
+      <content:encoded><![CDATA[<p>Hallo liebe Community,<br />
+  ihr werdet es wahrscheinlich festgestellt haben, dass die dzcp Seite die letzten Tage leider nicht erreichbar war.
+  Lasst mich den Hintergrund einmal ganz schnell erklären:
+  
+  <br />
+  <br />
+  Wenn ein Programmierer, der sich schon vor etlichen Jahren aus dzcp zurückgezogen hat, den Space auf dem dzcp.de liegt, kündigt, ohne vorher gro�?artig Bescheid zu sagen oder ein Backup zu machen, ist dies im höchsten Ma�?e unglücklich!! So kam es also, dass unser ganzes Team mit dieser Situation konfrontiert wurde. 
+  
+  <br />
+  <br />
+  Zusätzlich verging leider nochmal anschlie�?end Zeit, bis die Domain umgeschaltet war und wir die alten Daten von der Seite bekamen. Diese waren leider aus dem Jahr 2015 -.- . Wundert euch also nicht, dass die Datenbank auch den Stand aus 2015 hat.
+  
+  <br />
+  </p>
+<p>Doch kommen wir nach all den schlechten Nachrichten auch zu dem Erfreulichem:
+  
+  <br />
+  <br />
+  1.) Dzcp befindet sich ab sofort unter neuer Leitung! Lucas AKA [url=http://dzcp.de/user/?action=user&id=39391]Hammermaps.de DEV[/url] ist der neue Leiter des Community-Projekts dzcp!
+  <br />
+  2.) Wir arbeiten bereits seit Tagen im Hintergrund mit Hochdruck an einer neuen Hauptseite, sowie der neuen Version 1.7. Gebt uns also nicht auf! Es wird eine neue Version 1.7 geben, mit neuen und alt-bewährten Features und vielem anderen.<br />
+  3.) Es wird hier auf der Seite einen Download-Bereich für Mods und Templates geben. Au�?erdem werden wieder viele neue Toturials kommen...
+  
+  <br />
+  <br />
+  Mehr möchte ich jetzt an dieser Stelle noch nicht verraten. Weitere Infos kommen die nächsten Tage für euch.
+  
+  <br />
+  Nach dem jetzigen Stand wird auf der neuen Hauptseite auch eine frische Datenbank laufen. Wir haben uns dazu entschlossen, da es aufgrund des Alters der Datenbank und der Dateien immer wieder zu Fehlern kam. Welche Daten ggf. noch übernommen werden können, ist aktuell noch nicht klar. Infos folgen.
+  
+  <br />
+  <br />
+  Aus diesem Grund werdet ihr uns primär im Forum als eher zurückhaltend erfahren. Support wird es natürlich dennoch geben. Schreibt eure Supportanfragen bitte wie gewohnt ins Forum!
+  
+  <br />
+  <br />
+  Weitere Infos für euch folgen!
+  
+  <br />
+  <br />
+  Liebe Grü�?e,
+  euer Dzcp-Team </p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=261</guid>
+      <pubDate>Thu, 27 Apr 2017 18:19:57 +0200</pubDate>
+      <author>-{ICK}-Chris</author>
+    </item>
+    <item>
+      <title><![CDATA[deV!L`z Clanportal 1.6.0.3 zum Download bereit]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=260</link>
+      <description><![CDATA[<p>Das DZCP Update 1.6.0.3 ist fertig, wir hoffen das es bei allen klappt und DZCP wieder ein wenig besser macht.<br />
+  Wie gewohnt findet ihr ein Update Paket im Download Bereich so wie eine Vollständige Version für Upgrades und Neuinstallationen.
+    <br />
+  Bei Problemen oder Fragen steht euch unser Forum zur Verfügung.<br />
+</p>
+<p>Liste der  änderungen der v1.6.0.3:</p>
+<ul>
+  <li>Versionsabfrage wurde aufgrund der Github Repository änderungen nachgebessert, das die aktuelle Version von DZCP abgerufen werden kann. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/4eb547a6299b679616ae46360f073f254fc6b7ef" target="_blank">Commit: #2611e01</a></li>
+  <li>Es wurde der Administrations-Link angezeigt wenn jemand interne Rechte hatte zbs. "Interne Downloads sehen", "Interne Galerie sehen" usw. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/10" target="_blank">Issue: #10</a></li>
+  <li>Es kann ein externer E-Mail-Server für das versenden von E-Mails konfiguriert werden * SMTP * , sehe config.php * Use SMTP connection with authentication for Mailing * <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/781e12902e0b6602e298c61854dd4ac132526813" target="_blank">Commit: #a1a6c05</a></li>
+  <li>Ein Problem mit dem PHPFastCache betreffend der funktion encode() und decode() wurde behoben, der bei der deaktivierung der Session & Cookie Verschlüsselung übersehen wurde. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/6213d8f6af17f7dcd7ca43dfa4590bd4bbd00504" target="_blank">Commit: #781e129</a></li>
+  <li>Die dzcp_news können über einen schnell-Link gelöscht oder bearbeitet werden.<a href="https://github.com/DZCP-Community/DZCP-1.6/issues/6" target="_blank"> Issue: #6</a></li>
+  <li>Wenn beim anlegen neuer Profilfelder bestimmte Sonderzeichen wie _ oder - verwendet hat, wurde dieses Sonderzeichen gelöscht, dieses Problem wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/7" target="_blank">Issue: #7</a></li>
+  <li>Links zu neuen Foren Themen wurde in der Userlobby und Last Forum Posts wurden falsch generiert. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/14" target="_blank">Issue: #14</a></li>
+  <li>Links in der Slideshow waren fehlerhaft wenn die Einstellung: &#39;Neues Fenster?: Ja&#39; gesetzt ist, wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/13" target="_blank">Issue: #13</a></li>
+  <li>Es wurden fehlende BF4  Map Namen hinzugefügt.</li>
+</ul>
+
+<p> </p>
+<p><a href="https://www.dzcp.de/downloads/?action=download&id=195" target="_self">Update Paket 1.6.0.3</a></p>]]></description>
+      <content:encoded><![CDATA[<p>Das DZCP Update 1.6.0.3 ist fertig, wir hoffen das es bei allen klappt und DZCP wieder ein wenig besser macht.<br />
+  Wie gewohnt findet ihr ein Update Paket im Download Bereich so wie eine Vollständige Version für Upgrades und Neuinstallationen.
+    <br />
+  Bei Problemen oder Fragen steht euch unser Forum zur Verfügung.<br />
+</p>
+<p>Liste der  änderungen der v1.6.0.3:</p>
+<ul>
+  <li>Versionsabfrage wurde aufgrund der Github Repository änderungen nachgebessert, das die aktuelle Version von DZCP abgerufen werden kann. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/4eb547a6299b679616ae46360f073f254fc6b7ef" target="_blank">Commit: #2611e01</a></li>
+  <li>Es wurde der Administrations-Link angezeigt wenn jemand interne Rechte hatte zbs. "Interne Downloads sehen", "Interne Galerie sehen" usw. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/10" target="_blank">Issue: #10</a></li>
+  <li>Es kann ein externer E-Mail-Server für das versenden von E-Mails konfiguriert werden * SMTP * , sehe config.php * Use SMTP connection with authentication for Mailing * <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/781e12902e0b6602e298c61854dd4ac132526813" target="_blank">Commit: #a1a6c05</a></li>
+  <li>Ein Problem mit dem PHPFastCache betreffend der funktion encode() und decode() wurde behoben, der bei der deaktivierung der Session & Cookie Verschlüsselung übersehen wurde. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/6213d8f6af17f7dcd7ca43dfa4590bd4bbd00504" target="_blank">Commit: #781e129</a></li>
+  <li>Die dzcp_news können über einen schnell-Link gelöscht oder bearbeitet werden.<a href="https://github.com/DZCP-Community/DZCP-1.6/issues/6" target="_blank"> Issue: #6</a></li>
+  <li>Wenn beim anlegen neuer Profilfelder bestimmte Sonderzeichen wie _ oder - verwendet hat, wurde dieses Sonderzeichen gelöscht, dieses Problem wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/7" target="_blank">Issue: #7</a></li>
+  <li>Links zu neuen Foren Themen wurde in der Userlobby und Last Forum Posts wurden falsch generiert. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/14" target="_blank">Issue: #14</a></li>
+  <li>Links in der Slideshow waren fehlerhaft wenn die Einstellung: &#39;Neues Fenster?: Ja&#39; gesetzt ist, wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/13" target="_blank">Issue: #13</a></li>
+  <li>Es wurden fehlende BF4  Map Namen hinzugefügt.</li>
+</ul>
+
+<p> </p>
+<p><a href="https://www.dzcp.de/downloads/?action=download&id=195" target="_self">Update Paket 1.6.0.3</a></p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=260</guid>
+      <pubDate>Thu, 14 May 2015 11:19:52 +0200</pubDate>
+      <author>Hammermaps.de DEV</author>
+    </item>
+    <item>
+      <title><![CDATA[Vorschau auf DZCP 1.6.0.3 * Bugfix &  Enhancement Release *]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=259</link>
+      <description><![CDATA[<p>
+</p>
+<p>Wieder sind einige Wochen vergangen und  es hatt sich eine kleine Liste Bugs und Wünsche angesammelt die wir mit dem nächsten Update DZCP 1.6.0.3 einpflegen möchten.<br />
+</p>
+<p>Dabei handelt es sich hauptsächlich um  Fehler Korrekturen die bei einigen Usern für Probleme sorgten, das  möchten wir bald aus der Welt schaffen.<br />
+</p>
+<p>Hier findet ihr eine Liste der  Änderungen der v1.6.0.3:</p>
+<ul>
+  <li>Versionsabfrage wurde aufgrund der Github Repository Änderungen nachgebessert, das die aktuelle Version von DZCP abgerufen werden kann. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/4eb547a6299b679616ae46360f073f254fc6b7ef" target="_blank">Commit: #2611e01</a></li>
+  <li>Es wurde der Administrations-Link angezeigt wenn jemand interne Rechte hatte zbs. "Interne Downloads sehen", "Interne Galerie sehen" usw. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/10" target="_blank">Issue: #10</a></li>
+  <li>Es kann ein externer E-Mail-Server für das versenden von E-Mails konfiguriert werden * SMTP * , sehe config.php * Use SMTP connection with authentication for Mailing * <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/781e12902e0b6602e298c61854dd4ac132526813" target="_blank">Commit: #a1a6c05</a></li>
+  <li>Ein Problem mit dem PHPFastCache betreffend der funktion encode() und decode() wurde behoben, der bei der deaktivierung der Session & Cookie Verschlüsselung übersehen wurde. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/6213d8f6af17f7dcd7ca43dfa4590bd4bbd00504" target="_blank">Commit: #781e129</a></li>
+  <li>Die dzcp_news können über einen schnell-Link gelöscht oder bearbeitet werden.<a href="https://github.com/DZCP-Community/DZCP-1.6/issues/6" target="_blank"> Issue: #6</a></li>
+  <li>Wenn beim anlegen neuer Profilfelder bestimmte Sonderzeichen wie _ oder - verwendet hat, wurde dieses Sonderzeichen gelöscht, dieses Problem wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/7" target="_blank">Issue: #7</a></li>
+  <li>Links zu neuen Foren Themen wurde in der Userlobby und Last Forum Posts wurden falsch generiert. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/14" target="_blank">Issue: #14</a></li>
+  <li>Links in der Slideshow waren fehlerhaft wenn die Einstellung: &#39;Neues Fenster?: Ja&#39; gesetzt ist, wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/13" target="_blank">Issue: #13</a></li>
+  <li>Es wurden fehlende BF4  Map Namen hinzugefügt.</li>
+</ul>
+<p>Eine Vorabversion kann hier heruntergeladen werden: <a href="https://github.com/DZCP-Community/DZCP-1.6/archive/development.zip" target="_blank">https://github.com/DZCP-Community/DZCP-1.6/archive/development.zip</a></p>
+<p>Eine Anleiutung für das Menuelle Update folgt die nächsten Tage.</p>]]></description>
+      <content:encoded><![CDATA[<p>
+</p>
+<p>Wieder sind einige Wochen vergangen und  es hatt sich eine kleine Liste Bugs und Wünsche angesammelt die wir mit dem nächsten Update DZCP 1.6.0.3 einpflegen möchten.<br />
+</p>
+<p>Dabei handelt es sich hauptsächlich um  Fehler Korrekturen die bei einigen Usern für Probleme sorgten, das  möchten wir bald aus der Welt schaffen.<br />
+</p>
+<p>Hier findet ihr eine Liste der  Änderungen der v1.6.0.3:</p>
+<ul>
+  <li>Versionsabfrage wurde aufgrund der Github Repository Änderungen nachgebessert, das die aktuelle Version von DZCP abgerufen werden kann. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/4eb547a6299b679616ae46360f073f254fc6b7ef" target="_blank">Commit: #2611e01</a></li>
+  <li>Es wurde der Administrations-Link angezeigt wenn jemand interne Rechte hatte zbs. "Interne Downloads sehen", "Interne Galerie sehen" usw. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/10" target="_blank">Issue: #10</a></li>
+  <li>Es kann ein externer E-Mail-Server für das versenden von E-Mails konfiguriert werden * SMTP * , sehe config.php * Use SMTP connection with authentication for Mailing * <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/781e12902e0b6602e298c61854dd4ac132526813" target="_blank">Commit: #a1a6c05</a></li>
+  <li>Ein Problem mit dem PHPFastCache betreffend der funktion encode() und decode() wurde behoben, der bei der deaktivierung der Session & Cookie Verschlüsselung übersehen wurde. <a href="https://github.com/DZCP-Community/DZCP-1.6/commit/6213d8f6af17f7dcd7ca43dfa4590bd4bbd00504" target="_blank">Commit: #781e129</a></li>
+  <li>Die dzcp_news können über einen schnell-Link gelöscht oder bearbeitet werden.<a href="https://github.com/DZCP-Community/DZCP-1.6/issues/6" target="_blank"> Issue: #6</a></li>
+  <li>Wenn beim anlegen neuer Profilfelder bestimmte Sonderzeichen wie _ oder - verwendet hat, wurde dieses Sonderzeichen gelöscht, dieses Problem wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/7" target="_blank">Issue: #7</a></li>
+  <li>Links zu neuen Foren Themen wurde in der Userlobby und Last Forum Posts wurden falsch generiert. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/14" target="_blank">Issue: #14</a></li>
+  <li>Links in der Slideshow waren fehlerhaft wenn die Einstellung: &#39;Neues Fenster?: Ja&#39; gesetzt ist, wurde behoben. <a href="https://github.com/DZCP-Community/DZCP-1.6/issues/13" target="_blank">Issue: #13</a></li>
+  <li>Es wurden fehlende BF4  Map Namen hinzugefügt.</li>
+</ul>
+<p>Eine Vorabversion kann hier heruntergeladen werden: <a href="https://github.com/DZCP-Community/DZCP-1.6/archive/development.zip" target="_blank">https://github.com/DZCP-Community/DZCP-1.6/archive/development.zip</a></p>
+<p>Eine Anleiutung für das Menuelle Update folgt die nächsten Tage.</p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=259</guid>
+      <pubDate>Sun, 10 May 2015 20:42:32 +0200</pubDate>
+      <author>Hammermaps.de DEV</author>
+    </item>
+    <item>
+      <title><![CDATA[DZCP 1.6.0.2 Kalender Minifix V1602.00.03]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=258</link>
+      <description><![CDATA[<p><br />Bugfix: Die Geburtstage wurden im Kalender nicht angezeigt.
+Das Update Trägt die Version 1602.00.03 und kann optional installiert werden, da es kein Sicherheitsrelevantes Update ist.</p>]]></description>
+      <content:encoded><![CDATA[<p><br />Bugfix: Die Geburtstage wurden im Kalender nicht angezeigt.
+Das Update Trägt die Version 1602.00.03 und kann optional installiert werden, da es kein Sicherheitsrelevantes Update ist.</p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=258</guid>
+      <pubDate>Sat, 07 Feb 2015 16:19:05 +0100</pubDate>
+      <author>Hammermaps.de DEV</author>
+    </item>
+    <item>
+      <title><![CDATA[DZCP-Zone wieder online]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=257</link>
+      <description><![CDATA[<p>Nach einer knapp 1,5 monatigen Downtime ist DZCP-Zone.de wieder online.</p>
+<p></p>
+<p>Da auf der alten Seite eine 6 Jahre alte modifizierte DZCP-Version 1.5.5.4 zum Einsatz kam und das Team von DZCP dieses eifrig weiterentwickelt hat, haben wir uns dazu entschlossen, die Seite auf Basis des DZCP 1.6.0.2 neu aufzubauen.</p>
+<p></p>
+<p>Die Daten wurden von der alten Seite übernommen, sodass eure Logindaten noch funktionieren.</p>
+<p></p>
+<p>Des Weiteren möchte ich an dieser Stelle meinen Dank an das Team von DZCP aussprechen, dass Sie in den vergangenen Monaten so eifrig an der Weiterentwicklung des DZCP werkelten und es immernoch tun.<br />In den kommenden Tagen werden wir die ersten Addons für das DZCP 1.6.0.2 veröffentlichen.</p>
+<p></p>
+<p>Schaut doch einfach mal bei uns vorbei.</p>]]></description>
+      <content:encoded><![CDATA[<p>Nach einer knapp 1,5 monatigen Downtime ist DZCP-Zone.de wieder online.</p>
+<p></p>
+<p>Da auf der alten Seite eine 6 Jahre alte modifizierte DZCP-Version 1.5.5.4 zum Einsatz kam und das Team von DZCP dieses eifrig weiterentwickelt hat, haben wir uns dazu entschlossen, die Seite auf Basis des DZCP 1.6.0.2 neu aufzubauen.</p>
+<p></p>
+<p>Die Daten wurden von der alten Seite übernommen, sodass eure Logindaten noch funktionieren.</p>
+<p></p>
+<p>Des Weiteren möchte ich an dieser Stelle meinen Dank an das Team von DZCP aussprechen, dass Sie in den vergangenen Monaten so eifrig an der Weiterentwicklung des DZCP werkelten und es immernoch tun.<br />In den kommenden Tagen werden wir die ersten Addons für das DZCP 1.6.0.2 veröffentlichen.</p>
+<p></p>
+<p>Schaut doch einfach mal bei uns vorbei.</p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=257</guid>
+      <pubDate>Sun, 11 Jan 2015 23:21:44 +0100</pubDate>
+      <author>*nitro*</author>
+    </item>
+    <item>
+      <title><![CDATA[DZCP 1.6.0.2 Youtube Minifix V1602.00.02]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=256</link>
+      <description><![CDATA[<p>Wir haben ein paar kleine Probleme mit dem Youtube BBCODE behoben.<br />
+Bugfix: Youtube Links wurden nicht richtig erkannt, wenn https:// oder http://youtu.be/ etc. als Link verwendet wurde.<br />
+Das Update Trägt die Version 1602.00.02 und kann optional installiert werden, da es kein Sicherheitsrelevantes Update ist.</p>]]></description>
+      <content:encoded><![CDATA[<p>Wir haben ein paar kleine Probleme mit dem Youtube BBCODE behoben.<br />
+Bugfix: Youtube Links wurden nicht richtig erkannt, wenn https:// oder http://youtu.be/ etc. als Link verwendet wurde.<br />
+Das Update Trägt die Version 1602.00.02 und kann optional installiert werden, da es kein Sicherheitsrelevantes Update ist.</p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=256</guid>
+      <pubDate>Wed, 07 Jan 2015 13:57:11 +0100</pubDate>
+      <author>Hammermaps.de DEV</author>
+    </item>
+    <item>
+      <title><![CDATA[DZCP 1.6.0.2 Hotfix V1602.00.01]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=255</link>
+      <description><![CDATA[<p style="margin-bottom: 0cm"><span style="font-size:12px;"><span style="font-family:arial,helvetica,sans-serif;">Wir wurden auf eine SQL-Injektion in der �??function orderby_sql()�?? aufmerksam gemacht.</span></span></p>
+<p style="margin-bottom: 0cm"><span style="font-size:12px;"><span style="font-family:arial,helvetica,sans-serif;">Wir bitten alle User die eine DZCP 1.6.0.1 Build <font color="#3b3b3b"><font style="font-size: 7pt">1601.00.16</font></font> oder 1.6.0.2 Build 1602.00.00 verwenden, dieses Hotfix dringendst einzuspielen, es müssen nur zwei Zeilen geändert werden.</span></span></p></p>]]></description>
+      <content:encoded><![CDATA[<p style="margin-bottom: 0cm"><span style="font-size:12px;"><span style="font-family:arial,helvetica,sans-serif;">Wir wurden auf eine SQL-Injektion in der �??function orderby_sql()�?? aufmerksam gemacht.</span></span></p>
+<p style="margin-bottom: 0cm"><span style="font-size:12px;"><span style="font-family:arial,helvetica,sans-serif;">Wir bitten alle User die eine DZCP 1.6.0.1 Build <font color="#3b3b3b"><font style="font-size: 7pt">1601.00.16</font></font> oder 1.6.0.2 Build 1602.00.00 verwenden, dieses Hotfix dringendst einzuspielen, es müssen nur zwei Zeilen geändert werden.</span></span></p></p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=255</guid>
+      <pubDate>Sun, 21 Dec 2014 16:15:31 +0100</pubDate>
+      <author>Hammermaps.de DEV</author>
+    </item>
+    <item>
+      <title><![CDATA[DZCP 1.6.0.2 Security Update]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=254</link>
+      <description><![CDATA[<p align="LEFT" style="margin: 0px; padding: 0px; font-family: Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif; font-size: 10px; line-height: 15px; color: rgb(59, 59, 59);"><font color="#3b3b3b">Wir haben das Update 1.6.0.2 fertig und möchten einige Sicherheitsprobleme im Bezug auf SQL-Injection und Bots bereinigen.</font><br />
+<font color="#3b3b3b">Eine Übersicht über die Änderungen am ende der dzcp_news sowie Download Links in unseren Download Bereich.</font></span></p>
+
+<p style="margin: 0px; padding: 0px; font-family: Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif; font-size: 10px; line-height: 15px; color: rgb(59, 59, 59);"> </p>
+
+<p style="margin: 0px; padding: 0px; font-family: Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif; font-size: 10px; line-height: 15px; color: rgb(59, 59, 59);">Das "DZCP 1.6.0.2 Hotfix V1602.00.01" ist in diesem Update Paket enthalten, hinzugefügt am 21.12.2014.<br />
+Alle die vor dem 21.12.2014 das Update 1.6.0.2 installiert haben schauen bitte einmal in ihrere Adminitration auf den Build.<br />
+Sollte dort 1602.00.00 stehen, bitte dieses Update installieren:</p>
+
+<p style="margin: 0px; padding: 0px; font-family: Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif; font-size: 10px; line-height: 15px; color: rgb(59, 59, 59);"><a href="https://www.dzcp.de/downloads/?action=download&id=192" style="margin: 0px; padding: 0px; color: red; text-decoration: none;" target="_blank">https://www.dzcp.de/downloads/?action=download&id=192</a></p>
+
+<p style="margin: 0px; padding: 0px; font-family: Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif; font-size: 10px; line-height: 15px; color: rgb(59, 59, 59);"> </p>
+
+<p align="LEFT" style="line-height: 0.4cm"><span style="font-family:arial,helvetica,sans-serif;"><font color="#3b3b3b"><font style="font-size: 7pt">Bugfixes / Security Fixes</font></font>:</span></p>
+
+<ul>
+	<li align="LEFT" style="line-height: 0.4cm;">
+	<p><span style="font-family:arial,helvetica,sans-serif;"><font color="#3b3b3b"><font style="font-size: 7pt">Es wurde eine SQL-Injection Sicherheitslücke auf der Seite "dzcp_news einsenden" beseitigt</font></font></span></p>
+	</li>
+	<li align="LEFT" style="line-height: 0.4cm;">
+	<p><span style="font-family:arial,helvetica,sans-serif;"><font color="#3b3b3b"><font style="font-size: 7pt">Es wird jetzt JQuery zum laden der Capacha-Codes verwendet, um Bots usw. die kein JavaScript ausführen zu blockieren</font></font></span></p>
+	</li>
+	<li align="LEFT" style="line-height: 0.4cm;">
+	<p><span style="font-family:arial,helvetica,sans-serif;"><font color="#3b3b3b"><font style="font-size: 7pt">Die Session & Cookie Verschlüsselung wurde deaktiviert, da einige der nötigen Funktionen fehlerhaft sind ( Verwendung ist wieder ab DZCP 1.6.1.x möglich )</font></font></span></p>
+	</li>
+	<li align="LEFT" style="line-height: 0.4cm;">
+	<p><span style="font-family:arial,helvetica,sans-serif;"><font color="#3b3b3b"><font style="font-size: 7pt">Eine bessere Bot Detection wurde interpretiert</font></font></span></p>
+	</li>
+</ul>]]></description>
+      <content:encoded><![CDATA[<p align="LEFT" style="margin: 0px; padding: 0px; font-family: Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif; font-size: 10px; line-height: 15px; color: rgb(59, 59, 59);"><font color="#3b3b3b">Wir haben das Update 1.6.0.2 fertig und möchten einige Sicherheitsprobleme im Bezug auf SQL-Injection und Bots bereinigen.</font><br />
+<font color="#3b3b3b">Eine Übersicht über die Änderungen am ende der dzcp_news sowie Download Links in unseren Download Bereich.</font></span></p>
+
+<p style="margin: 0px; padding: 0px; font-family: Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif; font-size: 10px; line-height: 15px; color: rgb(59, 59, 59);"> </p>
+
+<p style="margin: 0px; padding: 0px; font-family: Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif; font-size: 10px; line-height: 15px; color: rgb(59, 59, 59);">Das "DZCP 1.6.0.2 Hotfix V1602.00.01" ist in diesem Update Paket enthalten, hinzugefügt am 21.12.2014.<br />
+Alle die vor dem 21.12.2014 das Update 1.6.0.2 installiert haben schauen bitte einmal in ihrere Adminitration auf den Build.<br />
+Sollte dort 1602.00.00 stehen, bitte dieses Update installieren:</p>
+
+<p style="margin: 0px; padding: 0px; font-family: Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif; font-size: 10px; line-height: 15px; color: rgb(59, 59, 59);"><a href="https://www.dzcp.de/downloads/?action=download&id=192" style="margin: 0px; padding: 0px; color: red; text-decoration: none;" target="_blank">https://www.dzcp.de/downloads/?action=download&id=192</a></p>
+
+<p style="margin: 0px; padding: 0px; font-family: Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif; font-size: 10px; line-height: 15px; color: rgb(59, 59, 59);"> </p>
+
+<p align="LEFT" style="line-height: 0.4cm"><span style="font-family:arial,helvetica,sans-serif;"><font color="#3b3b3b"><font style="font-size: 7pt">Bugfixes / Security Fixes</font></font>:</span></p>
+
+<ul>
+	<li align="LEFT" style="line-height: 0.4cm;">
+	<p><span style="font-family:arial,helvetica,sans-serif;"><font color="#3b3b3b"><font style="font-size: 7pt">Es wurde eine SQL-Injection Sicherheitslücke auf der Seite "dzcp_news einsenden" beseitigt</font></font></span></p>
+	</li>
+	<li align="LEFT" style="line-height: 0.4cm;">
+	<p><span style="font-family:arial,helvetica,sans-serif;"><font color="#3b3b3b"><font style="font-size: 7pt">Es wird jetzt JQuery zum laden der Capacha-Codes verwendet, um Bots usw. die kein JavaScript ausführen zu blockieren</font></font></span></p>
+	</li>
+	<li align="LEFT" style="line-height: 0.4cm;">
+	<p><span style="font-family:arial,helvetica,sans-serif;"><font color="#3b3b3b"><font style="font-size: 7pt">Die Session & Cookie Verschlüsselung wurde deaktiviert, da einige der nötigen Funktionen fehlerhaft sind ( Verwendung ist wieder ab DZCP 1.6.1.x möglich )</font></font></span></p>
+	</li>
+	<li align="LEFT" style="line-height: 0.4cm;">
+	<p><span style="font-family:arial,helvetica,sans-serif;"><font color="#3b3b3b"><font style="font-size: 7pt">Eine bessere Bot Detection wurde interpretiert</font></font></span></p>
+	</li>
+</ul>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=254</guid>
+      <pubDate>Sat, 20 Dec 2014 19:01:01 +0100</pubDate>
+      <author>Hammermaps.de DEV</author>
+    </item>
+    <item>
+      <title><![CDATA[DZCP 1.6.0 Final Release]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=253</link>
+      <description><![CDATA[<p>Hallo liebe Community,</p>
+<p></p>
+<p>endlich ist es soweit. Wir präsentieren voller Stolz die finale 1.6 des beliebten <a href="../" target="_self">deV!L`z Clanportal</a>.</p>
+<p></p>
+<p>Es wurden alle uns bekannten Bugs behoben, sodass wir euch eine zu 99,99% bugfreie Version an die Hand geben können.</p>
+<p></p>
+<p>Als kleines Dankeschön erhält die DZCP Community die finale 1.6 Version <span style="text-decoration: underline;"><strong>lizenzfrei</strong></span>.</p>
+<p></p>
+<p>Es wird von nun an <span style="text-decoration: underline;">keine Lizenzdatei</span> zum Entfernen der Copyrightleiste benötigt. Sie kann einfach in der Konfigurationsdatei ausgeschaltet werden. Natürlich begrüßen wir die Unterstützung der Community durch das aktivieren dieser Leiste.</p>]]></description>
+      <content:encoded><![CDATA[<p>Hallo liebe Community,</p>
+<p></p>
+<p>endlich ist es soweit. Wir präsentieren voller Stolz die finale 1.6 des beliebten <a href="../" target="_self">deV!L`z Clanportal</a>.</p>
+<p></p>
+<p>Es wurden alle uns bekannten Bugs behoben, sodass wir euch eine zu 99,99% bugfreie Version an die Hand geben können.</p>
+<p></p>
+<p>Als kleines Dankeschön erhält die DZCP Community die finale 1.6 Version <span style="text-decoration: underline;"><strong>lizenzfrei</strong></span>.</p>
+<p></p>
+<p>Es wird von nun an <span style="text-decoration: underline;">keine Lizenzdatei</span> zum Entfernen der Copyrightleiste benötigt. Sie kann einfach in der Konfigurationsdatei ausgeschaltet werden. Natürlich begrüßen wir die Unterstützung der Community durch das aktivieren dieser Leiste.</p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=253</guid>
+      <pubDate>Fri, 09 May 2014 14:59:08 +0200</pubDate>
+      <author>Richy</author>
+    </item>
+    <item>
+      <title><![CDATA[DZCP 1.6 BETA NOW ONLINE!!]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=246</link>
+      <description><![CDATA[<p>es ist endlich soweit. Wir präsentieren euch hiermit die erste offizielle 1.6 Beta.</p>
+<p></p>
+<p>Wie der Name BETA es bereits ausdrückt, dient diese Version lediglich zu Testzwecken und nicht zum Update. Wer es sich dennoch nicht verkneifen kann, soll es bitte auf eigener Gefahr machen. Support ist dann jedoch nicht zu erwarten.</p>
+<p></p>
+<p>Wir hoffen alle Bugs gefunden zu haben und bedanken uns für eure rege Teilnahme im Forum. Jetzt sind wir gespannt, was eure persönlichen Tests mit dieser Beta bringen.</p>
+<p></p>
+<p>Wichtig!! Wenn ihr noch Fehler findet, so müssen diese auch unter <a target="_blank" href="http://beta.dzcp.de">beta.dzcp.de</a> reproduzierbar sein.</p>
+<p></p>
+<p>An dieser Stelle möchte ich mich sehr herzlich bei allen Mitwirkenden für eure Hilfe Danken. Ohne euch wäre diese Beta nicht möglich gewesen. Ein ganz besonderen Dank geht an <img class="icon" src="../inc/images/flaggen/de.gif" border="0" alt="de" /> <a href="../user/?action=user&id=10523">Dragonfire</a>, der alles am Laufen gehalten hat. Sein einbringen im Projekt "DZCP 1.6" hat maßgeblich für den Erfolg gesorgt.</p>
+<p></p>
+<p>Nun viel Spass beim testen.</p>]]></description>
+      <content:encoded><![CDATA[<p>es ist endlich soweit. Wir präsentieren euch hiermit die erste offizielle 1.6 Beta.</p>
+<p></p>
+<p>Wie der Name BETA es bereits ausdrückt, dient diese Version lediglich zu Testzwecken und nicht zum Update. Wer es sich dennoch nicht verkneifen kann, soll es bitte auf eigener Gefahr machen. Support ist dann jedoch nicht zu erwarten.</p>
+<p></p>
+<p>Wir hoffen alle Bugs gefunden zu haben und bedanken uns für eure rege Teilnahme im Forum. Jetzt sind wir gespannt, was eure persönlichen Tests mit dieser Beta bringen.</p>
+<p></p>
+<p>Wichtig!! Wenn ihr noch Fehler findet, so müssen diese auch unter <a target="_blank" href="http://beta.dzcp.de">beta.dzcp.de</a> reproduzierbar sein.</p>
+<p></p>
+<p>An dieser Stelle möchte ich mich sehr herzlich bei allen Mitwirkenden für eure Hilfe Danken. Ohne euch wäre diese Beta nicht möglich gewesen. Ein ganz besonderen Dank geht an <img class="icon" src="../inc/images/flaggen/de.gif" border="0" alt="de" /> <a href="../user/?action=user&id=10523">Dragonfire</a>, der alles am Laufen gehalten hat. Sein einbringen im Projekt "DZCP 1.6" hat maßgeblich für den Erfolg gesorgt.</p>
+<p></p>
+<p>Nun viel Spass beim testen.</p>]]></content:encoded>
+      <category>Coding</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=246</guid>
+      <pubDate>Fri, 06 Jul 2012 23:31:45 +0200</pubDate>
+      <author>Richy</author>
+    </item>
+    <item>
+      <title><![CDATA[Sicherheitslücken in DZCP]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=244</link>
+      <description><![CDATA[<p><strong>ACHTUNG:</strong><br /><br />Unser System wurde leider infiziert !!!<br />Bitte unbedingt das <a target="_self" href="../downloads/?action=download&id=182">DZCP Update 1.5.5.2 -> 1.5.5.4</a> installieren!</p>
+<p>Es müssen nur 2 Dateien ausgetauscht werden.</p>]]></description>
+      <content:encoded><![CDATA[<p><strong>ACHTUNG:</strong><br /><br />Unser System wurde leider infiziert !!!<br />Bitte unbedingt das <a target="_self" href="../downloads/?action=download&id=182">DZCP Update 1.5.5.2 -> 1.5.5.4</a> installieren!</p>
+<p>Es müssen nur 2 Dateien ausgetauscht werden.</p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=244</guid>
+      <pubDate>Sun, 06 May 2012 17:54:12 +0200</pubDate>
+      <author>Richy</author>
+    </item>
+    <item>
+      <title><![CDATA[Minifix Update vom TinyMCE]]></title>
+      <link>https://www.dzcp.de/news/?action=show&amp;id=243</link>
+      <description><![CDATA[<p>Mit diesem kleinen Fix wird der TinyMCE Editor in folgenden bereich gefixt:</p>
+<p></p>
+<p></p>
+<ul>
+<li>Das Schreiben im Editor mit der Firefox Version 11.0 wieder möglich.</li>
+<li>Der Editor wird im Internet Explorer 9 wieder angezeigt.</li>
+<li>Der Filemanager ist im Internet Explorer 9 und im Kompatibilitätsmodus wieder erreichbar.</li>
+</ul>
+<p></p>
+<p>Des weiteren möchte ich an dieser Stelle auf den folgenden Thread aufmerksam machen:</p>
+<p></p>
+<p><a href="#mce_temp_url#">https://www.dzcp.de/forum/?action=showthread&kid=1&id=15062</a></p>
+<p></p>
+<p>Vielen Dank auch an alle, die bisher so toll am CMS arbeiten. Ich denke diesmal wird das was.</p>]]></description>
+      <content:encoded><![CDATA[<p>Mit diesem kleinen Fix wird der TinyMCE Editor in folgenden bereich gefixt:</p>
+<p></p>
+<p></p>
+<ul>
+<li>Das Schreiben im Editor mit der Firefox Version 11.0 wieder möglich.</li>
+<li>Der Editor wird im Internet Explorer 9 wieder angezeigt.</li>
+<li>Der Filemanager ist im Internet Explorer 9 und im Kompatibilitätsmodus wieder erreichbar.</li>
+</ul>
+<p></p>
+<p>Des weiteren möchte ich an dieser Stelle auf den folgenden Thread aufmerksam machen:</p>
+<p></p>
+<p><a href="#mce_temp_url#">https://www.dzcp.de/forum/?action=showthread&kid=1&id=15062</a></p>
+<p></p>
+<p>Vielen Dank auch an alle, die bisher so toll am CMS arbeiten. Ich denke diesmal wird das was.</p>]]></content:encoded>
+      <category>News</category>
+      <guid>https://www.dzcp.de/news/?action=show&amp;id=243</guid>
+      <pubDate>Mon, 19 Mar 2012 17:52:51 +0100</pubDate>
+      <author>Richy</author>
+    </item>
+  </channel>
 </rss>
